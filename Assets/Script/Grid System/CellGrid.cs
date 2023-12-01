@@ -62,9 +62,14 @@ public class CellGrid : MonoBehaviour
     {
         //Initialize the cell creation at the current location
         Vector3 position;
+        /*
         position.x = (x + z * 0.5f - z / 2) * (CellMetrics.innerRadius * 2f);
         position.y = 0f;
         position.z = z * (CellMetrics.outerRadius * 1.5f);
+        */
+        position.x = x;
+        position.y = 0f;
+        position.z = z;
 
         //Instantiate a cell in the list we set up beforehand
         Cell cell = cells[i] = Instantiate<Cell>(cellPrefab);

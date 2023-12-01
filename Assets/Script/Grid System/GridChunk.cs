@@ -22,7 +22,7 @@ public class GridChunk : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cellMesh.Triangulate(cells);
+        //cellMesh.Triangulate(cells);
     }
 
     // Update is called once per frame
