@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    public CellCoordinates coordinates;
+    [SerializeField] GameObject buildingTarget;
+    enum TerrainType {GRASS, DIRT, WATER, POLLUTED};
+    [SerializeField] TerrainType terrainType;
 
-    public GridChunk chunk;
+    GameObject placedObject;
 
-    public Material material;
-    public Color color;
+    private void Awake()
+    {
+        terrainType = TerrainType.POLLUTED;
+    }
+
+    private void OnMouseOver()
+    {
+        
+    }
 }
