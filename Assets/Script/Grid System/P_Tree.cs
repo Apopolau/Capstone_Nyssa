@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Flower : Plant
+public class P_Tree : Plant
 {
     // Start is called before the first frame update
     void Start()

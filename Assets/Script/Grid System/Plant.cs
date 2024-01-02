@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Plant : Creatable
 {
+    [SerializeField] PlantStats stats;
     // Start is called before the first frame update
     void Start()
     {
