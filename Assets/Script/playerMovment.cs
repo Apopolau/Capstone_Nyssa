@@ -59,7 +59,10 @@ public class playerMovement : MonoBehaviour
 
         //rotate orientation
        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        orientation.forward = viewDir.normalized;
+        if (viewDir != Vector3.zero)
+        {
+            orientation.forward = viewDir.normalized;
+        }
 
         // rotate the player object
         Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
