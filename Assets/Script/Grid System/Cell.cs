@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    private EarthPlayer earthPlayer;
+    [SerializeField] private EarthPlayer earthPlayer;
     [SerializeField] GameObjectRuntimeSet playerSet;
     [SerializeField] GameObject buildingTarget;
     enum TerrainType {GRASS, DIRT, WATER, POLLUTED};
     [SerializeField] TerrainType terrainType;
+
+    Vector2 tileVector;
+    Vector2 playerVector;
 
     GameObject placedObject;
 
@@ -26,26 +29,36 @@ public class Cell : MonoBehaviour
     {
         earthPlayer = playerSet.GetItemIndex(0).GetComponent<EarthPlayer>();
         StartCoroutine(CheckForPlayer());
+        tileVector.x = this.transform.position.x;
+        tileVector.y = this.transform.position.z;
     }
 
     IEnumerator CheckForPlayer()
     {
-        if (earthPlayer.isPlantSelected)
+        while (true)
         {
-            if(Mathf.Abs((this.transform.position - earthPlayer.transform.position).magnitude) < 1)
+            if (earthPlayer.isPlantSelected)
             {
-                tileIsActivated = true;
-                earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
+                playerVector.x = earthPlayer.transform.position.x;
+                playerVector.y = earthPlayer.transform.position.z;
+                //Debug.Log("Player has selected a plant");
+                if (Mathf.Abs((tileVector - playerVector).magnitude) < 2)
+                {
+                    Debug.Log("Player is near tile with a plant");
+                    tileIsActivated = true;
+                    earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
+                }
+                else
+                {
+                    tileIsActivated = false;
+                }
             }
             else
             {
+                //Debug.Log("Player has not selected a plant");
                 tileIsActivated = false;
             }
+            yield return waitTime;
         }
-        else
-        {
-            tileIsActivated = false;
-        }
-        yield return waitTime;
     }
 }
