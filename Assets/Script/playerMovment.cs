@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 //Resources and tutorials that were used to help create this quick tester
-// they can come in handy for future developpment, and a guide when it comes to creatign our final product
+// they can come in handy for future developpment, and a guide when it comes to creating our final product
 
 //
 
@@ -73,14 +73,18 @@ public class playerMovement : MonoBehaviour
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
         //print(grounded);
-       // print("I'm ready:");
-           // print(readyToJump) ;
+        // print("I'm ready:");
+        // print(readyToJump) ;
 
 
         //rotate orientation
-       Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        orientation.forward = viewDir.normalized;
 
+        
+        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+        if (viewDir != Vector3.zero)
+        {
+            orientation.forward = viewDir.normalized;
+        }
         // rotate the player object
         //float horInput = Input.GetAxis("Horizontal");
         //float verInput = Input.GetAxis("Vertical");
