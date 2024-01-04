@@ -36,7 +36,6 @@ public class Timer : Decorator
 
         if (EvaluationCount == 0)
         {
-            //Debug.Log($"Starting timer for {m_TimeToWait}. Child node status is: {originalStatus}");
             m_StartTime = m_UseFixedTime ? Time.fixedTime : Time.time;
         }
 
@@ -44,10 +43,8 @@ public class Timer : Decorator
 
         if (elapsedTime > m_TimeToWait)
         {
-            //Debug.Log($"Timer complete - Child node status is: {originalStatus}");
             return NodeState.SUCCESS;
         }
-        //Debug.Log($"Timer is {elapsedTime} out of {m_TimeToWait}. Child node status is: {originalStatus}");
         return NodeState.RUNNING;
     }
 

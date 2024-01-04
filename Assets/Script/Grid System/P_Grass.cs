@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Plant : Creatable
+public class P_Grass : Plant
 {
-    [SerializeField] PlantStats stats;
     // Start is called before the first frame update
     void Start()
     {

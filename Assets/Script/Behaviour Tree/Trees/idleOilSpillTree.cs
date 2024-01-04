@@ -16,6 +16,15 @@ public class idleOilSpillTree : BTree
         BTNode root = new Selector(new List<BtNode>
         {
 
+        if they can see the player (collider)
+        if close enough to player
+        Attack player
+        if they can see the player/not close enough
+        Run at player
+
+        if nothing else
+        switch to wander behaviour
+
         });
         return root;
         */

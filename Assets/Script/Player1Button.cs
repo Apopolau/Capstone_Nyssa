@@ -10,9 +10,6 @@ public class Player1Button : MonoBehaviour
     public Material defaultMat;
     public GameObject Bridge;
 
-
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -44,7 +41,6 @@ public class Player1Button : MonoBehaviour
         }
     }
 
-
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Player1")
@@ -54,9 +50,4 @@ public class Player1Button : MonoBehaviour
             Bridge.GetComponent<BoxCollider>().enabled = false;
         }
     }
-
-
-
-
-
 }

@@ -9,7 +9,6 @@ using UnityEngine;
 //
 
 public class playerMovement : MonoBehaviour
-
 {
     // Start is called before the first frame update
     //Rotation of the player
@@ -19,8 +18,6 @@ public class playerMovement : MonoBehaviour
     public Rigidbody rb;
 
     public float rotationSpeed;
-
-
 
     //Movement of the player
     public float moveSpeed;
@@ -34,8 +31,6 @@ public class playerMovement : MonoBehaviour
     bool readyToJump=true;
 
     //Keys Based on player
-   
-
     public KeyCode jumpKeyP1 = KeyCode.Space;
     public KeyCode jumpKeyP2 = KeyCode.KeypadEnter;
 
@@ -45,20 +40,9 @@ public class playerMovement : MonoBehaviour
     public LayerMask groundMask;
     bool grounded;
 
-
-
-
     float horInput;
     float vertInput;
     Vector3 moveDirection;
-
-
-
-
- 
-
-
-
 
     void Start()
     {
@@ -72,12 +56,22 @@ public class playerMovement : MonoBehaviour
     {
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
+<<<<<<< HEAD
         //print(grounded);
         // print("I'm ready:");
         // print(readyToJump) ;
 
 
         //rotate orientation
+=======
+
+        //rotate orientation
+       Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+        if (viewDir != Vector3.zero)
+        {
+            orientation.forward = viewDir.normalized;
+        }
+>>>>>>> 4be52c31fa3c14f0f1d980ccdcd259484c086a63
 
         
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
@@ -86,21 +80,14 @@ public class playerMovement : MonoBehaviour
             orientation.forward = viewDir.normalized;
         }
         // rotate the player object
-        //float horInput = Input.GetAxis("Horizontal");
-        //float verInput = Input.GetAxis("Vertical");
         Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
 
         //if input direction isnt 0 smoothly change the direction using the rotation speed
-       if (inputDir != Vector3.zero)
-         {
-             playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+        if (inputDir != Vector3.zero)
+        {
+            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
-
-
         //takes input of the keys for movement
-
-
-
         MyInput();
         SpeedControl();
 
@@ -113,30 +100,20 @@ public class playerMovement : MonoBehaviour
         {
             rb.drag = 0;
         }
-
-
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
-
     }
-
 
     private void MyInput()
     {
        
-
-       
-
-
-
         if(player.gameObject.tag == "Player1")
         {
             horInput = Input.GetAxisRaw("Horizontal_P1");
             vertInput = Input.GetAxisRaw("Vertical_P1");
-
 
             if (Input.GetKey(jumpKeyP1) && readyToJump && grounded)
             {
@@ -146,8 +123,6 @@ public class playerMovement : MonoBehaviour
                 // makes sure you can't double jump, but allow you to continuously jump iff you hodl down on the ke
                 Invoke(nameof(ResetJump), jumpCoolDown);
             }
-
-
         }
 
 
@@ -155,7 +130,6 @@ public class playerMovement : MonoBehaviour
         {
             horInput = Input.GetAxisRaw("Horizontal_P2");
             vertInput = Input.GetAxisRaw("Vertical_P2");
-
 
             if (Input.GetKey(jumpKeyP2) && readyToJump && grounded)
             {
@@ -165,18 +139,7 @@ public class playerMovement : MonoBehaviour
                 // makes sure you can't double jump, but allow you to continuously jump iff you hodl down on the ke
                 Invoke(nameof(ResetJump), jumpCoolDown);
             }
-
-
         }
-
-
-
-
-
-
-
-
-
     }
 
     private void MovePlayer()
@@ -194,17 +157,7 @@ public class playerMovement : MonoBehaviour
         {
             rb.AddForce(moveDirection.normalized * moveSpeed  *10f* airMultiplier, ForceMode.Force);
         }
-
-     // if (moveDirection != Vector3.zero)
-     // {
-       //   playerObj.forward = Vector3.Slerp(playerObj.forward, moveDirection.normalized, Time.deltaTime * rotationSpeed);
-    //  }
-    
-
-
     }
-
-
 
     private void SpeedControl()
     {
@@ -217,10 +170,7 @@ public class playerMovement : MonoBehaviour
             //now apply the max velotiy to the x and z axis
             rb.velocity = new Vector3(limitVel.x, rb.velocity.y, limitVel.z);
         }
-
-
     }
-
 
     private void Jump()
     {
@@ -230,9 +180,10 @@ public class playerMovement : MonoBehaviour
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
     }
-    private void ResetJump()
-    { readyToJump = true;
 
+    private void ResetJump()
+    { 
+        readyToJump = true;
     } 
 }
 
