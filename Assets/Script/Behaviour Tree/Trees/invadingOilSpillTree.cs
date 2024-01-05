@@ -16,6 +16,33 @@ public class invadingOilSpillTree : BTree
         BTNode root = new Selector(new List<BtNode>
         {
 
+        if they're in fog
+        switch to wander behaviour
+
+        if they have an animal
+        escape with the animal back the way they came
+
+        if they can see the player (collider)
+        if close enough to player
+        Attack player
+        if they can see the player/not close enough
+        Run at player
+
+        if they can see an animal
+        if close enough to animal
+        Kidnap animal
+        if not close enough
+        Approach animal
+
+        if they can see a plant/buildable
+        if close enough
+        attack plant/buildable (depending on enemy?)
+        if not close enough
+        approach plant/buildable
+
+        if nothing else
+        follow path towards animal nest, following waypoints
+
         });
         return root;
         */
