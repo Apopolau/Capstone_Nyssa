@@ -6,19 +6,19 @@ public class Cell : MonoBehaviour
 {
     [SerializeField] private EarthPlayer earthPlayer;
     [SerializeField] GameObjectRuntimeSet playerSet;
-    [SerializeField] GameObject buildingTarget;
-    enum TerrainType {GRASS, DIRT, WATER, POLLUTED};
-    [SerializeField] TerrainType terrainType;
+    [SerializeField] public GameObject buildingTarget;
+    public enum TerrainType {GRASS, DIRT, WATER, POLLUTED};
+    public TerrainType terrainType;
 
     Vector2 tileVector;
     Vector2 playerVector;
 
-    GameObject placedObject;
+    public GameObject placedObject;
 
     WaitForSeconds waitTime = new WaitForSeconds(0.2f);
 
-    bool tileIsActivated;
-    bool tileHasBuild;
+    public bool tileIsActivated;
+    public bool tileHasBuild;
 
     private void Awake()
     {
@@ -33,31 +33,45 @@ public class Cell : MonoBehaviour
         tileVector.y = this.transform.position.z;
     }
 
+    private void Update()
+    {
+        UpdatePlant();
+    }
+
+    private void UpdatePlant()
+    {
+        if (earthPlayer.isPlantSelected && tileIsActivated)
+        {
+            earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
+            //Handles indication whether it's a valid position or not
+            if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED)
+            {
+                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color.Equals(Color.red);
+            }
+            else
+            {
+                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color.Equals(Color.blue);
+            }
+        }
+    }
+
     IEnumerator CheckForPlayer()
     {
         while (true)
         {
-            if (earthPlayer.isPlantSelected)
+            playerVector.x = earthPlayer.transform.position.x;
+            playerVector.y = earthPlayer.transform.position.z;
+            //Debug.Log("Player has selected a plant");
+            if (Mathf.Abs((tileVector - playerVector).magnitude) < 5)
             {
-                playerVector.x = earthPlayer.transform.position.x;
-                playerVector.y = earthPlayer.transform.position.z;
-                //Debug.Log("Player has selected a plant");
-                if (Mathf.Abs((tileVector - playerVector).magnitude) < 2)
-                {
-                    Debug.Log("Player is near tile with a plant");
-                    tileIsActivated = true;
-                    earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
-                }
-                else
-                {
-                    tileIsActivated = false;
-                }
+                tileIsActivated = true;
+                earthPlayer.selectedTile = this.gameObject;
             }
             else
             {
-                //Debug.Log("Player has not selected a plant");
                 tileIsActivated = false;
             }
+
             yield return waitTime;
         }
     }
