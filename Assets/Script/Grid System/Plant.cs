@@ -5,7 +5,7 @@ using UnityEngine;
 public class Plant : Creatable
 {
     [SerializeField] PlantStats stats;
-    float plantTime;
+    //float plantTime;
     PlantStats.PlantStage currentPlantStage;
     //Sprite currentImage;
     public GameObject spriteObject;
@@ -13,16 +13,17 @@ public class Plant : Creatable
     // Start is called before the first frame update
     void Awake()
     {
-        plantTime = Time.deltaTime;
+        //plantTime = Time.deltaTime;
         currentPlantStage = PlantStats.PlantStage.SEEDLING;
         spriteObject.transform.position = new Vector3(this.gameObject.transform.position.x, stats.seedlingYOffset, this.gameObject.transform.position.z);
         spriteObject.transform.localScale = new Vector3(stats.seedlingScale, stats.seedlingScale, 1);
+        StartCoroutine(AdvancePlantStage());
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandlePlantGrowth();
+        
     }
 
     private void FixedUpdate()
@@ -30,37 +31,41 @@ public class Plant : Creatable
         
     }
 
-    void HandlePlantGrowth()
+    private IEnumerator AdvancePlantStage()
     {
-        if(currentPlantStage == PlantStats.PlantStage.SEEDLING)
+        while (true)
         {
-            if(Time.deltaTime > plantTime + stats.seedlingGrowTime)
+            if (currentPlantStage == PlantStats.PlantStage.SEEDLING)
             {
+                yield return new WaitForSeconds(stats.seedlingGrowTime);
+                Debug.Log("Plant should be growing");
                 currentPlantStage = PlantStats.PlantStage.SPROUT;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.sproutImage;
                 spriteObject.transform.position = new Vector3(this.gameObject.transform.position.x, stats.seedlingYOffset, this.gameObject.transform.position.z);
-                spriteObject.transform.localScale = new Vector3(stats.sproutScale, stats.seedlingScale, 1);
+                spriteObject.transform.localScale = new Vector3(stats.seedlingScale, stats.seedlingScale, 1);
             }
-        }
-        else if (currentPlantStage == PlantStats.PlantStage.SPROUT)
-        {
-            if (Time.deltaTime > plantTime + stats.sproutGrowTime)
+            else if(currentPlantStage == PlantStats.PlantStage.SPROUT)
             {
+                yield return new WaitForSeconds(stats.sproutGrowTime);
                 currentPlantStage = PlantStats.PlantStage.JUVENILE;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.juvenileImage;
                 spriteObject.transform.position = new Vector3(this.gameObject.transform.position.x, stats.juvenileYOffset, this.gameObject.transform.position.z);
-                spriteObject.transform.localScale = new Vector3(stats.sproutScale, stats.juvenileScale, 1);
+                spriteObject.transform.localScale = new Vector3(stats.juvenileScale, stats.juvenileScale, 1);
             }
-        }
-        else if (currentPlantStage == PlantStats.PlantStage.JUVENILE)
-        {
-            if (Time.deltaTime > plantTime + stats.juvenileGrowTime)
+            else if(currentPlantStage == PlantStats.PlantStage.JUVENILE)
             {
+                yield return new WaitForSeconds(stats.juvenileGrowTime);
                 currentPlantStage = PlantStats.PlantStage.MATURE;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.matureImage;
                 spriteObject.transform.position = new Vector3(this.gameObject.transform.position.x, stats.matureYOffset, this.gameObject.transform.position.z);
-                spriteObject.transform.localScale = new Vector3(stats.sproutScale, stats.matureScale, 1);
+                spriteObject.transform.localScale = new Vector3(stats.matureScale, stats.matureScale, 1);
+            }
+            else if(currentPlantStage == PlantStats.PlantStage.MATURE)
+            {
+                StopCoroutine(AdvancePlantStage());
+                yield break;
             }
         }
+        
     }
 }

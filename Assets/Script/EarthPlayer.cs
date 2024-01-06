@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class EarthPlayer : MonoBehaviour
 {
@@ -32,10 +33,15 @@ public class EarthPlayer : MonoBehaviour
     public PlantSelectedType plantSelectedType;
     public GameObject selectedTile;
 
+    private WaitForSeconds plantTime;
+
+    [SerializeField] TMPro.TextMeshProUGUI displayText;
+
     // Start is called before the first frame update
     void Start()
     {
         treeButton.onClick.AddListener(() => OnPlantSelected(plantSelectedType));
+        plantTime = new WaitForSeconds(2);
     }
 
     // Update is called once per frame
@@ -49,13 +55,13 @@ public class EarthPlayer : MonoBehaviour
         //Want to set this to controller button
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            OnPlantPlanted();
+            StartCoroutine(OnPlantPlanted());
         }
     }
 
     public void OnPlantSelected(PlantSelectedType plantButtonPressed)
     {
-        Cell activeTileCell = selectedTile.GetComponent<Cell>();
+        //Cell activeTileCell = selectedTile.GetComponent<Cell>();
         if (isPlantSelected)
         {
             isPlantSelected = false;
@@ -84,31 +90,57 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
-    public void OnPlantPlanted()
+    public IEnumerator OnPlantPlanted()
     {
         //Have to add checks to make sure they are on a tile
-        if (isPlantSelected)
+        if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
         {
+            isPlantSelected = false;
             Cell activeTileCell = selectedTile.GetComponent<Cell>();
             Destroy(plantSelected);
-            //We will want to add checks to make sure the tile type is valid, and check whether they are selecting a water or land tile
-            if (plantSelectedType == PlantSelectedType.TREE)
-            {
-                tempPlantPlanted = Instantiate(treePrefab, activeTileCell.buildingTarget.transform);
-            }
-            else if (plantSelectedType == PlantSelectedType.FLOWER)
-            {
-                tempPlantPlanted = Instantiate(landFlowerPrefab, activeTileCell.buildingTarget.transform);
-            }
-            else if (plantSelectedType == PlantSelectedType.GRASS)
-            {
-                tempPlantPlanted = Instantiate(landGrassPrefab, activeTileCell.buildingTarget.transform);
-            }
-            plantsPlanted.Add(tempPlantPlanted);
-            activeTileCell.placedObject = plantSelected;
-            activeTileCell.tileHasBuild = true;
-            //plantSelected.transform.position = selectedTile.GetComponent<Cell>().buildingTarget.transform.position;
-            isPlantSelected = false;
+            yield return plantTime;
+            PlantPlant(activeTileCell);
         }
+        else if(isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
+        {
+            //Display error message
+            StartCoroutine(InvalidPlantLocation());
+            yield break;
+        }
+        else
+        {
+            yield break;
+        }
+    }
+
+    private IEnumerator InvalidPlantLocation()
+    {
+        displayText.text = "Invalid plant placement";
+        yield return plantTime;
+        displayText.text = "";
+    }
+
+    private void PlantPlant(Cell activeTileCell)
+    {
+        //This is a good place to initiate a planting animation
+
+        //We will want to add checks to make sure the tile type is valid, and check whether they are selecting a water or land tile
+        if (plantSelectedType == PlantSelectedType.TREE)
+        {
+            tempPlantPlanted = Instantiate(treePrefab, activeTileCell.buildingTarget.transform);
+        }
+        else if (plantSelectedType == PlantSelectedType.FLOWER)
+        {
+            tempPlantPlanted = Instantiate(landFlowerPrefab, activeTileCell.buildingTarget.transform);
+        }
+        else if (plantSelectedType == PlantSelectedType.GRASS)
+        {
+            tempPlantPlanted = Instantiate(landGrassPrefab, activeTileCell.buildingTarget.transform);
+        }
+        plantsPlanted.Add(tempPlantPlanted);
+        activeTileCell.placedObject = plantSelected;
+        activeTileCell.tileHasBuild = true;
+        //plantSelected.transform.position = selectedTile.GetComponent<Cell>().buildingTarget.transform.position;
+        
     }
 }
