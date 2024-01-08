@@ -61,6 +61,7 @@ public class EarthPlayer : MonoBehaviour
 
     public void OnPlantSelected(PlantSelectedType plantButtonPressed)
     {
+        //We're going to want to check if they even have the seed for the plant they selected before we do anything else
         //Cell activeTileCell = selectedTile.GetComponent<Cell>();
         if (isPlantSelected)
         {
@@ -98,6 +99,7 @@ public class EarthPlayer : MonoBehaviour
             isPlantSelected = false;
             Cell activeTileCell = selectedTile.GetComponent<Cell>();
             Destroy(plantSelected);
+            //This is a good place to initiate a planting animation
             yield return plantTime;
             PlantPlant(activeTileCell);
         }
@@ -122,9 +124,8 @@ public class EarthPlayer : MonoBehaviour
 
     private void PlantPlant(Cell activeTileCell)
     {
-        //This is a good place to initiate a planting animation
-
         //We will want to add checks to make sure the tile type is valid, and check whether they are selecting a water or land tile
+        //Pick the right plant based on the type of plant selected, and the tile selected, and then consume the appropriate seed
         if (plantSelectedType == PlantSelectedType.TREE)
         {
             tempPlantPlanted = Instantiate(treePrefab, activeTileCell.buildingTarget.transform);
@@ -140,7 +141,5 @@ public class EarthPlayer : MonoBehaviour
         plantsPlanted.Add(tempPlantPlanted);
         activeTileCell.placedObject = plantSelected;
         activeTileCell.tileHasBuild = true;
-        //plantSelected.transform.position = selectedTile.GetComponent<Cell>().buildingTarget.transform.position;
-        
     }
 }

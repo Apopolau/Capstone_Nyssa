@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32583743, g: 0.30935916, b: 0.3104538, a: 1}
+  m_IndirectSpecularColor: {r: 0.32583743, g: 0.309359, b: 0.3104538, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4351,10 +4351,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1193701927}
     - target: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
-      propertyPath: treePrefab
-      value: 
-      objectReference: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-    - target: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: displayText
       value: 
       objectReference: {fileID: 1336561097}
@@ -4362,14 +4358,6 @@ PrefabInstance:
       propertyPath: plantParent
       value: 
       objectReference: {fileID: 1714669380}
-    - target: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
-      propertyPath: plantSelected
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
-      propertyPath: treePreviewPrefab
-      value: 
-      objectReference: {fileID: 8326592455623684711, guid: 6d904f1bd1ef58c499f5cd1347172c84, type: 3}
     - target: {fileID: 5887397370836663947, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_Name
       value: EarthPlayer
@@ -4417,10 +4405,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5887397370836663947, guid: 553568dfccc23274285fac4a878252df, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1800700399}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 553568dfccc23274285fac4a878252df, type: 3}
 --- !u!1 &512956475
 GameObject:
@@ -8865,7 +8850,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
   m_PrefabInstance: {fileID: 509809431}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800700395}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
@@ -17066,24 +17051,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1303750716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1800700395 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5887397370836663947, guid: 553568dfccc23274285fac4a878252df, type: 3}
-  m_PrefabInstance: {fileID: 509809431}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1800700399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1800700395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameObjectRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
 --- !u!1001 &1812477149
 PrefabInstance:
   m_ObjectHideFlags: 0
