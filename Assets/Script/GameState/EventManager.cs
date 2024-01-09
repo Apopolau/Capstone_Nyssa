@@ -2,19 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelObjectives : MonoBehaviour
+public class EventManager : MonoBehaviour
 {
-    int duckFoodGoal;
-    int hedgehogFoodGoal;
-    int foxFoodGoal;
-    int humanFoodGoal;
 
-    int currentVeg;
-    int currentInsects;
-    int currentMeat;
-
-    bool hasCleanWater;
-    bool hasShelter;
 
     // Start is called before the first frame update
     void Start()
@@ -26,5 +16,13 @@ public class LevelObjectives : MonoBehaviour
     void Update()
     {
         
+    }
+
+    protected void FlipTiles(List<GameObject> tiles)
+    {
+        foreach (GameObject tile in tiles)
+        {
+            tile.GetComponent<Cell>().terrainType = Cell.TerrainType.DIRT;
+        }
     }
 }
