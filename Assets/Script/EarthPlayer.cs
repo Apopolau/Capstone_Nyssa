@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class EarthPlayer : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] private GameObject landFlowerPreviewPrefab;
     [SerializeField] private GameObject waterFlowerPreviewPrefab;
 
-    public enum PlantSelectedType { TREE, FLOWER, GRASS}
+    public enum PlantSelectedType { TREE, FLOWER, GRASS }
     public PlantSelectedType plantSelectedType;
     public GameObject selectedTile;
 
@@ -37,21 +38,25 @@ public class EarthPlayer : MonoBehaviour
 
     [SerializeField] TMPro.TextMeshProUGUI displayText;
 
+    private PlayerInput playerInput;
+
     // Start is called before the first frame update
     void Start()
     {
         treeButton.onClick.AddListener(() => OnPlantSelected(plantSelectedType));
         plantTime = new WaitForSeconds(2);
+        playerInput = GetComponent<PlayerInput>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        HandleInputs();
+        //HandleInputs();
     }
 
     public void HandleInputs()
     {
+        Debug.Log("Handling inputs");
         //Want to set this to controller button
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -89,9 +94,14 @@ public class EarthPlayer : MonoBehaviour
             }
             plantSelected.transform.position = this.transform.position;
         }
+        playerInput.SwitchCurrentActionMap("PlantIsSelected");
     }
 
-    public IEnumerator OnPlantPlanted()
+    public void PlantPlantingHandler(){
+        StartCoroutine(OnPlantPlanted());
+    }
+    
+    private IEnumerator OnPlantPlanted()
     {
         //Have to add checks to make sure they are on a tile
         if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
@@ -102,6 +112,7 @@ public class EarthPlayer : MonoBehaviour
             //This is a good place to initiate a planting animation
             yield return plantTime;
             PlantPlant(activeTileCell);
+            playerInput.SwitchCurrentActionMap("Player1Default");
         }
         else if(isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
         {
@@ -141,5 +152,15 @@ public class EarthPlayer : MonoBehaviour
         plantsPlanted.Add(tempPlantPlanted);
         activeTileCell.placedObject = plantSelected;
         activeTileCell.tileHasBuild = true;
+    }
+
+    public void CancelPlant()
+    {
+
+    }
+
+    public void MoveCursor()
+    {
+
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32583743, g: 0.309359, b: 0.3104538, a: 1}
+  m_IndirectSpecularColor: {r: 0.32583743, g: 0.30935916, b: 0.3104538, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4405,7 +4405,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5887397370836663947, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 865163229}
   m_SourcePrefab: {fileID: 100100000, guid: 553568dfccc23274285fac4a878252df, type: 3}
 --- !u!1 &512956475
 GameObject:
@@ -8845,15 +8848,197 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 862500056}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &863005555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5887397370836663947, guid: 553568dfccc23274285fac4a878252df, type: 3}
+  m_PrefabInstance: {fileID: 509809431}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &865163228 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
   m_PrefabInstance: {fileID: 509809431}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 863005555}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &865163229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863005555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 24a76cae14a9de549b93be7830d10818, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 865163231}
+        m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
+        m_MethodName: MovePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 43db4cfc-7821-4a25-98e3-5b4088b2bae9
+    m_ActionName: Player1ActionsInGame/Walk[/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 865163228}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: HandleInputs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 495a34ab-3f11-4936-b56e-af29a9bccb07
+    m_ActionName: Player1ActionsInGame/PlantTree[/XInputControllerWindows/dpad/left]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 865163228}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: HandleInputs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b9e78fa6-71d3-466d-bd61-ae801e14870c
+    m_ActionName: Player1ActionsInGame/PlantGrass[/XInputControllerWindows/dpad/up]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 865163228}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: HandleInputs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5d3b6a75-ebc5-4669-b5ff-271a74081743
+    m_ActionName: Player1ActionsInGame/PlantFlower[/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9bdfe421-019d-4a88-bc4d-86ab3a08e810
+    m_ActionName: Player2ActionsInGame/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 514d0af8-d2f9-4fd1-9f44-2409bf99d06b
+    m_ActionName: Player1ActionsInGame/Remove Building[/XInputControllerWindows/dpad/down]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 865163228}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: PlantPlantingHandler
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9491d659-6adc-47b3-9a57-a00f6d07d1bb
+    m_ActionName: PlantIsSelected/Plant plant[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 865163228}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: CancelPlant
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fb33cbf5-e211-45bc-af25-fa98fed3c34b
+    m_ActionName: PlantIsSelected/Cancel planting[/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 865163231}
+        m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
+        m_MethodName: MovePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f135b41f-ef8f-4405-a125-3b506d4c8835
+    m_ActionName: PlantIsSelected/Move[/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 865163228}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: MoveCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4d61e0a9-39e3-4fef-a2b0-5a829350c262
+    m_ActionName: PlantIsSelected/Cursor Move[/XInputControllerWindows/rightStick]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player1Default
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &865163231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6007821295417367340, guid: 553568dfccc23274285fac4a878252df, type: 3}
+  m_PrefabInstance: {fileID: 509809431}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863005555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46638c6b0724f7340b5d2ad117f6828d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &867127970
