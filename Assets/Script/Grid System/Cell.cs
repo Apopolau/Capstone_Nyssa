@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 
 public class Cell : MonoBehaviour
 {
@@ -24,9 +25,11 @@ public class Cell : MonoBehaviour
     public bool tileIsActivated = false;
     public bool tileHasBuild = false;
 
+    private VirtualMouseInput virtualMouseInput;
+
     private void Awake()
     {
-        //terrainType = TerrainType.POLLUTED;
+        virtualMouseInput = GetComponent<VirtualMouseInput>();
     }
 
     private void Start()
@@ -41,6 +44,11 @@ public class Cell : MonoBehaviour
     {
         UpdateTileState();
         UpdatePlant();
+    }
+
+    private void LateUpdate()
+    {
+        
     }
 
     private void UpdateTileState()

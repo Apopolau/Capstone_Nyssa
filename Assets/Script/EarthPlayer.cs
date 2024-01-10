@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 public class EarthPlayer : MonoBehaviour
 {
-    [SerializeField] Button treeButton;
+    //[SerializeField] Button treeButton;
     [SerializeField] GameObject plantParent;
 
     public bool isPlantSelected = false;
@@ -30,20 +30,20 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] private GameObject landFlowerPreviewPrefab;
     [SerializeField] private GameObject waterFlowerPreviewPrefab;
 
-    public enum PlantSelectedType { TREE, FLOWER, GRASS }
+    public enum PlantSelectedType {NONE, TREE, FLOWER, GRASS }
     public PlantSelectedType plantSelectedType;
     public GameObject selectedTile;
 
     private WaitForSeconds plantTime;
 
-    [SerializeField] TMPro.TextMeshProUGUI displayText;
+    [SerializeField] TextMeshProUGUI displayText;
 
     private PlayerInput playerInput;
 
     // Start is called before the first frame update
     void Start()
     {
-        treeButton.onClick.AddListener(() => OnPlantSelected(plantSelectedType));
+        //treeButton.onClick.AddListener(() => OnPlantSelected(plantSelectedType));
         plantTime = new WaitForSeconds(2);
         playerInput = GetComponent<PlayerInput>();
     }
@@ -51,20 +51,10 @@ public class EarthPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //HandleInputs();
+        
     }
-
-    public void HandleInputs()
-    {
-        Debug.Log("Handling inputs");
-        //Want to set this to controller button
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(OnPlantPlanted());
-        }
-    }
-
-    public void OnPlantSelected(PlantSelectedType plantButtonPressed)
+    
+    public void OnTreeSelected()
     {
         //We're going to want to check if they even have the seed for the plant they selected before we do anything else
         //Cell activeTileCell = selectedTile.GetComponent<Cell>();
@@ -77,22 +67,44 @@ public class EarthPlayer : MonoBehaviour
         {
             //We select a type of plant from the input and make a transparent version of it with no stats
             isPlantSelected = true;
-            plantSelectedType = plantButtonPressed;
-
-            //Handles what kind of plant we're planting
-            if (plantSelectedType == PlantSelectedType.TREE)
-            {
-                plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
-            }
-            else if (plantSelectedType == PlantSelectedType.FLOWER)
-            {
-                plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
-            }
-            else if (plantSelectedType == PlantSelectedType.GRASS)
-            {
-                plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
-            }
+            plantSelectedType = PlantSelectedType.TREE;
+            plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
+            
             plantSelected.transform.position = this.transform.position;
+        }
+        playerInput.SwitchCurrentActionMap("PlantIsSelected");
+    }
+
+    public void OnGrassSelected()
+    {
+        if (isPlantSelected)
+        {
+            isPlantSelected = false;
+            Destroy(plantSelected);
+        }
+        if (!isPlantSelected)
+        {
+            //We select a type of plant from the input and make a transparent version of it with no stats
+            isPlantSelected = true;
+            plantSelectedType = PlantSelectedType.GRASS;
+            plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
+        }
+        playerInput.SwitchCurrentActionMap("PlantIsSelected");
+    }
+
+    public void OnFlowerSelected()
+    {
+        if (isPlantSelected)
+        {
+            isPlantSelected = false;
+            Destroy(plantSelected);
+        }
+        if (!isPlantSelected)
+        {
+            //We select a type of plant from the input and make a transparent version of it with no stats
+            isPlantSelected = true;
+            plantSelectedType = PlantSelectedType.FLOWER;
+            plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
         }
         playerInput.SwitchCurrentActionMap("PlantIsSelected");
     }
@@ -112,7 +124,8 @@ public class EarthPlayer : MonoBehaviour
             //This is a good place to initiate a planting animation
             yield return plantTime;
             PlantPlant(activeTileCell);
-            playerInput.SwitchCurrentActionMap("Player1Default");
+            plantSelectedType = PlantSelectedType.NONE;
+            playerInput.SwitchCurrentActionMap("EarthPlayerDefault");
         }
         else if(isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
         {
@@ -156,7 +169,13 @@ public class EarthPlayer : MonoBehaviour
 
     public void CancelPlant()
     {
-
+        if (isPlantSelected)
+        {
+            isPlantSelected = false;
+            plantSelectedType = PlantSelectedType.NONE;
+            Destroy(plantSelected);
+            playerInput.SwitchCurrentActionMap("EarthPlayerDefault");
+        }
     }
 
     public void MoveCursor()
