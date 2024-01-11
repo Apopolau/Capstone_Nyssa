@@ -846,9 +846,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 759828910782173683}
+    - target: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: displayText
+      value: 
+      objectReference: {fileID: 759828910782173684}
+    - target: {fileID: 4381394688206645819, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: virtualMouseInput
+      value: 
+      objectReference: {fileID: 759828910782173685}
     - target: {fileID: 5887397370836663947, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: EarthPlayer
       objectReference: {fileID: 0}
     - target: {fileID: 6611736519297317130, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12598,6 +12610,33 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
+--- !u!20 &759828910782173683 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 8587303203417477639, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
+  m_PrefabInstance: {fileID: 759828910782173682}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &759828910782173684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3191857091135058964, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
+  m_PrefabInstance: {fileID: 759828910782173682}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &759828910782173685 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 439961538267463637, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
+  m_PrefabInstance: {fileID: 759828910782173682}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 424b6720ff5999446843ba414e58a907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

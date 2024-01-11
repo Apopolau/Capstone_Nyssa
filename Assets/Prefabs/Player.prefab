@@ -588,7 +588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treeButton: {fileID: 0}
   plantParent: {fileID: 0}
   isPlantSelected: 0
   plantSelected: {fileID: 0}
@@ -608,6 +607,11 @@ MonoBehaviour:
   plantSelectedType: 0
   selectedTile: {fileID: 0}
   displayText: {fileID: 0}
+  virtualMouseInput: {fileID: 0}
+  mainCamera: {fileID: 0}
+  tileMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &6345640409037633156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -712,10 +716,6 @@ MonoBehaviour:
     m_ActionName: Player1ActionsInGame/PlantFlower[/XInputControllerWindows/dpad/right]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 9bdfe421-019d-4a88-bc4d-86ab3a08e810
-    m_ActionName: Player2ActionsInGame/New action
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 514d0af8-d2f9-4fd1-9f44-2409bf99d06b
     m_ActionName: Player1ActionsInGame/Remove Building[/XInputControllerWindows/dpad/down]
   - m_PersistentCalls:
@@ -784,7 +784,7 @@ MonoBehaviour:
     m_ActionName: PlantIsSelected/Cursor Move[/XInputControllerWindows/rightStick]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player1Default
+  m_DefaultActionMap: EarthPlayerDefault
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &9057446707243088907
