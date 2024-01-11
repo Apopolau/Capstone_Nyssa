@@ -205,6 +205,7 @@ public class EarthPlayer : MonoBehaviour
     private void ActivateTile()
     {
         //Debug.Log("Checking to activate tile");
+        Debug.Log(virtualMousePosition);
         Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
         RaycastHit hit;
         if (Physics.Raycast(cameraRay, out hit, 50, tileMask))
