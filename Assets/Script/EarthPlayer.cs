@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class EarthPlayer : MonoBehaviour
 {
@@ -40,10 +41,19 @@ public class EarthPlayer : MonoBehaviour
 
     private PlayerInput playerInput;
 
+    [SerializeField] private VirtualMouseInput virtualMouseInput;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private LayerMask tileMask;
+    Vector2 virtualMousePosition;
+
+    private void Awake()
+    {
+        //virtualMouseInput = GetComponent<VirtualMouseInput>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        //treeButton.onClick.AddListener(() => OnPlantSelected(plantSelectedType));
         plantTime = new WaitForSeconds(2);
         playerInput = GetComponent<PlayerInput>();
     }
@@ -51,9 +61,18 @@ public class EarthPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ActivateTile();
+    }
+
+    private void LateUpdate()
+    {
+        if (isPlantSelected)
+        {
+            virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
+        }
         
     }
-    
+
     public void OnTreeSelected()
     {
         //We're going to want to check if they even have the seed for the plant they selected before we do anything else
@@ -181,5 +200,22 @@ public class EarthPlayer : MonoBehaviour
     public void MoveCursor()
     {
 
+    }
+
+    private void ActivateTile()
+    {
+        //Debug.Log("Checking to activate tile");
+        Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(cameraRay, out hit, 50, tileMask))
+        {
+            //if(HitInfo.rigidbody.gameObject.layer == tileMask)
+            //{
+                Debug.Log("Found a tile");
+                //HitInfo.transform.GetComponent<Cell>().tileIsActivated = true;
+                selectedTile = hit.transform.gameObject;
+            //}
+        }
+        
     }
 }

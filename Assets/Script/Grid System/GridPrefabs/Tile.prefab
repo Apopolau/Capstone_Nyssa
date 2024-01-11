@@ -46,9 +46,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 709a69217cd8a3b46a3eab74f8e16b8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  earthPlayer: {fileID: 0}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   buildingTarget: {fileID: 3939437761485418024}
   terrainType: 0
+  placedObject: {fileID: 0}
+  tileValid: 1
+  tileIsActivated: 0
+  tileHasBuild: 0
+  mainCamera: {fileID: 0}
+  tileMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &8937094441804800154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71,7 +80,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4021813607207059727}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BuildTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +114,7 @@ GameObject:
   - component: {fileID: 59502794773378520}
   - component: {fileID: 7884374467033215361}
   - component: {fileID: 7804705972254750751}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TileGeo
   m_TagString: Untagged
   m_Icon: {fileID: 0}

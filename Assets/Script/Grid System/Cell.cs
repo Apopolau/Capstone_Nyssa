@@ -16,6 +16,7 @@ public class Cell : MonoBehaviour
 
     Vector2 tileVector;
     Vector2 playerVector;
+    //Vector2 virtualMousePosition;
 
     public GameObject placedObject;
 
@@ -25,11 +26,13 @@ public class Cell : MonoBehaviour
     public bool tileIsActivated = false;
     public bool tileHasBuild = false;
 
-    private VirtualMouseInput virtualMouseInput;
+    //private VirtualMouseInput virtualMouseInput;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private LayerMask tileMask;
 
     private void Awake()
     {
-        virtualMouseInput = GetComponent<VirtualMouseInput>();
+        //virtualMouseInput = GetComponent<VirtualMouseInput>();
     }
 
     private void Start()
@@ -48,7 +51,7 @@ public class Cell : MonoBehaviour
 
     private void LateUpdate()
     {
-        
+        //virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
     }
 
     private void UpdateTileState()
@@ -84,17 +87,33 @@ public class Cell : MonoBehaviour
     {
         while (true)
         {
-            playerVector.x = earthPlayer.transform.position.x;
-            playerVector.y = earthPlayer.transform.position.z;
+            //playerVector.x = earthPlayer.transform.position.x;
+            //playerVector.y = earthPlayer.transform.position.z;
             //Debug.Log("Player has selected a plant");
-            if (Mathf.Abs((tileVector - playerVector).magnitude) < 5)
+            /*
+            if (Mathf.Abs((tileVector - virtualMousePosition).magnitude) < 5)
             {
                 tileIsActivated = true;
                 earthPlayer.selectedTile = this.gameObject;
             }
+            
+            Ray cameraRay = mainCamera.ViewportPointToRay(virtualMousePosition);
+            if (Physics.Raycast(cameraRay, out RaycastHit HitInfo, 50, tileMask))
+            {
+
+            }
             else
             {
                 tileIsActivated = false;
+            }
+            */
+            if(earthPlayer.selectedTile != this)
+            {
+                tileIsActivated = false;
+            }
+            else
+            {
+                tileIsActivated = true;
             }
 
             yield return waitTime;
