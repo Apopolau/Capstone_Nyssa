@@ -66,10 +66,10 @@ public class EarthPlayer : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (isPlantSelected)
-        {
-            virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
-        }
+        //if (isPlantSelected)
+        //{
+        virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
+        //}
         
     }
 
@@ -204,18 +204,11 @@ public class EarthPlayer : MonoBehaviour
 
     private void ActivateTile()
     {
-        //Debug.Log("Checking to activate tile");
-        Debug.Log(virtualMousePosition);
         Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(cameraRay, out hit, 50, tileMask))
+        if (Physics.Raycast(cameraRay, out hit, 1000, tileMask))
         {
-            //if(HitInfo.rigidbody.gameObject.layer == tileMask)
-            //{
-                Debug.Log("Found a tile");
-                //HitInfo.transform.GetComponent<Cell>().tileIsActivated = true;
-                selectedTile = hit.transform.gameObject;
-            //}
+            selectedTile = hit.transform.gameObject.GetComponentInParent<Cell>().gameObject;
         }
         
     }
