@@ -44,7 +44,7 @@ public class idleOilSpillTree : BTree
                  //new TaskAttackPlayer(enemyMeshAgent,player)
                   //CHASE THE PLAYER
                   new taskChase(playerTransform,enemyMeshAgent,player),
-                  new taskAttack(playerTransform,enemyMeshAgent,player)
+                //  new taskAttack(playerTransform,enemyMeshAgent,player)
 
              }),
            

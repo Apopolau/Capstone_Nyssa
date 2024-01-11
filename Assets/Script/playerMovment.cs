@@ -59,7 +59,6 @@ public class playerMovement : MonoBehaviour
     {
         
 
-<<<<<<< HEAD
         //print(grounded);
         // print("I'm ready:");
         // print(readyToJump) ;
@@ -81,9 +80,7 @@ public class playerMovement : MonoBehaviour
         {
             playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
-=======
-        
->>>>>>> dbd7db3c553f5e131a1ac5efc6dd1c9d26b5c7a6
+
         //takes input of the keys for movement
         MyInput();
         SpeedControl();
