@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 //Resources and tutorials that were used to help create this quick tester
@@ -44,6 +45,8 @@ public class playerMovement : MonoBehaviour
     float vertInput;
     Vector3 moveDirection;
 
+    private InputAction.CallbackContext playerInputActions;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -54,9 +57,9 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //ground check, send a raycast to check if the ground is present half way down the players body+0.2
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
+        
 
+<<<<<<< HEAD
         //print(grounded);
         // print("I'm ready:");
         // print(readyToJump) ;
@@ -78,9 +81,13 @@ public class playerMovement : MonoBehaviour
         {
             playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
+=======
+        
+>>>>>>> dbd7db3c553f5e131a1ac5efc6dd1c9d26b5c7a6
         //takes input of the keys for movement
         MyInput();
         SpeedControl();
+        OrientPlayer();
 
         //check if grounded
         if (grounded)
@@ -95,7 +102,12 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        MovePlayer();
+        //MovePlayer();
+        Vector2 inputVector = playerInputActions.ReadValue<Vector2>();
+        rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+
+        //ground check, send a raycast to check if the ground is present half way down the players body+0.2
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
     }
 
     private void MyInput()
@@ -103,8 +115,8 @@ public class playerMovement : MonoBehaviour
        
         if(player.gameObject.tag == "Player1")
         {
-            horInput = Input.GetAxisRaw("Horizontal_P1");
-            vertInput = Input.GetAxisRaw("Vertical_P1");
+            //horInput = Input.GetAxisRaw("Horizontal_P1");
+            //vertInput = Input.GetAxisRaw("Vertical_P1");
 
             if (Input.GetKey(jumpKeyP1) && readyToJump && grounded)
             {
@@ -119,8 +131,8 @@ public class playerMovement : MonoBehaviour
 
         if (player.gameObject.tag == "Player2")
         {
-            horInput = Input.GetAxisRaw("Horizontal_P2");
-            vertInput = Input.GetAxisRaw("Vertical_P2");
+            //horInput = Input.GetAxisRaw("Horizontal_P2");
+            //vertInput = Input.GetAxisRaw("Vertical_P2");
 
             if (Input.GetKey(jumpKeyP2) && readyToJump && grounded)
             {
@@ -133,9 +145,16 @@ public class playerMovement : MonoBehaviour
         }
     }
 
-    private void MovePlayer()
+    public void MovePlayer(InputAction.CallbackContext context)
     {//calculate movment direction
         //move in dirction you are looking
+
+        Vector2 inputVector = context.ReadValue<Vector2>();
+        horInput = inputVector.x;
+        vertInput = inputVector.y;
+
+        rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+        /*
         moveDirection = orientation.forward * vertInput + orientation.right * horInput;
 
         if (grounded)
@@ -147,6 +166,28 @@ public class playerMovement : MonoBehaviour
         else if (!grounded) 
         {
             rb.AddForce(moveDirection.normalized * moveSpeed  *10f* airMultiplier, ForceMode.Force);
+        }
+        */
+
+
+    }
+
+    private void OrientPlayer()
+    {
+        //rotate orientation
+        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+        if (viewDir != Vector3.zero)
+        {
+            orientation.forward = viewDir.normalized;
+        }
+
+        // rotate the player object
+        Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
+
+        //if input direction isnt 0 smoothly change the direction using the rotation speed
+        if (inputDir != Vector3.zero)
+        {
+            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
     }
 
