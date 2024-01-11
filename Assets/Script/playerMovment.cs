@@ -56,22 +56,13 @@ public class playerMovement : MonoBehaviour
     {
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
-<<<<<<< HEAD
+
         //print(grounded);
         // print("I'm ready:");
         // print(readyToJump) ;
 
 
         //rotate orientation
-=======
-
-        //rotate orientation
-       Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        if (viewDir != Vector3.zero)
-        {
-            orientation.forward = viewDir.normalized;
-        }
->>>>>>> 4be52c31fa3c14f0f1d980ccdcd259484c086a63
 
         
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
