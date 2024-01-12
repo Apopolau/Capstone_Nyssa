@@ -8,8 +8,16 @@ public class PickupObject : MonoBehaviour
     [SerializeField] Inventory inventory;
     [SerializeField] KeyCode PickupKey = KeyCode.E; //change for controller input
 
+    [SerializeField] SpriteRenderer spriteRenderer;
+
+
     private bool isInRange;
     
+    private void OnValidate()
+    {
+        spriteRenderer.sprite = item.Icon;
+        spriteRenderer.enabled = true;
+    }
 
     private void Update()
     {
@@ -19,6 +27,10 @@ public class PickupObject : MonoBehaviour
             {
                  inventory.AddItem(item);
                  item = null;
+                spriteRenderer.enabled = false;
+        
+
+               
                  
                 //increase the count of the item
             }
@@ -35,6 +47,7 @@ public class PickupObject : MonoBehaviour
         if (player.gameObject.tag == "Player")
         {
             isInRange = true; 
+            spriteRenderer.enabled = true;
             Debug.LogWarning("in range");
         }
        
@@ -44,7 +57,7 @@ public class PickupObject : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isInRange = false;
-        
+         
     }
 
 }
