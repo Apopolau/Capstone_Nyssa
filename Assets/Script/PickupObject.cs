@@ -1,0 +1,51 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PickupObject : MonoBehaviour
+{
+    [SerializeField] Item item;
+    [SerializeField] Inventory inventory;
+    [SerializeField] KeyCode PickupKey = KeyCode.E; //change for controller input
+
+    private bool isInRange;
+    
+
+    private void Update()
+    {
+        if (isInRange && Input.GetKeyDown(PickupKey))
+        {
+            if (item != null)
+            {
+                 inventory.AddItem(item);
+                 item = null;
+                 
+                //increase the count of the item
+            }
+           
+            Debug.LogWarning("in range and key pressed");
+           
+
+        }
+    }
+
+
+    private void OnTriggerEnter(Collider player)
+    {
+        if (player.gameObject.tag == "Player")
+        {
+            isInRange = true; 
+            Debug.LogWarning("in range");
+        }
+       
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        isInRange = false;
+        
+    }
+
+}
+
