@@ -47,26 +47,20 @@ public class playerMovement : MonoBehaviour
 
     private InputAction.CallbackContext playerInputActions;
 
+    private void Awake()
+    {
+        //playerInputActions = new PlayerInputActions();
+    }
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
-        //print(grounded);
-        // print("I'm ready:");
-        // print(readyToJump) ;
-
-
-        //rotate orientation
-
-        
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
         if (viewDir != Vector3.zero)
         {
@@ -99,7 +93,6 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //MovePlayer();
         Vector2 inputVector = playerInputActions.ReadValue<Vector2>();
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
@@ -143,30 +136,14 @@ public class playerMovement : MonoBehaviour
     }
 
     public void MovePlayer(InputAction.CallbackContext context)
-    {//calculate movment direction
+    {
+        //calculate movment direction
         //move in dirction you are looking
-
         Vector2 inputVector = context.ReadValue<Vector2>();
         horInput = inputVector.x;
         vertInput = inputVector.y;
 
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-        /*
-        moveDirection = orientation.forward * vertInput + orientation.right * horInput;
-
-        if (grounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-            
-        }
-        // if you are in the air flying 
-        else if (!grounded) 
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed  *10f* airMultiplier, ForceMode.Force);
-        }
-        */
-
-
     }
 
     private void OrientPlayer()
