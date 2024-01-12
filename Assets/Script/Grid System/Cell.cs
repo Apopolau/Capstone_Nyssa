@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 
 public class Cell : MonoBehaviour
 {
@@ -10,19 +11,28 @@ public class Cell : MonoBehaviour
     public enum TerrainType {GRASS, DIRT, WATER, POLLUTED};
     public TerrainType terrainType;
 
+    Color selectableColour = new Color(0.5f, 0.9666f, 1, 0.5f);
+    Color unselectableColour = new Color(1, 0.5f, 0.5f, 0.5f);
+
     Vector2 tileVector;
     Vector2 playerVector;
+    //Vector2 virtualMousePosition;
 
     public GameObject placedObject;
 
     WaitForSeconds waitTime = new WaitForSeconds(0.2f);
 
-    public bool tileIsActivated;
-    public bool tileHasBuild;
+    public bool tileValid = true;
+    public bool tileIsActivated = false;
+    public bool tileHasBuild = false;
+
+    //private VirtualMouseInput virtualMouseInput;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private LayerMask tileMask;
 
     private void Awake()
     {
-        terrainType = TerrainType.POLLUTED;
+        //virtualMouseInput = GetComponent<VirtualMouseInput>();
     }
 
     private void Start()
@@ -35,7 +45,25 @@ public class Cell : MonoBehaviour
 
     private void Update()
     {
+        UpdateTileState();
         UpdatePlant();
+    }
+
+    private void LateUpdate()
+    {
+        //virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
+    }
+
+    private void UpdateTileState()
+    {
+        if(terrainType == TerrainType.POLLUTED || tileHasBuild)
+        {
+            tileValid = false;
+        }
+        else
+        {
+            tileValid = true;
+        }
     }
 
     private void UpdatePlant()
@@ -46,11 +74,11 @@ public class Cell : MonoBehaviour
             //Handles indication whether it's a valid position or not
             if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED)
             {
-                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color.Equals(Color.red);
+                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
             }
             else
             {
-                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color.Equals(Color.blue);
+                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
             }
         }
     }
@@ -59,13 +87,9 @@ public class Cell : MonoBehaviour
     {
         while (true)
         {
-            playerVector.x = earthPlayer.transform.position.x;
-            playerVector.y = earthPlayer.transform.position.z;
-            //Debug.Log("Player has selected a plant");
-            if (Mathf.Abs((tileVector - playerVector).magnitude) < 5)
+            if(earthPlayer.selectedTile == this.gameObject)
             {
                 tileIsActivated = true;
-                earthPlayer.selectedTile = this.gameObject;
             }
             else
             {

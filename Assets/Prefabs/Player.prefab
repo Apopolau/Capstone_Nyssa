@@ -494,6 +494,8 @@ GameObject:
   - component: {fileID: 364900004934728016}
   - component: {fileID: 6007821295417367340}
   - component: {fileID: 4381394688206645819}
+  - component: {fileID: 6345640409037633156}
+  - component: {fileID: 8073927087069849874}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player1
@@ -586,6 +588,205 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  plantParent: {fileID: 0}
+  isPlantSelected: 0
+  plantSelected: {fileID: 0}
+  plantsPlanted: []
+  tempPlantPlanted: {fileID: 0}
+  plantPreview: {fileID: 0}
+  treePrefab: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
+  landGrassPrefab: {fileID: 0}
+  waterGrassPrefab: {fileID: 0}
+  landFlowerPrefab: {fileID: 0}
+  waterFlowerPrefab: {fileID: 0}
+  treePreviewPrefab: {fileID: 8326592455623684711, guid: 6d904f1bd1ef58c499f5cd1347172c84, type: 3}
+  landGrassPreviewPrefab: {fileID: 0}
+  waterGrassPreviewPrefab: {fileID: 0}
+  landFlowerPreviewPrefab: {fileID: 0}
+  waterFlowerPreviewPrefab: {fileID: 0}
+  plantSelectedType: 0
+  selectedTile: {fileID: 0}
+  displayText: {fileID: 0}
+  virtualMouseInput: {fileID: 0}
+  mainCamera: {fileID: 0}
+  tileMask:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &6345640409037633156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887397370836663947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+--- !u!114 &8073927087069849874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887397370836663947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 24a76cae14a9de549b93be7830d10818, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6007821295417367340}
+        m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
+        m_MethodName: MovePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 43db4cfc-7821-4a25-98e3-5b4088b2bae9
+    m_ActionName: Player1ActionsInGame/Walk[/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381394688206645819}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: HandleInputs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 495a34ab-3f11-4936-b56e-af29a9bccb07
+    m_ActionName: Player1ActionsInGame/PlantTree[/XInputControllerWindows/dpad/left]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381394688206645819}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: HandleInputs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b9e78fa6-71d3-466d-bd61-ae801e14870c
+    m_ActionName: Player1ActionsInGame/PlantGrass[/XInputControllerWindows/dpad/up]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381394688206645819}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: HandleInputs
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5d3b6a75-ebc5-4669-b5ff-271a74081743
+    m_ActionName: Player1ActionsInGame/PlantFlower[/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 514d0af8-d2f9-4fd1-9f44-2409bf99d06b
+    m_ActionName: Player1ActionsInGame/Remove Building[/XInputControllerWindows/dpad/down]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381394688206645819}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: PlantPlantingHandler
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9491d659-6adc-47b3-9a57-a00f6d07d1bb
+    m_ActionName: PlantIsSelected/Plant plant[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381394688206645819}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: CancelPlant
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fb33cbf5-e211-45bc-af25-fa98fed3c34b
+    m_ActionName: PlantIsSelected/Cancel planting[/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6007821295417367340}
+        m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
+        m_MethodName: MovePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f135b41f-ef8f-4405-a125-3b506d4c8835
+    m_ActionName: PlantIsSelected/Move[/XInputControllerWindows/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4381394688206645819}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: MoveCursor
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4d61e0a9-39e3-4fef-a2b0-5a829350c262
+    m_ActionName: PlantIsSelected/Cursor Move[/XInputControllerWindows/rightStick]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: EarthPlayerDefault
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &9057446707243088907
 GameObject:
   m_ObjectHideFlags: 0
