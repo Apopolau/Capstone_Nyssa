@@ -54,7 +54,7 @@ public class TaskPatrol : BTNode
             //if not move towards it
             else
             {
-                transformPos.position= Vector3.MoveTowards(transformPos.position, wPoint.position, 0.5f);
+                transformPos.position= Vector3.MoveTowards(transformPos.position, wPoint.position, 5f*Time.deltaTime);
                 //thisAgent.SetDestination(wPoint.position);
                 transformPos.LookAt(wPoint.position);
                 Debug.Log("making rounds");
