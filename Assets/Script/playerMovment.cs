@@ -44,12 +44,24 @@ public class playerMovement : MonoBehaviour
     float horInput;
     float vertInput;
     Vector3 moveDirection;
+    bool isMoveKeyHeld;
 
-    private InputAction.CallbackContext playerInputActions;
+    private PlayerInputActions playerInputActions;
+    private PlayerInput playerInput;
 
     private void Awake()
     {
-        //playerInputActions = new PlayerInputActions();
+        playerInput = GetComponent<PlayerInput>();
+        playerInputActions = new PlayerInputActions();
+        if (this.GetComponent<EarthPlayer>())
+        {
+            playerInputActions.EarthPlayerDefault.Enable();
+            playerInputActions.EarthPlayerDefault.Walk.performed += MovePlayer;
+        }
+        else if (this.GetComponent<CelestialPlayer>())
+        {
+            //Put the Celestial player inputs here
+        }
     }
 
     void Start()
@@ -93,7 +105,16 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 inputVector = playerInputActions.ReadValue<Vector2>();
+        Vector2 inputVector;
+        //if (this.GetComponent<EarthPlayer>())
+        //{
+            inputVector = playerInputActions.EarthPlayerDefault.Walk.ReadValue<Vector2>();
+        //}
+        //else
+        //{
+            //inputVector = playerInputActions.CelestialPlayerDefault.PlayerDefault.Walk.ReadValue<Vector2>();
+        //}
+        
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
