@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.AI;
 
 
 //Resources and tutorials that were used to help create this quick tester
@@ -164,6 +165,15 @@ public class playerMovement : MonoBehaviour
         horInput = inputVector.x;
         vertInput = inputVector.y;
 
+        if (this.GetComponent<NavMeshAgent>())
+        {
+            if (this.GetComponent<NavMeshAgent>().enabled)
+            {
+                this.GetComponent<EarthPlayer>().enrouteToPlant = false;
+                this.GetComponent<NavMeshAgent>().ResetPath();
+                this.GetComponent<NavMeshAgent>().enabled = false;
+            }
+        }
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
     }
 
