@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.AI;
 
 
 //Resources and tutorials that were used to help create this quick tester
@@ -44,29 +45,35 @@ public class playerMovement : MonoBehaviour
     float horInput;
     float vertInput;
     Vector3 moveDirection;
+    bool isMoveKeyHeld;
 
-    private InputAction.CallbackContext playerInputActions;
+    private PlayerInputActions playerInputActions;
+    private PlayerInput playerInput;
+
+    private void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        playerInputActions = new PlayerInputActions();
+        if (this.GetComponent<EarthPlayer>())
+        {
+            playerInputActions.EarthPlayerDefault.Enable();
+            playerInputActions.EarthPlayerDefault.Walk.performed += MovePlayer;
+        }
+        else if (this.GetComponent<CelestialPlayer>())
+        {
+            //Put the Celestial player inputs here
+        }
+    }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-
-        //print(grounded);
-        // print("I'm ready:");
-        // print(readyToJump) ;
-
-
-        //rotate orientation
-
-        
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
         if (viewDir != Vector3.zero)
         {
@@ -99,8 +106,16 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //MovePlayer();
-        Vector2 inputVector = playerInputActions.ReadValue<Vector2>();
+        Vector2 inputVector;
+        //if (this.GetComponent<EarthPlayer>())
+        //{
+            inputVector = playerInputActions.EarthPlayerDefault.Walk.ReadValue<Vector2>();
+        //}
+        //else
+        //{
+            //inputVector = playerInputActions.CelestialPlayerDefault.PlayerDefault.Walk.ReadValue<Vector2>();
+        //}
+        
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
@@ -143,30 +158,23 @@ public class playerMovement : MonoBehaviour
     }
 
     public void MovePlayer(InputAction.CallbackContext context)
-    {//calculate movment direction
+    {
+        //calculate movment direction
         //move in dirction you are looking
-
         Vector2 inputVector = context.ReadValue<Vector2>();
         horInput = inputVector.x;
         vertInput = inputVector.y;
 
+        if (this.GetComponent<NavMeshAgent>())
+        {
+            if (this.GetComponent<NavMeshAgent>().enabled)
+            {
+                this.GetComponent<EarthPlayer>().enrouteToPlant = false;
+                this.GetComponent<NavMeshAgent>().ResetPath();
+                this.GetComponent<NavMeshAgent>().enabled = false;
+            }
+        }
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-        /*
-        moveDirection = orientation.forward * vertInput + orientation.right * horInput;
-
-        if (grounded)
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
-            
-        }
-        // if you are in the air flying 
-        else if (!grounded) 
-        {
-            rb.AddForce(moveDirection.normalized * moveSpeed  *10f* airMultiplier, ForceMode.Force);
-        }
-        */
-
-
     }
 
     private void OrientPlayer()

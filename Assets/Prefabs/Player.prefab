@@ -300,7 +300,7 @@ Transform:
   m_GameObject: {fileID: 3306627588631317008}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 4, z: 0}
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -496,6 +496,7 @@ GameObject:
   - component: {fileID: 4381394688206645819}
   - component: {fileID: 6345640409037633156}
   - component: {fileID: 8073927087069849874}
+  - component: {fileID: 7809379309165624223}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player1
@@ -588,7 +589,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treeButton: {fileID: 0}
   plantParent: {fileID: 0}
   isPlantSelected: 0
   plantSelected: {fileID: 0}
@@ -608,6 +608,11 @@ MonoBehaviour:
   plantSelectedType: 0
   selectedTile: {fileID: 0}
   displayText: {fileID: 0}
+  virtualMouseInput: {fileID: 0}
+  mainCamera: {fileID: 0}
+  tileMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &6345640409037633156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -666,7 +671,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4381394688206645819}
         m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
-        m_MethodName: HandleInputs
+        m_MethodName: OnTreeSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -682,7 +687,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4381394688206645819}
         m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
-        m_MethodName: HandleInputs
+        m_MethodName: OnGrassSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -698,7 +703,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4381394688206645819}
         m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
-        m_MethodName: HandleInputs
+        m_MethodName: OnFlowerSelected
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -710,10 +715,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5d3b6a75-ebc5-4669-b5ff-271a74081743
     m_ActionName: Player1ActionsInGame/PlantFlower[/XInputControllerWindows/dpad/right]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9bdfe421-019d-4a88-bc4d-86ab3a08e810
-    m_ActionName: Player2ActionsInGame/New action
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 514d0af8-d2f9-4fd1-9f44-2409bf99d06b
@@ -784,9 +785,31 @@ MonoBehaviour:
     m_ActionName: PlantIsSelected/Cursor Move[/XInputControllerWindows/rightStick]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player1Default
+  m_DefaultActionMap: EarthPlayerDefault
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!195 &7809379309165624223
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5887397370836663947}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &9057446707243088907
 GameObject:
   m_ObjectHideFlags: 0

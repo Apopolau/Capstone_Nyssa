@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
+using UnityEngine.AI;
 
 public class EarthPlayer : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class EarthPlayer : MonoBehaviour
     public List<GameObject> plantsPlanted;
     public GameObject tempPlantPlanted;
     public GameObject plantPreview;
+
+    private NavMeshAgent earthAgent;
 
     [Header("Plant Objects")]
     [SerializeField] private GameObject treePrefab;
@@ -45,10 +48,13 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
     Vector2 virtualMousePosition;
+    public bool enrouteToPlant = false;
 
     private void Awake()
     {
-        //virtualMouseInput = GetComponent<VirtualMouseInput>();
+        earthAgent = GetComponent<NavMeshAgent>();
+        earthAgent.enabled = false;
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
     // Start is called before the first frame update
@@ -62,15 +68,16 @@ public class EarthPlayer : MonoBehaviour
     void Update()
     {
         ActivateTile();
+        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
+        {
+            PlantPlantingHandler();
+        }
+        
     }
 
     private void LateUpdate()
     {
-        if (isPlantSelected)
-        {
-            virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
-        }
-        
+        virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
     }
 
     public void OnTreeSelected()
@@ -85,13 +92,11 @@ public class EarthPlayer : MonoBehaviour
         if (!isPlantSelected)
         {
             //We select a type of plant from the input and make a transparent version of it with no stats
-            isPlantSelected = true;
+            
             plantSelectedType = PlantSelectedType.TREE;
             plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
-            
-            plantSelected.transform.position = this.transform.position;
         }
-        playerInput.SwitchCurrentActionMap("PlantIsSelected");
+        OnPlantSelectedWrapUp();
     }
 
     public void OnGrassSelected()
@@ -104,11 +109,10 @@ public class EarthPlayer : MonoBehaviour
         if (!isPlantSelected)
         {
             //We select a type of plant from the input and make a transparent version of it with no stats
-            isPlantSelected = true;
             plantSelectedType = PlantSelectedType.GRASS;
             plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
         }
-        playerInput.SwitchCurrentActionMap("PlantIsSelected");
+        OnPlantSelectedWrapUp();
     }
 
     public void OnFlowerSelected()
@@ -121,11 +125,20 @@ public class EarthPlayer : MonoBehaviour
         if (!isPlantSelected)
         {
             //We select a type of plant from the input and make a transparent version of it with no stats
-            isPlantSelected = true;
             plantSelectedType = PlantSelectedType.FLOWER;
             plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
         }
+        OnPlantSelectedWrapUp();
+    }
+
+    private void OnPlantSelectedWrapUp()
+    {
+        isPlantSelected = true;
+        plantSelected.transform.position = this.transform.position;
         playerInput.SwitchCurrentActionMap("PlantIsSelected");
+        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width /2, Screen.height / 2);
+        virtualMousePosition = virtualMouseInput.cursorTransform.position;
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
     }
 
     public void PlantPlantingHandler(){
@@ -137,14 +150,23 @@ public class EarthPlayer : MonoBehaviour
         //Have to add checks to make sure they are on a tile
         if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
         {
-            isPlantSelected = false;
-            Cell activeTileCell = selectedTile.GetComponent<Cell>();
-            Destroy(plantSelected);
-            //This is a good place to initiate a planting animation
-            yield return plantTime;
-            PlantPlant(activeTileCell);
-            plantSelectedType = PlantSelectedType.NONE;
-            playerInput.SwitchCurrentActionMap("EarthPlayerDefault");
+            if(Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
+            {
+                enrouteToPlant = false;
+                isPlantSelected = false;
+                Cell activeTileCell = selectedTile.GetComponent<Cell>();
+                Destroy(plantSelected);
+                //This is a good place to initiate a planting animation
+                yield return plantTime;
+                PlantPlant(activeTileCell);
+                plantSelectedType = PlantSelectedType.NONE;
+                playerInput.SwitchCurrentActionMap("EarthPlayerDefault");
+                virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+            }
+            else
+            {
+                ApproachPlant();
+            }
         }
         else if(isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
         {
@@ -163,6 +185,12 @@ public class EarthPlayer : MonoBehaviour
         displayText.text = "Invalid plant placement";
         yield return plantTime;
         displayText.text = "";
+    }
+
+    private void ApproachPlant()
+    {
+        earthAgent.enabled = true;
+        earthAgent.SetDestination(selectedTile.transform.position);
     }
 
     private void PlantPlant(Cell activeTileCell)
@@ -197,25 +225,18 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
-    public void MoveCursor()
+    public void RemovePlant()
     {
 
     }
 
     private void ActivateTile()
     {
-        //Debug.Log("Checking to activate tile");
-        Debug.Log(virtualMousePosition);
         Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(cameraRay, out hit, 50, tileMask))
+        if (Physics.Raycast(cameraRay, out hit, 1000, tileMask))
         {
-            //if(HitInfo.rigidbody.gameObject.layer == tileMask)
-            //{
-                Debug.Log("Found a tile");
-                //HitInfo.transform.GetComponent<Cell>().tileIsActivated = true;
-                selectedTile = hit.transform.gameObject;
-            //}
+            selectedTile = hit.transform.gameObject.GetComponentInParent<Cell>().gameObject;
         }
         
     }

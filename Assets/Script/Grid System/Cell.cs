@@ -87,33 +87,13 @@ public class Cell : MonoBehaviour
     {
         while (true)
         {
-            //playerVector.x = earthPlayer.transform.position.x;
-            //playerVector.y = earthPlayer.transform.position.z;
-            //Debug.Log("Player has selected a plant");
-            /*
-            if (Mathf.Abs((tileVector - virtualMousePosition).magnitude) < 5)
+            if(earthPlayer.selectedTile == this.gameObject)
             {
                 tileIsActivated = true;
-                earthPlayer.selectedTile = this.gameObject;
-            }
-            
-            Ray cameraRay = mainCamera.ViewportPointToRay(virtualMousePosition);
-            if (Physics.Raycast(cameraRay, out RaycastHit HitInfo, 50, tileMask))
-            {
-
             }
             else
             {
                 tileIsActivated = false;
-            }
-            */
-            if(earthPlayer.selectedTile != this)
-            {
-                tileIsActivated = false;
-            }
-            else
-            {
-                tileIsActivated = true;
             }
 
             yield return waitTime;
