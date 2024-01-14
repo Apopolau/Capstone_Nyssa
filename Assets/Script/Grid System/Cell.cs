@@ -72,14 +72,29 @@ public class Cell : MonoBehaviour
         {
             earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
             //Handles indication whether it's a valid position or not
-            if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED)
+            if(earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
             {
-                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED || terrainType == Cell.TerrainType.WATER)
+                {
+                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                }
+                else
+                {
+                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                }
             }
             else
             {
-                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED)
+                {
+                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                }
+                else
+                {
+                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                }
             }
+            
         }
     }
 
