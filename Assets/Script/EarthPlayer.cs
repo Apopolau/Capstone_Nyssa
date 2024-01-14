@@ -191,6 +191,7 @@ public class EarthPlayer : MonoBehaviour
     {
         earthAgent.enabled = true;
         earthAgent.SetDestination(selectedTile.transform.position);
+        enrouteToPlant = true;
     }
 
     private void PlantPlant(Cell activeTileCell)
