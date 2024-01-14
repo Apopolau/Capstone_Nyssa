@@ -12,6 +12,16 @@ public class DisplayUI : MonoBehaviour
         uiObject.SetActive(false);
     }
 
+    private void Update()
+{
+    if (Input.GetKeyDown(KeyCode.P))
+    {
+        
+        uiObject.SetActive(false);
+    
+    }
+}
+
     void OnTriggerEnter(Collider player) 
     {
         
@@ -35,11 +45,4 @@ public class DisplayUI : MonoBehaviour
             yield return new WaitForSeconds(5);
             
         }
-
-    // Update is called once per frame
-    void Update()
-    {
-    
-    
-    }
 }
