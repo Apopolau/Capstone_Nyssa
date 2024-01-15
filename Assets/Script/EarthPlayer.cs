@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class EarthPlayer : MonoBehaviour
 {
     //[SerializeField] Button treeButton;
-    [SerializeField] GameObject plantParent;
+    [SerializeField] public GameObject plantParent;
 
     public bool isPlantSelected = false;
     public GameObject plantSelected;
@@ -28,15 +28,17 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] private GameObject waterFlowerPrefab;
 
     [Header("Preview Objects")]
-    [SerializeField] private GameObject treePreviewPrefab;
-    [SerializeField] private GameObject landGrassPreviewPrefab;
-    [SerializeField] private GameObject waterGrassPreviewPrefab;
-    [SerializeField] private GameObject landFlowerPreviewPrefab;
-    [SerializeField] private GameObject waterFlowerPreviewPrefab;
+    [SerializeField] public GameObject treePreviewPrefab;
+    [SerializeField] public GameObject landGrassPreviewPrefab;
+    [SerializeField] public GameObject waterGrassPreviewPrefab;
+    [SerializeField] public GameObject landFlowerPreviewPrefab;
+    [SerializeField] public GameObject waterFlowerPreviewPrefab;
 
     public enum PlantSelectedType {NONE, TREE, FLOWER, GRASS }
     public PlantSelectedType plantSelectedType;
     public GameObject selectedTile;
+    public enum TileSelectedType { LAND, WATER};
+    public TileSelectedType currentTileSelectedType;
 
     private WaitForSeconds plantTime;
 
@@ -204,11 +206,26 @@ public class EarthPlayer : MonoBehaviour
         }
         else if (plantSelectedType == PlantSelectedType.FLOWER)
         {
-            tempPlantPlanted = Instantiate(landFlowerPrefab, activeTileCell.buildingTarget.transform);
+            if(currentTileSelectedType == TileSelectedType.LAND)
+            {
+                tempPlantPlanted = Instantiate(landFlowerPrefab, activeTileCell.buildingTarget.transform);
+            }
+            else if (currentTileSelectedType == TileSelectedType.WATER)
+            {
+                tempPlantPlanted = Instantiate(waterFlowerPrefab, activeTileCell.buildingTarget.transform);
+            }
+
         }
         else if (plantSelectedType == PlantSelectedType.GRASS)
         {
-            tempPlantPlanted = Instantiate(landGrassPrefab, activeTileCell.buildingTarget.transform);
+            if (currentTileSelectedType == TileSelectedType.LAND)
+            {
+                tempPlantPlanted = Instantiate(landGrassPrefab, activeTileCell.buildingTarget.transform);
+            }
+            else if (currentTileSelectedType == TileSelectedType.WATER)
+            {
+                tempPlantPlanted = Instantiate(waterGrassPrefab, activeTileCell.buildingTarget.transform);
+            }
         }
         plantsPlanted.Add(tempPlantPlanted);
         activeTileCell.placedObject = plantSelected;
