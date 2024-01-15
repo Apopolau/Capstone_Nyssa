@@ -200,6 +200,24 @@ public class playerMovement : MonoBehaviour
                     playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
                 }
             }
+            else
+            {
+                //rotate orientation
+                Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+                if (viewDir != Vector3.zero)
+                {
+                    orientation.forward = viewDir.normalized;
+                }
+
+                // rotate the player object
+                Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
+
+                //if input direction isnt 0 smoothly change the direction using the rotation speed
+                if (inputDir != Vector3.zero)
+                {
+                    playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+                }
+            }
         }
         else
         {

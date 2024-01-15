@@ -89,8 +89,16 @@ public class Cell : MonoBehaviour
                 {
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
                 }
-                else
+                else if(earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
                 {
+                    if(terrainType == Cell.TerrainType.WATER)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
                 }
             }
