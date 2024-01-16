@@ -18,17 +18,24 @@ public class PlantStats : ScriptableObject
     [SerializeField] public Sprite juvenileImage;
     [SerializeField] public Sprite matureImage;
 
-    [Header("Growth Info")]
+    [Header("Position on Different Growth Stages")]
     [SerializeField] public float seedlingYOffset;
     [SerializeField] public float sproutYOffset;
     [SerializeField] public float juvenileYOffset;
     [SerializeField] public float matureYOffset;
 
+    [SerializeField] public float seedlingZOffset;
+    [SerializeField] public float sproutZOffset;
+    [SerializeField] public float juvenileZOffset;
+    [SerializeField] public float matureZOffset;
+
+    [Header("Scale on Different Growth Stages")]
     [SerializeField] public float seedlingScale;
     [SerializeField] public float sproutScale;
     [SerializeField] public float juvenileScale;
     [SerializeField] public float matureScale;
 
+    [Header("Growth Time for Growth Stages")]
     [SerializeField] public float seedlingGrowTime;
     [SerializeField] public float sproutGrowTime;
     [SerializeField] public float juvenileGrowTime;
