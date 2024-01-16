@@ -3,15 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
-
+using UnityEngine.AI;
 
 public class CelestialPlayer : MonoBehaviour
 {
-    private PlayerInput playerInput;
+    
+    [SerializeField] private VirtualMouseInput virtualMouseInput;
+    [SerializeField] public Camera mainCamera;
+    [SerializeField] private LayerMask tileMask;
 
+    [Header("Rain System")]
+    [SerializeField] public bool isRaining=false;
+    [SerializeField] public GameObject RainParticleSystem;
+
+    //private CelestialPlayerInputActions celestialPlayerInput;
+    private PlayerInput playerInput;
+    // [Header("Lightning System")]
     // Start is called before the first frame update
     void Start()
     {
+        // celestialPlayerInput = GetComponent<CelestialPlayerInputActions>();
         playerInput = GetComponent<PlayerInput>();
     }
 
@@ -21,4 +32,9 @@ public class CelestialPlayer : MonoBehaviour
     {
         
     }
+    //if player selects raindrop
+    public void OnRainDropSelected() {
+       
+    }
+    public void OnSnowFlakeSelected() { }
 }

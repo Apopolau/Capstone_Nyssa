@@ -11,9 +11,12 @@ public class SplitScreen : MonoBehaviour
     [SerializeField] Camera earthCam;
     [SerializeField] Camera celestialCam;
     [SerializeField] Camera mainCam;
+    EarthPlayer earthPlayerActiveCam;
+
     void Start()
     {
-        
+         earthPlayerActiveCam = GetComponent<EarthPlayer>();
+
     }
 
     // Update is called once per frame
@@ -26,6 +29,9 @@ public class SplitScreen : MonoBehaviour
             celestialCam.enabled = true;
             earthCam.gameObject.SetActive(true);
             earthCam.enabled = true;
+
+            //go into the the plant systems main camera and make sure it is properly set
+            earthPlayerActiveCam.mainCamera = earthCam;
         }
         else if(Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) < 20f)
         {
@@ -35,9 +41,11 @@ public class SplitScreen : MonoBehaviour
             celestialCam.enabled = false;
             earthCam.gameObject.SetActive(false);
            earthCam.enabled = false;
+            //go into the the plant systems main camera and make sure it is properly set
+            earthPlayerActiveCam.mainCamera = mainCam;
 
         }
 
-        
+
     }
 }

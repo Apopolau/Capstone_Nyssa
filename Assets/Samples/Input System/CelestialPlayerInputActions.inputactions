@@ -1,8 +1,8 @@
 {
-    "name": "New Controls",
+    "name": "CelestialPlayerInputActions",
     "maps": [
         {
-            "name": "CelestialPlayerInput",
+            "name": "CelestialPlayerDefault",
             "id": "fd55c840-f4fd-4a8b-a6f2-f8278c296c0e",
             "actions": [
                 {
@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Rain",
+                    "name": "MakeRain",
                     "type": "Button",
                     "id": "d31d8289-53b7-497e-97ab-003d87e38b48",
                     "expectedControlType": "Button",
@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LighteningStrike",
+                    "name": "MakeLighteningStrike",
                     "type": "Button",
                     "id": "abe50024-f9fd-430e-97bb-714ba157b059",
                     "expectedControlType": "Button",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Smog",
+                    "name": "MakeSmog",
                     "type": "Button",
                     "id": "d3ebafe9-90c6-44be-b922-ccd15c656c95",
                     "expectedControlType": "Button",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SunBeam",
+                    "name": "MakeSunBeam",
                     "type": "Button",
                     "id": "a1268b76-f0a0-4d53-ab24-df712bd1790d",
                     "expectedControlType": "Button",
@@ -51,18 +51,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Dodge",
+                    "name": "MakeDodge",
                     "type": "Button",
                     "id": "4deb8876-8554-4b2e-9552-fbfbcdbde72c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "New action",
-                    "type": "Button",
-                    "id": "9236c46a-356b-447e-91a2-d3985dbc66e1",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -84,7 +75,7 @@
                 {
                     "name": "up",
                     "id": "b433d833-df6f-4362-80a0-66bc16502076",
-                    "path": "<Gamepad>/leftStick/left",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -183,11 +174,11 @@
                 {
                     "name": "",
                     "id": "5888b0e5-3e5f-470c-81b0-6642e8da71de",
-                    "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
-                    "action": "Rain",
+                    "action": "MakeRain",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -198,7 +189,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LighteningStrike",
+                    "action": "MakeLighteningStrike",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -209,7 +200,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Smog",
+                    "action": "MakeSmog",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -220,7 +211,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SunBeam",
+                    "action": "MakeSunBeam",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -231,29 +222,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dodge",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "63d20fb5-e6be-44ba-adda-d289152922e7",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "New action",
+                    "action": "MakeDodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "KeyBoard",
                     "id": "a089a833-2bca-4360-a49f-f6642ea2aede",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rain",
+                    "action": "MakeRain",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -264,7 +244,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rain",
+                    "action": "MakeRain",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -275,7 +255,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LighteningStrike",
+                    "action": "MakeLighteningStrike",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -286,7 +266,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LighteningStrike",
+                    "action": "MakeLighteningStrike",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -297,7 +277,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Smog",
+                    "action": "MakeSmog",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -308,7 +288,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Smog",
+                    "action": "MakeSmog",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -319,7 +299,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SunBeam",
+                    "action": "MakeSunBeam",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -330,7 +310,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SunBeam",
+                    "action": "MakeSunBeam",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -341,7 +321,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dodge",
+                    "action": "MakeDodge",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -352,7 +332,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Dodge",
+                    "action": "MakeDodge",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

@@ -49,11 +49,15 @@ public class playerMovement : MonoBehaviour
 
     private PlayerInputActions playerInputActions;
     private PlayerInput playerInput;
+    private CelestialPlayerInputActions celestialPlayerInputActions;
+    //private CelestialPlayerInput celestialPlayerInput;
 
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         playerInputActions = new PlayerInputActions();
+        //playerInput = GetComponent<PlayerInput>();
+        celestialPlayerInputActions = new CelestialPlayerInputActions();
         if (this.GetComponent<EarthPlayer>())
         {
             playerInputActions.EarthPlayerDefault.Enable();
@@ -61,7 +65,10 @@ public class playerMovement : MonoBehaviour
         }
         else if (this.GetComponent<CelestialPlayer>())
         {
-            //Put the Celestial player inputs here
+            celestialPlayerInputActions.CelestialPlayerDefault.Enable();
+            celestialPlayerInputActions.CelestialPlayerDefault.Walk.performed += MovePlayer;
+           // playerInputActions.EarthPlayerDefault.Enable();
+            //playerInputActions.EarthPlayerDefault.Walk.performed += MovePlayer;
         }
     }
 
@@ -107,14 +114,14 @@ public class playerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 inputVector;
-        //if (this.GetComponent<EarthPlayer>())
-        //{
+        if (this.GetComponent<EarthPlayer>())
+        {
             inputVector = playerInputActions.EarthPlayerDefault.Walk.ReadValue<Vector2>();
-        //}
-        //else
-        //{
-            //inputVector = playerInputActions.CelestialPlayerDefault.PlayerDefault.Walk.ReadValue<Vector2>();
-        //}
+        }
+        else
+        {
+            inputVector = celestialPlayerInputActions.CelestialPlayerDefault.Walk.ReadValue<Vector2>();
+        }
         
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 

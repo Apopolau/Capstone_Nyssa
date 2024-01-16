@@ -45,7 +45,7 @@ public class EarthPlayer : MonoBehaviour
     private PlayerInput playerInput;
 
     [SerializeField] private VirtualMouseInput virtualMouseInput;
-    [SerializeField] private Camera mainCamera;
+    [SerializeField] public Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
     Vector2 virtualMousePosition;
     public bool enrouteToPlant = false;
