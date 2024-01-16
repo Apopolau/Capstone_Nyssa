@@ -27,7 +27,7 @@ public class Cell : MonoBehaviour
     public bool tileHasBuild = false;
 
     //private VirtualMouseInput virtualMouseInput;
-    [SerializeField] private Camera mainCamera;
+    //[SerializeField] private Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
 
     private void Awake()
@@ -68,6 +68,7 @@ public class Cell : MonoBehaviour
 
     private void UpdatePlant()
     {
+        //Debug.Log(earthPlayer);
         //If the player is currently picking a place to plant their plant
         if (earthPlayer.isPlantSelected && tileIsActivated)
         {
