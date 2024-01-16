@@ -498,7 +498,7 @@ GameObject:
   - component: {fileID: 8073927087069849874}
   - component: {fileID: 7809379309165624223}
   m_Layer: 0
-  m_Name: Player
+  m_Name: EarthPlayer
   m_TagString: Player1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,15 +596,15 @@ MonoBehaviour:
   tempPlantPlanted: {fileID: 0}
   plantPreview: {fileID: 0}
   treePrefab: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-  landGrassPrefab: {fileID: 0}
-  waterGrassPrefab: {fileID: 0}
-  landFlowerPrefab: {fileID: 0}
-  waterFlowerPrefab: {fileID: 0}
+  landGrassPrefab: {fileID: 8326592455623684711, guid: 2938a7a0c54ca5f448e41f884a596426, type: 3}
+  waterGrassPrefab: {fileID: 8326592455623684711, guid: fb6eac0bbccc5fc4784a1140b0696f91, type: 3}
+  landFlowerPrefab: {fileID: 8326592455623684711, guid: 19c12aa1d4023c14cad92ea4ddafc23f, type: 3}
+  waterFlowerPrefab: {fileID: 8326592455623684711, guid: 9bd48f7d11ca2e94581975afd9c7dddf, type: 3}
   treePreviewPrefab: {fileID: 8326592455623684711, guid: 6d904f1bd1ef58c499f5cd1347172c84, type: 3}
-  landGrassPreviewPrefab: {fileID: 0}
-  waterGrassPreviewPrefab: {fileID: 0}
-  landFlowerPreviewPrefab: {fileID: 0}
-  waterFlowerPreviewPrefab: {fileID: 0}
+  landGrassPreviewPrefab: {fileID: 8326592455623684711, guid: 6e8f167c583e07945ba68a7879273c92, type: 3}
+  waterGrassPreviewPrefab: {fileID: 8326592455623684711, guid: 9fa393e2e2ebf49479914043cb243949, type: 3}
+  landFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: ff2ccbcb6e6bbb040bc9b688c83d9c92, type: 3}
+  waterFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 5cbf96d630360a84d94d35a22c559639, type: 3}
   plantSelectedType: 0
   selectedTile: {fileID: 0}
   displayText: {fileID: 0}
@@ -613,6 +613,7 @@ MonoBehaviour:
   tileMask:
     serializedVersion: 2
     m_Bits: 128
+  enrouteToPlant: 0
 --- !u!114 &6345640409037633156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,11 +799,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 30
+  m_Acceleration: 25
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

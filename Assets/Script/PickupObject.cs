@@ -10,44 +10,63 @@ public class PickupObject : MonoBehaviour
 
     [SerializeField] SpriteRenderer spriteRenderer;
 
+    public GameObject boxRange;
+
+    public GameObject uiObject;
 
     private bool isInRange;
     
     private void OnValidate()
     {
-        spriteRenderer.sprite = item.Icon;
-        spriteRenderer.enabled = true;
-    }
-
-    private void Update()
-    {
-        if (isInRange && Input.GetKeyDown(PickupKey))
+        if (item != null)
         {
-            if (item != null)
-            {
-                 inventory.AddItem(item);
-                 item = null;
-                spriteRenderer.enabled = false;
-        
-
-               
-                 
-                //increase the count of the item
-            }
-           
-            Debug.LogWarning("in range and key pressed");
-           
+            spriteRenderer.sprite = item.Icon;
+            spriteRenderer.enabled = true;
+        }
+        else
+        {
+            spriteRenderer.enabled = false;
+            uiObject.SetActive(false);
 
         }
     }
 
+  private void Update()
+{
+    if (isInRange && Input.GetKeyDown(PickupKey))
+    {
+        if (item != null)
+        {
+            int pickupQuantity = 1; // You can change this to the desired quantity.
+            inventory.AddItem(item, pickupQuantity);
+            item = null;
+            spriteRenderer.enabled = false;
+            
+            uiObject.SetActive(false);
+            boxRange.SetActive(false);
+
+        }
+
+        Debug.LogWarning("in range and key pressed");
+    }
+}
+
 
     private void OnTriggerEnter(Collider player)
     {
-        if (player.gameObject.tag == "Player")
+        if (player.gameObject.tag == "Player1")
         {
-            isInRange = true; 
-            spriteRenderer.enabled = true;
+            isInRange = true;
+            uiObject.SetActive(true);
+            
+
+            // Check if the item is not null before enabling the spriteRenderer
+            if (item != null)
+            {
+                spriteRenderer.enabled = true;
+                
+            }
+
             Debug.LogWarning("in range");
         }
        
@@ -57,8 +76,8 @@ public class PickupObject : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isInRange = false;
+         uiObject.SetActive(false);
          
     }
 
 }
-

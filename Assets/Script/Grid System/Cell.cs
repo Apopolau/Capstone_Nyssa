@@ -68,18 +68,83 @@ public class Cell : MonoBehaviour
 
     private void UpdatePlant()
     {
+        //If the player is currently picking a place to plant their plant
         if (earthPlayer.isPlantSelected && tileIsActivated)
         {
+            //Move the plant position to the center of the currently highlighted tile
             earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
-            //Handles indication whether it's a valid position or not
-            if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED)
+
+            //Update the plant type if the player pans over a different kind of tile
+            if((this.terrainType == TerrainType.GRASS || this.terrainType == TerrainType.DIRT) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.WATER)
             {
-                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                
+                if(earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
+                {
+                    Destroy(earthPlayer.plantSelected);
+                }
+                
+                if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
+                {
+                    earthPlayer.plantSelected = Instantiate(earthPlayer.landFlowerPreviewPrefab, earthPlayer.plantParent.transform);
+                }
+                else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
+                {
+                    earthPlayer.plantSelected = Instantiate(earthPlayer.landGrassPreviewPrefab, earthPlayer.plantParent.transform);
+                }
+                earthPlayer.currentTileSelectedType = EarthPlayer.TileSelectedType.LAND;
+                /*
+                else if (earthPlayer.plantSelectedType == Earth)
+                {
+                    landFlowerPreviewPrefab
+                landGrassPreviewPrefab
+                waterFlowerPreviewPrefab
+                waterGrassPreviewPrefab
+                }
+                */
+            }
+            else if((this.terrainType == TerrainType.WATER) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.LAND)
+            {
+                
+                if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
+                {
+                    Destroy(earthPlayer.plantSelected);
+                }
+
+                if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
+                {
+                    earthPlayer.plantSelected = Instantiate(earthPlayer.waterFlowerPreviewPrefab, earthPlayer.plantParent.transform);
+                }
+                else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
+                {
+                    earthPlayer.plantSelected = Instantiate(earthPlayer.waterGrassPreviewPrefab, earthPlayer.plantParent.transform);
+                }
+                earthPlayer.currentTileSelectedType = EarthPlayer.TileSelectedType.WATER;
+            }
+
+            //Handles indication whether it's a valid position or not
+            if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
+            {
+                if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED || terrainType == Cell.TerrainType.WATER)
+                {
+                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                }
+                else
+                {
+                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                }
             }
             else
             {
-                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED)
+                {
+                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                }
+                else if(earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
+                {
+                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                }
             }
+            
         }
     }
 
