@@ -38,7 +38,7 @@ public class Inventory : MonoBehaviour
         // Add more conditions for other keys/items as needed
     }
 
-    private void RemoveItemByName(string itemName)
+    public void RemoveItemByName(string itemName)
     {
         // Find the item with the specified name and remove it
         Item itemToRemove = items.Find(item => item.ItemName == itemName);

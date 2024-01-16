@@ -54,7 +54,7 @@ public class PickupObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider player)
     {
-        if (player.gameObject.tag == "Player")
+        if (player.gameObject.tag == "Player1")
         {
             isInRange = true;
             uiObject.SetActive(true);

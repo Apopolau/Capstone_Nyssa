@@ -52,6 +52,7 @@ public class EarthPlayer : MonoBehaviour
     Vector2 virtualMousePosition;
     public bool enrouteToPlant = false;
 
+    public Inventory inventory; // hold a reference to the Inventory script
     private void Awake()
     {
         earthAgent = GetComponent<NavMeshAgent>();
@@ -203,12 +204,14 @@ public class EarthPlayer : MonoBehaviour
         if (plantSelectedType == PlantSelectedType.TREE)
         {
             tempPlantPlanted = Instantiate(treePrefab, activeTileCell.buildingTarget.transform);
+            inventory.RemoveItemByName("TreeSeed"); //remove the item "TreeSeed"
         }
         else if (plantSelectedType == PlantSelectedType.FLOWER)
         {
             if(currentTileSelectedType == TileSelectedType.LAND)
             {
                 tempPlantPlanted = Instantiate(landFlowerPrefab, activeTileCell.buildingTarget.transform);
+                inventory.RemoveItemByName("TreeLog"); //remove the item "TreeSeed"
             }
             else if (currentTileSelectedType == TileSelectedType.WATER)
             {
