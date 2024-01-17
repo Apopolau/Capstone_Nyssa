@@ -407,7 +407,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""EarthPlayerControlScheme"",
+            ""bindingGroup"": ""EarthPlayerControlScheme"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard Earth Player Control Scheme"",
+            ""bindingGroup"": ""Keyboard Earth Player Control Scheme"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // EarthPlayerDefault
         m_EarthPlayerDefault = asset.FindActionMap("EarthPlayerDefault", throwIfNotFound: true);
@@ -627,6 +650,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlantIsSelectedActions @PlantIsSelected => new PlantIsSelectedActions(this);
+    private int m_EarthPlayerControlSchemeSchemeIndex = -1;
+    public InputControlScheme EarthPlayerControlSchemeScheme
+    {
+        get
+        {
+            if (m_EarthPlayerControlSchemeSchemeIndex == -1) m_EarthPlayerControlSchemeSchemeIndex = asset.FindControlSchemeIndex("EarthPlayerControlScheme");
+            return asset.controlSchemes[m_EarthPlayerControlSchemeSchemeIndex];
+        }
+    }
+    private int m_KeyboardEarthPlayerControlSchemeSchemeIndex = -1;
+    public InputControlScheme KeyboardEarthPlayerControlSchemeScheme
+    {
+        get
+        {
+            if (m_KeyboardEarthPlayerControlSchemeSchemeIndex == -1) m_KeyboardEarthPlayerControlSchemeSchemeIndex = asset.FindControlSchemeIndex("Keyboard Earth Player Control Scheme");
+            return asset.controlSchemes[m_KeyboardEarthPlayerControlSchemeSchemeIndex];
+        }
+    }
     public interface IEarthPlayerDefaultActions
     {
         void OnWalk(InputAction.CallbackContext context);
