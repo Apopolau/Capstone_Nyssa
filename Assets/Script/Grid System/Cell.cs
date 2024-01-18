@@ -8,8 +8,11 @@ public class Cell : MonoBehaviour
     [SerializeField] private EarthPlayer earthPlayer;
     [SerializeField] GameObjectRuntimeSet playerSet;
     [SerializeField] public GameObject buildingTarget;
-    public enum TerrainType {GRASS, DIRT, WATER, POLLUTED};
+    public enum TerrainType {GRASS, DIRT, WATER};
     public TerrainType terrainType;
+
+    public enum EnviroState { CLEAN, POLLUTED};
+    public EnviroState enviroState;
 
     Color selectableColour = new Color(0.5f, 0.9666f, 1, 0.5f);
     Color unselectableColour = new Color(1, 0.5f, 0.5f, 0.5f);
@@ -56,7 +59,7 @@ public class Cell : MonoBehaviour
 
     private void UpdateTileState()
     {
-        if(terrainType == TerrainType.POLLUTED || tileHasBuild)
+        if(enviroState == EnviroState.POLLUTED || tileHasBuild)
         {
             tileValid = false;
         }
@@ -125,7 +128,7 @@ public class Cell : MonoBehaviour
             //Handles indication whether it's a valid position or not
             if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
             {
-                if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED || terrainType == Cell.TerrainType.WATER)
+                if (tileHasBuild || enviroState == EnviroState.POLLUTED || terrainType == TerrainType.WATER)
                 {
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
                 }
@@ -136,7 +139,7 @@ public class Cell : MonoBehaviour
             }
             else
             {
-                if (tileHasBuild || terrainType == Cell.TerrainType.POLLUTED)
+                if (tileHasBuild || enviroState == EnviroState.POLLUTED)
                 {
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
                 }
