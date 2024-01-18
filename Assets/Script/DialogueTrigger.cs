@@ -23,6 +23,7 @@ public class Dialogue
     public List<DialogueLine> dialogueLines = new List<DialogueLine>();
 }
 
+
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
@@ -31,12 +32,14 @@ public class DialogueTrigger : MonoBehaviour
     {
         DialogueManager.Instance.StartDialogue(dialogue);
     }
+
+   
  
     private void OnTriggerEnter(Collider collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == "Player1")
         {
-            TriggerDialogue();
+           TriggerDialogue();
         }
     }
 }

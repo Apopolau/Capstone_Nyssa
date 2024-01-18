@@ -33,7 +33,7 @@ public class PickupObject : MonoBehaviour
 
     private void Update()
     {
-    ItemPickup();
+        ItemPickup();
     }
 
     public void ItemPickup()
