@@ -81,6 +81,7 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
         if (viewDir != Vector3.zero)
         {
@@ -94,6 +95,7 @@ public class playerMovement : MonoBehaviour
         {
             playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
         }
+        */
 
         //takes input of the keys for movement
         MyInput();
@@ -147,7 +149,6 @@ public class playerMovement : MonoBehaviour
             }
         }
 
-
         if (player.gameObject.tag == "Player2")
         {
             //horInput = Input.GetAxisRaw("Horizontal_P2");
@@ -189,8 +190,10 @@ public class playerMovement : MonoBehaviour
 
         if (this.GetComponent<NavMeshAgent>())
         {
+            //If we've activated the nav mesh agent, we want to turn in the direction it is moving
             if (this.GetComponent<NavMeshAgent>().enabled)
             {
+                //Debug.Log("Nav mesh agent is enabled");
                 //rotate orientation
                 Vector3 viewDir = player.position - this.GetComponent<NavMeshAgent>().destination;
                 if (viewDir != Vector3.zero)
@@ -199,7 +202,8 @@ public class playerMovement : MonoBehaviour
                 }
 
                 // rotate the player object
-                Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
+                //Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
+                Vector3 inputDir = -orientation.forward;
 
                 //if input direction isnt 0 smoothly change the direction using the rotation speed
                 if (inputDir != Vector3.zero)
@@ -209,6 +213,7 @@ public class playerMovement : MonoBehaviour
             }
             else
             {
+                //Debug.Log("Has a nav mesh agent but not enabled");
                 //rotate orientation
                 Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
                 if (viewDir != Vector3.zero)
@@ -228,6 +233,7 @@ public class playerMovement : MonoBehaviour
         }
         else
         {
+            //Debug.Log("Doesn't have a nav mesh agent");
             //rotate orientation
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             if (viewDir != Vector3.zero)

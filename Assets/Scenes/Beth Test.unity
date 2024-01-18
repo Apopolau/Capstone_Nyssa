@@ -377,7 +377,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -29.94, y: 4.2, z: -117.3}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 873206682}
@@ -857,7 +857,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -15.2, y: 4.2, z: -96.29}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 258719845}
@@ -1828,7 +1828,7 @@ RectTransform:
   m_GameObject: {fileID: 258719844}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1115689455}
@@ -1837,7 +1837,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.12}
-  m_SizeDelta: {x: 2, y: 2}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &258719846
 MonoBehaviour:
@@ -1919,7 +1919,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3085ef116e37c324abc572a82eb015b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6445ef88f4380304f804c0b6e05aba7f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2709,6 +2709,10 @@ PrefabInstance:
     - target: {fileID: 326523166471446313, guid: 16fde7506474869439c9a946b5939b07, type: 3}
       propertyPath: m_Name
       value: CelestialPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 326523166471446313, guid: 16fde7506474869439c9a946b5939b07, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5716663258313696533, guid: 16fde7506474869439c9a946b5939b07, type: 3}
       propertyPath: mainCamera
@@ -8060,7 +8064,7 @@ RectTransform:
   m_GameObject: {fileID: 873206681}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1596451452}
@@ -8069,7 +8073,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -0.12}
-  m_SizeDelta: {x: 2, y: 2}
+  m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!135 &873206683
 SphereCollider:
@@ -8151,7 +8155,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3085ef116e37c324abc572a82eb015b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6445ef88f4380304f804c0b6e05aba7f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -18030,6 +18034,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1781476123}
+    - target: {fileID: 5061027297478944643, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: EarthPlayerControlScheme
+      objectReference: {fileID: 0}
     - target: {fileID: 7701263254620628334, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9

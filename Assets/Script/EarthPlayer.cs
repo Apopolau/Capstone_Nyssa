@@ -71,8 +71,11 @@ public class EarthPlayer : MonoBehaviour
     void Update()
     {
         ActivateTile();
-        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
+        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 10.5f)
         {
+            enrouteToPlant = false;
+            earthAgent.ResetPath();
+            earthAgent.enabled = false;
             PlantPlantingHandler();
         }
         
@@ -155,7 +158,7 @@ public class EarthPlayer : MonoBehaviour
         {
             if(Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
             {
-                enrouteToPlant = false;
+                //enrouteToPlant = false;
                 isPlantSelected = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
                 Destroy(plantSelected);
