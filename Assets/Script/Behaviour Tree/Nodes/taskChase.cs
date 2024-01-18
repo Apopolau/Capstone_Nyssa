@@ -8,9 +8,9 @@ public class taskChase : BTNode
 {
     private Transform thisTarget;
     NavMeshAgent thisAgent;
-    EarthPlayer thisPlayer;
+    CelestialPlayer thisPlayer;
 
-    public taskChase(Transform target, NavMeshAgent enemyMeshAgent, EarthPlayer player)
+    public taskChase(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player)
     {
         thisAgent = enemyMeshAgent;
         thisTarget = target;
@@ -24,20 +24,26 @@ public class taskChase : BTNode
 
         float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
 
-        if (distance > 7f && thisAgent.GetComponent<Enemy>().seesPlayer)
+        if (!thisAgent.GetComponent<Enemy>().inAttackRange && thisAgent.GetComponent<Enemy>().seesPlayer)
+       
         {
             thisAgent.SetDestination(thisTarget.position);
-            //Debug.Log(distance);
-            Debug.Log("im chasing");
+            if (distance  <= 10f)
+            {
+                //Debug.Log(distance);
+                thisAgent.GetComponent<Enemy>().inAttackRange = true;
+            }
             state = NodeState.RUNNING;
         }
-        else if (distance <= 7f)
+      
+       /* else if (thisAgent.GetComponent<Enemy>().inAttackRange)
         {
            // Debug.Log(distance);
             Debug.Log("im close enough");
+            thisAgent.GetComponent<Enemy>().inAttackRange = true;
             state = NodeState.SUCCESS;
-        }
-        else if (! thisAgent.GetComponent<Enemy>().seesPlayer)
+        }*/
+        else if (thisAgent.GetComponent<Enemy>().inAttackRange || !thisAgent.GetComponent<Enemy>().seesPlayer)
         {
             state = NodeState.FAILURE;
         }

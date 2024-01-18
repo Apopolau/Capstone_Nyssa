@@ -7,8 +7,25 @@ public class Enemy : MonoBehaviour
 {
     public NavMeshAgent enemyMeshAgent;
     public GameObject playerObj;
+
+    //MonsterStats
+    public EnemyStats enemyStats;
+    private int enemyHealthPoints;
+
+
+
+    //Interaction with the player
     public bool seesPlayer = false;
+    public bool inAttackRange = false;
     public Vector3 playerLocation;
+
+    void Awake()
+    {
+        enemyHealthPoints= enemyStats.maxHealth;
+
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +37,19 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         
+    }
+    
+    public bool TakeHit()
+    {
+
+       enemyHealthPoints -= 10;
+        bool isDead = enemyStats.maxHealth <= 0;
+        if (isDead) {
+            Die();
+        }
+
+        return isDead;
+       
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -65,5 +95,10 @@ public class Enemy : MonoBehaviour
             playerLocation = other.transform.position;
             //Debug.Log("~~~~~~~~~~~~~~~~~Exited collision with " + other.gameObject.name);
         }
+    }
+    
+    private void Die()
+    {
+        Destroy(gameObject);
     }
 }

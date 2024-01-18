@@ -14,7 +14,7 @@ public class CheckInRange : BTCondition
 
     protected override NodeState OnRun()
     {
-        if (agent.GetComponent<Enemy>().seesPlayer)
+        if (agent.GetComponent<Enemy>().seesPlayer )
         {
             Debug.Log("in range");
 

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class idleOilSpillTree : BTree
 {
-    private EarthPlayer player;
+    private CelestialPlayer player;
     private Enemy enemy;
     private NavMeshAgent enemyMeshAgent;
 
@@ -24,7 +24,7 @@ public class idleOilSpillTree : BTree
     protected override BTNode SetupTree()
     {
        enemyMeshAgent = transform.GetComponent<NavMeshAgent>();
-       player = transform.GetComponent<Enemy>().playerObj.GetComponent<EarthPlayer>();
+       player = transform.GetComponent<Enemy>().playerObj.GetComponent<CelestialPlayer>();
        enemy = transform.GetComponent<Enemy>();
         //Remove this when you actually implement it
         //throw new System.NotImplementedException();
@@ -33,7 +33,16 @@ public class idleOilSpillTree : BTree
         // Your behaviour tree will go in here: put your sequences after "new List<BTNode>"
         BTNode root = new Selector(new List<BTNode>
         {
-             new Sequence(new List<BTNode>
+           new Sequence(new List<BTNode>
+            {   new CheckInAttackRange(playerTransform,enemyMeshAgent,player),
+                new TaskAttack(playerTransform,enemyMeshAgent,player),
+
+
+            }),
+
+
+
+          new Sequence(new List<BTNode>
             {
                  //check if anything is in the range of the enemy
             // new CheckIfAnyInRange(enemyMeshAgent),
@@ -44,7 +53,7 @@ public class idleOilSpillTree : BTree
                  //new TaskAttackPlayer(enemyMeshAgent,player)
                   //CHASE THE PLAYER
                   new taskChase(playerTransform,enemyMeshAgent,player),
-                //  new taskAttack(playerTransform,enemyMeshAgent,player)
+
 
              }),
            
@@ -62,11 +71,11 @@ public class idleOilSpillTree : BTree
         switch to wander behaviour
             */
             ////PATROL SEQUENCE
-           new CheckInRange(enemyMeshAgent),
-            new TaskPatrol( enemy,enemyMeshAgent, transform, waypoints)
+            new CheckInRange(enemyMeshAgent),
+            new TaskPatrol( enemy,enemyMeshAgent, transform, waypoints),
 
 
-        }) ;
+        });
         return root;
         
     }
