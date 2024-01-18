@@ -31,27 +31,30 @@ public class PickupObject : MonoBehaviour
         }
     }
 
-  private void Update()
-{
-    if (isInRange && Input.GetKeyDown(PickupKey))
+    private void Update()
     {
-        if (item != null)
-        {
-            int pickupQuantity = 1; // You can change this to the desired quantity.
-            inventory.AddItem(item, pickupQuantity);
-            item = null;
-            spriteRenderer.enabled = false;
-            
-            uiObject.SetActive(false);
-            boxRange.SetActive(false);
-
-        }
-
-        Debug.LogWarning("in range and key pressed");
+        ItemPickup();
     }
-}
 
+    public void ItemPickup()
+    {
+        if (isInRange && Input.GetKeyDown(PickupKey))
+        {
+            if (item != null)
+            {
+                int pickupQuantity = 1; // You can change this to the desired quantity.
+                inventory.AddItem(item, pickupQuantity);
+                item = null;
+                spriteRenderer.enabled = false;
+                
+                uiObject.SetActive(false);
+                boxRange.SetActive(false);
 
+            }
+
+            Debug.LogWarning("in range and key pressed");
+        }
+    }
     private void OnTriggerEnter(Collider player)
     {
         if (player.gameObject.tag == "Player1")
@@ -76,7 +79,7 @@ public class PickupObject : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isInRange = false;
-         uiObject.SetActive(false);
+        uiObject.SetActive(false);
          
     }
 

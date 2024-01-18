@@ -87,8 +87,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""fbe9e24c-63fc-46bc-923a-e4b3daa1c9ee"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickTree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""b9d638ee-8c65-47ee-b44b-6a86993f259a"",
                     ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickGrass"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9de986a9-5537-44dc-bdd5-ad17691ded38"",
+                    ""path"": ""<Keyboard>/i"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -109,8 +131,30 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""819a3489-f125-4f9d-b03a-212eb3fefb7b"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PickFlower"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""fda73281-8b58-4c1e-b653-3a8799fa97fd"",
                     ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Remove Building"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b83cc183-82f3-464e-92e6-91577a02b239"",
+                    ""path"": ""<Keyboard>/k"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -285,9 +329,31 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""3f0a3964-fbde-44be-b691-60e18e3ce6df"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Plant plant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""c777e4d2-f813-469c-9feb-9f11070ae7a8"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel planting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc566b5a-0681-41bf-b55e-61a009eed32d"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Cancel planting"",
@@ -326,11 +392,45 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Cursor Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1ebd3025-3762-43e5-a6e5-740d068858bb"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cursor Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""EarthPlayerControlScheme"",
+            ""bindingGroup"": ""EarthPlayerControlScheme"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard Earth Player Control Scheme"",
+            ""bindingGroup"": ""Keyboard Earth Player Control Scheme"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // EarthPlayerDefault
         m_EarthPlayerDefault = asset.FindActionMap("EarthPlayerDefault", throwIfNotFound: true);
@@ -550,6 +650,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlantIsSelectedActions @PlantIsSelected => new PlantIsSelectedActions(this);
+    private int m_EarthPlayerControlSchemeSchemeIndex = -1;
+    public InputControlScheme EarthPlayerControlSchemeScheme
+    {
+        get
+        {
+            if (m_EarthPlayerControlSchemeSchemeIndex == -1) m_EarthPlayerControlSchemeSchemeIndex = asset.FindControlSchemeIndex("EarthPlayerControlScheme");
+            return asset.controlSchemes[m_EarthPlayerControlSchemeSchemeIndex];
+        }
+    }
+    private int m_KeyboardEarthPlayerControlSchemeSchemeIndex = -1;
+    public InputControlScheme KeyboardEarthPlayerControlSchemeScheme
+    {
+        get
+        {
+            if (m_KeyboardEarthPlayerControlSchemeSchemeIndex == -1) m_KeyboardEarthPlayerControlSchemeSchemeIndex = asset.FindControlSchemeIndex("Keyboard Earth Player Control Scheme");
+            return asset.controlSchemes[m_KeyboardEarthPlayerControlSchemeSchemeIndex];
+        }
+    }
     public interface IEarthPlayerDefaultActions
     {
         void OnWalk(InputAction.CallbackContext context);

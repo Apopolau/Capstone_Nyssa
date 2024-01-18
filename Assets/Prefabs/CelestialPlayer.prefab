@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6324618414171153746}
   - component: {fileID: 8684208249160075082}
-  - component: {fileID: 4466923639026772986}
   - component: {fileID: 6534518413732579240}
+  - component: {fileID: 4466923639026772986}
   - component: {fileID: 7850132529183412270}
   - component: {fileID: 2997010025017097440}
   - component: {fileID: 5716663258313696533}
@@ -67,6 +67,19 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &6534518413732579240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 326523166471446313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
 --- !u!114 &4466923639026772986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,19 +108,6 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &6534518413732579240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 326523166471446313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameObjectRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
 --- !u!114 &7850132529183412270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,13 +169,9 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4deb8876-8554-4b2e-9552-fbfbcdbde72c
     m_ActionName: CelestialPlayerInput/Dodge[/Keyboard/b]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9236c46a-356b-447e-91a2-d3985dbc66e1
-    m_ActionName: CelestialPlayerInput/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: CelestialPlayerInput
+  m_DefaultActionMap: CelestialPlayerDefault
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &2997010025017097440
@@ -203,6 +199,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e822071274fa4b42ae1ad708c2a7c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  virtualMouseInput: {fileID: 0}
+  mainCamera: {fileID: 0}
+  tileMask:
+    serializedVersion: 2
+    m_Bits: 0
+  isRaining: 0
+  RainParticleSystem: {fileID: 0}
 --- !u!1 &1647960824668705868
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +268,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0ed5f39ba6ba3a24a930462f5ebf12c4, type: 2}
+  - {fileID: 2100000, guid: 70e784b8339f68c469f5ca603d1bce13, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -640,7 +643,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0ed5f39ba6ba3a24a930462f5ebf12c4, type: 2}
+  - {fileID: 2100000, guid: 70e784b8339f68c469f5ca603d1bce13, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

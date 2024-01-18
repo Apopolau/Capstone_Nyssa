@@ -17,7 +17,8 @@ public class Plant : Creatable
     void Awake()
     {
         currentPlantStage = PlantStats.PlantStage.SEEDLING;
-        plantVisual.transform.position = new Vector3(this.gameObject.transform.position.x, stats.seedlingYOffset, this.gameObject.transform.position.z);
+        plantVisual.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
+        plantVisual.transform.localPosition = new Vector3(0, stats.seedlingYOffset, stats.seedlingZOffset);
         plantVisual.transform.localScale = new Vector3(stats.seedlingScale, stats.seedlingScale, 1);
         StartCoroutine(AdvancePlantStage());
     }
@@ -77,7 +78,7 @@ public class Plant : Creatable
                 Debug.Log("Plant should be growing");
                 currentPlantStage = PlantStats.PlantStage.SPROUT;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.sproutImage;
-                plantVisual.transform.position = new Vector3(this.gameObject.transform.position.x, stats.seedlingYOffset, this.gameObject.transform.position.z);
+                plantVisual.transform.localPosition = new Vector3(0, stats.seedlingYOffset, stats.sproutZOffset);
                 plantVisual.transform.localScale = new Vector3(stats.seedlingScale, stats.seedlingScale, 1);
             }
             else if(currentPlantStage == PlantStats.PlantStage.SPROUT)
@@ -85,7 +86,7 @@ public class Plant : Creatable
                 yield return new WaitForSeconds(stats.sproutGrowTime);
                 currentPlantStage = PlantStats.PlantStage.JUVENILE;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.juvenileImage;
-                plantVisual.transform.position = new Vector3(this.gameObject.transform.position.x, stats.juvenileYOffset, this.gameObject.transform.position.z);
+                plantVisual.transform.localPosition = new Vector3(0, stats.juvenileYOffset, stats.juvenileZOffset);
                 plantVisual.transform.localScale = new Vector3(stats.juvenileScale, stats.juvenileScale, 1);
             }
             else if(currentPlantStage == PlantStats.PlantStage.JUVENILE)
@@ -93,7 +94,7 @@ public class Plant : Creatable
                 yield return new WaitForSeconds(stats.juvenileGrowTime);
                 currentPlantStage = PlantStats.PlantStage.MATURE;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.matureImage;
-                plantVisual.transform.position = new Vector3(this.gameObject.transform.position.x, stats.matureYOffset, this.gameObject.transform.position.z);
+                plantVisual.transform.localPosition = new Vector3(0, stats.matureYOffset, stats.matureZOffset);
                 plantVisual.transform.localScale = new Vector3(stats.matureScale, stats.matureScale, 1);
             }
             else if(currentPlantStage == PlantStats.PlantStage.MATURE)
