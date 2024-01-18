@@ -2710,25 +2710,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: CelestialPlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 326523166471446313, guid: 16fde7506474869439c9a946b5939b07, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5716663258313696533, guid: 16fde7506474869439c9a946b5939b07, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1781476123}
-    - target: {fileID: 5716663258313696533, guid: 16fde7506474869439c9a946b5939b07, type: 3}
-      propertyPath: virtualMouseInput
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6324618414171153746, guid: 16fde7506474869439c9a946b5939b07, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.0000057
       objectReference: {fileID: 0}
     - target: {fileID: 6324618414171153746, guid: 16fde7506474869439c9a946b5939b07, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6324618414171153746, guid: 16fde7506474869439c9a946b5939b07, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2766,10 +2758,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1781476123}
-    - target: {fileID: 7861134237909768385, guid: 16fde7506474869439c9a946b5939b07, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11534,6 +11522,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1818777323}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1327782476 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2382068960563520468, guid: 553568dfccc23274285fac4a878252df, type: 3}
+  m_PrefabInstance: {fileID: 1797704627857044457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1327782478
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327782476}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.2
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!1 &1328853742
 GameObject:
   m_ObjectHideFlags: 0
@@ -17961,37 +17977,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1531475006479591630, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
+      propertyPath: m_margin.w
+      value: -87.17694
+      objectReference: {fileID: 0}
     - target: {fileID: 6080085847549858388, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
       propertyPath: m_Name
       value: Main Camera - ISO cam 1 (General)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342074519578878731, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342074519578878731, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342074519578878731, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342074519578878731, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342074519578878731, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342074519578878731, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 544.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7342074519578878731, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 273.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18026,6 +18018,10 @@ PrefabInstance:
       propertyPath: virtualMouseInput
       value: 
       objectReference: {fileID: 161378777}
+    - target: {fileID: 3045875588631837038, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4033276866688796702, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_Name
       value: EarthPlayer
@@ -18034,10 +18030,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1781476123}
-    - target: {fileID: 5061027297478944643, guid: 553568dfccc23274285fac4a878252df, type: 3}
-      propertyPath: m_DefaultControlScheme
-      value: EarthPlayerControlScheme
-      objectReference: {fileID: 0}
     - target: {fileID: 7701263254620628334, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9
@@ -18081,7 +18073,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2382068960563520468, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1327782478}
   m_SourcePrefab: {fileID: 100100000, guid: 553568dfccc23274285fac4a878252df, type: 3}
 --- !u!1001 &8722741282540974790
 PrefabInstance:
@@ -18091,6 +18086,198 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 58010175151800939, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 58010175151800939, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 140606663872023686, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 140606663872023686, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 215273231124771698, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 215273231124771698, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 433746629411138340, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 433746629411138340, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 444032986740116943, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 444032986740116943, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452405411323674176, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 452405411323674176, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 576558649275377906, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 576558649275377906, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 595699891835778829, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 595699891835778829, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 735099924133935073, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 735099924133935073, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 791014343058207196, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 791014343058207196, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 841422447066747781, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 841422447066747781, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009054872040417557, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1009054872040417557, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1061406368258504458, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1061406368258504458, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164223626881727846, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1164223626881727846, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242004792986390682, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1242004792986390682, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350297542698510583, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1350297542698510583, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434718094740973136, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1434718094740973136, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524108317251414247, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1524108317251414247, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1623445052180714558, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1623445052180714558, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1733403841495874324, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1733403841495874324, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1749841230859543940, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1749841230859543940, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780004233538289703, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1780004233538289703, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1835956348118527630, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1835956348118527630, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884803776979495976, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1884803776979495976, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2098470036529412422, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -18131,13 +18318,581 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2104869172981142763, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2104869172981142763, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2118760061535893932, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1781476123}
+    - target: {fileID: 2118760061535893932, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118760061535893932, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143766285639275025, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2143766285639275025, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2164348344487344073, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2164348344487344073, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200177190262152827, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2200177190262152827, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2264891642166309673, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2264891642166309673, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2273187759971168087, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2273187759971168087, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363820703952490068, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2363820703952490068, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446809108205857563, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2446809108205857563, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2545990823664188735, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2545990823664188735, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812590566097624277, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2812590566097624277, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2869578354611070203, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2869578354611070203, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990397813746249478, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2990397813746249478, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3044061990991134740, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3044061990991134740, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069945113744002606, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069945113744002606, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3270448355776417395, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3270448355776417395, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3523378410371282203, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3523378410371282203, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3681182544491937569, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3681182544491937569, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890054212808449189, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3890054212808449189, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925696952218143231, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925696952218143231, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4102832389876316390, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4102832389876316390, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215727425992244839, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4215727425992244839, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276974285516533920, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4276974285516533920, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4301552114627761858, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
       propertyPath: m_Name
       value: Grid
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991198317369886603, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4991198317369886603, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5131319047662258641, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5131319047662258641, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5134006716514239742, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5134006716514239742, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5322903383638092729, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5322903383638092729, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5695882293624338093, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5695882293624338093, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716275674458804520, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5716275674458804520, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868299683649169740, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5868299683649169740, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912305292656763287, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5912305292656763287, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6003195841561737728, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6003195841561737728, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049700135844671751, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6049700135844671751, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283799903070476976, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6283799903070476976, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297395623173935261, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6297395623173935261, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6478473915906021244, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6478473915906021244, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6513809811809362563, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6513809811809362563, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6578489866863275972, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6578489866863275972, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655924323538661762, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6655924323538661762, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829816062504615448, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6829816062504615448, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890295693037142883, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6890295693037142883, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6894930672136992545, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6894930672136992545, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938394028798271863, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6938394028798271863, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995747379483582578, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6995747379483582578, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7103019698170211231, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7103019698170211231, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7171176375902635023, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7171176375902635023, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7315064166894169691, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7315064166894169691, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364162428315594682, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7364162428315594682, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399820366144865185, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7399820366144865185, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571697411682438931, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571697411682438931, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583817443038002681, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583817443038002681, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639181363986490460, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7639181363986490460, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7714711832168218222, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7714711832168218222, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7729027468559797497, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7729027468559797497, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7758880445474290572, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7758880445474290572, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795041504119367953, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7795041504119367953, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816560684903413342, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816560684903413342, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7927991422841271684, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7927991422841271684, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001540043034331680, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001540043034331680, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8142432400890875903, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8142432400890875903, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146773297220144107, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8146773297220144107, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286360540263815548, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286360540263815548, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8517579792670930216, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8517579792670930216, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667539572031883286, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8667539572031883286, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8733771453264066577, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8733771453264066577, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778625849542845352, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8778625849542845352, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8802062816464531934, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8802062816464531934, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846365910666631931, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846365910666631931, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879391729918714413, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879391729918714413, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8897963240357789024, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8897963240357789024, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934323937664127665, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934323937664127665, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: terrainType
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -17,6 +17,11 @@ public class LevelOneProgress : LevelProgress
 
     int treeCount;
     int grassCount;
+    int cattailCount;
+
+    int treeGoal = 5;
+    int grassGoal = 7;
+    int cattailGoal = 5;
 
     // Start is called before the first frame update
     void Start()
