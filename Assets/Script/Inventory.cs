@@ -26,13 +26,13 @@ public class Inventory : MonoBehaviour
         // Check if the remove key for Seed is pressed
         if (Input.GetKeyDown(removeKeySeed))
         {
-            RemoveItemByName("TreeSeed");
+            RemoveItemByName("Tree Seed");
         }
 
         // Check if the remove key for TreeLog is pressed
         if (Input.GetKeyDown(removeKeyTreeLog))
         {
-            RemoveItemByName("TreeLog");
+            RemoveItemByName("Grass Seed");
         }
 
         // Add more conditions for other keys/items as needed
