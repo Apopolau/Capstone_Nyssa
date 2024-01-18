@@ -44,7 +44,10 @@ public class EarthPlayer : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI displayText;
 
+    private PlayerInputActions actions;
     private PlayerInput playerInput;
+
+    public bool interacting = false;
 
     [SerializeField] private VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
@@ -65,6 +68,9 @@ public class EarthPlayer : MonoBehaviour
     {
         plantTime = new WaitForSeconds(2);
         playerInput = GetComponent<PlayerInput>();
+        actions = new PlayerInputActions();
+        //playerInput.enabled = true;
+        //Interact.performed += OnInteract;
     }
 
     // Update is called once per frame
@@ -267,6 +273,13 @@ public class EarthPlayer : MonoBehaviour
 
     public void OnInteract()
     {
-
+        if (actions.EarthPlayerDefault.Interact.WasPressedThisFrame() || actions.EarthPlayerDefault.Interact.WasPerformedThisFrame())
+        {
+            interacting = true;
+        }
+        else if (actions.EarthPlayerDefault.Interact.WasReleasedThisFrame())
+        {
+            interacting = false;
+        }
     }
 }

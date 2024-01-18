@@ -2,20 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickupObject : MonoBehaviour
+public class PickupObject : Interactable
 {
     [SerializeField] Item item;
     [SerializeField] Inventory inventory;
-    [SerializeField] KeyCode PickupKey = KeyCode.E; //change for controller input
-
-    [SerializeField] SpriteRenderer spriteRenderer;
 
     public GameObject boxRange;
 
-    public GameObject uiObject;
+    EarthPlayer earthPlayer;
 
-    private bool isInRange;
-    
     private void OnValidate()
     {
         if (item != null)
@@ -31,6 +26,17 @@ public class PickupObject : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        foreach (GameObject player in players)
+        {
+            if (player.GetComponent<EarthPlayer>())
+            {
+                earthPlayer = player.GetComponent<EarthPlayer>();
+            }
+        }
+    }
+
     private void Update()
     {
         ItemPickup();
@@ -38,7 +44,7 @@ public class PickupObject : MonoBehaviour
 
     public void ItemPickup()
     {
-        if (isInRange && Input.GetKeyDown(PickupKey))
+        if (isInRange && earthPlayer.interacting)
         {
             if (item != null)
             {
@@ -55,32 +61,6 @@ public class PickupObject : MonoBehaviour
             Debug.LogWarning("in range and key pressed");
         }
     }
-    private void OnTriggerEnter(Collider player)
-    {
-        if (player.gameObject.tag == "Player1")
-        {
-            isInRange = true;
-            uiObject.SetActive(true);
-            
-
-            // Check if the item is not null before enabling the spriteRenderer
-            if (item != null)
-            {
-                spriteRenderer.enabled = true;
-                
-            }
-
-            Debug.LogWarning("in range");
-        }
-       
-
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        isInRange = false;
-        uiObject.SetActive(false);
-         
-    }
+    
 
 }

@@ -1811,7 +1811,7 @@ GameObject:
   - component: {fileID: 258719849}
   - component: {fileID: 258719848}
   - component: {fileID: 258719847}
-  - component: {fileID: 258719846}
+  - component: {fileID: 258719852}
   m_Layer: 0
   m_Name: Seed
   m_TagString: Untagged
@@ -1839,24 +1839,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -0.12}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &258719846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 258719844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7bdcd79136c6994a9fc1bf2b2267d89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: a140d235e4997e541bbfda0dc14cba59, type: 2}
-  inventory: {fileID: 1029211998}
-  PickupKey: 112
-  spriteRenderer: {fileID: 258719848}
-  boxRange: {fileID: 127044409}
-  uiObject: {fileID: 2034533806}
 --- !u!135 &258719847
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1993,6 +1975,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &258719852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258719844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cf5c9443e094746a31c5a387e2696e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 258719848}
+  uiObject: {fileID: 2034533806}
+  thing: {fileID: 0}
+  PickupKey: 101
+  playerRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  item: {fileID: 11400000, guid: a140d235e4997e541bbfda0dc14cba59, type: 2}
+  inventory: {fileID: 1029211998}
+  boxRange: {fileID: 127044409}
 --- !u!1 &277008293
 GameObject:
   m_ObjectHideFlags: 0
@@ -3857,6 +3859,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 545069092}
   boxRange: {fileID: 713341286}
   uiObject: {fileID: 901343214}
+  isInRange: 0
 --- !u!135 &545069091
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -8038,8 +8041,8 @@ GameObject:
   - component: {fileID: 873206687}
   - component: {fileID: 873206686}
   - component: {fileID: 873206685}
-  - component: {fileID: 873206684}
   - component: {fileID: 873206683}
+  - component: {fileID: 873206689}
   m_Layer: 0
   m_Name: Seed
   m_TagString: Untagged
@@ -8088,24 +8091,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.11
   m_Center: {x: 0, y: 0.000000029802322, z: 0}
---- !u!114 &873206684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873206681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7bdcd79136c6994a9fc1bf2b2267d89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: a140d235e4997e541bbfda0dc14cba59, type: 2}
-  inventory: {fileID: 1029211998}
-  PickupKey: 112
-  spriteRenderer: {fileID: 873206685}
-  boxRange: {fileID: 52122712}
-  uiObject: {fileID: 1503603923}
 --- !u!212 &873206685
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8221,6 +8206,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &873206689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873206681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cf5c9443e094746a31c5a387e2696e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 258719848}
+  uiObject: {fileID: 2034533806}
+  thing: {fileID: 0}
+  PickupKey: 101
+  playerRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  item: {fileID: 11400000, guid: a140d235e4997e541bbfda0dc14cba59, type: 2}
+  inventory: {fileID: 1029211998}
+  boxRange: {fileID: 127044409}
 --- !u!1 &879100254 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2152928520546954361, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
@@ -13005,6 +13010,7 @@ GameObject:
   - component: {fileID: 1537591244}
   - component: {fileID: 1537591243}
   - component: {fileID: 1537591242}
+  - component: {fileID: 1537591246}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -13074,6 +13080,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1537591246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1537591241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44c88b5d314f02e418a21ef32ddbcd67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectiveText: {fileID: 759828910782173683}
+  animalHasEnoughFood: 0
+  animalHasEnoughWater: 0
+  animalHasShelter: 0
+  animalIsSafe: 0
 --- !u!1 &1548372255
 GameObject:
   m_ObjectHideFlags: 0
@@ -18081,14 +18104,6 @@ PrefabInstance:
     - target: {fileID: 751666747554137490, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531475006479591630, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531475006479591630, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
-      propertyPath: m_margin.w
-      value: -87.17694
       objectReference: {fileID: 0}
     - target: {fileID: 6080085847549858388, guid: 1bc1acb042145f84cbc61c73c41de53a, type: 3}
       propertyPath: m_Name
