@@ -2,17 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CanColdSnap : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+
+[CreateAssetMenu(menuName = "FSM/Decisions/canColdSnap")]
+public class CanColdSnap : Decision
+{
+    public override bool Decide(BaseStateMachine stateMachine)
     {
-        
+        // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking)
+        {
+            Debug.Log("currentdoing attack");
+            //if (stateMachine.GetComponent<CelestialPlayer>().isRaining)
+
+            //celestialPlayer.isRaining = true;
+            return true;
+        }
+        else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking)
+        {
+            Debug.Log("ColdSnap OVer------");
+            return false;
+        }
+        return false;
     }
 }

@@ -46,9 +46,18 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MakeLighteningStrike"",
+                    ""name"": ""MakeColdSnap"",
                     ""type"": ""Button"",
                     ""id"": ""abe50024-f9fd-430e-97bb-714ba157b059"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MakeLighteningStrike"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd920340-10f7-48ce-9c68-9a1673690858"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -207,11 +216,11 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""9c5b4593-75b6-49f5-b8dd-2594130a33a9"",
-                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MakeLighteningStrike"",
+                    ""action"": ""MakeColdSnap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -277,7 +286,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MakeLighteningStrike"",
+                    ""action"": ""MakeColdSnap"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -288,7 +297,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MakeLighteningStrike"",
+                    ""action"": ""MakeColdSnap"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -357,6 +366,39 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""action"": ""MakeDodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d95e9c81-4c47-4fab-b047-b2ad46eb3e46"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeLighteningStrike"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""KeyBoard"",
+                    ""id"": ""8d308be7-5956-4a22-ab5b-0ce4164bdb6c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeLighteningStrike"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""bea95190-6609-4444-a7b3-ae329e903299"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeLighteningStrike"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -367,6 +409,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         m_CelestialPlayerDefault = asset.FindActionMap("CelestialPlayerDefault", throwIfNotFound: true);
         m_CelestialPlayerDefault_Walk = m_CelestialPlayerDefault.FindAction("Walk", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeRain = m_CelestialPlayerDefault.FindAction("MakeRain", throwIfNotFound: true);
+        m_CelestialPlayerDefault_MakeColdSnap = m_CelestialPlayerDefault.FindAction("MakeColdSnap", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeLighteningStrike = m_CelestialPlayerDefault.FindAction("MakeLighteningStrike", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeSmog = m_CelestialPlayerDefault.FindAction("MakeSmog", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeSunBeam = m_CelestialPlayerDefault.FindAction("MakeSunBeam", throwIfNotFound: true);
@@ -434,6 +477,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     private List<ICelestialPlayerDefaultActions> m_CelestialPlayerDefaultActionsCallbackInterfaces = new List<ICelestialPlayerDefaultActions>();
     private readonly InputAction m_CelestialPlayerDefault_Walk;
     private readonly InputAction m_CelestialPlayerDefault_MakeRain;
+    private readonly InputAction m_CelestialPlayerDefault_MakeColdSnap;
     private readonly InputAction m_CelestialPlayerDefault_MakeLighteningStrike;
     private readonly InputAction m_CelestialPlayerDefault_MakeSmog;
     private readonly InputAction m_CelestialPlayerDefault_MakeSunBeam;
@@ -444,6 +488,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         public CelestialPlayerDefaultActions(@CelestialPlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_CelestialPlayerDefault_Walk;
         public InputAction @MakeRain => m_Wrapper.m_CelestialPlayerDefault_MakeRain;
+        public InputAction @MakeColdSnap => m_Wrapper.m_CelestialPlayerDefault_MakeColdSnap;
         public InputAction @MakeLighteningStrike => m_Wrapper.m_CelestialPlayerDefault_MakeLighteningStrike;
         public InputAction @MakeSmog => m_Wrapper.m_CelestialPlayerDefault_MakeSmog;
         public InputAction @MakeSunBeam => m_Wrapper.m_CelestialPlayerDefault_MakeSunBeam;
@@ -463,6 +508,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeRain.started += instance.OnMakeRain;
             @MakeRain.performed += instance.OnMakeRain;
             @MakeRain.canceled += instance.OnMakeRain;
+            @MakeColdSnap.started += instance.OnMakeColdSnap;
+            @MakeColdSnap.performed += instance.OnMakeColdSnap;
+            @MakeColdSnap.canceled += instance.OnMakeColdSnap;
             @MakeLighteningStrike.started += instance.OnMakeLighteningStrike;
             @MakeLighteningStrike.performed += instance.OnMakeLighteningStrike;
             @MakeLighteningStrike.canceled += instance.OnMakeLighteningStrike;
@@ -485,6 +533,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeRain.started -= instance.OnMakeRain;
             @MakeRain.performed -= instance.OnMakeRain;
             @MakeRain.canceled -= instance.OnMakeRain;
+            @MakeColdSnap.started -= instance.OnMakeColdSnap;
+            @MakeColdSnap.performed -= instance.OnMakeColdSnap;
+            @MakeColdSnap.canceled -= instance.OnMakeColdSnap;
             @MakeLighteningStrike.started -= instance.OnMakeLighteningStrike;
             @MakeLighteningStrike.performed -= instance.OnMakeLighteningStrike;
             @MakeLighteningStrike.canceled -= instance.OnMakeLighteningStrike;
@@ -518,6 +569,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnMakeRain(InputAction.CallbackContext context);
+        void OnMakeColdSnap(InputAction.CallbackContext context);
         void OnMakeLighteningStrike(InputAction.CallbackContext context);
         void OnMakeSmog(InputAction.CallbackContext context);
         void OnMakeSunBeam(InputAction.CallbackContext context);

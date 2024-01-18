@@ -24,9 +24,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MakeLighteningStrike",
+                    "name": "MakeColdSnap",
                     "type": "Button",
                     "id": "abe50024-f9fd-430e-97bb-714ba157b059",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MakeLighteningStrike",
+                    "type": "Button",
+                    "id": "dd920340-10f7-48ce-9c68-9a1673690858",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -185,11 +194,11 @@
                 {
                     "name": "",
                     "id": "9c5b4593-75b6-49f5-b8dd-2594130a33a9",
-                    "path": "<Gamepad>/dpad/left",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MakeLighteningStrike",
+                    "action": "MakeColdSnap",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -255,7 +264,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MakeLighteningStrike",
+                    "action": "MakeColdSnap",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -266,7 +275,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MakeLighteningStrike",
+                    "action": "MakeColdSnap",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -333,6 +342,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "MakeDodge",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "d95e9c81-4c47-4fab-b047-b2ad46eb3e46",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MakeLighteningStrike",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "KeyBoard",
+                    "id": "8d308be7-5956-4a22-ab5b-0ce4164bdb6c",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MakeLighteningStrike",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "bea95190-6609-4444-a7b3-ae329e903299",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MakeLighteningStrike",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

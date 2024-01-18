@@ -20,6 +20,11 @@ public class CelestialPlayer : MonoBehaviour
     [SerializeField] public bool isRaining=false;
     [SerializeField] public GameObject RainParticleSystem;
 
+
+    [Header("Attack")]
+    [SerializeField] public bool isAttacking = false;
+    private Vector3 OrigPos = new Vector3(70,7,-40);
+    ColdSnapBehaviour coldSnap;
     //private CelestialPlayerInputActions celestialPlayerInput;
     private PlayerInput playerInput;
     // [Header("Lightning System")]
@@ -42,6 +47,7 @@ public class CelestialPlayer : MonoBehaviour
     {
         // celestialPlayerInput = GetComponent<CelestialPlayerInputActions>();
         playerInput = GetComponent<PlayerInput>();
+        coldSnap = GetComponent<ColdSnapBehaviour>();
     }
 
 
@@ -56,19 +62,23 @@ public class CelestialPlayer : MonoBehaviour
     {
 
        healthPoints -= 10;
+        
         Debug.Log(healthPoints);
         bool isDead = healthPoints <= 0;
         if (isDead)
         {
-            Die();
+           Respawn();
         }
 
         return isDead;
 
     }
-    private void Die()
+    private void Respawn()
     {
-        Destroy(gameObject);
+
+        healthPoints = 100;
+        gameObject.transform.position = OrigPos;
+
     }
 
     //if player selects raindrop
@@ -98,12 +108,20 @@ public class CelestialPlayer : MonoBehaviour
     }
     public IEnumerator ResetColdSnap()
     {
-        yield return new WaitForSeconds(1f);
-        //isRolling = false;
+        GameObject coldOrb = coldSnap.GetComponent<ColdSnapBehaviour>().ColdSnapStats.visualDisplay;
+        Instantiate(coldOrb, gameObject.transform.position, Quaternion.identity);
+        Rigidbody coldRB = coldOrb.GetComponent<Rigidbody>();
+        coldRB.AddForce(0, 0, 2f,ForceMode.Acceleration);
+
+        //////////////coldOrb.transform.forward.
+  
+            isAttacking = true;
+        yield return new WaitForSeconds(2f);
+       
     }
     public IEnumerator ResetThundrerStrike()
     {
         yield return new WaitForSeconds(1f);
-        //isRolling = false;
+       
     }
 }

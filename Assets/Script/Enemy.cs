@@ -7,9 +7,8 @@ public class Enemy : MonoBehaviour
 {
     public NavMeshAgent enemyMeshAgent;
     public GameObject playerObj;
-
-    //MonsterStats
     public EnemyStats enemyStats;
+  
     private int enemyHealthPoints;
 
 
@@ -39,10 +38,10 @@ public class Enemy : MonoBehaviour
         
     }
     
-    public bool TakeHit()
+    public bool TakeHit( int hitPoints)
     {
 
-       enemyHealthPoints -= 10;
+       enemyHealthPoints -=hitPoints;
         bool isDead = enemyStats.maxHealth <= 0;
         if (isDead) {
             Die();

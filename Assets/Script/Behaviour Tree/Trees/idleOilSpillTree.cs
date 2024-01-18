@@ -15,7 +15,7 @@ public class idleOilSpillTree : BTree
     public static float speed = 2f;
 
     //Enemy Health
-    [SerializeField] private float startingHealth;
+    [SerializeField] private float startingHealth=10;
     [SerializeField] private float currHealth;
     [SerializeField] private Transform playerTransform;
     //collider attackCollider or attack range
@@ -58,7 +58,7 @@ public class idleOilSpillTree : BTree
              }),
            
 
-
+          /*MAKE ANOTHER ONE TO RESPOND TO ATTACKS*/
 
             /*
         if they can see the player (collider)
