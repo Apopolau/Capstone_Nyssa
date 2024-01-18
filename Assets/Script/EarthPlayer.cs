@@ -264,4 +264,9 @@ public class EarthPlayer : MonoBehaviour
         }
         
     }
+
+    public void OnInteract()
+    {
+
+    }
 }
