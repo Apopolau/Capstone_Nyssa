@@ -18,10 +18,14 @@ public class LevelOneEvents : EventManager
     List<GameObject> secondAreaTiles = new List<GameObject>();
     List<GameObject> thirdAreaTiles = new List<GameObject>();
 
+    [SerializeField] TaskListManager task1;
+    [SerializeField] TaskListManager task2;
+    [SerializeField] TaskListManager task3;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        levelOneProgress = GetComponent<LevelOneProgress>();
         foreach (Transform childTransform in firstAreaGrid.transform)
         {
             firstAreaTiles.Add(childTransform.gameObject);
@@ -42,10 +46,10 @@ public class LevelOneEvents : EventManager
     // Update is called once per frame
     void Update()
     {
-        
+        EvaluateFoodLevel();
     }
 
-    private void OnFirstMonsterDefeated()
+    public void OnFirstMonsterDefeated()
     {
         
         foreach (GameObject go in firstAreaTiles)
@@ -56,6 +60,7 @@ public class LevelOneEvents : EventManager
             }
         }
         levelOneProgress.GetComponent<LevelProgress>().animalHasShelter = true;
+        task3.CrossOutTask();
     }
 
     public void OnPumpShutOff()
@@ -77,5 +82,14 @@ public class LevelOneEvents : EventManager
             }
         }
         levelOneProgress.GetComponent<LevelProgress>().animalHasEnoughWater = true;
+        task2.CrossOutTask();
+    }
+
+    private void EvaluateFoodLevel()
+    {
+        if (levelOneProgress.EvaluateFood())
+        {
+            task3.CrossOutTask();
+        }
     }
 }

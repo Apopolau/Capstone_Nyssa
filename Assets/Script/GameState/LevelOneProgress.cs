@@ -34,4 +34,33 @@ public class LevelOneProgress : LevelProgress
     {
         
     }
+
+    public bool EvaluateFood()
+    {
+        treeCount = 0;
+        grassCount = 0;
+        cattailCount = 0;
+
+        foreach(GameObject plant in plantSet.Items)
+        {
+            if(plant.GetComponent<Plant>().stats.plantName == "Grass")
+            {
+                grassCount++;
+            }
+            if (plant.GetComponent<Plant>().stats.plantName == "Tree")
+            {
+                treeCount++;
+            }
+            if (plant.GetComponent<Plant>().stats.plantName == "Cattail")
+            {
+                cattailCount++;
+            }
+        }
+
+        if(treeCount >= treeGoal && grassCount >= grassGoal && cattailCount >= cattailGoal)
+        {
+            return true;
+        }
+        return false;
+    }
 }

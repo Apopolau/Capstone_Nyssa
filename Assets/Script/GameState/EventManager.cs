@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EventManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    //private bool isTaskCompleted = false;
+    //private TextMeshProUGUI textComponent;
+
     void Start()
     {
         
+
     }
 
     // Update is called once per frame

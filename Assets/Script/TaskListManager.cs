@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 
 public class TaskListManager : MonoBehaviour
-{private bool isTaskCompleted = false;
+{
+    private bool isTaskCompleted = false;
     private TextMeshProUGUI textComponent;
 
     void Start()
@@ -22,7 +23,6 @@ public class TaskListManager : MonoBehaviour
         {
             isTaskCompleted = true;
             textComponent.text = "<s>" + textComponent.text + "</s>"; // TextMeshPro supports rich text
-           
         }
     }
 }

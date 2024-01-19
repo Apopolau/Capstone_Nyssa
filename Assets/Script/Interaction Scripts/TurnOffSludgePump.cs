@@ -51,6 +51,7 @@ public class TurnOffSludgePump : Interactable
     {
         if (isInRange && earthPlayer.interacting)
         {
+            Debug.Log("Turned off the sludge pump");
             levelOneEvents.OnPumpShutOff();
             uiObject.SetActive(false);
             boxRange.SetActive(false);

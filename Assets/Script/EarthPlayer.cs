@@ -271,14 +271,16 @@ public class EarthPlayer : MonoBehaviour
         
     }
 
-    public void OnInteract()
+    public void OnInteract(InputAction.CallbackContext context)
     {
-        if (actions.EarthPlayerDefault.Interact.WasPressedThisFrame() || actions.EarthPlayerDefault.Interact.WasPerformedThisFrame())
+        if (context.phase == InputActionPhase.Started)
         {
+            Debug.Log("Interacting");
             interacting = true;
         }
-        else if (actions.EarthPlayerDefault.Interact.WasReleasedThisFrame())
+        else if (context.phase == InputActionPhase.Performed)
         {
+            Debug.Log("Not interacting anymore");
             interacting = false;
         }
     }

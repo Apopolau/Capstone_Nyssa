@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.UI;
 public class Cell : MonoBehaviour
 {
     [SerializeField] private EarthPlayer earthPlayer;
+    [SerializeField] private CelestialPlayer celestialPlayer;
     [SerializeField] GameObjectRuntimeSet playerSet;
     [SerializeField] public GameObject buildingTarget;
 
@@ -46,7 +47,18 @@ public class Cell : MonoBehaviour
 
     private void Start()
     {
-        earthPlayer = playerSet.GetItemIndex(0).GetComponent<EarthPlayer>();
+        foreach(GameObject player in playerSet.Items)
+        {
+            if (player.tag == "Player1")
+            {
+                earthPlayer = player.GetComponent<EarthPlayer>();
+            }
+            else if (player.tag == "Player2")
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
+        }
+        //earthPlayer = playerSet.GetItemIndex(0).GetComponent<EarthPlayer>();
         StartCoroutine(CheckForPlayer());
         StartCoroutine(UpdateTileAppearance());
         tileVector.x = this.transform.position.x;

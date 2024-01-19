@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    
-
     protected bool isInRange;
     public GameObject uiObject;
     //[SerializeField] GameObject thing;
@@ -21,7 +19,7 @@ public class Interactable : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider player)
+    private void OnTriggerStay(Collider player)
     {
         if (player.gameObject.tag == "Player1")
         {
@@ -29,17 +27,8 @@ public class Interactable : MonoBehaviour
             uiObject.SetActive(true);
 
             // Check if the item is not null before enabling the spriteRenderer
-            /*
-            if (thing != null)
-            {
-                spriteRenderer.enabled = true;
-            }
-            */
-
-            Debug.LogWarning("in range");
+            //Debug.LogWarning("in range");
         }
-
-
     }
 
     private void OnTriggerExit(Collider other)

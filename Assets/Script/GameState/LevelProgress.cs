@@ -6,7 +6,8 @@ using TMPro;
 
 public class LevelProgress : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI objectiveText;
+    [SerializeField] protected GameObjectRuntimeSet plantSet;
+    [SerializeField] protected TextMeshProUGUI objectiveText;
 
     int currentPlayerLevel;
 
