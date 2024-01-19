@@ -38,8 +38,8 @@ public class CelestialPlayer : MonoBehaviour
     {
         celestialAgent = GetComponent<NavMeshAgent>();
         celestialAgent.enabled = false;
-       healthPoints=100;
-    virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        healthPoints=100;
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
 

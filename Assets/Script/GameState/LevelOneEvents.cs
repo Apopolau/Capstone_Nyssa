@@ -6,44 +6,90 @@ public class LevelOneEvents : EventManager
 {
     LevelOneProgress levelOneProgress;
 
-    [SerializeField] Texture cleanWaterMaterial;
-    GameObject river;
+    [SerializeField] Material cleanWaterMaterial;
+    [SerializeField] GameObject river;
+    [SerializeField] GameObject lake;
 
-    GameObject firstAreaGrid;
-    GameObject secondAreaGrid;
-    GameObject thirdAreaGrid;
+    [SerializeField] GameObject firstAreaGrid;
+    [SerializeField] GameObject secondAreaGrid;
+    [SerializeField] GameObject thirdAreaGrid;
+
+    List<GameObject> firstAreaTiles = new List<GameObject>();
+    List<GameObject> secondAreaTiles = new List<GameObject>();
+    List<GameObject> thirdAreaTiles = new List<GameObject>();
+
+    [SerializeField] TaskListManager task1;
+    [SerializeField] TaskListManager task2;
+    [SerializeField] TaskListManager task3;
 
     // Start is called before the first frame update
     void Start()
     {
+        levelOneProgress = GetComponent<LevelOneProgress>();
+        foreach (Transform childTransform in firstAreaGrid.transform)
+        {
+            firstAreaTiles.Add(childTransform.gameObject);
+        }
         
+        foreach (Transform childTransform in secondAreaGrid.transform)
+        {
+            secondAreaTiles.Add(childTransform.gameObject);
+        }
+        
+        foreach (Transform childTransform in thirdAreaGrid.transform)
+        {
+            thirdAreaTiles.Add(childTransform.gameObject);
+        }
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        EvaluateFoodLevel();
     }
 
-    private void OnFirstMonsterDefeated()
+    public void OnFirstMonsterDefeated()
     {
-        List<GameObject> firstAreaTiles = new List<GameObject>();
-        foreach (Transform childTransform in firstAreaGrid.transform)
-        {
-            firstAreaTiles.Add(childTransform.gameObject);
-        }
+        
         foreach (GameObject go in firstAreaTiles)
         {
-            go.GetComponent<Cell>().terrainType = Cell.TerrainType.DIRT;
+            if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+        levelOneProgress.GetComponent<LevelProgress>().animalHasShelter = true;
+        task3.CrossOutTask();
+    }
+
+    public void OnPumpShutOff()
+    {
+        river.GetComponent<Renderer>().material = cleanWaterMaterial;
+        lake.GetComponent<Renderer>().material = cleanWaterMaterial;
+        foreach(GameObject go in firstAreaTiles)
+        {
+            if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+        foreach (GameObject go in thirdAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+        levelOneProgress.GetComponent<LevelProgress>().animalHasEnoughWater = true;
+        task2.CrossOutTask();
+    }
+
+    private void EvaluateFoodLevel()
+    {
+        if (levelOneProgress.EvaluateFood())
+        {
+            task3.CrossOutTask();
         }
     }
-
-    private void OnPumpShutOff()
-    {
-        //Change texture from gross to nice?
-        river.GetComponent<Material>().SetTexture("Clean Water", cleanWaterMaterial);
-        levelOneProgress.GetComponent<LevelProgress>().animalHasEnoughWater = true;
-    }
-
-
 }

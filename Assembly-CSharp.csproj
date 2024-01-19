@@ -59,20 +59,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\Runtime Sets\RuntimeSet.cs" />
+    <Compile Include="Assets\Script\Interaction Scripts\ItemSlot.cs" />
     <Compile Include="Assets\Script\Finite State Machine\RemainInState.cs" />
     <Compile Include="Assets\Script\GameState\EventManager.cs" />
     <Compile Include="Assets\Script\Finite State Machine\Decision.cs" />
     <Compile Include="Assets\Script\Finite State Machine\FSMActions\StopRainAction.cs" />
     <Compile Include="Assets\Scenes\Apoline Test\playerInputHandler.cs" />
+    <Compile Include="Assets\Script\Interaction Scripts\TurnOffSludgePump.cs" />
     <Compile Include="Assets\Script\Finite State Machine\BaseStateMachine.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\Conditions\CheckInAttackRange.cs" />
+    <Compile Include="Assets\Script\Interaction Scripts\Items.cs" />
     <Compile Include="Assets\Script\DayNightCycle.cs" />
-    <Compile Include="Assets\Script\Inventory.cs" />
     <Compile Include="Assets\Script\GameState\WinState.cs" />
     <Compile Include="Assets\Script\Player2Button.cs" />
     <Compile Include="Assets\Script\Enemy.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\Nodes\taskChase.cs" />
-    <Compile Include="Assets\Script\PickupObject.cs" />
+    <Compile Include="Assets\Script\Interaction Scripts\Inventory.cs" />
     <Compile Include="Assets\Script\Finite State Machine\PowerStats\PowerStats.cs" />
     <Compile Include="Assets\Samples\Input System\CelestialPlayerInputActions.cs" />
     <Compile Include="Assets\Script\Grid System\Plant.cs" />
@@ -89,17 +91,18 @@
     <Compile Include="Assets\Script\Grid System\Creatable.cs" />
     <Compile Include="Assets\Script\Finite State Machine\FSMAction.cs" />
     <Compile Include="Assets\Script\Finite State Machine\Transition.cs" />
-    <Compile Include="Assets\Script\ItemSlot.cs" />
     <Compile Include="Assets\Script\GameState\LevelOneProgress.cs" />
     <Compile Include="Assets\Script\DialogueManager.cs" />
     <Compile Include="Assets\Script\Player1Button.cs" />
     <Compile Include="Assets\Script\SplitScreen.cs" />
+    <Compile Include="Assets\Script\Interaction Scripts\Interactable.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\Decorator.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\Trees\idleOilSpillTree.cs" />
     <Compile Include="Assets\Script\Finite State Machine\Decisions\IsRaining.cs" />
     <Compile Include="Assets\Script\GameState\LoseState.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\BTNode.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\Conditions\CheckInRange.cs" />
+    <Compile Include="Assets\Script\TaskListManager.cs" />
     <Compile Include="Assets\Script\GameState\LevelThreeProgress.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\Selector.cs" />
     <Compile Include="Assets\Script\GameState\LevelOneEvents.cs" />
@@ -109,7 +112,6 @@
     <Compile Include="Assets\Script\Behaviour Tree\Composite.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\Conditions\CheckIsAlive.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\Timer.cs" />
-    <Compile Include="Assets\Script\Items.cs" />
     <Compile Include="Assets\Script\Finite State Machine\BaseState.cs" />
     <Compile Include="Assets\Script\VirtualMouseUI.cs" />
     <Compile Include="Assets\Script\EnemySpawner.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Assets\Script\Finite State Machine\FSMActions\MakeRainAction.cs" />
     <Compile Include="Assets\Script\Behaviour Tree\BehaviourTree.cs" />
     <Compile Include="Assets\GameManager.cs" />
+    <Compile Include="Assets\Script\Interaction Scripts\PickupObject.cs" />
     <Compile Include="Assets\Script\playerMovment.cs" />
     <Compile Include="Assets\Script\Grid System\PlantStats.cs" />
     <Compile Include="Assets\Script\Finite State Machine\FSMActions\AttackLighteningAction.cs" />

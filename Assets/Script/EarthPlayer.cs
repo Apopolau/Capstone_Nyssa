@@ -44,7 +44,10 @@ public class EarthPlayer : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI displayText;
 
+    private PlayerInputActions actions;
     private PlayerInput playerInput;
+
+    public bool interacting = false;
 
     [SerializeField] private VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
@@ -65,6 +68,9 @@ public class EarthPlayer : MonoBehaviour
     {
         plantTime = new WaitForSeconds(2);
         playerInput = GetComponent<PlayerInput>();
+        actions = new PlayerInputActions();
+        //playerInput.enabled = true;
+        //Interact.performed += OnInteract;
     }
 
     // Update is called once per frame
@@ -263,5 +269,19 @@ public class EarthPlayer : MonoBehaviour
             selectedTile = hit.transform.gameObject.GetComponentInParent<Cell>().gameObject;
         }
         
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            Debug.Log("Interacting");
+            interacting = true;
+        }
+        else if (context.phase == InputActionPhase.Performed)
+        {
+            Debug.Log("Not interacting anymore");
+            interacting = false;
+        }
     }
 }

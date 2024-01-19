@@ -5,7 +5,7 @@ using UnityEngine;
 public class Plant : Creatable
 {
     private int currentHealth;
-    [SerializeField] PlantStats stats;
+    [SerializeField] public PlantStats stats;
     public GameObject plantVisual;
 
     private int storedSunlight;
