@@ -50,6 +50,10 @@ public class PickupObject : MonoBehaviour
                 uiObject.SetActive(false);
                 boxRange.SetActive(false);
 
+                // Add this anywhere where the task should be crossed out when completed.
+                TaskListManager task1 = GameObject.Find("Task1").GetComponent<TaskListManager>();
+                task1.CrossOutTask();
+
             }
 
             Debug.LogWarning("in range and key pressed");
