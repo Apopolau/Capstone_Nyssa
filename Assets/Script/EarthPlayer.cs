@@ -278,7 +278,7 @@ public class EarthPlayer : MonoBehaviour
             Debug.Log("Interacting");
             interacting = true;
         }
-        else if (context.phase == InputActionPhase.Performed)
+        else if (context.phase == InputActionPhase.Canceled)
         {
             Debug.Log("Not interacting anymore");
             interacting = false;
