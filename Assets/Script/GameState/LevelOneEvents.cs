@@ -58,7 +58,7 @@ public class LevelOneEvents : EventManager
         levelOneProgress.GetComponent<LevelProgress>().animalHasShelter = true;
     }
 
-    private void OnPumpShutOff()
+    public void OnPumpShutOff()
     {
         river.GetComponent<Renderer>().material = cleanWaterMaterial;
         lake.GetComponent<Renderer>().material = cleanWaterMaterial;

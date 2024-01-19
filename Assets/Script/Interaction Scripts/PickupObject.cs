@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PickupObject : Interactable
 {
+    [SerializeField] protected SpriteRenderer spriteRenderer;
+
     [SerializeField] Item item;
     [SerializeField] Inventory inventory;
 
@@ -22,12 +24,12 @@ public class PickupObject : Interactable
         {
             spriteRenderer.enabled = false;
             uiObject.SetActive(false);
-
         }
     }
 
     private void Start()
     {
+        players = playerRuntimeSet.Items;
         foreach (GameObject player in players)
         {
             if (player.GetComponent<EarthPlayer>())

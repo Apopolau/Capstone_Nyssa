@@ -8,6 +8,12 @@ public class Cell : MonoBehaviour
     [SerializeField] private EarthPlayer earthPlayer;
     [SerializeField] GameObjectRuntimeSet playerSet;
     [SerializeField] public GameObject buildingTarget;
+
+    [SerializeField] private Texture grassTile;
+    [SerializeField] private Texture dirtTile;
+    [SerializeField] private Texture pollutedTile;
+    [SerializeField] private Material waterTile;
+
     public enum TerrainType {GRASS, DIRT, WATER};
     public TerrainType terrainType;
 
@@ -42,8 +48,10 @@ public class Cell : MonoBehaviour
     {
         earthPlayer = playerSet.GetItemIndex(0).GetComponent<EarthPlayer>();
         StartCoroutine(CheckForPlayer());
+        StartCoroutine(UpdateTileAppearance());
         tileVector.x = this.transform.position.x;
         tileVector.y = this.transform.position.z;
+        
     }
 
     private void Update()
@@ -66,6 +74,36 @@ public class Cell : MonoBehaviour
         else
         {
             tileValid = true;
+        }
+    }
+
+    private IEnumerator UpdateTileAppearance()
+    {
+        while (true)
+        {
+            if (terrainType == TerrainType.WATER)
+            {
+                GetComponentInChildren<MeshRenderer>().material = waterTile;
+            }
+            else
+            {
+                if (enviroState == EnviroState.POLLUTED)
+                {
+                    GetComponentInChildren<MeshRenderer>().material.mainTexture = pollutedTile;
+                }
+                else
+                {
+                    if (tileHasBuild)
+                    {
+                        GetComponentInChildren<MeshRenderer>().material.mainTexture = grassTile;
+                    }
+                    else
+                    {
+                        GetComponentInChildren<MeshRenderer>().material.mainTexture = dirtTile;
+                    }
+                }
+            }
+            yield return new WaitForSeconds(0.2f);
         }
     }
 
