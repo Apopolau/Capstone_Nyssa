@@ -11,15 +11,20 @@ public class AttackColdSnapAction : FSMAction
         CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
 
         //if it isn't raining start rain
-        if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking)
+        if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().canColdSnap)
         {
             Debug.Log("ColdSnapActivated");
 
           
+           
+            player.StartCoroutine(player.animateColdSnap());
             player.StartCoroutine(player.ResetColdSnap());
-            
-         
+           
+            Debug.Log("coldsnap stopped");
+            stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;
+
         }
+
 
 
     }

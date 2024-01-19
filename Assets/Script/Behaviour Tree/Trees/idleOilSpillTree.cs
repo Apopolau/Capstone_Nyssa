@@ -18,6 +18,7 @@ public class idleOilSpillTree : BTree
     [SerializeField] private float startingHealth=10;
     [SerializeField] private float currHealth;
     [SerializeField] private Transform playerTransform;
+    
     //collider attackCollider or attack range
     //collider chase collider or chase range
 

@@ -8,10 +8,10 @@ public class Enemy : MonoBehaviour
     public NavMeshAgent enemyMeshAgent;
     public GameObject playerObj;
     public EnemyStats enemyStats;
-  
+    public CelestialPlayer player;
     private int enemyHealthPoints;
-
-
+    [SerializeField] bool isFirst;
+    [SerializeField] public bool isDying =false;
 
     //Interaction with the player
     public bool seesPlayer = false;
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         enemyMeshAgent = GetComponent<NavMeshAgent>();
-
+        //player = GetComponent<CelestialPlayer>();
     }
 
     // Update is called once per frame
@@ -40,10 +40,25 @@ public class Enemy : MonoBehaviour
     
     public bool TakeHit( int hitPoints)
     {
+        
+       
+        enemyHealthPoints -=hitPoints;
+        bool isDead = enemyHealthPoints <= 0;
 
-       enemyHealthPoints -=hitPoints;
-        bool isDead = enemyStats.maxHealth <= 0;
+        Debug.Log("Enemy:" + enemyHealthPoints);
         if (isDead) {
+
+            Debug.Log("DIEEEEEEEE" );
+            ////change scene herrrre
+            ///
+            if (player.enemyTarget.GetComponent<Enemy>().isFirst)
+            {
+                player.enemyTarget.GetComponent<Enemy>().isDying = true;
+                player.enemyTarget.GetComponent<LevelOneFirstEnemyDead>().CheckIfDead();
+
+
+            }
+
             Die();
         }
 
@@ -52,6 +67,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+
        // Debug.Log("Entered collision with " + other.gameObject.name);
         if (other.gameObject == playerObj)
         {
@@ -98,6 +114,7 @@ public class Enemy : MonoBehaviour
     
     private void Die()
     {
+        
         Destroy(gameObject);
     }
 }

@@ -23,8 +23,11 @@ public class CelestialPlayer : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] public bool isAttacking = false;
-    private Vector3 OrigPos = new Vector3(70,7,-40);
+    [SerializeField] public bool canColdSnap = true;
+
+    private Vector3 OrigPos = new Vector3(20,7,-97);
     ColdSnapBehaviour coldSnap;
+    [SerializeField] public GameObject treeSeedPrefab;
     //private CelestialPlayerInputActions celestialPlayerInput;
     private PlayerInput playerInput;
     // [Header("Lightning System")]
@@ -34,12 +37,23 @@ public class CelestialPlayer : MonoBehaviour
     //Battle 
     private int healthPoints;
 
+    //Interaction with the player
+    public bool enemySeen = false;
+
+    public GameObject enemyTarget;
+    public Vector3 enemyLocation;
+
+
+
+
+
+
     private void Awake()
     {
         celestialAgent = GetComponent<NavMeshAgent>();
         celestialAgent.enabled = false;
         healthPoints=100;
-        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+       virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
 
@@ -58,6 +72,53 @@ public class CelestialPlayer : MonoBehaviour
     }
 
 
+    private void OnTriggerEnter(Collider other)
+    {
+        //Debug.Log("Entered collision with " + other.gameObject.name);
+        if (other.gameObject.tag == "enemy")
+        {
+            //Player is in range of enemy, in invading monster they can pursue the player
+           enemySeen = true;
+          
+           enemyLocation= other.transform.position;
+            enemyTarget = other.gameObject;
+
+        }
+       
+    }
+
+    private void OnTriggerStay(Collider other)
+    {   
+        if (other.gameObject.tag == "Enemy")
+        {
+           // Debug.Log("Entered collision with " + other.gameObject.name);
+            //Player is in range of enemy, in invading monster they can pursue the player
+            enemySeen = true;
+
+            enemyLocation = other.transform.position;
+            enemyTarget = other.gameObject;
+
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+       
+        if (other.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Entered collision with " + other.gameObject.name);
+            //Player is in range of enemy, in invading monster they can pursue the player
+            enemySeen = false;
+
+            enemyLocation = other.transform.position;
+          
+
+        }
+    }
+
+
+
+
+
     public bool TakeHit()
     {
 
@@ -73,6 +134,25 @@ public class CelestialPlayer : MonoBehaviour
         return isDead;
 
     }
+
+    public void Attack()
+    {
+
+        ColdSnapBehaviour attack;
+        attack = GetComponent<ColdSnapBehaviour>();
+
+        bool playerIsDead;
+        playerIsDead =enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
+        if (playerIsDead)
+        {
+            //player.enemyTarget.GetComponent<Enemy>();
+
+
+        }
+
+
+    }
+
     private void Respawn()
     {
 
@@ -106,18 +186,31 @@ public class CelestialPlayer : MonoBehaviour
     public void OnSnowFlakeSelected() { 
     
     }
-    public IEnumerator ResetColdSnap()
-    {
-        GameObject coldOrb = coldSnap.GetComponent<ColdSnapBehaviour>().ColdSnapStats.visualDisplay;
-        Instantiate(coldOrb, gameObject.transform.position, Quaternion.identity);
-        Rigidbody coldRB = coldOrb.GetComponent<Rigidbody>();
-        coldRB.AddForce(0, 0, 2f,ForceMode.Acceleration);
 
-        //////////////coldOrb.transform.forward.
-  
-            isAttacking = true;
+    public IEnumerator animateColdSnap()
+    {
+     
+        Debug.Log("coldsnap is animated");
+        GameObject coldOrb = coldSnap.GetComponent<ColdSnapBehaviour>().ColdSnapStats.visualDisplay;
+        GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+        clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
+      
+        isAttacking = true;
         yield return new WaitForSeconds(2f);
        
+        Destroy(clone);
+
+    }
+
+    public IEnumerator ResetColdSnap()
+    {
+
+
+        Debug.Log("coldsnaptimer reset");
+      
+        yield return new WaitForSeconds(coldSnap.ColdSnapStats.rechargeTimer);
+        canColdSnap = true;
+
     }
     public IEnumerator ResetThundrerStrike()
     {
