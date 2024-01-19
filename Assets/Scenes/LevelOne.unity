@@ -1029,6 +1029,22 @@ PrefabInstance:
       propertyPath: virtualMouseInput
       value: 
       objectReference: {fileID: 1563508009}
+    - target: {fileID: 3045875588631837038, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045875588631837038, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045875588631837038, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3045875588631837038, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.42
+      objectReference: {fileID: 0}
     - target: {fileID: 4289947878237477393, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -7698,7 +7714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2551764230926651092, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4687744544096372904, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7753,6 +7769,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 921268330}
@@ -7782,7 +7802,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8462402078084706527, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -10029,6 +10049,33 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1057300265}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1062288875 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3133498875991405556, guid: 5d78069911bf8b043929cdcc07084fc8, type: 3}
+  m_PrefabInstance: {fileID: 1975942031}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1062288879
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062288875}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3909233067320746374, guid: 5d78069911bf8b043929cdcc07084fc8, type: 3}
 --- !u!1 &1067699413
 GameObject:
   m_ObjectHideFlags: 0
@@ -17709,6 +17756,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5d78069911bf8b043929cdcc07084fc8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 732090449}
+    - targetCorrespondingSourceObject: {fileID: -3133498875991405556, guid: 5d78069911bf8b043929cdcc07084fc8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1062288879}
   m_SourcePrefab: {fileID: 100100000, guid: 5d78069911bf8b043929cdcc07084fc8, type: 3}
 --- !u!1 &1975942032 stripped
 GameObject:
@@ -19372,15 +19422,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 6f0d797db3bf24e479b5f9a1042cbb9f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f0d797db3bf24e479b5f9a1042cbb9f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f0d797db3bf24e479b5f9a1042cbb9f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f0d797db3bf24e479b5f9a1042cbb9f, type: 3}
       propertyPath: m_LocalPosition.x
