@@ -281,6 +281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6205335525628429760}
+  - component: {fileID: 7502133238027360328}
   m_Layer: 0
   m_Name: TreeSeedPrefab
   m_TagString: Untagged
@@ -296,7 +297,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4222843129626314802}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -29.94, y: 4.2, z: -117.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -304,6 +305,33 @@ Transform:
   - {fileID: 2456310701568974806}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &7502133238027360328
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4222843129626314802}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 122
+  m_CollisionDetection: 0
 --- !u!1 &5393626610774157969
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,8 +723,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.11
-  m_Center: {x: 0, y: 0.000000029802322, z: 0}
+  m_Radius: 7
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2547371121991246748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -709,8 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60cf5c9443e094746a31c5a387e2696e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiObject: {fileID: 0}
-  PickupKey: 101
+  uiObject: {fileID: 5393626610774157969}
   playerRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   spriteRenderer: {fileID: 6777039029433243617}
   item: {fileID: 11400000, guid: a140d235e4997e541bbfda0dc14cba59, type: 2}

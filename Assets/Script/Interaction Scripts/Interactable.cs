@@ -8,7 +8,7 @@ public class Interactable : MonoBehaviour
     public GameObject uiObject;
     //[SerializeField] GameObject thing;
 
-    [SerializeField] protected KeyCode PickupKey = KeyCode.E; //change for controller input
+    //[SerializeField] protected KeyCode PickupKey = KeyCode.E; //change for controller input
 
     [SerializeField] protected GameObjectRuntimeSet playerRuntimeSet;
     protected List<GameObject> players;

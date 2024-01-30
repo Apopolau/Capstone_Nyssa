@@ -13,7 +13,7 @@ public class PickupObject : Interactable
 
     EarthPlayer earthPlayer;
 
-    private void OnValidate()
+    private void Start()
     {
         if (item != null)
         {
@@ -25,10 +25,7 @@ public class PickupObject : Interactable
             spriteRenderer.enabled = false;
             uiObject.SetActive(false);
         }
-    }
 
-    private void Start()
-    {
         players = playerRuntimeSet.Items;
         foreach (GameObject player in players)
         {
@@ -48,6 +45,7 @@ public class PickupObject : Interactable
     {
         if (isInRange && earthPlayer.interacting)
         {
+            Debug.Log("Picking up");
             if (item != null)
             {
                 int pickupQuantity = 1; // You can change this to the desired quantity.
