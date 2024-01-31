@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 5594391947123147156}
   - component: {fileID: 4070647664046155083}
   m_Layer: 0
-  m_Name: PickUpUiCanvas
+  m_Name: PickupCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,16 +163,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2150872853752922433}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.3199997}
-  m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
+  m_LocalPosition: {x: 0, y: 0, z: 1.3199999}
+  m_LocalScale: {x: 0.120000005, y: 0.12, z: 0.120000005}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8382496610302589821}
-  m_Father: {fileID: 4108432993057598271}
+  m_Father: {fileID: 4948543280895218375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1.0000004, y: 2.578}
+  m_AnchoredPosition: {x: 0.99998474, y: 2.5779934}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7234832758347590795
@@ -314,6 +314,38 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &4687337151950491541
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4948543280895218375}
+  m_Layer: 0
+  m_Name: PicukupTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4948543280895218375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4687337151950491541}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8016148020319171044}
+  m_Father: {fileID: 4108432993057598271}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5239927873510647113
 GameObject:
   m_ObjectHideFlags: 0
@@ -567,7 +599,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8382496610302589821}
   m_Layer: 0
-  m_Name: keyUI
+  m_Name: PickupUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -628,7 +660,7 @@ Transform:
   m_LocalScale: {x: 8.49984, y: 1.0210582, z: 8.49984}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8016148020319171044}
+  - {fileID: 4948543280895218375}
   m_Father: {fileID: 6483906665525101542}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
 --- !u!33 &8197042345218557643
@@ -717,7 +749,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiObject: {fileID: 7126053420615349885}
-  PickupKey: 101
   playerRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   m_Renderer: {fileID: 5961567393732287502}
   levelOneEvents: {fileID: 0}
