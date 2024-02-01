@@ -7,28 +7,31 @@ using UnityEngine.InputSystem;
 public class Inventory : ScriptableObject
 {
     int inventorySize = 4;
-    [SerializeField] List<Item> items;
+    [SerializeField] public List<Item> items;
 
     //[SerializeField] Transform itemsParent;
-    [SerializeField] List<ItemSlot> itemSlots;
+    [SerializeField] public List<ItemSlot> itemSlots;
     //[SerializeField] KeyCode removeKeySeed = KeyCode.O; // Change this to the Dpad
     //[SerializeField] KeyCode removeKeyTreeLog = KeyCode.L; // Change this to the Dpad
 
     private void OnValidate()
     {
+        
+    }
+
+    public void Initialize()
+    {
         if (itemSlots != null)
         {
+            items.Clear();
+            itemSlots.Clear();
             RefreshUI();
         }
     }
 
     private void OnEnable()
     {
-        if (itemSlots != null)
-        {
-            itemSlots = new List<ItemSlot>();
-            //items = new List<Item>();
-        }
+
     }
 
     public void AddItemSlot(ItemSlot slot)
@@ -140,6 +143,17 @@ public class Inventory : ScriptableObject
         return items.Count >= itemSlots.Count;
     }
 
-
+    public bool HasTypeSeed(string itemName)
+    {
+        
+        foreach(var item in items)
+        {
+            if(item.ItemName == itemName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

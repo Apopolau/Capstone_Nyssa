@@ -146,7 +146,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   enrouteToPlant: 0
-  inventory: {fileID: 0}
+  inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
 --- !u!114 &5061027297478944643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,7 +321,7 @@ MonoBehaviour:
     m_ActionId: a01b538b-153a-45fc-8c9e-8aae773c39d3
     m_ActionName: EarthPlayerDefault/Interact[/XInputControllerWindows/buttonSouth]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: EarthPlayerControlScheme
+  m_DefaultControlScheme: 
   m_DefaultActionMap: EarthPlayerDefault
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -332,12 +332,12 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4033276866688796702}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 30
   m_Acceleration: 25
-  avoidancePriority: 50
+  avoidancePriority: 20
   m_AngularSpeed: 120
   m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
@@ -388,15 +388,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
       propertyPath: m_LocalScale.x
-      value: 6
+      value: 10.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
       propertyPath: m_LocalScale.y
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
       propertyPath: m_LocalPosition.x
@@ -404,7 +404,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 6.42
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
       propertyPath: m_LocalPosition.z
