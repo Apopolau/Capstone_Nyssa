@@ -12,9 +12,13 @@ public class UIToCamera : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
-       transform.LookAt(mainCamera.transform.position + mainCamera.transform.forward);
-       transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+      // Get the camera's rotation
+        Quaternion cameraRotation = mainCamera.transform.rotation;
+
+        // Ensure that the pickupTarget is always facing the camera, including its rotation
+        transform.LookAt(mainCamera.transform.position);
+        transform.rotation *= Quaternion.Euler(cameraRotation.eulerAngles.x, cameraRotation.eulerAngles.y, 0);
     }
 }
