@@ -8,7 +8,7 @@ public class Inventory : ScriptableObject
 {
     int inventorySize = 4;
     [SerializeField] List<Item> items;
-    
+
     //[SerializeField] Transform itemsParent;
     [SerializeField] List<ItemSlot> itemSlots;
     //[SerializeField] KeyCode removeKeySeed = KeyCode.O; // Change this to the Dpad
@@ -16,7 +16,7 @@ public class Inventory : ScriptableObject
 
     private void OnValidate()
     {
-        if (items != null && itemSlots != null)
+        if (itemSlots != null)
         {
             RefreshUI();
         }
@@ -24,33 +24,12 @@ public class Inventory : ScriptableObject
 
     private void OnEnable()
     {
-        if(itemSlots != null)
+        if (itemSlots != null)
         {
             itemSlots = new List<ItemSlot>();
             //items = new List<Item>();
         }
-        
-        
     }
-
-    /*
-    private void Update()
-    {
-        // Check if the remove key for Seed is pressed
-        if (Input.GetKeyDown(removeKeySeed))
-        {
-            RemoveItemByName("Tree Seed");
-        }
-
-        // Check if the remove key for TreeLog is pressed
-        if (Input.GetKeyDown(removeKeyTreeLog))
-        {
-            RemoveItemByName("Grass Seed");
-        }
-
-        // Add more conditions for other keys/items as needed
-    }
-    */
 
     public void AddItemSlot(ItemSlot slot)
     {
@@ -81,82 +60,83 @@ public class Inventory : ScriptableObject
 
     private void RefreshUI()
     {
-    int i = 0;
-    for (; i < items.Count && i < itemSlots.Count; i++)
-    {
-        if (itemSlots[i] != null)
+        int i = 0;
+        for (; i < items.Count && i < itemSlots.Count; i++)
         {
-            itemSlots[i].Item = items[i];
-            itemSlots[i].UpdateQuantityText();
+            if (itemSlots[i] != null)
+            {
+                itemSlots[i].Item = items[i];
+                itemSlots[i].UpdateQuantityText();
+            }
+        }
+
+        for (; i < itemSlots.Count; i++)
+        {
+            if (itemSlots[i] != null)
+            {
+                itemSlots[i].Item = null;
+            }
+        }
+
+        // Display quantity changes in the console log.
+        foreach (Item item in items)
+        {
+            Debug.Log($"Item: {item.ItemName}, Quantity: {item.Quantity}");
         }
     }
 
-    for (; i < itemSlots.Count; i++)
+    public bool AddItem(Item item, int quantity = 1)
     {
-        if (itemSlots[i] != null)
+        if (IsFull())
         {
-            itemSlots[i].Item = null;
+            return false;
         }
+
+        // Check if the item already exists in the inventory.
+        foreach (var existingItem in items)
+        {
+            if (existingItem.ItemName == item.ItemName)
+            {
+                existingItem.Quantity += quantity; // Increase the quantity.
+                RefreshUI();
+                return true;
+            }
+        }
+
+        // If the item is not in the inventory, add a new one.
+        Item newItem = Instantiate(item);
+        newItem.Quantity = quantity;
+        items.Add(newItem);
+
+        RefreshUI();
+        return true;
     }
 
-    // Display quantity changes in the console log.
-    foreach (Item item in items)
-    {
-        Debug.Log($"Item: {item.ItemName}, Quantity: {item.Quantity}");
-    }
-}
 
-   public bool AddItem(Item item, int quantity = 1)
-{
-    if (IsFull())
+    public bool RemoveItem(Item item, int quantity = 1)
     {
+        foreach (var existingItem in items)
+        {
+            if (existingItem.ItemName == item.ItemName)
+            {
+                existingItem.Quantity -= quantity;
+
+                // Remove the item from the list if its quantity is zero or less.
+                if (existingItem.Quantity <= 0)
+                {
+                    items.Remove(existingItem);
+                }
+
+                RefreshUI();
+                return true;
+            }
+        }
         return false;
     }
 
-    // Check if the item already exists in the inventory.
-    foreach (var existingItem in items)
+
+    public bool IsFull()
     {
-        if (existingItem.ItemName == item.ItemName)
-        {
-            existingItem.Quantity += quantity; // Increase the quantity.
-            RefreshUI();
-            return true;
-        }
-    }
-
-    // If the item is not in the inventory, add a new one.
-    Item newItem = Instantiate(item);
-    newItem.Quantity = quantity;
-    items.Add(newItem);
-
-    RefreshUI();
-    return true;
-}
-
-
-public bool RemoveItem(Item item, int quantity = 1)
-{
-    foreach (var existingItem in items)
-    {
-        if (existingItem.ItemName == item.ItemName)
-        {
-            existingItem.Quantity -= quantity;
-
-            // Remove the item from the list if its quantity is zero or less.
-            if (existingItem.Quantity <= 0)
-            {
-                items.Remove(existingItem);
-            }
-
-            RefreshUI();
-            return true;
-        }
-    }
-    return false;
-}
-
-
-public bool IsFull(){
         return items.Count >= itemSlots.Count;
     }
 

@@ -42,7 +42,7 @@ public class EarthPlayer : MonoBehaviour
 
     private WaitForSeconds plantTime;
 
-    [SerializeField] TextMeshProUGUI displayText;
+    [SerializeField] public TextMeshProUGUI displayText;
 
     private PlayerInputActions actions;
     private PlayerInput playerInput;

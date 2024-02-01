@@ -50,21 +50,14 @@ public class PickupObject : Interactable
             if (item != null)
             {
                 int pickupQuantity = 1; // You can change this to the desired quantity.
-                inventory.AddItem(item, pickupQuantity);
-                //item = null;
-                //spriteRenderer.enabled = false;
-                
-                //uiObject.SetActive(false);
-                //boxRange.SetActive(false);
-
-                // Add this anywhere where the task should be crossed out when completed.
-                //TaskListManager task1 = GameObject.Find("Task1").GetComponent<TaskListManager>();
-                //task1.CrossOutTask();
-
+                if (inventory.AddItem(item, pickupQuantity))
+                {
+                    Destroy(this.GetComponentInParent<Transform>().gameObject);
+                }
+                else {
+                    earthPlayer.displayText.text = "Inventory is full";
+                };
             }
-
-            Destroy(this.GetComponentInParent<Transform>().gameObject);
-            //Debug.LogWarning("in range and key pressed");
         }
     }
     
