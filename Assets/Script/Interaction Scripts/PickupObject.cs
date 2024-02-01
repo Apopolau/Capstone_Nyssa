@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class PickupObject : Interactable
 {
-    [SerializeField] protected SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
 
     [SerializeField] Item item;
     [SerializeField] Inventory inventory;
 
-    public GameObject boxRange;
+    //public GameObject boxRange;
 
     EarthPlayer earthPlayer;
 
@@ -17,6 +17,7 @@ public class PickupObject : Interactable
     {
         if (item != null)
         {
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             spriteRenderer.sprite = item.Icon;
             spriteRenderer.enabled = true;
         }
@@ -45,24 +46,25 @@ public class PickupObject : Interactable
     {
         if (isInRange && earthPlayer.interacting)
         {
-            Debug.Log("Picking up");
+            //Debug.Log("Picking up");
             if (item != null)
             {
                 int pickupQuantity = 1; // You can change this to the desired quantity.
                 inventory.AddItem(item, pickupQuantity);
-                item = null;
-                spriteRenderer.enabled = false;
+                //item = null;
+                //spriteRenderer.enabled = false;
                 
-                uiObject.SetActive(false);
-                boxRange.SetActive(false);
+                //uiObject.SetActive(false);
+                //boxRange.SetActive(false);
 
                 // Add this anywhere where the task should be crossed out when completed.
-                TaskListManager task1 = GameObject.Find("Task1").GetComponent<TaskListManager>();
-                task1.CrossOutTask();
+                //TaskListManager task1 = GameObject.Find("Task1").GetComponent<TaskListManager>();
+                //task1.CrossOutTask();
 
             }
 
-            Debug.LogWarning("in range and key pressed");
+            Destroy(this.GetComponentInParent<Transform>().gameObject);
+            //Debug.LogWarning("in range and key pressed");
         }
     }
     

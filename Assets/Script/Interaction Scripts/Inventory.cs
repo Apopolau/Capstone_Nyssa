@@ -3,24 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
-public class Inventory : MonoBehaviour
+[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory")]
+public class Inventory : ScriptableObject
 {
+    int inventorySize = 4;
     [SerializeField] List<Item> items;
     
-    [SerializeField] Transform itemsParent;
-    [SerializeField] ItemSlot[] itemSlots;
-    [SerializeField] KeyCode removeKeySeed = KeyCode.O; // Change this to the Dpad
-    [SerializeField] KeyCode removeKeyTreeLog = KeyCode.L; // Change this to the Dpad
+    //[SerializeField] Transform itemsParent;
+    [SerializeField] List<ItemSlot> itemSlots;
+    //[SerializeField] KeyCode removeKeySeed = KeyCode.O; // Change this to the Dpad
+    //[SerializeField] KeyCode removeKeyTreeLog = KeyCode.L; // Change this to the Dpad
 
     private void OnValidate()
     {
-        if (itemsParent != null)
-            itemSlots = itemsParent.GetComponentsInChildren<ItemSlot>();
-
-        RefreshUI();
+        if (items != null && itemSlots != null)
+        {
+            RefreshUI();
+        }
     }
 
+    private void OnEnable()
+    {
+        if(itemSlots != null)
+        {
+            itemSlots = new List<ItemSlot>();
+            //items = new List<Item>();
+        }
+        
+        
+    }
+
+    /*
     private void Update()
     {
         // Check if the remove key for Seed is pressed
@@ -36,6 +49,12 @@ public class Inventory : MonoBehaviour
         }
 
         // Add more conditions for other keys/items as needed
+    }
+    */
+
+    public void AddItemSlot(ItemSlot slot)
+    {
+        itemSlots.Insert(0, slot);
     }
 
     public void RemoveItemByName(string itemName)
@@ -60,10 +79,10 @@ public class Inventory : MonoBehaviour
         }
     }
 
-   private void RefreshUI()
-{
+    private void RefreshUI()
+    {
     int i = 0;
-    for (; i < items.Count && i < itemSlots.Length; i++)
+    for (; i < items.Count && i < itemSlots.Count; i++)
     {
         if (itemSlots[i] != null)
         {
@@ -72,7 +91,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    for (; i < itemSlots.Length; i++)
+    for (; i < itemSlots.Count; i++)
     {
         if (itemSlots[i] != null)
         {
@@ -81,7 +100,7 @@ public class Inventory : MonoBehaviour
     }
 
     // Display quantity changes in the console log.
-    foreach (var item in items)
+    foreach (Item item in items)
     {
         Debug.Log($"Item: {item.ItemName}, Quantity: {item.Quantity}");
     }
@@ -138,7 +157,7 @@ public bool RemoveItem(Item item, int quantity = 1)
 
 
 public bool IsFull(){
-        return items.Count >= itemSlots.Length;
+        return items.Count >= itemSlots.Count;
     }
 
 

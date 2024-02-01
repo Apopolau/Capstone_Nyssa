@@ -96,6 +96,7 @@ public class EarthPlayer : MonoBehaviour
     {
         //We're going to want to check if they even have the seed for the plant they selected before we do anything else
         //Cell activeTileCell = selectedTile.GetComponent<Cell>();
+        //if(inventory.)
         if (isPlantSelected)
         {
             isPlantSelected = false;

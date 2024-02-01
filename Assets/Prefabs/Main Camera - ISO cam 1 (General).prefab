@@ -374,8 +374,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 954219031721836160}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: 0.000000059604638, z: 0.0000000074505797, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000030517578}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -436,6 +436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c341a0ed96937204fbf8876817652a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
   image: {fileID: 7040757272476057027}
   itemNameText: {fileID: 8730523872450077010}
   quantityText: {fileID: 2622394994138132724}
@@ -677,6 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c341a0ed96937204fbf8876817652a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
   image: {fileID: 5746334750591077779}
   itemNameText: {fileID: 4103143973543954537}
   quantityText: {fileID: 6554830800020919744}
@@ -1577,8 +1579,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1994,8 +1996,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2576,6 +2578,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c341a0ed96937204fbf8876817652a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
   image: {fileID: 1067528590109931704}
   itemNameText: {fileID: 7118796239735371036}
   quantityText: {fileID: 4492324277808887729}
@@ -2813,7 +2816,6 @@ GameObject:
   - component: {fileID: 4473939683538177082}
   - component: {fileID: 2882479705601867892}
   - component: {fileID: 2824373453084510385}
-  - component: {fileID: 3245054879913986637}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -2881,27 +2883,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3245054879913986637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6533508898295639420}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e321a3e1629dbb4985d3b61f7b0bca1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
-  itemsParent: {fileID: 1603955988363508830}
-  itemSlots:
-  - {fileID: 1284349112457130515}
-  - {fileID: 5202727597805837723}
-  - {fileID: 4613052373633762502}
-  - {fileID: 3649719600301261524}
-  removeKeySeed: 111
-  removeKeyTreeLog: 108
 --- !u!1 &6880042279185749376
 GameObject:
   m_ObjectHideFlags: 0
@@ -3460,6 +3441,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c341a0ed96937204fbf8876817652a12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
   image: {fileID: 8609052591589512231}
   itemNameText: {fileID: 7390765112203104865}
   quantityText: {fileID: 2935546747317990086}
@@ -3766,8 +3748,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
