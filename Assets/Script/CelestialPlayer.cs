@@ -22,11 +22,49 @@ public class CelestialPlayer : MonoBehaviour
 
 
     [Header("Attack")]
-    [SerializeField] public bool isAttacking = false;
-    [SerializeField] public bool canColdSnap = true;
 
-    private Vector3 OrigPos = new Vector3(20,7,-97);
+
+    [SerializeField] public bool isAttacking = false;
+    [SerializeField] public bool isDead = false;
+    [SerializeField] public bool canBasicAttack = true;
+    [SerializeField] public bool canColdSnap = true;
+    [SerializeField] public bool canLightningStrike = true;
+    [SerializeField] public bool canMoonTide = true;
+    [SerializeField] public bool canSetFogTrap = true;
+    [SerializeField] public bool canSetFrostTrap = true;
+    [SerializeField] public bool canSunBeam = true;
+
+
+    public enum Power
+    {
+        NONE,
+        BASIC,
+        COLDSNAP,
+        FOGTRAP,
+        FROSTTRAP,
+        LIGHTNINGSTRIKE,
+        MOONTIDE,
+        SUNBEAM
+    };
+
+    public Power powerInUse = Power.NONE;
+
+
     ColdSnapBehaviour coldSnap;
+
+
+
+    [Header("Respawn")]
+    private int healthPoints;
+    public Vector3 OrigPos = new Vector3(20,7,-97);
+    [SerializeField] public bool isDying = false;
+    [SerializeField] public bool isRespawning = false;
+   
+    
+    
+    
+    
+   
     [SerializeField] public GameObject treeSeedPrefab;
     //private CelestialPlayerInputActions celestialPlayerInput;
     private PlayerInput playerInput;
@@ -34,8 +72,6 @@ public class CelestialPlayer : MonoBehaviour
     // Start is called before the first frame update
 
 
-    //Battle 
-    private int healthPoints;
 
     //Interaction with the player
     public bool enemySeen = false;
@@ -159,6 +195,22 @@ public class CelestialPlayer : MonoBehaviour
         healthPoints = 100;
         gameObject.transform.position = OrigPos;
 
+    }
+    
+
+
+    public int GetHealth()
+    {
+        return healthPoints;
+    }
+    public void SetHealth(int newHealthPoint)
+    {
+        healthPoints = newHealthPoint;
+
+    }
+    public void SetLocation (Vector3 newPosition)
+    {
+        gameObject.transform.position = newPosition;
     }
 
     //if player selects raindrop
