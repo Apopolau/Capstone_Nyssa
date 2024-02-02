@@ -29,6 +29,14 @@ public class LevelOneEvents : EventManager
         foreach (Transform childTransform in firstAreaGrid.transform)
         {
             firstAreaTiles.Add(childTransform.gameObject);
+            /*
+            Cell[] cells = GetComponentsInChildren<Cell>();
+            foreach(Cell cell in cells)
+            {
+                cell.
+            }
+            */
+            
         }
         
         foreach (Transform childTransform in secondAreaGrid.transform)
@@ -90,6 +98,31 @@ public class LevelOneEvents : EventManager
         if (levelOneProgress.EvaluateFood())
         {
             task3.CrossOutTask();
+        }
+    }
+
+    public void DebugTileFlip()
+    {
+        foreach (GameObject go in firstAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+        foreach (GameObject go in secondAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+        foreach (GameObject go in thirdAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
         }
     }
 }

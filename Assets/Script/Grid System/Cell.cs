@@ -13,7 +13,8 @@ public class Cell : MonoBehaviour
     [SerializeField] private Texture grassTile;
     [SerializeField] private Texture dirtTile;
     [SerializeField] private Texture pollutedTile;
-    [SerializeField] private Material waterTile;
+    [SerializeField] private Material cleanWaterTile;
+    [SerializeField] private Material pollutedWaterTile;
 
     public enum TerrainType {GRASS, DIRT, WATER};
     public TerrainType terrainType;
@@ -26,6 +27,10 @@ public class Cell : MonoBehaviour
 
     Vector2 tileVector;
     Vector2 playerVector;
+
+    public GameObject tileGroup;
+    //0: top left, 1: top, 2: top right, 3: left, 4: right, 5: bottom left, 6: bottom 7: bottom right
+    [SerializeField] Cell[] neighbours = new Cell[8];
     //Vector2 virtualMousePosition;
 
     public GameObject placedObject;
@@ -43,6 +48,8 @@ public class Cell : MonoBehaviour
     private void Awake()
     {
         //virtualMouseInput = GetComponent<VirtualMouseInput>();
+        tileGroup = gameObject.transform.parent.gameObject;
+        FindNeighbours();
     }
 
     private void Start()
@@ -79,7 +86,8 @@ public class Cell : MonoBehaviour
 
     private void UpdateTileState()
     {
-        if(enviroState == EnviroState.POLLUTED || tileHasBuild)
+        if(enviroState == EnviroState.POLLUTED || tileHasBuild || 
+            (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE && terrainType == TerrainType.WATER))
         {
             tileValid = false;
         }
@@ -93,9 +101,13 @@ public class Cell : MonoBehaviour
     {
         while (true)
         {
-            if (terrainType == TerrainType.WATER)
+            if (terrainType == TerrainType.WATER && enviroState == EnviroState.CLEAN)
             {
-                GetComponentInChildren<MeshRenderer>().material = waterTile;
+                GetComponentInChildren<MeshRenderer>().material = cleanWaterTile;
+            }
+            else if(terrainType == TerrainType.WATER && enviroState == EnviroState.POLLUTED)
+            {
+                GetComponentInChildren<MeshRenderer>().material = pollutedWaterTile;
             }
             else
             {
@@ -127,8 +139,10 @@ public class Cell : MonoBehaviour
         {
             //Move the plant position to the center of the currently highlighted tile
             earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
+            earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
 
             //Update the plant type if the player pans over a different kind of tile
+            /////IF TILE IS EARTH
             if((this.terrainType == TerrainType.GRASS || this.terrainType == TerrainType.DIRT) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.WATER)
             {
                 
@@ -146,16 +160,8 @@ public class Cell : MonoBehaviour
                     earthPlayer.plantSelected = Instantiate(earthPlayer.landGrassPreviewPrefab, earthPlayer.plantParent.transform);
                 }
                 earthPlayer.currentTileSelectedType = EarthPlayer.TileSelectedType.LAND;
-                /*
-                else if (earthPlayer.plantSelectedType == Earth)
-                {
-                    landFlowerPreviewPrefab
-                landGrassPreviewPrefab
-                waterFlowerPreviewPrefab
-                waterGrassPreviewPrefab
-                }
-                */
             }
+            //////IF TILE IS WATER
             else if((this.terrainType == TerrainType.WATER) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.LAND)
             {
                 
@@ -181,10 +187,12 @@ public class Cell : MonoBehaviour
                 if (tileHasBuild || enviroState == EnviroState.POLLUTED || terrainType == TerrainType.WATER)
                 {
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                    earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
                 }
                 else
                 {
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                    earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
                 }
             }
             else
@@ -192,10 +200,12 @@ public class Cell : MonoBehaviour
                 if (tileHasBuild || enviroState == EnviroState.POLLUTED)
                 {
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                    earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
                 }
                 else if(earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
                 {
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                    earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
                 }
             }
             
@@ -216,6 +226,55 @@ public class Cell : MonoBehaviour
             }
 
             yield return waitTime;
+        }
+    }
+
+    private void FindNeighbours()
+    {
+        Cell[] cells = tileGroup.GetComponentsInChildren<Cell>();
+        foreach(Cell cell in cells)
+        {
+            if (cell.transform.position.x == this.transform.position.x - 10)
+            {
+                if(cell.transform.position.z == this.transform.position.z)
+                {
+                    neighbours[3] = cell;
+                }
+                else if(cell.transform.position.z == this.transform.position.z - 10)
+                {
+                    neighbours[5] = cell;
+                }
+                else if(cell.transform.position.z == this.transform.position.z + 10)
+                {
+                    neighbours[0] = cell;
+                }
+            }
+            else if(cell.transform.position.x == this.transform.position.x)
+            {
+                if (cell.transform.position.z == this.transform.position.z - 10)
+                {
+                    neighbours[6] = cell;
+                }
+                else if (cell.transform.position.z == this.transform.position.z + 10)
+                {
+                    neighbours[1] = cell;
+                }
+            }
+            else if (cell.transform.position.x == this.transform.position.x + 10)
+            {
+                if (cell.transform.position.z == this.transform.position.z)
+                {
+                    neighbours[4] = cell;
+                }
+                else if (cell.transform.position.z == this.transform.position.z - 10)
+                {
+                    neighbours[7] = cell;
+                }
+                else if (cell.transform.position.z == this.transform.position.z + 10)
+                {
+                    neighbours[2] = cell;
+                }
+            }
         }
     }
 }

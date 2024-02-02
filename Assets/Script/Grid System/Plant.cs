@@ -18,8 +18,7 @@ public class Plant : Creatable
     {
         currentPlantStage = PlantStats.PlantStage.SEEDLING;
         plantVisual.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
-        plantVisual.transform.localPosition = new Vector3(0, stats.seedlingYOffset, stats.seedlingZOffset);
-        plantVisual.transform.localScale = new Vector3(stats.seedlingScale, stats.seedlingScale, 1);
+        PlacePlant(stats.seedlingScale, stats.seedlingZOffset);
         StartCoroutine(AdvancePlantStage());
     }
 
@@ -78,24 +77,21 @@ public class Plant : Creatable
                 Debug.Log("Plant should be growing");
                 currentPlantStage = PlantStats.PlantStage.SPROUT;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.sproutImage;
-                plantVisual.transform.localPosition = new Vector3(0, stats.seedlingYOffset, stats.sproutZOffset);
-                plantVisual.transform.localScale = new Vector3(stats.seedlingScale, stats.seedlingScale, 1);
+                PlacePlant(stats.sproutScale, stats.sproutZOffset);
             }
             else if(currentPlantStage == PlantStats.PlantStage.SPROUT)
             {
                 yield return new WaitForSeconds(stats.sproutGrowTime);
                 currentPlantStage = PlantStats.PlantStage.JUVENILE;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.juvenileImage;
-                plantVisual.transform.localPosition = new Vector3(0, stats.juvenileYOffset, stats.juvenileZOffset);
-                plantVisual.transform.localScale = new Vector3(stats.juvenileScale, stats.juvenileScale, 1);
+                PlacePlant(stats.juvenileScale, stats.juvenileZOffset);
             }
             else if(currentPlantStage == PlantStats.PlantStage.JUVENILE)
             {
                 yield return new WaitForSeconds(stats.juvenileGrowTime);
                 currentPlantStage = PlantStats.PlantStage.MATURE;
                 this.GetComponentInChildren<SpriteRenderer>().sprite = stats.matureImage;
-                plantVisual.transform.localPosition = new Vector3(0, stats.matureYOffset, stats.matureZOffset);
-                plantVisual.transform.localScale = new Vector3(stats.matureScale, stats.matureScale, 1);
+                PlacePlant(stats.matureScale, stats.matureZOffset);
             }
             else if(currentPlantStage == PlantStats.PlantStage.MATURE)
             {
@@ -104,5 +100,13 @@ public class Plant : Creatable
             }
         }
         
+    }
+
+    private void PlacePlant(float scale, float zOffset)
+    {
+        plantVisual.transform.rotation = Quaternion.Euler(0, 45, 0);
+        plantVisual.transform.localScale = new Vector3(scale, scale, 1);
+        float yOffset = (this.GetComponentInChildren<SpriteRenderer>().sprite.bounds.extents.y * scale);
+        plantVisual.transform.localPosition = new Vector3(0, yOffset, zOffset);
     }
 }

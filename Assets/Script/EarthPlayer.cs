@@ -13,10 +13,13 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public GameObject plantParent;
 
     public bool isPlantSelected = false;
+    private bool plantSelectionStarted = false;
     public GameObject plantSelected;
     public List<GameObject> plantsPlanted;
     public GameObject tempPlantPlanted;
     public GameObject plantPreview;
+    [SerializeField] GameObject tileOutlinePrefab;
+    public GameObject tileOutline;
 
     private NavMeshAgent earthAgent;
 
@@ -34,15 +37,15 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public GameObject landFlowerPreviewPrefab;
     [SerializeField] public GameObject waterFlowerPreviewPrefab;
 
-    public enum PlantSelectedType {NONE, TREE, FLOWER, GRASS }
+    public enum PlantSelectedType { NONE, TREE, FLOWER, GRASS }
     public PlantSelectedType plantSelectedType;
     public GameObject selectedTile;
-    public enum TileSelectedType { LAND, WATER};
+    public enum TileSelectedType { LAND, WATER };
     public TileSelectedType currentTileSelectedType;
 
     private WaitForSeconds plantTime;
 
-    [SerializeField] TextMeshProUGUI displayText;
+    [SerializeField] public TextMeshProUGUI displayText;
 
     private PlayerInputActions actions;
     private PlayerInput playerInput;
@@ -84,7 +87,7 @@ public class EarthPlayer : MonoBehaviour
             earthAgent.enabled = false;
             PlantPlantingHandler();
         }
-        
+
     }
 
     private void LateUpdate()
@@ -94,80 +97,120 @@ public class EarthPlayer : MonoBehaviour
 
     public void OnTreeSelected()
     {
+        
         //We're going to want to check if they even have the seed for the plant they selected before we do anything else
-        //Cell activeTileCell = selectedTile.GetComponent<Cell>();
-        if (isPlantSelected)
+        if (inventory.HasTypeSeed("Tree Seed"))
         {
-            isPlantSelected = false;
-            Destroy(plantSelected);
+            if (!plantSelectionStarted)
+            {
+                if (isPlantSelected)
+                {
+                    isPlantSelected = false;
+                    Destroy(plantSelected);
+                    Destroy(tileOutline);
+                }
+                if (!isPlantSelected)
+                {
+                    //We select a type of plant from the input and make a transparent version of it with no stats
+                    plantSelectionStarted = true;
+                    plantSelectedType = PlantSelectedType.TREE;
+                    plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
+                    OnPlantSelectedWrapUp();
+                }
+            }
         }
-        if (!isPlantSelected)
+        else
         {
-            //We select a type of plant from the input and make a transparent version of it with no stats
-            
-            plantSelectedType = PlantSelectedType.TREE;
-            plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
+            StartCoroutine(InsufficientSeeds());
         }
-        OnPlantSelectedWrapUp();
+
     }
 
     public void OnGrassSelected()
     {
-        if (isPlantSelected)
+        if (inventory.HasTypeSeed("Grass Seed"))
         {
-            isPlantSelected = false;
-            Destroy(plantSelected);
+            if (!plantSelectionStarted)
+            {
+                if (isPlantSelected)
+                {
+                    isPlantSelected = false;
+                    Destroy(plantSelected);
+                    Destroy(tileOutline);
+                }
+                if (!isPlantSelected)
+                {
+                    //We select a type of plant from the input and make a transparent version of it with no stats
+                    plantSelectionStarted = true;
+                    plantSelectedType = PlantSelectedType.GRASS;
+                    plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
+                    OnPlantSelectedWrapUp();
+                }
+            }
         }
-        if (!isPlantSelected)
+        else
         {
-            //We select a type of plant from the input and make a transparent version of it with no stats
-            plantSelectedType = PlantSelectedType.GRASS;
-            plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
+            StartCoroutine(InsufficientSeeds());
         }
-        OnPlantSelectedWrapUp();
     }
 
     public void OnFlowerSelected()
     {
-        if (isPlantSelected)
+        if (inventory.HasTypeSeed("Flower Seed"))
         {
-            isPlantSelected = false;
-            Destroy(plantSelected);
+            if (!plantSelectionStarted)
+            {
+                if (isPlantSelected)
+                {
+                    isPlantSelected = false;
+                    Destroy(plantSelected);
+                    Destroy(tileOutline);
+                }
+                if (!isPlantSelected)
+                {
+                    //We select a type of plant from the input and make a transparent version of it with no stats
+                    plantSelectionStarted = true;
+                    plantSelectedType = PlantSelectedType.FLOWER;
+                    plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
+                    OnPlantSelectedWrapUp();
+                }
+            }
         }
-        if (!isPlantSelected)
+        else
         {
-            //We select a type of plant from the input and make a transparent version of it with no stats
-            plantSelectedType = PlantSelectedType.FLOWER;
-            plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
+            StartCoroutine(InsufficientSeeds());
         }
-        OnPlantSelectedWrapUp();
     }
 
     private void OnPlantSelectedWrapUp()
     {
+        Debug.Log("Wrapping up plant selection");
         isPlantSelected = true;
         plantSelected.transform.position = this.transform.position;
         playerInput.SwitchCurrentActionMap("PlantIsSelected");
-        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width /2, Screen.height / 2);
+        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         virtualMousePosition = virtualMouseInput.cursorTransform.position;
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
+        tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
-    public void PlantPlantingHandler(){
+    public void PlantPlantingHandler()
+    {
         StartCoroutine(OnPlantPlanted());
     }
-    
+
     private IEnumerator OnPlantPlanted()
     {
         //Have to add checks to make sure they are on a tile
         if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
         {
-            if(Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
             {
                 //enrouteToPlant = false;
                 isPlantSelected = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
                 Destroy(plantSelected);
+                Destroy(tileOutline);
                 //This is a good place to initiate a planting animation
                 yield return plantTime;
                 PlantPlant(activeTileCell);
@@ -180,7 +223,7 @@ public class EarthPlayer : MonoBehaviour
                 ApproachPlant();
             }
         }
-        else if(isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
+        else if (isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
         {
             //Display error message
             StartCoroutine(InvalidPlantLocation());
@@ -199,6 +242,13 @@ public class EarthPlayer : MonoBehaviour
         displayText.text = "";
     }
 
+    private IEnumerator InsufficientSeeds()
+    {
+        displayText.text = "Insufficient seeds of that type";
+        yield return plantTime;
+        displayText.text = "";
+    }
+
     private void ApproachPlant()
     {
         earthAgent.enabled = true;
@@ -213,14 +263,14 @@ public class EarthPlayer : MonoBehaviour
         if (plantSelectedType == PlantSelectedType.TREE)
         {
             tempPlantPlanted = Instantiate(treePrefab, activeTileCell.buildingTarget.transform);
-            inventory.RemoveItemByName("TreeSeed"); //remove the item "TreeSeed"
+            inventory.RemoveItemByName("Tree Seed"); //remove the item "TreeSeed"
         }
         else if (plantSelectedType == PlantSelectedType.FLOWER)
         {
-            if(currentTileSelectedType == TileSelectedType.LAND)
+            inventory.RemoveItemByName("Flower Seed"); //remove the item "Flower Seed"
+            if (currentTileSelectedType == TileSelectedType.LAND)
             {
                 tempPlantPlanted = Instantiate(landFlowerPrefab, activeTileCell.buildingTarget.transform);
-                inventory.RemoveItemByName("TreeLog"); //remove the item "TreeSeed"
             }
             else if (currentTileSelectedType == TileSelectedType.WATER)
             {
@@ -230,6 +280,7 @@ public class EarthPlayer : MonoBehaviour
         }
         else if (plantSelectedType == PlantSelectedType.GRASS)
         {
+            inventory.RemoveItemByName("Grass Seed"); //remove the item "Flower Seed"
             if (currentTileSelectedType == TileSelectedType.LAND)
             {
                 tempPlantPlanted = Instantiate(landGrassPrefab, activeTileCell.buildingTarget.transform);
@@ -248,9 +299,12 @@ public class EarthPlayer : MonoBehaviour
     {
         if (isPlantSelected)
         {
+            plantSelectionStarted = false;
             isPlantSelected = false;
             plantSelectedType = PlantSelectedType.NONE;
             Destroy(plantSelected);
+            Destroy(tileOutline);
+            virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
             playerInput.SwitchCurrentActionMap("EarthPlayerDefault");
         }
     }
@@ -268,7 +322,7 @@ public class EarthPlayer : MonoBehaviour
         {
             selectedTile = hit.transform.gameObject.GetComponentInParent<Cell>().gameObject;
         }
-        
+
     }
 
     public void OnInteract(InputAction.CallbackContext context)

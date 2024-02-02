@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class PickupObject : Interactable
 {
-    [SerializeField] protected SpriteRenderer spriteRenderer;
+    protected SpriteRenderer spriteRenderer;
 
     [SerializeField] Item item;
     [SerializeField] Inventory inventory;
 
-    public GameObject boxRange;
+    //public GameObject boxRange;
 
     EarthPlayer earthPlayer;
 
-    private void OnValidate()
+    private void Start()
     {
         if (item != null)
         {
+            spriteRenderer = GetComponentInChildren<SpriteRenderer>();
             spriteRenderer.sprite = item.Icon;
             spriteRenderer.enabled = true;
         }
@@ -25,10 +26,7 @@ public class PickupObject : Interactable
             spriteRenderer.enabled = false;
             uiObject.SetActive(false);
         }
-    }
 
-    private void Start()
-    {
         players = playerRuntimeSet.Items;
         foreach (GameObject player in players)
         {
@@ -48,23 +46,18 @@ public class PickupObject : Interactable
     {
         if (isInRange && earthPlayer.interacting)
         {
+            //Debug.Log("Picking up");
             if (item != null)
             {
                 int pickupQuantity = 1; // You can change this to the desired quantity.
-                inventory.AddItem(item, pickupQuantity);
-                item = null;
-                spriteRenderer.enabled = false;
-                
-                uiObject.SetActive(false);
-                boxRange.SetActive(false);
-
-                // Add this anywhere where the task should be crossed out when completed.
-                TaskListManager task1 = GameObject.Find("Task1").GetComponent<TaskListManager>();
-                task1.CrossOutTask();
-
+                if (inventory.AddItem(item, pickupQuantity))
+                {
+                    Destroy(this.GetComponentInParent<Transform>().gameObject);
+                }
+                else {
+                    earthPlayer.displayText.text = "Inventory is full";
+                };
             }
-
-            Debug.LogWarning("in range and key pressed");
         }
     }
     

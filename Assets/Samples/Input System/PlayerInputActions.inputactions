@@ -20,7 +20,7 @@
                     "id": "495a34ab-3f11-4936-b56e-af29a9bccb07",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -57,6 +57,15 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Debug Tileflip",
+                    "type": "Button",
+                    "id": "7b88c43f-dd52-49f5-b524-0eb0d63f124c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -263,7 +272,7 @@
                     "name": "",
                     "id": "30582203-2784-484e-a200-e74f58a21e92",
                     "path": "<Gamepad>/buttonSouth",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
@@ -274,10 +283,21 @@
                     "name": "",
                     "id": "f74824a8-a3ac-43ab-b042-5ae0c2631b16",
                     "path": "<Keyboard>/p",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fddf9087-6640-4efc-8d88-3cd3b5f639f5",
+                    "path": "<Keyboard>/m",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Debug Tileflip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

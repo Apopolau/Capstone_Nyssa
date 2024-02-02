@@ -6,6 +6,7 @@ using TMPro;
 
 public class ItemSlot : MonoBehaviour
 {
+    [SerializeField] Inventory inventory;
     [SerializeField] Image image;
     [SerializeField] TextMeshProUGUI itemNameText;  // New field for displaying item name.
     [SerializeField] TextMeshProUGUI quantityText;   // Field for displaying quantity.
@@ -36,6 +37,17 @@ public class ItemSlot : MonoBehaviour
 
     private void OnValidate()
     {
+        
+    }
+
+    private void OnDisable()
+    {
+        inventory.items.Remove(_item);
+        inventory.itemSlots.Remove(this);
+    }
+
+    private void Awake()
+    {
         if (image == null)
             image = GetComponent<Image>();
 
@@ -45,6 +57,8 @@ public class ItemSlot : MonoBehaviour
 
         if (quantityText == null)
             quantityText = GetComponentInChildren<TextMeshProUGUI>(); // Use TextMeshProUGUI here
+
+        inventory.AddItemSlot(this);
     }
 
     public void UpdateItemNameText()
