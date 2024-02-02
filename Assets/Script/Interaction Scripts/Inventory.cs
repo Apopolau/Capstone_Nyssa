@@ -148,7 +148,7 @@ public class Inventory : ScriptableObject
         
         foreach(var item in items)
         {
-            if(item.ItemName == itemName)
+            if(item.ItemName == itemName && item.Quantity > 0)
             {
                 return true;
             }
