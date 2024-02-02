@@ -27,6 +27,10 @@ public class Cell : MonoBehaviour
 
     Vector2 tileVector;
     Vector2 playerVector;
+
+    public GameObject tileGroup;
+    //0: top left, 1: top, 2: top right, 3: left, 4: right, 5: bottom left, 6: bottom 7: bottom right
+    [SerializeField] Cell[] neighbours = new Cell[8];
     //Vector2 virtualMousePosition;
 
     public GameObject placedObject;
@@ -44,6 +48,8 @@ public class Cell : MonoBehaviour
     private void Awake()
     {
         //virtualMouseInput = GetComponent<VirtualMouseInput>();
+        tileGroup = gameObject.transform.parent.gameObject;
+        FindNeighbours();
     }
 
     private void Start()
@@ -220,6 +226,55 @@ public class Cell : MonoBehaviour
             }
 
             yield return waitTime;
+        }
+    }
+
+    private void FindNeighbours()
+    {
+        Cell[] cells = tileGroup.GetComponentsInChildren<Cell>();
+        foreach(Cell cell in cells)
+        {
+            if (cell.transform.position.x == this.transform.position.x - 10)
+            {
+                if(cell.transform.position.z == this.transform.position.z)
+                {
+                    neighbours[3] = cell;
+                }
+                else if(cell.transform.position.z == this.transform.position.z - 10)
+                {
+                    neighbours[5] = cell;
+                }
+                else if(cell.transform.position.z == this.transform.position.z + 10)
+                {
+                    neighbours[0] = cell;
+                }
+            }
+            else if(cell.transform.position.x == this.transform.position.x)
+            {
+                if (cell.transform.position.z == this.transform.position.z - 10)
+                {
+                    neighbours[6] = cell;
+                }
+                else if (cell.transform.position.z == this.transform.position.z + 10)
+                {
+                    neighbours[1] = cell;
+                }
+            }
+            else if (cell.transform.position.x == this.transform.position.x + 10)
+            {
+                if (cell.transform.position.z == this.transform.position.z)
+                {
+                    neighbours[4] = cell;
+                }
+                else if (cell.transform.position.z == this.transform.position.z - 10)
+                {
+                    neighbours[7] = cell;
+                }
+                else if (cell.transform.position.z == this.transform.position.z + 10)
+                {
+                    neighbours[2] = cell;
+                }
+            }
         }
     }
 }

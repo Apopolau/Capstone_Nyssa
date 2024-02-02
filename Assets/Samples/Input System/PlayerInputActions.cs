@@ -80,6 +80,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Debug Tileflip"",
+                    ""type"": ""Button"",
+                    ""id"": ""7b88c43f-dd52-49f5-b524-0eb0d63f124c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -302,6 +311,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fddf9087-6640-4efc-8d88-3cd3b5f639f5"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Debug Tileflip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -448,6 +468,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_EarthPlayerDefault_PickFlower = m_EarthPlayerDefault.FindAction("PickFlower", throwIfNotFound: true);
         m_EarthPlayerDefault_RemoveBuilding = m_EarthPlayerDefault.FindAction("Remove Building", throwIfNotFound: true);
         m_EarthPlayerDefault_Interact = m_EarthPlayerDefault.FindAction("Interact", throwIfNotFound: true);
+        m_EarthPlayerDefault_DebugTileflip = m_EarthPlayerDefault.FindAction("Debug Tileflip", throwIfNotFound: true);
         // PlantIsSelected
         m_PlantIsSelected = asset.FindActionMap("PlantIsSelected", throwIfNotFound: true);
         m_PlantIsSelected_Plantplant = m_PlantIsSelected.FindAction("Plant plant", throwIfNotFound: true);
@@ -521,6 +542,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_EarthPlayerDefault_PickFlower;
     private readonly InputAction m_EarthPlayerDefault_RemoveBuilding;
     private readonly InputAction m_EarthPlayerDefault_Interact;
+    private readonly InputAction m_EarthPlayerDefault_DebugTileflip;
     public struct EarthPlayerDefaultActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -531,6 +553,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @PickFlower => m_Wrapper.m_EarthPlayerDefault_PickFlower;
         public InputAction @RemoveBuilding => m_Wrapper.m_EarthPlayerDefault_RemoveBuilding;
         public InputAction @Interact => m_Wrapper.m_EarthPlayerDefault_Interact;
+        public InputAction @DebugTileflip => m_Wrapper.m_EarthPlayerDefault_DebugTileflip;
         public InputActionMap Get() { return m_Wrapper.m_EarthPlayerDefault; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -558,6 +581,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @DebugTileflip.started += instance.OnDebugTileflip;
+            @DebugTileflip.performed += instance.OnDebugTileflip;
+            @DebugTileflip.canceled += instance.OnDebugTileflip;
         }
 
         private void UnregisterCallbacks(IEarthPlayerDefaultActions instance)
@@ -580,6 +606,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @DebugTileflip.started -= instance.OnDebugTileflip;
+            @DebugTileflip.performed -= instance.OnDebugTileflip;
+            @DebugTileflip.canceled -= instance.OnDebugTileflip;
         }
 
         public void RemoveCallbacks(IEarthPlayerDefaultActions instance)
@@ -675,6 +704,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnPickFlower(InputAction.CallbackContext context);
         void OnRemoveBuilding(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnDebugTileflip(InputAction.CallbackContext context);
     }
     public interface IPlantIsSelectedActions
     {

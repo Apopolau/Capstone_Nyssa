@@ -263,14 +263,14 @@ public class EarthPlayer : MonoBehaviour
         if (plantSelectedType == PlantSelectedType.TREE)
         {
             tempPlantPlanted = Instantiate(treePrefab, activeTileCell.buildingTarget.transform);
-            inventory.RemoveItemByName("TreeSeed"); //remove the item "TreeSeed"
+            inventory.RemoveItemByName("Tree Seed"); //remove the item "TreeSeed"
         }
         else if (plantSelectedType == PlantSelectedType.FLOWER)
         {
+            inventory.RemoveItemByName("Flower Seed"); //remove the item "Flower Seed"
             if (currentTileSelectedType == TileSelectedType.LAND)
             {
                 tempPlantPlanted = Instantiate(landFlowerPrefab, activeTileCell.buildingTarget.transform);
-                inventory.RemoveItemByName("TreeLog"); //remove the item "TreeSeed"
             }
             else if (currentTileSelectedType == TileSelectedType.WATER)
             {
@@ -280,6 +280,7 @@ public class EarthPlayer : MonoBehaviour
         }
         else if (plantSelectedType == PlantSelectedType.GRASS)
         {
+            inventory.RemoveItemByName("Grass Seed"); //remove the item "Flower Seed"
             if (currentTileSelectedType == TileSelectedType.LAND)
             {
                 tempPlantPlanted = Instantiate(landGrassPrefab, activeTileCell.buildingTarget.transform);
