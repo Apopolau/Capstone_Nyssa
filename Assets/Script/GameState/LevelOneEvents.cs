@@ -125,4 +125,9 @@ public class LevelOneEvents : EventManager
             }
         }
     }
+
+    public void DebugTeleport()
+    {
+
+    }
 }
