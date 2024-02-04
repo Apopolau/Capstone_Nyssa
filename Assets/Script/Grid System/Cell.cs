@@ -10,7 +10,18 @@ public class Cell : MonoBehaviour
     [SerializeField] GameObjectRuntimeSet playerSet;
     [SerializeField] public GameObject buildingTarget;
 
-    [SerializeField] private Texture grassTile;
+    [SerializeField] private Texture fullGrassTile;
+    [SerializeField] private Texture grassAllSidesDirtTile;
+    [SerializeField] private Texture grassStraightEdgeTile;
+    [SerializeField] private Texture grassDirtCornerTile;
+    [SerializeField] private Texture grassTetrisPieceTile;
+    [SerializeField] private Texture grass1CornerDirtTile;
+    [SerializeField] private Texture grass2CornerOppositeDirtTile;
+    [SerializeField] private Texture grass2CornerAdjacentDirtTile;
+    [SerializeField] private Texture grass3CornersDirtTile;
+    [SerializeField] private Texture grass4CornersDirtTile;
+    [SerializeField] private Texture grassLineTile;
+
     [SerializeField] private Texture dirtTile;
     [SerializeField] private Texture pollutedTile;
     [SerializeField] private Material cleanWaterTile;
