@@ -130,7 +130,7 @@ public class Cell : MonoBehaviour
                 {
                     if (tileHasBuild)
                     {
-                        GetComponentInChildren<MeshRenderer>().material.mainTexture = grassTile;
+                        GetComponentInChildren<MeshRenderer>().material.mainTexture = fullGrassTile;
                     }
                     else
                     {
