@@ -8,7 +8,10 @@ public class PlantStats : ScriptableObject
     [Header("Basic info")]
     [SerializeField] public string plantName;
     [SerializeField] public int maxHealth;
-    [SerializeField] public int airPollutionBonus;
+    [SerializeField] public int seedlingAirPollutionBonus;
+    [SerializeField] public int sproutAirPollutionBonus;
+    [SerializeField] public int juvenileAirPollutionBonus;
+    [SerializeField] public int matureAirPollutionBonus;
     [SerializeField] public GameObject cost;
     public enum PlantStage { SEEDLING, SPROUT, JUVENILE, MATURE}
 

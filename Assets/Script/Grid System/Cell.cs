@@ -11,6 +11,7 @@ public class Cell : MonoBehaviour
     [SerializeField] public GameObject buildingTarget;
 
     [SerializeField] private Texture fullGrassTile;
+    /*
     [SerializeField] private Texture grassAllSidesDirtTile;
     [SerializeField] private Texture grassStraightEdgeTile;
     [SerializeField] private Texture grassDirtCornerTile;
@@ -21,6 +22,7 @@ public class Cell : MonoBehaviour
     [SerializeField] private Texture grass3CornersDirtTile;
     [SerializeField] private Texture grass4CornersDirtTile;
     [SerializeField] private Texture grassLineTile;
+    */
 
     [SerializeField] private Texture dirtTile;
     [SerializeField] private Texture pollutedTile;

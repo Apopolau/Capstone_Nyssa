@@ -1791,7 +1791,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1d4ec5aabe1c7f4dafd86153a067351, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildSet: {fileID: 0}
+  buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
+  monsterSet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
+  pollutionLevelBar: {fileID: 436267231}
+  basePollutionLevel: 50
+  maxPollution: 100
+  acidRainThreshold: 75
 --- !u!1 &278518792
 GameObject:
   m_ObjectHideFlags: 0
@@ -2402,6 +2407,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388118133}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &436267231 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7666071084233918655, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+  m_PrefabInstance: {fileID: 1081010112}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &448007921
 GameObject:
   m_ObjectHideFlags: 0
@@ -6845,6 +6861,14 @@ PrefabInstance:
     - target: {fileID: 4301552114627761858, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
       propertyPath: m_Name
       value: LevelOneGrid
+      objectReference: {fileID: 0}
+    - target: {fileID: 5140116325864893718, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: fullGrassTile
+      value: 
+      objectReference: {fileID: 2800000, guid: 571606020baebc74194c73fae0489ced, type: 3}
+    - target: {fileID: 5883876826744259959, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

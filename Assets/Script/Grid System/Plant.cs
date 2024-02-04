@@ -8,6 +8,7 @@ public class Plant : Creatable
     [SerializeField] public PlantStats stats;
     public GameObject plantObject;
     public SpriteRenderer[] plantVisuals;
+    public int currentPollutionContribution;
 
     private int storedSunlight;
     private int storedWater;
@@ -20,6 +21,7 @@ public class Plant : Creatable
         plantVisuals = plantObject.GetComponentsInChildren<SpriteRenderer>();
         currentPlantStage = PlantStats.PlantStage.SEEDLING;
         plantObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
+        currentPollutionContribution = stats.seedlingAirPollutionBonus;
         
         PlacePlant(stats.seedlingScale, stats.seedlingTileOffset);
         StartCoroutine(AdvancePlantStage());
@@ -79,6 +81,7 @@ public class Plant : Creatable
                 yield return new WaitForSeconds(stats.seedlingGrowTime);
                 Debug.Log("Plant should be growing");
                 currentPlantStage = PlantStats.PlantStage.SPROUT;
+                currentPollutionContribution = stats.sproutAirPollutionBonus;
                 SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
                 foreach (SpriteRenderer spriteRenderer in spriteRenderers)
                 {
@@ -91,6 +94,7 @@ public class Plant : Creatable
             {
                 yield return new WaitForSeconds(stats.sproutGrowTime);
                 currentPlantStage = PlantStats.PlantStage.JUVENILE;
+                currentPollutionContribution = stats.juvenileAirPollutionBonus;
                 SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
                 foreach (SpriteRenderer spriteRenderer in spriteRenderers)
                 {
@@ -103,6 +107,7 @@ public class Plant : Creatable
             {
                 yield return new WaitForSeconds(stats.juvenileGrowTime);
                 currentPlantStage = PlantStats.PlantStage.MATURE;
+                currentPollutionContribution = stats.matureAirPollutionBonus;
                 SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
                 foreach(SpriteRenderer spriteRenderer in spriteRenderers)
                 {
