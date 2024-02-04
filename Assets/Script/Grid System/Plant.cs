@@ -8,8 +8,9 @@ public class Plant : Creatable
     [SerializeField] public PlantStats stats;
     public GameObject plantObject;
     public SpriteRenderer[] plantVisuals;
-    public int currentPollutionContribution;
+    private Cell tilePlantedOn;
 
+    public int currentPollutionContribution;
     private int storedSunlight;
     private int storedWater;
     private int growthPoints;
@@ -18,6 +19,7 @@ public class Plant : Creatable
     // Start is called before the first frame update
     void Awake()
     {
+        tilePlantedOn = this.gameObject.transform.parent.GetComponentInParent<Cell>();
         plantVisuals = plantObject.GetComponentsInChildren<SpriteRenderer>();
         currentPlantStage = PlantStats.PlantStage.SEEDLING;
         plantObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
@@ -42,15 +44,34 @@ public class Plant : Creatable
     {
         //Add a check to see if it is currently sunny or rainy when these states exist
         //Put the check so that stored resources are not drained if the resource is still active
-        if(storedSunlight > 0 && storedWater > 0){
-            growthPoints++;
-            storedSunlight--;
-            storedWater--;
-            //we want our plants to heal if they're not full health while they're growing
-            //We may choose to add a check where they don't heal if they're actively being affected by a monster
-            if(currentHealth < stats.maxHealth)
+        //If it's a water plant it doesn't need rain to grow
+        if (tilePlantedOn.terrainType == Cell.TerrainType.WATER)
+        {
+            if (storedSunlight > 0)
             {
-                currentHealth++;
+                growthPoints++;
+                storedSunlight--;
+                //we want our plants to heal if they're not full health while they're growing
+                //We may choose to add a check where they don't heal if they're actively being affected by a monster
+                if (currentHealth < stats.maxHealth)
+                {
+                    currentHealth++;
+                }
+            }
+        }
+        else
+        {
+            if (storedSunlight > 0 && storedWater > 0)
+            {
+                growthPoints++;
+                storedSunlight--;
+                storedWater--;
+                //we want our plants to heal if they're not full health while they're growing
+                //We may choose to add a check where they don't heal if they're actively being affected by a monster
+                if (currentHealth < stats.maxHealth)
+                {
+                    currentHealth++;
+                }
             }
         }
         if(storedSunlight < 0)

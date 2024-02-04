@@ -13,7 +13,7 @@ public class PollutionLevelManager : MonoBehaviour
     [SerializeField] private int maxPollution;
     [SerializeField] private float acidRainThreshold;
 
-    WaitForSeconds checkDelay = new WaitForSeconds(1);
+    WaitForSeconds checkDelay = new WaitForSeconds(0.5f);
 
     //Haven't decided if acid rain should be a bool or enum for multiple stages
     
