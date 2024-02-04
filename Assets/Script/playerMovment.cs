@@ -30,7 +30,7 @@ public class playerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCoolDown;
     public float airMultiplier;
-    bool readyToJump=true;
+    bool readyToJump = true;
 
     //Keys Based on player
     public KeyCode jumpKeyP1 = KeyCode.Space;
@@ -56,7 +56,6 @@ public class playerMovement : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         playerInputActions = new PlayerInputActions();
-        //playerInput = GetComponent<PlayerInput>();
         celestialPlayerInputActions = new CelestialPlayerInputActions();
         if (this.GetComponent<EarthPlayer>())
         {
@@ -67,8 +66,6 @@ public class playerMovement : MonoBehaviour
         {
             celestialPlayerInputActions.CelestialPlayerDefault.Enable();
             celestialPlayerInputActions.CelestialPlayerDefault.Walk.performed += MovePlayer;
-           // playerInputActions.EarthPlayerDefault.Enable();
-            //playerInputActions.EarthPlayerDefault.Walk.performed += MovePlayer;
         }
     }
 
@@ -81,24 +78,8 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
-        Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-        if (viewDir != Vector3.zero)
-        {
-            orientation.forward = viewDir.normalized;
-        }
-        // rotate the player object
-        Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
-
-        //if input direction isnt 0 smoothly change the direction using the rotation speed
-        if (inputDir != Vector3.zero)
-        {
-            playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-        }
-        */
-
         //takes input of the keys for movement
-        MyInput();
+        //MyInput();
         SpeedControl();
         OrientPlayer();
 
@@ -124,13 +105,14 @@ public class playerMovement : MonoBehaviour
         {
             inputVector = celestialPlayerInputActions.CelestialPlayerDefault.Walk.ReadValue<Vector2>();
         }
-        
+
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
     }
 
+    /*
     private void MyInput()
     {
        
@@ -164,6 +146,7 @@ public class playerMovement : MonoBehaviour
             }
         }
     }
+    */
 
     public void MovePlayer(InputAction.CallbackContext context)
     {
@@ -177,9 +160,7 @@ public class playerMovement : MonoBehaviour
         {
             if (this.GetComponent<NavMeshAgent>().enabled)
             {
-                this.GetComponent<EarthPlayer>().enrouteToPlant = false;
-                this.GetComponent<NavMeshAgent>().ResetPath();
-                this.GetComponent<NavMeshAgent>().enabled = false;
+                ResetNavAgent();
             }
         }
         rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
@@ -187,53 +168,9 @@ public class playerMovement : MonoBehaviour
 
     private void OrientPlayer()
     {
-
-        if (this.GetComponent<NavMeshAgent>())
+        //If we've activated the nav mesh agent, we want to turn in the direction it is moving
+        if (!this.GetComponent<NavMeshAgent>().enabled)
         {
-            //If we've activated the nav mesh agent, we want to turn in the direction it is moving
-            if (this.GetComponent<NavMeshAgent>().enabled)
-            {
-                //Debug.Log("Nav mesh agent is enabled");
-                //rotate orientation
-                Vector3 viewDir = player.position - this.GetComponent<NavMeshAgent>().destination;
-                if (viewDir != Vector3.zero)
-                {
-                    orientation.forward = viewDir.normalized;
-                }
-
-                // rotate the player object
-                //Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
-                Vector3 inputDir = -orientation.forward;
-
-                //if input direction isnt 0 smoothly change the direction using the rotation speed
-                if (inputDir != Vector3.zero)
-                {
-                    playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-                }
-            }
-            else
-            {
-                //Debug.Log("Has a nav mesh agent but not enabled");
-                //rotate orientation
-                Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-                if (viewDir != Vector3.zero)
-                {
-                    orientation.forward = viewDir.normalized;
-                }
-
-                // rotate the player object
-                Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
-
-                //if input direction isnt 0 smoothly change the direction using the rotation speed
-                if (inputDir != Vector3.zero)
-                {
-                    playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
-                }
-            }
-        }
-        else
-        {
-            //Debug.Log("Doesn't have a nav mesh agent");
             //rotate orientation
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
             if (viewDir != Vector3.zero)
@@ -249,8 +186,28 @@ public class playerMovement : MonoBehaviour
             {
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
             }
+
         }
-        
+        else
+        {
+            
+            //rotate orientation
+            Vector3 viewDir = player.position - this.GetComponent<NavMeshAgent>().destination;
+            if (viewDir != Vector3.zero)
+            {
+                orientation.forward = viewDir.normalized;
+            }
+
+            // rotate the player object
+            Vector3 inputDir = -orientation.forward;
+
+            //if input direction isnt 0 smoothly change the direction using the rotation speed
+            if (inputDir != Vector3.zero)
+            {
+                playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
+            }
+            
+        }
     }
 
     private void SpeedControl()
@@ -266,6 +223,16 @@ public class playerMovement : MonoBehaviour
         }
     }
 
+    public void ResetNavAgent()
+    {
+        
+        this.GetComponent<EarthPlayer>().enrouteToPlant = false;
+        this.GetComponent<NavMeshAgent>().ResetPath();
+        this.GetComponent<NavMeshAgent>().enabled = false;
+        orientation.localRotation = new Quaternion(0, 0, 0, 1);
+        this.gameObject.transform.rotation.Set(0, 0, 0, 1);
+    }
+
     private void Jump()
     {
         //makes sure y velocity is set to 0
@@ -276,8 +243,8 @@ public class playerMovement : MonoBehaviour
     }
 
     private void ResetJump()
-    { 
+    {
         readyToJump = true;
-    } 
+    }
 }
 
