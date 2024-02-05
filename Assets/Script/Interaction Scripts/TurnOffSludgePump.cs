@@ -9,7 +9,7 @@ public class TurnOffSludgePump : Interactable
     //[SerializeField] Inventory inventory;
     [SerializeField] LevelOneEvents levelOneEvents;
 
-    public GameObject boxRange;
+    //public GameObject boxRange;
 
     EarthPlayer earthPlayer;
 
@@ -54,7 +54,7 @@ public class TurnOffSludgePump : Interactable
             Debug.Log("Turned off the sludge pump");
             levelOneEvents.OnPumpShutOff();
             uiObject.SetActive(false);
-            boxRange.SetActive(false);
+            //boxRange.SetActive(false);
         }
     }
 }

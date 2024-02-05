@@ -58,7 +58,7 @@ public class playerMovement : MonoBehaviour
         playerInputActions = new PlayerInputActions();
         //playerInput = GetComponent<PlayerInput>();
         celestialPlayerInputActions = new CelestialPlayerInputActions();
-        if (this.GetComponent<EarthPlayer>())
+        /*if (this.GetComponent<EarthPlayer>())
         {
             playerInputActions.EarthPlayerDefault.Enable();
             playerInputActions.EarthPlayerDefault.Walk.performed += MovePlayer;
@@ -69,7 +69,7 @@ public class playerMovement : MonoBehaviour
             celestialPlayerInputActions.CelestialPlayerDefault.Walk.performed += MovePlayer;
            // playerInputActions.EarthPlayerDefault.Enable();
             //playerInputActions.EarthPlayerDefault.Walk.performed += MovePlayer;
-        }
+        }*/
     }
 
     void Start()
@@ -120,7 +120,7 @@ public class playerMovement : MonoBehaviour
         {
             inputVector = playerInputActions.EarthPlayerDefault.Walk.ReadValue<Vector2>();
         }
-        else
+        else 
         {
             inputVector = celestialPlayerInputActions.CelestialPlayerDefault.Walk.ReadValue<Vector2>();
         }
@@ -167,13 +167,14 @@ public class playerMovement : MonoBehaviour
 
     public void MovePlayer(InputAction.CallbackContext context)
     {
+        FixedUpdate();
         //calculate movment direction
         //move in dirction you are looking
         Vector2 inputVector = context.ReadValue<Vector2>();
         horInput = inputVector.x;
         vertInput = inputVector.y;
 
-        if (this.GetComponent<NavMeshAgent>())
+       if (this.GetComponent<NavMeshAgent>())
         {
             if (this.GetComponent<NavMeshAgent>().enabled)
             {
@@ -182,7 +183,8 @@ public class playerMovement : MonoBehaviour
                 this.GetComponent<NavMeshAgent>().enabled = false;
             }
         }
-        rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+       rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force); 
+       
     }
 
     private void OrientPlayer()

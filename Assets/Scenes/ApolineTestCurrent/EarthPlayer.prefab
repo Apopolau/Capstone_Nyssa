@@ -1,0 +1,495 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1657110413161616865
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8199604516139087726}
+  - component: {fileID: 6652302850866502148}
+  - component: {fileID: 3106489165327972005}
+  - component: {fileID: 912127368183225321}
+  - component: {fileID: 8256985731051743279}
+  - component: {fileID: 3321091793268904731}
+  - component: {fileID: 1996709615813500952}
+  m_Layer: 0
+  m_Name: EarthPlayer
+  m_TagString: Player1
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8199604516139087726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657110413161616865}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -9, y: 0, z: -133}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6704579787453237706}
+  - {fileID: 9009684055060116738}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &6652302850866502148
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657110413161616865}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 80
+  m_CollisionDetection: 1
+--- !u!114 &3106489165327972005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657110413161616865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+--- !u!114 &912127368183225321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657110413161616865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46638c6b0724f7340b5d2ad117f6828d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orientation: {fileID: 9009684055060116738}
+  player: {fileID: 8199604516139087726}
+  playerObj: {fileID: 6704579787453237706}
+  rb: {fileID: 6652302850866502148}
+  rotationSpeed: 5
+  moveSpeed: 8
+  groundDrag: 5
+  jumpForce: 8
+  jumpCoolDown: 0.25
+  airMultiplier: 0.4
+  jumpKeyP1: 32
+  jumpKeyP2: 271
+  playerHeight: 8
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &8256985731051743279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657110413161616865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  plantParent: {fileID: 0}
+  isPlantSelected: 0
+  plantSelected: {fileID: 0}
+  plantsPlanted: []
+  tempPlantPlanted: {fileID: 0}
+  plantPreview: {fileID: 0}
+  tileOutlinePrefab: {fileID: 0}
+  tileOutline: {fileID: 0}
+  treePrefab: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
+  landGrassPrefab: {fileID: 8326592455623684711, guid: 2938a7a0c54ca5f448e41f884a596426, type: 3}
+  waterGrassPrefab: {fileID: 8326592455623684711, guid: fb6eac0bbccc5fc4784a1140b0696f91, type: 3}
+  landFlowerPrefab: {fileID: 8326592455623684711, guid: 19c12aa1d4023c14cad92ea4ddafc23f, type: 3}
+  waterFlowerPrefab: {fileID: 8326592455623684711, guid: 9bd48f7d11ca2e94581975afd9c7dddf, type: 3}
+  treePreviewPrefab: {fileID: 8326592455623684711, guid: 6d904f1bd1ef58c499f5cd1347172c84, type: 3}
+  landGrassPreviewPrefab: {fileID: 8326592455623684711, guid: 6e8f167c583e07945ba68a7879273c92, type: 3}
+  waterGrassPreviewPrefab: {fileID: 8326592455623684711, guid: 9fa393e2e2ebf49479914043cb243949, type: 3}
+  landFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: ff2ccbcb6e6bbb040bc9b688c83d9c92, type: 3}
+  waterFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 5cbf96d630360a84d94d35a22c559639, type: 3}
+  plantSelectedType: 0
+  selectedTile: {fileID: 0}
+  currentTileSelectedType: 0
+  displayText: {fileID: 0}
+  interacting: 0
+  virtualMouseInput: {fileID: 0}
+  mainCamera: {fileID: 0}
+  tileMask:
+    serializedVersion: 2
+    m_Bits: 128
+  enrouteToPlant: 0
+  inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
+--- !u!114 &3321091793268904731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657110413161616865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 24a76cae14a9de549b93be7830d10818, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 912127368183225321}
+        m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
+        m_MethodName: MovePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 43db4cfc-7821-4a25-98e3-5b4088b2bae9
+    m_ActionName: EarthPlayerDefault/Walk[/XInputControllerWindows/leftStick/up,/XInputControllerWindows2/leftStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows2/leftStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows2/leftStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows2/leftStick/right,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8256985731051743279}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: OnTreeSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 495a34ab-3f11-4936-b56e-af29a9bccb07
+    m_ActionName: EarthPlayerDefault/PickTree[/XInputControllerWindows/dpad/left,/XInputControllerWindows2/dpad/left]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8256985731051743279}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: OnGrassSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b9e78fa6-71d3-466d-bd61-ae801e14870c
+    m_ActionName: EarthPlayerDefault/PickGrass[/XInputControllerWindows/dpad/up,/XInputControllerWindows2/dpad/up]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8256985731051743279}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: OnFlowerSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 5d3b6a75-ebc5-4669-b5ff-271a74081743
+    m_ActionName: EarthPlayerDefault/PickFlower[/XInputControllerWindows/dpad/right,/XInputControllerWindows2/dpad/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8256985731051743279}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: RemovePlant
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 514d0af8-d2f9-4fd1-9f44-2409bf99d06b
+    m_ActionName: EarthPlayerDefault/Remove Building[/XInputControllerWindows/dpad/down,/XInputControllerWindows2/dpad/down]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8256985731051743279}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: PlantPlantingHandler
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9491d659-6adc-47b3-9a57-a00f6d07d1bb
+    m_ActionName: PlantIsSelected/Plant plant[/XInputControllerWindows/buttonSouth,/XInputControllerWindows2/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8256985731051743279}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: CancelPlant
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: fb33cbf5-e211-45bc-af25-fa98fed3c34b
+    m_ActionName: PlantIsSelected/Cancel planting[/XInputControllerWindows/buttonEast,/XInputControllerWindows2/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 912127368183225321}
+        m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
+        m_MethodName: MovePlayer
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f135b41f-ef8f-4405-a125-3b506d4c8835
+    m_ActionName: PlantIsSelected/Move[/XInputControllerWindows/leftStick,/XInputControllerWindows2/leftStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4d61e0a9-39e3-4fef-a2b0-5a829350c262
+    m_ActionName: PlantIsSelected/Cursor Move[/XInputControllerWindows/rightStick,/XInputControllerWindows2/rightStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8256985731051743279}
+        m_TargetAssemblyTypeName: EarthPlayer, Assembly-CSharp
+        m_MethodName: OnInteract
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: a01b538b-153a-45fc-8c9e-8aae773c39d3
+    m_ActionName: EarthPlayerDefault/Interact[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7b88c43f-dd52-49f5-b524-0eb0d63f124c
+    m_ActionName: EarthPlayerDefault/Debug Tileflip[/Keyboard/m]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: EarthPlayerDefault
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!195 &1996709615813500952
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1657110413161616865}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 30
+  m_Acceleration: 25
+  avoidancePriority: 20
+  m_AngularSpeed: 120
+  m_StoppingDistance: 10
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!1 &4177486941403738845
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9009684055060116738}
+  m_Layer: 0
+  m_Name: Orientation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9009684055060116738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177486941403738845}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8199604516139087726}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &6521716619144031777
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8199604516139087726}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10.2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.42
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.008977937
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_Name
+      value: earth_char_model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      propertyPath: m_TagString
+      value: Player1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6293788587113010066}
+  m_SourcePrefab: {fileID: 100100000, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+--- !u!1 &6215147152001880944 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+  m_PrefabInstance: {fileID: 6521716619144031777}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &6293788587113010066
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6215147152001880944}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.3
+  m_Height: 1.2
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.1, z: 0}
+--- !u!4 &6704579787453237706 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 48811b1f4408ca04abf582043f868007, type: 3}
+  m_PrefabInstance: {fileID: 6521716619144031777}
+  m_PrefabAsset: {fileID: 0}
