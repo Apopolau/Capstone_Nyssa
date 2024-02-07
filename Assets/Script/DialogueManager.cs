@@ -14,14 +14,11 @@ public class DialogueManager : MonoBehaviour
     private Queue<DialogueLine> lines;
 
     public bool isDialogueActive = false;
-     public GameObject dialogueBox; // Reference to the entire dialogue box
+    public GameObject dialogueBox; // Reference to the entire dialogue box
 
-    public float typingSpeed = 0.5f;
-    void Start()
-    {
-        // Toggle visibility ON
-        SetVisibility(false);
-    }
+    
+    public float typingSpeed = 0.2f;
+
     private void Awake()
     {
         if (Instance == null)
@@ -33,9 +30,8 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         isDialogueActive = true;
-
-        // Toggle visibility ON
-        SetVisibility(true);
+        
+        Time.timeScale = 0f;
 
         lines.Clear();
 
@@ -70,21 +66,18 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in dialogueLine.line.ToCharArray())
         {
             dialogueArea.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
+            yield return null;
         }
     }
 
     void EndDialogue()
     {
         isDialogueActive = false;
+        dialogueBox.SetActive(false);
 
-        // Toggle visibility OFF
-        SetVisibility(false);
-    }
-
-    private void SetVisibility(bool isVisible)
-    {
+        Time.timeScale = 1f;
         
-        dialogueBox.SetActive(isVisible);
     }
+
+   
 }
