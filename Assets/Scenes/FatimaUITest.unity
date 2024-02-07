@@ -20,8 +20,8 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
-  m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
+  m_AmbientSkyColor: {r: 1, g: 1, b: 1, a: 1}
+  m_AmbientEquatorColor: {r: 1, g: 1, b: 1, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
@@ -1210,7 +1210,7 @@ GameObject:
   - component: {fileID: 157822184}
   - component: {fileID: 157822185}
   m_Layer: 0
-  m_Name: DialougeStarter
+  m_Name: DialougeManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1246,11 +1246,41 @@ MonoBehaviour:
   dialogue:
     dialogueLines:
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-      line: res
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: 'Whoa, this place is so... dirty! It''s like everything got covered in
+        mud. What happened here?
+
+'
     - character:
-        icon: {fileID: 21300000, guid: 7fac58b044ebd4840af7c9ad0aa6ee2d, type: 3}
-      line: tree
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: "This used to be our beautiful home, but people didn\u2019t take care
+        of it. The air and water are polluted and dirty now.\r\n\r\n"
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: 'We can''t just stand here. We have to save the animals and restore what''s
+        left of this world.
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: 'You''re right. We must fight these creatures and rebuild this land to
+        provide for the animals.
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: 'Yes! we can work together to bring life back to our earth! I will take
+        care of fighting anything that comes our way
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: 'Perfect, and I will try to save the animals in need!
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: "Let\u2019s start this adventure!"
 --- !u!1 &187642669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2024,6 +2054,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2638934273589438354, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 2.8
+      objectReference: {fileID: 0}
     - target: {fileID: 2673314126151306063, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2088,6 +2122,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3571004410004341720, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: typingSpeed
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 3850916345549216227, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2158,6 +2196,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4306460108081554944, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_fontSize
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: c4097c918bdeff548bc7a9b6e7668998, type: 2}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_lineSpacing
+      value: 13.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_wordSpacing
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6996556569580721715, guid: c4097c918bdeff548bc7a9b6e7668998, type: 2}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_characterSpacing
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_paragraphSpacing
+      value: 4.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4436420224707133159, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5759290059849945373, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
@@ -2260,6 +2342,10 @@ PrefabInstance:
       propertyPath: m_FillAmount
       value: 0.737
       objectReference: {fileID: 0}
+    - target: {fileID: 8316934767797362537, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8342424457061838604, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2314,10 +2400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5759290059849945373, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 879635361}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
 --- !u!1 &283261496
@@ -5825,11 +5908,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654262869}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &678819598 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5759290059849945373, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
-  m_PrefabInstance: {fileID: 264232445}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &684220511
 GameObject:
   m_ObjectHideFlags: 0
@@ -7511,81 +7589,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 862500056}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &879635360
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 879635361}
-  - component: {fileID: 879635363}
-  - component: {fileID: 879635362}
-  m_Layer: 5
-  m_Name: Overlay
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &879635361
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879635360}
-  m_LocalRotation: {x: -0.000000029802315, y: 0.000000059604623, z: 0.000000007450576, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.000051581857}
-  m_LocalScale: {x: 0.625, y: 0.62499994, z: 0.625}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 678819598}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 344.70007, y: 63.72495}
-  m_SizeDelta: {x: 788.06, y: 435.8}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &879635362
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879635360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.21960784, g: 0.21960784, b: 0.21960784, a: 0.79607844}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &879635363
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 879635360}
-  m_CullTransparentMesh: 1
 --- !u!1 &880488234
 GameObject:
   m_ObjectHideFlags: 0
