@@ -20,6 +20,24 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private Gradient skyColor;
     [SerializeField] private Gradient equatorColor;
 
+    //Level 1 Day colour clean: FFFFED
+    //Level 1 Day colour polluted: BCBC9A
+
+    //Level 2 Day colour clean: FFFFED
+    //Level 2 Day colour polluted: BCBC9A
+    //Level 2 Night colour clean: 38364D
+    //Level 2 Night colour polluted: 291927
+
+    //Level 3 Day colour clean: FFFFED
+    //Level 3 Day colour polluted: BCBC9A
+    //Level 3 Night colour clean: 38364D
+    //Level 3 Night colour polluted: 291927
+
+    //Level 4 Day colour clean: FFFFED
+    //Level 4 Day colour polluted: BCBC9A
+    //Level 4 Night colour clean: 38364D
+    //Level 4 Night colour polluted: 291927
+
     // Update is called once per frame
     void Update()
     {
