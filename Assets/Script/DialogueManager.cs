@@ -14,13 +14,25 @@ public class DialogueManager : MonoBehaviour
     private Queue<DialogueLine> lines;
 
     public bool isDialogueActive = false;
-     public GameObject dialogueBox; // Reference to the entire dialogue box
+    public GameObject dialogueBox; // Reference to the entire dialogue box
 
-    public float typingSpeed = 0.5f;
-    void Start()
+    
+    public float typingSpeed = 0.2f;
+
+    void Update()
     {
-        // Toggle visibility ON
-        SetVisibility(false);
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
+            Debug.Log("Space key pressed!"); //shortcut for closing dialouge
+            EndDialogue();
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.Return) && isDialogueActive) //replace with controller input
+        {
+            DisplayNextDialogueLine();
+        }
     }
     private void Awake()
     {
@@ -33,9 +45,8 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         isDialogueActive = true;
-
-        // Toggle visibility ON
-        SetVisibility(true);
+        
+        Time.timeScale = 0f;
 
         lines.Clear();
 
@@ -70,21 +81,18 @@ public class DialogueManager : MonoBehaviour
         foreach (char letter in dialogueLine.line.ToCharArray())
         {
             dialogueArea.text += letter;
-            yield return new WaitForSeconds(typingSpeed);
+            yield return null;
         }
     }
 
     void EndDialogue()
     {
         isDialogueActive = false;
+        dialogueBox.SetActive(false);
 
-        // Toggle visibility OFF
-        SetVisibility(false);
-    }
-
-    private void SetVisibility(bool isVisible)
-    {
+        Time.timeScale = 1f;
         
-        dialogueBox.SetActive(isVisible);
     }
+
+   
 }
