@@ -19,6 +19,21 @@ public class DialogueManager : MonoBehaviour
     
     public float typingSpeed = 0.2f;
 
+    void Update()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            
+            Debug.Log("Space key pressed!"); //shortcut for closing dialouge
+            EndDialogue();
+            
+        }
+        else if (Input.GetKeyDown(KeyCode.Return) && isDialogueActive) //replace with controller input
+        {
+            DisplayNextDialogueLine();
+        }
+    }
     private void Awake()
     {
         if (Instance == null)
