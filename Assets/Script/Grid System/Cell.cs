@@ -10,7 +10,20 @@ public class Cell : MonoBehaviour
     [SerializeField] GameObjectRuntimeSet playerSet;
     [SerializeField] public GameObject buildingTarget;
 
-    [SerializeField] private Texture grassTile;
+    [SerializeField] private Texture fullGrassTile;
+    /*
+    [SerializeField] private Texture grassAllSidesDirtTile;
+    [SerializeField] private Texture grassStraightEdgeTile;
+    [SerializeField] private Texture grassDirtCornerTile;
+    [SerializeField] private Texture grassTetrisPieceTile;
+    [SerializeField] private Texture grass1CornerDirtTile;
+    [SerializeField] private Texture grass2CornerOppositeDirtTile;
+    [SerializeField] private Texture grass2CornerAdjacentDirtTile;
+    [SerializeField] private Texture grass3CornersDirtTile;
+    [SerializeField] private Texture grass4CornersDirtTile;
+    [SerializeField] private Texture grassLineTile;
+    */
+
     [SerializeField] private Texture dirtTile;
     [SerializeField] private Texture pollutedTile;
     [SerializeField] private Material cleanWaterTile;
@@ -119,7 +132,7 @@ public class Cell : MonoBehaviour
                 {
                     if (tileHasBuild)
                     {
-                        GetComponentInChildren<MeshRenderer>().material.mainTexture = grassTile;
+                        GetComponentInChildren<MeshRenderer>().material.mainTexture = fullGrassTile;
                     }
                     else
                     {
@@ -231,46 +244,58 @@ public class Cell : MonoBehaviour
 
     private void FindNeighbours()
     {
+        float margin = 0.5f;
         Cell[] cells = tileGroup.GetComponentsInChildren<Cell>();
         foreach(Cell cell in cells)
         {
-            if (cell.transform.position.x == this.transform.position.x - 10)
+            if ((cell.transform.position.x <= this.transform.position.x - 10 + margin) 
+                && (cell.transform.position.x >= this.transform.position.x - 10 - margin))
             {
-                if(cell.transform.position.z == this.transform.position.z)
+                if((cell.transform.position.z <= this.transform.position.z + margin) &&
+                    (cell.transform.position.z >= this.transform.position.z - margin))
                 {
                     neighbours[3] = cell;
                 }
-                else if(cell.transform.position.z == this.transform.position.z - 10)
+                else if ((cell.transform.position.z <= this.transform.position.z - 10 + margin) &&
+                    (cell.transform.position.z >= this.transform.position.z - 10 - margin))
                 {
                     neighbours[5] = cell;
                 }
-                else if(cell.transform.position.z == this.transform.position.z + 10)
+                else if ((cell.transform.position.z <= this.transform.position.z + 10 + margin) &&
+                    (cell.transform.position.z >= this.transform.position.z + 10 - margin))
                 {
                     neighbours[0] = cell;
                 }
             }
-            else if(cell.transform.position.x == this.transform.position.x)
+            else if ((cell.transform.position.x <= this.transform.position.x + margin)
+                && (cell.transform.position.x >= this.transform.position.x - margin))
             {
-                if (cell.transform.position.z == this.transform.position.z - 10)
+                if ((cell.transform.position.z <= this.transform.position.z - 10 + margin) &&
+                    (cell.transform.position.z >= this.transform.position.z - 10 - margin))
                 {
                     neighbours[6] = cell;
                 }
-                else if (cell.transform.position.z == this.transform.position.z + 10)
+                else if ((cell.transform.position.z <= this.transform.position.z + 10 + margin) &&
+                    (cell.transform.position.z >= this.transform.position.z + 10 - margin))
                 {
                     neighbours[1] = cell;
                 }
             }
-            else if (cell.transform.position.x == this.transform.position.x + 10)
+            else if ((cell.transform.position.x <= this.transform.position.x + 10 + margin)
+                && (cell.transform.position.x >= this.transform.position.x + 10 - margin))
             {
-                if (cell.transform.position.z == this.transform.position.z)
+                if ((cell.transform.position.z <= this.transform.position.z + margin) &&
+                    (cell.transform.position.z >= this.transform.position.z - margin))
                 {
                     neighbours[4] = cell;
                 }
-                else if (cell.transform.position.z == this.transform.position.z - 10)
+                else if ((cell.transform.position.z <= this.transform.position.z - 10 + margin) &&
+                    (cell.transform.position.z >= this.transform.position.z - 10 - margin))
                 {
                     neighbours[7] = cell;
                 }
-                else if (cell.transform.position.z == this.transform.position.z + 10)
+                else if ((cell.transform.position.z <= this.transform.position.z + 10 + margin) &&
+                    (cell.transform.position.z >= this.transform.position.z + 10 - margin))
                 {
                     neighbours[2] = cell;
                 }

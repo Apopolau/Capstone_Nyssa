@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +7,8 @@ public class EarthPlayerControl : MonoBehaviour
 {
 
 
-    PlayerInputActions controls;
-    Vector2 moveInput;
+    public PlayerInputActions controls;
+    public InputAction pickTreeAction;
 
     int playerIndex = 1; // can only be 0 (for player 1) or 1 (for player 2)
     int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
@@ -46,7 +46,11 @@ public class EarthPlayerControl : MonoBehaviour
         controls.EarthPlayerDefault.Enable();
         controls.EarthPlayerDefault.Walk.performed += OnMovePerformed;
         controls.EarthPlayerDefault.Walk.canceled += OnMoveCancelled;
-        controls.EarthPlayerDefault.PickTree.performed += OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.EarthPlayerDefault.PickTree.performed+= OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.EarthPlayerDefault.PickFlower.performed += OnPickFlower; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.EarthPlayerDefault.PickGrass.performed += OnPickGrass; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.EarthPlayerDefault.RemoveBuilding.performed += OnRemovePlant;
+        controls.EarthPlayerDefault.Interact.performed += OnInteract;
 
         // controls.CelestialPlayerDefault.MakeRain.performed += OnAttackPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
 
@@ -57,8 +61,8 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
      if (context.control.device.deviceId != myDeviceID) return;
        this.GetComponent<playerMovement>().MovePlayer(context);
-      Debug.Log("start walking");
-
+       
+       
 
     }
 
@@ -66,6 +70,7 @@ public class EarthPlayerControl : MonoBehaviour
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
+        this.GetComponent<playerMovement>().StopPlayer();
 
 
     }
@@ -74,17 +79,75 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
 
-        Debug.Log("call start rain");
+        Debug.Log("call pickup tree");
+        this.GetComponent<EarthPlayer>().OnTreeSelected(context);
+        //pickTreeAction.(context);
 
 
     }
-
-
-    // Update is called once per frame
-    void Update()
+    private void OnPickFlower(InputAction.CallbackContext context)
     {
-        Vector3 moveDir = new Vector3(moveInput.x, moveInput.y, 0f);
-        transform.position += moveDir * moveSpeed * Time.deltaTime;
+        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        if (context.control.device.deviceId != myDeviceID) return;
+
+        Debug.Log("call pickup tree");
+        this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
+        //pickTreeAction.(context);
+
 
     }
+    private void OnPickGrass(InputAction.CallbackContext context)
+    {
+        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        if (context.control.device.deviceId != myDeviceID) return;
+
+        Debug.Log("call pickup tree");
+        this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
+        //pickTreeAction.(context);
+
+
+    }
+    private void OnRemovePlant(InputAction.CallbackContext context)
+    {
+        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        if (context.control.device.deviceId != myDeviceID) return;
+
+        Debug.Log("call pickup tree");
+        this.GetComponent<EarthPlayer>().RemovePlant();
+        //pickTreeAction.(context);
+
+
+    }
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        if (context.control.device.deviceId != myDeviceID) return;
+
+        Debug.Log("call pickup tree");
+        this.GetComponent<EarthPlayer>().OnInteract(context);
+        //pickTreeAction.(context);
+
+
+    }
+    /*
+        private void FixedUpdate()
+        {
+
+            Vector2 inputVector;
+            if (this.GetComponent<EarthPlayer>())
+            {
+                inputVector =controls.EarthPlayerDefault.Walk.ReadValue<Vector2>();
+            }
+            else
+            {
+                inputVector = new Vector2(0, 0);
+            }
+
+           rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+
+            //ground check, send a raycast to check if the ground is present half way down the players body+0.2
+            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
+        }
+    */
+
 }

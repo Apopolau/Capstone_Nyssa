@@ -8,7 +8,10 @@ public class PlantStats : ScriptableObject
     [Header("Basic info")]
     [SerializeField] public string plantName;
     [SerializeField] public int maxHealth;
-    [SerializeField] public int airPollutionBonus;
+    [SerializeField] public int seedlingAirPollutionBonus;
+    [SerializeField] public int sproutAirPollutionBonus;
+    [SerializeField] public int juvenileAirPollutionBonus;
+    [SerializeField] public int matureAirPollutionBonus;
     [SerializeField] public GameObject cost;
     public enum PlantStage { SEEDLING, SPROUT, JUVENILE, MATURE}
 
@@ -18,16 +21,10 @@ public class PlantStats : ScriptableObject
     [SerializeField] public Sprite juvenileImage;
     [SerializeField] public Sprite matureImage;
 
-    [Header("Position on Different Growth Stages")]
-    [SerializeField] public float seedlingYOffset;
-    [SerializeField] public float sproutYOffset;
-    [SerializeField] public float juvenileYOffset;
-    [SerializeField] public float matureYOffset;
-
-    [SerializeField] public float seedlingZOffset;
-    [SerializeField] public float sproutZOffset;
-    [SerializeField] public float juvenileZOffset;
-    [SerializeField] public float matureZOffset;
+    [SerializeField] public float seedlingTileOffset;
+    [SerializeField] public float sproutTileOffset;
+    [SerializeField] public float juvenileTileOffset;
+    [SerializeField] public float matureTileOffset;
 
     [Header("Scale on Different Growth Stages")]
     [SerializeField] public float seedlingScale;

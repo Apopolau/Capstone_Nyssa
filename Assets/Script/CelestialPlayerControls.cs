@@ -1,4 +1,4 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +8,9 @@ public class CelestialPlayerControls : MonoBehaviour
 {
 
 
-    CelestialPlayerInputActions controls;
-    Vector2 moveInput;
+    public CelestialPlayerInputActions controls;
+    public InputActionReference rainAction;
+   // public CelestialPlayerInputActions cele;
 
     int playerIndex = 0; // can only be 0 (for player 1) or 1 (for player 2)
     int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
@@ -53,12 +54,13 @@ public class CelestialPlayerControls : MonoBehaviour
 
     }
 
-    private void OnMovePerformed(InputAction.CallbackContext context)
+   private void OnMovePerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
-       this.GetComponent<playerMovement>().MovePlayer(context);
-        Debug.Log("start walking");
+
+       this.GetComponent<CelestialPlayerMovement>().MovePlayer(context);
+      
 
     }
 
@@ -66,16 +68,21 @@ public class CelestialPlayerControls : MonoBehaviour
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
+        this.GetComponent<CelestialPlayerMovement>().StopPlayer();
 
-       
+
     }
     private void OnMakeRain(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
-
+        
         Debug.Log("call start rain");
-   
+      
+       // rainAction.ToInputAction(BaseStateMachine.)
+        //https://gamedevbeginner.com/input-in-unity-made-easy-complete-guide-to-the-new-system/#:~:text=To%20do%20that%2C%20right%2Dclick,Input%20Actions%20from%20the%20menu.&text=To%20create%20an%20Input%20Actions,Input%20Actions%20in%20the%20menu.
+        //PlayerInput.switchcurrentactionMap("Menu");
+      
 
     }
 
@@ -89,10 +96,5 @@ public class CelestialPlayerControls : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
-    {
-        Vector3 moveDir = new Vector3(moveInput.x, moveInput.y, 0f);
-        transform.position += moveDir * moveSpeed * Time.deltaTime;
-
-    }
+ 
 }

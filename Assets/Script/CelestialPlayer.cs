@@ -96,7 +96,7 @@ public class CelestialPlayer : MonoBehaviour
     void Start()
     {
         // celestialPlayerInput = GetComponent<CelestialPlayerInputActions>();
-        playerInput = GetComponent<PlayerInput>();
+        //playerInput = GetComponent<PlayerInput>();
         coldSnap = GetComponent<ColdSnapBehaviour>();
     }
 

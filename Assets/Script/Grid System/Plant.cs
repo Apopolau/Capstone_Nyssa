@@ -6,8 +6,11 @@ public class Plant : Creatable
 {
     private int currentHealth;
     [SerializeField] public PlantStats stats;
-    public GameObject plantVisual;
+    public GameObject plantObject;
+    public SpriteRenderer[] plantVisuals;
+    private Cell tilePlantedOn;
 
+    public int currentPollutionContribution;
     private int storedSunlight;
     private int storedWater;
     private int growthPoints;
@@ -16,9 +19,13 @@ public class Plant : Creatable
     // Start is called before the first frame update
     void Awake()
     {
+        tilePlantedOn = this.gameObject.transform.parent.GetComponentInParent<Cell>();
+        plantVisuals = plantObject.GetComponentsInChildren<SpriteRenderer>();
         currentPlantStage = PlantStats.PlantStage.SEEDLING;
-        plantVisual.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
-        PlacePlant(stats.seedlingScale, stats.seedlingZOffset);
+        plantObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
+        currentPollutionContribution = stats.seedlingAirPollutionBonus;
+        
+        PlacePlant(stats.seedlingScale, stats.seedlingTileOffset);
         StartCoroutine(AdvancePlantStage());
     }
 
@@ -37,15 +44,34 @@ public class Plant : Creatable
     {
         //Add a check to see if it is currently sunny or rainy when these states exist
         //Put the check so that stored resources are not drained if the resource is still active
-        if(storedSunlight > 0 && storedWater > 0){
-            growthPoints++;
-            storedSunlight--;
-            storedWater--;
-            //we want our plants to heal if they're not full health while they're growing
-            //We may choose to add a check where they don't heal if they're actively being affected by a monster
-            if(currentHealth < stats.maxHealth)
+        //If it's a water plant it doesn't need rain to grow
+        if (tilePlantedOn.terrainType == Cell.TerrainType.WATER)
+        {
+            if (storedSunlight > 0)
             {
-                currentHealth++;
+                growthPoints++;
+                storedSunlight--;
+                //we want our plants to heal if they're not full health while they're growing
+                //We may choose to add a check where they don't heal if they're actively being affected by a monster
+                if (currentHealth < stats.maxHealth)
+                {
+                    currentHealth++;
+                }
+            }
+        }
+        else
+        {
+            if (storedSunlight > 0 && storedWater > 0)
+            {
+                growthPoints++;
+                storedSunlight--;
+                storedWater--;
+                //we want our plants to heal if they're not full health while they're growing
+                //We may choose to add a check where they don't heal if they're actively being affected by a monster
+                if (currentHealth < stats.maxHealth)
+                {
+                    currentHealth++;
+                }
             }
         }
         if(storedSunlight < 0)
@@ -76,22 +102,40 @@ public class Plant : Creatable
                 yield return new WaitForSeconds(stats.seedlingGrowTime);
                 Debug.Log("Plant should be growing");
                 currentPlantStage = PlantStats.PlantStage.SPROUT;
-                this.GetComponentInChildren<SpriteRenderer>().sprite = stats.sproutImage;
-                PlacePlant(stats.sproutScale, stats.sproutZOffset);
+                currentPollutionContribution = stats.sproutAirPollutionBonus;
+                SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                {
+                    spriteRenderer.sprite = stats.sproutImage;
+                }
+                PlacePlant(stats.sproutScale, stats.sproutTileOffset);
+                HandleTreeColliders(0.5f, 5);
             }
             else if(currentPlantStage == PlantStats.PlantStage.SPROUT)
             {
                 yield return new WaitForSeconds(stats.sproutGrowTime);
                 currentPlantStage = PlantStats.PlantStage.JUVENILE;
-                this.GetComponentInChildren<SpriteRenderer>().sprite = stats.juvenileImage;
-                PlacePlant(stats.juvenileScale, stats.juvenileZOffset);
+                currentPollutionContribution = stats.juvenileAirPollutionBonus;
+                SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+                {
+                    spriteRenderer.sprite = stats.juvenileImage;
+                }
+                PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
+                HandleTreeColliders(1f, 5);
             }
             else if(currentPlantStage == PlantStats.PlantStage.JUVENILE)
             {
                 yield return new WaitForSeconds(stats.juvenileGrowTime);
                 currentPlantStage = PlantStats.PlantStage.MATURE;
-                this.GetComponentInChildren<SpriteRenderer>().sprite = stats.matureImage;
-                PlacePlant(stats.matureScale, stats.matureZOffset);
+                currentPollutionContribution = stats.matureAirPollutionBonus;
+                SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+                foreach(SpriteRenderer spriteRenderer in spriteRenderers)
+                {
+                    spriteRenderer.sprite = stats.matureImage;
+                }
+                PlacePlant(stats.matureScale, stats.matureTileOffset);
+                HandleTreeColliders(2f, 5);
             }
             else if(currentPlantStage == PlantStats.PlantStage.MATURE)
             {
@@ -102,11 +146,37 @@ public class Plant : Creatable
         
     }
 
-    private void PlacePlant(float scale, float zOffset)
+    private void HandleTreeColliders(float colliderRadius, float colliderHeight)
     {
-        plantVisual.transform.rotation = Quaternion.Euler(0, 45, 0);
-        plantVisual.transform.localScale = new Vector3(scale, scale, 1);
-        float yOffset = (this.GetComponentInChildren<SpriteRenderer>().sprite.bounds.extents.y * scale);
-        plantVisual.transform.localPosition = new Vector3(0, yOffset, zOffset);
+        if (this.GetComponent<CapsuleCollider>() != null)
+        {
+            CapsuleCollider collider = this.GetComponent<CapsuleCollider>();
+            collider.radius = colliderRadius;
+            collider.height = colliderHeight;
+            //collider.center = colliderYPosition;
+        }
+    }
+
+    private void PlacePlant(float scale, float tileOffset)
+    {
+        plantObject.transform.rotation = Quaternion.Euler(0, 45, 0);
+        if(plantVisuals.Length > 1)
+        {
+            int i = 0;
+            foreach (SpriteRenderer plantVisual in plantVisuals)
+            {
+                plantVisual.transform.localScale = new Vector3(scale, scale, 1);
+                float yOffset = (plantVisual.GetComponent<SpriteRenderer>().sprite.bounds.extents.y * scale);
+                plantVisual.transform.localPosition = new Vector3(plantVisual.transform.localPosition.x, yOffset, plantVisual.transform.localPosition.z);
+                i++;
+            }
+        }
+        else
+        {
+            plantVisuals[0].transform.localScale = new Vector3(scale, scale, 1);
+            float yOffset = (plantVisuals[0].GetComponent<SpriteRenderer>().sprite.bounds.extents.y * scale);
+            plantVisuals[0].gameObject.transform.parent.gameObject.transform.localPosition = new Vector3(-tileOffset, yOffset, -tileOffset);
+            //plantVisuals[0].GetComponentInParent<GameObject>().transform.localPosition = new Vector3(-tileOffset, yOffset, -tileOffset);
+        }
     }
 }

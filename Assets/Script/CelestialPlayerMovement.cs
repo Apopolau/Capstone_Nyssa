@@ -10,7 +10,7 @@ using UnityEngine.AI;
 
 //
 
-public class playerMovement : MonoBehaviour
+public class CelestialPlayerMovement : MonoBehaviour
 {
     // Start is called before the first frame update
     //Rotation of the player
@@ -46,26 +46,22 @@ public class playerMovement : MonoBehaviour
     float vertInput;
     Vector3 moveDirection;
     bool isMoveKeyHeld;
-
-    private PlayerInputActions playerInputActions;
-    private PlayerInput playerInput;
     Vector2 inputVector;
 
+    private PlayerInput playerInput;
+    private CelestialPlayerInputActions celestialPlayerInputActions;
     //private CelestialPlayerInput celestialPlayerInput;
 
     private void Awake()
     {
-        // playerInputActions = new PlayerInputActions();
-
-        playerInputActions = GetComponent<EarthPlayerControl>().controls;
+        celestialPlayerInputActions = GetComponent<CelestialPlayerControls>().controls;
         /* playerInput = GetComponent<PlayerInput>();
-        playerInputActions = new PlayerInputActions();
-     
-       if (this.GetComponent<EarthPlayer>())
-        {
-            playerInputActions.EarthPlayerDefault.Enable();
-            playerInputActions.EarthPlayerDefault.Walk.performed += MovePlayer;
-        }*/
+         celestialPlayerInputActions = new CelestialPlayerInputActions();
+           if (this.GetComponent<CelestialPlayer>())
+          {
+              celestialPlayerInputActions.CelestialPlayerDefault.Enable();
+              celestialPlayerInputActions.CelestialPlayerDefault.Walk.performed += MovePlayer;
+          }*/
 
     }
 
@@ -86,7 +82,7 @@ public class playerMovement : MonoBehaviour
         //check if grounded
         if (grounded)
         {
-            rb.drag = groundDrag;
+            rb.drag= groundDrag;
         }
         else
         {
@@ -96,23 +92,20 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("earth FIXED UPDATE");
-       
-        if (this.gameObject.tag == "Player1")
+        //Vector2 inputVector;
+        if (this.gameObject.tag == "Player2")
         {
-            //inputVector = playerInputActions.EarthPlayerDefault.Walk.ReadValue<Vector2>();
-            
-           rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-            //isMoveKeyHeld = false;
-            Debug.Log("earth FIXED UPDATE CHECK");
-            Debug.Log("earth" + inputVector);
 
+           
+            //inputVector = GetComponent<CelestialPlayerControls>().controls.CelestialPlayerDefault.Walk.ReadValue<Vector2>();
+            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+            Debug.Log("celestial FIXED UPDATE CHECK");
+            Debug.Log("celestial" + inputVector);
         }
-    
+        
 
+       // rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
-
-        //  rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
     }
@@ -120,12 +113,13 @@ public class playerMovement : MonoBehaviour
     private void MyInput()
     {
        
-        if(player.gameObject.tag == "Player1")
-        {
-            //horInput = Input.GetAxisRaw("Horizontal_P1");
-            //vertInput = Input.GetAxisRaw("Vertical_P1");
 
-            if (Input.GetKey(jumpKeyP1) && readyToJump && grounded)
+        if (player.gameObject.tag == "Player2")
+        {
+            //horInput = Input.GetAxisRaw("Horizontal_P2");
+            //vertInput = Input.GetAxisRaw("Vertical_P2");
+
+            if (Input.GetKey(jumpKeyP2) && readyToJump && grounded)
             {
                 //print("I should be jumping");
                 readyToJump = false;
@@ -134,8 +128,6 @@ public class playerMovement : MonoBehaviour
                 Invoke(nameof(ResetJump), jumpCoolDown);
             }
         }
-
-      
     }
 
     public void MovePlayer(InputAction.CallbackContext context)
@@ -143,32 +135,31 @@ public class playerMovement : MonoBehaviour
         //FixedUpdate();
         //calculate movment direction
         //move in dirction you are looking
-        Debug.Log("earth MOVE PLAYER");
-        inputVector = context.ReadValue<Vector2>();
-        Debug.Log("earthPLAYER" +inputVector);
+        Debug.Log("celestial walking");
+         inputVector = context.ReadValue<Vector2>();
+        Debug.Log("celestialPLAYER" + inputVector);
         horInput = inputVector.x;
         vertInput = inputVector.y;
         isMoveKeyHeld = true;
-       if (this.GetComponent<NavMeshAgent>())
-        {
-            if (this.GetComponent<NavMeshAgent>().enabled)
-            {
-                this.GetComponent<EarthPlayer>().enrouteToPlant = false;
-                this.GetComponent<NavMeshAgent>().ResetPath();
-                this.GetComponent<NavMeshAgent>().enabled = false;
-            }
-        }
+         if (this.GetComponent<NavMeshAgent>())
+          {
+              if (this.GetComponent<NavMeshAgent>().enabled)
+              {
+                //  this.GetComponent<CelestialPlayer>().enrouteToPlant = false;
+                  this.GetComponent<NavMeshAgent>().ResetPath();
+                  this.GetComponent<NavMeshAgent>().enabled = false;
+              }
+          }
         if (this.GetComponent<NavMeshAgent>())
         {
             rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-      
+         
         }
     }
     public void StopPlayer()
     {
-
-        inputVector = new Vector2(0, 0);
-        Debug.Log("celestialPLAYER" + inputVector);
+   
+        inputVector = new Vector2(0 , 0);
         horInput = inputVector.x;
         vertInput = inputVector.y;
         isMoveKeyHeld = true;
@@ -187,7 +178,6 @@ public class playerMovement : MonoBehaviour
 
         }
     }
-
     private void OrientPlayer()
     {
         //If we've activated the nav mesh agent, we want to turn in the direction it is moving
@@ -248,7 +238,7 @@ public class playerMovement : MonoBehaviour
     public void ResetNavAgent()
     {
         
-        this.GetComponent<EarthPlayer>().enrouteToPlant = false;
+        //this.GetComponent<EarthPlayer>().enrouteToPlant = false;
         this.GetComponent<NavMeshAgent>().ResetPath();
         this.GetComponent<NavMeshAgent>().enabled = false;
         orientation.localRotation = new Quaternion(0, 0, 0, 1);
