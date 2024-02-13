@@ -50,8 +50,10 @@ public class playerMovement : MonoBehaviour
     private PlayerInputActions playerInputActions;
     private PlayerInput playerInput;
     Vector2 inputVector;
-
+    int EarthDeviceID;
     //private CelestialPlayerInput celestialPlayerInput;
+
+    public InputDevice lastDevice;
 
     private void Awake()
     {
@@ -73,6 +75,15 @@ public class playerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        EarthDeviceID = Gamepad.all[1].deviceId;
+
+      /*  InputSystem.onActionChange += (obj, change) => {
+            if (change == InputActionChange.ActionPerformed)
+            {
+                lastDevice = (obj as InputAction).activeControl.device;
+                Debug.Log($"last device->{lastDevice}");
+            }
+        };*/
     }
 
     // Update is called once per frame
@@ -96,16 +107,24 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("earth FIXED UPDATE");
-       
-        if (this.gameObject.tag == "Player1")
+        //Debug.Log("earth FIXED UPDATE");
+
+
+
+        //if (lastDevice.deviceId==0 && lastDevice.wasUpdatedThisFrame)
+       if (this.gameObject.tag == "Player1")
         {
             //inputVector = playerInputActions.EarthPlayerDefault.Walk.ReadValue<Vector2>();
+
+            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+            //rb.position += (new Vector3(inputVector.x, 0, inputVector.y).normalized) * moveSpeed * 10f * Time.deltaTime;
+            //Debug.Log(inputVector);
             
-           rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+            
+            
             //isMoveKeyHeld = false;
-            Debug.Log("earth FIXED UPDATE CHECK");
-            Debug.Log("earth" + inputVector);
+            //Debug.Log("earth FIXED UPDATE CHECK");
+           // Debug.Log("earth" + inputVector);
 
         }
     
@@ -138,18 +157,25 @@ public class playerMovement : MonoBehaviour
       
     }
 
-    public void MovePlayer(InputAction.CallbackContext context)
+    public void MovePlayer(InputAction.CallbackContext context, Vector2 input)
     {
         //FixedUpdate();
         //calculate movment direction
         //move in dirction you are looking
-        Debug.Log("earth MOVE PLAYER");
-        inputVector = context.ReadValue<Vector2>();
-        Debug.Log("earthPLAYER" +inputVector);
-        horInput = inputVector.x;
-        vertInput = inputVector.y;
+       // Debug.Log("earth MOVE PLAYER");
+       
+        //Debug.Log("earthPLAYER" +inputVector);
+    
         isMoveKeyHeld = true;
-       if (this.GetComponent<NavMeshAgent>())
+      
+        if (context.control.device.deviceId == EarthDeviceID)
+
+        {
+            //inputVector = context.ReadValue<Vector2>();
+            inputVector = input;
+            horInput = inputVector.x;
+            vertInput = inputVector.y;
+            if (this.GetComponent<NavMeshAgent>())
         {
             if (this.GetComponent<NavMeshAgent>().enabled)
             {
@@ -158,17 +184,19 @@ public class playerMovement : MonoBehaviour
                 this.GetComponent<NavMeshAgent>().enabled = false;
             }
         }
-        if (this.GetComponent<NavMeshAgent>())
-        {
-            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-      
+            if (this.GetComponent<NavMeshAgent>())
+            {
+                
+                rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+            }
         }
     }
-    public void StopPlayer()
+    public void StopPlayer(Vector2 input)
     {
 
+
         inputVector = new Vector2(0, 0);
-        Debug.Log("celestialPLAYER" + inputVector);
+
         horInput = inputVector.x;
         vertInput = inputVector.y;
         isMoveKeyHeld = true;
@@ -183,8 +211,9 @@ public class playerMovement : MonoBehaviour
         }
         if (this.GetComponent<NavMeshAgent>())
         {
-            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-
+            rb.AddForce(new Vector3(0, 0, 0).normalized * moveSpeed * 10f, ForceMode.Force);
+            //rb.position += (new Vector3(inputVector.x, 0, inputVector.y).normalized) * moveSpeed * 10f * Time.deltaTime;
+            
         }
     }
 

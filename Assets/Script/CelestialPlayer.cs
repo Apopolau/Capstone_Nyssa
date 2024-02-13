@@ -50,7 +50,7 @@ public class CelestialPlayer : MonoBehaviour
     public Power powerInUse = Power.NONE;
 
 
-    ColdSnapBehaviour coldSnap;
+    PowerBehaviour powerBehaviour;
 
 
 
@@ -97,7 +97,7 @@ public class CelestialPlayer : MonoBehaviour
     {
         // celestialPlayerInput = GetComponent<CelestialPlayerInputActions>();
         //playerInput = GetComponent<PlayerInput>();
-        coldSnap = GetComponent<ColdSnapBehaviour>();
+        powerBehaviour = GetComponent<PowerBehaviour>();
     }
 
 
@@ -171,11 +171,12 @@ public class CelestialPlayer : MonoBehaviour
 
     }
 
+    // public void AttackEnemy()
     public void Attack()
     {
 
-        ColdSnapBehaviour attack;
-        attack = GetComponent<ColdSnapBehaviour>();
+        PowerBehaviour attack;
+        attack = GetComponent<PowerBehaviour>();
 
         bool playerIsDead;
         playerIsDead =enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
@@ -214,28 +215,29 @@ public class CelestialPlayer : MonoBehaviour
     }
 
     //if player selects raindrop
-    public void OnRainDropSelected() {
-        //RainParticleSystem.SetActive(true);
+    public void OnRainDropSelected()
+    {
+        RainParticleSystem.SetActive(true);
         isRaining = true;
 
     }
     public IEnumerator ResetRain()
     {
         Debug.Log("It is currently raining");
-        //if (isRaining)
-       // {
+        if (isRaining)
+        {
             yield return new WaitForSeconds(5f);
             Debug.Log("******It is no longer raining****");
-        isRaining = true;
 
-        // RainParticleSystem.SetActive(false);
+            RainParticleSystem.SetActive(false);
+            isRaining = false;
 
-
-        //}
+        }
 
     }
- 
     public void OnSnowFlakeSelected() { 
+
+        //canLightningStrike = false;
     
     }
 
@@ -243,7 +245,7 @@ public class CelestialPlayer : MonoBehaviour
     {
      
         Debug.Log("coldsnap is animated");
-        GameObject coldOrb = coldSnap.GetComponent<ColdSnapBehaviour>().ColdSnapStats.visualDisplay;
+        GameObject coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
         GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
         clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
       
@@ -260,7 +262,7 @@ public class CelestialPlayer : MonoBehaviour
 
         Debug.Log("coldsnaptimer reset");
       
-        yield return new WaitForSeconds(coldSnap.ColdSnapStats.rechargeTimer);
+        yield return new WaitForSeconds(powerBehaviour.ColdSnapStats.rechargeTimer);
         canColdSnap = true;
 
     }

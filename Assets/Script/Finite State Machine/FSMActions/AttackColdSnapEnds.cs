@@ -19,7 +19,10 @@ public class AttackColdSnapEnds : FSMAction
 
         }
  
+        
 
+
+          
         player.isAttacking = false;
         Debug.Log("******tattack complete");
 

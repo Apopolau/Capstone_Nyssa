@@ -13,7 +13,7 @@ public class CelestialPlayerControls : MonoBehaviour
    // public CelestialPlayerInputActions cele;
 
     int playerIndex = 0; // can only be 0 (for player 1) or 1 (for player 2)
-    int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
+    public int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
 
     public float moveSpeed;
 
@@ -44,30 +44,35 @@ public class CelestialPlayerControls : MonoBehaviour
         // For a two player game, we set the playerIndex via the inspector as either 0 or 1 
 
         myDeviceID = Gamepad.all[playerIndex].deviceId;
-
+        Debug.Log(myDeviceID);
         controls.CelestialPlayerDefault.Enable();
         controls.CelestialPlayerDefault.Walk.performed += OnMovePerformed;
         controls.CelestialPlayerDefault.Walk.canceled += OnMoveCancelled;
         controls.CelestialPlayerDefault.MakeRain.performed += OnMakeRain; // <- we can talk about Attack here because P1Controls has an Attack action
-
-       // controls.CelestialPlayerDefault.MakeRain.performed += OnAttackPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.CelestialPlayerDefault.MakeColdSnap.performed += OnColdSnapPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
 
     }
 
    private void OnMovePerformed(InputAction.CallbackContext context)
     {
-        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        
         if (context.control.device.deviceId != myDeviceID) return;
 
-       this.GetComponent<CelestialPlayerMovement>().MovePlayer(context);
-      
+
+            Vector2 input;
+            input = context.ReadValue<Vector2>();
+
+            this.GetComponent<CelestialPlayerMovement>().MovePlayer(context, input);
+
+
+           
+     
 
     }
 
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
-        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        if (context.control.device.deviceId != myDeviceID) return;
+          if (context.control.device.deviceId != myDeviceID) return;
         this.GetComponent<CelestialPlayerMovement>().StopPlayer();
 
 
@@ -78,20 +83,23 @@ public class CelestialPlayerControls : MonoBehaviour
         if (context.control.device.deviceId != myDeviceID) return;
         
         Debug.Log("call start rain");
-      
-       // rainAction.ToInputAction(BaseStateMachine.)
+
+
+        //<CelestialPlayer>().isRaining = true;
+        this.GetComponent<CelestialPlayer>().OnRainDropSelected();
+        //rainAction.ToInputAction(BaseStateMachine.)
         //https://gamedevbeginner.com/input-in-unity-made-easy-complete-guide-to-the-new-system/#:~:text=To%20do%20that%2C%20right%2Dclick,Input%20Actions%20from%20the%20menu.&text=To%20create%20an%20Input%20Actions,Input%20Actions%20in%20the%20menu.
         //PlayerInput.switchcurrentactionMap("Menu");
-      
+
 
     }
 
-    private void OnAttackPerformed(InputAction.CallbackContext context)
+    private void OnColdSnapPerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
+        this.GetComponent<CelestialPlayer>().OnSnowFlakeSelected();
 
-        Debug.Log("P1 A button means Attack!");
     }
 
 

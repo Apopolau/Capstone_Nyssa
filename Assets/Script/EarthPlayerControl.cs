@@ -5,15 +5,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class EarthPlayerControl : MonoBehaviour
 {
-
+ 
 
     public PlayerInputActions controls;
     public InputAction pickTreeAction;
 
     int playerIndex = 1; // can only be 0 (for player 1) or 1 (for player 2)
-    int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
+    public int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
 
     public float moveSpeed;
+
+    bool takinginput=false;
 
     // Whenever either of two gamepads are used, input event will be sent to *all* player objects.
     // So if controller C1 sends an input, both Player 1 and Player 2 will receive it. Same for controller C2.
@@ -42,9 +44,9 @@ public class EarthPlayerControl : MonoBehaviour
         // For a two player game, we set the playerIndex via the inspector as either 0 or 1 
 
         myDeviceID = Gamepad.all[playerIndex].deviceId;
-
+        Debug.Log(myDeviceID);
         controls.EarthPlayerDefault.Enable();
-        controls.EarthPlayerDefault.Walk.performed += OnMovePerformed;
+        controls.EarthPlayerDefault.Walk.performed += OnMovePerformed6;
         controls.EarthPlayerDefault.Walk.canceled += OnMoveCancelled;
         controls.EarthPlayerDefault.PickTree.performed+= OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.PickFlower.performed += OnPickFlower; // <- we can talk about Attack here because P1Controls has an Attack action
@@ -52,17 +54,48 @@ public class EarthPlayerControl : MonoBehaviour
         controls.EarthPlayerDefault.RemoveBuilding.performed += OnRemovePlant;
         controls.EarthPlayerDefault.Interact.performed += OnInteract;
 
+
         // controls.CelestialPlayerDefault.MakeRain.performed += OnAttackPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
+
+       
+
+
+
+
+
 
     }
 
-    private void OnMovePerformed(InputAction.CallbackContext context)
+
+
+
+
+    private void OnMovePerformed6(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-     if (context.control.device.deviceId != myDeviceID) return;
-       this.GetComponent<playerMovement>().MovePlayer(context);
-       
-       
+        // if (context.control.device.deviceId != myDeviceID && context.control.device.deviceId == myDeviceID) return;
+        if (context.control.device.deviceId != myDeviceID) 
+        { return; 
+        }
+
+     
+        if (takinginput==false)
+        {
+            takinginput = true;
+            Debug.Log("Earth:" + context.control.device.deviceId);
+           
+
+            Vector2 input;
+            input = context.ReadValue<Vector2>();
+
+            //context.ReadValue<Vector2>();
+
+            this.GetComponent<playerMovement>().MovePlayer(context, input);
+            takinginput = false;
+        }
+   
+
+
 
     }
 
@@ -70,9 +103,13 @@ public class EarthPlayerControl : MonoBehaviour
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
-        this.GetComponent<playerMovement>().StopPlayer();
 
-
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            Vector2 input;
+            input = Vector2.zero;
+            this.GetComponent<playerMovement>().StopPlayer(input);
+        }
     }
     private void OnPickTree(InputAction.CallbackContext context)
     {

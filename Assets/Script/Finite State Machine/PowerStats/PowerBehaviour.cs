@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ColdSnapBehaviour : MonoBehaviour
+public class PowerBehaviour : MonoBehaviour
 {
     //MonsterStats
     [SerializeField] public PowerStats ColdSnapStats;

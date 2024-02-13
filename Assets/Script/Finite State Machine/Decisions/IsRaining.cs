@@ -12,7 +12,7 @@ public class isRaining : Decision
         {
             Debug.Log("It's stopping raining");
             //if (stateMachine.GetComponent<CelestialPlayer>().isRaining)
-
+   
                 //celestialPlayer.isRaining = true;
                 return true;
         }
