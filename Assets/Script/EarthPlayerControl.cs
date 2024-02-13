@@ -46,8 +46,8 @@ public class EarthPlayerControl : MonoBehaviour
         myDeviceID = Gamepad.all[playerIndex].deviceId;
         Debug.Log(myDeviceID);
         controls.EarthPlayerDefault.Enable();
-        controls.EarthPlayerDefault.Walk.performed += OnMovePerformed6;
-        controls.EarthPlayerDefault.Walk.canceled += OnMoveCancelled;
+        controls.EarthPlayerDefault.EarthWalk.performed += OnEarthMovePerformed;
+        controls.EarthPlayerDefault.EarthWalk.canceled += OnEarthMoveCancelled;
         controls.EarthPlayerDefault.PickTree.performed+= OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.PickFlower.performed += OnPickFlower; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.PickGrass.performed += OnPickGrass; // <- we can talk about Attack here because P1Controls has an Attack action
@@ -70,45 +70,45 @@ public class EarthPlayerControl : MonoBehaviour
 
 
 
-    private void OnMovePerformed6(InputAction.CallbackContext context)
+    private void OnEarthMovePerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         // if (context.control.device.deviceId != myDeviceID && context.control.device.deviceId == myDeviceID) return;
-        if (context.control.device.deviceId != myDeviceID) 
-        { return; 
-        }
+        //if (context.control.device.deviceId != myDeviceID) 
+        //{ return; 
+        //}
 
      
-        if (takinginput==false)
+        if(context.control.device.deviceId == myDeviceID)
         {
-            takinginput = true;
-            Debug.Log("Earth:" + context.control.device.deviceId);
-           
+            if (takinginput == false)
+            {
+                takinginput = true;
+                Debug.Log("Earth:" + context.control.device.deviceId);
 
-            Vector2 input;
-            input = context.ReadValue<Vector2>();
 
-            //context.ReadValue<Vector2>();
+                Vector2 input;
+                input = Gamepad.all[playerIndex].leftStick.ReadValue();
+                    //context.ReadValue<Vector2>();
 
-            this.GetComponent<playerMovement>().MovePlayer(context, input);
-            takinginput = false;
+                //context.ReadValue<Vector2>();
+
+                this.GetComponent<playerMovement>().MovePlayer(context, input);
+                takinginput = false;
+            }
         }
-   
-
-
-
     }
 
-    private void OnMoveCancelled(InputAction.CallbackContext context)
+    private void OnEarthMoveCancelled(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        if (context.control.device.deviceId != myDeviceID) return;
+        //if (context.control.device.deviceId != myDeviceID) return;
 
         if (context.control.device.deviceId == myDeviceID)
         {
-            Vector2 input;
-            input = Vector2.zero;
-            this.GetComponent<playerMovement>().StopPlayer(input);
+            //Vector2 input;
+            //input = Vector2.zero;
+            this.GetComponent<playerMovement>().EndMovement(context);
         }
     }
     private void OnPickTree(InputAction.CallbackContext context)

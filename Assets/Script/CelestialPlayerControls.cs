@@ -17,6 +17,8 @@ public class CelestialPlayerControls : MonoBehaviour
 
     public float moveSpeed;
 
+    bool takinginput = false;
+
     // Whenever either of two gamepads are used, input event will be sent to *all* player objects.
     // So if controller C1 sends an input, both Player 1 and Player 2 will receive it. Same for controller C2.
     // To have C1's inputs affect only P1, and C2's inputs affect only P2, each Player needs to ignore the messages that it receives from the "wrong" controller.
@@ -46,37 +48,50 @@ public class CelestialPlayerControls : MonoBehaviour
         myDeviceID = Gamepad.all[playerIndex].deviceId;
         Debug.Log(myDeviceID);
         controls.CelestialPlayerDefault.Enable();
-        controls.CelestialPlayerDefault.Walk.performed += OnMovePerformed;
-        controls.CelestialPlayerDefault.Walk.canceled += OnMoveCancelled;
+        controls.CelestialPlayerDefault.CelestialWalk.performed += OnCelestialMovePerformed;
+        controls.CelestialPlayerDefault.CelestialWalk.canceled += OnCelestialMoveCancelled;
         controls.CelestialPlayerDefault.MakeRain.performed += OnMakeRain; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.CelestialPlayerDefault.MakeColdSnap.performed += OnColdSnapPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
 
     }
 
-   private void OnMovePerformed(InputAction.CallbackContext context)
+   private void OnCelestialMovePerformed(InputAction.CallbackContext context)
     {
         
-        if (context.control.device.deviceId != myDeviceID) return;
+        //if (context.control.device.deviceId != myDeviceID) return;
+
+        if(context.control.device.deviceId == myDeviceID)
+        {
+            if (takinginput == false)
+            {
+                takinginput = true;
+                Debug.Log("Celestial:" + context.control.device.deviceId);
 
 
-            Vector2 input;
-            input = context.ReadValue<Vector2>();
+                Vector2 input;
+                input = Gamepad.all[playerIndex].leftStick.ReadValue();
 
-            this.GetComponent<CelestialPlayerMovement>().MovePlayer(context, input);
+                //context.ReadValue<Vector2>();
 
-
-           
-     
-
+                this.GetComponent<CelestialPlayerMovement>().MovePlayer(context, input);
+                takinginput = false;
+            }
+        }
     }
 
-    private void OnMoveCancelled(InputAction.CallbackContext context)
+    private void OnCelestialMoveCancelled(InputAction.CallbackContext context)
     {
-          if (context.control.device.deviceId != myDeviceID) return;
-        this.GetComponent<CelestialPlayerMovement>().StopPlayer();
+        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        //if (context.control.device.deviceId != myDeviceID) return;
 
-
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            //Vector2 input;
+            //input = Vector2.zero;
+            this.GetComponent<CelestialPlayerMovement>().EndMovement(context);
+        }
     }
+
     private void OnMakeRain(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)

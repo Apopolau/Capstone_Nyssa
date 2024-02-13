@@ -58,7 +58,7 @@ public class playerMovement : MonoBehaviour
     private void Awake()
     {
         // playerInputActions = new PlayerInputActions();
-
+        player = this.GetComponent<Transform>();
         playerInputActions = GetComponent<EarthPlayerControl>().controls;
         /* playerInput = GetComponent<PlayerInput>();
         playerInputActions = new PlayerInputActions();
@@ -175,46 +175,66 @@ public class playerMovement : MonoBehaviour
             inputVector = input;
             horInput = inputVector.x;
             vertInput = inputVector.y;
-            if (this.GetComponent<NavMeshAgent>())
-        {
-            if (this.GetComponent<NavMeshAgent>().enabled)
+
+            if(horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
             {
-                this.GetComponent<EarthPlayer>().enrouteToPlant = false;
-                this.GetComponent<NavMeshAgent>().ResetPath();
-                this.GetComponent<NavMeshAgent>().enabled = false;
+                Debug.Log("Stopping player movement");
+                inputVector = Vector2.zero;
+                return;
             }
-        }
             if (this.GetComponent<NavMeshAgent>())
             {
-                
-                rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+                if (this.GetComponent<NavMeshAgent>().enabled)
+                {
+                    this.GetComponent<EarthPlayer>().enrouteToPlant = false;
+                    this.GetComponent<NavMeshAgent>().ResetPath();
+                    this.GetComponent<NavMeshAgent>().enabled = false;
+                }
+            }
+            //if (this.GetComponent<NavMeshAgent>())
+            //{
+            Debug.Log("Continuing Earth movement");
+            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+            //}
+        }
+    }
+
+    public void EndMovement(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == EarthDeviceID)
+        {
+            if (context.canceled)
+            {
+                Debug.Log("Cancelling Earth movement");
+                inputVector = Vector2.zero;
             }
         }
     }
+
     public void StopPlayer(Vector2 input)
     {
-
-
+        /*
         inputVector = new Vector2(0, 0);
 
         horInput = inputVector.x;
         vertInput = inputVector.y;
-        isMoveKeyHeld = true;
+        */
+
+        //isMoveKeyHeld = true;
         if (this.GetComponent<NavMeshAgent>())
         {
             if (this.GetComponent<NavMeshAgent>().enabled)
             {
                 //  this.GetComponent<CelestialPlayer>().enrouteToPlant = false;
-                this.GetComponent<NavMeshAgent>().ResetPath();
-                this.GetComponent<NavMeshAgent>().enabled = false;
+                ResetNavAgent();
             }
         }
-        if (this.GetComponent<NavMeshAgent>())
-        {
-            rb.AddForce(new Vector3(0, 0, 0).normalized * moveSpeed * 10f, ForceMode.Force);
+        //if (this.GetComponent<NavMeshAgent>())
+        //{
+            //rb.AddForce(new Vector3(0, 0, 0).normalized * moveSpeed * 10f, ForceMode.Force);
             //rb.position += (new Vector3(inputVector.x, 0, inputVector.y).normalized) * moveSpeed * 10f * Time.deltaTime;
             
-        }
+        //}
     }
 
     private void OrientPlayer()

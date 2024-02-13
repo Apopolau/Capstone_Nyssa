@@ -176,7 +176,6 @@ GameObject:
   - component: {fileID: 8474400000804536065}
   - component: {fileID: 6770069238608861063}
   - component: {fileID: 4993862304564413137}
-  - component: {fileID: 5566271145270530194}
   - component: {fileID: 3037577086428736475}
   - component: {fileID: 1804562183767399373}
   - component: {fileID: 6133201602963904151}
@@ -246,34 +245,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObjectRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
---- !u!114 &5566271145270530194
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5852738161413650292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46638c6b0724f7340b5d2ad117f6828d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  orientation: {fileID: 4623803372219367083}
-  player: {fileID: 8474400000804536065}
-  playerObj: {fileID: 7946463470585063393}
-  rb: {fileID: 6770069238608861063}
-  rotationSpeed: 5
-  moveSpeed: 8
-  groundDrag: 5
-  jumpForce: 8
-  jumpCoolDown: 0.25
-  airMultiplier: 0.4
-  jumpKeyP1: 32
-  jumpKeyP2: 271
-  playerHeight: 8
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &3037577086428736475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,7 +272,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5566271145270530194}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: playerMovement, Assembly-CSharp
         m_MethodName: MovePlayer
         m_Mode: 0

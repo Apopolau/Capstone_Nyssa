@@ -54,6 +54,7 @@ public class CelestialPlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        player = this.GetComponent<Transform>();
         celestialPlayerInputActions = GetComponent<CelestialPlayerControls>().controls;
         /* playerInput = GetComponent<PlayerInput>();
          celestialPlayerInputActions = new CelestialPlayerInputActions();
@@ -150,6 +151,12 @@ public class CelestialPlayerMovement : MonoBehaviour
             horInput = inputVector.x;
             vertInput = inputVector.y;
             isMoveKeyHeld = true;
+            if (horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
+            {
+                Debug.Log("Stopping player movement");
+                inputVector = Vector2.zero;
+                return;
+            }
             if (this.GetComponent<NavMeshAgent>())
             {
                 if (this.GetComponent<NavMeshAgent>().enabled)
@@ -159,35 +166,49 @@ public class CelestialPlayerMovement : MonoBehaviour
                     this.GetComponent<NavMeshAgent>().enabled = false;
                 }
             }
-            if (this.GetComponent<NavMeshAgent>())
-            {
-                rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+            //if (this.GetComponent<NavMeshAgent>())
+            //{
+            Debug.Log("Continuing Celestial movement");
+            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
+            //}
+        }
+    }
+    public void EndMovement(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == CelestialDeviceID)
+        {
+            if (context.canceled)
+            {
+                Debug.Log("Cancelling Celestial movement");
+                inputVector = Vector2.zero;
             }
         }
     }
+
     public void StopPlayer()
     {
-   
+        /*
         inputVector = new Vector2(0 , 0);
         horInput = inputVector.x;
         vertInput = inputVector.y;
-        isMoveKeyHeld = true;
+        */
+        //isMoveKeyHeld = true;
         if (this.GetComponent<NavMeshAgent>())
         {
             if (this.GetComponent<NavMeshAgent>().enabled)
             {
                 //  this.GetComponent<CelestialPlayer>().enrouteToPlant = false;
-                this.GetComponent<NavMeshAgent>().ResetPath();
-                this.GetComponent<NavMeshAgent>().enabled = false;
+                ResetNavAgent();
             }
         }
-        if (this.GetComponent<NavMeshAgent>())
-        {
-            rb.AddRelativeForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+        //if (this.GetComponent<NavMeshAgent>())
+        //{
+            //rb.AddRelativeForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
-        }
+        //}
     }
+
     private void OrientPlayer()
     {
         //If we've activated the nav mesh agent, we want to turn in the direction it is moving
