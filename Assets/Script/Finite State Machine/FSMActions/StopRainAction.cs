@@ -10,11 +10,11 @@ public class StopRainAction : FSMAction
         CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
 
         //if it isn't raining start rain
-        Debug.Log("******It is no longer raining");
-        player.RainParticleSystem.SetActive(false);
-        player.isRaining = false;
+       // Debug.Log("******It is no longer raining");
+        //player.RainParticleSystem.SetActive(false);
+       // player.isRaining = false;
         
-
+        //////////////////////////////////////////////
 
     }
 

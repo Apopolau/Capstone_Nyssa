@@ -22,11 +22,49 @@ public class CelestialPlayer : MonoBehaviour
 
 
     [Header("Attack")]
-    [SerializeField] public bool isAttacking = false;
-    [SerializeField] public bool canColdSnap = true;
 
-    private Vector3 OrigPos = new Vector3(20,7,-97);
-    ColdSnapBehaviour coldSnap;
+
+    [SerializeField] public bool isAttacking = false;
+    [SerializeField] public bool isDead = false;
+    [SerializeField] public bool canBasicAttack = true;
+    [SerializeField] public bool canColdSnap = true;
+    [SerializeField] public bool canLightningStrike = true;
+    [SerializeField] public bool canMoonTide = true;
+    [SerializeField] public bool canSetFogTrap = true;
+    [SerializeField] public bool canSetFrostTrap = true;
+    [SerializeField] public bool canSunBeam = true;
+
+
+    public enum Power
+    {
+        NONE,
+        BASIC,
+        COLDSNAP,
+        FOGTRAP,
+        FROSTTRAP,
+        LIGHTNINGSTRIKE,
+        MOONTIDE,
+        SUNBEAM
+    };
+
+    public Power powerInUse = Power.NONE;
+
+
+    PowerBehaviour powerBehaviour;
+
+
+
+    [Header("Respawn")]
+    private int healthPoints;
+    public Vector3 OrigPos = new Vector3(20,7,-97);
+    [SerializeField] public bool isDying = false;
+    [SerializeField] public bool isRespawning = false;
+   
+    
+    
+    
+    
+   
     [SerializeField] public GameObject treeSeedPrefab;
     //private CelestialPlayerInputActions celestialPlayerInput;
     private PlayerInput playerInput;
@@ -34,8 +72,6 @@ public class CelestialPlayer : MonoBehaviour
     // Start is called before the first frame update
 
 
-    //Battle 
-    private int healthPoints;
 
     //Interaction with the player
     public bool enemySeen = false;
@@ -60,8 +96,8 @@ public class CelestialPlayer : MonoBehaviour
     void Start()
     {
         // celestialPlayerInput = GetComponent<CelestialPlayerInputActions>();
-        playerInput = GetComponent<PlayerInput>();
-        coldSnap = GetComponent<ColdSnapBehaviour>();
+        //playerInput = GetComponent<PlayerInput>();
+        powerBehaviour = GetComponent<PowerBehaviour>();
     }
 
 
@@ -135,11 +171,12 @@ public class CelestialPlayer : MonoBehaviour
 
     }
 
+    // public void AttackEnemy()
     public void Attack()
     {
 
-        ColdSnapBehaviour attack;
-        attack = GetComponent<ColdSnapBehaviour>();
+        PowerBehaviour attack;
+        attack = GetComponent<PowerBehaviour>();
 
         bool playerIsDead;
         playerIsDead =enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
@@ -160,30 +197,47 @@ public class CelestialPlayer : MonoBehaviour
         gameObject.transform.position = OrigPos;
 
     }
+    
+
+
+    public int GetHealth()
+    {
+        return healthPoints;
+    }
+    public void SetHealth(int newHealthPoint)
+    {
+        healthPoints = newHealthPoint;
+
+    }
+    public void SetLocation (Vector3 newPosition)
+    {
+        gameObject.transform.position = newPosition;
+    }
 
     //if player selects raindrop
-    public void OnRainDropSelected() {
-        //RainParticleSystem.SetActive(true);
+    public void OnRainDropSelected()
+    {
+        RainParticleSystem.SetActive(true);
         isRaining = true;
 
     }
     public IEnumerator ResetRain()
     {
         Debug.Log("It is currently raining");
-        //if (isRaining)
-       // {
+        if (isRaining)
+        {
             yield return new WaitForSeconds(5f);
             Debug.Log("******It is no longer raining****");
-        isRaining = true;
 
-        // RainParticleSystem.SetActive(false);
+            RainParticleSystem.SetActive(false);
+            isRaining = false;
 
-
-        //}
+        }
 
     }
- 
     public void OnSnowFlakeSelected() { 
+
+        //canLightningStrike = false;
     
     }
 
@@ -191,7 +245,7 @@ public class CelestialPlayer : MonoBehaviour
     {
      
         Debug.Log("coldsnap is animated");
-        GameObject coldOrb = coldSnap.GetComponent<ColdSnapBehaviour>().ColdSnapStats.visualDisplay;
+        GameObject coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
         GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
         clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
       
@@ -208,7 +262,7 @@ public class CelestialPlayer : MonoBehaviour
 
         Debug.Log("coldsnaptimer reset");
       
-        yield return new WaitForSeconds(coldSnap.ColdSnapStats.rechargeTimer);
+        yield return new WaitForSeconds(powerBehaviour.ColdSnapStats.rechargeTimer);
         canColdSnap = true;
 
     }

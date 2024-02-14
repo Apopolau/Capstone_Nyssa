@@ -51,10 +51,10 @@ public class EarthPlayer : MonoBehaviour
 
     public bool interacting = false;
 
-    [SerializeField] private VirtualMouseInput virtualMouseInput;
+    [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
-    Vector2 virtualMousePosition;
+    public Vector2 virtualMousePosition;
     public bool enrouteToPlant = false;
 
     public Inventory inventory; // hold a reference to the Inventory script
@@ -94,8 +94,10 @@ public class EarthPlayer : MonoBehaviour
 
     public void OnTreeSelected(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
-        {
+        Debug.Log("oonnnniit");
+     //   if (context.phase == InputActionPhase.Started)
+      //  {
+            //Debug.Log("innnnnniit");
             //We're going to want to check if they even have the seed for the plant they selected before we do anything else
             if (inventory.HasTypeSeed("Tree Seed"))
             {
@@ -118,13 +120,14 @@ public class EarthPlayer : MonoBehaviour
             {
                 StartCoroutine(InsufficientSeeds());
             }
-        }
+       // }
     }
 
     public void OnGrassSelected(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
         {
+           
             if (inventory.HasTypeSeed("Grass Seed"))
             {
                 if (isPlantSelected)
@@ -147,7 +150,11 @@ public class EarthPlayer : MonoBehaviour
             }
         }
     }
+    public void SetCamera(Camera switchCam)
+    {
+        mainCamera = switchCam;
 
+    }
     public void OnFlowerSelected(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)

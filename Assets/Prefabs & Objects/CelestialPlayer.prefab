@@ -66,7 +66,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 1
 --- !u!114 &6534518413732579240
 MonoBehaviour:
@@ -170,6 +170,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4deb8876-8554-4b2e-9552-fbfbcdbde72c
     m_ActionName: CelestialPlayerInput/Dodge[/Keyboard/b]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dd920340-10f7-48ce-9c68-9a1673690858
+    m_ActionName: CelestialPlayerDefault/MakeLighteningStrike[/XInputControllerWindows/buttonWest,/XInputControllerWindows1/buttonWest,/Keyboard/x]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: CelestialPlayerDefault
@@ -207,6 +211,23 @@ MonoBehaviour:
     m_Bits: 0
   isRaining: 0
   RainParticleSystem: {fileID: 0}
+  isAttacking: 0
+  isDead: 0
+  canBasicAttack: 1
+  canColdSnap: 1
+  canLightningStrike: 1
+  canMoonTide: 1
+  canSetFogTrap: 1
+  canSetFrostTrap: 1
+  canSunBeam: 1
+  powerInUse: 0
+  OrigPos: {x: 20, y: 7, z: -97}
+  isDying: 0
+  isRespawning: 0
+  treeSeedPrefab: {fileID: 0}
+  enemySeen: 0
+  enemyTarget: {fileID: 0}
+  enemyLocation: {x: 0, y: 0, z: 0}
 --- !u!195 &2311443087575768617
 NavMeshAgent:
   m_ObjectHideFlags: 0

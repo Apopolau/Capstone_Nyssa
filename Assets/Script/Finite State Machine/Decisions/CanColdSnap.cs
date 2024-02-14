@@ -13,9 +13,7 @@ public class CanColdSnap : Decision
         if (stateMachine.GetComponent<CelestialPlayer>().isAttacking)
         {
             Debug.Log("currentdoing attack");
-            //if (stateMachine.GetComponent<CelestialPlayer>().isRaining)
-
-            //celestialPlayer.isRaining = true;
+           
             return true;
         }
         else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking)

@@ -10,15 +10,15 @@ public class isRaining : Decision
        // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
      if(stateMachine.GetComponent<CelestialPlayer>().isRaining)
         {
-            Debug.Log("It's stopping raining");
+            //Debug.Log("It's stopping raining");
             //if (stateMachine.GetComponent<CelestialPlayer>().isRaining)
-
+   
                 //celestialPlayer.isRaining = true;
                 return true;
         }
         else if (!stateMachine.GetComponent<CelestialPlayer>().isRaining)
         {
-            Debug.Log("It's not raining-------");
+            //Debug.Log("It's not raining-------");
             return false;
         }
         return false;
