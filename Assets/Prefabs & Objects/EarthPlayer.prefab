@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2536686373789044869}
   - component: {fileID: 5061027297478944643}
   - component: {fileID: 4289947878237477393}
+  - component: {fileID: 2255882322329543974}
   m_Layer: 0
   m_Name: EarthPlayer
   m_TagString: Player1
@@ -48,7 +49,7 @@ Rigidbody:
   m_GameObject: {fileID: 4033276866688796702}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -125,6 +126,8 @@ MonoBehaviour:
   plantsPlanted: []
   tempPlantPlanted: {fileID: 0}
   plantPreview: {fileID: 0}
+  tileOutlinePrefab: {fileID: 7528671137186932086, guid: 07a32bb3de5c29748861e56ae15d4189, type: 3}
+  tileOutline: {fileID: 0}
   treePrefab: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
   landGrassPrefab: {fileID: 8326592455623684711, guid: 2938a7a0c54ca5f448e41f884a596426, type: 3}
   waterGrassPrefab: {fileID: 8326592455623684711, guid: fb6eac0bbccc5fc4784a1140b0696f91, type: 3}
@@ -145,6 +148,7 @@ MonoBehaviour:
   tileMask:
     serializedVersion: 2
     m_Bits: 128
+  virtualMousePosition: {x: 0, y: 0}
   enrouteToPlant: 0
   inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
 --- !u!114 &5061027297478944643
@@ -154,7 +158,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4033276866688796702}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -320,6 +324,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: a01b538b-153a-45fc-8c9e-8aae773c39d3
     m_ActionName: EarthPlayerDefault/Interact[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7b88c43f-dd52-49f5-b524-0eb0d63f124c
+    m_ActionName: EarthPlayerDefault/Debug Tileflip[/Keyboard/m]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: EarthPlayerDefault
@@ -332,7 +340,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4033276866688796702}
-  m_Enabled: 0
+  m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 30
@@ -347,6 +355,29 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2255882322329543974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033276866688796702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef9e524417f1be4981b9b77a8cc51fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickTreeAction:
+    m_Name: Pick Tree
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4234961c-51ee-4e58-86d1-9229cb758017
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  myDeviceID: 0
+  moveSpeed: 0
 --- !u!1 &8170333152614298398
 GameObject:
   m_ObjectHideFlags: 0
