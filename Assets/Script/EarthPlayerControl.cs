@@ -16,6 +16,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     int playerIndex = 1; // can only be 0 (for player 1) or 1 (for player 2)
     public int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
+    public int myDeviceID2 = 0;
 
     public float moveSpeed;
 
@@ -50,11 +51,13 @@ public class EarthPlayerControl : MonoBehaviour
         if(Gamepad.all.Count == 0)
         {
             myDeviceID = Keyboard.current.deviceId;
+            myDeviceID2 = Mouse.current.deviceId;
             thisDevice = DeviceUsed.KEYBOARD;
         }
         else if(Gamepad.all.Count == 1)
         {
             myDeviceID = Keyboard.current.deviceId;
+            myDeviceID2 = Mouse.current.deviceId;
             thisDevice = DeviceUsed.KEYBOARD;
         }
         else
@@ -179,7 +182,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     private void OnPlantPlantedPerformed(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == myDeviceID)
+        if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
         {
             Debug.Log("planting plant");
             earthPlayer.PlantPlantingHandler();
@@ -188,7 +191,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     private void OnPlantingCancelledPerformed(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == myDeviceID)
+        if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
         {
             Debug.Log("cancelling plant");
             earthPlayer.CancelPlant();
