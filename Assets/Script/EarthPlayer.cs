@@ -34,7 +34,7 @@ public class EarthPlayer : MonoBehaviour
     public GameObject selectedTile;
     [SerializeField] private LayerMask tileMask;
     public Vector2 virtualMousePosition;
-    
+
     private WaitForSeconds plantTime;
 
     [Header("Plant Objects")]
@@ -90,106 +90,100 @@ public class EarthPlayer : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
+        if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
         {
             virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
         }
-        else if(earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
             virtualMousePosition = Mouse.current.position.value;
         }
-        
+
     }
 
-    public void OnTreeSelected(InputAction.CallbackContext context)
-    {
-        //Debug.Log("oonnnniit");
-     //   if (context.phase == InputActionPhase.Started)
-      //  {
-            //Debug.Log("innnnnniit");
-            //We're going to want to check if they even have the seed for the plant they selected before we do anything else
-            if (inventory.HasTypeSeed("Tree Seed"))
-            {
-
-                if (isPlantSelected)
-                {
-                    isPlantSelected = false;
-                    Destroy(plantSelected);
-                    Destroy(tileOutline);
-                }
-                if (!isPlantSelected)
-                {
-                    //We select a type of plant from the input and make a transparent version of it with no stats
-                    plantSelectedType = PlantSelectedType.TREE;
-                    plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
-                    OnPlantSelectedWrapUp();
-                }
-            }
-            else
-            {
-                StartCoroutine(InsufficientSeeds());
-            }
-       // }
-    }
-
-    public void OnGrassSelected(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Started)
-        {
-           
-            if (inventory.HasTypeSeed("Grass Seed"))
-            {
-                if (isPlantSelected)
-                {
-                    isPlantSelected = false;
-                    Destroy(plantSelected);
-                    Destroy(tileOutline);
-                }
-                if (!isPlantSelected)
-                {
-                    //We select a type of plant from the input and make a transparent version of it with no stats
-                    plantSelectedType = PlantSelectedType.GRASS;
-                    plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
-                    OnPlantSelectedWrapUp();
-                }
-            }
-            else
-            {
-                StartCoroutine(InsufficientSeeds());
-            }
-        }
-    }
     public void SetCamera(Camera switchCam)
     {
         mainCamera = switchCam;
 
     }
-    public void OnFlowerSelected(InputAction.CallbackContext context)
+
+    public void OnTreeSelected(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started)
+        //We're going to want to check if they even have the seed for the plant they selected before we do anything else
+        if (inventory.HasTypeSeed("Tree Seed"))
         {
-            if (inventory.HasTypeSeed("Flower Seed"))
+
+            if (isPlantSelected)
             {
-                if (isPlantSelected)
-                {
-                    isPlantSelected = false;
-                    Destroy(plantSelected);
-                    Destroy(tileOutline);
-                }
-                if (!isPlantSelected)
-                {
-                    //We select a type of plant from the input and make a transparent version of it with no stats
-                    plantSelectedType = PlantSelectedType.FLOWER;
-                    plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
-                    OnPlantSelectedWrapUp();
-                }
+                isPlantSelected = false;
+                Destroy(plantSelected);
+                Destroy(tileOutline);
             }
-            else
+            if (!isPlantSelected)
             {
-                StartCoroutine(InsufficientSeeds());
+                //We select a type of plant from the input and make a transparent version of it with no stats
+                plantSelectedType = PlantSelectedType.TREE;
+                plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
+                OnPlantSelectedWrapUp();
             }
         }
+        else
+        {
+            StartCoroutine(InsufficientSeeds());
+        }
     }
+
+    public void OnGrassSelected(InputAction.CallbackContext context)
+    {
+        if (inventory.HasTypeSeed("Grass Seed"))
+        {
+            if (isPlantSelected)
+            {
+                isPlantSelected = false;
+                Destroy(plantSelected);
+                Destroy(tileOutline);
+            }
+            if (!isPlantSelected)
+            {
+                //We select a type of plant from the input and make a transparent version of it with no stats
+                plantSelectedType = PlantSelectedType.GRASS;
+                plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
+                OnPlantSelectedWrapUp();
+            }
+        }
+        else
+        {
+            StartCoroutine(InsufficientSeeds());
+        }
+    }
+
+    public void OnFlowerSelected(InputAction.CallbackContext context)
+    {
+
+        if (inventory.HasTypeSeed("Flower Seed"))
+        {
+            if (isPlantSelected)
+            {
+                isPlantSelected = false;
+                Destroy(plantSelected);
+                Destroy(tileOutline);
+            }
+            if (!isPlantSelected)
+            {
+                //We select a type of plant from the input and make a transparent version of it with no stats
+                plantSelectedType = PlantSelectedType.FLOWER;
+                plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
+                OnPlantSelectedWrapUp();
+            }
+        }
+        else
+        {
+            StartCoroutine(InsufficientSeeds());
+        }
+
+    }
+
+
 
     //This is called at the end of each plant selection function, to capture shared functionality
     private void OnPlantSelectedWrapUp()
@@ -211,7 +205,7 @@ public class EarthPlayer : MonoBehaviour
         {
             virtualMousePosition = Mouse.current.position.value;
         }
-        
+
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
@@ -241,8 +235,8 @@ public class EarthPlayer : MonoBehaviour
                 plantSelectedType = PlantSelectedType.NONE;
 
                 //Switch our controls
-                earthControls.controls.PlantIsSelected.Disable();
                 earthControls.controls.EarthPlayerDefault.Enable();
+                earthControls.controls.PlantIsSelected.Disable();
                 virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
             }
             else
@@ -336,8 +330,8 @@ public class EarthPlayer : MonoBehaviour
             virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
 
             //Switch our controls
-            earthControls.controls.PlantIsSelected.Disable();
             earthControls.controls.EarthPlayerDefault.Enable();
+            earthControls.controls.PlantIsSelected.Disable();
         }
     }
 

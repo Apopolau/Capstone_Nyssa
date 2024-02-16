@@ -71,7 +71,7 @@ public class EarthPlayerControl : MonoBehaviour
         controls.EarthPlayerDefault.Enable();
         controls.EarthPlayerDefault.EarthWalk.performed += OnEarthMovePerformed;
         controls.EarthPlayerDefault.EarthWalk.canceled += OnEarthMoveCancelled;
-        controls.EarthPlayerDefault.PickTree.performed+= OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.EarthPlayerDefault.PickTree.performed += OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.PickFlower.performed += OnPickFlower; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.PickGrass.performed += OnPickGrass; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.RemoveBuilding.performed += OnRemovePlant;
@@ -131,7 +131,7 @@ public class EarthPlayerControl : MonoBehaviour
     {
         if (context.control.device.deviceId == myDeviceID)
         {
-            Debug.Log("call pickup tree");
+            Debug.Log("call pick tree");
             this.GetComponent<EarthPlayer>().OnTreeSelected(context);
         }
 
@@ -141,6 +141,7 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
+            Debug.Log("call pick flower");
             this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
         }
 
@@ -150,6 +151,7 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
+            Debug.Log("call pick grass");
             this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
         }
 
