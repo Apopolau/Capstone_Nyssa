@@ -10,7 +10,11 @@ public class CelestialPlayerControls : MonoBehaviour
 
     public CelestialPlayerInputActions controls;
     public InputActionReference rainAction;
-   // public CelestialPlayerInputActions cele;
+    public InputAction celestialActions;
+    // public CelestialPlayerInputActions cele;
+
+    public enum DeviceUsed { KEYBOARD, CONTROLLER };
+    public DeviceUsed thisDevice;
 
     int playerIndex = 0; // can only be 0 (for player 1) or 1 (for player 2)
     public int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
@@ -45,7 +49,21 @@ public class CelestialPlayerControls : MonoBehaviour
         // P1's deviceId is at index 0, P2's deviceID is at index 1...
         // For a two player game, we set the playerIndex via the inspector as either 0 or 1 
 
-        myDeviceID = Gamepad.all[playerIndex].deviceId;
+        if (Gamepad.all.Count == 0)
+        {
+            myDeviceID = Keyboard.current.deviceId;
+            thisDevice = DeviceUsed.KEYBOARD;
+        }
+        else if (Gamepad.all.Count == 1)
+        {
+            myDeviceID = Gamepad.all[playerIndex].deviceId;
+            thisDevice = DeviceUsed.CONTROLLER;
+        }
+        else
+        {
+            myDeviceID = Gamepad.all[playerIndex].deviceId;
+            thisDevice = DeviceUsed.CONTROLLER;
+        }
         Debug.Log(myDeviceID);
         controls.CelestialPlayerDefault.Enable();
         controls.CelestialPlayerDefault.CelestialWalk.performed += OnCelestialMovePerformed;
@@ -69,7 +87,15 @@ public class CelestialPlayerControls : MonoBehaviour
 
 
                 Vector2 input;
-                input = Gamepad.all[playerIndex].leftStick.ReadValue();
+                if (thisDevice == DeviceUsed.KEYBOARD)
+                {
+                    input = new Vector2(Keyboard.current.wKey.ReadValue() - Keyboard.current.sKey.ReadValue(),
+                        Keyboard.current.aKey.ReadValue() - Keyboard.current.dKey.ReadValue());
+                }
+                else
+                {
+                    input = Gamepad.all[playerIndex].leftStick.ReadValue();
+                }
 
                 //context.ReadValue<Vector2>();
 

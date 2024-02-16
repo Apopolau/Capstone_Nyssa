@@ -70,7 +70,14 @@ public class CelestialPlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        CelestialDeviceID = Gamepad.all[0].deviceId;
+        if (GetComponent<CelestialPlayerControls>().thisDevice == CelestialPlayerControls.DeviceUsed.KEYBOARD)
+        {
+            CelestialDeviceID = Keyboard.current.deviceId;
+        }
+        else
+        {
+            CelestialDeviceID = Gamepad.all[0].deviceId;
+        }
     }
 
     // Update is called once per frame
@@ -153,7 +160,7 @@ public class CelestialPlayerMovement : MonoBehaviour
             isMoveKeyHeld = true;
             if (horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
             {
-                Debug.Log("Stopping player movement");
+                //Debug.Log("Stopping player movement");
                 inputVector = Vector2.zero;
                 return;
             }
@@ -168,7 +175,7 @@ public class CelestialPlayerMovement : MonoBehaviour
             }
             //if (this.GetComponent<NavMeshAgent>())
             //{
-            Debug.Log("Continuing Celestial movement");
+            //Debug.Log("Continuing Celestial movement");
             rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
             //}
@@ -180,7 +187,7 @@ public class CelestialPlayerMovement : MonoBehaviour
         {
             if (context.canceled)
             {
-                Debug.Log("Cancelling Celestial movement");
+                //Debug.Log("Cancelling Celestial movement");
                 inputVector = Vector2.zero;
             }
         }

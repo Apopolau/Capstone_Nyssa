@@ -10,6 +10,9 @@ public class EarthPlayerControl : MonoBehaviour
     public PlayerInputActions controls;
     public InputAction pickTreeAction;
 
+    public enum DeviceUsed { KEYBOARD, CONTROLLER};
+    public DeviceUsed thisDevice;
+
     int playerIndex = 1; // can only be 0 (for player 1) or 1 (for player 2)
     public int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
 
@@ -42,8 +45,22 @@ public class EarthPlayerControl : MonoBehaviour
         // We need the deviceId of the gamepad that will control this character (the one this script is attached to), so that we can check it later when actions happen.
         // P1's deviceId is at index 0, P2's deviceID is at index 1...
         // For a two player game, we set the playerIndex via the inspector as either 0 or 1 
-
-        myDeviceID = Gamepad.all[playerIndex].deviceId;
+        if(Gamepad.all.Count == 0)
+        {
+            myDeviceID = Keyboard.current.deviceId;
+            thisDevice = DeviceUsed.KEYBOARD;
+        }
+        else if(Gamepad.all.Count == 1)
+        {
+            myDeviceID = Keyboard.current.deviceId;
+            thisDevice = DeviceUsed.KEYBOARD;
+        }
+        else
+        {
+            myDeviceID = Gamepad.all[playerIndex].deviceId;
+            thisDevice = DeviceUsed.CONTROLLER;
+        }
+        
         Debug.Log(myDeviceID);
         controls.EarthPlayerDefault.Enable();
         controls.EarthPlayerDefault.EarthWalk.performed += OnEarthMovePerformed;
@@ -52,23 +69,9 @@ public class EarthPlayerControl : MonoBehaviour
         controls.EarthPlayerDefault.PickFlower.performed += OnPickFlower; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.PickGrass.performed += OnPickGrass; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.RemoveBuilding.performed += OnRemovePlant;
-        controls.EarthPlayerDefault.Interact.performed += OnInteract;
-
-
-        // controls.CelestialPlayerDefault.MakeRain.performed += OnAttackPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
-
-       
-
-
-
-
-
-
+        controls.EarthPlayerDefault.Interact.started += OnInteract;
+        controls.EarthPlayerDefault.Interact.canceled += OnInteract;
     }
-
-
-
-
 
     private void OnEarthMovePerformed(InputAction.CallbackContext context)
     {
@@ -77,18 +80,28 @@ public class EarthPlayerControl : MonoBehaviour
         //if (context.control.device.deviceId != myDeviceID) 
         //{ return; 
         //}
-
      
         if(context.control.device.deviceId == myDeviceID)
         {
             if (takinginput == false)
             {
                 takinginput = true;
-                Debug.Log("Earth:" + context.control.device.deviceId);
+                //Debug.Log("Earth:" + context.control.device.deviceId);
 
 
                 Vector2 input;
-                input = Gamepad.all[playerIndex].leftStick.ReadValue();
+                if(thisDevice == DeviceUsed.KEYBOARD)
+                {
+                    //Debug.Log(Keyboard.current.leftArrowKey.ReadValue() + ", " + Keyboard.current.rightArrowKey.ReadValue()
+                         //+ ", " + Keyboard.current.upArrowKey.ReadValue() + ", " + Keyboard.current.downArrowKey.ReadValue());
+                    input = new Vector2(Keyboard.current.upArrowKey.ReadValue() - Keyboard.current.downArrowKey.ReadValue(),
+                        Keyboard.current.leftArrowKey.ReadValue() - Keyboard.current.rightArrowKey.ReadValue());
+                }
+                else
+                {
+                    input = Gamepad.all[playerIndex].leftStick.ReadValue();
+                }
+                
                     //context.ReadValue<Vector2>();
 
                 //context.ReadValue<Vector2>();
@@ -113,58 +126,60 @@ public class EarthPlayerControl : MonoBehaviour
     }
     private void OnPickTree(InputAction.CallbackContext context)
     {
-        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        if (context.control.device.deviceId != myDeviceID) return;
-
-        Debug.Log("call pickup tree");
-        this.GetComponent<EarthPlayer>().OnTreeSelected(context);
-        //pickTreeAction.(context);
-
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            Debug.Log("call pickup tree");
+            this.GetComponent<EarthPlayer>().OnTreeSelected(context);
+            //pickTreeAction.(context);
+        }
 
     }
     private void OnPickFlower(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        if (context.control.device.deviceId != myDeviceID) return;
+        if (context.control.device.deviceId == myDeviceID)
+        {
 
-        Debug.Log("call pickup tree");
-        this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
-        //pickTreeAction.(context);
-
+            //Debug.Log("call pickup tree");
+            this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
+            //pickTreeAction.(context);
+        }
 
     }
     private void OnPickGrass(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        if (context.control.device.deviceId != myDeviceID) return;
+        if (context.control.device.deviceId == myDeviceID)
+        {
 
-        Debug.Log("call pickup tree");
-        this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
-        //pickTreeAction.(context);
-
+            //Debug.Log("call pickup tree");
+            this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
+            //pickTreeAction.(context);
+        }
 
     }
     private void OnRemovePlant(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        if (context.control.device.deviceId != myDeviceID) return;
+        if (context.control.device.deviceId == myDeviceID)
+        {
 
-        Debug.Log("call pickup tree");
-        this.GetComponent<EarthPlayer>().RemovePlant();
-        //pickTreeAction.(context);
-
+            //Debug.Log("call pickup tree");
+            this.GetComponent<EarthPlayer>().RemovePlant();
+            //pickTreeAction.(context);
+        }
 
     }
     private void OnInteract(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        if (context.control.device.deviceId != myDeviceID) return;
+        if (context.control.device.deviceId == myDeviceID)
+        {
 
-        Debug.Log("call pickup tree");
-        this.GetComponent<EarthPlayer>().OnInteract(context);
-        //pickTreeAction.(context);
-
-
+            Debug.Log("call pickup tree");
+            this.GetComponent<EarthPlayer>().OnInteract(context);
+            //pickTreeAction.(context);
+        }
     }
     /*
         private void FixedUpdate()

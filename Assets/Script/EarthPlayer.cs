@@ -94,7 +94,7 @@ public class EarthPlayer : MonoBehaviour
 
     public void OnTreeSelected(InputAction.CallbackContext context)
     {
-        Debug.Log("oonnnniit");
+        //Debug.Log("oonnnniit");
      //   if (context.phase == InputActionPhase.Started)
       //  {
             //Debug.Log("innnnnniit");
@@ -184,7 +184,7 @@ public class EarthPlayer : MonoBehaviour
 
     private void OnPlantSelectedWrapUp()
     {
-        Debug.Log("Wrapping up plant selection");
+        //Debug.Log("Wrapping up plant selection");
         isPlantSelected = true;
         plantSelected.transform.position = this.transform.position;
         playerInput.SwitchCurrentActionMap("PlantIsSelected");

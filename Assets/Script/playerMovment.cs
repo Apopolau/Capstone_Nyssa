@@ -75,7 +75,15 @@ public class playerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        EarthDeviceID = Gamepad.all[1].deviceId;
+        if(GetComponent<EarthPlayerControl>().thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        {
+            EarthDeviceID = Keyboard.current.deviceId;
+        }
+        else
+        {
+            EarthDeviceID = Gamepad.all[1].deviceId;
+        }
+        
 
       /*  InputSystem.onActionChange += (obj, change) => {
             if (change == InputActionChange.ActionPerformed)
@@ -174,7 +182,7 @@ public class playerMovement : MonoBehaviour
             //inputVector = context.ReadValue<Vector2>();
             inputVector = input;
             horInput = inputVector.x;
-            vertInput = inputVector.y;
+            vertInput = inputVector.y ;
 
             if(horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
             {
@@ -249,6 +257,22 @@ public class playerMovement : MonoBehaviour
                 orientation.forward = viewDir.normalized;
             }
 
+            /*
+            Vector2 moddedInput;
+            
+            moddedInput.y = vertInput / 2;
+            moddedInput.x = horInput / 2;
+            if (vertInput == 1 && horInput == 0)
+            {
+                moddedInput.x += 0.5f;
+            }
+            if(horInput == 0 && vertInput != 0)
+            {
+                moddedInput.y += 0.5f;
+            }
+            */
+            
+            
             // rotate the player object
             Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
 

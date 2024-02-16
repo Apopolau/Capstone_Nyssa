@@ -8,15 +8,14 @@ public class TaskAttack : BTNode
     NavMeshAgent thisAgent;
     Enemy thisEnemy;
     private Transform thisTarget;
-    private bool isAttacking= false;
-    private float attackTime = 1f;
-    private float attackcounter = 0;
+
 
 
     public TaskAttack(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player)
     {
         thisAgent = enemyMeshAgent;
         thisTarget = target;
+        thisEnemy = enemyMeshAgent.GetComponent<Enemy>();
     }
 
     protected override NodeState OnRun()
@@ -25,51 +24,44 @@ public class TaskAttack : BTNode
         float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
 
           
-            if (distance <= 10f)
-            {
-               // Debug.Log(distance);
-                thisAgent.GetComponent<Enemy>().inAttackRange = true;
-            }
+        if (distance <= 10f)
+        {
+            // Debug.Log(distance);
+            thisEnemy.inAttackRange = true;
+        }
         else
         {
-            thisAgent.GetComponent<Enemy>().inAttackRange = false;
+            thisEnemy.inAttackRange = false;
+            thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
         }
 
-
-
-
-
-
-
-
-
-
-        if (thisAgent.GetComponent<Enemy>().inAttackRange)
+        if (thisEnemy.inAttackRange && thisEnemy.attackInitiated)
         {
-            Debug.Log("am attacking");
-            attackcounter += Time.deltaTime;
-            if (attackcounter >= attackTime)
+            //yield return attackTime;
+            bool playerIsDead;
+            playerIsDead = thisTarget.GetComponentInParent<CelestialPlayer>().TakeHit();
+            if (playerIsDead)
             {
-                bool playerIsDead;
-                playerIsDead = thisTarget.GetComponent<CelestialPlayer>().TakeHit();
-                if (playerIsDead)
-                {
-                    //go back to patrolling
-                    state = NodeState.FAILURE;
-                }
-                else { attackcounter = 0f; }
-
-
+                state = NodeState.FAILURE;
             }
-            state = NodeState.RUNNING;
-
+            else
+            {
+                Debug.Log("finishing attack");
+                //attackcounter += Time.deltaTime;
+                state = NodeState.SUCCESS;
+            }
+            thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
         }
         else
         {
             state = NodeState.FAILURE;
         }
+        thisEnemy.attackInitiated = false;
         return state;
     }
+
+    
+
     protected override void OnReset()
     {
     }

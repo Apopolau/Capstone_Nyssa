@@ -161,7 +161,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""up"",
                     ""id"": ""fb5e921c-01e1-455a-956b-e016538af1ff"",
-                    ""path"": ""<Keyboard>/upArrow"",
+                    ""path"": ""<Keyboard>/w"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -172,7 +172,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""down"",
                     ""id"": ""0d93a4ce-c54a-4cdb-ac25-2de93e14606e"",
-                    ""path"": ""<Keyboard>/downArrow"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -183,7 +183,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""left"",
                     ""id"": ""76ef8127-2714-48dc-ac4b-8a6bc69fc290"",
-                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -194,7 +194,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""right"",
                     ""id"": ""30a910c2-5a7f-4e3d-acc6-3d12993967f3"",
-                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

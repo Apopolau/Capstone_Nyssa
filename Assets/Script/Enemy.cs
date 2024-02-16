@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     public NavMeshAgent enemyMeshAgent;
+    public OilMonsterAnimator enemyAnimator;
     public GameObject playerObj;
     public EnemyStats enemyStats;
     public CelestialPlayer player;
@@ -16,12 +17,15 @@ public class Enemy : MonoBehaviour
     //Interaction with the player
     public bool seesPlayer = false;
     public bool inAttackRange = false;
+    public bool attackInitiated = false;
     public Vector3 playerLocation;
+
+    private WaitForSeconds attackTime = new WaitForSeconds(1);
 
     void Awake()
     {
         enemyHealthPoints= enemyStats.maxHealth;
-
+        enemyAnimator = GetComponent<OilMonsterAnimator>();
     }
 
 
@@ -111,7 +115,7 @@ public class Enemy : MonoBehaviour
             //Debug.Log("~~~~~~~~~~~~~~~~~Exited collision with " + other.gameObject.name);
         }
     }
-    
+
     private void Die()
     {
         
