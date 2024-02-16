@@ -230,6 +230,9 @@ public class EarthPlayer : MonoBehaviour
                 Destroy(plantSelected);
                 Destroy(tileOutline);
                 //This is a good place to initiate a planting animation
+                //earthAnimator.animator.SetBool(earthAnimator.IfPlanting, true);
+                //Set other animations to false
+                StartCoroutine(SuspendActions(plantTime));
                 yield return plantTime;
                 PlantPlant(activeTileCell);
                 plantSelectedType = PlantSelectedType.NONE;
@@ -366,5 +369,13 @@ public class EarthPlayer : MonoBehaviour
             Debug.Log("Not interacting anymore");
             interacting = false;
         }
+    }
+
+    private IEnumerator SuspendActions(WaitForSeconds waitTime)
+    {
+        earthControls.controls.EarthPlayerDefault.Disable();
+        earthControls.controls.PlantIsSelected.Disable();
+        yield return waitTime;
+        earthControls.controls.EarthPlayerDefault.Enable();
     }
 }
