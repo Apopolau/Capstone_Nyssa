@@ -403,7 +403,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dc566b5a-0681-41bf-b55e-61a009eed32d"",
-                    ""path"": ""<Keyboard>/backspace"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

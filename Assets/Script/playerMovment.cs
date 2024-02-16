@@ -115,31 +115,10 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Debug.Log("earth FIXED UPDATE");
-
-
-
-        //if (lastDevice.deviceId==0 && lastDevice.wasUpdatedThisFrame)
        if (this.gameObject.tag == "Player1")
-        {
-            //inputVector = playerInputActions.EarthPlayerDefault.Walk.ReadValue<Vector2>();
-
+       {
             rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-            //rb.position += (new Vector3(inputVector.x, 0, inputVector.y).normalized) * moveSpeed * 10f * Time.deltaTime;
-            //Debug.Log(inputVector);
-            
-            
-            
-            //isMoveKeyHeld = false;
-            //Debug.Log("earth FIXED UPDATE CHECK");
-           // Debug.Log("earth" + inputVector);
-
-        }
-    
-
-
-
-        //  rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+       }
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
     }
@@ -149,12 +128,8 @@ public class playerMovement : MonoBehaviour
        
         if(player.gameObject.tag == "Player1")
         {
-            //horInput = Input.GetAxisRaw("Horizontal_P1");
-            //vertInput = Input.GetAxisRaw("Vertical_P1");
-
             if (Input.GetKey(jumpKeyP1) && readyToJump && grounded)
             {
-                //print("I should be jumping");
                 readyToJump = false;
                 Jump();
                 // makes sure you can't double jump, but allow you to continuously jump iff you hodl down on the ke
@@ -167,26 +142,17 @@ public class playerMovement : MonoBehaviour
 
     public void MovePlayer(InputAction.CallbackContext context, Vector2 input)
     {
-        //FixedUpdate();
-        //calculate movment direction
-        //move in dirction you are looking
-       // Debug.Log("earth MOVE PLAYER");
-       
-        //Debug.Log("earthPLAYER" +inputVector);
-    
         isMoveKeyHeld = true;
       
         if (context.control.device.deviceId == EarthDeviceID)
 
         {
-            //inputVector = context.ReadValue<Vector2>();
             inputVector = input;
             horInput = inputVector.x;
             vertInput = inputVector.y ;
 
             if(horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
             {
-                Debug.Log("Stopping player movement");
                 inputVector = Vector2.zero;
                 return;
             }
@@ -199,11 +165,7 @@ public class playerMovement : MonoBehaviour
                     this.GetComponent<NavMeshAgent>().enabled = false;
                 }
             }
-            //if (this.GetComponent<NavMeshAgent>())
-            //{
-            Debug.Log("Continuing Earth movement");
             rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-            //}
         }
     }
 
@@ -213,7 +175,7 @@ public class playerMovement : MonoBehaviour
         {
             if (context.canceled)
             {
-                Debug.Log("Cancelling Earth movement");
+                //Debug.Log("Cancelling Earth movement");
                 inputVector = Vector2.zero;
             }
         }
@@ -221,28 +183,13 @@ public class playerMovement : MonoBehaviour
 
     public void StopPlayer(Vector2 input)
     {
-        /*
-        inputVector = new Vector2(0, 0);
-
-        horInput = inputVector.x;
-        vertInput = inputVector.y;
-        */
-
-        //isMoveKeyHeld = true;
         if (this.GetComponent<NavMeshAgent>())
         {
             if (this.GetComponent<NavMeshAgent>().enabled)
             {
-                //  this.GetComponent<CelestialPlayer>().enrouteToPlant = false;
                 ResetNavAgent();
             }
         }
-        //if (this.GetComponent<NavMeshAgent>())
-        //{
-            //rb.AddForce(new Vector3(0, 0, 0).normalized * moveSpeed * 10f, ForceMode.Force);
-            //rb.position += (new Vector3(inputVector.x, 0, inputVector.y).normalized) * moveSpeed * 10f * Time.deltaTime;
-            
-        //}
     }
 
     private void OrientPlayer()
@@ -256,22 +203,6 @@ public class playerMovement : MonoBehaviour
             {
                 orientation.forward = viewDir.normalized;
             }
-
-            /*
-            Vector2 moddedInput;
-            
-            moddedInput.y = vertInput / 2;
-            moddedInput.x = horInput / 2;
-            if (vertInput == 1 && horInput == 0)
-            {
-                moddedInput.x += 0.5f;
-            }
-            if(horInput == 0 && vertInput != 0)
-            {
-                moddedInput.y += 0.5f;
-            }
-            */
-            
             
             // rotate the player object
             Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;

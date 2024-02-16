@@ -191,12 +191,16 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
+    //This is called at the end of each plant selection function, to capture shared functionality
     private void OnPlantSelectedWrapUp()
     {
         //Debug.Log("Wrapping up plant selection");
         isPlantSelected = true;
         plantSelected.transform.position = this.transform.position;
-        playerInput.SwitchCurrentActionMap("PlantIsSelected");
+
+        //Switch our controls
+        earthControls.controls.PlantIsSelected.Enable();
+        earthControls.controls.EarthPlayerDefault.Disable();
 
         if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
         {
@@ -212,11 +216,13 @@ public class EarthPlayer : MonoBehaviour
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
+    //Call this function to start actually planting a plant
     public void PlantPlantingHandler()
     {
         StartCoroutine(OnPlantPlanted());
     }
 
+    //Handles if they're in a position to start planting a plant
     private IEnumerator OnPlantPlanted()
     {
         //Have to add checks to make sure they are on a tile
@@ -233,7 +239,10 @@ public class EarthPlayer : MonoBehaviour
                 yield return plantTime;
                 PlantPlant(activeTileCell);
                 plantSelectedType = PlantSelectedType.NONE;
-                playerInput.SwitchCurrentActionMap("EarthPlayerDefault");
+
+                //Switch our controls
+                earthControls.controls.PlantIsSelected.Disable();
+                earthControls.controls.EarthPlayerDefault.Enable();
                 virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
             }
             else
@@ -267,6 +276,7 @@ public class EarthPlayer : MonoBehaviour
         displayText.text = "";
     }
 
+    //Call if the player is too far from a tile they selected to plant
     private void ApproachPlant()
     {
         earthAgent.enabled = true;
@@ -274,6 +284,7 @@ public class EarthPlayer : MonoBehaviour
         enrouteToPlant = true;
     }
 
+    //Finishes the process of planting a plant
     private void PlantPlant(Cell activeTileCell)
     {
         //We will want to add checks to make sure the tile type is valid, and check whether they are selecting a water or land tile
@@ -313,6 +324,7 @@ public class EarthPlayer : MonoBehaviour
         activeTileCell.tileHasBuild = true;
     }
 
+    //If the player cancels planting while they have a plant selected
     public void CancelPlant()
     {
         if (isPlantSelected)
@@ -322,7 +334,10 @@ public class EarthPlayer : MonoBehaviour
             Destroy(plantSelected);
             Destroy(tileOutline);
             virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
-            playerInput.SwitchCurrentActionMap("EarthPlayerDefault");
+
+            //Switch our controls
+            earthControls.controls.PlantIsSelected.Disable();
+            earthControls.controls.EarthPlayerDefault.Enable();
         }
     }
 
@@ -331,6 +346,7 @@ public class EarthPlayer : MonoBehaviour
 
     }
 
+    //When highlighting tiles, get information to move indicators
     private void ActivateTile()
     {
         Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
@@ -342,6 +358,8 @@ public class EarthPlayer : MonoBehaviour
 
     }
 
+    //A catch-all interact button. Simply sends a signal that the player is interacting, so various objects
+    //can react to it appropriately
     public void OnInteract(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)

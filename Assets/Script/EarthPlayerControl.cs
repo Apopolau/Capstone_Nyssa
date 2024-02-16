@@ -5,8 +5,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class EarthPlayerControl : MonoBehaviour
 {
- 
 
+    private EarthPlayer earthPlayer;
     public PlayerInputActions controls;
     public InputAction pickTreeAction;
     public LevelOneEvents levelOneEvents;
@@ -38,6 +38,7 @@ public class EarthPlayerControl : MonoBehaviour
     private void Awake()
     {
         controls = new PlayerInputActions();
+        earthPlayer = GetComponent<EarthPlayer>();
     }
 
     void Start()
@@ -63,6 +64,7 @@ public class EarthPlayerControl : MonoBehaviour
         }
         
         Debug.Log(myDeviceID);
+        //EarthPlayerDefault
         controls.EarthPlayerDefault.Enable();
         controls.EarthPlayerDefault.EarthWalk.performed += OnEarthMovePerformed;
         controls.EarthPlayerDefault.EarthWalk.canceled += OnEarthMoveCancelled;
@@ -73,6 +75,13 @@ public class EarthPlayerControl : MonoBehaviour
         controls.EarthPlayerDefault.Interact.started += OnInteract;
         controls.EarthPlayerDefault.Interact.canceled += OnInteract;
         controls.EarthPlayerDefault.DebugTileflip.performed += OnTileFlipped;
+
+        //When planting
+        controls.PlantIsSelected.Disable();
+        controls.PlantIsSelected.Plantplant.performed += OnPlantPlantedPerformed;
+        controls.PlantIsSelected.Cancelplanting.performed += OnPlantingCancelledPerformed;
+        controls.PlantIsSelected.EarthWalk.performed += OnEarthMovePerformed;
+        controls.PlantIsSelected.EarthWalk.canceled += OnEarthMoveCancelled;
     }
 
     private void OnEarthMovePerformed(InputAction.CallbackContext context)
@@ -94,8 +103,6 @@ public class EarthPlayerControl : MonoBehaviour
                 Vector2 input;
                 if(thisDevice == DeviceUsed.KEYBOARD)
                 {
-                    //Debug.Log(Keyboard.current.leftArrowKey.ReadValue() + ", " + Keyboard.current.rightArrowKey.ReadValue()
-                         //+ ", " + Keyboard.current.upArrowKey.ReadValue() + ", " + Keyboard.current.downArrowKey.ReadValue());
                     input = new Vector2(Keyboard.current.upArrowKey.ReadValue() - Keyboard.current.downArrowKey.ReadValue(),
                         Keyboard.current.leftArrowKey.ReadValue() - Keyboard.current.rightArrowKey.ReadValue());
                 }
@@ -103,11 +110,6 @@ public class EarthPlayerControl : MonoBehaviour
                 {
                     input = Gamepad.all[playerIndex].leftStick.ReadValue();
                 }
-                
-                    //context.ReadValue<Vector2>();
-
-                //context.ReadValue<Vector2>();
-
                 this.GetComponent<playerMovement>().MovePlayer(context, input);
                 takinginput = false;
             }
@@ -117,12 +119,8 @@ public class EarthPlayerControl : MonoBehaviour
     private void OnEarthMoveCancelled(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        //if (context.control.device.deviceId != myDeviceID) return;
-
         if (context.control.device.deviceId == myDeviceID)
         {
-            //Vector2 input;
-            //input = Vector2.zero;
             this.GetComponent<playerMovement>().EndMovement(context);
         }
     }
@@ -132,7 +130,6 @@ public class EarthPlayerControl : MonoBehaviour
         {
             Debug.Log("call pickup tree");
             this.GetComponent<EarthPlayer>().OnTreeSelected(context);
-            //pickTreeAction.(context);
         }
 
     }
@@ -141,10 +138,7 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
-
-            //Debug.Log("call pickup tree");
             this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
-            //pickTreeAction.(context);
         }
 
     }
@@ -153,10 +147,7 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
-
-            //Debug.Log("call pickup tree");
             this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
-            //pickTreeAction.(context);
         }
 
     }
@@ -165,10 +156,7 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
-
-            //Debug.Log("call pickup tree");
             this.GetComponent<EarthPlayer>().RemovePlant();
-            //pickTreeAction.(context);
         }
 
     }
@@ -180,37 +168,30 @@ public class EarthPlayerControl : MonoBehaviour
 
             Debug.Log("call pickup tree");
             this.GetComponent<EarthPlayer>().OnInteract(context);
-            //pickTreeAction.(context);
         }
     }
-    /*
-        private void FixedUpdate()
-        {
 
-            Vector2 inputVector;
-            if (this.GetComponent<EarthPlayer>())
-            {
-                inputVector =controls.EarthPlayerDefault.Walk.ReadValue<Vector2>();
-            }
-            else
-            {
-                inputVector = new Vector2(0, 0);
-            }
-
-           rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-
-            //ground check, send a raycast to check if the ground is present half way down the players body+0.2
-            grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
-        }
-    */
     private void OnTileFlipped(InputAction.CallbackContext context)
+    {
+            Debug.Log("flipping tiles");
+            levelOneEvents.DebugTileFlip();
+    }
+
+    private void OnPlantPlantedPerformed(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == myDeviceID)
         {
+            Debug.Log("planting plant");
+            earthPlayer.PlantPlantingHandler();
+        }
+    }
 
-            Debug.Log("flipping tiles");
-            levelOneEvents.DebugTileFlip();
-            //pickTreeAction.(context);
+    private void OnPlantingCancelledPerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            Debug.Log("cancelling plant");
+            earthPlayer.CancelPlant();
         }
     }
 }
