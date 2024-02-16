@@ -152,7 +152,7 @@ public class EarthPlayerControl : MonoBehaviour
         if (context.control.device.deviceId == myDeviceID)
         {
             Debug.Log("call pick grass");
-            this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
+            this.GetComponent<EarthPlayer>().OnGrassSelected(context);
         }
 
     }
