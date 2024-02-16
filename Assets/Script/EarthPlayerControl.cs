@@ -9,6 +9,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     public PlayerInputActions controls;
     public InputAction pickTreeAction;
+    public LevelOneEvents levelOneEvents;
 
     public enum DeviceUsed { KEYBOARD, CONTROLLER};
     public DeviceUsed thisDevice;
@@ -71,6 +72,7 @@ public class EarthPlayerControl : MonoBehaviour
         controls.EarthPlayerDefault.RemoveBuilding.performed += OnRemovePlant;
         controls.EarthPlayerDefault.Interact.started += OnInteract;
         controls.EarthPlayerDefault.Interact.canceled += OnInteract;
+        controls.EarthPlayerDefault.DebugTileflip.performed += OnTileFlipped;
     }
 
     private void OnEarthMovePerformed(InputAction.CallbackContext context)
@@ -201,5 +203,14 @@ public class EarthPlayerControl : MonoBehaviour
             grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
         }
     */
+    private void OnTileFlipped(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
 
+            Debug.Log("flipping tiles");
+            levelOneEvents.DebugTileFlip();
+            //pickTreeAction.(context);
+        }
+    }
 }

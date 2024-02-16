@@ -9,9 +9,13 @@ using UnityEngine.AI;
 
 public class EarthPlayer : MonoBehaviour
 {
-    //[SerializeField] Button treeButton;
+    [Header("These need to be set up in each scene")]
     [SerializeField] public GameObject plantParent;
+    [SerializeField] public VirtualMouseInput virtualMouseInput;
+    [SerializeField] public Camera mainCamera;
+    [SerializeField] public TextMeshProUGUI displayText;
 
+    [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
     public GameObject plantSelected;
     public List<GameObject> plantsPlanted;
@@ -20,7 +24,18 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] GameObject tileOutlinePrefab;
     public GameObject tileOutline;
 
-    private NavMeshAgent earthAgent;
+    //Data for when the player picks a plant to plant
+    public enum PlantSelectedType { NONE, TREE, FLOWER, GRASS }
+    public PlantSelectedType plantSelectedType;
+
+    //Data for the tile they're trying to plant on
+    public enum TileSelectedType { LAND, WATER };
+    public TileSelectedType currentTileSelectedType;
+    public GameObject selectedTile;
+    [SerializeField] private LayerMask tileMask;
+    public Vector2 virtualMousePosition;
+    
+    private WaitForSeconds plantTime;
 
     [Header("Plant Objects")]
     [SerializeField] private GameObject treePrefab;
@@ -36,30 +51,18 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public GameObject landFlowerPreviewPrefab;
     [SerializeField] public GameObject waterFlowerPreviewPrefab;
 
-    public enum PlantSelectedType { NONE, TREE, FLOWER, GRASS }
-    public PlantSelectedType plantSelectedType;
-    public GameObject selectedTile;
-    public enum TileSelectedType { LAND, WATER };
-    public TileSelectedType currentTileSelectedType;
-
-    private WaitForSeconds plantTime;
-
-    [SerializeField] public TextMeshProUGUI displayText;
-
-    private PlayerInputActions actions;
+    [Header("Misc")]
+    private NavMeshAgent earthAgent;
+    public bool enrouteToPlant = false;
     private PlayerInput playerInput;
+    private EarthPlayerControl earthControls;
 
     public bool interacting = false;
+    public Inventory inventory; // hold a reference to the Inventory scriptable object
 
-    [SerializeField] public VirtualMouseInput virtualMouseInput;
-    [SerializeField] public Camera mainCamera;
-    [SerializeField] private LayerMask tileMask;
-    public Vector2 virtualMousePosition;
-    public bool enrouteToPlant = false;
-
-    public Inventory inventory; // hold a reference to the Inventory script
     private void Awake()
     {
+        earthControls = GetComponent<EarthPlayerControl>();
         earthAgent = GetComponent<NavMeshAgent>();
         earthAgent.enabled = false;
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
@@ -70,9 +73,7 @@ public class EarthPlayer : MonoBehaviour
     {
         plantTime = new WaitForSeconds(2);
         playerInput = GetComponent<PlayerInput>();
-        actions = new PlayerInputActions();
-        //playerInput.enabled = true;
-        //Interact.performed += OnInteract;
+        //actions = new PlayerInputActions();
     }
 
     // Update is called once per frame
@@ -89,7 +90,15 @@ public class EarthPlayer : MonoBehaviour
 
     private void LateUpdate()
     {
-        virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
+        if(earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
+        {
+            virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
+        }
+        else if(earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        {
+            virtualMousePosition = Mouse.current.position.value;
+        }
+        
     }
 
     public void OnTreeSelected(InputAction.CallbackContext context)
@@ -188,8 +197,17 @@ public class EarthPlayer : MonoBehaviour
         isPlantSelected = true;
         plantSelected.transform.position = this.transform.position;
         playerInput.SwitchCurrentActionMap("PlantIsSelected");
-        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
-        virtualMousePosition = virtualMouseInput.cursorTransform.position;
+
+        if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
+        {
+            virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
+            virtualMousePosition = virtualMouseInput.cursorTransform.position;
+        }
+        else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        {
+            virtualMousePosition = Mouse.current.position.value;
+        }
+        
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
