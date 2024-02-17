@@ -52,6 +52,7 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public GameObject waterFlowerPreviewPrefab;
 
     [Header("Misc")]
+    private EarthPlayerAnimator earthAnimator;
     private NavMeshAgent earthAgent;
     public bool enrouteToPlant = false;
     private PlayerInput playerInput;
@@ -62,6 +63,7 @@ public class EarthPlayer : MonoBehaviour
 
     private void Awake()
     {
+        earthAnimator = GetComponent<EarthPlayerAnimator>();
         earthControls = GetComponent<EarthPlayerControl>();
         earthAgent = GetComponent<NavMeshAgent>();
         earthAgent.enabled = false;
@@ -92,7 +94,9 @@ public class EarthPlayer : MonoBehaviour
     {
         if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
         {
-            virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
+            //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
+            //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.;
+            virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
         else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
@@ -183,8 +187,6 @@ public class EarthPlayer : MonoBehaviour
 
     }
 
-
-
     //This is called at the end of each plant selection function, to capture shared functionality
     private void OnPlantSelectedWrapUp()
     {
@@ -196,17 +198,19 @@ public class EarthPlayer : MonoBehaviour
         earthControls.controls.PlantIsSelected.Enable();
         earthControls.controls.EarthPlayerDefault.Disable();
 
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
         {
+            //virtualMouseInput.virtualMouse.position. = new Vector2(Screen.width / 2, Screen.height / 2);
             virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
         else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
+            virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
             virtualMousePosition = Mouse.current.position.value;
         }
 
-        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
@@ -230,10 +234,12 @@ public class EarthPlayer : MonoBehaviour
                 Destroy(plantSelected);
                 Destroy(tileOutline);
                 //This is a good place to initiate a planting animation
-                //earthAnimator.animator.SetBool(earthAnimator.IfPlanting, true);
+                earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
+                earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 //Set other animations to false
                 StartCoroutine(SuspendActions(plantTime));
                 yield return plantTime;
+                earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, false);
                 PlantPlant(activeTileCell);
                 plantSelectedType = PlantSelectedType.NONE;
 

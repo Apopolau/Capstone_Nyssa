@@ -121,6 +121,14 @@ public class playerMovement : MonoBehaviour
        }
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
+        if(rb.velocity != Vector3.zero)
+        {
+            GetComponent<EarthPlayerAnimator>().animator.SetBool(GetComponent<EarthPlayerAnimator>().IfWalkingHash, true);
+        }
+        else
+        {
+            GetComponent<EarthPlayerAnimator>().animator.SetBool(GetComponent<EarthPlayerAnimator>().IfWalkingHash, false);
+        }
     }
 
     private void MyInput()
