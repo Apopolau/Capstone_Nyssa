@@ -376,7 +376,7 @@ RectTransform:
   m_GameObject: {fileID: 4116769555716790316}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.67, y: 0.05, z: 0.120000005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2148401818922422074}
@@ -634,6 +634,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2148401818922422074}
+  - component: {fileID: 148386958142588165}
   m_Layer: 0
   m_Name: PickupUI
   m_TagString: Untagged
@@ -650,7 +651,7 @@ RectTransform:
   m_GameObject: {fileID: 7745085374962196620}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 2.59, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5690332531754962163}
@@ -662,6 +663,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 156.9, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &148386958142588165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7745085374962196620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b5359528c703141904a9d0ee6a58d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 5669971432095664597, guid: 15987e579baafb348a40e12f66f1593d, type: 3}
 --- !u!1 &7759193086660257439
 GameObject:
   m_ObjectHideFlags: 0
@@ -826,7 +840,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5997566680368904488}
-  - component: {fileID: 316812995744027301}
   m_Layer: 0
   m_Name: PicukupTarget
   m_TagString: Untagged
@@ -843,23 +856,10 @@ Transform:
   m_GameObject: {fileID: 8691398639664675735}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 20.21, z: -0}
+  m_LocalPosition: {x: -20, y: 20.21, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5094712637375964591}
   m_Father: {fileID: 2456310701568974806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &316812995744027301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8691398639664675735}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0b5359528c703141904a9d0ee6a58d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 5669971432095664597, guid: 15987e579baafb348a40e12f66f1593d, type: 3}
