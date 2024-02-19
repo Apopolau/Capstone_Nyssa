@@ -22,6 +22,7 @@ public class SplitScreen : MonoBehaviour
     [SerializeField] public VirtualMouseInput earthVirtualMouseInput;
     bool switching = false;
     int currCam = 1;
+    public int Manager=0;
     void Start()
     {
 
@@ -32,15 +33,17 @@ public class SplitScreen : MonoBehaviour
     void Update()
     {
 
-       
 
+        //If two players are close enough make camera one, if players are far enough split camera
         if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) > distance)
         {
             SetTwoCams();
+           // Changed();
         }
         else if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) < distance)
         {
             SetOneCam();
+            //Changed();
         }
 
 
@@ -50,6 +53,27 @@ public class SplitScreen : MonoBehaviour
         GetComponent<Animator>().SetTrigger("Change");
 
     }
+
+
+    public void ManageCamera()
+    { 
+        if (Manager == 0)
+        {
+            SetTwoCams();
+            Manager = 1;
+        }
+        else
+        { 
+            SetOneCam();
+            Manager = 0;
+        }
+
+
+
+
+    }
+
+
     private void SetTwoCams ()
     {
      
@@ -66,7 +90,7 @@ public class SplitScreen : MonoBehaviour
         earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = earthVirtualMouseInput;
         if (currCam == 1)
         {
-            Changed();
+           // Changed();
             currCam = 2;
         }
 
@@ -74,6 +98,13 @@ public class SplitScreen : MonoBehaviour
     }
     private void SetOneCam()
     {
+        if (currCam == 2)
+        {
+            currCam = 1;
+           // Changed();
+
+        }
+
 
         mainCam.transform.position = Vector3.Lerp(earthPlayer.transform.position, celestialPlayer.transform.position, 0.5f);
 
@@ -87,11 +118,7 @@ public class SplitScreen : MonoBehaviour
         earthPlayer.GetComponent<EarthPlayer>().SetCamera(mainCam);
         earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = virtualMouseInput;
 
-        if (currCam == 2)
-        {
-            Changed();
-            currCam = 1;
-        }
+       
     }
 
 }

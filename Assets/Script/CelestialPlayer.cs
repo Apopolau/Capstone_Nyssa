@@ -237,7 +237,7 @@ public class CelestialPlayer : MonoBehaviour
     }
     public void OnSnowFlakeSelected() { 
 
-        //canLightningStrike = false;
+        canLightningStrike = false;
     
     }
 
