@@ -8,11 +8,13 @@ public class taskInitiatePathTo : BTNode
 {
     private Transform thisTarget;
     NavMeshAgent thisAgent;
+    OurAnimator thisAnimator;
 
-    public taskInitiatePathTo(NavMeshAgent navAgent, Transform target)
+    public taskInitiatePathTo(NavMeshAgent navAgent, Transform target, OurAnimator animator)
     {
         thisAgent = navAgent;
         thisTarget = target;
+        thisAnimator = animator;   
     }
 
 
@@ -24,16 +26,19 @@ public class taskInitiatePathTo : BTNode
         if (!inRange && thisAgent.path.status != NavMeshPathStatus.PathInvalid)
         {
             thisAgent.SetDestination(thisTarget.position);
+            thisAnimator.ToggleSetWalk();
             state = NodeState.RUNNING;
         }
         //If we've reached the destination
         else if (inRange)
         {
+            thisAnimator.ToggleSetWalk();
             state = NodeState.SUCCESS;
         }
         //If we can't reach the destination
         else if(thisAgent.path.status == NavMeshPathStatus.PathInvalid)
         {
+            thisAnimator.ToggleSetWalk();
             state = NodeState.FAILURE;
         }
         return state;

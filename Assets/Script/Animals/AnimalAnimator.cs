@@ -2,16 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AnimalAnimator : MonoBehaviour
+public class AnimalAnimator : OurAnimator
 {
-    public Animator animator;
-    public int IfWalkingHash;
+    public new Animator animator;
+    public new int IfWalkingHash;
     public int IfEatingHash;
     public int IfPanickingHash;
     public int IfSwimmingHash;
 
     // Start is called before the first frame update
     void Start()
+    {
+        SetAnimations();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+    }
+
+    protected override void SetAnimations()
     {
         animator = GetComponentInChildren<Animator>();
         IfWalkingHash = Animator.StringToHash("IfWalking");
@@ -20,9 +31,18 @@ public class AnimalAnimator : MonoBehaviour
         IfSwimmingHash = Animator.StringToHash("IfSwimming");
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void ToggleSetWalk()
     {
-
+        if (animator.GetBool(IfWalkingHash))
+        {
+            animator.SetBool(IfWalkingHash, false);
+        }
+        else if (!animator.GetBool(IfWalkingHash))
+        {
+            animator.SetBool(IfWalkingHash, true);
+            animator.SetBool(IfEatingHash, false);
+            animator.SetBool(IfPanickingHash, false);
+            animator.SetBool(IfSwimmingHash, false);
+        }
     }
 }
