@@ -13,20 +13,59 @@ public class LevelThreeProgress : LevelProgress
 
     bool hasSavedRabbit;
 
-    int treeCount;
-    int grassCount;
-    int flowerCount;
+    public bool animalHasEnoughFood = false;
+    public bool animalHasEnoughWater = false;
+    public bool animalHasShelter = false;
+    public bool animalIsSafe = false;
 
+    int treeGoal = 5;
+    int grassGoal = 7;
+    int cattailGoal = 5;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override bool EvaluateFood()
     {
-        
+        treeCount = 0;
+        grassCount = 0;
+        cattailCount = 0;
+
+        foreach (GameObject plant in plantSet.Items)
+        {
+            if (plant.GetComponent<Plant>().stats.plantName == "Grass")
+            {
+                grassCount++;
+            }
+            if (plant.GetComponent<Plant>().stats.plantName == "Tree")
+            {
+                treeCount++;
+            }
+            if (plant.GetComponent<Plant>().stats.plantName == "Cattail")
+            {
+                cattailCount++;
+            }
+        }
+
+        if (treeCount >= treeGoal && grassCount >= grassGoal && cattailCount >= cattailGoal)
+        {
+            return true;
+        }
+        return false;
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void EvaluateLevelProgress()
     {
-        
+        if (animalHasEnoughFood && animalHasEnoughWater && animalHasShelter && animalIsSafe)
+        {
+            OnPlayerWin();
+        }
+    }
+
+    protected override void OnPlayerWin()
+    {
+
+    }
+
+    protected override void OnPlayerLoss()
+    {
+
     }
 }

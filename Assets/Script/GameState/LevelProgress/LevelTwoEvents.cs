@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelOneEvents : EventManager
+public class LevelTwoEvents : EventManager
 {
-    LevelOneProgress levelOneProgress;
+
+    /// <summary>
+    /// THIS SCRIPT WAS COPY AND PASTED FROM LEVEL ONE EVENTS
+    /// PLEASE READ IT CAREFULLY BEFORE DECIDING IT'S UP TO DATE
+    /// </summary>
+    LevelOneProgress levelTwoProgress;
 
     [SerializeField] Material cleanWaterMaterial;
-    [SerializeField] GameObject river;
     [SerializeField] GameObject lake;
 
     [SerializeField] GameObject firstAreaGrid;
@@ -25,7 +29,7 @@ public class LevelOneEvents : EventManager
     // Start is called before the first frame update
     void Start()
     {
-        levelOneProgress = GetComponent<LevelOneProgress>();
+        levelTwoProgress = GetComponent<LevelOneProgress>();
         foreach (Transform childTransform in firstAreaGrid.transform)
         {
             firstAreaTiles.Add(childTransform.gameObject);
@@ -67,13 +71,13 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        levelOneProgress.shelter = true;
+        levelTwoProgress.animalHasShelter = true;
         task3.CrossOutTask();
     }
 
     public void OnPumpShutOff()
     {
-        river.GetComponent<Renderer>().material = cleanWaterMaterial;
+        //river.GetComponent<Renderer>().material = cleanWaterMaterial;
         lake.GetComponent<Renderer>().material = cleanWaterMaterial;
         foreach(GameObject go in firstAreaTiles)
         {
@@ -89,13 +93,13 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        levelOneProgress.cleanWater = true;
+        levelTwoProgress.animalHasEnoughWater = true;
         task2.CrossOutTask();
     }
 
     private void EvaluateFoodLevel()
     {
-        if (levelOneProgress.EvaluateFood())
+        if (levelTwoProgress.EvaluateFood())
         {
             task3.CrossOutTask();
         }

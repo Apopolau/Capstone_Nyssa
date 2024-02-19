@@ -8,6 +8,7 @@ public class DuckTree : BTree
 {
     Duck thisDuck;
     NavMeshAgent agent;
+    GameObject managerObject;
     DayNightCycle dayNightCycle;
     AnimalAnimator duckAnimator;
 
@@ -18,12 +19,36 @@ public class DuckTree : BTree
         dayNightCycle = thisDuck.dayNightCycle;
         duckAnimator = thisDuck.animalAnimator;
 
+        List<int> nonEatingAnimations;
+        nonEatingAnimations = new List<int>();
+        nonEatingAnimations.Add(duckAnimator.IfPanickingHash);
+        nonEatingAnimations.Add(duckAnimator.IfWalkingHash);
+        nonEatingAnimations.Add(duckAnimator.IfSwimmingHash);
+
+        List<int> nonPanickingAnimations;
+        nonPanickingAnimations = new List<int>();
+        nonPanickingAnimations.Add(duckAnimator.IfEatingHash);
+        nonPanickingAnimations.Add(duckAnimator.IfWalkingHash);
+        nonPanickingAnimations.Add(duckAnimator.IfSwimmingHash);
+
+        List<int> nonWalkingAnimations;
+        nonWalkingAnimations = new List<int>();
+        nonWalkingAnimations.Add(duckAnimator.IfEatingHash);
+        nonWalkingAnimations.Add(duckAnimator.IfPanickingHash);
+        nonWalkingAnimations.Add(duckAnimator.IfSwimmingHash);
+
+        List<int> nonSwimmingAnimations;
+        nonSwimmingAnimations = new List<int>();
+        nonSwimmingAnimations.Add(duckAnimator.IfEatingHash);
+        nonSwimmingAnimations.Add(duckAnimator.IfPanickingHash);
+        nonSwimmingAnimations.Add(duckAnimator.IfWalkingHash);
+
         BTNode root = new Selector(new List<BTNode>
         {
             //Pick our appropriate tree based on time of day
             new Selector(new List<BTNode>
             {
-                //Duck near an enemy drops everything to run or hide from them
+                //Duck near an enemy drops everything to run or hide from them, regardless of time of day
                 new Sequence(new List<BTNode>
                 {
                     //Check if enemy nearby
@@ -33,6 +58,7 @@ public class DuckTree : BTree
                     {
                         new Sequence(new List<BTNode>
                         {
+                            new CheckIfAnyShelter(thisDuck),
                             new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.shelterWaypoint, 20),
                             new taskInitiatePathTo(agent, thisDuck.shelterWaypoint.transform, duckAnimator)
                             //Hide in shelter
@@ -62,6 +88,7 @@ public class DuckTree : BTree
                     {
                         new Sequence(new List<BTNode>
                         {
+                            new CheckIfAnyShelter(thisDuck),
                             new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.shelterWaypoint, 20),
                             new taskInitiatePathTo(agent, thisDuck.shelterWaypoint.transform, duckAnimator)
                             //Hide in shelter
@@ -96,28 +123,28 @@ public class DuckTree : BTree
                         new Sequence(new List<BTNode>
                         {
                             new CheckIfHungry(thisDuck),
-                            //Check if there is any food
-                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.buildSet, 5)
+                            new CheckIfAnyFood(thisDuck),
+                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.buildSet, 5),
                             //Figure out which food is closest
                             //Path to that food
-                            //Do the drinking/eating animation
-                            //Reset duck's hunger value
+                            new Timer(2f, new TaskInitiateAnimation(duckAnimator.animator, duckAnimator.IfEatingHash, nonEatingAnimations)),
+                            new TaskRestoreStat(thisDuck.hunger)
                         }),
                         //Check if thirsty next, find water
                         new Sequence(new List<BTNode>
                         {
                             new CheckIfThirsty(thisDuck),
-                            //Check if the water is clean
-                            new taskInitiatePathTo(agent, thisDuck.waterWaypoint.transform, duckAnimator)
-                            //Initiate a drinking animation when we get here
-                            //Reset duck's thirst value
+                            new CheckIfAnyWater(thisDuck),
+                            new taskInitiatePathTo(agent, thisDuck.waterWaypoint.transform, duckAnimator),
+                            new Timer(2f, new TaskInitiateAnimation(duckAnimator.animator, duckAnimator.IfEatingHash, nonEatingAnimations)),
+                            new TaskRestoreStat(thisDuck.thirst)
                         }),
                         //Check if bored finally, play
                         new Sequence(new List<BTNode>
                         {
-                            new CheckIfBored(thisDuck)
+                            new CheckIfBored(thisDuck),
                             //Find some nice behaviours for a bored duck
-                            //Reset their boredom value once finished
+                            new TaskRestoreStat(thisDuck.entertained)
                         })
                     })
                 })

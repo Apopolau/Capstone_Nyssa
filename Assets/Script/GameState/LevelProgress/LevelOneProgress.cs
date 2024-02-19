@@ -4,46 +4,33 @@ using UnityEngine;
 
 public class LevelOneProgress : LevelProgress
 {
+    
     //Start of game condition, saved duck, destroyed oil spill
-    bool hasSavedDuck;
+    bool hasSavedDuck = false;
     //Defeated the monster on the short path
-    bool hasTallGrass;
+    bool hasTallGrass = false;
     //Cleared the rock slide
-
+    bool clearedRockSlide = false;
     //Defeated the monster up the path
-    bool cleanedLongPath;
+    public bool cleanedLongPath;
     //Cleaned the water at the top of the path
-    bool hasTurnedOffPump;
-
-    int treeCount;
-    int grassCount;
-    int cattailCount;
+    public bool hasTurnedOffPump;
+    public bool animalHasEnoughFood = false;
+    public bool animalIsSafe = false;
 
     int treeGoal = 5;
     int grassGoal = 7;
     int cattailGoal = 5;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public bool EvaluateFood()
+    public override bool EvaluateFood()
     {
         treeCount = 0;
         grassCount = 0;
         cattailCount = 0;
 
-        foreach(GameObject plant in plantSet.Items)
+        foreach (GameObject plant in plantSet.Items)
         {
-            if(plant.GetComponent<Plant>().stats.plantName == "Grass")
+            if (plant.GetComponent<Plant>().stats.plantName == "Grass")
             {
                 grassCount++;
             }
@@ -57,10 +44,30 @@ public class LevelOneProgress : LevelProgress
             }
         }
 
-        if(treeCount >= treeGoal && grassCount >= grassGoal && cattailCount >= cattailGoal)
+        totalPlants = grassCount + treeCount + cattailCount;
+
+        if (treeCount >= treeGoal && grassCount >= grassGoal && cattailCount >= cattailGoal)
         {
             return true;
         }
         return false;
+    }
+
+    protected override void EvaluateLevelProgress()
+    {
+        if (animalHasEnoughFood && cleanWater && shelter && animalIsSafe)
+        {
+            OnPlayerWin();
+        }
+    }
+
+    protected override void OnPlayerWin()
+    {
+
+    }
+
+    protected override void OnPlayerLoss()
+    {
+
     }
 }

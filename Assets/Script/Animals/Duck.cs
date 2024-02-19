@@ -5,37 +5,21 @@ using UnityEngine.AI;
 
 public class Duck : Animal
 {
-    [Header("Set this from the scene")]
-    public new DayNightCycle dayNightCycle;
-    public new GameObject shelterWaypoint;
-    public new GameObject waterWaypoint;
-
-    [Header("These variables set themselves")]
-    public new NavMeshAgent navAgent;
-    public new AnimalAnimator animalAnimator;
-
-    public new bool hungry;
-    public new bool thirsty;
-    public new bool bored;
-    public new bool scared;
-    public new bool hiding;
-
-    private new int hungerMax = 100;
-    private new int hungerCurrent = 100;
-    private new int thirstMax = 50;
-    private new int thirstCurrent = 50;
-    private new int boredMax = 150;
-    private new int boredCurrent = 150;
-
-    [Header("These can be set on the prefab")]
-    [SerializeField] public new GameObjectRuntimeSet playerSet;
-    [SerializeField] public new GameObjectRuntimeSet enemySet;
-    [SerializeField] public new GameObjectRuntimeSet buildSet;
+    public Duck(bool stuckness)
+    {
+        stuck = stuckness;
+    }
 
     private void Awake()
     {
+        hunger = new Stat(100, 100, false);
+        thirst = new Stat(50, 50, false);
+        entertained = new Stat(150, 150, false);
+        scared = false;
+        hiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
+        levelProgress = managerObject.GetComponent<LevelProgress>();
     }
 
     // Update is called once per frame
@@ -46,39 +30,69 @@ public class Duck : Animal
 
     override protected void UpdateAnimalState()
     {
-        hungerCurrent--;
-        hungerCurrent = Mathf.Clamp(hungerCurrent, 0, hungerMax);
-        thirstCurrent--;
-        thirstCurrent = Mathf.Clamp(thirstCurrent, 0, thirstMax);
-        boredCurrent--;
-        boredCurrent = Mathf.Clamp(boredCurrent, 0, boredMax);
+        hunger.current--;
+        hunger.current = Mathf.Clamp(hunger.current, 0, hunger.max);
+        thirst.current--;
+        thirst.current = Mathf.Clamp(thirst.current, 0, thirst.max);
+        entertained.current--;
+        entertained.current = Mathf.Clamp(entertained.current, 0, entertained.max);
 
-        if(hungerCurrent <= 25)
+        if(hunger.current <= 25)
         {
-            hungry = true;
+            hunger.low = true;
         }
-        if (thirstCurrent <= 25)
+        if (thirst.current <= 25)
         {
-            thirsty = true;
+            thirst.low = true;
         }
-        if(boredCurrent <= 25)
+        if(entertained.current <= 25)
         {
-            bored = true;
+            entertained.low = true;
+        }
+    }
+
+    protected void CheckLevelState()
+    {
+        if(levelProgress.totalPlants > 0)
+        {
+            hasAnyFood = true;
+        }
+        else
+        {
+            hasAnyFood = false;
+        }
+
+        if (levelProgress.cleanWater)
+        {
+            hasCleanWater = true;
+        }
+        else
+        {
+            hasCleanWater = false;
+        }
+
+        if (levelProgress.shelter)
+        {
+            hasShelter = true;
+        }
+        else
+        {
+            hasShelter = false;
         }
     }
 
     public override bool GetHungryState()
     {
-        return hungry;
+        return hunger;
     }
 
     public override bool GetThirstyState()
     {
-        return thirsty;
+        return thirst;
     }
 
     public override bool GetBoredState()
     {
-        return bored;
+        return entertained;
     }
 }

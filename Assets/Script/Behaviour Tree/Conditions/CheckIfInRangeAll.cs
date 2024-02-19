@@ -23,23 +23,31 @@ public class CheckIfInRangeAll : BTCondition
     //Returns true if it's night time
     protected override NodeState OnRun()
     {
-        foreach(GameObject g in checkObjectSet.Items)
+        if(checkObjectSet.Items != null)
         {
-            float objectRange = (checkingObject.transform.position - g.transform.position).magnitude;
-            if(Mathf.Abs(objectRange) <= distanceRange)
+            foreach (GameObject g in checkObjectSet.Items)
             {
-                foundObjectInRange = true;
-                break;
+                float objectRange = (checkingObject.transform.position - g.transform.position).magnitude;
+                if (Mathf.Abs(objectRange) <= distanceRange)
+                {
+                    foundObjectInRange = true;
+                    break;
+                }
             }
-        }
-        if (foundObjectInRange)
-        {
-            return NodeState.SUCCESS;
+            if (foundObjectInRange)
+            {
+                return NodeState.SUCCESS;
+            }
+            else
+            {
+                return NodeState.FAILURE;
+            }
         }
         else
         {
             return NodeState.FAILURE;
         }
+        
     }
 
     protected override void OnReset() { }

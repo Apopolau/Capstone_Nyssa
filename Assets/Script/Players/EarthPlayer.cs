@@ -73,7 +73,7 @@ public class EarthPlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        plantTime = new WaitForSeconds(2);
+        plantTime = new WaitForSeconds(4.542f);
         playerInput = GetComponent<PlayerInput>();
         //actions = new PlayerInputActions();
     }

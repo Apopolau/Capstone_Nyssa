@@ -5,29 +5,33 @@ using UnityEngine.AI;
 
 public abstract class Animal : MonoBehaviour
 {
-    protected DayNightCycle dayNightCycle;
-    protected GameObject shelterWaypoint;
-    protected GameObject waterWaypoint;
+    [Header("Set this from the scene")]
+    public GameObject managerObject;
+    public DayNightCycle dayNightCycle;
+    public GameObject shelterWaypoint;
+    public GameObject waterWaypoint;
 
-    protected NavMeshAgent navAgent;
-    protected AnimalAnimator animalAnimator;
+    [Header("These variables set themselves")]
+    public NavMeshAgent navAgent;
+    public AnimalAnimator animalAnimator;
 
-    protected bool hungry;
-    protected bool thirsty;
-    protected bool bored;
+    [Header("These can be set on the prefab")]
+    [SerializeField] public  GameObjectRuntimeSet playerSet;
+    [SerializeField] public  GameObjectRuntimeSet enemySet;
+    [SerializeField] public  GameObjectRuntimeSet buildSet;
+
+    protected bool stuck;
+    public bool midAnimation;
+    public Stat hunger;
+    public Stat thirst;
+    public Stat entertained;
     protected bool scared;
     protected bool hiding;
 
-    protected int hungerMax;
-    protected int hungerCurrent;
-    protected int thirstMax;
-    protected int thirstCurrent;
-    protected int boredMax;
-    protected int boredCurrent;
-
-    protected GameObjectRuntimeSet playerSet;
-    protected GameObjectRuntimeSet enemySet;
-    protected GameObjectRuntimeSet buildSet;
+    protected LevelProgress levelProgress;
+    public bool hasCleanWater = false;
+    public bool hasShelter = false;
+    public bool hasAnyFood = false;
 
     protected abstract void UpdateAnimalState();
 

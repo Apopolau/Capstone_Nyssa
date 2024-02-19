@@ -83,7 +83,7 @@ public class CelestialPlayerControls : MonoBehaviour
             if (takinginput == false)
             {
                 takinginput = true;
-                Debug.Log("Celestial:" + context.control.device.deviceId);
+                //Debug.Log("Celestial:" + context.control.device.deviceId);
 
 
                 Vector2 input;

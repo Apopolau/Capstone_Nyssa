@@ -4,45 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class LevelProgress : MonoBehaviour
+public abstract class LevelProgress : MonoBehaviour
 {
     [SerializeField] protected GameObjectRuntimeSet plantSet;
     [SerializeField] protected TextMeshProUGUI objectiveText;
 
-    int currentPlayerLevel;
+    protected int currentPlayerLevel;
 
-    public bool animalHasEnoughFood = false;
-    public bool animalHasEnoughWater = false;
-    public bool animalHasShelter = false;
-    public bool animalIsSafe = false;
+    protected int treeCount;
+    protected int grassCount;
+    protected int cattailCount;
+    public int totalPlants;
+    public bool cleanWater = false;
+    public bool shelter = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract bool EvaluateFood();
+    protected abstract void EvaluateLevelProgress();
 
-    protected void EvaluateLevelProgress()
-    {
-        if(animalHasEnoughFood && animalHasEnoughWater && animalHasShelter && animalIsSafe)
-        {
-            OnPlayerWin();
-        }
-    }
+    protected abstract void OnPlayerWin();
 
-    private void OnPlayerWin()
-    {
-
-    }
-
-    private void OnPlayerLoss()
-    {
-
-    }
+    protected abstract void OnPlayerLoss();
 }
