@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class EarthPlayerAnimator : OurAnimator
 {
-    public new Animator animator;
-    public new int IfWalkingHash;
-
     public int IfPlantingHash;
 
     // Start is called before the first frame update

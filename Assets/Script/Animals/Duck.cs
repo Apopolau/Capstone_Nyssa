@@ -13,8 +13,17 @@ public class Duck : Animal
     private void Awake()
     {
         hunger = new Stat(100, 100, false);
+        //hunger.current = 100;
+        //hunger.max = 100;
+        //hunger.low = false;
         thirst = new Stat(50, 50, false);
+        //thirst.current = 50;
+        //thirst.max = 50;
+        //thirst.low = false;
         entertained = new Stat(150, 150, false);
+        //entertained.current = 150;
+        //entertained.max = 150;
+        //entertained.low = false;
         scared = false;
         hiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
@@ -83,16 +92,16 @@ public class Duck : Animal
 
     public override bool GetHungryState()
     {
-        return hunger;
+        return hunger.low;
     }
 
     public override bool GetThirstyState()
     {
-        return thirst;
+        return thirst.low;
     }
 
     public override bool GetBoredState()
     {
-        return entertained;
+        return entertained.low;
     }
 }

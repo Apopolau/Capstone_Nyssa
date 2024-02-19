@@ -71,7 +71,7 @@ public class LevelTwoEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        levelTwoProgress.animalHasShelter = true;
+        levelTwoProgress.shelter = true;
         task3.CrossOutTask();
     }
 
@@ -93,7 +93,7 @@ public class LevelTwoEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        levelTwoProgress.animalHasEnoughWater = true;
+        levelTwoProgress.cleanWater = true;
         task2.CrossOutTask();
     }
 

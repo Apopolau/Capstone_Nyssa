@@ -24,7 +24,7 @@ public class LevelTwoProgress : LevelProgress
     int grassGoal = 7;
     int cattailGoal = 5;
 
-    protected override bool EvaluateFood()
+    public override bool EvaluateFood()
     {
         treeCount = 0;
         grassCount = 0;

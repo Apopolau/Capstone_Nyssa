@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class OilMonsterAnimator : OurAnimator
 {
-
-    public new Animator animator;
     public int IfAttackingHash;
-    public new int IfWalkingHash;
 
     // Start is called before the first frame update
     void Start()

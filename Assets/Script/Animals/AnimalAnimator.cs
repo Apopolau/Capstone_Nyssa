@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AnimalAnimator : OurAnimator
 {
-    public new Animator animator;
-    public new int IfWalkingHash;
     public int IfEatingHash;
     public int IfPanickingHash;
     public int IfSwimmingHash;

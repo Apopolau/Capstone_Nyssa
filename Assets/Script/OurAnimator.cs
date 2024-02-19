@@ -4,8 +4,8 @@ using UnityEngine;
 
 public abstract class OurAnimator : MonoBehaviour
 {
-    protected Animator animator;
-    protected int IfWalkingHash;
+    public Animator animator;
+    public int IfWalkingHash;
 
     // Start is called before the first frame update
     void Start()

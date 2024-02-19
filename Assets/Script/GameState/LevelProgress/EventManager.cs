@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class EventManager : MonoBehaviour
+public abstract class EventManager : MonoBehaviour
 {
     //private bool isTaskCompleted = false;
     //private TextMeshProUGUI textComponent;

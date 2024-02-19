@@ -14,15 +14,15 @@ public class LevelThreeProgress : LevelProgress
     bool hasSavedRabbit;
 
     public bool animalHasEnoughFood = false;
-    public bool animalHasEnoughWater = false;
-    public bool animalHasShelter = false;
+    //public bool animalHasEnoughWater = false;
+    //public bool animalHasShelter = false;
     public bool animalIsSafe = false;
 
     int treeGoal = 5;
     int grassGoal = 7;
     int cattailGoal = 5;
 
-    protected override bool EvaluateFood()
+    public override bool EvaluateFood()
     {
         treeCount = 0;
         grassCount = 0;
@@ -53,7 +53,7 @@ public class LevelThreeProgress : LevelProgress
 
     protected override void EvaluateLevelProgress()
     {
-        if (animalHasEnoughFood && animalHasEnoughWater && animalHasShelter && animalIsSafe)
+        if (animalHasEnoughFood && cleanWater && shelter && animalIsSafe)
         {
             OnPlayerWin();
         }
