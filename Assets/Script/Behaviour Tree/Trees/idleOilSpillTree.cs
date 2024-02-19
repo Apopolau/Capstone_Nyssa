@@ -35,10 +35,10 @@ public class idleOilSpillTree : BTree
         BTNode root = new Selector(new List<BTNode>
         {
            new Sequence(new List<BTNode>
-            {   new CheckInAttackRange(playerTransform,enemyMeshAgent,player),
-                new TaskAttack(playerTransform,enemyMeshAgent,player),
-
-
+            {   
+                new CheckInAttackRange(playerTransform,enemyMeshAgent,player),
+                new Timer(2f, new taskInitiateAttack(playerTransform,enemyMeshAgent,player)),
+                new TaskAttack(playerTransform,enemyMeshAgent,player)
             }),
 
 

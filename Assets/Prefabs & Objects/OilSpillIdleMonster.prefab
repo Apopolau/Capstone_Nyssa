@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1459414117865843924}
   - component: {fileID: 4770475498123940046}
   - component: {fileID: 5816718239107520356}
+  - component: {fileID: 8467155445567841855}
   m_Layer: 0
   m_Name: OilMonster
   m_TagString: Untagged
@@ -106,6 +107,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 6568009305251152141, guid: dd0febc78e91c2a479cd225002a4e6fc, type: 3}
+--- !u!95 &8467155445567841855
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82787130119994753}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00e75cf353795ae4dbded31624db1c81, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5913674526504397533
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +142,7 @@ GameObject:
   - component: {fileID: 3919838605589282462}
   - component: {fileID: 6889421697060786377}
   - component: {fileID: 2832246318173308284}
+  - component: {fileID: 354479892945874935}
   m_Layer: 0
   m_Name: OilSpillIdleMonster
   m_TagString: Enemy
@@ -187,6 +210,8 @@ MonoBehaviour:
   playerObj: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: cac8e7c2926be4b48b8f35ca1264ab97, type: 2}
   player: {fileID: 0}
+  isFirst: 0
+  isDying: 0
   seesPlayer: 0
   inAttackRange: 0
   playerLocation: {x: 0, y: 0, z: 0}
@@ -252,7 +277,20 @@ MonoBehaviour:
   startingHealth: 100
   currHealth: 100
   playerTransform: {fileID: 0}
-  isFirst: 0
+--- !u!114 &354479892945874935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5913674526504397533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29603e278d459f4ba23a1381a25bb08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  ifAttackingHash: 0
 --- !u!1 &8344188139315059696
 GameObject:
   m_ObjectHideFlags: 0

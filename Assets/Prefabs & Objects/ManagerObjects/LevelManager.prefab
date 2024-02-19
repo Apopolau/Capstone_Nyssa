@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5999955894293346025}
-  - component: {fileID: 8100636425402109961}
-  - component: {fileID: 2060512435854143136}
   - component: {fileID: 1977504091769091201}
   - component: {fileID: 6650053670999285971}
   - component: {fileID: 1935697344440149660}
@@ -41,36 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.8790484, y: 116.28168}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8100636425402109961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2356076383909513412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd2f22f1284caa4681f51e0548f7a5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &2060512435854143136
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2356076383909513412}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c896e49ef8d281e4a9f2f3c1378c6c10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  plantSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
-  objectiveText: {fileID: 0}
-  animalHasEnoughFood: 0
-  animalHasEnoughWater: 0
-  animalHasShelter: 0
-  animalIsSafe: 0
 --- !u!114 &1977504091769091201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,9 +74,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   plantSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
   objectiveText: {fileID: 0}
+  totalPlants: 0
+  cleanWater: 0
+  shelter: 0
+  cleanedLongPath: 0
+  hasTurnedOffPump: 0
   animalHasEnoughFood: 0
-  animalHasEnoughWater: 0
-  animalHasShelter: 0
   animalIsSafe: 0
 --- !u!222 &1935697344440149660
 CanvasRenderer:

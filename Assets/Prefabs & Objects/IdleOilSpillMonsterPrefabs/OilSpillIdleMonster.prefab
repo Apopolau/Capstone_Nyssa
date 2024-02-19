@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3683027411586778587}
   - component: {fileID: 1600394031809458323}
   - component: {fileID: 5804434315703889750}
+  - component: {fileID: 6719677676223621316}
   m_Layer: 0
   m_Name: OilSpillIdleMonster
   m_TagString: Enemy
@@ -78,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 1600394031809458323}
+  enemyAnimator: {fileID: 0}
   playerObj: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: cac8e7c2926be4b48b8f35ca1264ab97, type: 2}
   player: {fileID: 0}
@@ -145,9 +147,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   startingHealth: 100
   currHealth: 100
   playerTransform: {fileID: 0}
+--- !u!114 &6719677676223621316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090664895178657524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29603e278d459f4ba23a1381a25bb08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  IfAttackingHash: 0
 --- !u!1 &2898012355351432001
 GameObject:
   m_ObjectHideFlags: 0
@@ -255,10 +272,39 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: dd0febc78e91c2a479cd225002a4e6fc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9137171943769482038}
     - targetCorrespondingSourceObject: {fileID: -1650490620677193708, guid: dd0febc78e91c2a479cd225002a4e6fc, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7732040463057699606}
   m_SourcePrefab: {fileID: 100100000, guid: dd0febc78e91c2a479cd225002a4e6fc, type: 3}
+--- !u!1 &121583361140739576 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: dd0febc78e91c2a479cd225002a4e6fc, type: 3}
+  m_PrefabInstance: {fileID: 967881110218961065}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &9137171943769482038
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 121583361140739576}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 00e75cf353795ae4dbded31624db1c81, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &784791545325033282 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: dd0febc78e91c2a479cd225002a4e6fc, type: 3}

@@ -88,7 +88,7 @@ public class Cell : MonoBehaviour
 
     private void Update()
     {
-        UpdateTileState();
+        UpdateTileValid();
         UpdatePlant();
     }
 
@@ -97,7 +97,7 @@ public class Cell : MonoBehaviour
         //virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
     }
 
-    private void UpdateTileState()
+    private void UpdateTileValid()
     {
         if(enviroState == EnviroState.POLLUTED || tileHasBuild || 
             (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE && terrainType == TerrainType.WATER))
@@ -146,7 +146,6 @@ public class Cell : MonoBehaviour
 
     private void UpdatePlant()
     {
-        //Debug.Log(earthPlayer);
         //If the player is currently picking a place to plant their plant
         if (earthPlayer.isPlantSelected && tileIsActivated)
         {
