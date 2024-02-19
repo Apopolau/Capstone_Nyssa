@@ -11,6 +11,7 @@ public class CelestialPlayerControls : MonoBehaviour
     public CelestialPlayerInputActions controls;
     public InputActionReference rainAction;
     public InputAction celestialActions;
+    public DialogueManager dialogueManager;
     // public CelestialPlayerInputActions cele;
 
     public enum DeviceUsed { KEYBOARD, CONTROLLER };
@@ -65,12 +66,20 @@ public class CelestialPlayerControls : MonoBehaviour
             thisDevice = DeviceUsed.CONTROLLER;
         }
         Debug.Log(myDeviceID);
-        controls.CelestialPlayerDefault.Enable();
+        controls.CelestialPlayerDefault.Disable();
         controls.CelestialPlayerDefault.CelestialWalk.performed += OnCelestialMovePerformed;
         controls.CelestialPlayerDefault.CelestialWalk.canceled += OnCelestialMoveCancelled;
         controls.CelestialPlayerDefault.MakeRain.performed += OnMakeRain; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.CelestialPlayerDefault.MakeColdSnap.performed += OnColdSnapPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
 
+        //When in the menus
+        //We may want to switch this one to be active when we start up the game instead of the default
+        controls.MenuControls.Disable();
+
+        //When in dialogue
+        controls.DialogueControls.Enable();
+        controls.DialogueControls.Continue.performed += OnContinuePerformed;
+        controls.DialogueControls.Skip.performed += OnSkipPerformed;
     }
 
    private void OnCelestialMovePerformed(InputAction.CallbackContext context)
@@ -143,7 +152,24 @@ public class CelestialPlayerControls : MonoBehaviour
 
     }
 
+    //UI calls
+    private void OnContinuePerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            Debug.Log("continuing dialogue");
+            dialogueManager.DisplayNextDialogueLine();
+        }
+    }
 
+    private void OnSkipPerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            Debug.Log("skipping dialogue");
+            dialogueManager.EndDialogue();
+        }
+    }
     // Update is called once per frame
- 
+
 }

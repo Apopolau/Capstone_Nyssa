@@ -10,6 +10,7 @@ public class EarthPlayerControl : MonoBehaviour
     public PlayerInputActions controls;
     public InputAction pickTreeAction;
     public LevelOneEvents levelOneEvents;
+    public DialogueManager dialogueManager;
 
     public enum DeviceUsed { KEYBOARD, CONTROLLER};
     public DeviceUsed thisDevice;
@@ -68,7 +69,7 @@ public class EarthPlayerControl : MonoBehaviour
         
         Debug.Log(myDeviceID);
         //EarthPlayerDefault
-        controls.EarthPlayerDefault.Enable();
+        controls.EarthPlayerDefault.Disable();
         controls.EarthPlayerDefault.EarthWalk.performed += OnEarthMovePerformed;
         controls.EarthPlayerDefault.EarthWalk.canceled += OnEarthMoveCancelled;
         controls.EarthPlayerDefault.PickTree.performed += OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
@@ -85,6 +86,15 @@ public class EarthPlayerControl : MonoBehaviour
         controls.PlantIsSelected.Cancelplanting.performed += OnPlantingCancelledPerformed;
         controls.PlantIsSelected.EarthWalk.performed += OnEarthMovePerformed;
         controls.PlantIsSelected.EarthWalk.canceled += OnEarthMoveCancelled;
+
+        //When in the menus
+        //We may want to switch this one to be active when we start up the game instead of the default
+        controls.MenuControls.Disable();
+
+        //When in dialogue
+        controls.DialogueControls.Enable();
+        controls.DialogueControls.Continue.performed += OnContinuePerformed;
+        controls.DialogueControls.Skip.performed += OnSkipPerformed;
     }
 
     private void OnEarthMovePerformed(InputAction.CallbackContext context)
@@ -197,6 +207,24 @@ public class EarthPlayerControl : MonoBehaviour
         {
             Debug.Log("cancelling plant");
             earthPlayer.CancelPlant();
+        }
+    }
+
+    private void OnContinuePerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            Debug.Log("continuing dialogue");
+            dialogueManager.DisplayNextDialogueLine();
+        }
+    }
+
+    private void OnSkipPerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            Debug.Log("skipping dialogue");
+            dialogueManager.EndDialogue();
         }
     }
 }

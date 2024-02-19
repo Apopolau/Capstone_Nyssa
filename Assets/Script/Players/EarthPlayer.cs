@@ -56,7 +56,7 @@ public class EarthPlayer : MonoBehaviour
     private NavMeshAgent earthAgent;
     public bool enrouteToPlant = false;
     private PlayerInput playerInput;
-    private EarthPlayerControl earthControls;
+    public EarthPlayerControl earthControls;
 
     public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
