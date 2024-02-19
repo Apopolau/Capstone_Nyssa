@@ -111,9 +111,16 @@ public class CelestialPlayerMovement : MonoBehaviour
            // Debug.Log("celestial FIXED UPDATE CHECK");
            // Debug.Log("celestial" + inputVector);
         }
-        
 
-       // rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+        if (rb.velocity != Vector3.zero)
+        {
+            GetComponent<CelestialPlayerAnimator>().animator.SetBool(GetComponent<CelestialPlayerAnimator>().IfWalkingHash, true);
+        }
+        else
+        {
+            GetComponent<CelestialPlayerAnimator>().animator.SetBool(GetComponent<CelestialPlayerAnimator>().IfWalkingHash, false);
+        }
+        // rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
