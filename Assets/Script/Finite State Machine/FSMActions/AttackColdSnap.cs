@@ -11,7 +11,7 @@ public class AttackColdSnapAction : FSMAction
         CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
 
         //if it isn't raining start rain
-        if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().canColdSnap)
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.COLDSNAP)
         {
             Debug.Log("ColdSnapActivated");
 

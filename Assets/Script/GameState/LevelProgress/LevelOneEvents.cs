@@ -7,8 +7,9 @@ public class LevelOneEvents : EventManager
     LevelOneProgress levelOneProgress;
 
     [SerializeField] Material cleanWaterMaterial;
-    [SerializeField] GameObject river;
-    [SerializeField] GameObject lake;
+    //[SerializeField] GameObject river;
+    //[SerializeField] GameObject lake;
+    [SerializeField] GameObject water;
 
     [SerializeField] GameObject firstAreaGrid;
     [SerializeField] GameObject secondAreaGrid;
@@ -73,9 +74,10 @@ public class LevelOneEvents : EventManager
 
     public void OnPumpShutOff()
     {
-        river.GetComponent<Renderer>().material = cleanWaterMaterial;
-        lake.GetComponent<Renderer>().material = cleanWaterMaterial;
-        foreach(GameObject go in firstAreaTiles)
+        water.GetComponent<Renderer>().material = cleanWaterMaterial;
+        //river.GetComponent<Renderer>().material = cleanWaterMaterial;
+        //lake.GetComponent<Renderer>().material = cleanWaterMaterial;
+        foreach (GameObject go in firstAreaTiles)
         {
             if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
             {

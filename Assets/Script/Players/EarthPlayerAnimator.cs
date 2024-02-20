@@ -20,7 +20,7 @@ public class EarthPlayerAnimator : OurAnimator
 
     protected override void SetAnimations()
     {
-        animator = GetComponentInChildren<Animator>();
+        animator = GameObject.Find("earth_geo").GetComponentInChildren<Animator>();
         IfWalkingHash = Animator.StringToHash("IfWalking");
         IfPlantingHash = Animator.StringToHash("IfPlanting");
     }

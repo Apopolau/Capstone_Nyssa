@@ -47,6 +47,7 @@ public class CelestialPlayer : MonoBehaviour
         SUNBEAM
     };
 
+    public Power Powers;
     public Power powerInUse = Power.NONE;
 
 
@@ -98,6 +99,7 @@ public class CelestialPlayer : MonoBehaviour
         // celestialPlayerInput = GetComponent<CelestialPlayerInputActions>();
         //playerInput = GetComponent<PlayerInput>();
         powerBehaviour = GetComponent<PowerBehaviour>();
+       
     }
 
 
@@ -237,8 +239,11 @@ public class CelestialPlayer : MonoBehaviour
     }
     public void OnSnowFlakeSelected() { 
 
-        canLightningStrike = false;
-    
+        canColdSnap= false;
+        isAttacking = true;
+        powerInUse = Power.COLDSNAP;
+        Debug.Log("start");
+
     }
 
     public IEnumerator animateColdSnap()
@@ -247,8 +252,16 @@ public class CelestialPlayer : MonoBehaviour
         Debug.Log("coldsnap is animated");
         GameObject coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
         GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
-        clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
-      
+        //clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
+
+
+
+        // Move our position a step closer to the target.
+        var step = 5 * Time.deltaTime; // calculate distance to move
+       clone.transform.position = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
+
+       // clone.GetComponent<Rigidbody>().velocity = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
+
         isAttacking = true;
         yield return new WaitForSeconds(2f);
        

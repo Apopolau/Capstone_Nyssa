@@ -20,7 +20,7 @@ public class CelestialPlayerAnimator : OurAnimator
 
     protected override void SetAnimations()
     {
-        animator = GetComponentInChildren<Animator>();
+        animator = GameObject.Find("Celestial_geo").GetComponentInChildren<Animator>();
         IfWalkingHash = Animator.StringToHash("IfWalking");
         IfAttackingHash = Animator.StringToHash("IfAttacking");
     }
