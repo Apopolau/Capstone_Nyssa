@@ -19,10 +19,16 @@ public abstract class LevelProgress : ScriptableObject
     public bool shelter = false;
 
 
+    public void SetObjectiveText(TextMeshProUGUI incObjectiveText)
+    {
+        objectiveText = incObjectiveText;
+    }
+
     public abstract bool EvaluateFood();
     protected abstract void EvaluateLevelProgress();
 
     protected abstract void OnPlayerWin();
 
     protected abstract void OnPlayerLoss();
+
 }

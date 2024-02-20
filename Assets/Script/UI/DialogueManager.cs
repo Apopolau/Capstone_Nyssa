@@ -28,7 +28,7 @@ public class DialogueManager : MonoBehaviour
         
     }
 
-    private void Start()
+    private void OnEnable()
     {
         for(int i = 0; i < playerSet.Items.Count; i++)
         {
