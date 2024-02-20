@@ -7,7 +7,6 @@ public abstract class Animal : MonoBehaviour
 {
     [Header("Set this from the scene")]
     public GameObject managerObject;
-    public WeatherState weatherState;
     public GameObject shelterWaypoint;
     public GameObject waterWaypoint;
 
@@ -19,6 +18,7 @@ public abstract class Animal : MonoBehaviour
     [SerializeField] public  GameObjectRuntimeSet playerSet;
     [SerializeField] public  GameObjectRuntimeSet enemySet;
     [SerializeField] public  GameObjectRuntimeSet buildSet;
+    public WeatherState weatherState;
 
     protected bool stuck;
     public bool midAnimation;

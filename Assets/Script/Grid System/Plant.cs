@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class Plant : Creatable
 {
-    private int currentHealth;
+
+    [Header("Set these on the prefab")]
     [SerializeField] public PlantStats stats;
     [SerializeField] List<LevelManagerObject> levelManagers;
     public GameObject plantObject;
+    [SerializeField] WeatherState weatherState;
+
+    [Header("These set themselves")]
+    private Stat health;
+    private Stat storedSunlight;
+    private Stat storedWater;
     public SpriteRenderer[] plantVisuals;
     private Cell tilePlantedOn;
+    bool waterPlant = false;
 
     public int currentPollutionContribution;
-    private int storedSunlight;
-    private int storedWater;
     private int growthPoints;
+    private int growthRate = 1;
+    public bool isSmothered;
     PlantStats.PlantStage currentPlantStage;
-
-    //DayNightCycle dayNightCycle;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,6 +36,18 @@ public class Plant : Creatable
 
         PlacePlant(stats.seedlingScale, stats.seedlingTileOffset);
 
+        health = new Stat(stats.maxHealth, stats.maxHealth, false);
+        storedSunlight = new Stat(100, 0, true);
+        storedWater = new Stat(100, 0, true);
+
+        if (tilePlantedOn.terrainType == Cell.TerrainType.WATER)
+        {
+            waterPlant = true;
+            storedWater.current = 100;
+            storedWater.low = false;
+        }
+
+        
     }
 
     // Update is called once per frame
@@ -43,6 +61,7 @@ public class Plant : Creatable
         StoreNutrients();
         GrowPlant();
         AdvancePlantStage();
+        ResolveStats();
     }
 
     private void GrowPlant()
@@ -50,55 +69,58 @@ public class Plant : Creatable
         //Add a check to see if it is currently sunny or rainy when these states exist
         //Put the check so that stored resources are not drained if the resource is still active
         //If it's a water plant it doesn't need rain to grow
-        if (tilePlantedOn.terrainType == Cell.TerrainType.WATER)
+        if (waterPlant)
         {
-            if (storedSunlight > 0)
+            if (storedSunlight.current > 0)
             {
                 growthPoints++;
-                storedSunlight--;
+                if (!weatherState.dayTime)
+                {
+                    storedSunlight.current -= Mathf.Clamp(-growthRate, 0, storedSunlight.max);
+                }
                 //we want our plants to heal if they're not full health while they're growing
                 //We may choose to add a check where they don't heal if they're actively being affected by a monster
-                if (currentHealth < stats.maxHealth)
+                if (health.current < health.max)
                 {
-                    currentHealth++;
+                    health.current++;
                 }
             }
         }
         else
         {
-            if (storedSunlight > 0 && storedWater > 0)
+            if (storedSunlight.current > 0 && storedWater.current > 0)
             {
                 growthPoints++;
-                storedSunlight--;
-                storedWater--;
+                if (!weatherState.dayTime)
+                {
+                    storedSunlight.current -= Mathf.Clamp(-growthRate, 0, storedSunlight.max);
+                }
+                if (weatherState.skyState == WeatherState.SkyState.CLEAR)
+                {
+                    storedWater.current -= Mathf.Clamp(-growthRate, 0, storedWater.max);
+                }
                 //we want our plants to heal if they're not full health while they're growing
                 //We may choose to add a check where they don't heal if they're actively being affected by a monster
-                if (currentHealth < stats.maxHealth)
+                if (health.current < health.max)
                 {
-                    currentHealth++;
+                    health.current++;
                 }
             }
-        }
-        if (storedSunlight < 0)
-        {
-            storedSunlight = 0;
-        }
-        if (storedWater < 0)
-        {
-            storedWater = 0;
         }
     }
 
     private void StoreNutrients()
     {
-        /*
-        if ()
+        
+        if (weatherState.dayTime && !isSmothered)
         {
-
+            storedSunlight.current += Mathf.Clamp(growthRate, 0, 100);
         }
-        */
-
-        //if rainy, store water
+        
+        if(weatherState.skyState == WeatherState.SkyState.RAINY && !waterPlant)
+        {
+            storedSunlight.current += Mathf.Clamp(growthRate, 0, 100);
+        }
     }
 
     //Refactor this back out of being an IEnumerator, use growth points instead
@@ -188,6 +210,39 @@ public class Plant : Creatable
             float yOffset = (plantVisuals[0].GetComponent<SpriteRenderer>().sprite.bounds.extents.y * scale);
             plantVisuals[0].gameObject.transform.parent.gameObject.transform.localPosition = new Vector3(-tileOffset, yOffset, -tileOffset);
             //plantVisuals[0].GetComponentInParent<GameObject>().transform.localPosition = new Vector3(-tileOffset, yOffset, -tileOffset);
+        }
+    }
+
+    private void ResolveStats()
+    {
+        //Change water state
+        if(storedWater.current < storedWater.max / 4)
+        {
+            storedWater.low = true;
+        }
+        else
+        {
+            storedWater.low = false;
+        }
+
+        //Change sunlight state
+        if (storedSunlight.current < storedSunlight.max / 4)
+        {
+            storedSunlight.low = true;
+        }
+        else
+        {
+            storedSunlight.low = false;
+        }
+
+        //Change health state
+        if (health.current < health.max / 4)
+        {
+            health.low = true;
+        }
+        else
+        {
+            health.low = false;
         }
     }
 }

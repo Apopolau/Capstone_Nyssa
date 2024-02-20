@@ -18,7 +18,7 @@ public class CanColdSnap : Decision
         }
         else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking)
         {
-            Debug.Log("ColdSnap OVer------");
+            //Debug.Log("ColdSnap OVer------");
             return false;
         }
         return false;
