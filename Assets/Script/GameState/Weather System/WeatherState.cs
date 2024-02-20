@@ -13,4 +13,11 @@ public class WeatherState : ScriptableObject
 
     public enum SkyState { CLEAR, RAINY};
     public SkyState skyState = SkyState.CLEAR;
+
+    public bool dayTime;
+
+    public void SetDayTime(bool isDay)
+    {
+        dayTime = isDay;
+    }
 }
