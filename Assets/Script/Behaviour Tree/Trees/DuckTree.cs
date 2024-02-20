@@ -9,14 +9,14 @@ public class DuckTree : BTree
     Duck thisDuck;
     NavMeshAgent agent;
     GameObject managerObject;
-    DayNightCycle dayNightCycle;
+    WeatherState weatherState;
     AnimalAnimator duckAnimator;
 
     protected override BTNode SetupTree()
     {
         thisDuck = GetComponent<Duck>();
         agent = GetComponent<NavMeshAgent>();
-        dayNightCycle = thisDuck.dayNightCycle;
+        weatherState = thisDuck.weatherState;
         duckAnimator = thisDuck.animalAnimator;
 
         List<int> nonEatingAnimations;
@@ -82,7 +82,7 @@ public class DuckTree : BTree
                 //If it's night time
                 new Sequence(new List<BTNode>
                 {
-                    new CheckIfNight(dayNightCycle),
+                    new CheckIfNight(weatherState),
                     //Pick between hiding in the shelter and hiding in tall grass
                     new Selector(new List<BTNode>
                     {
@@ -109,7 +109,7 @@ public class DuckTree : BTree
                 //If it's not night time
                 new Sequence(new List<BTNode>
                 {
-                    new Inverter(new CheckIfNight(dayNightCycle)),
+                    new Inverter(new CheckIfNight(weatherState)),
                     new Selector(new List<BTNode>
                     {
                         new Sequence(new List<BTNode>

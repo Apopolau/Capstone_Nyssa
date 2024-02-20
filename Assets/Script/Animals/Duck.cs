@@ -28,7 +28,7 @@ public class Duck : Animal
         hiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
-        levelProgress = managerObject.GetComponent<LevelProgress>();
+        //levelProgress = managerObject.GetComponent<LevelProgress>();
     }
 
     // Update is called once per frame

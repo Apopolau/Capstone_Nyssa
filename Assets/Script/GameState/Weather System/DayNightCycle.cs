@@ -19,8 +19,9 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private Gradient directionalLightIntensity;
     [SerializeField] private Gradient skyColor;
     [SerializeField] private Gradient equatorColor;
-    public enum TimeOfDay { DAY, EVENING, NIGHT};
-    public TimeOfDay currentTimeOfDay = TimeOfDay.DAY;
+
+    //Stores data on the weather state
+    [SerializeField] WeatherState weatherState;
 
     //Level 1 Day colour clean: FFFFED
     //Level 1 Day colour polluted: BCBC9A
@@ -63,21 +64,25 @@ public class DayNightCycle : MonoBehaviour
     private void UpdateLighting()
     {
         float timeFraction = timeOfDay / 24;
-        if(timeFraction < 6)
+        if(timeFraction < 5)
         {
-            currentTimeOfDay = TimeOfDay.NIGHT;
+            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.NIGHT;
+        }
+        else if (timeFraction > 5 && timeFraction < 6)
+        {
+            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAYBREAK;
         }
         else if(timeFraction > 6 && timeFraction < 18)
         {
-            currentTimeOfDay = TimeOfDay.DAY;
+            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAY;
         }
         else if(timeFraction > 18 && timeFraction < 21)
         {
-            currentTimeOfDay = TimeOfDay.EVENING;
+            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.EVENING;
         }
         else if (timeFraction > 21)
         {
-            currentTimeOfDay = TimeOfDay.NIGHT;
+            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.NIGHT;
         }
         RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeFraction);
         RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeFraction);

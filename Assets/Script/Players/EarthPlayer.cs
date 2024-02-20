@@ -14,6 +14,7 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] public TextMeshProUGUI displayText;
+    [SerializeField] public DayNightCycle dayNightCycle;
 
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;

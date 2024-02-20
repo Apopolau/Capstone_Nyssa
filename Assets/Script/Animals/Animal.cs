@@ -7,7 +7,7 @@ public abstract class Animal : MonoBehaviour
 {
     [Header("Set this from the scene")]
     public GameObject managerObject;
-    public DayNightCycle dayNightCycle;
+    public WeatherState weatherState;
     public GameObject shelterWaypoint;
     public GameObject waterWaypoint;
 
@@ -28,7 +28,7 @@ public abstract class Animal : MonoBehaviour
     protected bool scared;
     protected bool hiding;
 
-    protected LevelProgress levelProgress;
+    [SerializeField] protected LevelProgress levelProgress;
     public bool hasCleanWater = false;
     public bool hasShelter = false;
     public bool hasAnyFood = false;
