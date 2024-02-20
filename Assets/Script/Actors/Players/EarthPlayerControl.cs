@@ -93,8 +93,8 @@ public class EarthPlayerControl : MonoBehaviour
 
         //When in dialogue
         controls.DialogueControls.Enable();
-        controls.DialogueControls.Continue.performed += OnContinuePerformed;
-        controls.DialogueControls.Skip.performed += OnSkipPerformed;
+        controls.DialogueControls.Continue.started += OnContinuePerformed;
+        controls.DialogueControls.Skip.started += OnSkipPerformed;
     }
 
     private void OnEarthMovePerformed(InputAction.CallbackContext context)

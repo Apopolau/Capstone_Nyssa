@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32785472, g: 0.31164402, b: 0.3123275, a: 1}
+  m_IndirectSpecularColor: {r: 0.32583743, g: 0.309359, b: 0.3104538, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1464,6 +1464,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 895418423}
     m_Modifications:
+    - target: {fileID: 2255882322329543974, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: levelOneEvents
+      value: 
+      objectReference: {fileID: 645999400}
+    - target: {fileID: 2255882322329543974, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: dialogueManager
+      value: 
+      objectReference: {fileID: 386904646}
     - target: {fileID: 2536686373789044869, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: mainCamera
       value: 
@@ -6142,6 +6150,17 @@ Terrain:
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
   m_TreeMotionVectorModeOverride: 3
+--- !u!114 &645999400 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+  m_PrefabInstance: {fileID: 129706640}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 973851733484a4045b4e85a158183091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &646091191
 GameObject:
   m_ObjectHideFlags: 0
@@ -8435,6 +8454,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 895418423}
     m_Modifications:
+    - target: {fileID: 616051488619230335, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: dialogueManager
+      value: 
+      objectReference: {fileID: 386904646}
     - target: {fileID: 3136162748017275304, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: _initialState
       value: 
@@ -20718,6 +20741,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1112224117}
     m_Modifications:
+    - target: {fileID: 4770475498123940046, guid: 6ed7a7aa8b7620548a62a1df3ba42dfd, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4770475498123940046, guid: 6ed7a7aa8b7620548a62a1df3ba42dfd, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f1a6fd455fb5d1940aa76b634ad4dc5f, type: 2}
     - target: {fileID: 989046953387641571, guid: f152c6031e4b2944cae7423592e76233, type: 3}
       propertyPath: player
       value: 
@@ -20806,14 +20837,6 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[2]
       value: 
       objectReference: {fileID: 1740665701}
-    - target: {fileID: 4770475498123940046, guid: 6ed7a7aa8b7620548a62a1df3ba42dfd, type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4770475498123940046, guid: 6ed7a7aa8b7620548a62a1df3ba42dfd, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: f1a6fd455fb5d1940aa76b634ad4dc5f, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 121583361140739576, guid: f152c6031e4b2944cae7423592e76233, type: 3}

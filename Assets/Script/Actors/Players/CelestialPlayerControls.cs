@@ -78,8 +78,8 @@ public class CelestialPlayerControls : MonoBehaviour
 
         //When in dialogue
         controls.DialogueControls.Enable();
-        controls.DialogueControls.Continue.performed += OnContinuePerformed;
-        controls.DialogueControls.Skip.performed += OnSkipPerformed;
+        controls.DialogueControls.Continue.started += OnContinuePerformed;
+        controls.DialogueControls.Skip.started += OnSkipPerformed;
     }
 
    private void OnCelestialMovePerformed(InputAction.CallbackContext context)
@@ -155,10 +155,20 @@ public class CelestialPlayerControls : MonoBehaviour
     //UI calls
     private void OnContinuePerformed(InputAction.CallbackContext context)
     {
+       
         if (context.control.device.deviceId == myDeviceID)
-        {
-            Debug.Log("continuing dialogue");
+        { 
+        float input; 
+        if(thisDevice == DeviceUsed.CONTROLLER){
+            input = Gamepad.all[playerIndex].buttonSouth.ReadValue();
+            }
+        else{
+            input = 0;
+            }
+        if(input > 0)
+            {
             dialogueManager.DisplayNextDialogueLine();
+            }
         }
     }
 
