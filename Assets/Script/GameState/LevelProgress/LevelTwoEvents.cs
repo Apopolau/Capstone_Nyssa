@@ -9,7 +9,7 @@ public class LevelTwoEvents : EventManager
     /// THIS SCRIPT WAS COPY AND PASTED FROM LEVEL ONE EVENTS
     /// PLEASE READ IT CAREFULLY BEFORE DECIDING IT'S UP TO DATE
     /// </summary>
-    LevelOneProgress levelTwoProgress;
+    [SerializeField] LevelTwoProgress levelTwoProgress;
 
     [SerializeField] Material cleanWaterMaterial;
     [SerializeField] GameObject lake;
@@ -29,7 +29,6 @@ public class LevelTwoEvents : EventManager
     // Start is called before the first frame update
     void Start()
     {
-        levelTwoProgress = GetComponent<LevelOneProgress>();
         foreach (Transform childTransform in firstAreaGrid.transform)
         {
             firstAreaTiles.Add(childTransform.gameObject);

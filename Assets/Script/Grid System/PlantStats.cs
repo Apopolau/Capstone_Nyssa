@@ -35,8 +35,8 @@ public class PlantStats : ScriptableObject
     [SerializeField] public float matureScale;
 
     [Header("Growth Time for Growth Stages")]
-    [SerializeField] public float seedlingGrowTime;
-    [SerializeField] public float sproutGrowTime;
-    [SerializeField] public float juvenileGrowTime;
+    [SerializeField] public int seedlingGrowTime;
+    [SerializeField] public int sproutGrowTime;
+    [SerializeField] public int juvenileGrowTime;
 
 }

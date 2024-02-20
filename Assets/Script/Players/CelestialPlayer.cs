@@ -52,7 +52,7 @@ public class CelestialPlayer : MonoBehaviour
 
 
     PowerBehaviour powerBehaviour;
-
+    public CelestialPlayerControls celestialControls;
 
 
     [Header("Respawn")]
@@ -89,6 +89,7 @@ public class CelestialPlayer : MonoBehaviour
     {
         celestialAgent = GetComponent<NavMeshAgent>();
         celestialAgent.enabled = false;
+        celestialControls = GetComponent<CelestialPlayerControls>();
         healthPoints=100;
        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }

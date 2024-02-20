@@ -6,6 +6,7 @@ public class Plant : Creatable
 {
     private int currentHealth;
     [SerializeField] public PlantStats stats;
+    [SerializeField] List<LevelManagerObject> levelManagers;
     public GameObject plantObject;
     public SpriteRenderer[] plantVisuals;
     private Cell tilePlantedOn;
@@ -16,6 +17,8 @@ public class Plant : Creatable
     private int growthPoints;
     PlantStats.PlantStage currentPlantStage;
 
+    //DayNightCycle dayNightCycle;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,23 +27,25 @@ public class Plant : Creatable
         currentPlantStage = PlantStats.PlantStage.SEEDLING;
         plantObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
         currentPollutionContribution = stats.seedlingAirPollutionBonus;
-        
+
         PlacePlant(stats.seedlingScale, stats.seedlingTileOffset);
-        StartCoroutine(AdvancePlantStage());
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void FixedUpdate()
     {
-        
+        StoreNutrients();
+        GrowPlant();
+        AdvancePlantStage();
     }
 
-    private void growPlant()
+    private void GrowPlant()
     {
         //Add a check to see if it is currently sunny or rainy when these states exist
         //Put the check so that stored resources are not drained if the resource is still active
@@ -74,76 +79,82 @@ public class Plant : Creatable
                 }
             }
         }
-        if(storedSunlight < 0)
+        if (storedSunlight < 0)
         {
             storedSunlight = 0;
         }
-        if(storedWater < 0)
+        if (storedWater < 0)
         {
             storedWater = 0;
         }
     }
 
-    private void storeNutrients()
+    private void StoreNutrients()
     {
-        //if sunny, store sunlight
-        //May need to check factors like pollution, time of day, etc to figure out how much you get
+        /*
+        if ()
+        {
+
+        }
+        */
 
         //if rainy, store water
     }
 
     //Refactor this back out of being an IEnumerator, use growth points instead
-    private IEnumerator AdvancePlantStage()
+    private void AdvancePlantStage()
     {
-        while (true)
+
+        if (currentPlantStage == PlantStats.PlantStage.SEEDLING && growthPoints >= stats.seedlingGrowTime)
         {
-            if (currentPlantStage == PlantStats.PlantStage.SEEDLING)
+            //yield return new WaitForSeconds(stats.seedlingGrowTime);
+            Debug.Log("Plant should be growing");
+            currentPlantStage = PlantStats.PlantStage.SPROUT;
+            currentPollutionContribution = stats.sproutAirPollutionBonus;
+            SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
             {
-                yield return new WaitForSeconds(stats.seedlingGrowTime);
-                Debug.Log("Plant should be growing");
-                currentPlantStage = PlantStats.PlantStage.SPROUT;
-                currentPollutionContribution = stats.sproutAirPollutionBonus;
-                SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-                {
-                    spriteRenderer.sprite = stats.sproutImage;
-                }
-                PlacePlant(stats.sproutScale, stats.sproutTileOffset);
-                HandleTreeColliders(0.5f, 5);
+                spriteRenderer.sprite = stats.sproutImage;
             }
-            else if(currentPlantStage == PlantStats.PlantStage.SPROUT)
-            {
-                yield return new WaitForSeconds(stats.sproutGrowTime);
-                currentPlantStage = PlantStats.PlantStage.JUVENILE;
-                currentPollutionContribution = stats.juvenileAirPollutionBonus;
-                SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-                foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-                {
-                    spriteRenderer.sprite = stats.juvenileImage;
-                }
-                PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
-                HandleTreeColliders(1f, 5);
-            }
-            else if(currentPlantStage == PlantStats.PlantStage.JUVENILE)
-            {
-                yield return new WaitForSeconds(stats.juvenileGrowTime);
-                currentPlantStage = PlantStats.PlantStage.MATURE;
-                currentPollutionContribution = stats.matureAirPollutionBonus;
-                SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-                foreach(SpriteRenderer spriteRenderer in spriteRenderers)
-                {
-                    spriteRenderer.sprite = stats.matureImage;
-                }
-                PlacePlant(stats.matureScale, stats.matureTileOffset);
-                HandleTreeColliders(2f, 5);
-            }
-            else if(currentPlantStage == PlantStats.PlantStage.MATURE)
-            {
-                StopCoroutine(AdvancePlantStage());
-                yield break;
-            }
+            PlacePlant(stats.sproutScale, stats.sproutTileOffset);
+            HandleTreeColliders(0.5f, 5);
+            growthPoints = 0;
         }
-        
+        else if (currentPlantStage == PlantStats.PlantStage.SPROUT && growthPoints >= stats.sproutGrowTime)
+        {
+            //yield return new WaitForSeconds(stats.sproutGrowTime);
+            currentPlantStage = PlantStats.PlantStage.JUVENILE;
+            currentPollutionContribution = stats.juvenileAirPollutionBonus;
+            SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.sprite = stats.juvenileImage;
+            }
+            PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
+            HandleTreeColliders(1f, 5);
+            growthPoints = 0;
+        }
+        else if (currentPlantStage == PlantStats.PlantStage.JUVENILE && growthPoints >= stats.juvenileGrowTime)
+        {
+            //yield return new WaitForSeconds(stats.juvenileGrowTime);
+            currentPlantStage = PlantStats.PlantStage.MATURE;
+            currentPollutionContribution = stats.matureAirPollutionBonus;
+            SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+            {
+                spriteRenderer.sprite = stats.matureImage;
+            }
+            PlacePlant(stats.matureScale, stats.matureTileOffset);
+            HandleTreeColliders(2f, 5);
+            growthPoints = 0;
+        }
+        else if (currentPlantStage == PlantStats.PlantStage.MATURE)
+        {
+            
+            //yield break;
+        }
+
+
     }
 
     private void HandleTreeColliders(float colliderRadius, float colliderHeight)
@@ -160,7 +171,7 @@ public class Plant : Creatable
     private void PlacePlant(float scale, float tileOffset)
     {
         plantObject.transform.rotation = Quaternion.Euler(0, 45, 0);
-        if(plantVisuals.Length > 1)
+        if (plantVisuals.Length > 1)
         {
             int i = 0;
             foreach (SpriteRenderer plantVisual in plantVisuals)

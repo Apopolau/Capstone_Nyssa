@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelOneEvents : EventManager
 {
-    LevelOneProgress levelOneProgress;
+    [SerializeField] LevelOneProgress levelOneProgress;
 
     [SerializeField] Material cleanWaterMaterial;
     //[SerializeField] GameObject river;
@@ -26,7 +26,7 @@ public class LevelOneEvents : EventManager
     // Start is called before the first frame update
     void Start()
     {
-        levelOneProgress = GetComponent<LevelOneProgress>();
+        //levelOneProgress = GetComponent<LevelOneProgress>();
         foreach (Transform childTransform in firstAreaGrid.transform)
         {
             firstAreaTiles.Add(childTransform.gameObject);

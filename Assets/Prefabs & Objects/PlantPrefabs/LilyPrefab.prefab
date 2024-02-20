@@ -126,6 +126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1139449237558272451}
   - component: {fileID: -6140201787562686091}
+  - component: {fileID: 9219826929178035140}
   - component: {fileID: 2154681442573940760}
   - component: {fileID: 9158549723933943176}
   m_Layer: 0
@@ -164,6 +165,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameObjectRuntimeSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
+--- !u!114 &9219826929178035140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8326592455623684711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectRuntimeSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
 --- !u!114 &2154681442573940760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,5 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: f8aefa51ebf577e44b478ee1730db0c0, type: 2}
+  levelManagers: []
   plantObject: {fileID: 605298435785021509}
   plantVisuals: []
+  currentPollutionContribution: 0

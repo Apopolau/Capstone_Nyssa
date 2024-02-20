@@ -15,6 +15,8 @@ public class PollutionLevelManager : MonoBehaviour
 
     WaitForSeconds checkDelay = new WaitForSeconds(0.5f);
 
+    [SerializeField] WeatherState weatherState;
+
     //Haven't decided if acid rain should be a bool or enum for multiple stages
     
     // Start is called before the first frame update
@@ -37,6 +39,7 @@ public class PollutionLevelManager : MonoBehaviour
             yield return checkDelay;
             CalculatePollutionLevel();
         }
+        
     }
 
     private void CalculatePollutionLevel()

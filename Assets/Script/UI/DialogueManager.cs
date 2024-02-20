@@ -16,24 +16,34 @@ public class DialogueManager : MonoBehaviour
     public bool isDialogueActive = false;
     public GameObject dialogueBox; // Reference to the entire dialogue box
 
+    [SerializeField] private GameObjectRuntimeSet playerSet;
+    private EarthPlayer earthPlayer;
+    private CelestialPlayer celestialPlayer;
+
     
     public float typingSpeed = 0.2f;
 
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.Space))
+    }
+
+    private void Start()
+    {
+        for(int i = 0; i < playerSet.Items.Count; i++)
         {
+            if(playerSet.Items[i].GetComponent<EarthPlayer>())
+            {
+                earthPlayer = playerSet.Items[i].GetComponent<EarthPlayer>();
+            }
+            else if(playerSet.Items[i].GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
+            }
             
-            Debug.Log("Space key pressed!"); //shortcut for closing dialouge
-            EndDialogue();
-            
-        }
-        else if (Input.GetKeyDown(KeyCode.Return) && isDialogueActive) //replace with controller input
-        {
-            DisplayNextDialogueLine();
         }
     }
+
     private void Awake()
     {
         if (Instance == null)
@@ -44,8 +54,13 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        //Turn off other player controls, turn on dialogue controls
         isDialogueActive = true;
-        
+        earthPlayer.earthControls.controls.DialogueControls.Enable();
+        earthPlayer.earthControls.controls.EarthPlayerDefault.Disable();
+        celestialPlayer.celestialControls.controls.DialogueControls.Enable();
+        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
+
         Time.timeScale = 0f;
 
         lines.Clear();
@@ -85,10 +100,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void EndDialogue()
+    public void EndDialogue()
     {
         isDialogueActive = false;
         dialogueBox.SetActive(false);
+
+        //Turn off the dialogue controls and turn on the default controls of both players
+        earthPlayer.earthControls.controls.DialogueControls.Disable();
+        earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
+        celestialPlayer.celestialControls.controls.DialogueControls.Disable();
+        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
 
         Time.timeScale = 1f;
         

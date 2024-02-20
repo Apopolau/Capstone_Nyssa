@@ -14,6 +14,7 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] public TextMeshProUGUI displayText;
+    [SerializeField] public DayNightCycle dayNightCycle;
 
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
@@ -56,7 +57,7 @@ public class EarthPlayer : MonoBehaviour
     private NavMeshAgent earthAgent;
     public bool enrouteToPlant = false;
     private PlayerInput playerInput;
-    private EarthPlayerControl earthControls;
+    public EarthPlayerControl earthControls;
 
     public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object

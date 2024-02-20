@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Level One Progress", menuName = "LevelProgress/LevelOne")]
 public class LevelOneProgress : LevelProgress
 {
     

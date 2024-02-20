@@ -6,16 +6,16 @@ using UnityEngine.AI;
 
 public class CheckIfNight : BTCondition
 {
-    DayNightCycle timeOfDayManager;
-    public CheckIfNight(DayNightCycle dayNightCycle)
+    WeatherState weatherState;
+    public CheckIfNight(WeatherState incWeatherState)
     {
-        timeOfDayManager = dayNightCycle;
+        weatherState = incWeatherState;
     }
 
     //Returns true if it's night time
     protected override NodeState OnRun()
     {
-        if (timeOfDayManager.currentTimeOfDay == DayNightCycle.TimeOfDay.NIGHT)
+        if (weatherState.currentTimeOfDay == WeatherState.TimeOfDay.NIGHT)
         {
             return NodeState.SUCCESS;
         }

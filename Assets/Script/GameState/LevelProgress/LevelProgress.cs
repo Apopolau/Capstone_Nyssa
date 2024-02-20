@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public abstract class LevelProgress : MonoBehaviour
+public abstract class LevelProgress : ScriptableObject
 {
     [SerializeField] protected GameObjectRuntimeSet plantSet;
     [SerializeField] protected TextMeshProUGUI objectiveText;

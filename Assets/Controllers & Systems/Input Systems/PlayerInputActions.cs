@@ -456,6 +456,104 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""MenuControls"",
+            ""id"": ""2dbef1da-ff53-41d8-8c9d-209dd9447025"",
+            ""actions"": [
+                {
+                    ""name"": ""New action"",
+                    ""type"": ""Button"",
+                    ""id"": ""d9ca3c15-17b0-4d48-a4bc-a891dc335de8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""227bca91-2c8e-424f-a843-1070a422d190"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""New action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""DialogueControls"",
+            ""id"": ""a7805a6e-1c87-408a-83a9-e5fc3ee97bad"",
+            ""actions"": [
+                {
+                    ""name"": ""Continue"",
+                    ""type"": ""Button"",
+                    ""id"": ""fd660d95-50f0-460c-add5-8dd213cc14fe"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Skip"",
+                    ""type"": ""Button"",
+                    ""id"": ""157cbc13-5578-4a2f-827d-ba32ac7a17f2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""20126de4-7ac4-46d2-9b1f-7d861aae0993"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""974a3c29-3b96-44ee-9c34-e63370084ad1"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Continue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0b170083-7769-44b2-9c4d-bebdef0b1600"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""898d31ce-77bb-45b5-8c75-c2b404f3fb52"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Skip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -475,6 +573,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_PlantIsSelected_Cancelplanting = m_PlantIsSelected.FindAction("Cancel planting", throwIfNotFound: true);
         m_PlantIsSelected_EarthWalk = m_PlantIsSelected.FindAction("EarthWalk", throwIfNotFound: true);
         m_PlantIsSelected_CursorMove = m_PlantIsSelected.FindAction("Cursor Move", throwIfNotFound: true);
+        // MenuControls
+        m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
+        m_MenuControls_Newaction = m_MenuControls.FindAction("New action", throwIfNotFound: true);
+        // DialogueControls
+        m_DialogueControls = asset.FindActionMap("DialogueControls", throwIfNotFound: true);
+        m_DialogueControls_Continue = m_DialogueControls.FindAction("Continue", throwIfNotFound: true);
+        m_DialogueControls_Skip = m_DialogueControls.FindAction("Skip", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -696,6 +801,106 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public PlantIsSelectedActions @PlantIsSelected => new PlantIsSelectedActions(this);
+
+    // MenuControls
+    private readonly InputActionMap m_MenuControls;
+    private List<IMenuControlsActions> m_MenuControlsActionsCallbackInterfaces = new List<IMenuControlsActions>();
+    private readonly InputAction m_MenuControls_Newaction;
+    public struct MenuControlsActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public MenuControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Newaction => m_Wrapper.m_MenuControls_Newaction;
+        public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Add(instance);
+            @Newaction.started += instance.OnNewaction;
+            @Newaction.performed += instance.OnNewaction;
+            @Newaction.canceled += instance.OnNewaction;
+        }
+
+        private void UnregisterCallbacks(IMenuControlsActions instance)
+        {
+            @Newaction.started -= instance.OnNewaction;
+            @Newaction.performed -= instance.OnNewaction;
+            @Newaction.canceled -= instance.OnNewaction;
+        }
+
+        public void RemoveCallbacks(IMenuControlsActions instance)
+        {
+            if (m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuControlsActions @MenuControls => new MenuControlsActions(this);
+
+    // DialogueControls
+    private readonly InputActionMap m_DialogueControls;
+    private List<IDialogueControlsActions> m_DialogueControlsActionsCallbackInterfaces = new List<IDialogueControlsActions>();
+    private readonly InputAction m_DialogueControls_Continue;
+    private readonly InputAction m_DialogueControls_Skip;
+    public struct DialogueControlsActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public DialogueControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Continue => m_Wrapper.m_DialogueControls_Continue;
+        public InputAction @Skip => m_Wrapper.m_DialogueControls_Skip;
+        public InputActionMap Get() { return m_Wrapper.m_DialogueControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialogueControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IDialogueControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialogueControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialogueControlsActionsCallbackInterfaces.Add(instance);
+            @Continue.started += instance.OnContinue;
+            @Continue.performed += instance.OnContinue;
+            @Continue.canceled += instance.OnContinue;
+            @Skip.started += instance.OnSkip;
+            @Skip.performed += instance.OnSkip;
+            @Skip.canceled += instance.OnSkip;
+        }
+
+        private void UnregisterCallbacks(IDialogueControlsActions instance)
+        {
+            @Continue.started -= instance.OnContinue;
+            @Continue.performed -= instance.OnContinue;
+            @Continue.canceled -= instance.OnContinue;
+            @Skip.started -= instance.OnSkip;
+            @Skip.performed -= instance.OnSkip;
+            @Skip.canceled -= instance.OnSkip;
+        }
+
+        public void RemoveCallbacks(IDialogueControlsActions instance)
+        {
+            if (m_Wrapper.m_DialogueControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDialogueControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialogueControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialogueControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DialogueControlsActions @DialogueControls => new DialogueControlsActions(this);
     public interface IEarthPlayerDefaultActions
     {
         void OnEarthWalk(InputAction.CallbackContext context);
@@ -712,5 +917,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCancelplanting(InputAction.CallbackContext context);
         void OnEarthWalk(InputAction.CallbackContext context);
         void OnCursorMove(InputAction.CallbackContext context);
+    }
+    public interface IMenuControlsActions
+    {
+        void OnNewaction(InputAction.CallbackContext context);
+    }
+    public interface IDialogueControlsActions
+    {
+        void OnContinue(InputAction.CallbackContext context);
+        void OnSkip(InputAction.CallbackContext context);
     }
 }
