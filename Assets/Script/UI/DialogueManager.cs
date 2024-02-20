@@ -56,11 +56,16 @@ public class DialogueManager : MonoBehaviour
     {
         //Turn off other player controls, turn on dialogue controls
         isDialogueActive = true;
-        earthPlayer.earthControls.controls.DialogueControls.Enable();
-        earthPlayer.earthControls.controls.EarthPlayerDefault.Disable();
-        celestialPlayer.celestialControls.controls.DialogueControls.Enable();
-        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
-
+        if (earthPlayer.earthControls.controls.DialogueControls.enabled)
+        {
+            earthPlayer.earthControls.controls.DialogueControls.Enable();
+            earthPlayer.earthControls.controls.EarthPlayerDefault.Disable();
+        }
+        if (celestialPlayer.celestialControls.controls.DialogueControls.enabled)
+        {
+            celestialPlayer.celestialControls.controls.DialogueControls.Enable();
+            celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
+        }
         Time.timeScale = 0f;
 
         lines.Clear();
