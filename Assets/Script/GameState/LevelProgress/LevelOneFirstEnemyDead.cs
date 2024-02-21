@@ -10,8 +10,7 @@ public class LevelOneFirstEnemyDead : MonoBehaviour
     [SerializeField] GameObject treeSeedPrefab;
     GameObject treeSeedSpawn;
 
-    public Dialogue dialogueOnDefeat;
-    public DialogueManager dialogueManager;
+    public DialogueTrigger monsterDeadDialouge;
     public CelestialPlayer player;
     // Start is called before the first frame update
     void Start()
@@ -40,8 +39,8 @@ public class LevelOneFirstEnemyDead : MonoBehaviour
             treeSeedSpawn = Instantiate(player.treeSeedPrefab, this.transform);
             levelOneEvents.OnFirstMonsterDefeated();
 
-            //start secondDialouge
-           // dialogueManager.StartDialogue(dialogueOnDefeat);
+            //start dialouge after monester dies
+            monsterDeadDialouge.TriggerDialogue();
             //Instantiate the tree seed here
            
         }

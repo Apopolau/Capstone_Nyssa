@@ -54,14 +54,22 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        
+        // Activate the dialogue box if it's currently inactive
+        if (!dialogueBox.activeSelf)
+        {
+        dialogueBox.SetActive(true);
+        }
+        else {
+            isDialogueActive = true; }
+
         //Turn off other player controls, turn on dialogue controls
-        isDialogueActive = true;
-        if (earthPlayer.earthControls.controls.DialogueControls.enabled)
+        if (!earthPlayer.earthControls.controls.DialogueControls.enabled)
         {
             earthPlayer.earthControls.controls.DialogueControls.Enable();
             earthPlayer.earthControls.controls.EarthPlayerDefault.Disable();
         }
-        if (celestialPlayer.celestialControls.controls.DialogueControls.enabled)
+        if (!celestialPlayer.celestialControls.controls.DialogueControls.enabled)
         {
             celestialPlayer.celestialControls.controls.DialogueControls.Enable();
             celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
@@ -107,9 +115,11 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        isDialogueActive = false;
-        dialogueBox.SetActive(false);
-
+        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        {
+            dialogueBox.SetActive(false); // Deactivate the dialogue box
+            isDialogueActive = false; // Set the dialogue state to inactive
+        }
         //Turn off the dialogue controls and turn on the default controls of both players
         earthPlayer.earthControls.controls.DialogueControls.Disable();
         earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();

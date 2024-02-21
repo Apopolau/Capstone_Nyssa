@@ -30,7 +30,7 @@ public class DialogueTrigger : MonoBehaviour
 
     void Start()
     {
-        TriggerDialogue();
+        //TriggerDialogue();
     }
 
      /* void StartDialogue()

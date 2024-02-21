@@ -1093,7 +1093,7 @@ PrefabInstance:
     - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       propertyPath: dialogueTrigger
       value: 
-      objectReference: {fileID: 1566417605}
+      objectReference: {fileID: 0}
     - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       propertyPath: cleanWaterMaterial
       value: 
@@ -1101,7 +1101,7 @@ PrefabInstance:
     - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       propertyPath: dialogueTriggerObject
       value: 
-      objectReference: {fileID: 1566417604}
+      objectReference: {fileID: 0}
     - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       propertyPath: dialogue.dialogueLines.Array.size
       value: 4
@@ -3016,6 +3016,103 @@ Transform:
   - {fileID: 1198528059}
   m_Father: {fileID: 4809181396229127118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &384551733
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 384551737}
+  - component: {fileID: 384551736}
+  - component: {fileID: 384551735}
+  - component: {fileID: 384551734}
+  m_Layer: 0
+  m_Name: IntroDialouge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &384551734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384551733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d926887e0847e141a556c1a03e250e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  introDialouge: {fileID: 384551735}
+--- !u!114 &384551735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384551733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    dialogueLines:
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: "Don\u2019t worry little one, we\u2019ll save you!\n\nNe t'inqui\xE8te
+        pas, petit canard! Nous allons vous sauver!\r\n\n"
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: "Stay back. That monster is dangerous.\r"
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: "I\u2019ll get it off the duck with my magic!\r\n"
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: 'I can use my celestial magic to destroy the monster.
+
+'
+--- !u!135 &384551736
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384551733}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 4.43
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &384551737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384551733}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -5.1, z: 0.6089783}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 970884806}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &386904646 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3571004410004341720, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
@@ -3132,6 +3229,115 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388118133}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &390012239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 390012240}
+  - component: {fileID: 390012244}
+  - component: {fileID: 390012243}
+  - component: {fileID: 390012242}
+  - component: {fileID: 390012241}
+  m_Layer: 0
+  m_Name: LandslideDialouge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &390012240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390012239}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -30.3, y: -3.8, z: 20.9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 970884806}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &390012241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390012239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4e40b656be6256448e0ce79c9da0da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  landslideDialouge1: {fileID: 390012243}
+  landslideDialouge2: {fileID: 390012242}
+--- !u!114 &390012242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390012239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    dialogueLines:
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: "Sprout, I\u2019m going to need some help\r\n"
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: ' I should be able to take care of this!
+
+'
+--- !u!114 &390012243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390012239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    dialogueLines:
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: ' I should be able to take care of this'
+--- !u!65 &390012244
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390012239}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 7.18, y: 1, z: 12.81}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &398109518
 GameObject:
   m_ObjectHideFlags: 0
@@ -3870,11 +4076,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 467215243}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &471201275 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-  m_PrefabInstance: {fileID: 1621354409}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &472056478
 GameObject:
   m_ObjectHideFlags: 0
@@ -4417,215 +4618,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 521429396}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &523223243
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1224415385}
-    m_Modifications:
-    - target: {fileID: 3755911689581721834, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_Name
-      value: DefeatMonsetr#1Dialouge
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.size
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[0].line
-      value: '*Qaucks happily*'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[1].line
-      value: "You\u2019re very welcome! I\u2019m so glad we could help!\r\n"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[2].line
-      value: 'I found some seeds buried in the oil. Maybe we can change things here.
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[3].line
-      value: 'Oh let me see them! I can grow a grove for this duck to live in!
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[4].line
-      value: "Hmm. I\u2019m worried though."
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[5].line
-      value: "That was far from the only monster in this area. It wouldn\u2019t be
-        safe."
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[6].line
-      value: 'You know what you can do about that!
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[7].line
-      value: ' Hey little duck, what do you need to live here?
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[8].line
-      value: ' *Quacks urgently*'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[9].line
-      value: 'Oh of course! He says he needs clean water, some leaves and grass to
-        eat, and safety from those monsters.
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[10].line
-      value: '*Quacks shyly*
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[11].line
-      value: 'Oh, and a friend to share the grove with!
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[12].line
-      value: 'Hmm, these are tree seeds. I will see if there are grass seeds nearby.
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[13].line
-      value: If you plant me some trees, they will give me energy to use my powers
-        on the monsters.
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[14].line
-      value: " Alright, I\u2019ll get started with these. We\u2019ll have a nice
-        forest for you in no time, duck!\r\n"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[15].line
-      value: Stay safe
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[0].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[1].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[2].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[3].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[4].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[5].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[6].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[7].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[8].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[9].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[10].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[11].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[12].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[13].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[14].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[15].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 31.863922
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 11.508663
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -20.276901
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
 --- !u!1 &533347918 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1984064612084882971, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
@@ -6627,11 +6619,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654262869}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &669185534 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-  m_PrefabInstance: {fileID: 523223243}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &684220511
 GameObject:
   m_ObjectHideFlags: 0
@@ -10115,6 +10102,39 @@ Transform:
   - {fileID: 467215244}
   m_Father: {fileID: 310131792}
   m_LocalEulerAnglesHint: {x: 0, y: 220.064, z: 0}
+--- !u!1 &970884805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 970884806}
+  m_Layer: 0
+  m_Name: DialougeTriggers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &970884806
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970884805}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -70, y: 5.5, z: -81.00898}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 390012240}
+  - {fileID: 384551737}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &971190013
 GameObject:
   m_ObjectHideFlags: 0
@@ -13403,8 +13423,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 290001918}
-  - {fileID: 471201275}
-  - {fileID: 669185534}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1231511840
@@ -15874,40 +15892,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1565609504}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1566417604 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3755911689581721834, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-  m_PrefabInstance: {fileID: 1621354409}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1566417605 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-  m_PrefabInstance: {fileID: 1621354409}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566417604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1566417606
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1566417604}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4058883afb6bde749a95de780419595c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterIcon: {fileID: 0}
-  dialogueArea: {fileID: 0}
-  isDialogueActive: 0
-  dialogueBox: {fileID: 0}
-  playerSet: {fileID: 0}
-  typingSpeed: 0.2
 --- !u!1 &1568477590
 GameObject:
   m_ObjectHideFlags: 0
@@ -16235,105 +16219,6 @@ RectTransform:
   m_AnchoredPosition: {x: 2088, y: 272.9999}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1001 &1621354409
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1224415385}
-    m_Modifications:
-    - target: {fileID: 3755911689581721834, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_Name
-      value: EntryDialougeTrigger
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[0].line
-      value: "Don\u2019t worry little one, we\u2019ll save you!\n\nNe t'inqui\xE8te
-        pas, petit canard! Nous allons vous sauver!\r\n\n"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[1].line
-      value: "Stay back. That monster is dangerous.\r"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[2].line
-      value: "I\u2019ll get it off the duck with my magic!\r\n"
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[3].line
-      value: 'I can use my celestial magic to destroy the monster.
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[0].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[1].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[2].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-    - target: {fileID: 4371672639607403597, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: dialogue.dialogueLines.Array.data[3].character.icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 31.863922
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 11.508663
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -20.276901
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8054640025156181917, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3755911689581721834, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1566417606}
-  m_SourcePrefab: {fileID: 100100000, guid: 33dea35eaa2eaab42910453f0fa9f2e8, type: 3}
 --- !u!1001 &1641183678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17758,6 +17643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a720d4e38c05b447ba85138e9825bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasRectTransform: {fileID: 0}
 --- !u!114 &1761140673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18514,6 +18400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a720d4e38c05b447ba85138e9825bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasRectTransform: {fileID: 0}
 --- !u!114 &1830055894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21386,6 +21273,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2090664895178657524, guid: f152c6031e4b2944cae7423592e76233, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7886797499397215488}
+    - targetCorrespondingSourceObject: {fileID: 2090664895178657524, guid: f152c6031e4b2944cae7423592e76233, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7886797499397215495}
   m_SourcePrefab: {fileID: 100100000, guid: f152c6031e4b2944cae7423592e76233, type: 3}
 --- !u!4 &4809181396229127118 stripped
 Transform:
@@ -21404,12 +21294,92 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3285e2465e5a0274d99ab61586f9a8d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelOneEvents: {fileID: 0}
+  levelOneEvents: {fileID: 645999400}
   treeSeedPrefab: {fileID: 4222843129626314802, guid: 6482a3cc3c478bd44b278f27a007293e, type: 3}
-  dialogueOnDefeat:
-    dialogueLines: []
-  dialogueManager: {fileID: 386904646}
+  monsterDeadDialouge: {fileID: 7886797499397215495}
   player: {fileID: 1308052667}
+--- !u!114 &7886797499397215495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090664895559583413}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue:
+    dialogueLines:
+    - character:
+        icon: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+      line: '*Qaucks happily*'
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: "You\u2019re very welcome! I\u2019m so glad we could help!\r\n"
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: 'I found some seeds buried in the oil. Maybe we can change things here.
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: 'Oh let me see them! I can grow a grove for this duck to live in!
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: "Hmm. I\u2019m worried though."
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: "That was far from the only monster in this area. It wouldn\u2019t be
+        safe."
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: 'You know what you can do about that!
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: ' Hey little duck, what do you need to live here?
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+      line: ' *Quacks urgently*'
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: 'Oh of course! He says he needs clean water, some leaves and grass to
+        eat, and safety from those monsters.
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+      line: '*Quacks shyly*
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: 'Oh, and a friend to share the grove with!
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: 'Hmm, these are tree seeds. I will see if there are grass seeds nearby.
+
+'
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: If you plant me some trees, they will give me energy to use my powers
+        on the monsters.
+    - character:
+        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+      line: " Alright, I\u2019ll get started with these. We\u2019ll have a nice forest
+        for you in no time, duck!\r\n"
+    - character:
+        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+      line: Stay safe
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -21424,3 +21394,4 @@ SceneRoots:
   - {fileID: 895418423}
   - {fileID: 1486187507}
   - {fileID: 376487869}
+  - {fileID: 970884806}
