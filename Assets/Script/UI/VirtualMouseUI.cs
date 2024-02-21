@@ -6,11 +6,18 @@ using UnityEngine.InputSystem.UI;
 
 public class VirtualMouseUI : MonoBehaviour
 {
+    [SerializeField] private RectTransform canvasRectTransform;
     private VirtualMouseInput virtualMouseInput;
 
     private void Awake()
     {
         virtualMouseInput = GetComponent<VirtualMouseInput>();
+    }
+
+    private void Update()
+    {
+        transform.localScale = Vector3.one * (1f / canvasRectTransform.localScale.x);
+        transform.SetAsLastSibling();
     }
 
     private void LateUpdate()

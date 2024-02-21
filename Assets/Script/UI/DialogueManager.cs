@@ -8,8 +8,10 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
-    public Image characterIcon;
+    public Image characterIconLeft;
+    public Image characterIconRight;
     public TextMeshProUGUI dialogueArea;
+    public TextMeshProUGUI dialogueAreaFR;
 
     private Queue<DialogueLine> lines;
 
@@ -20,27 +22,27 @@ public class DialogueManager : MonoBehaviour
     private EarthPlayer earthPlayer;
     private CelestialPlayer celestialPlayer;
 
-    
+
     public float typingSpeed = 0.2f;
 
     void Update()
     {
-        
+
     }
 
     private void OnEnable()
     {
-        for(int i = 0; i < playerSet.Items.Count; i++)
+        for (int i = 0; i < playerSet.Items.Count; i++)
         {
-            if(playerSet.Items[i].GetComponent<EarthPlayer>())
+            if (playerSet.Items[i].GetComponent<EarthPlayer>())
             {
                 earthPlayer = playerSet.Items[i].GetComponent<EarthPlayer>();
             }
-            else if(playerSet.Items[i].GetComponent<CelestialPlayer>())
+            else if (playerSet.Items[i].GetComponent<CelestialPlayer>())
             {
                 celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
             }
-            
+
         }
     }
 
@@ -55,43 +57,23 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
 
-
-        for (int i = 0; i < playerSet.Items.Count; i++)
+        // Activate the dialogue box if it's currently inactive
+        if (!dialogueBox.activeSelf)
         {
-            if (playerSet.Items[i].GetComponent<EarthPlayer>())
-            {
-                earthPlayer = playerSet.Items[i].GetComponent<EarthPlayer>();
-            }
-            else if (playerSet.Items[i].GetComponent<CelestialPlayer>())
-            {
-                celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
-            }
-
+            dialogueBox.SetActive(true);
+        }
+        else
+        {
+            isDialogueActive = true;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //Turn off other player controls, turn on dialogue controls
-        isDialogueActive = true;
-        if (earthPlayer.earthControls.controls.DialogueControls.enabled)
+        if (!earthPlayer.earthControls.controls.DialogueControls.enabled)
         {
             earthPlayer.earthControls.controls.DialogueControls.Enable();
             earthPlayer.earthControls.controls.EarthPlayerDefault.Disable();
         }
-        if (celestialPlayer.celestialControls.controls.DialogueControls.enabled)
+        if (!celestialPlayer.celestialControls.controls.DialogueControls.enabled)
         {
             celestialPlayer.celestialControls.controls.DialogueControls.Enable();
             celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
@@ -118,17 +100,50 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine currentLine = lines.Dequeue();
 
-        characterIcon.sprite = currentLine.character.icon;
+        //characterIcon.sprite = currentLine.character.icon;
 
-        StopAllCoroutines();
+        //StopAllCoroutines();
 
-        StartCoroutine(TypeSentence(currentLine));
+
+        // Clear the dialogue areas
+        dialogueArea.text = "";
+        dialogueAreaFR.text = "";
+
+        // Clear both character icons
+        characterIconLeft.sprite = null;
+        characterIconRight.sprite = null;
+
+        if (currentLine.character.isLeft)
+        {
+            characterIconLeft.sprite = currentLine.character.iconLeft;
+            // Fade in characterIconLeft
+            characterIconLeft.CrossFadeAlpha(1f, 0.5f, true);
+            // Fade out characterIconRight
+            characterIconRight.CrossFadeAlpha(0f, 0.5f, true);
+        }
+        else if (!currentLine.character.isLeft)
+        {
+            characterIconRight.sprite = currentLine.character.iconRight;
+            // Fade in characterIconRight
+            characterIconRight.CrossFadeAlpha(1f, 0.5f, true);
+            // Fade out characterIconLeft
+            characterIconLeft.CrossFadeAlpha(0f, 0.5f, true);
+        }
+
+
+        //display all text at once
+        dialogueArea.text = currentLine.line;
+        dialogueAreaFR.text = currentLine.lineFR;
+
+        // Display French line
+        // StartCoroutine(TypeSentence(dialogueAreaFR, currentLine.lineFR));
+        //StartCoroutine(TypeSentence(dialogueArea,currentLine.line));
     }
 
-    IEnumerator TypeSentence(DialogueLine dialogueLine)
+    //display letter by letter
+    IEnumerator TypeSentence(TextMeshProUGUI dialogueArea, string line)
     {
-        dialogueArea.text = "";
-        foreach (char letter in dialogueLine.line.ToCharArray())
+        foreach (char letter in line.ToCharArray())
         {
             dialogueArea.text += letter;
             yield return null;
@@ -137,18 +152,18 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        isDialogueActive = false;
-        Debug.Log("Switching");
+        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        {
+            dialogueBox.SetActive(false); // Deactivate the dialogue box
+            isDialogueActive = false; // Set the dialogue state to inactive
+        }
         //Turn off the dialogue controls and turn on the default controls of both players
         earthPlayer.earthControls.controls.DialogueControls.Disable();
         earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
         celestialPlayer.celestialControls.controls.DialogueControls.Disable();
         celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
-        dialogueBox.SetActive(false);
 
         Time.timeScale = 1f;
-        
-    }
 
-   
+    }
 }

@@ -29,10 +29,10 @@ public class Cell : MonoBehaviour
     [SerializeField] private Material cleanWaterTile;
     [SerializeField] private Material pollutedWaterTile;
 
-    public enum TerrainType {GRASS, DIRT, WATER};
+    public enum TerrainType { GRASS, DIRT, WATER };
     public TerrainType terrainType;
 
-    public enum EnviroState { CLEAN, POLLUTED};
+    public enum EnviroState { CLEAN, POLLUTED };
     public EnviroState enviroState;
 
     Color selectableColour = new Color(0.5f, 0.9666f, 1, 0.5f);
@@ -67,7 +67,7 @@ public class Cell : MonoBehaviour
 
     private void Start()
     {
-        foreach(GameObject player in playerSet.Items)
+        foreach (GameObject player in playerSet.Items)
         {
             if (player.tag == "Player1")
             {
@@ -83,13 +83,17 @@ public class Cell : MonoBehaviour
         StartCoroutine(UpdateTileAppearance());
         tileVector.x = this.transform.position.x;
         tileVector.y = this.transform.position.z;
-        
+
     }
 
     private void Update()
     {
         UpdateTileValid();
         UpdatePlant();
+        if (earthPlayer.isRemovalStarted)
+        {
+            UpdatePlantRemoval();
+        }
     }
 
     private void LateUpdate()
@@ -99,7 +103,7 @@ public class Cell : MonoBehaviour
 
     private void UpdateTileValid()
     {
-        if(enviroState == EnviroState.POLLUTED || tileHasBuild || 
+        if (enviroState == EnviroState.POLLUTED || tileHasBuild ||
             (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE && terrainType == TerrainType.WATER))
         {
             tileValid = false;
@@ -118,7 +122,7 @@ public class Cell : MonoBehaviour
             {
                 GetComponentInChildren<MeshRenderer>().material = cleanWaterTile;
             }
-            else if(terrainType == TerrainType.WATER && enviroState == EnviroState.POLLUTED)
+            else if (terrainType == TerrainType.WATER && enviroState == EnviroState.POLLUTED)
             {
                 GetComponentInChildren<MeshRenderer>().material = pollutedWaterTile;
             }
@@ -155,14 +159,14 @@ public class Cell : MonoBehaviour
 
             //Update the plant type if the player pans over a different kind of tile
             /////IF TILE IS EARTH
-            if((this.terrainType == TerrainType.GRASS || this.terrainType == TerrainType.DIRT) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.WATER)
+            if ((this.terrainType == TerrainType.GRASS || this.terrainType == TerrainType.DIRT) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.WATER)
             {
-                
-                if(earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
+
+                if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
                 {
                     Destroy(earthPlayer.plantSelected);
                 }
-                
+
                 if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
                 {
                     earthPlayer.plantSelected = Instantiate(earthPlayer.landFlowerPreviewPrefab, earthPlayer.plantParent.transform);
@@ -174,9 +178,9 @@ public class Cell : MonoBehaviour
                 earthPlayer.currentTileSelectedType = EarthPlayer.TileSelectedType.LAND;
             }
             //////IF TILE IS WATER
-            else if((this.terrainType == TerrainType.WATER) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.LAND)
+            else if ((this.terrainType == TerrainType.WATER) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.LAND)
             {
-                
+
                 if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
                 {
                     Destroy(earthPlayer.plantSelected);
@@ -214,13 +218,29 @@ public class Cell : MonoBehaviour
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
                     earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
                 }
-                else if(earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
+                else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
                 {
                     earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
                     earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
                 }
             }
-            
+
+        }
+    }
+
+    private void UpdatePlantRemoval()
+    {
+        if (tileIsActivated)
+        {
+            earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
+            if (tileHasBuild)
+            {
+                earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+            }
+            else
+            {
+                earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
+            }
         }
     }
 
@@ -228,7 +248,7 @@ public class Cell : MonoBehaviour
     {
         while (true)
         {
-            if(earthPlayer.selectedTile == this.gameObject)
+            if (earthPlayer.selectedTile == this.gameObject)
             {
                 tileIsActivated = true;
             }
@@ -245,12 +265,12 @@ public class Cell : MonoBehaviour
     {
         float margin = 0.5f;
         Cell[] cells = tileGroup.GetComponentsInChildren<Cell>();
-        foreach(Cell cell in cells)
+        foreach (Cell cell in cells)
         {
-            if ((cell.transform.position.x <= this.transform.position.x - 10 + margin) 
+            if ((cell.transform.position.x <= this.transform.position.x - 10 + margin)
                 && (cell.transform.position.x >= this.transform.position.x - 10 - margin))
             {
-                if((cell.transform.position.z <= this.transform.position.z + margin) &&
+                if ((cell.transform.position.z <= this.transform.position.z + margin) &&
                     (cell.transform.position.z >= this.transform.position.z - margin))
                 {
                     neighbours[3] = cell;
@@ -300,5 +320,10 @@ public class Cell : MonoBehaviour
                 }
             }
         }
+    }
+
+    public GameObject GetPlacedObject()
+    {
+        return placedObject;
     }
 }

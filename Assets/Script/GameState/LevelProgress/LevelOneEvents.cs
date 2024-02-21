@@ -22,6 +22,7 @@ public class LevelOneEvents : EventManager
     [SerializeField] TaskListManager task1;
     [SerializeField] TaskListManager task2;
     [SerializeField] TaskListManager task3;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,8 @@ public class LevelOneEvents : EventManager
                 cell.
             }
             */
+
+
             
         }
         

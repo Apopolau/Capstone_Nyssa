@@ -330,21 +330,21 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""bcc7bf38-e7f8-48eb-8d1b-58fd81b0eff0"",
             ""actions"": [
                 {
-                    ""name"": ""Plant plant"",
+                    ""name"": ""Plantplant"",
                     ""type"": ""Button"",
                     ""id"": ""9491d659-6adc-47b3-9a57-a00f6d07d1bb"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Cancel planting"",
+                    ""name"": ""Cancelplanting"",
                     ""type"": ""Button"",
                     ""id"": ""fb33cbf5-e211-45bc-af25-fa98fed3c34b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -371,10 +371,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""01c1f3cd-ffcc-4b6a-bef0-c6b6d6646149"",
                     ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Plant plant"",
+                    ""action"": ""Plantplant"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -382,10 +382,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""3f0a3964-fbde-44be-b691-60e18e3ce6df"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Plant plant"",
+                    ""action"": ""Plantplant"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -393,10 +393,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""c777e4d2-f813-469c-9feb-9f11070ae7a8"",
                     ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Cancel planting"",
+                    ""action"": ""Cancelplanting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -404,10 +404,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""dc566b5a-0681-41bf-b55e-61a009eed32d"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Cancel planting"",
+                    ""action"": ""Cancelplanting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -421,6 +421,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""EarthWalk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""3af53c5d-8dca-4f97-b606-8e666d18357c"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""f1829765-2fcb-44ea-9063-3fde24d697ae"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""50581b9e-d34e-4128-bf95-359cb79be04b"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""5d668e62-d900-4e43-9f73-141ec88f815e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""648299e9-23a3-4e78-bc6d-c5af0ae73ee6"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -447,6 +502,193 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1ebd3025-3762-43e5-a6e5-740d068858bb"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cursor Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""RemovingPlant"",
+            ""id"": ""515d603f-6197-4797-8d4e-d6c8de988aa3"",
+            ""actions"": [
+                {
+                    ""name"": ""RemovePlant"",
+                    ""type"": ""Button"",
+                    ""id"": ""323e625d-19e5-4c9e-98ed-36a4cc2aa7f6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CancelRemoval"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa190ad2-5ac3-4caf-bf38-b0f5944ae0a7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EarthWalk"",
+                    ""type"": ""Value"",
+                    ""id"": ""ec60ddc9-66d1-4b80-90cb-9af0760e6016"",
+                    ""expectedControlType"": ""Stick"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Cursor Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""3c59488e-5908-4b5e-a8c8-a667ab453c52"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0e586dd2-0f02-48a0-8b2f-0665fbd48b17"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RemovePlant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e601471a-757d-41df-8aef-2dd93eebb90d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RemovePlant"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""24a65085-af6b-4762-8719-69ca27cb2fe2"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelRemoval"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3e064fd4-1100-4b71-8700-96e2ed5e6989"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelRemoval"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5106479b-cc5d-474c-b924-5ace287c8c04"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""65912e0f-fea9-4325-928b-e4aeebfb05e2"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""c1959e5a-1943-4519-a279-bf8c9b897ae5"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""c5acd38e-1f42-4e11-a59a-02c8e272218a"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""e24d7de4-d29f-460e-82b7-6d728a359e3b"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""6dde927e-5ced-4975-9eb9-f8caa0ab0bbf"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""083244f1-ea83-40ee-bb7b-60745490c98b"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cursor Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39666b1c-c6cc-4d2f-ac79-604190b9bc2e"",
+                    ""path"": ""<VirtualMouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cursor Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""54c3917d-c28d-4525-ad44-b1a2f6c0b08e"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -569,10 +811,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_EarthPlayerDefault_DebugTileflip = m_EarthPlayerDefault.FindAction("Debug Tileflip", throwIfNotFound: true);
         // PlantIsSelected
         m_PlantIsSelected = asset.FindActionMap("PlantIsSelected", throwIfNotFound: true);
-        m_PlantIsSelected_Plantplant = m_PlantIsSelected.FindAction("Plant plant", throwIfNotFound: true);
-        m_PlantIsSelected_Cancelplanting = m_PlantIsSelected.FindAction("Cancel planting", throwIfNotFound: true);
+        m_PlantIsSelected_Plantplant = m_PlantIsSelected.FindAction("Plantplant", throwIfNotFound: true);
+        m_PlantIsSelected_Cancelplanting = m_PlantIsSelected.FindAction("Cancelplanting", throwIfNotFound: true);
         m_PlantIsSelected_EarthWalk = m_PlantIsSelected.FindAction("EarthWalk", throwIfNotFound: true);
         m_PlantIsSelected_CursorMove = m_PlantIsSelected.FindAction("Cursor Move", throwIfNotFound: true);
+        // RemovingPlant
+        m_RemovingPlant = asset.FindActionMap("RemovingPlant", throwIfNotFound: true);
+        m_RemovingPlant_RemovePlant = m_RemovingPlant.FindAction("RemovePlant", throwIfNotFound: true);
+        m_RemovingPlant_CancelRemoval = m_RemovingPlant.FindAction("CancelRemoval", throwIfNotFound: true);
+        m_RemovingPlant_EarthWalk = m_RemovingPlant.FindAction("EarthWalk", throwIfNotFound: true);
+        m_RemovingPlant_CursorMove = m_RemovingPlant.FindAction("Cursor Move", throwIfNotFound: true);
         // MenuControls
         m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
         m_MenuControls_Newaction = m_MenuControls.FindAction("New action", throwIfNotFound: true);
@@ -802,6 +1050,76 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public PlantIsSelectedActions @PlantIsSelected => new PlantIsSelectedActions(this);
 
+    // RemovingPlant
+    private readonly InputActionMap m_RemovingPlant;
+    private List<IRemovingPlantActions> m_RemovingPlantActionsCallbackInterfaces = new List<IRemovingPlantActions>();
+    private readonly InputAction m_RemovingPlant_RemovePlant;
+    private readonly InputAction m_RemovingPlant_CancelRemoval;
+    private readonly InputAction m_RemovingPlant_EarthWalk;
+    private readonly InputAction m_RemovingPlant_CursorMove;
+    public struct RemovingPlantActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public RemovingPlantActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RemovePlant => m_Wrapper.m_RemovingPlant_RemovePlant;
+        public InputAction @CancelRemoval => m_Wrapper.m_RemovingPlant_CancelRemoval;
+        public InputAction @EarthWalk => m_Wrapper.m_RemovingPlant_EarthWalk;
+        public InputAction @CursorMove => m_Wrapper.m_RemovingPlant_CursorMove;
+        public InputActionMap Get() { return m_Wrapper.m_RemovingPlant; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(RemovingPlantActions set) { return set.Get(); }
+        public void AddCallbacks(IRemovingPlantActions instance)
+        {
+            if (instance == null || m_Wrapper.m_RemovingPlantActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_RemovingPlantActionsCallbackInterfaces.Add(instance);
+            @RemovePlant.started += instance.OnRemovePlant;
+            @RemovePlant.performed += instance.OnRemovePlant;
+            @RemovePlant.canceled += instance.OnRemovePlant;
+            @CancelRemoval.started += instance.OnCancelRemoval;
+            @CancelRemoval.performed += instance.OnCancelRemoval;
+            @CancelRemoval.canceled += instance.OnCancelRemoval;
+            @EarthWalk.started += instance.OnEarthWalk;
+            @EarthWalk.performed += instance.OnEarthWalk;
+            @EarthWalk.canceled += instance.OnEarthWalk;
+            @CursorMove.started += instance.OnCursorMove;
+            @CursorMove.performed += instance.OnCursorMove;
+            @CursorMove.canceled += instance.OnCursorMove;
+        }
+
+        private void UnregisterCallbacks(IRemovingPlantActions instance)
+        {
+            @RemovePlant.started -= instance.OnRemovePlant;
+            @RemovePlant.performed -= instance.OnRemovePlant;
+            @RemovePlant.canceled -= instance.OnRemovePlant;
+            @CancelRemoval.started -= instance.OnCancelRemoval;
+            @CancelRemoval.performed -= instance.OnCancelRemoval;
+            @CancelRemoval.canceled -= instance.OnCancelRemoval;
+            @EarthWalk.started -= instance.OnEarthWalk;
+            @EarthWalk.performed -= instance.OnEarthWalk;
+            @EarthWalk.canceled -= instance.OnEarthWalk;
+            @CursorMove.started -= instance.OnCursorMove;
+            @CursorMove.performed -= instance.OnCursorMove;
+            @CursorMove.canceled -= instance.OnCursorMove;
+        }
+
+        public void RemoveCallbacks(IRemovingPlantActions instance)
+        {
+            if (m_Wrapper.m_RemovingPlantActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IRemovingPlantActions instance)
+        {
+            foreach (var item in m_Wrapper.m_RemovingPlantActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_RemovingPlantActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public RemovingPlantActions @RemovingPlant => new RemovingPlantActions(this);
+
     // MenuControls
     private readonly InputActionMap m_MenuControls;
     private List<IMenuControlsActions> m_MenuControlsActionsCallbackInterfaces = new List<IMenuControlsActions>();
@@ -915,6 +1233,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnPlantplant(InputAction.CallbackContext context);
         void OnCancelplanting(InputAction.CallbackContext context);
+        void OnEarthWalk(InputAction.CallbackContext context);
+        void OnCursorMove(InputAction.CallbackContext context);
+    }
+    public interface IRemovingPlantActions
+    {
+        void OnRemovePlant(InputAction.CallbackContext context);
+        void OnCancelRemoval(InputAction.CallbackContext context);
         void OnEarthWalk(InputAction.CallbackContext context);
         void OnCursorMove(InputAction.CallbackContext context);
     }

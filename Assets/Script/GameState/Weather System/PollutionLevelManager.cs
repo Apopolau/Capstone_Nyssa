@@ -12,6 +12,7 @@ public class PollutionLevelManager : MonoBehaviour
     [SerializeField] private int basePollutionLevel;
     [SerializeField] private int maxPollution;
     [SerializeField] private float acidRainThreshold;
+    [SerializeField] private float acidRainHardThreshold;
 
     WaitForSeconds checkDelay = new WaitForSeconds(0.5f);
 
@@ -49,12 +50,20 @@ public class PollutionLevelManager : MonoBehaviour
         float pollutionLevel = basePollutionLevel + monsterPollution - pollutionCounteractment;
         float pollutionPercent = (float)pollutionLevel / maxPollution;
         pollutionLevelBar.fillAmount = pollutionPercent;
-        /*
-        if (pollutionPercent >= acidRainThreshold)
+        
+        if (pollutionPercent >= acidRainThreshold && pollutionPercent < acidRainHardThreshold)
         {
-
+            weatherState.acidRainState = WeatherState.AcidRainState.LIGHT;
         }
-        */
+        else if (pollutionPercent >= acidRainHardThreshold)
+        {
+            weatherState.acidRainState = WeatherState.AcidRainState.HEAVY;
+        }
+        else
+        {
+            weatherState.acidRainState = WeatherState.AcidRainState.NONE;
+        }
+
     }
 
     private float CalculatePlantContribution()
