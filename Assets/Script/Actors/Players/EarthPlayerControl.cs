@@ -16,8 +16,8 @@ public class EarthPlayerControl : MonoBehaviour
     public DeviceUsed thisDevice;
 
     int playerIndex = 1; // can only be 0 (for player 1) or 1 (for player 2)
-    public int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
-    public int myDeviceID2 = 0;
+    public int myDeviceID = -1; // used to store the ID of the controller that controls this particular player
+    public int myDeviceID2 = -1;
 
     public float moveSpeed;
 
@@ -217,7 +217,8 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnPlantPlantedPerformed(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
+        Debug.Log("Tried to plant a plant");
+        if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
         {
             Debug.Log("planting plant");
             earthPlayer.PlantPlantingHandler();
@@ -226,7 +227,8 @@ public class EarthPlayerControl : MonoBehaviour
 
     private void OnPlantingCancelledPerformed(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
+        Debug.Log("Tried to cancel planting a plant");
+        if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
         {
             Debug.Log("cancelling plant");
             earthPlayer.CancelPlant();
@@ -241,7 +243,7 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnPlantRemoved(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
+        if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
         {
             Debug.Log("removing plant");
             earthPlayer.PlantRemovingHandler();
@@ -250,7 +252,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     private void OnRemovingPlantCancelled(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
+        if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
         {
             Debug.Log("cancelled removing plant");
             earthPlayer.OnRemovingCancelled();
