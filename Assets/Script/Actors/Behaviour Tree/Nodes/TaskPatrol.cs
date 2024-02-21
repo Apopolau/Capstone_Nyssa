@@ -16,14 +16,15 @@ public class TaskPatrol : BTNode
     private bool iswaiting = false;
     private float waitTime = 1f;
     private float waitCounter =0;
+    Rigidbody rb;
 
-
-    public TaskPatrol(Enemy enemy, NavMeshAgent enemyMeshAgent, Transform transform, Transform[] waypointList)
+    public TaskPatrol(Enemy enemy,Rigidbody rbi, NavMeshAgent enemyMeshAgent, Transform transform, Transform[] waypointList)
     {
         thisEnemy = enemy;
         thisAgent = enemyMeshAgent;
         transformPos = transform;
         waypoints = waypointList;
+        rb = rbi;
     }
     protected override NodeState OnRun() {
        //Debug.Log("start patrolling");
@@ -43,9 +44,9 @@ public class TaskPatrol : BTNode
             float distance = Vector3.Distance(transformPos.position, wPoint.position);
             
             //check if the enemy has reached the waypoint, if it has pause for a few seconds
-            if (distance < 8f)
+            if (distance < 1.5f)
             {
-                transformPos.position = wPoint.position;
+                rb.MovePosition( wPoint.position);
                 waitCounter = 0f;
                 iswaiting = true;
                 //makes enemy loop back through way points
@@ -56,7 +57,8 @@ public class TaskPatrol : BTNode
             //if not move towards it
             else
             {
-                transformPos.position= Vector3.MoveTowards(transformPos.position, wPoint.position, 5f*Time.deltaTime);
+
+                rb.MovePosition(Vector3.MoveTowards(rb.position, wPoint.position, 5f * Time.deltaTime));
                 thisAgent.SetDestination(wPoint.position);
                 transformPos.LookAt(wPoint.position);
                 //Debug.Log("making rounds");

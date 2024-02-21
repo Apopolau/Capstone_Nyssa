@@ -23,6 +23,10 @@ public class LevelOneProgress : LevelProgress
     int grassGoal = 7;
     int cattailGoal = 5;
 
+    //Drag this from the plant prefabs folder
+    [SerializeField]public GameObject treeSeedPrefab;
+
+
     public override bool EvaluateFood()
     {
         treeCount = 0;

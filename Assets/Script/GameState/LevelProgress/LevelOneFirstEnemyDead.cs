@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class LevelOneFirstEnemyDead : MonoBehaviour
 {
+    
     //Get your Level Manager object's levelOneEvents script
     [SerializeField] LevelOneEvents levelOneEvents;
-    //Drag this from the plant prefabs folder
-    [SerializeField] GameObject treeSeedPrefab;
+    [SerializeField] LevelOneProgress levelOneProgress;
     GameObject treeSeedSpawn;
     public CelestialPlayer player;
     // Start is called before the first frame update
-    void Start()
-    {
-       
+    void Start() { 
+
     }
 
     // Update is called once per frame
@@ -24,8 +23,8 @@ public class LevelOneFirstEnemyDead : MonoBehaviour
 
     public void CheckIfDead()
     {
-        
-        
+
+        Vector3 pos = this.transform.position;
         //
         //Use some kind of metric to catch if the monster this is attached to is dead or dying
         //Make sure it's able to complete this function before you destroy the gameobject (the monster) it's attached to
@@ -33,12 +32,12 @@ public class LevelOneFirstEnemyDead : MonoBehaviour
         if (player.enemyTarget.GetComponent<Enemy>().isDying)
         //Call this function
         {
-            //treeSeedSpawn = Instantiate(treeSeedPrefab, this.transform);
-            treeSeedSpawn = Instantiate(player.treeSeedPrefab, this.transform);
-            levelOneEvents.OnFirstMonsterDefeated();
-
             //Instantiate the tree seed here
-           
+
+            levelOneEvents.OnFirstMonsterDefeated();
+            treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, pos, Quaternion.identity);
+            //Instantiate the tree seed here
+
         }
     }
 }

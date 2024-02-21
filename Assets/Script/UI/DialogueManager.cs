@@ -54,6 +54,36 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+
+
+        for (int i = 0; i < playerSet.Items.Count; i++)
+        {
+            if (playerSet.Items[i].GetComponent<EarthPlayer>())
+            {
+                earthPlayer = playerSet.Items[i].GetComponent<EarthPlayer>();
+            }
+            else if (playerSet.Items[i].GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         //Turn off other player controls, turn on dialogue controls
         isDialogueActive = true;
         if (earthPlayer.earthControls.controls.DialogueControls.enabled)
@@ -108,13 +138,13 @@ public class DialogueManager : MonoBehaviour
     public void EndDialogue()
     {
         isDialogueActive = false;
-        dialogueBox.SetActive(false);
-
+        Debug.Log("Switching");
         //Turn off the dialogue controls and turn on the default controls of both players
         earthPlayer.earthControls.controls.DialogueControls.Disable();
         earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
         celestialPlayer.celestialControls.controls.DialogueControls.Disable();
         celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+        dialogueBox.SetActive(false);
 
         Time.timeScale = 1f;
         

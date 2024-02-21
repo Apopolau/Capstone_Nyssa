@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     public NavMeshAgent enemyMeshAgent;
     public OilMonsterAnimator enemyAnimator;
+   //Drag and drop player here
     public GameObject playerObj;
     public EnemyStats enemyStats;
     public CelestialPlayer player;
@@ -19,6 +20,15 @@ public class Enemy : MonoBehaviour
     public bool inAttackRange = false;
     public bool attackInitiated = false;
     public Vector3 playerLocation;
+    Rigidbody rb;
+
+
+
+    //Interaction with the animal
+    public bool hasAnimal;
+    public bool isKidnapping;
+
+
 
     private WaitForSeconds attackTime = new WaitForSeconds(1);
 
@@ -30,10 +40,17 @@ public class Enemy : MonoBehaviour
 
 
     // Start is called before the first frame update
+
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         enemyMeshAgent = GetComponent<NavMeshAgent>();
         //player = GetComponent<CelestialPlayer>();
+
+     
+
+
+
     }
 
     // Update is called once per frame
@@ -112,6 +129,11 @@ public class Enemy : MonoBehaviour
             //Player is in range of enemy, in invading monster they can pursue the player
             seesPlayer = false;
             playerLocation = other.transform.position;
+
+
+
+
+
             //Debug.Log("~~~~~~~~~~~~~~~~~Exited collision with " + other.gameObject.name);
         }
     }

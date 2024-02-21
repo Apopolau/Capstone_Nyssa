@@ -27,6 +27,7 @@ public class taskChase : BTNode
         if (!thisAgent.GetComponent<Enemy>().inAttackRange && thisAgent.GetComponent<Enemy>().seesPlayer)
        
         {
+            Debug.Log("I'm chasing abby");
             thisAgent.SetDestination(thisTarget.position);
             if (distance  <= 10f)
             {

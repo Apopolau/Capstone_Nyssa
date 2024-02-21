@@ -24,6 +24,11 @@ public class CelestialPlayerControls : MonoBehaviour
 
     bool takinginput = false;
 
+
+    private Keyboard kb;
+    private Mouse ms;
+    private Gamepad gp;
+    private bool initialized;
     // Whenever either of two gamepads are used, input event will be sent to *all* player objects.
     // So if controller C1 sends an input, both Player 1 and Player 2 will receive it. Same for controller C2.
     // To have C1's inputs affect only P1, and C2's inputs affect only P2, each Player needs to ignore the messages that it receives from the "wrong" controller.
@@ -43,7 +48,50 @@ public class CelestialPlayerControls : MonoBehaviour
         controls = new CelestialPlayerInputActions();
     }
 
-    void Start()
+
+
+
+
+
+
+
+
+
+
+    /*
+    private IEnumerator Start()
+    {
+        // Gamepad.all gives us a list of all connected gamepads.
+        // We need the deviceId of the gamepad that will control this character (the one this script is attached to), so that we can check it later when actions happen.
+        // P1's deviceId is at index 0, P2's deviceID is at index 1...
+        // For a two player game, we set the playerIndex via the inspector as either 0 or 1 
+
+        while (ms == null || kb == null || gp == null)
+        {
+            if (kb == null) kb = InputSystem.GetDevice<Keyboard>();
+            if (ms == null) ms = InputSystem.GetDevice<Mouse>();
+            if (gp == null) gp = InputSystem.GetDevice<Gamepad>();
+            Debug.Log("whilelooooop");
+            yield return null;
+        }
+
+        initialized = true;
+
+        if (initialized)
+        {
+
+
+    */
+
+
+
+
+
+
+
+
+
+private void Start()
     {
         // Gamepad.all gives us a list of all connected gamepads.
         // We need the deviceId of the gamepad that will control this character (the one this script is attached to), so that we can check it later when actions happen.
@@ -65,6 +113,12 @@ public class CelestialPlayerControls : MonoBehaviour
             myDeviceID = Gamepad.all[playerIndex].deviceId;
             thisDevice = DeviceUsed.CONTROLLER;
         }
+
+  
+
+
+
+
         Debug.Log(myDeviceID);
         controls.CelestialPlayerDefault.Disable();
         controls.CelestialPlayerDefault.CelestialWalk.performed += OnCelestialMovePerformed;

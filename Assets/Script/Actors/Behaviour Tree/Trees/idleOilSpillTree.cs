@@ -9,7 +9,7 @@ public class idleOilSpillTree : BTree
     private CelestialPlayer player;
     private Enemy enemy;
     private NavMeshAgent enemyMeshAgent;
-
+    Rigidbody rb;
     //Enemy Movements
     public Transform[] waypoints;
     public static float speed = 2f;
@@ -27,6 +27,8 @@ public class idleOilSpillTree : BTree
        enemyMeshAgent = transform.GetComponent<NavMeshAgent>();
        player = transform.GetComponent<Enemy>().playerObj.GetComponent<CelestialPlayer>();
        enemy = transform.GetComponent<Enemy>();
+       rb = GetComponent<Rigidbody>();
+
         //Remove this when you actually implement it
         //throw new System.NotImplementedException();
 
@@ -73,7 +75,7 @@ public class idleOilSpillTree : BTree
             */
             ////PATROL SEQUENCE
             new CheckInRange(enemyMeshAgent),
-            new TaskPatrol( enemy,enemyMeshAgent, transform, waypoints),
+            new TaskPatrol( enemy,rb,enemyMeshAgent, transform, waypoints),
 
 
         });
