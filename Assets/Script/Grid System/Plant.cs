@@ -12,7 +12,7 @@ public class Plant : Creatable
     [SerializeField] WeatherState weatherState;
 
     [Header("These set themselves")]
-    private Stat health;
+    
     private Stat storedSunlight;
     private Stat storedWater;
     public SpriteRenderer[] plantVisuals;
@@ -24,6 +24,8 @@ public class Plant : Creatable
     private int growthRate = 1;
     public bool isSmothered;
     PlantStats.PlantStage currentPlantStage;
+
+    public new event System.Action<int, int> OnHealthChanged;
 
     // Start is called before the first frame update
     void Awake()
@@ -266,10 +268,14 @@ public class Plant : Creatable
         } 
     }
 
-    public void TakeDamage(int damageTaken)
+    public override void TakeDamage(int damageTaken)
     {
         health.current -= Mathf.Clamp(damageTaken, 0, health.max);
-        if(health.current <= 0)
+
+        if (OnHealthChanged != null)
+            OnHealthChanged(health.max, health.current);
+
+        if (health.current <= 0)
         {
             PlantDies();
         }

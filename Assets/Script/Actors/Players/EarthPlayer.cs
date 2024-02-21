@@ -59,10 +59,13 @@ public class EarthPlayer : MonoBehaviour
     private PlayerInput playerInput;
     public EarthPlayerControl earthControls;
     [SerializeField] public WeatherState weatherState;
+    private Vector3 OrigPos;
+    public Stat health;
 
     public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
 
+    public event System.Action<int, int> OnHealthChanged;
 
 
     private void Awake()
@@ -72,6 +75,8 @@ public class EarthPlayer : MonoBehaviour
         earthAgent = GetComponent<NavMeshAgent>();
         earthAgent.enabled = false;
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        OrigPos = this.transform.position;
+        health = new Stat(100, 100, false);
     }
 
     // Start is called before the first frame update
@@ -491,6 +496,34 @@ public class EarthPlayer : MonoBehaviour
             Debug.Log("Not interacting anymore");
             interacting = false;
         }
+    }
+
+    public bool TakeHit()
+    {
+
+        health.current -= 10;
+
+        Debug.Log(health.current);
+
+        if (OnHealthChanged != null)
+            OnHealthChanged(health.max, health.current);
+
+        bool isDead = health.current <= 0;
+        if (isDead)
+        {
+            Respawn();
+        }
+
+        return isDead;
+
+    }
+
+    private void Respawn()
+    {
+
+        health.current = 100;
+        gameObject.transform.position = OrigPos;
+
     }
 
     //Call this if you want to have all player controls turned off for a certain amount of time
