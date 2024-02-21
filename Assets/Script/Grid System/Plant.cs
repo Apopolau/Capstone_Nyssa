@@ -23,7 +23,7 @@ public class Plant : Creatable
     private int growthPoints;
     private int growthRate = 1;
     public bool isSmothered;
-    PlantStats.PlantStage currentPlantStage;
+    public PlantStats.PlantStage currentPlantStage;
 
     private GameObject seed;
 

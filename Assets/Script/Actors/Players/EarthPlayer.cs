@@ -54,6 +54,7 @@ public class EarthPlayer : MonoBehaviour
 
     [Header("Item Drop")]
     [SerializeField] GameObject treeLogPrefab;
+    private GameObject itemDropped;
 
     [Header("Misc")]
     public bool enrouteToPlant = false;
@@ -452,10 +453,20 @@ public class EarthPlayer : MonoBehaviour
         {
             if(cellToRemoveFrom.placedObject.GetComponent<Plant>().stats.plantName == "Tree")
             {
-                Instantiate(treeLogPrefab);
+                itemDropped = Instantiate(treeLogPrefab);
+                if (cellToRemoveFrom.placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.JUVENILE)
+                {
+                    itemDropped.GetComponent<PickupObject>().SetItemQuantity(1);
+                }
+                if (cellToRemoveFrom.placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.MATURE)
+                {
+                    itemDropped.GetComponent<PickupObject>().SetItemQuantity(3);
+                }
             }
+            cellToRemoveFrom.GetPlacedObject().GetComponent<Plant>().PlantDies();
+            cellToRemoveFrom.placedObject = null;
         }
-        Destroy(cellToRemoveFrom.GetPlacedObject());
+        
         cellToRemoveFrom.tileHasBuild = false;
     }
 

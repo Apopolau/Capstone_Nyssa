@@ -17,6 +17,7 @@ public class CelestialPlayer : MonoBehaviour
     private NavMeshAgent celestialAgent;
 
     [Header("Rain System")]
+    [SerializeField] WeatherState weatherState;
     [SerializeField] public bool isRaining=false;
     [SerializeField] public GameObject RainParticleSystem;
 
@@ -225,6 +226,7 @@ public class CelestialPlayer : MonoBehaviour
     public void OnRainDropSelected()
     {
         RainParticleSystem.SetActive(true);
+        weatherState.skyState = WeatherState.SkyState.RAINY;
         isRaining = true;
 
     }
@@ -236,6 +238,7 @@ public class CelestialPlayer : MonoBehaviour
             yield return new WaitForSeconds(5f);
             Debug.Log("******It is no longer raining****");
 
+            weatherState.skyState = WeatherState.SkyState.CLEAR;
             RainParticleSystem.SetActive(false);
             isRaining = false;
 
