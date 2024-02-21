@@ -8,8 +8,10 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
-    public Image characterIcon;
+    public Image characterIconLeft;
+    public Image characterIconRight;
     public TextMeshProUGUI dialogueArea;
+    public TextMeshProUGUI dialogueAreaFR;
 
     private Queue<DialogueLine> lines;
 
@@ -96,17 +98,50 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine currentLine = lines.Dequeue();
 
-        characterIcon.sprite = currentLine.character.icon;
+        //characterIcon.sprite = currentLine.character.icon;
 
-        StopAllCoroutines();
+        //StopAllCoroutines();
 
-        StartCoroutine(TypeSentence(currentLine));
+
+        // Clear the dialogue areas
+        dialogueArea.text = "";
+        dialogueAreaFR.text = "";
+
+       // Clear both character icons
+    characterIconLeft.sprite = null;
+    characterIconRight.sprite = null;
+
+    if (currentLine.character.isLeft)
+{
+    characterIconLeft.sprite = currentLine.character.iconLeft;
+    // Fade in characterIconLeft
+    characterIconLeft.CrossFadeAlpha(1f, 0.5f, true);
+    // Fade out characterIconRight
+    characterIconRight.CrossFadeAlpha(0f, 0.5f, true);
+}
+else if (!currentLine.character.isLeft)
+{
+    characterIconRight.sprite = currentLine.character.iconRight;
+    // Fade in characterIconRight
+    characterIconRight.CrossFadeAlpha(1f, 0.5f, true);
+    // Fade out characterIconLeft
+    characterIconLeft.CrossFadeAlpha(0f, 0.5f, true);
+}
+
+
+        //display all text at once
+        dialogueArea.text = currentLine.line;
+        dialogueAreaFR.text = currentLine.lineFR;
+
+        // Display French line
+       // StartCoroutine(TypeSentence(dialogueAreaFR, currentLine.lineFR));
+        //StartCoroutine(TypeSentence(dialogueArea,currentLine.line));
     }
 
-    IEnumerator TypeSentence(DialogueLine dialogueLine)
+    //display letter by letter
+    IEnumerator TypeSentence(TextMeshProUGUI dialogueArea, string line)
     {
-        dialogueArea.text = "";
-        foreach (char letter in dialogueLine.line.ToCharArray())
+        foreach (char letter in line.ToCharArray())
         {
             dialogueArea.text += letter;
             yield return null;

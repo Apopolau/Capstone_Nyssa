@@ -5,8 +5,14 @@ using UnityEngine;
 [System.Serializable]
 public class DialogueCharacter
 {
-   // public string name;
-    public Sprite icon;
+   // Icon for the left side of the dialogue box
+    public Sprite iconLeft;
+
+    // Icon for the right side of the dialogue box
+    public Sprite iconRight;
+
+    // Whether the character should appear on the left side of the dialogue box
+    public bool isLeft;
 }
  
 [System.Serializable]
@@ -15,6 +21,8 @@ public class DialogueLine
     public DialogueCharacter character;
     [TextArea(3, 10)]
     public string line;
+    [TextArea(3, 10)]
+    public string lineFR; // Text for French language
 }
  
 [System.Serializable]

@@ -2202,6 +2202,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245809919}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &249250368 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9136765236401025335, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+  m_PrefabInstance: {fileID: 1081010112}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &278518792
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,20 +3074,31 @@ MonoBehaviour:
   dialogue:
     dialogueLines:
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-      line: "Don\u2019t worry little one, we\u2019ll save you!\n\nNe t'inqui\xE8te
-        pas, petit canard! Nous allons vous sauver!\r\n\n"
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
+      line: "Don\u2019t worry little one, we\u2019ll save you!\n\r"
+      lineFR: "Ne t'inqui\xE8te pas, petit canard! Nous allons vous sauver!\r\n\n"
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: "Stay back. That monster is dangerous.\r"
+      lineFR: "Restez en arri\xE8re, je ce monstre est dangereux!\r\n"
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: "I\u2019ll get it off the duck with my magic!\r\n"
+      lineFR: "Je vais r\xE9cup\xE9rer le canard avec ma magie de la terre!\r\n"
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: 'I can use my celestial magic to destroy the monster.
 
 '
+      lineFR: "Et je peux utiliser ma magie c\xE9leste pour d\xE9truire le monstre."
 --- !u!135 &384551736
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3293,13 +3315,21 @@ MonoBehaviour:
   dialogue:
     dialogueLines:
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: "Sprout, I\u2019m going to need some help\r\n"
+      lineFR: 'Sprout, je vais avoir besoin de ton aide.
+
+'
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: ' I should be able to take care of this!
 
 '
+      lineFR: "J\u2019arrive! Je peux me d\xE9barrasser de celles-l\xE0 pour toi.\r\n"
 --- !u!114 &390012243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3315,8 +3345,13 @@ MonoBehaviour:
   dialogue:
     dialogueLines:
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: ' I should be able to take care of this'
+      lineFR: 'Je devrais pouvoir m''en occuper!
+
+'
 --- !u!65 &390012244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11256,6 +11291,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 855141517422320795, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 899087556128760856, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: m_Color.a
       value: 1
@@ -11324,6 +11363,14 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 51f90d6d62613954b95deca7e9da0fc8, type: 3}
+    - target: {fileID: 2568931850659072898, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_text
+      value: 'this is a dialouge
+
+        thissss
+
+        hhhhhhhhh'
+      objectReference: {fileID: 0}
     - target: {fileID: 2638934273589438354, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: m_SizeDelta.x
       value: 282.1
@@ -11456,6 +11503,14 @@ PrefabInstance:
       propertyPath: playerSet
       value: 
       objectReference: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+    - target: {fileID: 3571004410004341720, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: characterIconLeft
+      value: 
+      objectReference: {fileID: 1227686432}
+    - target: {fileID: 3571004410004341720, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: characterIconRight
+      value: 
+      objectReference: {fileID: 249250368}
     - target: {fileID: 3850916345549216227, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11883,6 +11938,18 @@ PrefabInstance:
     - target: {fileID: 8587303203417477639, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: orthographic size
       value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 9136765236401025335, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9136765236401025335, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9136765236401025335, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9175048980535259678, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
       propertyPath: m_IsActive
@@ -13425,6 +13492,17 @@ Transform:
   - {fileID: 290001918}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1227686432 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 855141517422320795, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
+  m_PrefabInstance: {fileID: 1081010112}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1231511840
 GameObject:
   m_ObjectHideFlags: 0
@@ -21313,73 +21391,134 @@ MonoBehaviour:
   dialogue:
     dialogueLines:
     - character:
-        icon: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+        iconLeft: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: '*Qaucks happily*'
+      lineFR: 'Coin-coin! *heureux*
+
+'
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: "You\u2019re very welcome! I\u2019m so glad we could help!\r\n"
+      lineFR: "Vous \xEAtes l\xE0 bienvenue! Nous sommes heureux de pouvoir vous
+        aider!\r\n"
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: 'I found some seeds buried in the oil. Maybe we can change things here.
 
 '
+      lineFR: "J\u2019ai trouv\xE9 des graines enterr\xE9es dans l'huile. Peut-\xEAtre
+        que nous pourrons changer les choses ici apr\xE8s tout.\r\n"
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: 'Oh let me see them! I can grow a grove for this duck to live in!
 
 '
+      lineFR: "Oh! Laisse-moi voir! Je peux faire pousser une for\xEAt pour que le
+        canard puisse y vivre dedans.\r\n"
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: "Hmm. I\u2019m worried though."
+      lineFR: "Hum\u2026 \xC7a m'inqui\xE8te.\r\n"
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: "That was far from the only monster in this area. It wouldn\u2019t be
         safe."
+      lineFR: "Je suis certaine que ce n'\xE9tait pas le seul monstre dans cet endroit.
+        Ce n\u2019est pas sauf ici\u2026\r\n"
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: 'You know what you can do about that!
 
 '
+      lineFR: " Tu sais quoi faire! J\u2019ai confiance en toi!\r\n"
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: ' Hey little duck, what do you need to live here?
 
 '
+      lineFR: ' Petit canard, de quoi avez-vous besoin afin de vivre ici?'
     - character:
-        icon: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+        iconLeft: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: ' *Quacks urgently*'
+      lineFR: Coin-coin! *urgent*
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: 'Oh of course! He says he needs clean water, some leaves and grass to
         eat, and safety from those monsters.
 
 '
+      lineFR: "Ah, bien s\xFBr! Il dit qu\u2019il a besoin de l\u2019eau propre,
+        des feuilles et de l\u2019herbe \xE0 manger, et de la protection contre les
+        monstres.\r\n"
     - character:
-        icon: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+        iconLeft: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: '*Quacks shyly*
 
 '
+      lineFR: 'Coin-coin! *timide*
+
+'
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: 'Oh, and a friend to share the grove with!
 
 '
+      lineFR: "Ah, et un ami pour partager la for\xEAt avec. \r\n"
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: 'Hmm, these are tree seeds. I will see if there are grass seeds nearby.
 
 '
+      lineFR: "Hum, ce sont des graines d\u2019arbres. Je vais voir s\u2019il y a
+        des graines d\u2019herbe proche d\u2019ici.\r\n"
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 1
       line: If you plant me some trees, they will give me energy to use my powers
         on the monsters.
+      lineFR: "Si tu plantes des arbres, \xE7a me donnerait de l'\xE9nergie pour
+        utiliser mes pouvoirs contre les monstres. "
     - character:
-        icon: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: " Alright, I\u2019ll get started with these. We\u2019ll have a nice forest
         for you in no time, duck!\r\n"
+      lineFR: " D\u2019accord, je vais commencer avec celles-ci.  Nous allons avoir
+        une belle for\xEAt pour toi en un rien de temps, petit canard!\r\n"
     - character:
-        icon: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+        isLeft: 0
       line: Stay safe
+      lineFR: Soyez prudent.
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
