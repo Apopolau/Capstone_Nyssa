@@ -25,6 +25,8 @@ public class Plant : Creatable
     public bool isSmothered;
     PlantStats.PlantStage currentPlantStage;
 
+    private GameObject seed;
+
     public new event System.Action<int, int> OnHealthChanged;
 
     // Start is called before the first frame update
@@ -177,13 +179,18 @@ public class Plant : Creatable
             HandleTreeColliders(2f, 5);
             growthPoints = 0;
         }
-        else if (currentPlantStage == PlantStats.PlantStage.MATURE)
+        else if (currentPlantStage == PlantStats.PlantStage.MATURE && growthPoints >= stats.matureSeedDropTime)
         {
-            
-            //yield break;
+            DropSeed();
+            growthPoints = 0;
         }
 
 
+    }
+
+    private void DropSeed()
+    {
+        seed = Instantiate(stats.seedPrefab, this.transform);
     }
 
     private void HandleTreeColliders(float colliderRadius, float colliderHeight)

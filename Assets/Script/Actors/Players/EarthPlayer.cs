@@ -52,10 +52,13 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public GameObject landFlowerPreviewPrefab;
     [SerializeField] public GameObject waterFlowerPreviewPrefab;
 
+    [Header("Item Drop")]
+    [SerializeField] GameObject treeLogPrefab;
+
     [Header("Misc")]
+    public bool enrouteToPlant = false;
     private EarthPlayerAnimator earthAnimator;
     private NavMeshAgent earthAgent;
-    public bool enrouteToPlant = false;
     private PlayerInput playerInput;
     public EarthPlayerControl earthControls;
     [SerializeField] public WeatherState weatherState;
@@ -116,10 +119,12 @@ public class EarthPlayer : MonoBehaviour
         {
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.;
+            virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
         else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
+            virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
             virtualMousePosition = Mouse.current.position.value;
         }
         
@@ -222,10 +227,12 @@ public class EarthPlayer : MonoBehaviour
         virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
         {
+            virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
         else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
+            virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
             virtualMousePosition = Mouse.current.position.value;
         }
 
@@ -441,6 +448,13 @@ public class EarthPlayer : MonoBehaviour
 
     private void RemovePlant(Cell cellToRemoveFrom)
     {
+        if (cellToRemoveFrom.placedObject.GetComponent<Plant>())
+        {
+            if(cellToRemoveFrom.placedObject.GetComponent<Plant>().stats.plantName == "Tree")
+            {
+                Instantiate(treeLogPrefab);
+            }
+        }
         Destroy(cellToRemoveFrom.GetPlacedObject());
         cellToRemoveFrom.tileHasBuild = false;
     }
