@@ -14,10 +14,10 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] public TextMeshProUGUI displayText;
-    [SerializeField] public DayNightCycle dayNightCycle;
 
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
+    public bool isRemovalStarted = false;
     public GameObject plantSelected;
     public List<GameObject> plantsPlanted;
     public GameObject tempPlantPlanted;
@@ -58,9 +58,12 @@ public class EarthPlayer : MonoBehaviour
     public bool enrouteToPlant = false;
     private PlayerInput playerInput;
     public EarthPlayerControl earthControls;
+    [SerializeField] public WeatherState weatherState;
 
     public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
+
+
 
     private void Awake()
     {
@@ -82,17 +85,28 @@ public class EarthPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Debug.Log("Default controls are on: " + earthControls.controls.EarthPlayerDefault.enabled);
+        //Debug.Log("Planting controls are on: " + earthControls.controls.PlantIsSelected.enabled);
         ActivateTile();
         if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 10.5f)
         {
             this.GetComponent<playerMovement>().ResetNavAgent();
-            PlantPlantingHandler();
+            if (isPlantSelected)
+            {
+                PlantPlantingHandler();
+            }
+            else if (isRemovalStarted)
+            {
+                PlantRemovingHandler();
+            }
+            
         }
 
     }
 
     private void LateUpdate()
     {
+        
         if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
         {
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
@@ -103,15 +117,15 @@ public class EarthPlayer : MonoBehaviour
         {
             virtualMousePosition = Mouse.current.position.value;
         }
+        
 
     }
 
-    public void SetCamera(Camera switchCam)
-    {
-        mainCamera = switchCam;
+    
 
-    }
-
+    /// <summary>
+    /// THESE FUNCTIONS HANDLE WHEN THE PLAYER PICKS A PLANT TO PLANT
+    /// </summary>
     public void OnTreeSelected(InputAction.CallbackContext context)
     {
         //We're going to want to check if they even have the seed for the plant they selected before we do anything else
@@ -200,22 +214,25 @@ public class EarthPlayer : MonoBehaviour
         earthControls.controls.EarthPlayerDefault.Disable();
 
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
+        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
         {
-            //virtualMouseInput.virtualMouse.position. = new Vector2(Screen.width / 2, Screen.height / 2);
-            virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
         else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
-            virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
             virtualMousePosition = Mouse.current.position.value;
         }
 
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
-    //Call this function to start actually planting a plant
+
+
+    /// <summary>
+    /// THESE FUNCTIONS HANDLE WHEN THE PLAYER SELECTS A TILE TO PLANT ON
+    /// AND ACTUALLY PLANTS
+    /// </summary>
     public void PlantPlantingHandler()
     {
         StartCoroutine(OnPlantPlanted());
@@ -345,11 +362,109 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
-    public void RemovePlant()
+
+
+    /// <summary>
+    /// THESE FUNCTIONS HANDLE IF THE PLAYER TRIES TO REMOVE A PLANT
+    /// </summary>
+    public void OnRemovePlant()
     {
 
+        //Switch our controls
+        earthControls.controls.RemovingPlant.Enable();
+        earthControls.controls.EarthPlayerDefault.Disable();
+
+        //Turn on the virtual mouse cursor
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
+        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
+        if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
+        {
+            virtualMousePosition = virtualMouseInput.cursorTransform.position;
+        }
+        else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        {
+            virtualMousePosition = Mouse.current.position.value;
+        }
+
+        //Create our tile outline effect
+        tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
+    public void PlantRemovingHandler()
+    {
+        StartCoroutine(OnPlantRemoved());
+    }
+
+    private IEnumerator OnPlantRemoved()
+    {
+        if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
+        {
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
+            {
+                //enrouteToPlant = false;
+                isRemovalStarted = false;
+                Cell activeTileCell = selectedTile.GetComponent<Cell>();
+                Destroy(tileOutline);
+                //This is a good place to initiate a planting animation
+                earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
+                earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
+                //Set other animations to false
+                StartCoroutine(SuspendActions(plantTime));
+                yield return plantTime;
+                earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, false);
+                RemovePlant(activeTileCell);
+
+                //Switch our controls
+                earthControls.controls.EarthPlayerDefault.Enable();
+                earthControls.controls.RemovingPlant.Disable();
+                virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+            }
+            else
+            {
+                ApproachPlant();
+            }
+        }
+        else if (!selectedTile.GetComponent<Cell>().tileHasBuild)
+        {
+            StartCoroutine(InvalidRemovalTile());
+        }
+        else
+        {
+            yield break;
+        }
+    }
+
+    private void RemovePlant(Cell cellToRemoveFrom)
+    {
+        Destroy(cellToRemoveFrom.GetPlacedObject());
+        cellToRemoveFrom.tileHasBuild = false;
+    }
+
+    private IEnumerator InvalidRemovalTile()
+    {
+        displayText.text = "No valid objects to remove";
+        yield return plantTime;
+        displayText.text = "";
+    }
+
+    public void OnRemovingCancelled()
+    {
+        if (isRemovalStarted)
+        {
+            isRemovalStarted = false;
+            Destroy(tileOutline);
+            virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+
+            //Switch our controls
+            earthControls.controls.EarthPlayerDefault.Enable();
+            earthControls.controls.RemovingPlant.Disable();
+        }
+        
+    }
+
+    /// <summary>
+    /// HELPER FUNCTIONS
+    /// </summary>
     //When highlighting tiles, get information to move indicators
     private void ActivateTile()
     {
@@ -378,11 +493,18 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
+    //Call this if you want to have all player controls turned off for a certain amount of time
     private IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
         earthControls.controls.EarthPlayerDefault.Disable();
         earthControls.controls.PlantIsSelected.Disable();
         yield return waitTime;
         earthControls.controls.EarthPlayerDefault.Enable();
+    }
+
+    public void SetCamera(Camera switchCam)
+    {
+        mainCamera = switchCam;
+
     }
 }

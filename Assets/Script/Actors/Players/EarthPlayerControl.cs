@@ -87,6 +87,13 @@ public class EarthPlayerControl : MonoBehaviour
         controls.PlantIsSelected.EarthWalk.performed += OnEarthMovePerformed;
         controls.PlantIsSelected.EarthWalk.canceled += OnEarthMoveCancelled;
 
+        //When removing plant
+        controls.RemovingPlant.Disable();
+        controls.RemovingPlant.RemovePlant.performed += OnPlantRemoved;
+        controls.RemovingPlant.CancelRemoval.performed += OnRemovingPlantCancelled;
+        controls.RemovingPlant.EarthWalk.performed += OnEarthMovePerformed;
+        controls.RemovingPlant.EarthWalk.canceled += OnEarthMoveCancelled;
+
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
         controls.MenuControls.Disable();
@@ -97,6 +104,11 @@ public class EarthPlayerControl : MonoBehaviour
         controls.DialogueControls.Skip.started += OnSkipPerformed;
     }
 
+
+    /// <summary>
+    /// DEFAULT CONTROLS
+    /// </summary>
+    /// <param name="context"></param>
     private void OnEarthMovePerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -171,10 +183,11 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
-            this.GetComponent<EarthPlayer>().RemovePlant();
+            this.GetComponent<EarthPlayer>().OnRemovePlant();
         }
 
     }
+
     private void OnInteract(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -186,12 +199,22 @@ public class EarthPlayerControl : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// DEBUG CONTROLS (DEFAULT)
+    /// </summary>
+    /// <param name="context"></param>
     private void OnTileFlipped(InputAction.CallbackContext context)
     {
             Debug.Log("flipping tiles");
             levelOneEvents.DebugTileFlip();
     }
 
+
+
+    /// <summary>
+    /// PLANTING PLANT CONTROLS
+    /// </summary>
+    /// <param name="context"></param>
     private void OnPlantPlantedPerformed(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
@@ -210,12 +233,59 @@ public class EarthPlayerControl : MonoBehaviour
         }
     }
 
+
+
+    /// <summary>
+    /// PLANT REMOVAL CONTROLS
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnPlantRemoved(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
+        {
+            Debug.Log("removing plant");
+            earthPlayer.PlantRemovingHandler();
+        }
+    }
+
+    private void OnRemovingPlantCancelled(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID || context.control.device.deviceId == myDeviceID2)
+        {
+            Debug.Log("cancelled removing plant");
+            earthPlayer.OnRemovingCancelled();
+        }
+    }
+
+
+
+    /// <summary>
+    /// MENU CONTROLS
+    /// </summary>
+
+
+
+    /// <summary>
+    /// DIALOGUE CONTROLS
+    /// </summary>
+    /// <param name="context"></param>
     private void OnContinuePerformed(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == myDeviceID)
         {
-            Debug.Log("continuing dialogue");
-            dialogueManager.DisplayNextDialogueLine();
+            float input;
+            if (thisDevice == DeviceUsed.CONTROLLER)
+            {
+                input = Gamepad.all[playerIndex].buttonSouth.ReadValue();
+            }
+            else
+            {
+                input = Keyboard.current.enterKey.ReadValue();
+            }
+            if (input > 0)
+            {
+                dialogueManager.DisplayNextDialogueLine();
+            }
         }
     }
 

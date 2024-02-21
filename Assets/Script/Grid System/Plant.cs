@@ -28,18 +28,22 @@ public class Plant : Creatable
     // Start is called before the first frame update
     void Awake()
     {
+        //Gather our references
         tilePlantedOn = this.gameObject.transform.parent.GetComponentInParent<Cell>();
         plantVisuals = plantObject.GetComponentsInChildren<SpriteRenderer>();
+
+        //Initialize Seedling stats
         currentPlantStage = PlantStats.PlantStage.SEEDLING;
         plantObject.transform.position = new Vector3(this.gameObject.transform.position.x, this.gameObject.transform.position.y, this.gameObject.transform.position.z);
         currentPollutionContribution = stats.seedlingAirPollutionBonus;
-
         PlacePlant(stats.seedlingScale, stats.seedlingTileOffset);
 
+        //Initialize our stats
         health = new Stat(stats.maxHealth, stats.maxHealth, false);
         storedSunlight = new Stat(100, 0, true);
         storedWater = new Stat(100, 0, true);
 
+        //Special considerations for water plants
         if (tilePlantedOn.terrainType == Cell.TerrainType.WATER)
         {
             waterPlant = true;
@@ -62,6 +66,7 @@ public class Plant : Creatable
         GrowPlant();
         AdvancePlantStage();
         ResolveStats();
+        HandleAcidRain();
     }
 
     private void GrowPlant()
@@ -244,5 +249,36 @@ public class Plant : Creatable
         {
             health.low = false;
         }
+    }
+
+    private void HandleAcidRain()
+    {
+        if(weatherState.skyState == WeatherState.SkyState.RAINY)
+        {
+            if (weatherState.acidRainState == WeatherState.AcidRainState.LIGHT)
+            {
+                TakeDamage(1);
+            }
+            else if(weatherState.acidRainState == WeatherState.AcidRainState.HEAVY)
+            {
+                TakeDamage(2);
+            }
+        } 
+    }
+
+    public void TakeDamage(int damageTaken)
+    {
+        health.current -= Mathf.Clamp(damageTaken, 0, health.max);
+        if(health.current <= 0)
+        {
+            PlantDies();
+        }
+    }
+
+    public void PlantDies()
+    {
+        tilePlantedOn.tileHasBuild = false;
+        tilePlantedOn.placedObject = null;
+        Destroy(this.gameObject);
     }
 }
