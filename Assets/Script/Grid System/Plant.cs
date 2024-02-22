@@ -12,18 +12,23 @@ public class Plant : Creatable
     [SerializeField] WeatherState weatherState;
 
     [Header("These set themselves")]
-    private Stat health;
-    private Stat storedSunlight;
-    private Stat storedWater;
+    
+    [SerializeField] private Stat storedSunlight;
+    [SerializeField] private Stat storedWater;
+    //[SerializeField] storedSunlight.current;
     public SpriteRenderer[] plantVisuals;
     private Cell tilePlantedOn;
     bool waterPlant = false;
 
     public int currentPollutionContribution;
-    private int growthPoints;
-    private int growthRate = 1;
+    [SerializeField] private int growthPoints;
+    private WaitForSeconds growthRate = new WaitForSeconds(1);
     public bool isSmothered;
-    PlantStats.PlantStage currentPlantStage;
+    public PlantStats.PlantStage currentPlantStage;
+
+    private GameObject seed;
+
+    public new event System.Action<int, int> OnHealthChanged;
 
     // Start is called before the first frame update
     void Awake()
@@ -54,6 +59,12 @@ public class Plant : Creatable
         
     }
 
+    private void Start()
+    {
+        StartCoroutine(GrowPlant());
+        StartCoroutine(StoreNutrients());
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -69,20 +80,48 @@ public class Plant : Creatable
         HandleAcidRain();
     }
 
-    private void GrowPlant()
+    private IEnumerator GrowPlant()
     {
-        //Add a check to see if it is currently sunny or rainy when these states exist
-        //Put the check so that stored resources are not drained if the resource is still active
-        //If it's a water plant it doesn't need rain to grow
+        while (true)
+        {
+            yield return growthRate;
+            //Add a check to see if it is currently sunny or rainy when these states exist
+            //Put the check so that stored resources are not drained if the resource is still active
+            //If it's a water plant it doesn't need rain to grow
+            if (waterPlant)
+            {
+                if (weatherState.dayTime)
+                {
+                    growthPoints++;
+                }
+                else
+                {
+                    UseReserveNutrients();
+                }
+            }
+            else
+            {
+                if (weatherState.dayTime && weatherState.skyState == WeatherState.SkyState.RAINY)
+                {
+                    growthPoints++;
+                }
+                else
+                {
+                    UseReserveNutrients();
+                }
+            }
+        }
+        
+    }
+
+    private void UseReserveNutrients()
+    {
         if (waterPlant)
         {
             if (storedSunlight.current > 0)
             {
-                growthPoints++;
-                if (!weatherState.dayTime)
-                {
-                    storedSunlight.current -= Mathf.Clamp(-growthRate, 0, storedSunlight.max);
-                }
+                growthPoints ++;
+                storedSunlight.current -= Mathf.Clamp(1, 0, storedSunlight.max);
                 //we want our plants to heal if they're not full health while they're growing
                 //We may choose to add a check where they don't heal if they're actively being affected by a monster
                 if (health.current < health.max)
@@ -95,14 +134,14 @@ public class Plant : Creatable
         {
             if (storedSunlight.current > 0 && storedWater.current > 0)
             {
-                growthPoints++;
+                growthPoints ++;
                 if (!weatherState.dayTime)
                 {
-                    storedSunlight.current -= Mathf.Clamp(-growthRate, 0, storedSunlight.max);
+                    storedSunlight.current -= Mathf.Clamp(1, 0, storedSunlight.max);
                 }
                 if (weatherState.skyState == WeatherState.SkyState.CLEAR)
                 {
-                    storedWater.current -= Mathf.Clamp(-growthRate, 0, storedWater.max);
+                    storedWater.current -= Mathf.Clamp(1, 0, storedWater.max);
                 }
                 //we want our plants to heal if they're not full health while they're growing
                 //We may choose to add a check where they don't heal if they're actively being affected by a monster
@@ -114,17 +153,21 @@ public class Plant : Creatable
         }
     }
 
-    private void StoreNutrients()
+    private IEnumerator StoreNutrients()
     {
-        
-        if (weatherState.dayTime && !isSmothered)
+        while (true)
         {
-            storedSunlight.current += Mathf.Clamp(growthRate, 0, 100);
-        }
-        
-        if(weatherState.skyState == WeatherState.SkyState.RAINY && !waterPlant)
-        {
-            storedSunlight.current += Mathf.Clamp(growthRate, 0, 100);
+            yield return growthRate;
+
+            if (weatherState.dayTime && !isSmothered)
+            {
+                storedSunlight.current += Mathf.Clamp(1, 0, storedSunlight.max);
+            }
+
+            if (weatherState.skyState == WeatherState.SkyState.RAINY && !waterPlant && !isSmothered)
+            {
+                storedSunlight.current += Mathf.Clamp(1, 0, storedWater.max);
+            }
         }
     }
 
@@ -175,13 +218,22 @@ public class Plant : Creatable
             HandleTreeColliders(2f, 5);
             growthPoints = 0;
         }
-        else if (currentPlantStage == PlantStats.PlantStage.MATURE)
+        else if (currentPlantStage == PlantStats.PlantStage.MATURE && growthPoints >= stats.matureSeedDropTime)
         {
-            
-            //yield break;
+            DropSeed();
+            growthPoints = 0;
+        }
+        else
+        {
+
         }
 
 
+    }
+
+    private void DropSeed()
+    {
+        seed = Instantiate(stats.seedPrefab, this.transform);
     }
 
     private void HandleTreeColliders(float colliderRadius, float colliderHeight)
@@ -266,10 +318,14 @@ public class Plant : Creatable
         } 
     }
 
-    public void TakeDamage(int damageTaken)
+    public override void TakeDamage(int damageTaken)
     {
         health.current -= Mathf.Clamp(damageTaken, 0, health.max);
-        if(health.current <= 0)
+
+        if (OnHealthChanged != null)
+            OnHealthChanged(health.max, health.current);
+
+        if (health.current <= 0)
         {
             PlantDies();
         }

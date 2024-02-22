@@ -230,7 +230,7 @@ public class Cell : MonoBehaviour
 
     private void UpdatePlantRemoval()
     {
-        if (tileIsActivated)
+        if (earthPlayer.isRemovalStarted && tileIsActivated)
         {
             earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
             if (tileHasBuild)

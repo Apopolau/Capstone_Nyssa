@@ -23,6 +23,8 @@ public class DayNightCycle : MonoBehaviour
     //Stores data on the weather state
     [SerializeField] WeatherState weatherState;
 
+    bool timeOfDayChanges = false;
+
     //Level 1 Day colour clean: FFFFED
     //Level 1 Day colour polluted: BCBC9A
 
@@ -42,9 +44,24 @@ public class DayNightCycle : MonoBehaviour
     //Level 4 Night colour polluted: 291927
 
     // Update is called once per frame
+
+    private void Awake()
+    {
+        if(GetComponent<MainManagerScript>().levelManager.currentLevel == 1)
+        {
+            timeOfDayChanges = false;
+            weatherState.dayTime = true;
+            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAY;
+        }
+        else
+        {
+            timeOfDayChanges = true;
+        }
+    }
+
     void Update()
     {
-        if (Application.isPlaying)
+        if (Application.isPlaying && timeOfDayChanges)
         {
             timeOfDay += Time.deltaTime;
             timeOfDay %= 24;
@@ -57,32 +74,39 @@ public class DayNightCycle : MonoBehaviour
     {
         UpdateLighting();
     }
+
     private void UpdateSun()
     {
 
     }
+
     private void UpdateLighting()
     {
         float timeFraction = timeOfDay / 24;
         if(timeFraction < 5)
         {
             weatherState.currentTimeOfDay = WeatherState.TimeOfDay.NIGHT;
+            weatherState.SetDayTime(false);
         }
         else if (timeFraction > 5 && timeFraction < 6)
         {
             weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAYBREAK;
+            weatherState.SetDayTime(true);
         }
         else if(timeFraction > 6 && timeFraction < 18)
         {
             weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAY;
+            weatherState.SetDayTime(true);
         }
         else if(timeFraction > 18 && timeFraction < 21)
         {
             weatherState.currentTimeOfDay = WeatherState.TimeOfDay.EVENING;
+            weatherState.SetDayTime(true);
         }
         else if (timeFraction > 21)
         {
             weatherState.currentTimeOfDay = WeatherState.TimeOfDay.NIGHT;
+            weatherState.SetDayTime(false);
         }
         RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeFraction);
         RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeFraction);
@@ -93,11 +117,4 @@ public class DayNightCycle : MonoBehaviour
         //print(directionalLightColor.Evaluate(timeFraction));
         //print(V);
     }
-
-    void Start()
-    {
-        
-    }
-
-   
 }

@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Tree Stats
   m_EditorClassIdentifier: 
   plantName: Tree
-  maxHealth: 50
-  seedlingAirPollutionBonus: 1
-  sproutAirPollutionBonus: 2
-  juvenileAirPollutionBonus: 7
-  matureAirPollutionBonus: 10
-  cost: {fileID: 0}
+  maxHealth: 3600
+  seedPrefab: {fileID: 4222843129626314802, guid: 6482a3cc3c478bd44b278f27a007293e, type: 3}
   seedlingImage: {fileID: 21300000, guid: 3085ef116e37c324abc572a82eb015b3, type: 3}
   sproutImage: {fileID: 21300000, guid: 27e0d7951439a4746b0159584d514ea1, type: 3}
   juvenileImage: {fileID: 21300000, guid: 892460e8fa648a142b20d4fa774fa53e, type: 3}
   matureImage: {fileID: 21300000, guid: 1d918ff8294af8e49aa5163cf5695d3d, type: 3}
+  seedlingAirPollutionBonus: 1
+  sproutAirPollutionBonus: 2
+  juvenileAirPollutionBonus: 7
+  matureAirPollutionBonus: 10
   seedlingTileOffset: 2
   sproutTileOffset: 2
   juvenileTileOffset: 2
@@ -34,3 +34,4 @@ MonoBehaviour:
   seedlingGrowTime: 30
   sproutGrowTime: 30
   juvenileGrowTime: 30
+  matureSeedDropTime: 3600

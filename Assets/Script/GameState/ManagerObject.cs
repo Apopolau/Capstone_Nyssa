@@ -8,7 +8,7 @@ public class LevelManagerObject : ScriptableObject
     [SerializeField] EventManager eventManager;
     [SerializeField] LevelProgress levelProgress;
 
-    [SerializeField, Range(1,4)] int currentLevel;
+    [SerializeField, Range(1,4)] public int currentLevel;
 
     public void SetEventManager(EventManager incEventManager)
     {

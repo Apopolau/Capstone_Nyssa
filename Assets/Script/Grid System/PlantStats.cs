@@ -9,6 +9,7 @@ public class PlantStats : ScriptableObject
     [SerializeField] public string plantName;
     [SerializeField] public int maxHealth;
     public enum PlantStage { SEEDLING, SPROUT, JUVENILE, MATURE}
+    [SerializeField] public GameObject seedPrefab;
 
     [Header("Sprites")]
     [SerializeField] public Sprite seedlingImage;
@@ -38,5 +39,6 @@ public class PlantStats : ScriptableObject
     [SerializeField] public int seedlingGrowTime;
     [SerializeField] public int sproutGrowTime;
     [SerializeField] public int juvenileGrowTime;
+    [SerializeField] public int matureSeedDropTime;
 
 }

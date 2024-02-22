@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainManagerScript : MonoBehaviour
 {
-    [SerializeField] LevelManagerObject levelManager;
+    [SerializeField] public LevelManagerObject levelManager;
     [SerializeField] EventManager eventManager;
 
     private void Awake()

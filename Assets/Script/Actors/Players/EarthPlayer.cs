@@ -52,17 +52,24 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public GameObject landFlowerPreviewPrefab;
     [SerializeField] public GameObject waterFlowerPreviewPrefab;
 
+    [Header("Item Drop")]
+    [SerializeField] GameObject treeLogPrefab;
+    private GameObject itemDropped;
+
     [Header("Misc")]
+    public bool enrouteToPlant = false;
     private EarthPlayerAnimator earthAnimator;
     private NavMeshAgent earthAgent;
-    public bool enrouteToPlant = false;
     private PlayerInput playerInput;
     public EarthPlayerControl earthControls;
     [SerializeField] public WeatherState weatherState;
+    private Vector3 OrigPos;
+    public Stat health;
 
     public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
 
+    public event System.Action<int, int> OnHealthChanged;
 
 
     private void Awake()
@@ -72,6 +79,8 @@ public class EarthPlayer : MonoBehaviour
         earthAgent = GetComponent<NavMeshAgent>();
         earthAgent.enabled = false;
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        OrigPos = this.transform.position;
+        health = new Stat(100, 100, false);
     }
 
     // Start is called before the first frame update
@@ -111,10 +120,12 @@ public class EarthPlayer : MonoBehaviour
         {
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.;
+            virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
         else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
+            virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
             virtualMousePosition = Mouse.current.position.value;
         }
         
@@ -217,10 +228,12 @@ public class EarthPlayer : MonoBehaviour
         virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
         {
+            virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
         else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
+            virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
             virtualMousePosition = Mouse.current.position.value;
         }
 
@@ -246,7 +259,7 @@ public class EarthPlayer : MonoBehaviour
         {
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
             {
-                //enrouteToPlant = false;
+                enrouteToPlant = false;
                 isPlantSelected = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
                 Destroy(plantSelected);
@@ -341,7 +354,8 @@ public class EarthPlayer : MonoBehaviour
             }
         }
         plantsPlanted.Add(tempPlantPlanted);
-        activeTileCell.placedObject = plantSelected;
+        int finalIndex = plantsPlanted.Count - 1;
+        activeTileCell.placedObject = plantsPlanted[finalIndex];
         activeTileCell.tileHasBuild = true;
     }
 
@@ -367,13 +381,15 @@ public class EarthPlayer : MonoBehaviour
     /// <summary>
     /// THESE FUNCTIONS HANDLE IF THE PLAYER TRIES TO REMOVE A PLANT
     /// </summary>
+    //Called when the player first picks to use this skill
     public void OnRemovePlant()
     {
-
+        //Mark that we've started the process
+        isRemovalStarted = true;
         //Switch our controls
         earthControls.controls.RemovingPlant.Enable();
         earthControls.controls.EarthPlayerDefault.Disable();
-
+        
         //Turn on the virtual mouse cursor
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
@@ -390,6 +406,7 @@ public class EarthPlayer : MonoBehaviour
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
+    //Called when the player selects a tile to remove a plant from
     public void PlantRemovingHandler()
     {
         StartCoroutine(OnPlantRemoved());
@@ -397,21 +414,23 @@ public class EarthPlayer : MonoBehaviour
 
     private IEnumerator OnPlantRemoved()
     {
+        //Check if the tile they highlighted has a plant on it
         if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
         {
+            //If we're close enough to the plant, we can go ahead and remove it
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
             {
-                //enrouteToPlant = false;
+                enrouteToPlant = false;
                 isRemovalStarted = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
                 Destroy(tileOutline);
-                //This is a good place to initiate a planting animation
+                //Set our animations
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
-                //Set other animations to false
                 StartCoroutine(SuspendActions(plantTime));
                 yield return plantTime;
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, false);
+                
                 RemovePlant(activeTileCell);
 
                 //Switch our controls
@@ -419,12 +438,14 @@ public class EarthPlayer : MonoBehaviour
                 earthControls.controls.RemovingPlant.Disable();
                 virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
             }
+            //If we're not close enough, we'll have to get close enough
             else
             {
                 ApproachPlant();
             }
         }
-        else if (!selectedTile.GetComponent<Cell>().tileHasBuild)
+        //If the tile has no build
+        else if (selectedTile.GetComponent<Cell>().tileIsActivated && !selectedTile.GetComponent<Cell>().tileHasBuild)
         {
             StartCoroutine(InvalidRemovalTile());
         }
@@ -434,9 +455,33 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
+    //Complete the action of removing the plant
     private void RemovePlant(Cell cellToRemoveFrom)
     {
-        Destroy(cellToRemoveFrom.GetPlacedObject());
+        if(cellToRemoveFrom.placedObject != null)
+        {
+            if (cellToRemoveFrom.placedObject.GetComponent<Plant>())
+            {
+                if (cellToRemoveFrom.placedObject.GetComponent<Plant>().stats.plantName == "Tree")
+                {
+
+                    if (cellToRemoveFrom.placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.JUVENILE)
+                    {
+                        itemDropped = Instantiate(treeLogPrefab);
+                        itemDropped.GetComponent<PickupObject>().SetItemQuantity(1);
+                    }
+                    if (cellToRemoveFrom.placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.MATURE)
+                    {
+                        itemDropped = Instantiate(treeLogPrefab);
+                        itemDropped.GetComponent<PickupObject>().SetItemQuantity(3);
+                    }
+                }
+                cellToRemoveFrom.placedObject.GetComponent<Plant>().PlantDies();
+                cellToRemoveFrom.placedObject = null;
+            }
+        }
+        //Set the appropriate flags back to false
+        
         cellToRemoveFrom.tileHasBuild = false;
     }
 
@@ -491,6 +536,34 @@ public class EarthPlayer : MonoBehaviour
             Debug.Log("Not interacting anymore");
             interacting = false;
         }
+    }
+
+    public bool TakeHit()
+    {
+
+        health.current -= 10;
+
+        Debug.Log(health.current);
+
+        if (OnHealthChanged != null)
+            OnHealthChanged(health.max, health.current);
+
+        bool isDead = health.current <= 0;
+        if (isDead)
+        {
+            Respawn();
+        }
+
+        return isDead;
+
+    }
+
+    private void Respawn()
+    {
+
+        health.current = 100;
+        gameObject.transform.position = OrigPos;
+
     }
 
     //Call this if you want to have all player controls turned off for a certain amount of time

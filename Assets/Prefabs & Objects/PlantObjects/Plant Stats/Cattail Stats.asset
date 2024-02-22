@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Cattail Stats
   m_EditorClassIdentifier: 
   plantName: Cattail
-  maxHealth: 0
-  seedlingAirPollutionBonus: 1
-  sproutAirPollutionBonus: 2
-  juvenileAirPollutionBonus: 4
-  matureAirPollutionBonus: 5
-  cost: {fileID: 0}
+  maxHealth: 3600
+  seedPrefab: {fileID: 4222843129626314802, guid: 5dd4253e92774b9498d7346b2cae2dcc, type: 3}
   seedlingImage: {fileID: 21300000, guid: b0898cab77b1a07449a342b98b014565, type: 3}
   sproutImage: {fileID: 21300000, guid: 4941ec1518e9ea449ba42902eb61a3f4, type: 3}
   juvenileImage: {fileID: 21300000, guid: c395c7de6f17c864f836d1159fbdfdea, type: 3}
   matureImage: {fileID: 21300000, guid: b69b641a5819fb44da8d506e1ed1641e, type: 3}
+  seedlingAirPollutionBonus: 1
+  sproutAirPollutionBonus: 2
+  juvenileAirPollutionBonus: 4
+  matureAirPollutionBonus: 5
   seedlingTileOffset: 0
   sproutTileOffset: 0
   juvenileTileOffset: 0
@@ -34,3 +34,4 @@ MonoBehaviour:
   seedlingGrowTime: 30
   sproutGrowTime: 30
   juvenileGrowTime: 30
+  matureSeedDropTime: 3600
