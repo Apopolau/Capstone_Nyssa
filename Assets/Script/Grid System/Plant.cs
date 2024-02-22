@@ -229,6 +229,7 @@ public class Plant : Creatable
     private void DropSeed()
     {
         seed = Instantiate(stats.seedPrefab, this.transform);
+        seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
     }
 
     private void HandleTreeColliders(float colliderRadius, float colliderHeight)
