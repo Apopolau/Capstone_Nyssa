@@ -27,6 +27,7 @@ public class Plant : Creatable
     public PlantStats.PlantStage currentPlantStage;
 
     private GameObject seed;
+    private GameObject logs;
 
     public new event System.Action<int, int> OnHealthChanged;
 
@@ -223,12 +224,6 @@ public class Plant : Creatable
             DropSeed();
             growthPoints = 0;
         }
-        else
-        {
-
-        }
-
-
     }
 
     private void DropSeed()
@@ -333,6 +328,22 @@ public class Plant : Creatable
 
     public void PlantDies()
     {
+        if (stats.plantName == "Tree")
+        {
+
+            if (currentPlantStage == PlantStats.PlantStage.JUVENILE)
+            {
+                logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
+                logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
+                logs.GetComponent<PickupObject>().SetItemQuantity(1);
+            }
+            if (currentPlantStage == PlantStats.PlantStage.MATURE)
+            {
+                logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
+                logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
+                logs.GetComponent<PickupObject>().SetItemQuantity(3);
+            }
+        }
         tilePlantedOn.tileHasBuild = false;
         tilePlantedOn.placedObject = null;
         Destroy(this.gameObject);

@@ -33,7 +33,7 @@ public abstract class Animal : MonoBehaviour
     public bool hasShelter = false;
     public bool hasAnyFood = false;
 
-    protected abstract void UpdateAnimalState();
+    protected abstract IEnumerator UpdateAnimalState();
 
     public abstract bool GetHungryState();
     public abstract bool GetThirstyState();
