@@ -60,6 +60,11 @@ public class PickupObject : Interactable
             }
         }
     }
+
+    public void SetItemQuantity(int newQuantity)
+    {
+        item.Quantity = newQuantity;
+    }
     
 
 }

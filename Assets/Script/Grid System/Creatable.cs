@@ -2,8 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Creatable : MonoBehaviour
+public abstract class Creatable : MonoBehaviour
 {
+    public event System.Action<int, int> OnHealthChanged;
+
+    public Stat health;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,4 +19,6 @@ public class Creatable : MonoBehaviour
     {
         
     }
+
+    public abstract void TakeDamage(int damageTaken);
 }

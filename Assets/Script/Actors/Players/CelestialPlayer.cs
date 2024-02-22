@@ -17,6 +17,7 @@ public class CelestialPlayer : MonoBehaviour
     private NavMeshAgent celestialAgent;
 
     [Header("Rain System")]
+    [SerializeField] WeatherState weatherState;
     [SerializeField] public bool isRaining=false;
     [SerializeField] public GameObject RainParticleSystem;
 
@@ -56,7 +57,7 @@ public class CelestialPlayer : MonoBehaviour
 
 
     [Header("Respawn")]
-    private int healthPoints;
+    public Stat health;
     public Vector3 OrigPos = new Vector3(20,7,-97);
     [SerializeField] public bool isDying = false;
     [SerializeField] public bool isRespawning = false;
@@ -80,7 +81,7 @@ public class CelestialPlayer : MonoBehaviour
     public GameObject enemyTarget;
     public Vector3 enemyLocation;
 
-
+    public event System.Action<int, int> OnHealthChanged;
 
 
 
@@ -90,8 +91,8 @@ public class CelestialPlayer : MonoBehaviour
         celestialAgent = GetComponent<NavMeshAgent>();
         celestialAgent.enabled = false;
         celestialControls = GetComponent<CelestialPlayerControls>();
-        healthPoints=100;
-       virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        health = new Stat(100, 100, false);
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
 
@@ -161,10 +162,14 @@ public class CelestialPlayer : MonoBehaviour
     public bool TakeHit()
     {
 
-       healthPoints -= 10;
+       health.current -= 10;
         
-        Debug.Log(healthPoints);
-        bool isDead = healthPoints <= 0;
+        Debug.Log(health.current);
+
+        if (OnHealthChanged != null)
+            OnHealthChanged(health.max, health.current);
+
+        bool isDead = health.current <= 0;
         if (isDead)
         {
            Respawn();
@@ -196,7 +201,7 @@ public class CelestialPlayer : MonoBehaviour
     private void Respawn()
     {
 
-        healthPoints = 100;
+        health.current = 100;
         gameObject.transform.position = OrigPos;
 
     }
@@ -205,11 +210,11 @@ public class CelestialPlayer : MonoBehaviour
 
     public int GetHealth()
     {
-        return healthPoints;
+        return health.current;
     }
     public void SetHealth(int newHealthPoint)
     {
-        healthPoints = newHealthPoint;
+        health.current = newHealthPoint;
 
     }
     public void SetLocation (Vector3 newPosition)
@@ -221,6 +226,7 @@ public class CelestialPlayer : MonoBehaviour
     public void OnRainDropSelected()
     {
         RainParticleSystem.SetActive(true);
+        weatherState.skyState = WeatherState.SkyState.RAINY;
         isRaining = true;
 
     }
@@ -232,6 +238,7 @@ public class CelestialPlayer : MonoBehaviour
             yield return new WaitForSeconds(5f);
             Debug.Log("******It is no longer raining****");
 
+            weatherState.skyState = WeatherState.SkyState.CLEAR;
             RainParticleSystem.SetActive(false);
             isRaining = false;
 

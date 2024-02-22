@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
     public GameObject playerObj;
     public EnemyStats enemyStats;
     public CelestialPlayer player;
-    private int enemyHealthPoints;
+    public Stat health;
     [SerializeField] bool isFirst;
     [SerializeField] public bool isDying =false;
 
@@ -32,9 +32,11 @@ public class Enemy : MonoBehaviour
 
     private WaitForSeconds attackTime = new WaitForSeconds(1);
 
+    public event System.Action<int, int> OnHealthChanged;
+
     void Awake()
     {
-        enemyHealthPoints= enemyStats.maxHealth;
+        health = new Stat(enemyStats.maxHealth, enemyStats.maxHealth, false);
         enemyAnimator = GetComponent<OilMonsterAnimator>();
     }
 
@@ -61,12 +63,16 @@ public class Enemy : MonoBehaviour
     
     public bool TakeHit( int hitPoints)
     {
-        
-       
-        enemyHealthPoints -=hitPoints;
-        bool isDead = enemyHealthPoints <= 0;
 
-        Debug.Log("Enemy:" + enemyHealthPoints);
+
+        health.current -= hitPoints;
+        bool isDead = health.current <= 0;
+
+        Debug.Log("Enemy:" + health.current);
+
+        if (OnHealthChanged != null)
+            OnHealthChanged(health.max, health.current);
+
         if (isDead) {
 
             Debug.Log("DIEEEEEEEE" );

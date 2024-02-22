@@ -31,18 +31,22 @@ public class LevelOneFirstEnemyDead : MonoBehaviour
         //Use some kind of metric to catch if the monster this is attached to is dead or dying
         //Make sure it's able to complete this function before you destroy the gameobject (the monster) it's attached to
         //
-        if (player.enemyTarget.GetComponent<Enemy>().isDying)
-        //Call this function
+        if(player.enemyTarget != null)
         {
-            //Instantiate the tree seed here
+            if (player.enemyTarget.GetComponent<Enemy>().isDying)
+            //Call this function
+            {
+                //Instantiate the tree seed here
 
-            levelOneEvents.OnFirstMonsterDefeated();
+                levelOneEvents.OnFirstMonsterDefeated();
 
-            //start dialouge after monester dies
-            monsterDeadDialouge.TriggerDialogue();
-            treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, pos, Quaternion.identity);
-            //Instantiate the tree seed here
+                //start dialouge after monester dies
+                monsterDeadDialouge.TriggerDialogue();
+                treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, pos, Quaternion.identity);
+                //Instantiate the tree seed here
 
+            }
         }
+        
     }
 }
