@@ -10,6 +10,7 @@ public class PlantStats : ScriptableObject
     [SerializeField] public int maxHealth;
     public enum PlantStage { SEEDLING, SPROUT, JUVENILE, MATURE}
     [SerializeField] public GameObject seedPrefab;
+    [SerializeField] public GameObject treeLogPrefab;
 
     [Header("Sprites")]
     [SerializeField] public Sprite seedlingImage;

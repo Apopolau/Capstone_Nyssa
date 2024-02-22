@@ -35,6 +35,7 @@ public class Plant : Creatable
 
     private GameObject seed;
     
+    private GameObject logs;
 
     public new event System.Action<int, int> OnHealthChanged;
 
@@ -231,17 +232,12 @@ public class Plant : Creatable
             DropSeed();
             growthPoints = 0;
         }
-        else
-        {
-
-        }
-
-
     }
 
     private void DropSeed()
     {
         seed = Instantiate(stats.seedPrefab, this.transform);
+        seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
     }
 
     private void HandleTreeColliders(float colliderRadius, float colliderHeight)
@@ -380,6 +376,22 @@ public class Plant : Creatable
 
     public void PlantDies()
     {
+        if (stats.plantName == "Tree")
+        {
+
+            if (currentPlantStage == PlantStats.PlantStage.JUVENILE)
+            {
+                logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
+                logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
+                logs.GetComponent<PickupObject>().SetItemQuantity(1);
+            }
+            if (currentPlantStage == PlantStats.PlantStage.MATURE)
+            {
+                logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
+                logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
+                logs.GetComponent<PickupObject>().SetItemQuantity(3);
+            }
+        }
         tilePlantedOn.tileHasBuild = false;
         tilePlantedOn.placedObject = null;
         Destroy(this.gameObject);
