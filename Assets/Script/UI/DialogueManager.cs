@@ -117,17 +117,17 @@ public class DialogueManager : MonoBehaviour
         {
             characterIconLeft.sprite = currentLine.character.iconLeft;
             // Fade in characterIconLeft
-            characterIconLeft.CrossFadeAlpha(1f, 0.5f, true);
+            characterIconLeft.CrossFadeAlpha(1f, 0f, true);
             // Fade out characterIconRight
-            characterIconRight.CrossFadeAlpha(0f, 0.5f, true);
+            characterIconRight.CrossFadeAlpha(0f, 0f, true);
         }
         else if (!currentLine.character.isLeft)
         {
             characterIconRight.sprite = currentLine.character.iconRight;
             // Fade in characterIconRight
-            characterIconRight.CrossFadeAlpha(1f, 0.5f, true);
+            characterIconRight.CrossFadeAlpha(1f, 0f, true);
             // Fade out characterIconLeft
-            characterIconLeft.CrossFadeAlpha(0f, 0.5f, true);
+            characterIconLeft.CrossFadeAlpha(0f, 0f, true);
         }
 
 

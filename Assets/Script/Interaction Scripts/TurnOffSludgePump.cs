@@ -8,6 +8,10 @@ public class TurnOffSludgePump : Interactable
     //[SerializeField] Item item;
     //[SerializeField] Inventory inventory;
     [SerializeField] LevelOneEvents levelOneEvents;
+    public DialogueTrigger sludgeOffDialouge;
+    public DialogueTrigger sludgeDialougeEarth;
+    public DialogueTrigger sludgeDialougeCelest;
+
 
     //public GameObject boxRange;
 
@@ -54,7 +58,26 @@ public class TurnOffSludgePump : Interactable
             Debug.Log("Turned off the sludge pump");
             levelOneEvents.OnPumpShutOff();
             uiObject.SetActive(false);
-            //boxRange.SetActive(false);
+            sludgeOffDialouge.TriggerDialogue(); //trigger dialouge after sludge is turned off
+        }
+    }
+
+
+    // trigger dialouge when pump is encountred
+     private void OnTriggerEnter(Collider other)
+    {
+        // Check if earthPlayer enterted area
+        if (other.CompareTag("Player1"))
+        {   
+            sludgeDialougeEarth.TriggerDialogue();
+            // Destroy the GameObject collider
+           // Destroy(gameObject);
+        }
+        else if (other.CompareTag("Player2"))
+        {
+           sludgeDialougeCelest.TriggerDialogue();
+            // Destroy the GameObject collider
+            //Destroy(gameObject);
         }
     }
 }
