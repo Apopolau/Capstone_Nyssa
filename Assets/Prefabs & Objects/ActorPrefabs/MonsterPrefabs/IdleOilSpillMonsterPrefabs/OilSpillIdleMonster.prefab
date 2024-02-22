@@ -46,8 +46,9 @@ GameObject:
   - component: {fileID: 1600394031809458323}
   - component: {fileID: 5804434315703889750}
   - component: {fileID: 6719677676223621316}
-  - component: {fileID: 8461326959070330374}
   - component: {fileID: 564950624634221338}
+  - component: {fileID: 3325454151170343581}
+  - component: {fileID: 4840897772112739693}
   m_Layer: 0
   m_Name: OilSpillIdleMonster
   m_TagString: Enemy
@@ -69,9 +70,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3610001726377940427}
-  - {fileID: 1779240644712959598}
   - {fileID: 8566001897504401736}
   - {fileID: 1695010440449814950}
+  - {fileID: 8139256438206007730}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7886797500331793598
@@ -203,38 +204,6 @@ MonoBehaviour:
   animator: {fileID: 0}
   IfWalkingHash: 0
   IfAttackingHash: 0
---- !u!114 &4840897772112739693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2090664895178657524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d294fb0d0f162d44bfbd80440072a51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
-  target: {fileID: 1695010440449814950}
---- !u!114 &3325454151170343581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2090664895178657524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3285e2465e5a0274d99ab61586f9a8d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelOneEvents: {fileID: 0}
-  levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
-  monsterDeadDialouge: {fileID: 564950624634221338}
-  treeSeedPrefab: {fileID: 4222843129626314802, guid: 6482a3cc3c478bd44b278f27a007293e, type: 3}
-  monsterDeadDialouge: {fileID: 0}
-  player: {fileID: 0}
 --- !u!114 &564950624634221338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,6 +347,36 @@ MonoBehaviour:
         isLeft: 0
       line: Stay safe
       lineFR: Soyez prudent.
+--- !u!114 &3325454151170343581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090664895178657524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3285e2465e5a0274d99ab61586f9a8d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelOneEvents: {fileID: 0}
+  levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
+  monsterDeadDialouge: {fileID: 0}
+  player: {fileID: 0}
+--- !u!114 &4840897772112739693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090664895178657524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d294fb0d0f162d44bfbd80440072a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
+  target: {fileID: 1695010440449814950}
 --- !u!1 &2898012355351432001
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +437,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2618057904473333922}
+  - {fileID: 6820321036821556735}
   m_Father: {fileID: 2155472256782070553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8421384319438521502
@@ -532,42 +531,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5847191815604956589}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
---- !u!4 &2618057904473333922 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
-  m_PrefabInstance: {fileID: 2584939426512897865}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3395403402299652632 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
-  m_PrefabInstance: {fileID: 2584939426512897865}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &5847191815604956589
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3395403402299652632}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 00e75cf353795ae4dbded31624db1c81, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &6820321036821556735 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
