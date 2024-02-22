@@ -16,6 +16,13 @@ public class Plant : Creatable
     [SerializeField] private Stat storedSunlight;
     [SerializeField] private Stat storedWater;
     //[SerializeField] storedSunlight.current;
+    //private Stat storedSunlight;
+    //private Stat storedWater;
+
+    // Reference to the UI elements
+    public GameObject waterUI;
+    public GameObject sunlightUI;
+    
     public SpriteRenderer[] plantVisuals;
     private Cell tilePlantedOn;
     bool waterPlant = false;
@@ -27,6 +34,8 @@ public class Plant : Creatable
     public PlantStats.PlantStage currentPlantStage;
 
     private GameObject seed;
+    
+    private GameObject logs;
 
     public new event System.Action<int, int> OnHealthChanged;
 
@@ -223,17 +232,12 @@ public class Plant : Creatable
             DropSeed();
             growthPoints = 0;
         }
-        else
-        {
-
-        }
-
-
     }
 
     private void DropSeed()
     {
         seed = Instantiate(stats.seedPrefab, this.transform);
+        seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
     }
 
     private void HandleTreeColliders(float colliderRadius, float colliderHeight)
@@ -272,25 +276,64 @@ public class Plant : Creatable
 
     private void ResolveStats()
     {
-        //Change water state
-        if(storedWater.current < storedWater.max / 4)
+        
+        bool waterLow = storedWater.current < storedWater.max / 4;
+        bool sunlightLow = storedSunlight.current < storedSunlight.max / 4;
+
+        if (waterLow && !sunlightLow)
         {
-            storedWater.low = true;
+            // Water is low but sunlight is not, prioritize water UI
+            waterUI.SetActive(true);
+            sunlightUI.SetActive(false);
+            Debug.Log("Water is needed");
+        }
+        else if (!waterLow && sunlightLow)
+        {
+            // Sunlight is low but water is not, prioritize sunlight UI
+            waterUI.SetActive(false);
+            sunlightUI.SetActive(true);
+            Debug.Log("Sunlight is needed");
+        }
+        else if (waterLow && sunlightLow)
+        {
+            // Both water and sunlight are low, prioritize water UI
+            waterUI.SetActive(true);
+            sunlightUI.SetActive(false);
+            Debug.Log("Water is needed");
         }
         else
         {
+            // Both water and sunlight are not low, deactivate both UIs
+            waterUI.SetActive(false);
+            sunlightUI.SetActive(false);
+        }
+        
+        /*
+        // Change water state
+        if (storedWater.current < storedWater.max / 4)
+        {
+            storedWater.low = true;
+            waterUI.SetActive(true); // Activate water UI
+            Debug.Log("Water is needed");
+        }
+        else if (storedWater.current > storedWater.max / 4)
+        {
             storedWater.low = false;
+            waterUI.SetActive(false); // Deactivate water UI
+            Debug.Log("Water is not needed anymore");
         }
 
-        //Change sunlight state
+        // Change sunlight state
         if (storedSunlight.current < storedSunlight.max / 4)
         {
             storedSunlight.low = true;
+            sunlightUI.SetActive(true); // Activate sunlight UI
         }
         else
         {
             storedSunlight.low = false;
-        }
+            sunlightUI.SetActive(false); // Deactivate sunlight UI
+        } */
 
         //Change health state
         if (health.current < health.max / 4)
@@ -333,6 +376,22 @@ public class Plant : Creatable
 
     public void PlantDies()
     {
+        if (stats.plantName == "Tree")
+        {
+
+            if (currentPlantStage == PlantStats.PlantStage.JUVENILE)
+            {
+                logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
+                logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
+                logs.GetComponent<PickupObject>().SetItemQuantity(1);
+            }
+            if (currentPlantStage == PlantStats.PlantStage.MATURE)
+            {
+                logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
+                logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
+                logs.GetComponent<PickupObject>().SetItemQuantity(3);
+            }
+        }
         tilePlantedOn.tileHasBuild = false;
         tilePlantedOn.placedObject = null;
         Destroy(this.gameObject);
