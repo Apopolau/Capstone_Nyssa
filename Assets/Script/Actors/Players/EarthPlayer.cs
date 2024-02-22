@@ -58,7 +58,7 @@ public class EarthPlayer : MonoBehaviour
 
     [Header("Misc")]
     public bool enrouteToPlant = false;
-    private EarthPlayerAnimator earthAnimator;
+    public EarthPlayerAnimator earthAnimator;
     private NavMeshAgent earthAgent;
     private PlayerInput playerInput;
     public EarthPlayerControl earthControls;
@@ -554,6 +554,11 @@ public class EarthPlayer : MonoBehaviour
     }
 
     //Call this if you want to have all player controls turned off for a certain amount of time
+    public void CallSuspendActions(WaitForSeconds waitTime)
+    {
+        StartCoroutine(SuspendActions(waitTime));
+    }
+
     private IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
         earthControls.controls.EarthPlayerDefault.Disable();

@@ -188,6 +188,17 @@ public class Inventory : ScriptableObject
             }
         }
         return quantity;
+    public bool HasEnoughItems(string itemName, int quantity)
+    {
+
+        foreach (var item in items)
+        {
+            if (item.ItemName == itemName && item.Quantity >= quantity)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
