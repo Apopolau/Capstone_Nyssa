@@ -31,7 +31,10 @@ public class LevelOneFirstEnemyDead : MonoBehaviour
         //Use some kind of metric to catch if the monster this is attached to is dead or dying
         //Make sure it's able to complete this function before you destroy the gameobject (the monster) it's attached to
         //
-        if (player.enemyTarget.GetComponent<Enemy>().isDying)
+
+       if(player.enemyTarget == null){
+        }
+       else if (player.enemyTarget.GetComponent<Enemy>().isDying && player.enemyTarget!=null)
         //Call this function
         {
             //Instantiate the tree seed here

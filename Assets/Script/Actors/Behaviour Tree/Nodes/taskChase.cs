@@ -9,12 +9,14 @@ public class taskChase : BTNode
     private Transform thisTarget;
     NavMeshAgent thisAgent;
     CelestialPlayer thisPlayer;
+    Rigidbody rb;
 
     public taskChase(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player)
     {
         thisAgent = enemyMeshAgent;
         thisTarget = target;
         thisPlayer = player;
+
     }
     
 
@@ -28,16 +30,20 @@ public class taskChase : BTNode
        
         {
             Debug.Log("I'm chasing abby");
-            thisAgent.SetDestination(thisTarget.position);
+
+
+          thisAgent.SetDestination(thisTarget.position);
+           
+        
             if (distance  <= 10f)
             {
-                //Debug.Log(distance);
+                Debug.Log("broether i am close and can attack" +distance);
                 thisAgent.GetComponent<Enemy>().inAttackRange = true;
             }
             state = NodeState.RUNNING;
         }
       
-       /* else if (thisAgent.GetComponent<Enemy>().inAttackRange)
+      /*  else if (thisAgent.GetComponent<Enemy>().inAttackRange)
         {
            // Debug.Log(distance);
             Debug.Log("im close enough");

@@ -44,8 +44,9 @@ public class TaskPatrol : BTNode
             float distance = Vector3.Distance(transformPos.position, wPoint.position);
             
             //check if the enemy has reached the waypoint, if it has pause for a few seconds
-            if (distance < 1.5f)
+            if (distance < 2f)
             {
+           
                 rb.MovePosition( wPoint.position);
                 waitCounter = 0f;
                 iswaiting = true;

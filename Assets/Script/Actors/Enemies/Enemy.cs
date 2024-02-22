@@ -98,14 +98,14 @@ public class Enemy : MonoBehaviour
             playerLocation = other.transform.position;
      
         }
-        if (other.gameObject.tag == "plant")
+       /* if (other.gameObject.tag == "plant")
         {
             //Player is in range of enemy, in invading monster they can pursue the player
             seesPlayer = true;
            // Debug.Log("~~~~~~~~~~~~~~~~~~~Entered collision with " + other.gameObject.name);
             playerLocation = other.transform.position;
 
-        }
+        }*/
 
 
     }

@@ -76,8 +76,7 @@ public class CelestialPlayer : MonoBehaviour
 
     //Interaction with the player
     public bool enemySeen = false;
-
-    public GameObject enemyTarget;
+    public GameObject enemyTarget= null;
     public Vector3 enemyLocation;
 
 
@@ -87,6 +86,7 @@ public class CelestialPlayer : MonoBehaviour
 
     private void Awake()
     {
+      
         celestialAgent = GetComponent<NavMeshAgent>();
         celestialAgent.enabled = false;
         celestialControls = GetComponent<CelestialPlayerControls>();
@@ -114,10 +114,13 @@ public class CelestialPlayer : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Entered collision with " + other.gameObject.name);
-        if (other.gameObject.tag == "enemy")
+        if ((other.gameObject.tag == "Enemy"))
         {
             //Player is in range of enemy, in invading monster they can pursue the player
-           enemySeen = true;
+
+
+            Debug.Log("I've collided with enemy");
+                enemySeen = true;
           
            enemyLocation= other.transform.position;
             enemyTarget = other.gameObject;
@@ -128,7 +131,7 @@ public class CelestialPlayer : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {   
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.tag == "Enemy" )
         {
            // Debug.Log("Entered collision with " + other.gameObject.name);
             //Player is in range of enemy, in invading monster they can pursue the player
@@ -149,7 +152,10 @@ public class CelestialPlayer : MonoBehaviour
             enemySeen = false;
 
             enemyLocation = other.transform.position;
-          
+
+            //enemyTarget = null;
+
+
 
         }
     }
