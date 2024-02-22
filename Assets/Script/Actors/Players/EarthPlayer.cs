@@ -259,7 +259,7 @@ public class EarthPlayer : MonoBehaviour
         {
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
             {
-                //enrouteToPlant = false;
+                enrouteToPlant = false;
                 isPlantSelected = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
                 Destroy(plantSelected);
@@ -354,7 +354,8 @@ public class EarthPlayer : MonoBehaviour
             }
         }
         plantsPlanted.Add(tempPlantPlanted);
-        activeTileCell.placedObject = plantSelected;
+        int finalIndex = plantsPlanted.Count - 1;
+        activeTileCell.placedObject = plantsPlanted[finalIndex];
         activeTileCell.tileHasBuild = true;
     }
 
@@ -380,13 +381,15 @@ public class EarthPlayer : MonoBehaviour
     /// <summary>
     /// THESE FUNCTIONS HANDLE IF THE PLAYER TRIES TO REMOVE A PLANT
     /// </summary>
+    //Called when the player first picks to use this skill
     public void OnRemovePlant()
     {
-
+        //Mark that we've started the process
+        isRemovalStarted = true;
         //Switch our controls
         earthControls.controls.RemovingPlant.Enable();
         earthControls.controls.EarthPlayerDefault.Disable();
-
+        
         //Turn on the virtual mouse cursor
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
@@ -403,6 +406,7 @@ public class EarthPlayer : MonoBehaviour
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
+    //Called when the player selects a tile to remove a plant from
     public void PlantRemovingHandler()
     {
         StartCoroutine(OnPlantRemoved());
@@ -410,21 +414,23 @@ public class EarthPlayer : MonoBehaviour
 
     private IEnumerator OnPlantRemoved()
     {
+        //Check if the tile they highlighted has a plant on it
         if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
         {
+            //If we're close enough to the plant, we can go ahead and remove it
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
             {
-                //enrouteToPlant = false;
+                enrouteToPlant = false;
                 isRemovalStarted = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
                 Destroy(tileOutline);
-                //This is a good place to initiate a planting animation
+                //Set our animations
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
-                //Set other animations to false
                 StartCoroutine(SuspendActions(plantTime));
                 yield return plantTime;
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, false);
+                
                 RemovePlant(activeTileCell);
 
                 //Switch our controls
@@ -432,12 +438,14 @@ public class EarthPlayer : MonoBehaviour
                 earthControls.controls.RemovingPlant.Disable();
                 virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
             }
+            //If we're not close enough, we'll have to get close enough
             else
             {
                 ApproachPlant();
             }
         }
-        else if (!selectedTile.GetComponent<Cell>().tileHasBuild)
+        //If the tile has no build
+        else if (selectedTile.GetComponent<Cell>().tileIsActivated && !selectedTile.GetComponent<Cell>().tileHasBuild)
         {
             StartCoroutine(InvalidRemovalTile());
         }
@@ -447,25 +455,32 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
+    //Complete the action of removing the plant
     private void RemovePlant(Cell cellToRemoveFrom)
     {
-        if (cellToRemoveFrom.placedObject.GetComponent<Plant>())
+        if(cellToRemoveFrom.placedObject != null)
         {
-            if(cellToRemoveFrom.placedObject.GetComponent<Plant>().stats.plantName == "Tree")
+            if (cellToRemoveFrom.placedObject.GetComponent<Plant>())
             {
-                itemDropped = Instantiate(treeLogPrefab);
-                if (cellToRemoveFrom.placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.JUVENILE)
+                if (cellToRemoveFrom.placedObject.GetComponent<Plant>().stats.plantName == "Tree")
                 {
-                    itemDropped.GetComponent<PickupObject>().SetItemQuantity(1);
+
+                    if (cellToRemoveFrom.placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.JUVENILE)
+                    {
+                        itemDropped = Instantiate(treeLogPrefab);
+                        itemDropped.GetComponent<PickupObject>().SetItemQuantity(1);
+                    }
+                    if (cellToRemoveFrom.placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.MATURE)
+                    {
+                        itemDropped = Instantiate(treeLogPrefab);
+                        itemDropped.GetComponent<PickupObject>().SetItemQuantity(3);
+                    }
                 }
-                if (cellToRemoveFrom.placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.MATURE)
-                {
-                    itemDropped.GetComponent<PickupObject>().SetItemQuantity(3);
-                }
+                cellToRemoveFrom.placedObject.GetComponent<Plant>().PlantDies();
+                cellToRemoveFrom.placedObject = null;
             }
-            cellToRemoveFrom.GetPlacedObject().GetComponent<Plant>().PlantDies();
-            cellToRemoveFrom.placedObject = null;
         }
+        //Set the appropriate flags back to false
         
         cellToRemoveFrom.tileHasBuild = false;
     }

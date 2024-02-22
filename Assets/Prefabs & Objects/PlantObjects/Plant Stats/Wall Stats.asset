@@ -13,21 +13,20 @@ MonoBehaviour:
   m_Name: Wall Stats
   m_EditorClassIdentifier: 
   plantName: Bramble
-  maxHealth: 0
-  airPollutionBonus: 0
-  cost: {fileID: 0}
+  maxHealth: 3600
+  seedPrefab: {fileID: 0}
   seedlingImage: {fileID: 0}
   sproutImage: {fileID: 0}
   juvenileImage: {fileID: 0}
   matureImage: {fileID: 0}
-  seedlingYOffset: 1
-  sproutYOffset: 1
-  juvenileYOffset: 1
-  matureYOffset: 1
-  seedlingZOffset: 0
-  sproutZOffset: 0
-  juvenileZOffset: 0
-  matureZOffset: 0
+  seedlingAirPollutionBonus: 0
+  sproutAirPollutionBonus: 0
+  juvenileAirPollutionBonus: 0
+  matureAirPollutionBonus: 0
+  seedlingTileOffset: 0
+  sproutTileOffset: 0
+  juvenileTileOffset: 0
+  matureTileOffset: 0
   seedlingScale: 1
   sproutScale: 1
   juvenileScale: 1
@@ -35,3 +34,4 @@ MonoBehaviour:
   seedlingGrowTime: 40
   sproutGrowTime: 40
   juvenileGrowTime: 40
+  matureSeedDropTime: 0

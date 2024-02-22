@@ -13,16 +13,16 @@ MonoBehaviour:
   m_Name: Lily Stats
   m_EditorClassIdentifier: 
   plantName: Lily
-  maxHealth: 0
-  seedlingAirPollutionBonus: 1
-  sproutAirPollutionBonus: 2
-  juvenileAirPollutionBonus: 5
-  matureAirPollutionBonus: 6
-  cost: {fileID: 0}
+  maxHealth: 3600
+  seedPrefab: {fileID: 0}
   seedlingImage: {fileID: 21300000, guid: 8d964086f673ab24faf7f04a74516f99, type: 3}
   sproutImage: {fileID: 21300000, guid: 770431f1e992a24409cc35b072e282f3, type: 3}
   juvenileImage: {fileID: 21300000, guid: dab9e373c880a944cb7efdb9ec8bd969, type: 3}
   matureImage: {fileID: 21300000, guid: e40af02beae0b154a94c05b859dd9c17, type: 3}
+  seedlingAirPollutionBonus: 1
+  sproutAirPollutionBonus: 2
+  juvenileAirPollutionBonus: 5
+  matureAirPollutionBonus: 6
   seedlingTileOffset: 0
   sproutTileOffset: 0
   juvenileTileOffset: 0
@@ -34,3 +34,4 @@ MonoBehaviour:
   seedlingGrowTime: 40
   sproutGrowTime: 40
   juvenileGrowTime: 40
+  matureSeedDropTime: 3600

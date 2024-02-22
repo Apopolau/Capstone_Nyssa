@@ -225,18 +225,22 @@ public class CelestialPlayer : MonoBehaviour
     //if player selects raindrop
     public void OnRainDropSelected()
     {
-        RainParticleSystem.SetActive(true);
-        weatherState.skyState = WeatherState.SkyState.RAINY;
-        isRaining = true;
+        if (!isRaining)
+        {
+            RainParticleSystem.SetActive(true);
+            weatherState.skyState = WeatherState.SkyState.RAINY;
+            isRaining = true;
+        }
+        
 
     }
     public IEnumerator ResetRain()
     {
-        Debug.Log("It is currently raining");
+        //Debug.Log("It is currently raining");
         if (isRaining)
         {
-            yield return new WaitForSeconds(5f);
-            Debug.Log("******It is no longer raining****");
+            yield return new WaitForSeconds(10f);
+            //Debug.Log("******It is no longer raining****");
 
             weatherState.skyState = WeatherState.SkyState.CLEAR;
             RainParticleSystem.SetActive(false);
