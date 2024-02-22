@@ -8505,7 +8505,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: e0acc7f8a78ef8142912a199e9d7b526, type: 2}
     - target: {fileID: 4687744544096372904, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23.486988
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4687744544096372904, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8513,7 +8513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4687744544096372904, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -61.518036
+      value: -84.7
       objectReference: {fileID: 0}
     - target: {fileID: 4687744544096372904, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8876,6 +8876,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3d3dc2b0eb9021c45b8a0fbb90fea322, type: 2}
+    - target: {fileID: 4215727425992244839, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
+      propertyPath: enviroState
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4256419426133788451, guid: 57005484c33949a4d92278af5a39eb80, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -9886,29 +9890,70 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 445789769343514806, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.47069
+      objectReference: {fileID: 0}
+    - target: {fileID: 445789769343514806, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3.4341097
+      objectReference: {fileID: 0}
+    - target: {fileID: 445789769343514806, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 54.5
+      value: 45.6
       objectReference: {fileID: 0}
     - target: {fileID: 445789769343514806, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 56.3
+      value: 57
       objectReference: {fileID: 0}
     - target: {fileID: 445789769343514806, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7261042
+      value: 0.7123684
       objectReference: {fileID: 0}
     - target: {fileID: 445789769343514806, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6875848
+      value: 0.7018058
       objectReference: {fileID: 0}
     - target: {fileID: 445789769343514806, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 86.878
+      value: 89.144
       objectReference: {fileID: 0}
     - target: {fileID: 994840208409094369, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_Name
       value: DialougeTriggers
       objectReference: {fileID: 0}
+    - target: {fileID: 1296093042031711168, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: dialogue.dialogueLines.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296093042031711168, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[0].line
+      value: " It seems like there\u2019s a path up on the other side\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296093042031711168, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[1].line
+      value: ' I think I could make a bridge to get across, and clear those rocks.
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296093042031711168, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[0].lineFR
+      value: "On dirait qu\u2019il y a un chemin de l\u2019autre c\xF4t\xE9.\r\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296093042031711168, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[1].lineFR
+      value: 'Je crois que je peux construire un pont afin de traverser et bouger
+        ces roches.
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1296093042031711168, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[1].character.iconLeft
+      value: 
+      objectReference: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+    - target: {fileID: 1296093042031711168, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: dialogue.dialogueLines.Array.data[1].character.iconRight
+      value: 
+      objectReference: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
     - target: {fileID: 1761225087951360150, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_LocalPosition.x
       value: -70
@@ -9948,6 +9993,38 @@ PrefabInstance:
     - target: {fileID: 1761225087951360150, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5100849740859043839, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2228
+      objectReference: {fileID: 0}
+    - target: {fileID: 5100849740859043839, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5100849740859043839, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 117.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5100849740859043839, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5100849740859043839, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5100849740859043839, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 5100849740859043839, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5100849740859043839, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 8848819249392660266, guid: ae8f866e54c4f414681ad4a799406cbc, type: 3}
       propertyPath: m_Size.z
@@ -20902,67 +20979,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2134842152}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &2146481563
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -75.77485
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.4006958
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -48.743355
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1139449237558272451, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_Name
-      value: TreePrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
 --- !u!1 &2090664895559583413 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2090664895178657524, guid: f152c6031e4b2944cae7423592e76233, type: 3}
@@ -21052,6 +21068,10 @@ PrefabInstance:
       propertyPath: levelOneEvents
       value: 
       objectReference: {fileID: 645999400}
+    - target: {fileID: 3325454151170343581, guid: f152c6031e4b2944cae7423592e76233, type: 3}
+      propertyPath: monsterDeadDialouge
+      value: 
+      objectReference: {fileID: 4809181396229127119}
     - target: {fileID: 5804434315703889750, guid: f152c6031e4b2944cae7423592e76233, type: 3}
       propertyPath: isFirst
       value: 0
@@ -21132,4 +21152,3 @@ SceneRoots:
   - {fileID: 1486187507}
   - {fileID: 376487869}
   - {fileID: 951234305}
-  - {fileID: 2146481563}
