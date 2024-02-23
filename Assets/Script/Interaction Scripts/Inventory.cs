@@ -64,6 +64,28 @@ public class Inventory : ScriptableObject
         }
     }
 
+    public void RemoveItemByName(string itemName, int quantity)
+    {
+        // Find the item with the specified name and remove it
+        Item itemToRemove = items.Find(item => item.ItemName == itemName);
+        if (itemToRemove != null)
+        {
+            Debug.Log($"Removing item {itemToRemove.ItemName} based on key press");
+            RemoveItem(itemToRemove, quantity);
+
+            // Add a log message to check the current inventory after removal
+            Debug.Log("Current inventory:");
+            foreach (var item in items)
+            {
+                Debug.Log($"Item: {item.ItemName}, Quantity: {item.Quantity}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"You do not have the required item in the inventory.");
+        }
+    }
+
     private void RefreshUI()
     {
         int i = 0;
@@ -176,7 +198,7 @@ public class Inventory : ScriptableObject
 
     public int GetQuantityByItemType(string itemType)
     {
-         Debug.Log($"GetQuantityByItemType() called for itemType: {itemType}");
+        Debug.Log($"GetQuantityByItemType() called for itemType: {itemType}");
 
         int quantity = 0;
         foreach (var item in items)

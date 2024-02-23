@@ -190,8 +190,8 @@ public class Plant : Creatable
             Debug.Log("Plant should be growing");
             currentPlantStage = PlantStats.PlantStage.SPROUT;
             currentPollutionContribution = stats.sproutAirPollutionBonus;
-            SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+            //SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer spriteRenderer in plantVisuals)
             {
                 spriteRenderer.sprite = stats.sproutImage;
             }
@@ -204,8 +204,8 @@ public class Plant : Creatable
             //yield return new WaitForSeconds(stats.sproutGrowTime);
             currentPlantStage = PlantStats.PlantStage.JUVENILE;
             currentPollutionContribution = stats.juvenileAirPollutionBonus;
-            SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+            //SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer spriteRenderer in plantVisuals)
             {
                 spriteRenderer.sprite = stats.juvenileImage;
             }
@@ -218,8 +218,8 @@ public class Plant : Creatable
             //yield return new WaitForSeconds(stats.juvenileGrowTime);
             currentPlantStage = PlantStats.PlantStage.MATURE;
             currentPollutionContribution = stats.matureAirPollutionBonus;
-            SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
-            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
+            //SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
+            foreach (SpriteRenderer spriteRenderer in plantVisuals)
             {
                 spriteRenderer.sprite = stats.matureImage;
             }
