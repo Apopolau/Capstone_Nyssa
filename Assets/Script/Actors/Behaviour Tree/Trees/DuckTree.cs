@@ -52,7 +52,6 @@ public class DuckTree : BTree
                 new Sequence(new List<BTNode>
                 {
                     //Check if enemy nearby
-                    //Run to nearest shelter
                     new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.enemySet, 20),
                     new Selector(new List<BTNode>
                     {
