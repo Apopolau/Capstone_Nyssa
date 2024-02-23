@@ -173,6 +173,7 @@ public class CelestialPlayer : MonoBehaviour
             enemySeen = false;
 
             enemyLocation = other.transform.position;
+            enemyTarget = null;
 
             //enemyTarget = null;
 
@@ -213,13 +214,12 @@ public class CelestialPlayer : MonoBehaviour
         attack = GetComponent<PowerBehaviour>();
 
         bool playerIsDead;
-        playerIsDead =enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
-        if (playerIsDead)
+        if (enemyTarget)
         {
-            //player.enemyTarget.GetComponent<Enemy>();
-
-
+            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
         }
+        
+     
 
 
     }

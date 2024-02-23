@@ -7735,6 +7735,10 @@ PrefabInstance:
       propertyPath: m_ProvidesContacts
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6801160615061595783, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: enemySeen
       value: 1
@@ -8621,11 +8625,6 @@ Transform:
   - {fileID: 731231220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &906915588 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2090664895178657524, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-  m_PrefabInstance: {fileID: 4809181396229127117}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &921268330 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 8587303203417477639, guid: 3404641d12d7d4b4aae345c95d4aa8d1, type: 3}
@@ -18964,25 +18963,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1308052667}
     - target: {fileID: 989046953387641571, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: isFirst
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 989046953387641571, guid: f152c6031e4b2944cae7423592e76233, type: 3}
       propertyPath: playerObj
       value: 
       objectReference: {fileID: 864819264}
-    - target: {fileID: 989046953387641571, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: seesPlayer
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 989046953387641571, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: isKidnapping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1600394031809458323, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: m_Radius
-      value: 0.04
-      objectReference: {fileID: 0}
     - target: {fileID: 2090664895178657524, guid: f152c6031e4b2944cae7423592e76233, type: 3}
       propertyPath: m_Name
       value: OilSpillIdleMonster
@@ -19039,18 +19022,6 @@ PrefabInstance:
       propertyPath: monsterDeadDialouge
       value: 
       objectReference: {fileID: 944509476}
-    - target: {fileID: 3683027411586778587, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: m_Radius
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3683027411586778587, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5204139106922679516, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5804434315703889750, guid: f152c6031e4b2944cae7423592e76233, type: 3}
       propertyPath: playerTransform
       value: 
@@ -19067,62 +19038,16 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[2]
       value: 
       objectReference: {fileID: 1740665701}
-    - target: {fileID: 7886797500331793598, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7886797500331793598, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: m_IncludeLayers.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 8461326959070330374, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1308052667}
-    - target: {fileID: 8461326959070330374, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: levelOneEvents
-      value: 
-      objectReference: {fileID: 645999400}
-    - target: {fileID: 8461326959070330374, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      propertyPath: monsterDeadDialouge
-      value: 
-      objectReference: {fileID: 944509476}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2090664895178657524, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4809181396229127128}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f152c6031e4b2944cae7423592e76233, type: 3}
 --- !u!4 &4809181396229127118 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2155472256782070553, guid: f152c6031e4b2944cae7423592e76233, type: 3}
   m_PrefabInstance: {fileID: 4809181396229127117}
   m_PrefabAsset: {fileID: 0}
---- !u!136 &4809181396229127128
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906915588}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.01
-  m_Height: 0.045
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.02, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

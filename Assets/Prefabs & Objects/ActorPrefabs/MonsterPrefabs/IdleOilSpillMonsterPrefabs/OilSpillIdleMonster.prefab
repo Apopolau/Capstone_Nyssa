@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 564950624634221338}
   - component: {fileID: 3325454151170343581}
   - component: {fileID: 4840897772112739693}
+  - component: {fileID: 6055277272015157759}
   m_Layer: 0
   m_Name: OilSpillIdleMonster
   m_TagString: Enemy
@@ -137,7 +138,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -157,7 +158,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2090664895178657524}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.06
+  m_Radius: 0.04
   m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
@@ -361,9 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelOneEvents: {fileID: 0}
   levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
-
-  monsterDeadDialouge: {fileID: 564950624634221338}
-
+  monsterDeadDialouge: {fileID: 0}
   player: {fileID: 0}
 --- !u!114 &4840897772112739693
 MonoBehaviour:
@@ -379,6 +378,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
   target: {fileID: 1695010440449814950}
+--- !u!136 &6055277272015157759
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090664895178657524}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.01
+  m_Height: 0.045
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.02, z: 0}
 --- !u!1 &2898012355351432001
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8139256438206007730
 Transform:
   m_ObjectHideFlags: 0
