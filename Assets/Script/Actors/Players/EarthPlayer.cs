@@ -15,6 +15,9 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public Camera mainCamera;
     [SerializeField] public TextMeshProUGUI displayText;
 
+    // Reference to the UI controller script
+    public EarthCharacterUIController uiController;
+
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
     public bool isRemovalStarted = false;
@@ -563,8 +566,10 @@ public class EarthPlayer : MonoBehaviour
     {
         earthControls.controls.EarthPlayerDefault.Disable();
         earthControls.controls.PlantIsSelected.Disable();
+        uiController.SuspendUI();
         yield return waitTime;
         earthControls.controls.EarthPlayerDefault.Enable();
+        uiController.RestoreUI();
     }
 
     public void SetCamera(Camera switchCam)

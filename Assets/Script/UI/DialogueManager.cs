@@ -17,6 +17,8 @@ public class DialogueManager : MonoBehaviour
 
     public bool isDialogueActive = false;
     public GameObject dialogueBox; // Reference to the entire dialogue box
+    // Reference to the UI controller script
+    public EarthCharacterUIController uiController;
 
     [SerializeField] private GameObjectRuntimeSet playerSet;
     private EarthPlayer earthPlayer;
@@ -61,6 +63,7 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueBox.activeSelf)
         {
             dialogueBox.SetActive(true);
+            
         }
         else
         {

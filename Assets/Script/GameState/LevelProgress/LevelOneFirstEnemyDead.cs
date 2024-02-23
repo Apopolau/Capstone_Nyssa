@@ -27,6 +27,7 @@ public class LevelOneFirstEnemyDead : MonoBehaviour
     {
 
         Vector3 pos = this.transform.position;
+        pos.y += 4.0f; //added this because the position off the tree seed is kind off under ground
         //
         //Use some kind of metric to catch if the monster this is attached to is dead or dying
         //Make sure it's able to complete this function before you destroy the gameobject (the monster) it's attached to
