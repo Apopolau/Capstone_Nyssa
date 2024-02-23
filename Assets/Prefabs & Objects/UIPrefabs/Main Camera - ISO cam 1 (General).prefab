@@ -6776,6 +6776,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5759290059849945373}
   - component: {fileID: 3571004410004341720}
+  - component: {fileID: 5057634296655002919}
   m_Layer: 5
   m_Name: DialogueBox
   m_TagString: Untagged
@@ -6821,9 +6822,35 @@ MonoBehaviour:
   dialogueAreaFR: {fileID: 2568931850659072898}
   isDialogueActive: 0
   dialogueBox: {fileID: 8316934767797362537}
-  uiController: {fileID: 0}
+  uiController: {fileID: 5057634296655002919}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   typingSpeed: 0.08
+--- !u!114 &5057634296655002919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8316934767797362537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823d4af481012394fbe4dc360484a85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiImages:
+  - {fileID: 1941716346928520056}
+  - {fileID: 2824373453084510385}
+  - {fileID: 1335016894662039029}
+  dialogueBox: {fileID: 8316934767797362537}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  suspendedColor: {r: 0, g: 0, b: 0, a: 0.85882354}
+  uiObjectToToggle:
+  - {fileID: 4943726791511784965}
+  - {fileID: 5360638374554593496}
+  - {fileID: 2743024407200053256}
+  - {fileID: 5754433660233683900}
+  - {fileID: 4133531415645477173}
+  - {fileID: 1513494065719181062}
 --- !u!1 &8325139730273493104
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,5 +36,18 @@ public class EarthCharacterUIController : MonoBehaviour
         
     }
 
+
+    public GameObject[] uiObjectToToggle; // Array of UI images to toggle
+
+    // Method to toggle the visibility of other UI elements
+    public void ToggleOtherUIElements(bool isActive)
+    {
+        foreach (GameObject uiObject in uiObjectToToggle)
+        {
+            uiObject.SetActive(isActive);
+            Debug.Log("ui is being deactivated");
+        }
+    }
+
     
 }
