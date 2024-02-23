@@ -35,6 +35,7 @@ public class Dialogue
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;
+    
 
     void Start()
     {
@@ -61,6 +62,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         DialogueManager.Instance.StartDialogue(dialogue);
         Debug.Log("DialogueManager started");
+       // uiController.DeactivateAllUI();
     }
 
    

@@ -15,6 +15,9 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public Camera mainCamera;
     [SerializeField] public TextMeshProUGUI displayText;
 
+    // Reference to the UI controller script
+    public EarthCharacterUIController uiController;
+
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
     public bool isRemovalStarted = false;
@@ -58,7 +61,7 @@ public class EarthPlayer : MonoBehaviour
 
     [Header("Misc")]
     public bool enrouteToPlant = false;
-    private EarthPlayerAnimator earthAnimator;
+    public EarthPlayerAnimator earthAnimator;
     private NavMeshAgent earthAgent;
     private PlayerInput playerInput;
     public EarthPlayerControl earthControls;
@@ -265,6 +268,7 @@ public class EarthPlayer : MonoBehaviour
                 Destroy(plantSelected);
                 Destroy(tileOutline);
                 //This is a good place to initiate a planting animation
+                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 //Set other animations to false
@@ -425,6 +429,7 @@ public class EarthPlayer : MonoBehaviour
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
                 Destroy(tileOutline);
                 //Set our animations
+                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 StartCoroutine(SuspendActions(plantTime));
@@ -554,12 +559,19 @@ public class EarthPlayer : MonoBehaviour
     }
 
     //Call this if you want to have all player controls turned off for a certain amount of time
+    public void CallSuspendActions(WaitForSeconds waitTime)
+    {
+        StartCoroutine(SuspendActions(waitTime));
+    }
+
     private IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
         earthControls.controls.EarthPlayerDefault.Disable();
         earthControls.controls.PlantIsSelected.Disable();
+        uiController.SuspendUI();
         yield return waitTime;
         earthControls.controls.EarthPlayerDefault.Enable();
+        uiController.RestoreUI();
     }
 
     public void SetCamera(Camera switchCam)

@@ -5,6 +5,8 @@ using UnityEngine;
 public class EarthPlayerAnimator : OurAnimator
 {
     public int IfPlantingHash;
+    public int IfBuildingHash;
+    public int IfTurningHash;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,8 @@ public class EarthPlayerAnimator : OurAnimator
         animator = GameObject.Find("earth_geo").GetComponentInChildren<Animator>();
         IfWalkingHash = Animator.StringToHash("IfWalking");
         IfPlantingHash = Animator.StringToHash("IfPlanting");
+        IfBuildingHash = Animator.StringToHash("IfBuilding");
+        IfTurningHash = Animator.StringToHash("IfTurning");
     }
 
     public override void ToggleSetWalk()
@@ -35,6 +39,8 @@ public class EarthPlayerAnimator : OurAnimator
         {
             animator.SetBool(IfWalkingHash, true);
             animator.SetBool(IfPlantingHash, false);
+            animator.SetBool(IfBuildingHash, false);
+            animator.SetBool(IfTurningHash, false);
         }
     }
 }

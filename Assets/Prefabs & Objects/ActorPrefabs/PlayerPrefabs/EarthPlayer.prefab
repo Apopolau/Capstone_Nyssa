@@ -843,6 +843,7 @@ GameObject:
   - component: {fileID: 2449388460271823589}
   - component: {fileID: 4394548441176001214}
   - component: {fileID: 4289947878237477393}
+  - component: {fileID: 1222953851676443687}
   m_Layer: 0
   m_Name: EarthPlayer
   m_TagString: Player1
@@ -948,6 +949,7 @@ MonoBehaviour:
   virtualMouseInput: {fileID: 0}
   mainCamera: {fileID: 0}
   displayText: {fileID: 0}
+  uiController: {fileID: 0}
   isPlantSelected: 0
   isRemovalStarted: 0
   plantSelected: {fileID: 0}
@@ -974,6 +976,7 @@ MonoBehaviour:
   landFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: ff2ccbcb6e6bbb040bc9b688c83d9c92, type: 3}
   waterFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 5cbf96d630360a84d94d35a22c559639, type: 3}
   enrouteToPlant: 0
+  earthAnimator: {fileID: 0}
   earthControls: {fileID: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   interacting: 0
@@ -1270,6 +1273,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   IfWalkingHash: 0
   IfPlantingHash: 0
+  IfBuildingHash: 0
+  IfTurningHash: 0
 --- !u!114 &4394548441176001214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1306,6 +1311,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1222953851676443687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033276866688796702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823d4af481012394fbe4dc360484a85b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  dialogueBox: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  suspendedColor: {r: 0, g: 0, b: 0, a: 0.85882354}
+  uiObjectToToggle:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &4200965884570861750
 GameObject:
   m_ObjectHideFlags: 0

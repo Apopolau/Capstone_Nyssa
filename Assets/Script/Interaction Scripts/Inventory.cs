@@ -14,6 +14,9 @@ public class Inventory : ScriptableObject
     //[SerializeField] KeyCode removeKeySeed = KeyCode.O; // Change this to the Dpad
     //[SerializeField] KeyCode removeKeyTreeLog = KeyCode.L; // Change this to the Dpad
 
+    public PlantingUIIndicator plantingUI;
+    
+
     private void OnValidate()
     {
         
@@ -61,6 +64,28 @@ public class Inventory : ScriptableObject
         }
     }
 
+    public void RemoveItemByName(string itemName, int quantity)
+    {
+        // Find the item with the specified name and remove it
+        Item itemToRemove = items.Find(item => item.ItemName == itemName);
+        if (itemToRemove != null)
+        {
+            Debug.Log($"Removing item {itemToRemove.ItemName} based on key press");
+            RemoveItem(itemToRemove, quantity);
+
+            // Add a log message to check the current inventory after removal
+            Debug.Log("Current inventory:");
+            foreach (var item in items)
+            {
+                Debug.Log($"Item: {item.ItemName}, Quantity: {item.Quantity}");
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"You do not have the required item in the inventory.");
+        }
+    }
+
     private void RefreshUI()
     {
         int i = 0;
@@ -70,7 +95,10 @@ public class Inventory : ScriptableObject
             {
                 itemSlots[i].Item = items[i];
                 itemSlots[i].UpdateQuantityText();
+                
             }
+
+    
         }
 
         for (; i < itemSlots.Count; i++)
@@ -129,12 +157,24 @@ public class Inventory : ScriptableObject
                 {
                     items.Remove(existingItem);
                 }
-
+                UpdateUIText(); // Call UpdateUIText() after item removal
                 RefreshUI();
+               
                 return true;
             }
         }
         return false;
+    }
+
+    private void UpdateUIText()
+    {
+        // Find the PlantingUIIndicator script in the scene
+        PlantingUIIndicator uiIndicator = FindObjectOfType<PlantingUIIndicator>();
+        if (uiIndicator != null)
+        {
+            // Call the UpdateQuantityText() method
+            uiIndicator.UpdateQuantityText();
+        }
     }
 
 
@@ -149,6 +189,35 @@ public class Inventory : ScriptableObject
         foreach(var item in items)
         {
             if(item.ItemName == itemName && item.Quantity > 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int GetQuantityByItemType(string itemType)
+    {
+        Debug.Log($"GetQuantityByItemType() called for itemType: {itemType}");
+
+        int quantity = 0;
+        foreach (var item in items)
+        {
+            if (item.ItemName == itemType)
+            {
+                quantity += item.Quantity;
+                Debug.Log($"Item type: {itemType}, Quantity: {quantity}");
+            }
+        }
+        return quantity;
+    }
+    
+    public bool HasEnoughItems(string itemName, int quantity)
+    {
+
+        foreach (var item in items)
+        {
+            if (item.ItemName == itemName && item.Quantity >= quantity)
             {
                 return true;
             }

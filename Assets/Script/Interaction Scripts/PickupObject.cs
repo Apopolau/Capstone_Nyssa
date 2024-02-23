@@ -52,12 +52,23 @@ public class PickupObject : Interactable
                 int pickupQuantity = 1; // You can change this to the desired quantity.
                 if (inventory.AddItem(item, pickupQuantity))
                 {
+                    UpdateUIText();
                     Destroy(this.GetComponentInParent<Transform>().gameObject);
                 }
                 else {
                     earthPlayer.displayText.text = "Inventory is full";
                 };
             }
+        }
+    }
+
+    private void UpdateUIText()
+    {
+        // Find all InventoryUITextUpdater scripts in the scene and call UpdateQuantityText() on each of them
+        PlantingUIIndicator[] textUpdaters = FindObjectsOfType<PlantingUIIndicator>();
+        foreach (PlantingUIIndicator textUpdater in textUpdaters)
+        {
+            textUpdater.UpdateQuantityText();
         }
     }
 
