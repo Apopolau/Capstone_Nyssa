@@ -30,9 +30,12 @@
 
         public float typingSpeed = 0.2f;
 
- 
+    private void Update()
+    {
+        
+    }
 
-        private void OnEnable()
+    private void OnEnable()
         {
             for (int i = 0; i < playerSet.Items.Count; i++)
             {
