@@ -268,6 +268,7 @@ public class EarthPlayer : MonoBehaviour
                 Destroy(plantSelected);
                 Destroy(tileOutline);
                 //This is a good place to initiate a planting animation
+                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 //Set other animations to false
@@ -428,6 +429,7 @@ public class EarthPlayer : MonoBehaviour
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
                 Destroy(tileOutline);
                 //Set our animations
+                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 StartCoroutine(SuspendActions(plantTime));
