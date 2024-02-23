@@ -36,24 +36,5 @@ public class EarthCharacterUIController : MonoBehaviour
         
     }
 
-    public void DeactivateAllUI()
-    {
-        
-
-        foreach (Image image in uiImages)
-        { // Check if the dialogue box is active
-        bool dialogueActive = dialogueBox.activeSelf;
-       
-            if (dialogueActive)
-            {
-                image.gameObject.SetActive(false);
-            }
-            
-            if (!dialogueActive )
-            {
-                image.gameObject.SetActive(true);
-                Debug.Log("re activate the ui");
-            }
-        } 
-    }
+    
 }

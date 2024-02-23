@@ -10,12 +10,34 @@ public class PlantingUIIndicator : MonoBehaviour
     [SerializeField] TextMeshProUGUI quantityText; // text field for quantity
     [SerializeField] string itemType;
 
+    [SerializeField] private GameObjectRuntimeSet buildRuntimeSet;
+
     public Image grassImage;
     public Image treeImage;
+    
+    [SerializeField] private GameObject shovelUIOverlay;
+
+    private void Update()
+    {
+        UpdateQuantityText();
+
+        if (buildRuntimeSet.Items.Count == 0)
+        {
+            // Activate the UI if the build set count is 0
+            shovelUIOverlay.SetActive(true);
+        }
+        else
+        {
+            // Deactivate the UI if the build set count is greater than 0
+            shovelUIOverlay.SetActive(false);
+        }
+    }
 
     private void OnEnable()
     {
-        UpdateQuantityText();
+        
+
+       
     }
 
     public void UpdateQuantityText()
@@ -89,5 +111,6 @@ private void ToggleIconsOverlay(Image image, bool isActive)
     // Set the active state of the image GameObject based on isActive parameter
     image.gameObject.SetActive(isActive);
 }
+
 
 }
