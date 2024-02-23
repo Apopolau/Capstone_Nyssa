@@ -30,10 +30,7 @@
 
         public float typingSpeed = 0.2f;
 
-    private void Update()
-    {
-        
-    }
+ 
 
     private void OnEnable()
         {
@@ -60,7 +57,10 @@
 
             lines = new Queue<DialogueLine>();
         }
- 
+    private void Update()
+    {
+
+    }
 
     public void StartDialogue(Dialogue dialogue)
         {
@@ -97,8 +97,6 @@
                 celestialPlayer.celestialControls.controls.DialogueControls.Enable();
                 celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
             }
-
-        
             Time.timeScale = 0f;
        
 
@@ -187,6 +185,7 @@
             }
              // Toggle other UI elements visibility
              uiController.ToggleOtherUIElements(true); // Pass true to reactivate other UI elements
+     
 
             //Turn off the dialogue controls and turn on the default controls of both players
             earthPlayer.earthControls.controls.DialogueControls.Disable();

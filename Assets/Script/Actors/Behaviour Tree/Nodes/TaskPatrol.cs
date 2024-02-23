@@ -52,7 +52,7 @@ public class TaskPatrol : BTNode
             }
             else
             {
-                Debug.Log("I'm patrolling");
+                //Debug.Log("I'm patrolling");
                 Transform wPoint = waypoints[currWaypointIndex];
                 float distance = Vector3.Distance(transformPos.position, wPoint.position);
 

@@ -48,7 +48,7 @@ public class PlantingUIIndicator : MonoBehaviour
             int quantity = inventory.GetQuantityByItemType(itemType);
             quantityText.text = $"{quantity}";
 
-            Debug.Log($"Item type: {itemType}, Quantity: {quantity}");
+            //Debug.Log($"Item type: {itemType}, Quantity: {quantity}");
 
             // Check if the quantity is above 0
             if (quantity > 0)
@@ -76,7 +76,7 @@ private void ActivateUIByItemType(string itemType)
     {
         case "Grass Seed":
             ToggleIconsOverlay(grassImage, true); // Activate grass UI
-            Debug.Log($"Item type: {itemType} overlay deactivated");
+            //Debug.Log($"Item type: {itemType} overlay deactivated");
             break;
         case "Tree Seed":
             ToggleIconsOverlay(treeImage, true); // Activate tree UI
