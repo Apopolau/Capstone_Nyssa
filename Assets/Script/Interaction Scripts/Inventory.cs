@@ -14,6 +14,9 @@ public class Inventory : ScriptableObject
     //[SerializeField] KeyCode removeKeySeed = KeyCode.O; // Change this to the Dpad
     //[SerializeField] KeyCode removeKeyTreeLog = KeyCode.L; // Change this to the Dpad
 
+    public PlantingUIIndicator plantingUI;
+    
+
     private void OnValidate()
     {
         
@@ -92,7 +95,10 @@ public class Inventory : ScriptableObject
             {
                 itemSlots[i].Item = items[i];
                 itemSlots[i].UpdateQuantityText();
+                
             }
+
+    
         }
 
         for (; i < itemSlots.Count; i++)
@@ -151,12 +157,24 @@ public class Inventory : ScriptableObject
                 {
                     items.Remove(existingItem);
                 }
-
+                UpdateUIText(); // Call UpdateUIText() after item removal
                 RefreshUI();
+               
                 return true;
             }
         }
         return false;
+    }
+
+    private void UpdateUIText()
+    {
+        // Find the PlantingUIIndicator script in the scene
+        PlantingUIIndicator uiIndicator = FindObjectOfType<PlantingUIIndicator>();
+        if (uiIndicator != null)
+        {
+            // Call the UpdateQuantityText() method
+            uiIndicator.UpdateQuantityText();
+        }
     }
 
 
@@ -178,6 +196,20 @@ public class Inventory : ScriptableObject
         return false;
     }
 
+    public int GetQuantityByItemType(string itemType)
+    {
+         Debug.Log($"GetQuantityByItemType() called for itemType: {itemType}");
+
+        int quantity = 0;
+        foreach (var item in items)
+        {
+            if (item.ItemName == itemType)
+            {
+                quantity += item.Quantity;
+                Debug.Log($"Item type: {itemType}, Quantity: {quantity}");
+            }
+        }
+        return quantity;
     public bool HasEnoughItems(string itemName, int quantity)
     {
 

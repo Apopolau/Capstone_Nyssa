@@ -31,7 +31,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5049433802376321219}
+  - {fileID: 2189358811587964622}
   - {fileID: 7938985253769842609}
+  - {fileID: 7914351766514610753}
   - {fileID: 2501160846113816130}
   - {fileID: 1865932446486502512}
   m_Father: {fileID: 8201203250196408903}
@@ -1709,8 +1711,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7914351766514610753}
+  m_Children: []
   m_Father: {fileID: 2254374040965194503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2720,6 +2721,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2189358811587964622}
+  - component: {fileID: 7595323361881193835}
   m_Layer: 5
   m_Name: GrassStat
   m_TagString: Untagged
@@ -2734,20 +2736,37 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3651107759122529145}
-  m_LocalRotation: {x: 0.00000006322026, y: 0.0000001053671, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 283}
-  m_LocalScale: {x: 0.34999993, y: 0.34999993, z: 1}
+  m_LocalRotation: {x: -0.000000014901156, y: 0.00000011920925, z: -0.000000014901156, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 282.99997}
+  m_LocalScale: {x: 0.35000002, y: 0.35000002, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5059740602699345201}
   - {fileID: 2179226469490361552}
-  m_Father: {fileID: 7938985253769842609}
+  m_Father: {fileID: 2254374040965194503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.3008423, y: 19.083649}
+  m_AnchoredPosition: {x: 45.999672, y: 2.3999844}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7595323361881193835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3651107759122529145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1d458feb7a668479adf43629307237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
+  quantityText: {fileID: 6930603388041025374}
+  itemType: Grass Seed
+  grassImage: {fileID: 8713518841045271059}
+  treeImage: {fileID: 2655890965082434741}
 --- !u!1 &3977814865028338044
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,6 +3275,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7914351766514610753}
+  - component: {fileID: 2347223180664456}
   m_Layer: 5
   m_Name: TreeStat
   m_TagString: Untagged
@@ -3270,20 +3290,37 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4297737126638942432}
-  m_LocalRotation: {x: -0.00000002107342, y: 0.00000002107342, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 283}
-  m_LocalScale: {x: 0.9615383, y: 0.9615383, z: 1}
+  m_LocalRotation: {x: -0, y: 0.00000008940696, z: 0.000000014901159, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 282.99994}
+  m_LocalScale: {x: 0.96153843, y: 0.96153855, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7241978690241176813}
   - {fileID: 1364966017141281385}
-  m_Father: {fileID: 2501160846113816130}
+  - {fileID: 7241978690241176813}
+  m_Father: {fileID: 2254374040965194503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.9777832, y: 24.14618}
+  m_AnchoredPosition: {x: -41.153534, y: 3.0769672}
   m_SizeDelta: {x: 17.5, y: 35}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2347223180664456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4297737126638942432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1d458feb7a668479adf43629307237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
+  quantityText: {fileID: 2555271614994353201}
+  itemType: Tree Seed
+  grassImage: {fileID: 8713518841045271059}
+  treeImage: {fileID: 2655890965082434741}
 --- !u!1 &4337219352118601946
 GameObject:
   m_ObjectHideFlags: 0
@@ -4562,8 +4599,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2189358811587964622}
+  m_Children: []
   m_Father: {fileID: 2254374040965194503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4960,7 +4996,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '1
+  m_text: '0
 
 
 '
@@ -5537,7 +5573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5759290059849945373
 Transform:
   m_ObjectHideFlags: 0
