@@ -40,7 +40,7 @@ public class idleOilSpillTree : BTree
             {   
                 new CheckInAttackRange(playerTransform,enemyMeshAgent,player),
                 new Timer(2f, new taskInitiateAttack(playerTransform,enemyMeshAgent,player)),
-                new TaskAttack(playerTransform,enemyMeshAgent,player)
+                new TaskAttack(playerTransform,enemyMeshAgent,player,transform),
             }),
 
 
@@ -55,7 +55,7 @@ public class idleOilSpillTree : BTree
                  new CheckInRange(enemyMeshAgent),
                  //new TaskAttackPlayer(enemyMeshAgent,player)
                   //CHASE THE PLAYER
-                  new taskChase(playerTransform,enemyMeshAgent,player),
+                  new taskChase(playerTransform,enemyMeshAgent,player,transform),
 
 
              }),

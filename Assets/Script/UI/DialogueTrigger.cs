@@ -60,6 +60,8 @@ public class DialogueTrigger : MonoBehaviour
 
      public void TriggerDialogue()
     {
+
+
         DialogueManager.Instance.StartDialogue(dialogue);
         Debug.Log("DialogueManager started");
        // uiController.DeactivateAllUI();

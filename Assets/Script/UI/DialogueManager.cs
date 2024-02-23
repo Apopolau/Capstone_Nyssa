@@ -19,10 +19,13 @@
         public GameObject dialogueBox; // Reference to the entire dialogue box
         // Reference to the UI controller script
         public EarthCharacterUIController uiController;
+    public SplitScreen split;
+
 
         [SerializeField] private GameObjectRuntimeSet playerSet;
         private EarthPlayer earthPlayer;
         private CelestialPlayer celestialPlayer;
+    
 
 
         public float typingSpeed = 0.2f;
@@ -46,6 +49,8 @@
                 }
 
             }
+
+      
         }
 
         private void Awake()
@@ -55,23 +60,31 @@
 
             lines = new Queue<DialogueLine>();
         }
+ 
 
-        public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue dialogue)
         {
+    
 
-            // Activate the dialogue box if it's currently inactive
-            if (!dialogueBox.activeSelf)
+        // Activate the dialogue box if it's currently inactive
+        if (!dialogueBox.activeSelf)
             {
-                dialogueBox.SetActive(true);
+            dialogueBox.SetActive(true);
+            
+
+
                 
             }
             else
             {
                 isDialogueActive = true;
             }
+     
 
-             // Toggle other UI elements visibility
-            uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
+
+
+        // Toggle other UI elements visibility
+        uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
 
             //Turn off other player controls, turn on dialogue controls
             if (!earthPlayer.earthControls.controls.DialogueControls.enabled)
@@ -84,9 +97,13 @@
                 celestialPlayer.celestialControls.controls.DialogueControls.Enable();
                 celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
             }
-            Time.timeScale = 0f;
 
-            lines.Clear();
+        
+            Time.timeScale = 0f;
+       
+
+
+        lines.Clear();
 
             foreach (DialogueLine dialogueLine in dialogue.dialogueLines)
             {
@@ -94,15 +111,19 @@
             }
 
             DisplayNextDialogueLine();
+     
 
-        }
+
+
+    }
 
         public void DisplayNextDialogueLine()
         {
             if (lines.Count == 0)
             {
                 EndDialogue();
-                return;
+        
+            return;
             }
 
             DialogueLine currentLine = lines.Dequeue();

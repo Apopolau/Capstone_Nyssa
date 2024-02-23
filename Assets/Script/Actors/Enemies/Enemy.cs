@@ -85,6 +85,14 @@ public class Enemy : MonoBehaviour
 
 
             }
+            else if (!player.enemyTarget.GetComponent<Enemy>().isFirst)
+            {
+                player.enemyTarget.GetComponent<Enemy>().isDying = true;
+                player.enemyTarget.GetComponent<LevelOneGrassEnemyDead>().CheckIfDead();
+
+
+            }
+            
 
             Die();
         }

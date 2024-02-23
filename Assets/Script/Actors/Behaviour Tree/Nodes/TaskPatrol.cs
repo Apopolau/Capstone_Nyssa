@@ -76,6 +76,7 @@ public class TaskPatrol : BTNode
                     /// thisAgent.transform.position
                     //rb.MovePosition(Vector3.MoveTowards(rb.position, wPoint.position, 10f * Time.deltaTime));
                     thisAgent.SetDestination(wPoint.position);
+                
                     transformPos.LookAt(wPoint.position);
                     //Debug.Log("making rounds");
                     state = NodeState.RUNNING;

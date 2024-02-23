@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.InputSystem;
@@ -17,22 +16,29 @@ public class SplitScreen : MonoBehaviour
     [SerializeField] public Camera earthCam;
     [SerializeField] public Camera celestialCam;
     [SerializeField] public Camera mainCam;
-    [SerializeField] float distance;
+    [SerializeField] public float distance;
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public VirtualMouseInput earthVirtualMouseInput;
+
+    DialogueManager dialogue;
+
     bool switching = false;
     int currCam = 1;
     public int Manager=0;
     void Start()
     {
+       
+      
 
 
     }
 
+    
     // Update is called once per frame
     void Update()
     {
 
+      
 
         //If two players are close enough make camera one, if players are far enough split camera
         if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) > distance)
@@ -119,6 +125,16 @@ public class SplitScreen : MonoBehaviour
         earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = virtualMouseInput;
 
        
+    }
+
+
+    public void camDistExtend()
+    {
+        distance = 1300;
+    }
+    public void camDistDec()
+    {
+        distance = 1300;
     }
 
 }

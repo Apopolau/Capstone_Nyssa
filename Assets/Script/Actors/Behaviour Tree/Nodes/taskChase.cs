@@ -10,12 +10,13 @@ public class taskChase : BTNode
     NavMeshAgent thisAgent;
     CelestialPlayer thisPlayer;
     Rigidbody rb;
-
-    public taskChase(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player)
+    private Transform transformPos;
+    public taskChase(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player, Transform transform)
     {
         thisAgent = enemyMeshAgent;
         thisTarget = target;
         thisPlayer = player;
+        transformPos = transform;
 
     }
     
@@ -33,8 +34,9 @@ public class taskChase : BTNode
 
 
           thisAgent.SetDestination(thisTarget.position);
-           
-        
+            transformPos.LookAt(thisTarget.position);
+
+
             if (distance  <= 10f)
             {
                 Debug.Log("broether i am close and can attack" +distance);

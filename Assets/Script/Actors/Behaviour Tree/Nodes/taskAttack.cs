@@ -8,14 +8,15 @@ public class TaskAttack : BTNode
     NavMeshAgent thisAgent;
     Enemy thisEnemy;
     private Transform thisTarget;
+    private Transform transformPos;
 
 
-
-    public TaskAttack(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player)
+    public TaskAttack(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player, Transform transform)
     {
         thisAgent = enemyMeshAgent;
         thisTarget = target;
         thisEnemy = enemyMeshAgent.GetComponent<Enemy>();
+        transformPos = transform;
     }
 
     protected override NodeState OnRun()
@@ -28,6 +29,7 @@ public class TaskAttack : BTNode
         {
             // Debug.Log(distance);
             thisEnemy.inAttackRange = true;
+     
         }
         else
         {
@@ -40,6 +42,7 @@ public class TaskAttack : BTNode
             //yield return attackTime;
             bool playerIsDead;
             playerIsDead = thisTarget.GetComponentInParent<CelestialPlayer>().TakeHit();
+            transformPos.LookAt(thisTarget.position);
             if (playerIsDead)
             {
                 state = NodeState.FAILURE;
