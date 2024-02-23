@@ -92,10 +92,11 @@ public class Bridge : Interactable
 
     private IEnumerator BuildBridge()
     {
-        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfPlantingHash, true);
+        earthPlayer.GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfBuildingHash, true);
         earthPlayer.CallSuspendActions(buildTime);
         yield return buildTime;
-        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfPlantingHash, false);
+        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfBuildingHash, false);
         FinishBridgeBuild();
     }
 

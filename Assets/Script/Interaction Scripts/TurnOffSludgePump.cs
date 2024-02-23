@@ -11,6 +11,7 @@ public class TurnOffSludgePump : Interactable
     public DialogueTrigger sludgeOffDialouge;
     public DialogueTrigger sludgeDialougeEarth;
     public DialogueTrigger sludgeDialougeCelest;
+    private WaitForSeconds turnTime = new WaitForSeconds(4.958f);
 
 
     //public GameObject boxRange;
@@ -55,11 +56,24 @@ public class TurnOffSludgePump : Interactable
     {
         if (isInRange && earthPlayer.interacting)
         {
-            Debug.Log("Turned off the sludge pump");
-            levelOneEvents.OnPumpShutOff();
-            uiObject.SetActive(false);
-            sludgeOffDialouge.TriggerDialogue(); //trigger dialouge after sludge is turned off
+            StartCoroutine(SludgePumpTurnsOff());
+             //trigger dialouge after sludge is turned off
         }
+    }
+
+    private IEnumerator SludgePumpTurnsOff()
+    {
+        earthPlayer.GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfTurningHash, true);
+        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, false);
+        earthPlayer.CallSuspendActions(turnTime);
+        yield return turnTime;
+        Debug.Log("Turned off the sludge pump");
+        levelOneEvents.OnPumpShutOff();
+        uiObject.SetActive(false);
+        sludgeOffDialouge.TriggerDialogue();
+        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfTurningHash, false);
+        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, true);
     }
 
 
