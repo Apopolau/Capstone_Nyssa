@@ -30,10 +30,7 @@
 
         public float typingSpeed = 0.2f;
 
-        void Update()
-        {
-
-        }
+ 
 
         private void OnEnable()
         {

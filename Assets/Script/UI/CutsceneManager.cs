@@ -33,8 +33,8 @@ public class CutsceneManager : MonoBehaviour
         if (nextImg == null)
         {
 
-            //SceneManager.LoadScene("LevelOne");
-            SceneManager.LoadScene("FatimaUITest");
+            SceneManager.LoadScene("LevelOne");
+            //SceneManager.LoadScene("FatimaUITest");
         }
     }
 
