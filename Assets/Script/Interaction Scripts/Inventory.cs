@@ -198,7 +198,7 @@ public class Inventory : ScriptableObject
 
     public int GetQuantityByItemType(string itemType)
     {
-         Debug.Log($"GetQuantityByItemType() called for itemType: {itemType}");
+        Debug.Log($"GetQuantityByItemType() called for itemType: {itemType}");
 
         int quantity = 0;
         foreach (var item in items)
@@ -210,6 +210,8 @@ public class Inventory : ScriptableObject
             }
         }
         return quantity;
+    }
+
     public bool HasEnoughItems(string itemName, int quantity)
     {
 

@@ -56,7 +56,7 @@ public class RockSlideInteraction : Interactable
         if (isAnimated)
         {
             Debug.Log("moving downward");
-            this.gameObject.transform.localPosition.Set(this.gameObject.transform.localPosition.x, this.gameObject.transform.localPosition.y - 0.5f, this.gameObject.transform.localPosition.z);
+            this.gameObject.transform.localPosition = new Vector3(this.gameObject.transform.localPosition.x, this.gameObject.transform.localPosition.y - 0.3f, this.gameObject.transform.localPosition.z);
         }
     }
 
