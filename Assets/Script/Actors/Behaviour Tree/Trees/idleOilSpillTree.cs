@@ -73,10 +73,14 @@ public class idleOilSpillTree : BTree
         if nothing else
         switch to wander behaviour
             */
-            ////PATROL SEQUENCE
-            new CheckInRange(enemyMeshAgent),
+         
+       new Sequence(new List<BTNode>
+            {
+          
+          ////PATROL SEQUENCE
+        
             new TaskPatrol( enemy,rb,enemyMeshAgent, transform, waypoints),
-
+       }),
 
         });
         return root;

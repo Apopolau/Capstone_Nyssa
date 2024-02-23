@@ -27,50 +27,62 @@ public class TaskPatrol : BTNode
         rb = rbi;
     }
     protected override NodeState OnRun() {
-       //Debug.Log("start patrolling");
+        //Debug.Log("start patrolling");
 
         //if while player is chilling they are in range of somehing, patroling fails
-        if (iswaiting)
+
+
+        if (thisAgent.GetComponent<Enemy>().seesPlayer)
         {
-            waitCounter += Time.deltaTime;
-            if (waitCounter >= waitTime)
-            {
-                iswaiting = false;
-            }
+            state = NodeState.FAILURE;
         }
+
         else
         {
-            Transform wPoint = waypoints[currWaypointIndex];
-            float distance = Vector3.Distance(transformPos.position, wPoint.position);
-            
-            //check if the enemy has reached the waypoint, if it has pause for a few seconds
-            if (distance < 2f)
+            if (iswaiting)
             {
-           
-                rb.MovePosition( wPoint.position);
-                waitCounter = 0f;
-                iswaiting = true;
-                //makes enemy loop back through way points
-                currWaypointIndex = (currWaypointIndex + 1) % waypoints.Length;
-                //Debug.Log("waiting");
+                waitCounter += Time.deltaTime;
+                if (waitCounter >= waitTime)
+                {
+                    iswaiting = false;
+                }
+
                 state = NodeState.RUNNING;
+
             }
-            //if not move towards it
             else
             {
+                Debug.Log("I'm patrolling");
+                Transform wPoint = waypoints[currWaypointIndex];
+                float distance = Vector3.Distance(transformPos.position, wPoint.position);
 
-                rb.MovePosition(Vector3.MoveTowards(rb.position, wPoint.position, 5f * Time.deltaTime));
-                thisAgent.SetDestination(wPoint.position);
-                transformPos.LookAt(wPoint.position);
-                //Debug.Log("making rounds");
-                state = NodeState.RUNNING;
+                //check if the enemy has reached the waypoint, if it has pause for a few seconds
+                if (distance < 2f)
+                {
+
+                    //rb.MovePosition( wPoint.position);
+                    thisAgent.transform.position = wPoint.position;
+                    waitCounter = 0f;
+                    iswaiting = true;
+                    //makes enemy loop back through way points
+                    currWaypointIndex = (currWaypointIndex + 1) % waypoints.Length;
+                    //Debug.Log("waiting");
+                    state = NodeState.RUNNING;
+                }
+                //if not move towards it
+                else
+                {
+
+                    /// thisAgent.transform.position
+                    //rb.MovePosition(Vector3.MoveTowards(rb.position, wPoint.position, 10f * Time.deltaTime));
+                    thisAgent.SetDestination(wPoint.position);
+                    transformPos.LookAt(wPoint.position);
+                    //Debug.Log("making rounds");
+                    state = NodeState.RUNNING;
+                }
             }
+
         }
-   
-        if (thisAgent.GetComponent<Enemy>().seesPlayer)
-         {
-             state = NodeState.FAILURE;
-         }
         return state;
     }
     protected override void OnReset() { }

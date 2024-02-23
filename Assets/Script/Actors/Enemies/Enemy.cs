@@ -92,7 +92,7 @@ public class Enemy : MonoBehaviour
         return isDead;
        
     }
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
 
        // Debug.Log("Entered collision with " + other.gameObject.name);
@@ -111,10 +111,10 @@ public class Enemy : MonoBehaviour
            // Debug.Log("~~~~~~~~~~~~~~~~~~~Entered collision with " + other.gameObject.name);
             playerLocation = other.transform.position;
 
-        }*/
+        }
 
 
-    }
+    }*/
         private void OnTriggerStay(Collider other)
     {
         //Debug.Log("Coliding with " + other.gameObject.name);

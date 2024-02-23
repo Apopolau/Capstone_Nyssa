@@ -117,7 +117,7 @@ public class CelestialPlayer : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+ /*   private void OnTriggerEnter(Collider other)
     {
         //Debug.Log("Entered collision with " + other.gameObject.name);
         if ((other.gameObject.tag == "Enemy"))
@@ -135,7 +135,7 @@ public class CelestialPlayer : MonoBehaviour
 
         }
        
-    }
+    }*/
 
     private void OnTriggerStay(Collider other)
     {
@@ -158,15 +158,15 @@ public class CelestialPlayer : MonoBehaviour
     {
         //Debug.Log("Trigger Exit");
 
-        Debug.Log("Trigger Exit" + other.transform.tag);
+        /*Debug.Log("Trigger Exit" + other.transform.tag);
 
-        Debug.Log("Trigger Exit-- - " + other.transform.name);
+        Debug.Log("Trigger Exit-- - " + other.transform.name);*/
 
         if (other.transform.gameObject.tag == "Enemy")
         {
-            Debug.Log("----Trigger Exit----" + other.transform.tag);
+           /* Debug.Log("----Trigger Exit----" + other.transform.tag);
 
-            Debug.Log("------Trigger Exit --- " + other.transform.name);
+            Debug.Log("------Trigger Exit --- " + other.transform.name);*/
 
 
             //Player is in range of enemy, in invading monster they can pursue the player
