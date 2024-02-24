@@ -103,6 +103,7 @@ public class Bridge : Interactable
     private void FinishBridgeBuild()
     {
         earthPlayer.inventory.RemoveItemByName("Tree Log", 3);
+        bridgeGeometry.GetComponentInChildren<MeshCollider>().gameObject.SetActive(true);
         bridgeGeometry.GetComponentInChildren<MeshRenderer>().material = material;
         Destroy(this.gameObject.GetComponent<BoxCollider>());
     }
