@@ -57,25 +57,15 @@ public class playerMovement : MonoBehaviour
 
     private void Awake()
     {
-        // playerInputActions = new PlayerInputActions();
         player = this.GetComponent<Transform>();
         playerInputActions = GetComponent<EarthPlayerControl>().controls;
-        /* playerInput = GetComponent<PlayerInput>();
-        playerInputActions = new PlayerInputActions();
-     
-       if (this.GetComponent<EarthPlayer>())
-        {
-            playerInputActions.EarthPlayerDefault.Enable();
-            playerInputActions.EarthPlayerDefault.Walk.performed += MovePlayer;
-        }*/
-
     }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        if(GetComponent<EarthPlayerControl>().thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        if (GetComponent<EarthPlayerControl>().thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
         {
             EarthDeviceID = Keyboard.current.deviceId;
         }
@@ -83,15 +73,6 @@ public class playerMovement : MonoBehaviour
         {
             EarthDeviceID = Gamepad.all[1].deviceId;
         }
-        
-
-      /*  InputSystem.onActionChange += (obj, change) => {
-            if (change == InputActionChange.ActionPerformed)
-            {
-                lastDevice = (obj as InputAction).activeControl.device;
-                Debug.Log($"last device->{lastDevice}");
-            }
-        };*/
     }
 
     // Update is called once per frame
@@ -115,13 +96,13 @@ public class playerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-       if (this.gameObject.tag == "Player1")
-       {
+        if (this.gameObject.tag == "Player1")
+        {
             rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-       }
+        }
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
-        if(rb.velocity != Vector3.zero)
+        if (rb.velocity != Vector3.zero)
         {
             GetComponent<EarthPlayerAnimator>().animator.SetBool(GetComponent<EarthPlayerAnimator>().IfWalkingHash, true);
         }
@@ -133,8 +114,8 @@ public class playerMovement : MonoBehaviour
 
     private void MyInput()
     {
-       
-        if(player.gameObject.tag == "Player1")
+
+        if (player.gameObject.tag == "Player1")
         {
             if (Input.GetKey(jumpKeyP1) && readyToJump && grounded)
             {
@@ -145,61 +126,60 @@ public class playerMovement : MonoBehaviour
             }
         }
 
-      
+
     }
 
+    //This is the function that handles actually moving the player
     public void MovePlayer(InputAction.CallbackContext context, Vector2 input)
     {
         isMoveKeyHeld = true;
-      
-        if (context.control.device.deviceId == EarthDeviceID)
 
+        if (context.control.device.deviceId == EarthDeviceID)
         {
             inputVector = input;
             horInput = inputVector.x;
-            vertInput = inputVector.y ;
+            vertInput = inputVector.y;
 
-            if(horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
+            if (horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
             {
                 inputVector = Vector2.zero;
                 return;
             }
-            if (this.GetComponent<NavMeshAgent>())
+            //Call this if the player is in the middle of navigating using the nav agent
+            if (this.GetComponent<NavMeshAgent>().enabled)
             {
-                if (this.GetComponent<NavMeshAgent>().enabled)
-                {
-                    this.GetComponent<EarthPlayer>().enrouteToPlant = false;
-                    this.GetComponent<NavMeshAgent>().ResetPath();
-                    this.GetComponent<NavMeshAgent>().enabled = false;
-                }
+                this.GetComponent<EarthPlayer>().enrouteToPlant = false;
+                this.GetComponent<NavMeshAgent>().ResetPath();
+                this.GetComponent<NavMeshAgent>().enabled = false;
             }
+
             rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
         }
     }
 
+    //This is called when the player stops inputting on their movement controls
     public void EndMovement(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == EarthDeviceID)
         {
             if (context.canceled)
             {
-                //Debug.Log("Cancelling Earth movement");
                 inputVector = Vector2.zero;
             }
         }
     }
 
-    public void StopPlayer(Vector2 input)
+    //This is used if the player cancels their nav agent movement
+    public void StopPlayer()
     {
-        if (this.GetComponent<NavMeshAgent>())
+        if (this.GetComponent<NavMeshAgent>().enabled)
         {
-            if (this.GetComponent<NavMeshAgent>().enabled)
-            {
-                ResetNavAgent();
-            }
+            ResetNavAgent();
         }
+
     }
 
+    //This turns the player in the direction they are moving
     private void OrientPlayer()
     {
         //If we've activated the nav mesh agent, we want to turn in the direction it is moving
@@ -211,7 +191,7 @@ public class playerMovement : MonoBehaviour
             {
                 orientation.forward = viewDir.normalized;
             }
-            
+
             // rotate the player object
             Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
 
@@ -224,9 +204,9 @@ public class playerMovement : MonoBehaviour
         }
         else
         {
-            
+
             //rotate orientation
-            Vector3 viewDir = player.position - this.GetComponent<NavMeshAgent>().destination;
+            Vector3 viewDir = player.position - this.GetComponent<NavMeshAgent>().steeringTarget;
             if (viewDir != Vector3.zero)
             {
                 orientation.forward = viewDir.normalized;
@@ -240,10 +220,11 @@ public class playerMovement : MonoBehaviour
             {
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
             }
-            
+
         }
     }
 
+    //Keeps player speed below a certain threshold
     private void SpeedControl()
     {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -257,14 +238,15 @@ public class playerMovement : MonoBehaviour
         }
     }
 
+    //Handles setting all variables related to nav agent back to default
     public void ResetNavAgent()
     {
-        
+
         this.GetComponent<EarthPlayer>().enrouteToPlant = false;
         this.GetComponent<NavMeshAgent>().ResetPath();
         this.GetComponent<NavMeshAgent>().enabled = false;
         orientation.localRotation = new Quaternion(0, 0, 0, 1);
-        this.gameObject.transform.rotation.Set(0, 0, 0, 1);
+        //this.gameObject.transform.rotation.Set(0, 0, 0, 1);
     }
 
     private void Jump()
@@ -284,7 +266,7 @@ public class playerMovement : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         //If we're touching the ground
-        if(other.gameObject.layer == 6)
+        if (other.gameObject.layer == 6)
         {
             grounded = true;
         }
