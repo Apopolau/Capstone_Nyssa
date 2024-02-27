@@ -14,10 +14,12 @@ public class LevelOneEvents : EventManager
     [SerializeField] GameObject firstAreaGrid;
     [SerializeField] GameObject secondAreaGrid;
     [SerializeField] GameObject thirdAreaGrid;
+    [SerializeField] GameObject fourthAreaGrid;
 
     List<GameObject> firstAreaTiles = new List<GameObject>();
     List<GameObject> secondAreaTiles = new List<GameObject>();
     List<GameObject> thirdAreaTiles = new List<GameObject>();
+    List<GameObject> fourthAreaTiles = new List<GameObject>();
 
     [SerializeField] TaskListManager task1;
     [SerializeField] TaskListManager task2;
@@ -31,16 +33,6 @@ public class LevelOneEvents : EventManager
         foreach (Transform childTransform in firstAreaGrid.transform)
         {
             firstAreaTiles.Add(childTransform.gameObject);
-            /*
-            Cell[] cells = GetComponentsInChildren<Cell>();
-            foreach(Cell cell in cells)
-            {
-                cell.
-            }
-            */
-
-
-            
         }
         
         foreach (Transform childTransform in secondAreaGrid.transform)
@@ -51,6 +43,11 @@ public class LevelOneEvents : EventManager
         foreach (Transform childTransform in thirdAreaGrid.transform)
         {
             thirdAreaTiles.Add(childTransform.gameObject);
+        }
+
+        foreach (Transform childTransform in fourthAreaGrid.transform)
+        {
+            fourthAreaTiles.Add(childTransform.gameObject);
         }
 
     }
@@ -73,6 +70,39 @@ public class LevelOneEvents : EventManager
         }
         levelOneProgress.shelter = true;
         task3.CrossOutTask();
+    }
+
+    public void OnSecondMonsterDefeated()
+    {
+        foreach (GameObject go in secondAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+    }
+
+    public void OnThirdMonsterDefeated()
+    {
+        foreach (GameObject go in thirdAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+    }
+
+    public void OnFourthMonsterDefeated()
+    {
+        foreach (GameObject go in fourthAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
     }
 
     public void OnPumpShutOff()

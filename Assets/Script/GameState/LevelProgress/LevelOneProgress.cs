@@ -25,6 +25,7 @@ public class LevelOneProgress : LevelProgress
 
     //Drag this from the plant prefabs folder
     [SerializeField]public GameObject treeSeedPrefab;
+    [SerializeField] public GameObject grassSeedPrefab;
 
 
     public override bool EvaluateFood()
