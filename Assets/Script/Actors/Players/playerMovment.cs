@@ -40,7 +40,7 @@ public class playerMovement : MonoBehaviour
     //Check if player is on the ground
     public float playerHeight;
     public LayerMask groundMask;
-    bool grounded;
+    [SerializeField] bool grounded;
 
     float horInput;
     float vertInput;
@@ -279,6 +279,24 @@ public class playerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //If we're touching the ground
+        if(other.gameObject.layer == 6)
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //If we're not touching the ground
+        if (other.gameObject.layer == 6)
+        {
+            grounded = false;
+        }
     }
 }
 

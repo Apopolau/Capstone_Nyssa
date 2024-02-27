@@ -303,5 +303,23 @@ public class CelestialPlayerMovement : MonoBehaviour
     {
         readyToJump = true;
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //If we're touching the ground
+        if (other.gameObject.layer == 6)
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //If we're not touching the ground
+        if (other.gameObject.layer == 6)
+        {
+            grounded = false;
+        }
+    }
 }
 
