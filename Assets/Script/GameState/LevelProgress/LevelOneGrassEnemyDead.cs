@@ -10,7 +10,7 @@ public class LevelOneGrassEnemyDead : MonoBehaviour
     [SerializeField] LevelOneProgress levelOneProgress;
     GameObject treeSeedSpawn;
 
-  ///////////////////////////////  public DialogueTrigger monsterDeadDialouge;
+   public DialogueTrigger monsterDeadDialouge;
     public CelestialPlayer player;
     // Start is called before the first frame update
     void Start()
@@ -40,11 +40,11 @@ public class LevelOneGrassEnemyDead : MonoBehaviour
             {
                 //Instantiate the tree seed here
 
-              
 
 
-            ////////will havd to replace this with grass seed after testing 
-                treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, pos, Quaternion.identity);
+                monsterDeadDialouge.TriggerDialogue();
+                ////////will havd to replace this with grass seed after testing 
+                treeSeedSpawn = Instantiate(levelOneProgress.grassPrefab, pos, Quaternion.identity);
                 //Instantiate the tree seed here
 
             }
