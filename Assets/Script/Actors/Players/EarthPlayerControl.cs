@@ -231,7 +231,7 @@ public class EarthPlayerControl : MonoBehaviour
         if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
         {
             Debug.Log("cancelling plant");
-            earthPlayer.CancelPlant();
+            earthPlayer.OnPlantingCancelled();
         }
     }
 
