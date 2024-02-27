@@ -65,7 +65,14 @@ public class Plant : Creatable
             storedWater.low = false;
         }
 
-        
+        foreach(SpriteRenderer r in waterUI.GetComponentsInChildren<SpriteRenderer>())
+        {
+            r.material.renderQueue += 1;
+        }
+        foreach (SpriteRenderer r in sunlightUI.GetComponentsInChildren<SpriteRenderer>())
+        {
+            r.material.renderQueue += 1;
+        }
     }
 
     private void Start()
@@ -175,7 +182,7 @@ public class Plant : Creatable
 
             if (weatherState.skyState == WeatherState.SkyState.RAINY && !waterPlant && !isSmothered)
             {
-                storedSunlight.current += Mathf.Clamp(1, 0, storedWater.max);
+                storedWater.current += Mathf.Clamp(3, 0, storedWater.max);
             }
         }
     }
@@ -253,12 +260,13 @@ public class Plant : Creatable
 
     private void PlacePlant(float scale, float tileOffset)
     {
-        plantObject.transform.rotation = Quaternion.Euler(0, 45, 0);
+        
         if (plantVisuals.Length > 1)
         {
             int i = 0;
             foreach (SpriteRenderer plantVisual in plantVisuals)
             {
+                plantVisual.transform.rotation = Quaternion.Euler(0, 45, 0);
                 plantVisual.transform.localScale = new Vector3(scale, scale, 1);
                 float yOffset = (plantVisual.GetComponent<SpriteRenderer>().sprite.bounds.extents.y * scale);
                 plantVisual.transform.localPosition = new Vector3(plantVisual.transform.localPosition.x, yOffset, plantVisual.transform.localPosition.z);
@@ -267,6 +275,7 @@ public class Plant : Creatable
         }
         else
         {
+            plantObject.transform.rotation = Quaternion.Euler(0, 45, 0);
             plantVisuals[0].transform.localScale = new Vector3(scale, scale, 1);
             float yOffset = (plantVisuals[0].GetComponent<SpriteRenderer>().sprite.bounds.extents.y * scale);
             plantVisuals[0].gameObject.transform.parent.gameObject.transform.localPosition = new Vector3(-tileOffset, yOffset, -tileOffset);
@@ -287,7 +296,7 @@ public class Plant : Creatable
             sunlightUI.SetActive(false);
             Debug.Log("Water is needed");
         }
-        else if (!waterLow && sunlightLow)
+        else if (!waterLow && sunlightLow && !weatherState.dayTime)
         {
             // Sunlight is low but water is not, prioritize sunlight UI
             waterUI.SetActive(false);
