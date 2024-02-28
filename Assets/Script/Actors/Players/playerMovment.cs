@@ -50,6 +50,8 @@ public class playerMovement : MonoBehaviour
     private PlayerInputActions playerInputActions;
     private PlayerInput playerInput;
     Vector2 inputVector;
+    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+    Vector3 isometricInput;
     int EarthDeviceID;
     //private CelestialPlayerInput celestialPlayerInput;
 
@@ -59,6 +61,7 @@ public class playerMovement : MonoBehaviour
     {
         player = this.GetComponent<Transform>();
         playerInputActions = GetComponent<EarthPlayerControl>().controls;
+        isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
     }
 
     void Start()
@@ -98,7 +101,8 @@ public class playerMovement : MonoBehaviour
     {
         if (this.gameObject.tag == "Player1")
         {
-            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+            //isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
+            rb.AddForce(new Vector3(inputVector.x - isometricInput.x, 0, inputVector.y - isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
         }
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
@@ -139,10 +143,12 @@ public class playerMovement : MonoBehaviour
             inputVector = input;
             horInput = inputVector.x;
             vertInput = inputVector.y;
+            isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
 
             if (horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
             {
                 inputVector = Vector2.zero;
+                isometricInput = Vector3.zero;
                 return;
             }
             //Call this if the player is in the middle of navigating using the nav agent
@@ -151,7 +157,8 @@ public class playerMovement : MonoBehaviour
                 ResetNavAgent();
             }
 
-            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+
+            rb.AddForce(new Vector3(inputVector.x - isometricInput.x, 0, inputVector.y - isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
         }
     }
 
@@ -163,6 +170,7 @@ public class playerMovement : MonoBehaviour
             if (context.canceled)
             {
                 inputVector = Vector2.zero;
+                isometricInput = Vector3.zero;
             }
         }
     }
@@ -175,13 +183,15 @@ public class playerMovement : MonoBehaviour
         {
             //rotate orientation
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+            //Vector3 isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
+
             if (viewDir != Vector3.zero)
             {
                 orientation.forward = viewDir.normalized;
             }
 
             // rotate the player object
-            Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
+            Vector3 inputDir = orientation.forward * isometricInput.x + orientation.right * -isometricInput.z;
 
             //if input direction isnt 0 smoothly change the direction using the rotation speed
             if (inputDir != Vector3.zero)
