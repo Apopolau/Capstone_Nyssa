@@ -102,7 +102,8 @@ public class playerMovement : MonoBehaviour
         if (this.gameObject.tag == "Player1")
         {
             //isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
-            rb.AddForce(new Vector3(inputVector.x - isometricInput.x, 0, inputVector.y - isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2), 
+                0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
         }
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
@@ -157,8 +158,8 @@ public class playerMovement : MonoBehaviour
                 ResetNavAgent();
             }
 
-
-            rb.AddForce(new Vector3(inputVector.x - isometricInput.x, 0, inputVector.y - isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2),
+                0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
         }
     }
 
