@@ -21,6 +21,7 @@ public class EarthPlayer : MonoBehaviour
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
     public bool isRemovalStarted = false;
+    public bool isATileSelected = false;
     public GameObject plantSelected;
     public List<GameObject> plantsPlanted;
     public GameObject tempPlantPlanted;
@@ -100,7 +101,7 @@ public class EarthPlayer : MonoBehaviour
         //Debug.Log("Default controls are on: " + earthControls.controls.EarthPlayerDefault.enabled);
         //Debug.Log("Planting controls are on: " + earthControls.controls.PlantIsSelected.enabled);
         ActivateTile();
-        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 10.5f)
+        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
         {
             this.GetComponent<playerMovement>().ResetNavAgent();
             if (isPlantSelected)
@@ -221,6 +222,7 @@ public class EarthPlayer : MonoBehaviour
     {
         //Debug.Log("Wrapping up plant selection");
         isPlantSelected = true;
+        isATileSelected = false;
         plantSelected.transform.position = this.transform.position;
 
         //Switch our controls
@@ -260,13 +262,14 @@ public class EarthPlayer : MonoBehaviour
         //Have to add checks to make sure they are on a tile
         if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
         {
-            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
+            TurnOffTileSelect(true);
+            Destroy(plantSelected);
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
             {
                 enrouteToPlant = false;
                 isPlantSelected = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                Destroy(plantSelected);
-                Destroy(tileOutline);
+                //Destroy(tileOutline);
                 //This is a good place to initiate a planting animation
                 GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
@@ -368,11 +371,14 @@ public class EarthPlayer : MonoBehaviour
     {
         if (isPlantSelected)
         {
-            isPlantSelected = false;
+            if (enrouteToPlant)
+            {
+                GetComponent<playerMovement>().ResetNavAgent();
+            }
+            isATileSelected = false;
             plantSelectedType = PlantSelectedType.NONE;
             Destroy(plantSelected);
-            Destroy(tileOutline);
-            virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+            TurnOffTileSelect(false);
 
             //Switch our controls
             earthControls.controls.EarthPlayerDefault.Enable();
@@ -390,6 +396,7 @@ public class EarthPlayer : MonoBehaviour
     {
         //Mark that we've started the process
         isRemovalStarted = true;
+        isATileSelected = false;
         //Switch our controls
         earthControls.controls.RemovingPlant.Enable();
         earthControls.controls.EarthPlayerDefault.Disable();
@@ -421,13 +428,14 @@ public class EarthPlayer : MonoBehaviour
         //Check if the tile they highlighted has a plant on it
         if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
         {
+            TurnOffTileSelect(true);
             //If we're close enough to the plant, we can go ahead and remove it
-            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < 12)
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
             {
                 enrouteToPlant = false;
                 isRemovalStarted = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                Destroy(tileOutline);
+                //Destroy(tileOutline);
                 //Set our animations
                 GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
@@ -488,9 +496,12 @@ public class EarthPlayer : MonoBehaviour
     {
         if (isRemovalStarted)
         {
+            if (enrouteToPlant)
+            {
+                GetComponent<playerMovement>().ResetNavAgent();
+            }
             isRemovalStarted = false;
-            Destroy(tileOutline);
-            virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+            TurnOffTileSelect(false);
 
             //Switch our controls
             earthControls.controls.EarthPlayerDefault.Enable();
@@ -505,13 +516,23 @@ public class EarthPlayer : MonoBehaviour
     //When highlighting tiles, get information to move indicators
     private void ActivateTile()
     {
-        Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(cameraRay, out hit, 1000, tileMask))
+        //Only do this if we haven't selected a tile yet
+        if(!isATileSelected)
         {
-            selectedTile = hit.transform.gameObject.GetComponentInParent<Cell>().gameObject;
+            Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(cameraRay, out hit, 1000, tileMask))
+            {
+                selectedTile = hit.transform.gameObject.GetComponentInParent<Cell>().gameObject;
+            }
         }
+    }
 
+    private void TurnOffTileSelect(bool tileSelectionState)
+    {
+        isATileSelected = tileSelectionState;
+        Destroy(tileOutline);
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
     //A catch-all interact button. Simply sends a signal that the player is interacting, so various objects

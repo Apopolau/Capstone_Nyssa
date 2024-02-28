@@ -148,9 +148,7 @@ public class playerMovement : MonoBehaviour
             //Call this if the player is in the middle of navigating using the nav agent
             if (this.GetComponent<NavMeshAgent>().enabled)
             {
-                this.GetComponent<EarthPlayer>().enrouteToPlant = false;
-                this.GetComponent<NavMeshAgent>().ResetPath();
-                this.GetComponent<NavMeshAgent>().enabled = false;
+                ResetNavAgent();
             }
 
             rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
@@ -167,16 +165,6 @@ public class playerMovement : MonoBehaviour
                 inputVector = Vector2.zero;
             }
         }
-    }
-
-    //This is used if the player cancels their nav agent movement
-    public void StopPlayer()
-    {
-        if (this.GetComponent<NavMeshAgent>().enabled)
-        {
-            ResetNavAgent();
-        }
-
     }
 
     //This turns the player in the direction they are moving

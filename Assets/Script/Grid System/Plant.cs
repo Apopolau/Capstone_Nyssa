@@ -231,7 +231,7 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.matureImage;
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
-            HandleTreeColliders(2f, 5);
+            HandleTreeColliders(2.5f, 10);
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.MATURE && growthPoints >= stats.matureSeedDropTime)
