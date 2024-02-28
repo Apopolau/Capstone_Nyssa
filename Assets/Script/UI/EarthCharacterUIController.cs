@@ -45,7 +45,7 @@ public class EarthCharacterUIController : MonoBehaviour
         foreach (GameObject uiObject in uiObjectToToggle)
         {
             uiObject.SetActive(isActive);
-            Debug.Log("ui is being deactivated");
+            //Debug.Log("ui is being deactivated");
         }
     }
 

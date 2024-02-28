@@ -144,7 +144,7 @@ public class EarthPlayer : MonoBehaviour
     public void OnTreeSelected(InputAction.CallbackContext context)
     {
         //We're going to want to check if they even have the seed for the plant they selected before we do anything else
-        if (inventory.HasTypeSeed("Tree Seed"))
+        if (inventory.HasEnoughItems("Tree Seed", 1))
         {
 
             if (isPlantSelected)
@@ -169,7 +169,7 @@ public class EarthPlayer : MonoBehaviour
 
     public void OnGrassSelected(InputAction.CallbackContext context)
     {
-        if (inventory.HasTypeSeed("Grass Seed"))
+        if (inventory.HasEnoughItems("Grass Seed", 1))
         {
             if (isPlantSelected)
             {
@@ -194,7 +194,7 @@ public class EarthPlayer : MonoBehaviour
     public void OnFlowerSelected(InputAction.CallbackContext context)
     {
 
-        if (inventory.HasTypeSeed("Flower Seed"))
+        if (inventory.HasEnoughItems("Flower Seed", 1))
         {
             if (isPlantSelected)
             {
@@ -333,11 +333,11 @@ public class EarthPlayer : MonoBehaviour
         if (plantSelectedType == PlantSelectedType.TREE)
         {
             tempPlantPlanted = Instantiate(treePrefab, activeTileCell.buildingTarget.transform);
-            inventory.RemoveItemByName("Tree Seed"); //remove the item "TreeSeed"
+            inventory.RemoveItemByName("Tree Seed", 1); //remove the item "Tree Seed"
         }
         else if (plantSelectedType == PlantSelectedType.FLOWER)
         {
-            inventory.RemoveItemByName("Flower Seed"); //remove the item "Flower Seed"
+            inventory.RemoveItemByName("Flower Seed", 1); //remove the item "Flower Seed"
             if (currentTileSelectedType == TileSelectedType.LAND)
             {
                 tempPlantPlanted = Instantiate(landFlowerPrefab, activeTileCell.buildingTarget.transform);
@@ -350,7 +350,7 @@ public class EarthPlayer : MonoBehaviour
         }
         else if (plantSelectedType == PlantSelectedType.GRASS)
         {
-            inventory.RemoveItemByName("Grass Seed"); //remove the item "Flower Seed"
+            inventory.RemoveItemByName("Grass Seed", 1); //remove the item "Flower Seed"
             if (currentTileSelectedType == TileSelectedType.LAND)
             {
                 tempPlantPlanted = Instantiate(landGrassPrefab, activeTileCell.buildingTarget.transform);

@@ -14,7 +14,7 @@ public class PlantingUIIndicator : MonoBehaviour
 
     public Image grassImage;
     public Image treeImage;
-    
+
     [SerializeField] private GameObject shovelUIOverlay;
 
     private void Update()
@@ -35,9 +35,9 @@ public class PlantingUIIndicator : MonoBehaviour
 
     private void OnEnable()
     {
-        
 
-       
+
+
     }
 
     public void UpdateQuantityText()
@@ -54,7 +54,7 @@ public class PlantingUIIndicator : MonoBehaviour
             if (quantity > 0)
             {
                 // Activate the UI element based on the itemType
-                DeactivateUIByItemType(itemType);            
+                DeactivateUIByItemType(itemType);
 
             }
             else if (quantity == 0)
@@ -64,53 +64,54 @@ public class PlantingUIIndicator : MonoBehaviour
             }
         }
         else
-        {   quantityText.text = "0";
-            Debug.LogWarning("Inventory or quantityText is null.");
+        {
+            quantityText.text = "0";
+            //Debug.LogWarning("Inventory or quantityText is null.");
         }
     }
-// Function to activate UI element based on itemType
-private void ActivateUIByItemType(string itemType)
-{
-    // Check itemType and activate corresponding UI element
-    switch (itemType)
+    // Function to activate UI element based on itemType
+    private void ActivateUIByItemType(string itemType)
     {
-        case "Grass Seed":
-            ToggleIconsOverlay(grassImage, true); // Activate grass UI
-            //Debug.Log($"Item type: {itemType} overlay deactivated");
-            break;
-        case "Tree Seed":
-            ToggleIconsOverlay(treeImage, true); // Activate tree UI
-            break;
-        // Add more cases for other item types as needed
-        default:
-            break;
+        // Check itemType and activate corresponding UI element
+        switch (itemType)
+        {
+            case "Grass Seed":
+                ToggleIconsOverlay(grassImage, true); // Activate grass UI
+                                                      //Debug.Log($"Item type: {itemType} overlay deactivated");
+                break;
+            case "Tree Seed":
+                ToggleIconsOverlay(treeImage, true); // Activate tree UI
+                break;
+            // Add more cases for other item types as needed
+            default:
+                break;
+        }
     }
-}
     // Function to deactivate UI element based on itemType
-private void DeactivateUIByItemType(string itemType)
-{
-    // Check itemType and deactivate corresponding UI element
-    switch (itemType)
+    private void DeactivateUIByItemType(string itemType)
     {
-        case "Grass Seed":
-            ToggleIconsOverlay(grassImage, false); // Deactivate grass UI
-            break;
-        case "Tree Seed":
-            ToggleIconsOverlay(treeImage, false); // Deactivate tree UI
-            break;
-        // Add more cases for other item types as needed
-        default:
-            break;
+        // Check itemType and deactivate corresponding UI element
+        switch (itemType)
+        {
+            case "Grass Seed":
+                ToggleIconsOverlay(grassImage, false); // Deactivate grass UI
+                break;
+            case "Tree Seed":
+                ToggleIconsOverlay(treeImage, false); // Deactivate tree UI
+                break;
+            // Add more cases for other item types as needed
+            default:
+                break;
+        }
+        //Debug.Log($"Item type: {itemType} overlay deactivated");
     }
-    Debug.Log($"Item type: {itemType} overlay deactivated");
-}
 
-// Function to toggle visibility of UI element
-private void ToggleIconsOverlay(Image image, bool isActive)
-{
-    // Set the active state of the image GameObject based on isActive parameter
-    image.gameObject.SetActive(isActive);
-}
+    // Function to toggle visibility of UI element
+    private void ToggleIconsOverlay(Image image, bool isActive)
+    {
+        // Set the active state of the image GameObject based on isActive parameter
+        image.gameObject.SetActive(isActive);
+    }
 
 
 }

@@ -18,7 +18,7 @@ public class PickupObject : Interactable
         if (item != null)
         {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            spriteRenderer.sprite = item.Icon;
+            spriteRenderer.sprite = item.stats.Icon;
             spriteRenderer.enabled = true;
         }
         else
@@ -49,15 +49,15 @@ public class PickupObject : Interactable
             //Debug.Log("Picking up");
             if (item != null)
             {
-                int pickupQuantity = 1; // You can change this to the desired quantity.
-                if (inventory.AddItem(item, pickupQuantity))
+                if (inventory.AddItem(item, item.quantity))
                 {
                     UpdateUIText();
+                    Destroy(item);
                     Destroy(this.GetComponentInParent<Transform>().gameObject);
                 }
                 else {
                     earthPlayer.displayText.text = "Inventory is full";
-                };
+                }
             }
         }
     }
@@ -72,9 +72,10 @@ public class PickupObject : Interactable
         }
     }
 
+    //Call this when instantiating an item prefab to set the quantity of items being dropped
     public void SetItemQuantity(int newQuantity)
     {
-        item.Quantity = newQuantity;
+        item.quantity = newQuantity;
     }
     
 

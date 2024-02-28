@@ -294,21 +294,21 @@ public class Plant : Creatable
             // Water is low but sunlight is not, prioritize water UI
             waterUI.SetActive(true);
             sunlightUI.SetActive(false);
-            Debug.Log("Water is needed");
+            //Debug.Log("Water is needed");
         }
         else if (!waterLow && sunlightLow && !weatherState.dayTime)
         {
             // Sunlight is low but water is not, prioritize sunlight UI
             waterUI.SetActive(false);
             sunlightUI.SetActive(true);
-            Debug.Log("Sunlight is needed");
+            //Debug.Log("Sunlight is needed");
         }
         else if (waterLow && sunlightLow)
         {
             // Both water and sunlight are low, prioritize water UI
             waterUI.SetActive(true);
             sunlightUI.SetActive(false);
-            Debug.Log("Water is needed");
+            //Debug.Log("Water is needed");
         }
         else
         {

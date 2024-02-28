@@ -11,7 +11,7 @@ public class ItemSlot : MonoBehaviour
     [SerializeField] TextMeshProUGUI itemNameText;  // New field for displaying item name.
     [SerializeField] TextMeshProUGUI quantityText;   // Field for displaying quantity.
 
-    private Item _item;
+    [SerializeField] private Item _item;
 
     public Item Item
     {
@@ -27,7 +27,7 @@ public class ItemSlot : MonoBehaviour
             }
             else
             {
-                image.sprite = _item.Icon;
+                image.sprite = _item.stats.Icon;
                 image.enabled = true;
                 UpdateItemNameText();
                 UpdateQuantityText();
@@ -61,12 +61,35 @@ public class ItemSlot : MonoBehaviour
         inventory.AddItemSlot(this);
     }
 
+    public void SetItem(Item newItem)
+    {
+        _item = newItem;
+    }
+
+    public void SetItemDisplay()
+    {
+        
+        if (_item == null)
+        {
+            image.enabled = false;
+            itemNameText.text = "";
+            quantityText.text = "";
+        }
+        else
+        {
+            image.sprite = _item.stats.Icon;
+            image.enabled = true;
+            UpdateItemNameText();
+            UpdateQuantityText();
+        }
+    }
+
     public void UpdateItemNameText()
     {
         // Update the item name text with the item's name.
         if (_item != null)
         {
-            itemNameText.text = _item.ItemName;
+            itemNameText.text = _item.stats.ItemName;
         }
     }
 
@@ -75,7 +98,7 @@ public class ItemSlot : MonoBehaviour
         // Update the quantity text with the item's quantity.
         if (_item != null)
         {
-            quantityText.text = $"{_item.Quantity}";
+            quantityText.text = $"{_item.quantity}";
         }
     }
 }

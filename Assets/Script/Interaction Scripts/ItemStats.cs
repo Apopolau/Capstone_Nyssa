@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
-public class Item : ScriptableObject
+public class ItemStats : ScriptableObject
 {
     public string ItemName;
     public Sprite Icon;
-    public int Quantity;
+    //public int Quantity;
     //public GameObject itemPrefab;
     
 }
