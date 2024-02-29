@@ -584,7 +584,7 @@ public class EarthPlayer : MonoBehaviour
     {
         earthControls.controls.EarthPlayerDefault.Disable();
         earthControls.controls.PlantIsSelected.Disable();
-        uiController.SuspendUI();
+        uiController.DarkenOverlay(); //indicate no movement is allowed while planting
         yield return waitTime;
         earthControls.controls.EarthPlayerDefault.Enable();
         uiController.RestoreUI();
