@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8367480010192199803}
   - component: {fileID: 7736046322097026913}
   m_Layer: 0
-  m_Name: PickupUI
+  m_Name: MoveUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -402,9 +402,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Pickup
-
-'
+  m_text: Move
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -982,7 +980,7 @@ GameObject:
   - component: {fileID: 1946839251719472280}
   - component: {fileID: 1173439700395419515}
   m_Layer: 0
-  m_Name: PickupCanvas
+  m_Name: MoveCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1636,8 +1634,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6987381848557000553}
+  - component: {fileID: 2586280834659760344}
   m_Layer: 0
-  m_Name: PicukupTarget
+  m_Name: UITarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1652,13 +1651,26 @@ Transform:
   m_GameObject: {fileID: 5708132736867260016}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.68375593, z: -0, w: 0.7297108}
-  m_LocalPosition: {x: -108.1, y: -12.43, z: -40.84}
+  m_LocalPosition: {x: -108.1, y: -9.3, z: -40.84}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4048950970096214212}
   m_Father: {fileID: 9105947208277114259}
   m_LocalEulerAnglesHint: {x: 0, y: -86.276, z: 0}
+--- !u!114 &2586280834659760344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5708132736867260016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b5359528c703141904a9d0ee6a58d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
 --- !u!1 &6400273692092781910
 GameObject:
   m_ObjectHideFlags: 0

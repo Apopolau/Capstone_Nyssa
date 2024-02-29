@@ -79,7 +79,11 @@ public class PickupObject : Interactable
     //Call this when instantiating an item prefab to set the quantity of items being dropped
     public void SetItemQuantity(int newQuantity)
     {
-        item.quantity = newQuantity;
+        quantity = newQuantity;
+        if(item != null)
+        {
+            item.quantity = quantity;
+        }
     }
     
 

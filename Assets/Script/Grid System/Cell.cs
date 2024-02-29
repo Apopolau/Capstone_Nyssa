@@ -240,7 +240,7 @@ public class Cell : MonoBehaviour
     //Modifies the indicators for plant removal while the player selects a tile to remove from
     private void UpdatePlantRemoval()
     {
-        if (earthPlayer.isRemovalStarted && tileIsActivated)
+        if (earthPlayer.isRemovalStarted && tileIsActivated && earthPlayer.earthControls.controls.RemovingPlant.enabled)
         {
             earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
             if (tileHasBuild)

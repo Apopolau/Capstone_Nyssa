@@ -379,10 +379,6 @@ public class EarthPlayer : MonoBehaviour
             plantSelectedType = PlantSelectedType.NONE;
             Destroy(plantSelected);
             TurnOffTileSelect(false);
-
-            //Switch our controls
-            earthControls.controls.EarthPlayerDefault.Enable();
-            earthControls.controls.PlantIsSelected.Disable();
         }
     }
 
@@ -428,14 +424,14 @@ public class EarthPlayer : MonoBehaviour
         //Check if the tile they highlighted has a plant on it
         if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
         {
+            
             TurnOffTileSelect(true);
             //If we're close enough to the plant, we can go ahead and remove it
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
             {
-                enrouteToPlant = false;
                 isRemovalStarted = false;
+                enrouteToPlant = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                //Destroy(tileOutline);
                 //Set our animations
                 GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
@@ -502,10 +498,6 @@ public class EarthPlayer : MonoBehaviour
             }
             isRemovalStarted = false;
             TurnOffTileSelect(false);
-
-            //Switch our controls
-            earthControls.controls.EarthPlayerDefault.Enable();
-            earthControls.controls.RemovingPlant.Disable();
         }
         
     }
@@ -530,6 +522,9 @@ public class EarthPlayer : MonoBehaviour
 
     private void TurnOffTileSelect(bool tileSelectionState)
     {
+        earthControls.controls.RemovingPlant.Disable();
+        earthControls.controls.PlantIsSelected.Disable();
+        earthControls.controls.EarthPlayerDefault.Enable();
         isATileSelected = tileSelectionState;
         Destroy(tileOutline);
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
