@@ -40,12 +40,6 @@ public class ItemSlot : MonoBehaviour
         
     }
 
-    private void OnDisable()
-    {
-        inventory.items.Remove(_item);
-        inventory.itemSlots.Remove(this);
-    }
-
     private void Awake()
     {
         if (image == null)

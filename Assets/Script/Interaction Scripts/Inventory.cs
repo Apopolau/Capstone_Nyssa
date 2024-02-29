@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class Inventory : ScriptableObject
 {
     int inventorySize = 4;
-    [SerializeField] public List<Item> items;
+    [SerializeField] public List<Item> items = new List<Item>();
     [SerializeField] public List<ItemSlot> itemSlots;
 
     public PlantingUIIndicator plantingUI;
@@ -16,36 +16,47 @@ public class Inventory : ScriptableObject
     {
         if (itemSlots != null)
         {
+            /*
+            if(items == null)
+            {
+                items = new List<Item>();
+            }
+            */
             items.Clear();
             itemSlots.Clear();
             RefreshUI();
         }
     }
 
-    //Called when only removing 1 item
-    /*
-    public void RemoveItemByName(string itemName)
+    public bool AddItem(Item item, int quantity)
     {
-        // Find the item with the specified name and remove it
-        Item itemToRemove = items.Find(item => item.stats.ItemName == itemName);
-        if (itemToRemove != null)
+        Debug.Log("Quantity was: " + quantity);
+        if (IsFull())
         {
-            Debug.Log($"Removing item {itemToRemove.stats.ItemName} based on key press");
-            RemoveItem(itemToRemove);
+            return false;
+        }
 
-            // Add a log message to check the current inventory after removal
-            Debug.Log("Current inventory:");
-            foreach (var item in items)
+        // Check if the item already exists in the inventory.
+        foreach (var existingItem in items)
+        {
+            if (existingItem.stats.ItemName == item.stats.ItemName)
             {
-                Debug.Log($"Item: {item.stats.ItemName}, Quantity: {item.quantity}");
+                existingItem.quantity += quantity; // Increase the quantity.
+                RefreshUI();
+                return true;
             }
         }
-        else
-        {
-            Debug.LogWarning($"You do not have the required item in the inventory.");
-        }
+
+        // If the item is not in the inventory, add a new one.
+
+        Item itemToAdd = new Item(item);
+        items.Add(itemToAdd);
+
+        //item.stats.Icon = item.stats.Icon;
+
+        RefreshUI();
+        return true;
     }
-    */
 
     /// <summary>
     /// THIS
@@ -85,40 +96,6 @@ public class Inventory : ScriptableObject
         }
     }
 
-    public bool AddItem(Item item, int quantity)
-    {
-        Debug.Log("Quantity was: " + quantity);
-        if (IsFull())
-        {
-            return false;
-        }
-
-        // Check if the item already exists in the inventory.
-        foreach (var existingItem in items)
-        {
-            if (existingItem.stats.ItemName == item.stats.ItemName)
-            {
-                existingItem.quantity += quantity; // Increase the quantity.
-                RefreshUI();
-                return true;
-            }
-        }
-
-        // If the item is not in the inventory, add a new one.
-        /*
-        Item itemToAdd = Instantiate(item);
-        itemToAdd.stats.name = item.stats.name;
-        itemToAdd.stats.Icon = item.stats.Icon;
-        itemToAdd.quantity = quantity;
-        */
-        items.Add(item);
-        
-        //item.stats.Icon = item.stats.Icon;
-
-        RefreshUI();
-        return true;
-    }
-
     //This is called in RemoveItemByName, so you should generally call that instead
     public bool RemoveItem(Item item, int quantity)
     {
@@ -142,31 +119,6 @@ public class Inventory : ScriptableObject
         }
         return false;
     }
-
-    //If only removing one item at a time
-    /*
-    public bool RemoveItem(Item item)
-    {
-        foreach (var existingItem in items)
-        {
-            if (existingItem.stats.ItemName == item.stats.ItemName)
-            {
-                existingItem.quantity -= 1;
-
-                // Remove the item from the list if its quantity is zero or less.
-                if (existingItem.quantity <= 0)
-                {
-                    items.Remove(existingItem);
-                }
-                UpdateUIText(); // Call UpdateUIText() after item removal
-                RefreshUI();
-
-                return true;
-            }
-        }
-        return false;
-    }
-    */
 
     //Update the text on the ui to match current item quantities
     private void UpdateUIText()

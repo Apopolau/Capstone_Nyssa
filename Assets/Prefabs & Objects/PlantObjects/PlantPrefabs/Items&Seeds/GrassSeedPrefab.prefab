@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6205335525628429760}
   - component: {fileID: 7502133238027360328}
   - component: {fileID: 626061461009314058}
-  - component: {fileID: 7529178138732307516}
   - component: {fileID: 2992362894250126283}
   m_Layer: 0
   m_Name: GrassSeedPrefab
@@ -78,21 +77,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiObject: {fileID: 3402841193372014619}
   playerRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
-  item: {fileID: 7529178138732307516}
+  itemStats: {fileID: 11400000, guid: b626233bd45df314f868bb4f2e624c53, type: 2}
   inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
---- !u!114 &7529178138732307516
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4222843129626314802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f276f1bd469295469bef1f092e3c7ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: b626233bd45df314f868bb4f2e624c53, type: 2}
   quantity: 1
 --- !u!135 &2992362894250126283
 SphereCollider:

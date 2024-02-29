@@ -7,7 +7,9 @@ public class PickupObject : Interactable
     protected SpriteRenderer spriteRenderer;
 
     [SerializeField] Item item;
+    [SerializeField] ItemStats itemStats;
     [SerializeField] Inventory inventory;
+    [SerializeField] int quantity;
 
     //public GameObject boxRange;
 
@@ -15,6 +17,8 @@ public class PickupObject : Interactable
 
     private void Start()
     {
+        item = new Item(itemStats, quantity);
+
         if (item != null)
         {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -52,7 +56,7 @@ public class PickupObject : Interactable
                 if (inventory.AddItem(item, item.quantity))
                 {
                     UpdateUIText();
-                    Destroy(item);
+                    //Destroy(item);
                     Destroy(this.GetComponentInParent<Transform>().gameObject);
                 }
                 else {
