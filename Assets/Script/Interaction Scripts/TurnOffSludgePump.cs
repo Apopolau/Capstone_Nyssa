@@ -89,7 +89,7 @@ public class TurnOffSludgePump : Interactable
             earthDialogueHasPlayed = true;
             celestialDialogueHasPlayed = true;
         }
-        else if (other.CompareTag("Player2") && (!earthDialogueHasPlayed && !celestialDialogueHasPlayed))
+        else if (other.CompareTag("Player2") && (!earthDialogueHasPlayed && !celestialDialogueHasPlayed) && other is CapsuleCollider)
         {
            sludgeDialougeCelest.TriggerDialogue();
            celestialDialogueHasPlayed = true;

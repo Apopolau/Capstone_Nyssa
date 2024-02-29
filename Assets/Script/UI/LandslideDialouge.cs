@@ -26,7 +26,7 @@ public class LandslideDialouge : MonoBehaviour
             // Destroy the GameObject collider
             Destroy(gameObject);
         }
-        else if (other.CompareTag("Player2"))
+        else if (other.CompareTag("Player2") && other is CapsuleCollider)
         {
            landslideDialouge2.TriggerDialogue();
             // Destroy the GameObject collider

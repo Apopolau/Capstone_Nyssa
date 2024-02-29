@@ -27,7 +27,7 @@ public class RiverDialogue : MonoBehaviour
             // Destroy the GameObject collider
             Destroy(gameObject);
         }
-        else if (other.CompareTag("Player2"))
+        else if (other.CompareTag("Player2") && other is CapsuleCollider)
         {
            riverlideDialougeCelest.TriggerDialogue();
             // Destroy the GameObject collider
