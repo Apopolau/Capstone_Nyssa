@@ -14,6 +14,7 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] public TextMeshProUGUI displayText;
+    [SerializeField] public Image selectTileText;
 
     // Reference to the UI controller script
     public EarthCharacterUIController uiController;
@@ -242,6 +243,7 @@ public class EarthPlayer : MonoBehaviour
             virtualMousePosition = Mouse.current.position.value;
         }
 
+        DisplayTileText();
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
@@ -264,6 +266,7 @@ public class EarthPlayer : MonoBehaviour
         {
             TurnOffTileSelect(true);
             Destroy(plantSelected);
+            HideTileText();
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
             {
                 enrouteToPlant = false;
@@ -595,4 +598,35 @@ public class EarthPlayer : MonoBehaviour
         mainCamera = switchCam;
 
     }
+
+    public void DisplayTileText()
+    {
+        // Check if the Image component is disabled
+        if (!selectTileText.enabled)
+        {
+            // Enable the Image component
+            selectTileText.enabled = true;
+        }
+
+        // Activate the GameObject
+         selectTileText.gameObject.SetActive(true);
+
+    }
+
+    public void HideTileText()
+    {
+        // Check if the Image component is disabled
+        if (selectTileText.enabled)
+        {
+            // Enable the Image component
+            selectTileText.enabled = false;
+        }
+
+        // Activate the GameObject
+        selectTileText.gameObject.SetActive(false);
+
+    
+    }
+
+    
 }
