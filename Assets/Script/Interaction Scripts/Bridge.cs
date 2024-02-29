@@ -6,6 +6,7 @@ public class Bridge : Interactable
 {
     [SerializeField] GameObject pickupTarget;
     [SerializeField] GameObject bridgeGeometry;
+    [SerializeField] GameObject bridgeCollider;
     [SerializeField] GameObjectRuntimeSet playerSet;
     Material material;
     [SerializeField] Material transparentMaterial;
@@ -18,6 +19,8 @@ public class Bridge : Interactable
     private void Awake()
     {
         material = bridgeGeometry.GetComponentInChildren<MeshRenderer>().material;
+        bridgeCollider = bridgeGeometry.GetComponentInChildren<MeshCollider>().gameObject;
+        bridgeCollider.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -103,7 +106,7 @@ public class Bridge : Interactable
     private void FinishBridgeBuild()
     {
         earthPlayer.inventory.RemoveItemByName("Tree Log", 3);
-        bridgeGeometry.GetComponentInChildren<MeshCollider>().gameObject.SetActive(true);
+        bridgeCollider.SetActive(true);
         bridgeGeometry.GetComponentInChildren<MeshRenderer>().material = material;
         Destroy(this.gameObject.GetComponent<BoxCollider>());
     }
