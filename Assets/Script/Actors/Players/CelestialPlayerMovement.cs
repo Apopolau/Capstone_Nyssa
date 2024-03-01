@@ -12,6 +12,7 @@ using UnityEngine.AI;
 
 public class CelestialPlayerMovement : MonoBehaviour
 {
+    public GameObject movementControlsUI;
     // Start is called before the first frame update
     //Rotation of the player
     public Transform orientation;
@@ -193,6 +194,17 @@ public class CelestialPlayerMovement : MonoBehaviour
                 0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
 
             //}
+        }
+
+        // if player moved disable the UI
+        if (input != Vector2.zero)
+        {
+            // Disable the UI element
+            if (movementControlsUI != null)
+            {
+            
+               movementControlsUI.SetActive(false);
+            }
         }
     }
     public void EndMovement(InputAction.CallbackContext context)
