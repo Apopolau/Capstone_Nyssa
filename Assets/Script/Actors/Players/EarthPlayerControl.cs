@@ -66,7 +66,14 @@ public class EarthPlayerControl : MonoBehaviour
             myDeviceID = Gamepad.all[playerIndex].deviceId;
             thisDevice = DeviceUsed.CONTROLLER;
         }
-        
+
+        //Test
+        controls.EarthPlayerDefault.Enable();
+        controls.PlantIsSelected.Enable();
+        controls.RemovingPlant.Enable();
+        controls.MenuControls.Enable();
+        controls.DialogueControls.Enable();
+
         Debug.Log(myDeviceID);
         //EarthPlayerDefault
         controls.EarthPlayerDefault.Disable();

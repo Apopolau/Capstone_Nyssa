@@ -490,8 +490,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1ac3baf0-6ffa-4f19-9b7e-bc90895b03b4"",
-                    ""path"": ""<VirtualMouse>/position"",
+                    ""id"": ""1ebd3025-3762-43e5-a6e5-740d068858bb"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -501,8 +501,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1ebd3025-3762-43e5-a6e5-740d068858bb"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""5ecec0e8-98d7-40b0-8f57-45cdd928f836"",
+                    ""path"": ""<VirtualMouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -677,8 +677,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""39666b1c-c6cc-4d2f-ac79-604190b9bc2e"",
-                    ""path"": ""<VirtualMouse>/position"",
+                    ""id"": ""54c3917d-c28d-4525-ad44-b1a2f6c0b08e"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -688,8 +688,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""54c3917d-c28d-4525-ad44-b1a2f6c0b08e"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""e854b329-e893-40a4-aaba-1ad38d1929fe"",
+                    ""path"": ""<VirtualMouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

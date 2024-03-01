@@ -65,7 +65,7 @@ public class EarthPlayer : MonoBehaviour
     public bool enrouteToPlant = false;
     public EarthPlayerAnimator earthAnimator;
     private NavMeshAgent earthAgent;
-    private PlayerInput playerInput;
+    //private PlayerInput playerInput;
     public EarthPlayerControl earthControls;
     [SerializeField] public WeatherState weatherState;
     private Vector3 OrigPos;
@@ -84,6 +84,7 @@ public class EarthPlayer : MonoBehaviour
         earthAgent = GetComponent<NavMeshAgent>();
         earthAgent.enabled = false;
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        virtualMousePosition = new Vector3();
         OrigPos = this.transform.position;
         health = new Stat(100, 100, false);
     }
@@ -92,7 +93,7 @@ public class EarthPlayer : MonoBehaviour
     void Start()
     {
         plantTime = new WaitForSeconds(4.542f);
-        playerInput = GetComponent<PlayerInput>();
+        //playerInput = GetComponent<PlayerInput>();
         //actions = new PlayerInputActions();
     }
 
@@ -125,6 +126,8 @@ public class EarthPlayer : MonoBehaviour
         {
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.;
+            Debug.Log("virtual mouse input: " + virtualMouseInput);
+            Debug.Log("virtual mouse: " + virtualMouseInput.virtualMouse);
             virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
