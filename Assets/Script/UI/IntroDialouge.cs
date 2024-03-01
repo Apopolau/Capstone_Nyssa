@@ -6,9 +6,15 @@ public class IntroDialouge : MonoBehaviour
 {
     
     public DialogueTrigger introDialouge;
+    private SphereCollider dialogueCollider;
+
+    private void Awake()
+    {
+        dialogueCollider = GetComponent<SphereCollider>();
+    }
     void Start()
     {
-        
+        dialogueCollider.enabled = true;
     }
 
     // Update is called once per frame
