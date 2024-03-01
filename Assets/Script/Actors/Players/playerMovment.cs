@@ -12,6 +12,8 @@ using UnityEngine.AI;
 
 public class playerMovement : MonoBehaviour
 {
+
+    public GameObject  movementControlsUI; //assign controlsUI
     // Start is called before the first frame update
     //Rotation of the player
     public Transform orientation;
@@ -161,6 +163,19 @@ public class playerMovement : MonoBehaviour
             rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2),
                 0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
         }
+
+        // if player moved disable the UI
+        if (input != Vector2.zero)
+        {
+            // Disable the UI element
+            if ( movementControlsUI != null)
+            {
+            
+                movementControlsUI.SetActive(false);
+            }
+        }
+
+        
     }
 
     //This is called when the player stops inputting on their movement controls
