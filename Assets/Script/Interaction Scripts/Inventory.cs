@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory")]
+[CreateAssetMenu(fileName = "New Inventory", menuName = "ManagerObject/Inventory")]
 public class Inventory : ScriptableObject
 {
     int inventorySize = 4;

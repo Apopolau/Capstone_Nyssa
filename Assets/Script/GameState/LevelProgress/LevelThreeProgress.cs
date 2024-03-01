@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Level Three Progress", menuName = "LevelProgress/LevelThree")]
+[CreateAssetMenu(fileName = "New Level Three Progress", menuName = "ManagerObject/LevelProgress/LevelThree")]
 public class LevelThreeProgress : LevelProgress
 {
     bool hasSavedFox;

@@ -70,7 +70,7 @@ public class playerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        if (GetComponent<EarthPlayerControl>().thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        if (GetComponent<EarthPlayerControl>().userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             EarthDeviceID = Keyboard.current.deviceId;
         }

@@ -11,9 +11,10 @@ public class EarthPlayerControl : MonoBehaviour
     public InputAction pickTreeAction;
     public LevelOneEvents levelOneEvents;
     public DialogueManager dialogueManager;
+    public UserSettingsManager userSettingsManager;
 
-    public enum DeviceUsed { KEYBOARD, CONTROLLER};
-    public DeviceUsed thisDevice;
+    //public enum DeviceUsed { KEYBOARD, CONTROLLER};
+    //public DeviceUsed thisDevice;
 
     int playerIndex = 1; // can only be 0 (for player 1) or 1 (for player 2)
     public int myDeviceID = -1; // used to store the ID of the controller that controls this particular player
@@ -53,18 +54,18 @@ public class EarthPlayerControl : MonoBehaviour
         {
             myDeviceID = Keyboard.current.deviceId;
             myDeviceID2 = Mouse.current.deviceId;
-            thisDevice = DeviceUsed.KEYBOARD;
+            userSettingsManager.earthControlType = UserSettingsManager.ControlType.KEYBOARD;
         }
         else if(Gamepad.all.Count == 1)
         {
             myDeviceID = Keyboard.current.deviceId;
             myDeviceID2 = Mouse.current.deviceId;
-            thisDevice = DeviceUsed.KEYBOARD;
+            userSettingsManager.earthControlType = UserSettingsManager.ControlType.KEYBOARD;
         }
         else
         {
             myDeviceID = Gamepad.all[playerIndex].deviceId;
-            thisDevice = DeviceUsed.CONTROLLER;
+            userSettingsManager.earthControlType = UserSettingsManager.ControlType.CONTROLLER;
         }
 
         Debug.Log(myDeviceID);
@@ -126,7 +127,7 @@ public class EarthPlayerControl : MonoBehaviour
 
 
                 Vector2 input;
-                if(thisDevice == DeviceUsed.KEYBOARD)
+                if(userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
                 {
                     input = new Vector2(Keyboard.current.upArrowKey.ReadValue() - Keyboard.current.downArrowKey.ReadValue(),
                         Keyboard.current.leftArrowKey.ReadValue() - Keyboard.current.rightArrowKey.ReadValue());
@@ -218,7 +219,7 @@ public class EarthPlayerControl : MonoBehaviour
     private void OnPlantPlantedPerformed(InputAction.CallbackContext context)
     {
         Debug.Log("Tried to plant a plant");
-        if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
+        if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
         {
             Debug.Log("planting plant");
             earthPlayer.PlantPlantingHandler();
@@ -228,7 +229,7 @@ public class EarthPlayerControl : MonoBehaviour
     private void OnPlantingCancelledPerformed(InputAction.CallbackContext context)
     {
         Debug.Log("Tried to cancel planting a plant");
-        if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
+        if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
         {
             Debug.Log("cancelling plant");
             earthPlayer.OnPlantingCancelled();
@@ -243,7 +244,7 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnPlantRemoved(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
+        if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
         {
             Debug.Log("removing plant");
             earthPlayer.PlantRemovingHandler();
@@ -252,7 +253,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     private void OnRemovingPlantCancelled(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == myDeviceID || (thisDevice == DeviceUsed.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
+        if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
         {
             Debug.Log("cancelled removing plant");
             earthPlayer.OnRemovingCancelled();
@@ -276,7 +277,7 @@ public class EarthPlayerControl : MonoBehaviour
         if (context.control.device.deviceId == myDeviceID)
         {
             float input;
-            if (thisDevice == DeviceUsed.CONTROLLER)
+            if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
             {
                 input = Gamepad.all[playerIndex].buttonSouth.ReadValue();
             }

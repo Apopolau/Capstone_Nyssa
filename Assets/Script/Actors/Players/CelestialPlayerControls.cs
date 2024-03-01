@@ -12,10 +12,8 @@ public class CelestialPlayerControls : MonoBehaviour
     public InputActionReference rainAction;
     public InputAction celestialActions;
     public DialogueManager dialogueManager;
+    public UserSettingsManager userSettingsManager;
     // public CelestialPlayerInputActions cele;
-
-    public enum DeviceUsed { KEYBOARD, CONTROLLER };
-    public DeviceUsed thisDevice;
 
     int playerIndex = 0; // can only be 0 (for player 1) or 1 (for player 2)
     public int myDeviceID = 0; // used to store the ID of the controller that controls this particular player
@@ -50,48 +48,7 @@ public class CelestialPlayerControls : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-    /*
-    private IEnumerator Start()
-    {
-        // Gamepad.all gives us a list of all connected gamepads.
-        // We need the deviceId of the gamepad that will control this character (the one this script is attached to), so that we can check it later when actions happen.
-        // P1's deviceId is at index 0, P2's deviceID is at index 1...
-        // For a two player game, we set the playerIndex via the inspector as either 0 or 1 
-
-        while (ms == null || kb == null || gp == null)
-        {
-            if (kb == null) kb = InputSystem.GetDevice<Keyboard>();
-            if (ms == null) ms = InputSystem.GetDevice<Mouse>();
-            if (gp == null) gp = InputSystem.GetDevice<Gamepad>();
-            Debug.Log("whilelooooop");
-            yield return null;
-        }
-
-        initialized = true;
-
-        if (initialized)
-        {
-
-
-    */
-
-
-
-
-
-
-
-
-
-private void Start()
+    private void Start()
     {
         // Gamepad.all gives us a list of all connected gamepads.
         // We need the deviceId of the gamepad that will control this character (the one this script is attached to), so that we can check it later when actions happen.
@@ -101,23 +58,15 @@ private void Start()
         if (Gamepad.all.Count == 0)
         {
             myDeviceID = Keyboard.current.deviceId;
-            thisDevice = DeviceUsed.KEYBOARD;
         }
         else if (Gamepad.all.Count == 1)
         {
             myDeviceID = Gamepad.all[playerIndex].deviceId;
-            thisDevice = DeviceUsed.CONTROLLER;
         }
         else
         {
             myDeviceID = Gamepad.all[playerIndex].deviceId;
-            thisDevice = DeviceUsed.CONTROLLER;
         }
-
-  
-
-
-
 
         Debug.Log(myDeviceID);
         controls.CelestialPlayerDefault.Disable();
@@ -136,12 +85,12 @@ private void Start()
         controls.DialogueControls.Skip.started += OnSkipPerformed;
     }
 
-   private void OnCelestialMovePerformed(InputAction.CallbackContext context)
+    private void OnCelestialMovePerformed(InputAction.CallbackContext context)
     {
-        
+
         //if (context.control.device.deviceId != myDeviceID) return;
 
-        if(context.control.device.deviceId == myDeviceID)
+        if (context.control.device.deviceId == myDeviceID)
         {
             if (takinginput == false)
             {
@@ -150,7 +99,7 @@ private void Start()
 
 
                 Vector2 input;
-                if (thisDevice == DeviceUsed.KEYBOARD)
+                if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
                 {
                     input = new Vector2(Keyboard.current.wKey.ReadValue() - Keyboard.current.sKey.ReadValue(),
                         Keyboard.current.aKey.ReadValue() - Keyboard.current.dKey.ReadValue());
@@ -185,7 +134,7 @@ private void Start()
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
-        
+
         Debug.Log("call start rain");
 
 
@@ -209,19 +158,21 @@ private void Start()
     //UI calls
     private void OnContinuePerformed(InputAction.CallbackContext context)
     {
-       
+
         if (context.control.device.deviceId == myDeviceID)
-        { 
-        float input; 
-        if(thisDevice == DeviceUsed.CONTROLLER){
-            input = Gamepad.all[playerIndex].buttonSouth.ReadValue();
-            }
-        else{
-            input = 0;
-            }
-        if(input > 0)
+        {
+            float input;
+            if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.CONTROLLER)
             {
-            dialogueManager.DisplayNextDialogueLine();
+                input = Gamepad.all[playerIndex].buttonSouth.ReadValue();
+            }
+            else
+            {
+                input = 0;
+            }
+            if (input > 0)
+            {
+                dialogueManager.DisplayNextDialogueLine();
             }
         }
     }

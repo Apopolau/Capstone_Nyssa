@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Level Four Progress", menuName = "LevelProgress/LevelFour")]
+[CreateAssetMenu(fileName = "New Level Four Progress", menuName = "ManagerObject/LevelProgress/LevelFour")]
 public class LevelFourProgress : LevelProgress
 {
     bool hasFoundRabbit;

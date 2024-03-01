@@ -125,7 +125,7 @@ public class EarthPlayer : MonoBehaviour
     private void LateUpdate()
     {
         
-        if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
+        if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.;
@@ -134,7 +134,7 @@ public class EarthPlayer : MonoBehaviour
             virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
-        else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        else if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
             virtualMousePosition = Mouse.current.position.value;
@@ -238,12 +238,12 @@ public class EarthPlayer : MonoBehaviour
 
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
-        if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
+        if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
             virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
-        else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        else if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
             virtualMousePosition = Mouse.current.position.value;
@@ -411,11 +411,11 @@ public class EarthPlayer : MonoBehaviour
         //Turn on the virtual mouse cursor
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
-        if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.CONTROLLER)
+        if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
-        else if (earthControls.thisDevice == EarthPlayerControl.DeviceUsed.KEYBOARD)
+        else if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             virtualMousePosition = Mouse.current.position.value;
         }

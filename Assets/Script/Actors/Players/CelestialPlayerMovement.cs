@@ -73,7 +73,7 @@ public class CelestialPlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        if (GetComponent<CelestialPlayerControls>().thisDevice == CelestialPlayerControls.DeviceUsed.KEYBOARD)
+        if (GetComponent<CelestialPlayerControls>().userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             CelestialDeviceID = Keyboard.current.deviceId;
         }
