@@ -71,16 +71,11 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueBox.SetActive(true);
 
-
-
-
         }
         else
         {
             isDialogueActive = true;
         }
-
-
 
 
         // Toggle other UI elements visibility

@@ -19,6 +19,9 @@ public class EarthPlayer : MonoBehaviour
     // Reference to the UI controller script
     public EarthCharacterUIController uiController;
 
+    [SerializeField] private GameObject earthPlayerDpad;
+    [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
+
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
     public bool isRemovalStarted = false;
@@ -244,6 +247,7 @@ public class EarthPlayer : MonoBehaviour
         }
 
         DisplayTileText();
+        DarkenAllImages(earthPlayerDpad);
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
@@ -267,6 +271,7 @@ public class EarthPlayer : MonoBehaviour
             TurnOffTileSelect(true);
             Destroy(plantSelected);
             HideTileText();
+            ResetImageColor(earthPlayerDpad); 
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
             {
                 enrouteToPlant = false;
@@ -628,5 +633,39 @@ public class EarthPlayer : MonoBehaviour
     
     }
 
+    void DarkenAllImages(GameObject targetGameObject)
+    {
+        if (targetGameObject != null)
+        {
+            Image[] images = targetGameObject.GetComponentsInChildren<Image>();
+            foreach (Image image in images)
+            {
+                // Create a copy of the current material
+                Material darkenedMaterial = new Material(image.material);
+
+                // Darken the material color
+                Color darkenedColor = darkenedMaterial.color * darkeningAmount;
+                darkenedMaterial.color = darkenedColor;
+
+                // Assign the new material to the image
+                image.material = darkenedMaterial;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Target GameObject is not assigned.");
+        }
+    }
+    
+     // Function to reset color to original
+    public void ResetImageColor(GameObject targetGameObject)
+    {
+        Image[] images = targetGameObject.GetComponentsInChildren<Image>();
+            foreach (Image image in images)
+            {
+                 // Restore the original color
+                 image.material.color = image.color;
+            }
+    }
     
 }
