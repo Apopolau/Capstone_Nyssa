@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class CelestialPlayer : MonoBehaviour
 {
     
-    [SerializeField] private VirtualMouseInput virtualMouseInput;
+    //[SerializeField] private VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
     [SerializeField] private GameObject celestPlayerDpad;
@@ -99,7 +99,7 @@ public class CelestialPlayer : MonoBehaviour
         celestialAgent.enabled = false;
         celestialControls = GetComponent<CelestialPlayerControls>();
         health = new Stat(100, 100, false);
-        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
 
