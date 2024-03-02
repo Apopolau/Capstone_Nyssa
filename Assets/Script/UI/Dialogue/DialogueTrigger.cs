@@ -2,36 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class DialogueCharacter
-{
-   // Icon for the left side of the dialogue box
-    public Sprite iconLeft;
-
-    // Icon for the right side of the dialogue box
-    public Sprite iconRight;
-
-    // Whether the character should appear on the left side of the dialogue box
-    public bool isLeft;
-}
- 
-[System.Serializable]
-public class DialogueLine
-{
-    public DialogueCharacter character;
-    [TextArea(3, 10)]
-    public string line;
-    [TextArea(3, 10)]
-    public string lineFR; // Text for French language
-}
- 
-[System.Serializable]
-public class Dialogue
-{
-    public List<DialogueLine> dialogueLines = new List<DialogueLine>();
-}
-
-
 public class DialogueTrigger : MonoBehaviour
 {
     public Dialogue dialogue;

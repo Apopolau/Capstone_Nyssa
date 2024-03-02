@@ -7,6 +7,7 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
+    private UserSettingsManager userSettingsManager;
 
     public Image characterIconLeft;
     public Image characterIconRight;
@@ -21,16 +22,16 @@ public class DialogueManager : MonoBehaviour
     public EarthCharacterUIController uiController;
     public SplitScreen split;
 
-
     [SerializeField] private GameObjectRuntimeSet playerSet;
     private EarthPlayer earthPlayer;
     private CelestialPlayer celestialPlayer;
 
-
+    [SerializeField] private List<SpriteLibrary> spriteLibraries;
+    [SerializeField] private List<DialogueCharacter> dialogueCharacters;
+    private DialogueCharacter currentCharacter;
+    private Sprite currentSprite;
 
     public float typingSpeed = 0.2f;
-
-
 
     private void OnEnable()
     {
@@ -57,15 +58,9 @@ public class DialogueManager : MonoBehaviour
 
         lines = new Queue<DialogueLine>();
     }
-    private void Update()
-    {
-
-    }
 
     public void StartDialogue(Dialogue dialogue)
     {
-
-
         // Activate the dialogue box if it's currently inactive
         if (!dialogueBox.activeSelf)
         {
@@ -116,9 +111,59 @@ public class DialogueManager : MonoBehaviour
 
         DisplayNextDialogueLine();
 
+    }
 
+    private void AssignCharacter(DialogueLine currentLine)
+    {
+        if(currentLine.speaker == DialogueLine.Character.CELESTE)
+        {
+            currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Celeste"));
+        }
+        else if(currentLine.speaker == DialogueLine.Character.SPROUT)
+        {
+            currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Sprout"));
+        }
+        else if(currentLine.speaker == DialogueLine.Character.DUCK)
+        {
+            currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Duck"));
+        }
+        else if (currentLine.speaker == DialogueLine.Character.HEDGEHOG)
+        {
+            currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Hedgehog"));
+        }
+        else if (currentLine.speaker == DialogueLine.Character.FOX)
+        {
+            currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Fox"));
+        }
+        else if (currentLine.speaker == DialogueLine.Character.NYSSA)
+        {
+            currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Nyssa"));
+        }
 
-
+        if(currentLine.emotion == DialogueLine.Emotion.DEFAULT)
+        {
+            currentSprite = currentCharacter.characterSprites.Default;
+        }
+        else if (currentLine.emotion == DialogueLine.Emotion.SILHOUETTE)
+        {
+            currentSprite = currentCharacter.characterSprites.Silhouette;
+        }
+        if (currentLine.emotion == DialogueLine.Emotion.HAPPY)
+        {
+            currentSprite = currentCharacter.characterSprites.Happy;
+        }
+        if (currentLine.emotion == DialogueLine.Emotion.UPSET)
+        {
+            currentSprite = currentCharacter.characterSprites.Upset;
+        }
+        if (currentLine.emotion == DialogueLine.Emotion.ANGRY)
+        {
+            currentSprite = currentCharacter.characterSprites.Angry;
+        }
+        if (currentLine.emotion == DialogueLine.Emotion.DETERMINED)
+        {
+            currentSprite = currentCharacter.characterSprites.Determined;
+        }
     }
 
     public void DisplayNextDialogueLine()
@@ -132,11 +177,6 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine currentLine = lines.Dequeue();
 
-        //characterIcon.sprite = currentLine.character.icon;
-
-        //StopAllCoroutines();
-
-
         // Clear the dialogue areas
         dialogueArea.text = "";
         dialogueAreaFR.text = "";
@@ -145,31 +185,28 @@ public class DialogueManager : MonoBehaviour
         characterIconLeft.sprite = null;
         characterIconRight.sprite = null;
 
-        if (currentLine.character.isLeft)
+        AssignCharacter(currentLine);
+
+        if (currentCharacter.isLeft)
         {
-            characterIconLeft.sprite = currentLine.character.iconLeft;
+            characterIconLeft.sprite = currentSprite;
             // Fade in characterIconLeft
             characterIconLeft.CrossFadeAlpha(1f, 0f, true);
             // Fade out characterIconRight
             characterIconRight.CrossFadeAlpha(0f, 0f, true);
         }
-        else if (!currentLine.character.isLeft)
+        else if (!currentCharacter.isLeft)
         {
-            characterIconRight.sprite = currentLine.character.iconRight;
+            characterIconRight.sprite = currentSprite;
             // Fade in characterIconRight
             characterIconRight.CrossFadeAlpha(1f, 0f, true);
             // Fade out characterIconLeft
             characterIconLeft.CrossFadeAlpha(0f, 0f, true);
         }
 
-
         //display all text at once
         dialogueArea.text = currentLine.line;
         dialogueAreaFR.text = currentLine.lineFR;
-
-        // Display French line
-        // StartCoroutine(TypeSentence(dialogueAreaFR, currentLine.lineFR));
-        //StartCoroutine(TypeSentence(dialogueArea,currentLine.line));
     }
 
     //display letter by letter
