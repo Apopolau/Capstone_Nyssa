@@ -36,7 +36,8 @@ public class CelestialPlayer : MonoBehaviour
     [SerializeField] public bool canSetFogTrap = true;
     [SerializeField] public bool canSetFrostTrap = true;
     [SerializeField] public bool canSunBeam = true;
-   
+
+    public bool interacting = false;
 
     public enum Power
     {
@@ -119,25 +120,39 @@ public class CelestialPlayer : MonoBehaviour
     }
 
 
- /*   private void OnTriggerEnter(Collider other)
+    /*   private void OnTriggerEnter(Collider other)
+       {
+           //Debug.Log("Entered collision with " + other.gameObject.name);
+           if ((other.gameObject.tag == "Enemy"))
+           {
+               //Debug.Log("Trigger enter");
+
+               //Player is in range of enemy, in invading monster they can pursue the player
+
+
+              // Debug.Log("I've collided with enemy");
+                   enemySeen = true;
+
+              enemyLocation= other.transform.position;
+               enemyTarget = other.transform.gameObject;
+
+           }
+
+       }*/
+
+    public void OnInteract(InputAction.CallbackContext context)
     {
-        //Debug.Log("Entered collision with " + other.gameObject.name);
-        if ((other.gameObject.tag == "Enemy"))
+        if (context.phase == InputActionPhase.Started)
         {
-            //Debug.Log("Trigger enter");
-
-            //Player is in range of enemy, in invading monster they can pursue the player
-
-
-           // Debug.Log("I've collided with enemy");
-                enemySeen = true;
-          
-           enemyLocation= other.transform.position;
-            enemyTarget = other.transform.gameObject;
-
+            Debug.Log("Interacting");
+            interacting = true;
         }
-       
-    }*/
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            Debug.Log("Not interacting anymore");
+            interacting = false;
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {

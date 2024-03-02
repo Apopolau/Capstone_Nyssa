@@ -11,9 +11,13 @@ public class PickupObject : Interactable
     [SerializeField] Inventory inventory;
     [SerializeField] int quantity;
 
-    //public GameObject boxRange;
+    //[SerializeField] GameObjectRuntimeSet playerSet;
 
-    EarthPlayer earthPlayer;
+    private void Awake()
+    {
+        isEarthInteractable = true;
+        isCelestialInteractable = true;
+    }
 
     private void Start()
     {
@@ -30,25 +34,29 @@ public class PickupObject : Interactable
             spriteRenderer.enabled = false;
             uiObject.SetActive(false);
         }
-
-        players = playerRuntimeSet.Items;
-        foreach (GameObject player in players)
+        foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<EarthPlayer>())
             {
                 earthPlayer = player.GetComponent<EarthPlayer>();
             }
+            else if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
         }
+
     }
 
     private void Update()
     {
         ItemPickup();
+        UpdateUIElement();
     }
 
     public void ItemPickup()
     {
-        if (isInRange && earthPlayer.interacting)
+        if ((p1IsInRange && earthPlayer.interacting) || (p2IsInRange && celestialPlayer.interacting))
         {
             //Debug.Log("Picking up");
             if (item != null)
@@ -56,7 +64,6 @@ public class PickupObject : Interactable
                 if (inventory.AddItem(item, item.quantity))
                 {
                     UpdateUIText();
-                    //Destroy(item);
                     Destroy(this.GetComponentInParent<Transform>().gameObject);
                 }
                 else {
@@ -85,6 +92,28 @@ public class PickupObject : Interactable
             item.quantity = quantity;
         }
     }
-    
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<EarthPlayer>())
+        {
+            p1IsInRange = true;
+        }
+        if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<EarthPlayer>())
+        {
+            p1IsInRange = false;
+        }
+        if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = false;
+        }
+    }
 }

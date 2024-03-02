@@ -74,6 +74,8 @@ public class CelestialPlayerControls : MonoBehaviour
         controls.CelestialPlayerDefault.CelestialWalk.canceled += OnCelestialMoveCancelled;
         controls.CelestialPlayerDefault.MakeRain.performed += OnMakeRain; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.CelestialPlayerDefault.MakeColdSnap.performed += OnColdSnapPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.CelestialPlayerDefault.MakeInteract.started += OnInteract;
+        controls.CelestialPlayerDefault.MakeInteract.canceled += OnInteract;
 
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
@@ -153,6 +155,17 @@ public class CelestialPlayerControls : MonoBehaviour
         if (context.control.device.deviceId != myDeviceID) return;
         this.GetComponent<CelestialPlayer>().OnSnowFlakeSelected();
 
+    }
+
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        if (context.control.device.deviceId == myDeviceID)
+        {
+
+            Debug.Log("call pickup tree");
+            this.GetComponent<CelestialPlayer>().OnInteract(context);
+        }
     }
 
     //UI calls

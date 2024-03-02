@@ -89,6 +89,15 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MakeInteract"",
+                    ""type"": ""Button"",
+                    ""id"": ""70fabc35-6cc7-46e5-9de1-e11d6081d148"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -205,7 +214,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""5888b0e5-3e5f-470c-81b0-6642e8da71de"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
@@ -216,7 +225,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""9c5b4593-75b6-49f5-b8dd-2594130a33a9"",
-                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -238,7 +247,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""9913192c-1396-455e-a9cf-b8ae097318ad"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -370,7 +379,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""d95e9c81-4c47-4fab-b047-b2ad46eb3e46"",
-                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""path"": ""<Gamepad>/dpad/right"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -399,6 +408,28 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""action"": ""MakeLighteningStrike"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4368e63-94d7-42aa-8360-7b9cf3f40a3b"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32868745-9d43-4111-96ea-78a1e0985d79"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeInteract"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -512,6 +543,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         m_CelestialPlayerDefault_MakeSmog = m_CelestialPlayerDefault.FindAction("MakeSmog", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeSunBeam = m_CelestialPlayerDefault.FindAction("MakeSunBeam", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeDodge = m_CelestialPlayerDefault.FindAction("MakeDodge", throwIfNotFound: true);
+        m_CelestialPlayerDefault_MakeInteract = m_CelestialPlayerDefault.FindAction("MakeInteract", throwIfNotFound: true);
         // MenuControls
         m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
         m_MenuControls_Newaction = m_MenuControls.FindAction("New action", throwIfNotFound: true);
@@ -587,6 +619,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     private readonly InputAction m_CelestialPlayerDefault_MakeSmog;
     private readonly InputAction m_CelestialPlayerDefault_MakeSunBeam;
     private readonly InputAction m_CelestialPlayerDefault_MakeDodge;
+    private readonly InputAction m_CelestialPlayerDefault_MakeInteract;
     public struct CelestialPlayerDefaultActions
     {
         private @CelestialPlayerInputActions m_Wrapper;
@@ -598,6 +631,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         public InputAction @MakeSmog => m_Wrapper.m_CelestialPlayerDefault_MakeSmog;
         public InputAction @MakeSunBeam => m_Wrapper.m_CelestialPlayerDefault_MakeSunBeam;
         public InputAction @MakeDodge => m_Wrapper.m_CelestialPlayerDefault_MakeDodge;
+        public InputAction @MakeInteract => m_Wrapper.m_CelestialPlayerDefault_MakeInteract;
         public InputActionMap Get() { return m_Wrapper.m_CelestialPlayerDefault; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -628,6 +662,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeDodge.started += instance.OnMakeDodge;
             @MakeDodge.performed += instance.OnMakeDodge;
             @MakeDodge.canceled += instance.OnMakeDodge;
+            @MakeInteract.started += instance.OnMakeInteract;
+            @MakeInteract.performed += instance.OnMakeInteract;
+            @MakeInteract.canceled += instance.OnMakeInteract;
         }
 
         private void UnregisterCallbacks(ICelestialPlayerDefaultActions instance)
@@ -653,6 +690,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeDodge.started -= instance.OnMakeDodge;
             @MakeDodge.performed -= instance.OnMakeDodge;
             @MakeDodge.canceled -= instance.OnMakeDodge;
+            @MakeInteract.started -= instance.OnMakeInteract;
+            @MakeInteract.performed -= instance.OnMakeInteract;
+            @MakeInteract.canceled -= instance.OnMakeInteract;
         }
 
         public void RemoveCallbacks(ICelestialPlayerDefaultActions instance)
@@ -779,6 +819,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         void OnMakeSmog(InputAction.CallbackContext context);
         void OnMakeSunBeam(InputAction.CallbackContext context);
         void OnMakeDodge(InputAction.CallbackContext context);
+        void OnMakeInteract(InputAction.CallbackContext context);
     }
     public interface IMenuControlsActions
     {
