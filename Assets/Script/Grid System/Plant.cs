@@ -387,19 +387,24 @@ public class Plant : Creatable
     {
         if (stats.plantName == "Tree")
         {
-
             if (currentPlantStage == PlantStats.PlantStage.JUVENILE)
             {
                 logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
                 logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
                 logs.GetComponent<PickupObject>().SetItemQuantity(1);
             }
-            if (currentPlantStage == PlantStats.PlantStage.MATURE)
+            else if (currentPlantStage == PlantStats.PlantStage.MATURE)
             {
                 logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
                 logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
                 logs.GetComponent<PickupObject>().SetItemQuantity(3);
             }
+        }
+        if (currentPlantStage == PlantStats.PlantStage.SEEDLING || currentPlantStage == PlantStats.PlantStage.SPROUT)
+        {
+            seed = Instantiate(stats.seedPrefab, tilePlantedOn.transform);
+            seed.transform.localPosition.Set(seed.transform.localPosition.x, seed.transform.localPosition.y + 1f, seed.transform.localPosition.z);
+            seed.GetComponent<PickupObject>().SetItemQuantity(1);
         }
         tilePlantedOn.tileHasBuild = false;
         tilePlantedOn.placedObject = null;
