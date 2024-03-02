@@ -118,11 +118,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb9082c08ebcef4f9bb3c23c6f6cb67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  p1IsInRange: 0
+  isEarthInteractable: 0
+  p2IsInRange: 0
+  isCelestialInteractable: 0
   uiObject: {fileID: 5833380048832634067}
-  playerRuntimeSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   pickupTarget: {fileID: 6698964673289282032}
   bridgeGeometry: {fileID: 8253770229352232056}
-  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  bridgeCollider: {fileID: 0}
   transparentMaterial: {fileID: 2100000, guid: e7592163430e3514e88f2569989bd642, type: 2}
 --- !u!1 &3989181330797547442
 GameObject:
@@ -373,7 +377,7 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
