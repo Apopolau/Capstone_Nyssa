@@ -34,6 +34,7 @@ public class TurnOffSludgePump : Interactable
                 celestialPlayer = player.GetComponent<CelestialPlayer>();
             }
         }
+        
     }
 
     private void Update()
@@ -68,7 +69,7 @@ public class TurnOffSludgePump : Interactable
         uiObject.SetActive(false);
         sludgeOffDialouge.TriggerDialogue();
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfTurningHash, false);
-        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, true);
+        //earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, true);
     }
 
 
