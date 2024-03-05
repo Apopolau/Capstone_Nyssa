@@ -54,6 +54,8 @@ public class CelestialPlayer : MonoBehaviour
     public Power Powers;
     public Power powerInUse = Power.NONE;
 
+    public Stat energy;
+
 
     PowerBehaviour powerBehaviour;
     public CelestialPlayerControls celestialControls;
@@ -100,6 +102,7 @@ public class CelestialPlayer : MonoBehaviour
         celestialAgent.enabled = false;
         celestialControls = GetComponent<CelestialPlayerControls>();
         health = new Stat(100, 100, false);
+        energy = new Stat(100, 0, true);
         //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 

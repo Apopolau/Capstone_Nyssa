@@ -14,16 +14,6 @@ public class Inventory : ScriptableObject
 
     private void OnEnable()
     {
-        /*
-        if (itemSlots != null)
-        {
-            itemSlots.Clear();
-        }
-        if (items.Count != 0)
-        {
-            items.Clear();
-        }
-        */
         RefreshUI();
     }
 
@@ -145,7 +135,6 @@ public class Inventory : ScriptableObject
     private void RefreshUI()
     {
         int i = 0;
-        Debug.Log("Number of items: " + items.Count);
         for (; i < items.Count && i < itemSlots.Count; i++)
         {
             if (itemSlots[i] != null)
@@ -153,7 +142,6 @@ public class Inventory : ScriptableObject
                 
                 if (itemSlots[i].Item == null)
                 {
-                    Debug.Log("Number of item slots: " + itemSlots.Count + ", Number of items: " + items.Count + ", Position in for loop: " + i);
                     itemSlots[i].SetItem(items[i]);
                 }
                 

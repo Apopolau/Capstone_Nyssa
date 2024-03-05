@@ -42,4 +42,9 @@ public class PlantStats : ScriptableObject
     [SerializeField] public int juvenileGrowTime;
     [SerializeField] public int matureSeedDropTime;
 
+    [Header("Energy Drop for each Stage")]
+    [SerializeField] public int seedlingEnergy;
+    [SerializeField] public int sproutEnergy;
+    [SerializeField] public int juvenileEnergy;
+    [SerializeField] public int matureEnergy;
 }

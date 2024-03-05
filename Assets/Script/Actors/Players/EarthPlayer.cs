@@ -45,6 +45,13 @@ public class EarthPlayer : MonoBehaviour
     public Vector2 virtualMousePosition;
 
     private WaitForSeconds plantTime;
+    private WaitForSeconds healTime;
+    private WaitForSeconds healCooldown;
+    private WaitForSeconds barrierTime;
+    private WaitForSeconds barrierCooldown;
+
+    private bool healUsed;
+    private bool shieldUsed;
 
     [Header("Plant Objects")]
     [SerializeField] private GameObject treePrefab;
@@ -60,9 +67,9 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public GameObject landFlowerPreviewPrefab;
     [SerializeField] public GameObject waterFlowerPreviewPrefab;
 
-    [Header("Item Drop")]
+    [Header("VFX")]
     
-    //private GameObject itemDropped;
+    [SerializeField] private GameObject ThornShieldPrefab;
 
     [Header("Misc")]
     public bool enrouteToPlant = false;
@@ -73,6 +80,7 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public WeatherState weatherState;
     private Vector3 OrigPos;
     public Stat health;
+    private GameObject powerTarget;
 
     public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
@@ -96,6 +104,10 @@ public class EarthPlayer : MonoBehaviour
     void Start()
     {
         plantTime = new WaitForSeconds(4.542f);
+        healTime = new WaitForSeconds(0.7f);
+        barrierTime = new WaitForSeconds(1.458f);
+        healCooldown = new WaitForSeconds(10);
+        barrierCooldown = new WaitForSeconds(10);
         //playerInput = GetComponent<PlayerInput>();
         //actions = new PlayerInputActions();
     }
@@ -559,6 +571,111 @@ public class EarthPlayer : MonoBehaviour
             Debug.Log("Not interacting anymore");
             interacting = false;
         }
+    }
+
+    public void CastHealHandler()
+    {
+        if (!healUsed && CheckIfValidTargets())
+        {
+            //HealSelectMode();
+        }
+        else if(healUsed)
+        {
+            StartCoroutine(HealingOnCooldown());
+        }
+        else if (!CheckIfValidTargets())
+        {
+            StartCoroutine(NoAvailableTargets());
+        }
+    }
+
+    public void InitiateHealing()
+    {
+        StartCoroutine(HealingStarted());
+    }
+
+    private IEnumerator HealingStarted()
+    {
+        yield return healTime;
+        StartCoroutine(HandleHealCooldown());
+    }
+
+    private IEnumerator HealingOnCooldown()
+    {
+        displayText.text = "Healing still on cooldown";
+        yield return plantTime;
+        displayText.text = "";
+    }
+
+    private IEnumerator HandleHealCooldown()
+    {
+        yield return healCooldown;
+    }
+
+    public void OnHealingCancelled()
+    {
+
+    }
+
+    public void CastThornShieldHandler()
+    {
+        if (!shieldUsed && CheckIfValidTargets())
+        {
+            //ShieldSelectMode();
+        }
+        else if (shieldUsed)
+        {
+            StartCoroutine(ShieldOnCooldown());
+        }
+        else if (!CheckIfValidTargets())
+        {
+            StartCoroutine(NoAvailableTargets());
+        }
+    }
+
+    public void InitiateBarrier()
+    {
+        StartCoroutine(BarrierStarted());
+    }
+
+    private IEnumerator BarrierStarted()
+    {
+        yield return barrierTime;
+        StartCoroutine(HandleShieldCooldown());
+    }
+
+    private IEnumerator ShieldOnCooldown()
+    {
+        displayText.text = "Shield still on cooldown";
+        yield return plantTime;
+        displayText.text = "";
+    }
+
+    private IEnumerator HandleShieldCooldown()
+    {
+        yield return barrierCooldown;
+    }
+
+    public void OnBarrierCancelled()
+    {
+
+    }
+
+    private IEnumerator NoAvailableTargets()
+    {
+        displayText.text = "No valid targets nearby";
+        yield return plantTime;
+        displayText.text = "";
+    }
+
+    private bool CheckIfValidTargets()
+    {
+        return false;
+    }
+
+    public void OnCycleTargets(InputAction.CallbackContext context)
+    {
+
     }
 
     public bool TakeHit()
