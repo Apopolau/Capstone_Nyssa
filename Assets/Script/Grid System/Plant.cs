@@ -10,6 +10,7 @@ public class Plant : Creatable
     [SerializeField] List<LevelManagerObject> levelManagers;
     public GameObject plantObject;
     [SerializeField] WeatherState weatherState;
+    [SerializeField] GameObject energyPrefab;
 
     [Header("These set themselves")]
     
@@ -34,7 +35,7 @@ public class Plant : Creatable
     public PlantStats.PlantStage currentPlantStage;
 
     private GameObject seed;
-    
+    private GameObject energyDrop;
     private GameObject logs;
 
     public new event System.Action<int, int> OnHealthChanged;
@@ -204,6 +205,8 @@ public class Plant : Creatable
             }
             PlacePlant(stats.sproutScale, stats.sproutTileOffset);
             HandleTreeColliders(0.5f, 5);
+            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.seedlingEnergy;
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.SPROUT && growthPoints >= stats.sproutGrowTime)
@@ -218,6 +221,8 @@ public class Plant : Creatable
             }
             PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
             HandleTreeColliders(1f, 5);
+            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.JUVENILE && growthPoints >= stats.juvenileGrowTime)
@@ -232,10 +237,14 @@ public class Plant : Creatable
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
             HandleTreeColliders(2.5f, 10);
+            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.MATURE && growthPoints >= stats.matureSeedDropTime)
         {
+            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.matureEnergy;
             DropSeed();
             growthPoints = 0;
         }

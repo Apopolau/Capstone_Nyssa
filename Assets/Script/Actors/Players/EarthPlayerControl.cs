@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class EarthPlayerControl : MonoBehaviour
 {
-
     private EarthPlayer earthPlayer;
     public PlayerInputActions controls;
     public InputAction pickTreeAction;
@@ -80,6 +79,8 @@ public class EarthPlayerControl : MonoBehaviour
         controls.EarthPlayerDefault.Interact.started += OnInteract;
         controls.EarthPlayerDefault.Interact.canceled += OnInteract;
         controls.EarthPlayerDefault.DebugTileflip.performed += OnTileFlipped;
+        controls.EarthPlayerDefault.Heal.started += OnHealPerformed;
+        controls.EarthPlayerDefault.ThornShield.started += OnThornShieldPerformed;
 
         //When planting
         controls.PlantIsSelected.Disable();
@@ -94,6 +95,16 @@ public class EarthPlayerControl : MonoBehaviour
         controls.RemovingPlant.CancelRemoval.performed += OnRemovingPlantCancelled;
         controls.RemovingPlant.EarthWalk.performed += OnEarthMovePerformed;
         controls.RemovingPlant.EarthWalk.canceled += OnEarthMoveCancelled;
+
+        controls.HealSelect.Disable();
+        controls.HealSelect.SelectTarget.started += OnTargetSelected;
+        controls.HealSelect.CancelHeal.started += OnHealCancelled;
+        controls.HealSelect.CycleTarget.started += OnTargetCycled;
+
+        controls.BarrierSelect.Disable();
+        controls.BarrierSelect.SelectTarget.started += OnTargetSelected;
+        controls.BarrierSelect.CancelBarrier.started += OnBarrierCancelled;
+        controls.BarrierSelect.CycleTarget.started += OnTargetCycled;
 
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
@@ -199,6 +210,21 @@ public class EarthPlayerControl : MonoBehaviour
             this.GetComponent<EarthPlayer>().OnInteract(context);
         }
     }
+    private void OnHealPerformed(InputAction.CallbackContext context)
+    {
+        if(context.control.device.deviceId == myDeviceID)
+        {
+            earthPlayer.CastHealHandler();
+        }
+    }
+
+    private void OnThornShieldPerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            earthPlayer.CastThornShieldHandler();
+        }
+    }
 
     /// <summary>
     /// DEBUG CONTROLS (DEFAULT)
@@ -261,6 +287,50 @@ public class EarthPlayerControl : MonoBehaviour
     }
 
 
+
+    /// <summary>
+    /// HEAL AND BARRIER SELECTION CONTROLS
+    /// </summary>
+    /// <param name="context"></param>
+    private void OnTargetSelected(InputAction.CallbackContext context)
+    {
+        if(context.control.device.deviceId == myDeviceID)
+        {
+            if (controls.HealSelect.enabled)
+            {
+                earthPlayer.InitiateHealing();
+            }
+            else
+            {
+                earthPlayer.InitiateBarrier();
+            }
+        }
+        
+    }
+
+    private void OnTargetCycled(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            earthPlayer.OnCycleTargets(context);
+        }
+    }
+
+    private void OnHealCancelled(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
+        {
+            earthPlayer.OnHealingCancelled();
+        }
+    }
+
+    private void OnBarrierCancelled(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
+        {
+            earthPlayer.OnBarrierCancelled();
+        }
+    }
 
     /// <summary>
     /// MENU CONTROLS
