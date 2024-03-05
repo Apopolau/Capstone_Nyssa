@@ -18,8 +18,8 @@ public class EarthPlayer : MonoBehaviour
 
     // Reference to the UI controller script
     public EarthCharacterUIController uiController;
-
-    [SerializeField] private GameObject earthPlayerDpad;
+    [SerializeField] private GameObject darkenInSelectMode;
+    [SerializeField] private GameObject darkenWhilePlanting;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
     [Header("Info for selecting plants")]
@@ -250,7 +250,7 @@ public class EarthPlayer : MonoBehaviour
         }
 
         DisplayTileText();
-        DarkenAllImages(earthPlayerDpad);
+        DarkenAllImages(darkenInSelectMode);
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
@@ -274,7 +274,7 @@ public class EarthPlayer : MonoBehaviour
             TurnOffTileSelect(true);
             Destroy(plantSelected);
             HideTileText();
-            ResetImageColor(earthPlayerDpad); 
+            ResetImageColor(darkenInSelectMode); 
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
             {
                 enrouteToPlant = false;
@@ -421,6 +421,8 @@ public class EarthPlayer : MonoBehaviour
         }
 
         //Create our tile outline effect
+        DisplayTileText();
+        DarkenAllImages(darkenInSelectMode);
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
     }
 
@@ -437,6 +439,8 @@ public class EarthPlayer : MonoBehaviour
         {
             
             TurnOffTileSelect(true);
+            HideTileText();
+            ResetImageColor(darkenInSelectMode); 
             //If we're close enough to the plant, we can go ahead and remove it
             if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
             {
@@ -595,10 +599,10 @@ public class EarthPlayer : MonoBehaviour
     {
         earthControls.controls.EarthPlayerDefault.Disable();
         earthControls.controls.PlantIsSelected.Disable();
-        uiController.DarkenOverlay(); //indicate no movement is allowed while planting
+        uiController.DarkenOverlay(darkenWhilePlanting); //indicate no movement is allowed while planting
         yield return waitTime;
         earthControls.controls.EarthPlayerDefault.Enable();
-        uiController.RestoreUI();
+        uiController.RestoreUI(darkenWhilePlanting);
     }
 
     public void SetCamera(Camera switchCam)

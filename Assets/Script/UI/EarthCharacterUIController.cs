@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+ 
 
 public class EarthCharacterUIController : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class EarthCharacterUIController : MonoBehaviour
     public Color suspendedColor = Color.black;
     public Image darkOverlay;
 
+    [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
+
     // Function to suspend UI elements
    /* public void SuspendUI()
     {
@@ -27,16 +31,20 @@ public class EarthCharacterUIController : MonoBehaviour
     } */
 
     // Function to restore UI elements
-    public void RestoreUI()
+    public void RestoreUI(GameObject targetGameObject)
     {
-        if(darkOverlay.gameObject.activeSelf)
-        {darkOverlay.gameObject.SetActive(false);}
+        Image[] images = targetGameObject.GetComponentsInChildren<Image>();
+            foreach (Image image in images)
+            {
+                 // Restore the original color
+                 image.material.color = image.color;
+            }
         
     }
 
-    public void DarkenOverlay()
+    public void DarkenOverlay(GameObject targetGameObject)
     {
-        // Check if the Image component is disabled
+        /* // Check if the Image component is disabled
         if (!darkOverlay.enabled)
         {
             // Enable the Image component
@@ -46,7 +54,29 @@ public class EarthCharacterUIController : MonoBehaviour
         // Activate the GameObject
         darkOverlay.gameObject.SetActive(true);
 
-        Debug.Log("Overlay is being activated");
+        Debug.Log("Overlay is being activated"); */
+
+        if (targetGameObject != null)
+        {
+            Image[] images = targetGameObject.GetComponentsInChildren<Image>();
+            foreach (Image image in images)
+            {
+                // Create a copy of the current material
+                Material darkenedMaterial = new Material(image.material);
+
+                // Darken the material color
+                Color darkenedColor = darkenedMaterial.color * darkeningAmount;
+                darkenedMaterial.color = darkenedColor;
+
+                // Assign the new material to the image
+                image.material = darkenedMaterial;
+            }
+
+        }
+        else
+        {
+            Debug.LogWarning("Target GameObject is not assigned.");
+        }
     }
 
 
