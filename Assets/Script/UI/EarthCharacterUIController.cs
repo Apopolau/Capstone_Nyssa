@@ -7,28 +7,15 @@ using TMPro;
 
 public class EarthCharacterUIController : MonoBehaviour
 {
-    // References to UI elements
-    //public Image[] uiImages;
-    //public Canvas[] uiCanvases;
-    //[SerializeField] private GameObject dialogueBox; // Assign the DialogueBox GameObject in the inspector
-
-    // Colors for normal and suspended states
-    public Color normalColor = Color.white;
-    public Color suspendedColor = Color.black;
+   
     public Image darkOverlay;
 
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
-    // Function to suspend UI elements
-   /* public void SuspendUI()
-    {
-        // Change color or other properties of UI elements to indicate suspension
-        foreach (Image image in uiImages)
-        {
-            image.color = suspendedColor;
-        }
-       
-    } */
+    public UserSettingsManager userSettingsManager;
+
+    public GameObject[] keyboardUIObjects; // UI elements for keyboard control
+    public GameObject[] controllerUIObjects; // UI elements for controller control
 
     // Function to restore UI elements
     public void RestoreUI(GameObject targetGameObject)
@@ -80,15 +67,23 @@ public class EarthCharacterUIController : MonoBehaviour
     }
 
 
-    public GameObject[] uiObjectToToggle; // Array of UI images to toggle
+    //public GameObject[] uiObjectToToggle; // Array of UI images to toggle
 
     // Method to toggle the visibility of other UI elements
     public void ToggleOtherUIElements(bool isActive)
     {
-        foreach (GameObject uiObject in uiObjectToToggle)
+         // Check the current control type from the UserSettingsManager
+        UserSettingsManager.ControlType currentControlType = userSettingsManager.earthControlType;
+
+        // Determine which array of UI objects to use based on the current control type
+        GameObject[] uiObjectsToToggle = (currentControlType == UserSettingsManager.ControlType.KEYBOARD) ? keyboardUIObjects : controllerUIObjects;
+
+        // Loop through the UI objects in the selected array
+        foreach (GameObject uiObject in uiObjectsToToggle)
         {
+              Debug.Log("Toggling UI object: " + uiObject.name);
+            // Toggle the visibility of the UI object based on the isActive parameter
             uiObject.SetActive(isActive);
-            //Debug.Log("ui is being deactivated");
         }
     }
 
