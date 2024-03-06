@@ -44,8 +44,8 @@ public class LevelOneFirstEnemyDead : MonoBehaviour
                 //start dialouge after monester dies
                 monsterDeadDialouge.TriggerDialogue();
                 treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, pos, Quaternion.identity);
-                treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(pos.x+1, pos.y+1, pos.z), Quaternion.identity);
-                treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(pos.x - 1, pos.y-1, pos.z), Quaternion.identity);
+                treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(pos.x + 1, pos.y + 1, pos.z), Quaternion.identity);
+                treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(pos.x - 1, pos.y - 1, pos.z), Quaternion.identity);
                 //Instantiate the tree seed here
 
             }

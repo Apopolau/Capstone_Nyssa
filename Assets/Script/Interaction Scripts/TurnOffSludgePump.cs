@@ -12,6 +12,8 @@ public class TurnOffSludgePump : Interactable
     public DialogueTrigger sludgeDialougeEarth;
     public DialogueTrigger sludgeDialougeCelest;
     private WaitForSeconds turnTime = new WaitForSeconds(4.958f);
+    private bool earthDialogueHasPlayed = false;
+    private bool celestialDialogueHasPlayed = false;
 
 
     //public GameObject boxRange;
@@ -81,17 +83,16 @@ public class TurnOffSludgePump : Interactable
      private void OnTriggerEnter(Collider other)
     {
         // Check if earthPlayer enterted area
-        if (other.CompareTag("Player1"))
+        if (other.CompareTag("Player1") && !earthDialogueHasPlayed)
         {   
             sludgeDialougeEarth.TriggerDialogue();
-            // Destroy the GameObject collider
-           // Destroy(gameObject);
+            earthDialogueHasPlayed = true;
+            celestialDialogueHasPlayed = true;
         }
-        else if (other.CompareTag("Player2"))
+        else if (other.CompareTag("Player2") && (!earthDialogueHasPlayed && !celestialDialogueHasPlayed))
         {
            sludgeDialougeCelest.TriggerDialogue();
-            // Destroy the GameObject collider
-            //Destroy(gameObject);
+           celestialDialogueHasPlayed = true;
         }
     }
 }

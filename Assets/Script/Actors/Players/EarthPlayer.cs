@@ -364,7 +364,7 @@ public class EarthPlayer : MonoBehaviour
     }
 
     //If the player cancels planting while they have a plant selected
-    public void CancelPlant()
+    public void OnPlantingCancelled()
     {
         if (isPlantSelected)
         {
