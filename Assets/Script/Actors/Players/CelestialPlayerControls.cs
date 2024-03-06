@@ -101,12 +101,13 @@ public class CelestialPlayerControls : MonoBehaviour
                 Vector2 input;
                 if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
                 {
-                    input = new Vector2(Keyboard.current.wKey.ReadValue() - Keyboard.current.sKey.ReadValue(),
-                        Keyboard.current.aKey.ReadValue() - Keyboard.current.dKey.ReadValue());
+                    input = new Vector2(Keyboard.current.aKey.ReadValue() - Keyboard.current.dKey.ReadValue(),
+                        Keyboard.current.wKey.ReadValue() - Keyboard.current.sKey.ReadValue());
                 }
                 else
                 {
                     input = Gamepad.all[playerIndex].leftStick.ReadValue();
+                    input.x *= -1;
                 }
 
                 this.GetComponent<CelestialPlayerMovement>().MovePlayer(input);

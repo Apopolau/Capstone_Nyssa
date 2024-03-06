@@ -130,14 +130,15 @@ public class EarthPlayerControl : MonoBehaviour
                 takinginput = true;
 
                 Vector2 input;
-                if(userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
+                if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
                 {
-                    input = new Vector2(Keyboard.current.upArrowKey.ReadValue() - Keyboard.current.downArrowKey.ReadValue(),
-                        Keyboard.current.leftArrowKey.ReadValue() - Keyboard.current.rightArrowKey.ReadValue());
+                    input = new Vector2(Keyboard.current.leftArrowKey.ReadValue() - Keyboard.current.rightArrowKey.ReadValue(),
+                        Keyboard.current.upArrowKey.ReadValue() - Keyboard.current.downArrowKey.ReadValue());
                 }
                 else
                 {
                     input = Gamepad.all[playerIndex].leftStick.ReadValue();
+                    input.x *= -1;
                 }
                 this.GetComponent<playerMovement>().MovePlayer(input);
                 takinginput = false;

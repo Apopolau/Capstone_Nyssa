@@ -48,7 +48,7 @@ public class CelestialPlayerMovement : MonoBehaviour
     Vector3 moveDirection;
     bool isMoveKeyHeld;
     Vector2 inputVector;
-    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, -45, 0));
+    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
     Matrix4x4 isometricRotIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
     Vector3 isometricInput;
     Vector3 isometricRotInput;
@@ -100,7 +100,7 @@ public class CelestialPlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(new Vector3(isometricInput.x, 0, isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
+        rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
 
         if (rb.velocity != Vector3.zero)
         {
@@ -161,7 +161,7 @@ public class CelestialPlayerMovement : MonoBehaviour
             ResetNavAgent();
         }
 
-        rb.AddForce(new Vector3(isometricInput.x, 0, isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
+        rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
 
         // if player moved disable the UI
         if (input != Vector2.zero)
@@ -220,7 +220,7 @@ public class CelestialPlayerMovement : MonoBehaviour
             }
 
             // rotate the player object
-            Vector3 inputDir = orientation.forward * isometricRotInput.x + orientation.right * -isometricRotInput.z;
+            Vector3 inputDir = orientation.forward * isometricRotInput.x + orientation.right * isometricRotInput.z;
 
             //if input direction isnt 0 smoothly change the direction using the rotation speed
             if (inputDir != Vector3.zero)

@@ -52,7 +52,7 @@ public class playerMovement : MonoBehaviour
     private PlayerInputActions playerInputActions;
     private PlayerInput playerInput;
     Vector2 inputVector;
-    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, -45, 0));
+    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
     Matrix4x4 isometricRotIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
     Vector3 isometricInput;
     Vector3 isometricRotInput;
@@ -107,7 +107,7 @@ public class playerMovement : MonoBehaviour
         if (this.gameObject.tag == "Player1")
         {
             //isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
-            rb.AddForce(new Vector3(isometricInput.x, 0, isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
         }
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
@@ -162,7 +162,7 @@ public class playerMovement : MonoBehaviour
             ResetNavAgent();
         }
 
-        rb.AddForce(new Vector3(isometricInput.x, 0, isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
+        rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
 
         // if player moved disable the UI
         if (input != Vector2.zero)
@@ -201,7 +201,7 @@ public class playerMovement : MonoBehaviour
             }
 
             // rotate the player object
-            Vector3 inputDir = orientation.forward * isometricRotInput.x + orientation.right * -isometricRotInput.z;
+            Vector3 inputDir = orientation.forward * isometricRotInput.x + orientation.right * isometricRotInput.z;
 
             //if input direction isnt 0 smoothly change the direction using the rotation speed
             if (inputDir != Vector3.zero)
