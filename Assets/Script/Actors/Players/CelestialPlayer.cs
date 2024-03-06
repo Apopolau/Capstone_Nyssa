@@ -66,8 +66,9 @@ public class CelestialPlayer : MonoBehaviour
     public Vector3 OrigPos = new Vector3(20,7,-97);
     [SerializeField] public bool isDying = false;
     [SerializeField] public bool isRespawning = false;
+    public bool isShielded = false;
 
-
+    WaitForSeconds barrierLength = new WaitForSeconds(5);
 
 
     [Header("Animation")]
@@ -206,24 +207,38 @@ public class CelestialPlayer : MonoBehaviour
 
 
 
-    public bool TakeHit()
+    public bool TakeHit(int damageDealt)
     {
-
-       health.current -= 10;
-        
-        Debug.Log(health.current);
-
-        if (OnHealthChanged != null)
-            OnHealthChanged(health.max, health.current);
-
-        bool isDead = health.current <= 0;
-        if (isDead)
+        if (!isShielded)
         {
-           Respawn();
+            health.current -= damageDealt;
+
+            Debug.Log(health.current);
+
+            if (OnHealthChanged != null)
+                OnHealthChanged(health.max, health.current);
+
+            bool isDead = health.current <= 0;
+            if (isDead)
+            {
+                Respawn();
+            }
+
+            return isDead;
         }
+        return false;
+    }
 
-        return isDead;
+    public void ApplyBarrier()
+    {
+        isShielded = true;
+        StartCoroutine(BarrierWearsOff());
+    }
 
+    private IEnumerator BarrierWearsOff()
+    {
+        yield return barrierLength;
+        isShielded = false;
     }
 
     // public void AttackEnemy()

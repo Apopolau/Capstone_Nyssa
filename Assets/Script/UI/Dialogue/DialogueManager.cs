@@ -90,6 +90,16 @@ public class DialogueManager : MonoBehaviour
                 earthPlayer.OnRemovingCancelled();
                 earthPlayer.earthControls.controls.RemovingPlant.Disable();
             }
+            if (earthPlayer.earthControls.controls.HealSelect.enabled)
+            {
+                earthPlayer.OnHealingCancelled();
+                earthPlayer.earthControls.controls.HealSelect.Disable();
+            }
+            if (earthPlayer.earthControls.controls.BarrierSelect.enabled)
+            {
+                earthPlayer.OnBarrierCancelled();
+                earthPlayer.earthControls.controls.BarrierSelect.Disable();
+            }
             earthPlayer.earthControls.controls.DialogueControls.Enable();
             earthPlayer.earthControls.controls.EarthPlayerDefault.Disable();
         }

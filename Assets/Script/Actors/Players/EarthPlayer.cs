@@ -44,14 +44,27 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] private LayerMask tileMask;
     public Vector2 virtualMousePosition;
 
+    [Header("Spell Variables")]
+    [SerializeField] private GameObjectRuntimeSet playerList;
+    [SerializeField] private GameObjectRuntimeSet animalList;
+    private CelestialPlayer celestialPlayer;
+    private GameObject powerTarget;
+    private GameObject thornShield;
+    List<GameObject> validTargets;
+    private int validTargetIndex = 0;
+
     private WaitForSeconds plantTime;
     private WaitForSeconds healTime;
     private WaitForSeconds healCooldown;
     private WaitForSeconds barrierTime;
     private WaitForSeconds barrierCooldown;
+    private WaitForSeconds barrierActiveTime;
 
     private bool healUsed;
     private bool shieldUsed;
+
+    [SerializeField] float spellRange;
+    private float closestDistance;
 
     [Header("Plant Objects")]
     [SerializeField] private GameObject treePrefab;
@@ -75,12 +88,10 @@ public class EarthPlayer : MonoBehaviour
     public bool enrouteToPlant = false;
     public EarthPlayerAnimator earthAnimator;
     private NavMeshAgent earthAgent;
-    //private PlayerInput playerInput;
     public EarthPlayerControl earthControls;
     [SerializeField] public WeatherState weatherState;
     private Vector3 OrigPos;
     public Stat health;
-    private GameObject powerTarget;
 
     public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
@@ -98,16 +109,27 @@ public class EarthPlayer : MonoBehaviour
         virtualMousePosition = new Vector3();
         OrigPos = this.transform.position;
         health = new Stat(100, 100, false);
+        validTargets = new List<GameObject>();
+        
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        foreach (GameObject player in playerList.Items)
+        {
+            if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
+        }
         plantTime = new WaitForSeconds(4.542f);
         healTime = new WaitForSeconds(0.7f);
         barrierTime = new WaitForSeconds(1.458f);
         healCooldown = new WaitForSeconds(10);
         barrierCooldown = new WaitForSeconds(10);
+        barrierActiveTime = new WaitForSeconds(5);
         //playerInput = GetComponent<PlayerInput>();
         //actions = new PlayerInputActions();
     }
@@ -529,6 +551,249 @@ public class EarthPlayer : MonoBehaviour
         
     }
 
+
+
+    /// <summary>
+    /// INTERACT FUNCTION
+    /// </summary>
+    /// <param name="context"></param>
+    //A catch-all interact button. Simply sends a signal that the player is interacting, so various objects
+    //  can react to it appropriately
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            Debug.Log("Interacting");
+            interacting = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            Debug.Log("Not interacting anymore");
+            interacting = false;
+        }
+    }
+
+
+
+    /// <summary>
+    /// HEALING FUNCTIONS
+    /// </summary>
+    public void CastHealHandler()
+    {
+        if (!healUsed && CheckIfValidTargets())
+        {
+            //HealSelectMode();
+            displayText.text = "Select a target to heal";
+            earthControls.controls.EarthPlayerDefault.Disable();
+            earthControls.controls.HealSelect.Enable();
+            PickClosestTarget();
+            tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
+            tileOutline.GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        else if (healUsed)
+        {
+            StartCoroutine(AbilityOnCooldown());
+        }
+        else if (!CheckIfValidTargets())
+        {
+            StartCoroutine(NoAvailableTargets());
+        }
+    }
+
+    //Called when the player selects a target and casts heal
+    public void InitiateHealing()
+    {
+        StartCoroutine(HealingStarted());
+    }
+
+    //Handles staggering the functionality of healing
+    private IEnumerator HealingStarted()
+    {
+        Destroy(tileOutline);
+        earthControls.controls.HealSelect.Disable();
+        CallSuspendActions(healTime);
+        earthAnimator.animator.SetBool(earthAnimator.IfHealingHash, true);
+        yield return healTime;
+        earthAnimator.animator.SetBool(earthAnimator.IfHealingHash, false);
+        if (powerTarget.GetComponent<CelestialPlayer>())
+        {
+            powerTarget.GetComponent<CelestialPlayer>().TakeHit(-20);
+        }
+        else if (powerTarget.GetComponent<Animal>())
+        {
+            powerTarget.GetComponent<Animal>().IsHealed();
+        }
+        healUsed = true;
+        earthControls.controls.EarthPlayerDefault.Enable();
+        StartCoroutine(HandleHealCooldown());
+    }
+
+    //Resets the cooldown on the heal
+    private IEnumerator HandleHealCooldown()
+    {
+        yield return healCooldown;
+        healUsed = false;
+    }
+
+    //If the player backs out after initiating picking a heal target
+    public void OnHealingCancelled()
+    {
+        Destroy(tileOutline);
+        displayText.text = "";
+        earthControls.controls.EarthPlayerDefault.Enable();
+        earthControls.controls.HealSelect.Disable();
+    }
+
+
+
+    /// <summary>
+    /// SHIELDING FUNCTIONS
+    /// </summary>
+    public void CastThornShieldHandler()
+    {
+        if (!shieldUsed && CheckIfValidTargets())
+        {
+            displayText.text = "Select a target to shield";
+            earthControls.controls.EarthPlayerDefault.Disable();
+            earthControls.controls.BarrierSelect.Enable();
+            PickClosestTarget();
+            tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
+            tileOutline.GetComponent<SpriteRenderer>().color = Color.green;
+        }
+        else if (shieldUsed)
+        {
+            StartCoroutine(AbilityOnCooldown());
+        }
+        else if (!CheckIfValidTargets())
+        {
+            StartCoroutine(NoAvailableTargets());
+        }
+    }
+
+    public void InitiateBarrier()
+    {
+        StartCoroutine(BarrierStarted());
+    }
+
+    private IEnumerator BarrierStarted()
+    {
+        Destroy(tileOutline);
+        earthControls.controls.BarrierSelect.Disable();
+        CallSuspendActions(barrierTime);
+        earthAnimator.animator.SetBool(earthAnimator.IfShieldingHash, true);
+        yield return barrierTime;
+        earthAnimator.animator.SetBool(earthAnimator.IfShieldingHash, false);
+        thornShield = Instantiate(ThornShieldPrefab, powerTarget.transform);
+        if (powerTarget.GetComponent<CelestialPlayer>())
+        {
+            powerTarget.GetComponent<CelestialPlayer>().ApplyBarrier();
+        }
+        else if (powerTarget.GetComponent<Animal>())
+        {
+            powerTarget.GetComponent<Animal>().ApplyBarrier();
+        }
+        shieldUsed = true;
+        earthControls.controls.EarthPlayerDefault.Enable();
+        StartCoroutine(HandleShieldCooldown());
+        StartCoroutine(HandleShieldExpiry());
+    }
+
+    private IEnumerator HandleShieldCooldown()
+    {
+        yield return barrierCooldown;
+        shieldUsed = false;
+    }
+
+    private IEnumerator HandleShieldExpiry()
+    {
+        yield return barrierActiveTime;
+        Destroy(thornShield);
+    }
+
+    public void OnBarrierCancelled()
+    {
+        Destroy(tileOutline);
+        displayText.text = "";
+        earthControls.controls.EarthPlayerDefault.Enable();
+        earthControls.controls.BarrierSelect.Disable();
+    }
+
+    /// <summary>
+    /// GENERAL SPELL HELPERS
+    /// </summary>
+    /// <returns></returns>
+
+    /// Warning telling the player the heal is on cooldown
+    private IEnumerator AbilityOnCooldown()
+    {
+        displayText.text = "That ability still on cooldown";
+        yield return plantTime;
+        displayText.text = "";
+    }
+
+    //Warning telling the player they have no valid targets
+    private IEnumerator NoAvailableTargets()
+    {
+        displayText.text = "No valid targets nearby";
+        yield return plantTime;
+        displayText.text = "";
+    }
+
+    private bool CheckIfValidTargets()
+    {
+        validTargets.Clear();
+        Debug.Log(celestialPlayer);
+        if(JudgeDistance(celestialPlayer.transform.position, this.transform.position, spellRange))
+        {
+            validTargets.Add(celestialPlayer.gameObject);
+        }
+        foreach(GameObject animal in animalList.Items)
+        {
+            if (JudgeDistance(animal.transform.position, this.transform.position, spellRange))
+            {
+                validTargets.Add(animal.gameObject);
+            }
+        }
+        if(validTargets.Count > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public void OnCycleTargets(bool right)
+    {
+        if (right && validTargets.Count > 1)
+        {
+            if (validTargets[validTargetIndex + 1] != null)
+            {
+                powerTarget = validTargets[validTargetIndex + 1];
+                validTargetIndex++;
+            }
+            else
+            {
+                powerTarget = validTargets[0];
+                validTargetIndex = 0;
+            }
+            tileOutline.transform.position = powerTarget.transform.position;
+        }
+        else if(!right && validTargets.Count > 1)
+        {
+            if (validTargets[validTargetIndex - 1] != null)
+            {
+                powerTarget = validTargets[validTargetIndex + 1];
+                validTargetIndex++;
+            }
+            else
+            {
+                powerTarget = validTargets[validTargets.Count - 1];
+                validTargetIndex = validTargets.Count - 1;
+            }
+            tileOutline.transform.position = powerTarget.transform.position;
+        }
+    }
+
+
     /// <summary>
     /// HELPER FUNCTIONS
     /// </summary>
@@ -547,6 +812,7 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
+    //When the player finishes using an ability with a tile select, shut off the appropriate UI and controls
     private void TurnOffTileSelect(bool tileSelectionState)
     {
         earthControls.controls.RemovingPlant.Disable();
@@ -557,127 +823,40 @@ public class EarthPlayer : MonoBehaviour
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
-    //A catch-all interact button. Simply sends a signal that the player is interacting, so various objects
-    //can react to it appropriately
-    public void OnInteract(InputAction.CallbackContext context)
+    //Create a list of targets that are in range of your abilities
+    private bool JudgeDistance(Vector3 transform1, Vector3 transform2, float distance)
     {
-        if (context.phase == InputActionPhase.Started)
-        {
-            Debug.Log("Interacting");
-            interacting = true;
-        }
-        else if (context.phase == InputActionPhase.Canceled)
-        {
-            Debug.Log("Not interacting anymore");
-            interacting = false;
-        }
-    }
+        float calcDistance = Mathf.Abs((transform1 - transform2).magnitude);
+        
 
-    public void CastHealHandler()
-    {
-        if (!healUsed && CheckIfValidTargets())
+        if (calcDistance < distance)
         {
-            //HealSelectMode();
+            return true;
         }
-        else if(healUsed)
+        else
         {
-            StartCoroutine(HealingOnCooldown());
-        }
-        else if (!CheckIfValidTargets())
-        {
-            StartCoroutine(NoAvailableTargets());
+            return false;
         }
     }
 
-    public void InitiateHealing()
+    //Goes through the current list of targets in range, finds the closest one
+    private void PickClosestTarget()
     {
-        StartCoroutine(HealingStarted());
-    }
-
-    private IEnumerator HealingStarted()
-    {
-        yield return healTime;
-        StartCoroutine(HandleHealCooldown());
-    }
-
-    private IEnumerator HealingOnCooldown()
-    {
-        displayText.text = "Healing still on cooldown";
-        yield return plantTime;
-        displayText.text = "";
-    }
-
-    private IEnumerator HandleHealCooldown()
-    {
-        yield return healCooldown;
-    }
-
-    public void OnHealingCancelled()
-    {
-
-    }
-
-    public void CastThornShieldHandler()
-    {
-        if (!shieldUsed && CheckIfValidTargets())
+        int i = 0;
+        foreach(GameObject potTarget in validTargets)
         {
-            //ShieldSelectMode();
-        }
-        else if (shieldUsed)
-        {
-            StartCoroutine(ShieldOnCooldown());
-        }
-        else if (!CheckIfValidTargets())
-        {
-            StartCoroutine(NoAvailableTargets());
+            i++;
+            float distanceMeasured = Mathf.Abs((potTarget.transform.position - this.transform.position).magnitude);
+            if (distanceMeasured < closestDistance)
+            {
+                validTargetIndex = i;
+                closestDistance = distanceMeasured;
+                powerTarget = potTarget;
+            }
         }
     }
-
-    public void InitiateBarrier()
-    {
-        StartCoroutine(BarrierStarted());
-    }
-
-    private IEnumerator BarrierStarted()
-    {
-        yield return barrierTime;
-        StartCoroutine(HandleShieldCooldown());
-    }
-
-    private IEnumerator ShieldOnCooldown()
-    {
-        displayText.text = "Shield still on cooldown";
-        yield return plantTime;
-        displayText.text = "";
-    }
-
-    private IEnumerator HandleShieldCooldown()
-    {
-        yield return barrierCooldown;
-    }
-
-    public void OnBarrierCancelled()
-    {
-
-    }
-
-    private IEnumerator NoAvailableTargets()
-    {
-        displayText.text = "No valid targets nearby";
-        yield return plantTime;
-        displayText.text = "";
-    }
-
-    private bool CheckIfValidTargets()
-    {
-        return false;
-    }
-
-    public void OnCycleTargets(InputAction.CallbackContext context)
-    {
-
-    }
-
+    
+    //If the earth player takes damage
     public bool TakeHit()
     {
 
@@ -698,6 +877,7 @@ public class EarthPlayer : MonoBehaviour
 
     }
 
+    //If the earth player takes so much damage they get defeated
     private void Respawn()
     {
 
@@ -722,12 +902,14 @@ public class EarthPlayer : MonoBehaviour
         uiController.RestoreUI(darkenWhilePlanting);
     }
 
+    //Switch between cameras for splitscreen
     public void SetCamera(Camera switchCam)
     {
         mainCamera = switchCam;
 
     }
 
+    //Turns the UI element asking the player to pick a tile to plant on on or off
     public void DisplayTileText()
     {
         // Check if the Image component is disabled

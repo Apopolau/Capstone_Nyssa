@@ -2302,7 +2302,8 @@ MonoBehaviour:
   displayText: {fileID: 0}
   selectTileText: {fileID: 0}
   uiController: {fileID: 1222953851676443687}
-  earthPlayerDpad: {fileID: 0}
+  darkenInSelectMode: {fileID: 0}
+  darkenWhilePlanting: {fileID: 0}
   darkeningAmount: 0.5
   isPlantSelected: 0
   isRemovalStarted: 0
@@ -2320,6 +2321,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   virtualMousePosition: {x: 0, y: 0}
+  playerList: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  animalList: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
+  spellRange: 25
   treePrefab: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
   landGrassPrefab: {fileID: 8326592455623684711, guid: 2938a7a0c54ca5f448e41f884a596426, type: 3}
   waterGrassPrefab: {fileID: 8326592455623684711, guid: fb6eac0bbccc5fc4784a1140b0696f91, type: 3}
@@ -2330,6 +2334,7 @@ MonoBehaviour:
   waterGrassPreviewPrefab: {fileID: 8326592455623684711, guid: d6b142561e779ec4eaa392fad207b22d, type: 3}
   landFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 82cd7f247c015654cb325a2356a51c3f, type: 3}
   waterFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 6c0ae7c3c763d1f48815522aabb11b6d, type: 3}
+  ThornShieldPrefab: {fileID: 699971024190529053, guid: d4d187bc0a511bd40896d295d703326c, type: 3}
   enrouteToPlant: 0
   earthAnimator: {fileID: 0}
   earthControls: {fileID: 0}
@@ -2610,6 +2615,38 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 157cbc13-5578-4a2f-827d-ba32ac7a17f2
     m_ActionName: DialogueControls/Skip[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c1d112c0-abfe-4969-a55d-b0980585fa63
+    m_ActionName: EarthPlayerDefault/Heal[/Keyboard/m]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ec8b9e47-9253-4fc8-a456-9e33586dd469
+    m_ActionName: EarthPlayerDefault/ThornShield[/Keyboard/comma]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 82e769aa-100d-4e74-9e24-6b93a2a597c1
+    m_ActionName: HealSelect/SelectTarget[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b95555b2-d759-4c50-a517-d5ad14236420
+    m_ActionName: HealSelect/CancelHeal[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d46b3596-a203-498d-821c-8e373f400721
+    m_ActionName: HealSelect/CycleTarget[/Keyboard/rightArrow,/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 769b02b7-4f67-4c69-bfb7-318b57ba475e
+    m_ActionName: BarrierSelect/SelectTarget[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f4238b88-b498-4160-a6a3-3deda772e752
+    m_ActionName: BarrierSelect/CancelBarrier[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4b5ab5a9-3e9c-4dfc-bbd5-f7251df0abfa
+    m_ActionName: BarrierSelect/CycleTarget[/Keyboard/rightArrow,/Keyboard/leftArrow]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: EarthPlayerDefault
@@ -2632,6 +2669,8 @@ MonoBehaviour:
   IfPlantingHash: 0
   IfBuildingHash: 0
   IfTurningHash: 0
+  IfHealingHash: 0
+  IfShieldingHash: 0
 --- !u!114 &4394548441176001214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2683,6 +2722,7 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   suspendedColor: {r: 0, g: 0, b: 0, a: 0.89411765}
   darkOverlay: {fileID: 0}
+  darkeningAmount: 0.5
   uiObjectToToggle:
   - {fileID: 0}
   - {fileID: 0}

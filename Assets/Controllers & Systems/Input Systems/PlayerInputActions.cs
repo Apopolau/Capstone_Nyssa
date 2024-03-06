@@ -333,7 +333,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fddf9087-6640-4efc-8d88-3cd3b5f639f5"",
-                    ""path"": ""<Keyboard>/m"",
+                    ""path"": ""<Keyboard>/b"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",

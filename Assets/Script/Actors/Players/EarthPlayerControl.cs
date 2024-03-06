@@ -312,7 +312,34 @@ public class EarthPlayerControl : MonoBehaviour
     {
         if (context.control.device.deviceId == myDeviceID)
         {
-            earthPlayer.OnCycleTargets(context);
+            float input;
+            if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
+            {
+                input = Gamepad.all[playerIndex].leftTrigger.ReadValue();
+                input += Gamepad.all[playerIndex].rightTrigger.ReadValue() * -2;
+                if(input < 0)
+                {
+                    earthPlayer.OnCycleTargets(true);
+                }
+                else if(input > 0)
+                {
+                    earthPlayer.OnCycleTargets(false);
+                }
+            }
+            else
+            {
+                input = Keyboard.current.leftArrowKey.ReadValue();
+                input += Keyboard.current.rightArrowKey.ReadValue() * -2;
+                if (input < 0)
+                {
+                    earthPlayer.OnCycleTargets(true);
+                }
+                else if (input > 0)
+                {
+                    earthPlayer.OnCycleTargets(false);
+                }
+            }
+            
         }
     }
 
