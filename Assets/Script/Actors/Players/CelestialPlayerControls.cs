@@ -58,14 +58,17 @@ public class CelestialPlayerControls : MonoBehaviour
         if (Gamepad.all.Count == 0)
         {
             myDeviceID = Keyboard.current.deviceId;
+            userSettingsManager.celestialControlType = UserSettingsManager.ControlType.KEYBOARD;
         }
         else if (Gamepad.all.Count == 1)
         {
             myDeviceID = Gamepad.all[playerIndex].deviceId;
+            userSettingsManager.celestialControlType = UserSettingsManager.ControlType.CONTROLLER;
         }
         else
         {
             myDeviceID = Gamepad.all[playerIndex].deviceId;
+            userSettingsManager.celestialControlType = UserSettingsManager.ControlType.CONTROLLER;
         }
 
         Debug.Log(myDeviceID);
@@ -89,31 +92,25 @@ public class CelestialPlayerControls : MonoBehaviour
 
     private void OnCelestialMovePerformed(InputAction.CallbackContext context)
     {
-
-        //if (context.control.device.deviceId != myDeviceID) return;
-
         if (context.control.device.deviceId == myDeviceID)
         {
             if (takinginput == false)
             {
                 takinginput = true;
-                //Debug.Log("Celestial:" + context.control.device.deviceId);
-
 
                 Vector2 input;
                 if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
                 {
-                    input = new Vector2(Keyboard.current.wKey.ReadValue() - Keyboard.current.sKey.ReadValue(),
-                        Keyboard.current.aKey.ReadValue() - Keyboard.current.dKey.ReadValue());
+                    input = new Vector2(Keyboard.current.aKey.ReadValue() - Keyboard.current.dKey.ReadValue(),
+                        Keyboard.current.wKey.ReadValue() - Keyboard.current.sKey.ReadValue());
                 }
                 else
                 {
                     input = Gamepad.all[playerIndex].leftStick.ReadValue();
+                    input.x *= -1;
                 }
 
-                //context.ReadValue<Vector2>();
-
-                this.GetComponent<CelestialPlayerMovement>().MovePlayer(context, input);
+                this.GetComponent<CelestialPlayerMovement>().MovePlayer(input);
                 takinginput = false;
             }
         }
@@ -126,9 +123,7 @@ public class CelestialPlayerControls : MonoBehaviour
 
         if (context.control.device.deviceId == myDeviceID)
         {
-            //Vector2 input;
-            //input = Vector2.zero;
-            this.GetComponent<CelestialPlayerMovement>().EndMovement(context);
+            this.GetComponent<CelestialPlayerMovement>().EndMovement();
         }
     }
 
