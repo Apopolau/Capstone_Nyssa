@@ -37,6 +37,11 @@ public class UserSettingsManager : ScriptableObject
         }
     }
 
+    // Method to set the chosen language
+    public void SetLanguage(GameLanguage language)
+    {
+        chosenLanguage = language;
+    }
 
     
 }
