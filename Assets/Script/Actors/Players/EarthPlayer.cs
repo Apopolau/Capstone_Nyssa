@@ -161,10 +161,8 @@ public class EarthPlayer : MonoBehaviour
         
         if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
-            //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
-            //virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.;
-            Debug.Log("virtual mouse input: " + virtualMouseInput);
-            Debug.Log("virtual mouse: " + virtualMouseInput.virtualMouse);
+            //Debug.Log("virtual mouse input: " + virtualMouseInput);
+            //Debug.Log("virtual mouse: " + virtualMouseInput.virtualMouse);
             virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }

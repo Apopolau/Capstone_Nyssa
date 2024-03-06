@@ -28,7 +28,7 @@ public class UserSettingsManager : ScriptableObject
         else if (Gamepad.all.Count == 1)
         {
             earthControlType = UserSettingsManager.ControlType.KEYBOARD;
-            celestialControlType= UserSettingsManager.ControlType.CONTROLLER;
+            celestialControlType = UserSettingsManager.ControlType.CONTROLLER;
         }
         else
         {

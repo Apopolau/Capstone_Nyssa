@@ -123,19 +123,11 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnEarthMovePerformed(InputAction.CallbackContext context)
     {
-        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
-        // if (context.control.device.deviceId != myDeviceID && context.control.device.deviceId == myDeviceID) return;
-        //if (context.control.device.deviceId != myDeviceID) 
-        //{ return; 
-        //}
-     
         if(context.control.device.deviceId == myDeviceID)
         {
             if (takinginput == false)
             {
                 takinginput = true;
-                //Debug.Log("Earth:" + context.control.device.deviceId);
-
 
                 Vector2 input;
                 if(userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
@@ -147,7 +139,7 @@ public class EarthPlayerControl : MonoBehaviour
                 {
                     input = Gamepad.all[playerIndex].leftStick.ReadValue();
                 }
-                this.GetComponent<playerMovement>().MovePlayer(context, input);
+                this.GetComponent<playerMovement>().MovePlayer(input);
                 takinginput = false;
             }
         }

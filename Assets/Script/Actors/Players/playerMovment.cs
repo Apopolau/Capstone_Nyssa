@@ -13,7 +13,7 @@ using UnityEngine.AI;
 public class playerMovement : MonoBehaviour
 {
 
-    public GameObject  movementControlsUI; //assign controlsUI
+    public GameObject movementControlsUI; //assign controlsUI
     // Start is called before the first frame update
     //Rotation of the player
     public Transform orientation;
@@ -52,8 +52,10 @@ public class playerMovement : MonoBehaviour
     private PlayerInputActions playerInputActions;
     private PlayerInput playerInput;
     Vector2 inputVector;
-    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, -45, 0));
+    Matrix4x4 isometricRotIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
     Vector3 isometricInput;
+    Vector3 isometricRotInput;
     int EarthDeviceID;
     //private CelestialPlayerInput celestialPlayerInput;
 
@@ -64,13 +66,14 @@ public class playerMovement : MonoBehaviour
         player = this.GetComponent<Transform>();
         playerInputActions = GetComponent<EarthPlayerControl>().controls;
         isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
+        isometricRotInput = isometricRotIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
     }
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        if (GetComponent<EarthPlayerControl>().userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
+        if (GetComponent<EarthPlayerControl>().userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             EarthDeviceID = Keyboard.current.deviceId;
         }
@@ -104,8 +107,7 @@ public class playerMovement : MonoBehaviour
         if (this.gameObject.tag == "Player1")
         {
             //isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
-            rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2), 
-                0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(new Vector3(isometricInput.x, 0, isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
         }
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
@@ -137,58 +139,51 @@ public class playerMovement : MonoBehaviour
     }
 
     //This is the function that handles actually moving the player
-    public void MovePlayer(InputAction.CallbackContext context, Vector2 input)
+    public void MovePlayer(Vector2 input)
     {
         isMoveKeyHeld = true;
 
-        if (context.control.device.deviceId == EarthDeviceID)
+        inputVector = input;
+        horInput = inputVector.x;
+        vertInput = inputVector.y;
+        isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
+        isometricRotInput = isometricRotIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
+
+        if (horInput < 0.2 && horInput > -0.2 && vertInput < 0.2 && vertInput > -0.2)
         {
-            inputVector = input;
-            horInput = inputVector.x;
-            vertInput = inputVector.y;
-            isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
-
-            if (horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
-            {
-                inputVector = Vector2.zero;
-                isometricInput = Vector3.zero;
-                return;
-            }
-            //Call this if the player is in the middle of navigating using the nav agent
-            if (this.GetComponent<NavMeshAgent>().enabled)
-            {
-                ResetNavAgent();
-            }
-
-            rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2),
-                0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
+            inputVector = Vector2.zero;
+            isometricInput = Vector3.zero;
+            isometricRotInput = Vector3.zero;
+            return;
         }
+        //Call this if the player is in the middle of navigating using the nav agent
+        if (this.GetComponent<NavMeshAgent>().enabled)
+        {
+            ResetNavAgent();
+        }
+
+        rb.AddForce(new Vector3(isometricInput.x, 0, isometricInput.z).normalized * moveSpeed * 10f, ForceMode.Force);
 
         // if player moved disable the UI
         if (input != Vector2.zero)
         {
             // Disable the UI element
-            if ( movementControlsUI != null)
+            if (movementControlsUI != null)
             {
-            
+
                 movementControlsUI.SetActive(false);
             }
         }
 
-        
+        isMoveKeyHeld = false;
     }
 
     //This is called when the player stops inputting on their movement controls
     public void EndMovement(InputAction.CallbackContext context)
     {
-        if (context.control.device.deviceId == EarthDeviceID)
-        {
-            if (context.canceled)
-            {
-                inputVector = Vector2.zero;
-                isometricInput = Vector3.zero;
-            }
-        }
+        inputVector = Vector2.zero;
+        isometricInput = Vector3.zero;
+        isometricRotInput = Vector3.zero;
     }
 
     //This turns the player in the direction they are moving
@@ -199,7 +194,6 @@ public class playerMovement : MonoBehaviour
         {
             //rotate orientation
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
-            //Vector3 isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
 
             if (viewDir != Vector3.zero)
             {
@@ -207,7 +201,7 @@ public class playerMovement : MonoBehaviour
             }
 
             // rotate the player object
-            Vector3 inputDir = orientation.forward * isometricInput.x + orientation.right * -isometricInput.z;
+            Vector3 inputDir = orientation.forward * isometricRotInput.x + orientation.right * -isometricRotInput.z;
 
             //if input direction isnt 0 smoothly change the direction using the rotation speed
             if (inputDir != Vector3.zero)

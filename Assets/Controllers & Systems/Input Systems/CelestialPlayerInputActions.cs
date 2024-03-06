@@ -106,7 +106,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""id"": ""6d015667-5eff-46f8-b4d6-b05081afdacf"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""StickDeadzone(min=0.2,max=1)"",
                     ""groups"": """",
                     ""action"": ""CelestialWalk"",
                     ""isComposite"": true,
