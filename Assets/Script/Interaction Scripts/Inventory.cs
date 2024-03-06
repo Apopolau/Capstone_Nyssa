@@ -7,30 +7,31 @@ using UnityEngine.InputSystem;
 public class Inventory : ScriptableObject
 {
     int inventorySize = 4;
-    [SerializeField] public List<Item> items = new List<Item>();
+    [SerializeField] public List<Item> items;
     [SerializeField] public List<ItemSlot> itemSlots;
 
     public PlantingUIIndicator plantingUI;
 
-    public void Initialize()
+    private void OnEnable()
     {
-        if (itemSlots != null)
+        RefreshUI();
+    }
+
+    private void OnDisable()
+    {
+        if (itemSlots.Count != 0)
         {
-            /*
-            if(items == null)
-            {
-                items = new List<Item>();
-            }
-            */
-            items.Clear();
             itemSlots.Clear();
-            RefreshUI();
+        }
+        if (items.Count != 0)
+        {
+            items.Clear();
         }
     }
 
     public bool AddItem(Item item, int quantity)
     {
-        Debug.Log("Quantity was: " + quantity);
+        //Debug.Log("Quantity was: " + quantity);
         if (IsFull())
         {
             return false;
@@ -48,12 +49,10 @@ public class Inventory : ScriptableObject
         }
 
         // If the item is not in the inventory, add a new one.
-
         Item itemToAdd = new Item(item);
         items.Add(itemToAdd);
 
         //item.stats.Icon = item.stats.Icon;
-
         RefreshUI();
         return true;
     }
@@ -80,11 +79,11 @@ public class Inventory : ScriptableObject
         
         if (itemToRemove != null)
         {
-            Debug.Log($"Removing item {itemToRemove.stats.ItemName} based on key press");
+            //Debug.Log($"Removing item {itemToRemove.stats.ItemName} based on key press");
             RemoveItem(itemToRemove, quantity);
 
             // Add a log message to check the current inventory after removal
-            Debug.Log("Current inventory:");
+            //Debug.Log("Current inventory:");
             foreach (var item in items)
             {
                 Debug.Log($"Item: {item.stats.ItemName}, Quantity: {item.quantity}");
@@ -92,7 +91,7 @@ public class Inventory : ScriptableObject
         }
         else
         {
-            Debug.LogWarning($"You do not have the required item in the inventory.");
+            //Debug.LogWarning($"You do not have the required item in the inventory.");
         }
     }
 
@@ -167,9 +166,20 @@ public class Inventory : ScriptableObject
     }
 
     //Increase number of item slots when a player picks up a new type of item
-    public void AddItemSlot(ItemSlot slot)
+    public void AddItemSlots(List<ItemSlot> slots)
     {
-        itemSlots.Insert(0, slot);
+        itemSlots = slots;
+    }
+
+    public void RemoveItemFromItems(Item itemToRemove)
+    {
+        items.Remove(itemToRemove);
+    }
+
+    public void RemoveItemSlot(ItemSlot slot)
+    {
+        if (itemSlots.Contains(slot))
+            itemSlots.Remove(slot);
     }
 
     //No more slots left

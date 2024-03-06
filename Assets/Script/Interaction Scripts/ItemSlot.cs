@@ -35,11 +35,6 @@ public class ItemSlot : MonoBehaviour
         }
     }
 
-    private void OnValidate()
-    {
-        
-    }
-
     private void Awake()
     {
         if (image == null)
@@ -52,11 +47,23 @@ public class ItemSlot : MonoBehaviour
         if (quantityText == null)
             quantityText = GetComponentInChildren<TextMeshProUGUI>(); // Use TextMeshProUGUI here
 
-        inventory.AddItemSlot(this);
+        _item = null;
+        //inventory.AddItemSlot(this);
+    }
+
+    private void OnDisable()
+    {
+        if (inventory.items.Contains(_item))
+        {
+            inventory.RemoveItemFromItems(_item);
+        }
+        _item = null;
+        inventory.RemoveItemSlot(this);
     }
 
     public void SetItem(Item newItem)
     {
+        Debug.Log("Item being set: " + newItem.stats.name);
         _item = newItem;
     }
 
@@ -71,6 +78,7 @@ public class ItemSlot : MonoBehaviour
         }
         else
         {
+            //Debug.Log("item is " + _item.stats.name + " and stats are " + _item.stats);
             image.sprite = _item.stats.Icon;
             image.enabled = true;
             UpdateItemNameText();
