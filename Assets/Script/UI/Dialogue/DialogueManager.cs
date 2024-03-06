@@ -7,19 +7,19 @@ using TMPro;
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
-    private UserSettingsManager userSettingsManager;
+    public UserSettingsManager userSettingsManager;
 
     public Image characterIconLeft;
     public Image characterIconRight;
     public TextMeshProUGUI dialogueArea;
-    public TextMeshProUGUI dialogueAreaFR;
+   //public TextMeshProUGUI dialogueAreaFR;
 
     private Queue<DialogueLine> lines;
 
     public bool isDialogueActive = false;
     public GameObject dialogueBox; // Reference to the entire dialogue box
-                                   // Reference to the UI controller script
-    public EarthCharacterUIController uiController;
+                                   
+    public EarthCharacterUIController uiController;// Reference to the UI controller script
     public SplitScreen split;
 
     [SerializeField] private GameObjectRuntimeSet playerSet;
@@ -189,7 +189,7 @@ public class DialogueManager : MonoBehaviour
 
         // Clear the dialogue areas
         dialogueArea.text = "";
-        dialogueAreaFR.text = "";
+        //dialogueAreaFR.text = "";
 
         // Clear both character icons
         characterIconLeft.sprite = null;
@@ -215,8 +215,22 @@ public class DialogueManager : MonoBehaviour
         }
 
         //display all text at once
-        dialogueArea.text = currentLine.line;
-        dialogueAreaFR.text = currentLine.lineFR;
+       //dialogueArea.text = currentLine.line;
+        //dialogueAreaFR.text = currentLine.lineFR;
+
+        // Determine which language to display based on the user's language setting
+        switch (userSettingsManager.chosenLanguage)
+        {
+            case UserSettingsManager.GameLanguage.ENGLISH:
+                // Display English dialogue
+                dialogueArea.text = currentLine.line;
+                break;
+            case UserSettingsManager.GameLanguage.FRENCH:
+                // Display French dialogue
+                dialogueArea.text = currentLine.lineFR;
+                Debug.Log("French text should display");
+                break;
+        }
     }
 
     //display letter by letter
