@@ -26,7 +26,7 @@ public class HealthUI : MonoBehaviour
     void Start()
     {
         cam = Camera.main.transform;
-        foreach(Canvas c in FindObjectsOfType<Canvas>())
+        foreach(Canvas c in GetComponentsInChildren<Canvas>())
         {
             if(c.renderMode == RenderMode.WorldSpace)
             {

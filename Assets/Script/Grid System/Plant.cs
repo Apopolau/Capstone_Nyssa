@@ -10,6 +10,7 @@ public class Plant : Creatable
     [SerializeField] List<LevelManagerObject> levelManagers;
     public GameObject plantObject;
     [SerializeField] WeatherState weatherState;
+    [SerializeField] GameObject energyPrefab;
 
     [Header("These set themselves")]
     
@@ -34,7 +35,7 @@ public class Plant : Creatable
     public PlantStats.PlantStage currentPlantStage;
 
     private GameObject seed;
-    
+    private GameObject energyDrop;
     private GameObject logs;
 
     public new event System.Action<int, int> OnHealthChanged;
@@ -65,7 +66,14 @@ public class Plant : Creatable
             storedWater.low = false;
         }
 
-        
+        foreach(SpriteRenderer r in waterUI.GetComponentsInChildren<SpriteRenderer>())
+        {
+            r.material.renderQueue += 1;
+        }
+        foreach (SpriteRenderer r in sunlightUI.GetComponentsInChildren<SpriteRenderer>())
+        {
+            r.material.renderQueue += 1;
+        }
     }
 
     private void Start()
@@ -175,7 +183,7 @@ public class Plant : Creatable
 
             if (weatherState.skyState == WeatherState.SkyState.RAINY && !waterPlant && !isSmothered)
             {
-                storedSunlight.current += Mathf.Clamp(1, 0, storedWater.max);
+                storedWater.current += Mathf.Clamp(3, 0, storedWater.max);
             }
         }
     }
@@ -197,6 +205,8 @@ public class Plant : Creatable
             }
             PlacePlant(stats.sproutScale, stats.sproutTileOffset);
             HandleTreeColliders(0.5f, 5);
+            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.seedlingEnergy;
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.SPROUT && growthPoints >= stats.sproutGrowTime)
@@ -211,6 +221,8 @@ public class Plant : Creatable
             }
             PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
             HandleTreeColliders(1f, 5);
+            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.JUVENILE && growthPoints >= stats.juvenileGrowTime)
@@ -224,11 +236,15 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.matureImage;
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
-            HandleTreeColliders(2f, 5);
+            HandleTreeColliders(2.5f, 10);
+            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.MATURE && growthPoints >= stats.matureSeedDropTime)
         {
+            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.matureEnergy;
             DropSeed();
             growthPoints = 0;
         }
@@ -253,12 +269,13 @@ public class Plant : Creatable
 
     private void PlacePlant(float scale, float tileOffset)
     {
-        plantObject.transform.rotation = Quaternion.Euler(0, 45, 0);
+        
         if (plantVisuals.Length > 1)
         {
             int i = 0;
             foreach (SpriteRenderer plantVisual in plantVisuals)
             {
+                plantVisual.transform.rotation = Quaternion.Euler(0, 45, 0);
                 plantVisual.transform.localScale = new Vector3(scale, scale, 1);
                 float yOffset = (plantVisual.GetComponent<SpriteRenderer>().sprite.bounds.extents.y * scale);
                 plantVisual.transform.localPosition = new Vector3(plantVisual.transform.localPosition.x, yOffset, plantVisual.transform.localPosition.z);
@@ -267,6 +284,7 @@ public class Plant : Creatable
         }
         else
         {
+            plantObject.transform.rotation = Quaternion.Euler(0, 45, 0);
             plantVisuals[0].transform.localScale = new Vector3(scale, scale, 1);
             float yOffset = (plantVisuals[0].GetComponent<SpriteRenderer>().sprite.bounds.extents.y * scale);
             plantVisuals[0].gameObject.transform.parent.gameObject.transform.localPosition = new Vector3(-tileOffset, yOffset, -tileOffset);
@@ -285,21 +303,21 @@ public class Plant : Creatable
             // Water is low but sunlight is not, prioritize water UI
             waterUI.SetActive(true);
             sunlightUI.SetActive(false);
-            Debug.Log("Water is needed");
+            //Debug.Log("Water is needed");
         }
-        else if (!waterLow && sunlightLow)
+        else if (!waterLow && sunlightLow && !weatherState.dayTime)
         {
             // Sunlight is low but water is not, prioritize sunlight UI
             waterUI.SetActive(false);
             sunlightUI.SetActive(true);
-            Debug.Log("Sunlight is needed");
+            //Debug.Log("Sunlight is needed");
         }
         else if (waterLow && sunlightLow)
         {
             // Both water and sunlight are low, prioritize water UI
             waterUI.SetActive(true);
             sunlightUI.SetActive(false);
-            Debug.Log("Water is needed");
+            //Debug.Log("Water is needed");
         }
         else
         {
@@ -378,19 +396,24 @@ public class Plant : Creatable
     {
         if (stats.plantName == "Tree")
         {
-
             if (currentPlantStage == PlantStats.PlantStage.JUVENILE)
             {
                 logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
                 logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
                 logs.GetComponent<PickupObject>().SetItemQuantity(1);
             }
-            if (currentPlantStage == PlantStats.PlantStage.MATURE)
+            else if (currentPlantStage == PlantStats.PlantStage.MATURE)
             {
                 logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
                 logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
                 logs.GetComponent<PickupObject>().SetItemQuantity(3);
             }
+        }
+        if (currentPlantStage == PlantStats.PlantStage.SEEDLING || currentPlantStage == PlantStats.PlantStage.SPROUT)
+        {
+            seed = Instantiate(stats.seedPrefab, tilePlantedOn.transform);
+            seed.transform.localPosition.Set(seed.transform.localPosition.x, seed.transform.localPosition.y + 1f, seed.transform.localPosition.z);
+            seed.GetComponent<PickupObject>().SetItemQuantity(1);
         }
         tilePlantedOn.tileHasBuild = false;
         tilePlantedOn.placedObject = null;

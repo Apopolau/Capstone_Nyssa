@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelManager: {fileID: 11400000, guid: 84a591d714bdf7e4387770b536fd3615, type: 2}
-  eventManager: {fileID: 0}
+  eventManager: {fileID: 3328214192355188500}
 --- !u!114 &3328214192355188500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,11 +62,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
-  cleanWaterMaterial: {fileID: 2100000, guid: 6327eefc20edae449b2b2a09c6d9c4df, type: 2}
+  cleanWaterMaterial: {fileID: 2100000, guid: e33eb5d28521d5f4188aec862cee5330, type: 2}
   water: {fileID: 0}
   firstAreaGrid: {fileID: 0}
   secondAreaGrid: {fileID: 0}
   thirdAreaGrid: {fileID: 0}
+  fourthAreaGrid: {fileID: 0}
   task1: {fileID: 0}
   task2: {fileID: 0}
   task3: {fileID: 0}
@@ -83,7 +84,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   directionalLight: {fileID: 0}
-  timeOfDay: 0
+  timeOfDay: 10
   directionalLightColor:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -223,4 +224,5 @@ MonoBehaviour:
   basePollutionLevel: 50
   maxPollution: 100
   acidRainThreshold: 75
+  acidRainHardThreshold: 90
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}

@@ -10,9 +10,11 @@ using UnityEngine.AI;
 public class CelestialPlayer : MonoBehaviour
 {
     
-    [SerializeField] private VirtualMouseInput virtualMouseInput;
+    //[SerializeField] private VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
+    [SerializeField] private GameObject celestPlayerDpad;
+    [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
     private NavMeshAgent celestialAgent;
 
@@ -35,6 +37,7 @@ public class CelestialPlayer : MonoBehaviour
     [SerializeField] public bool canSetFrostTrap = true;
     [SerializeField] public bool canSunBeam = true;
 
+    public bool interacting = false;
 
     public enum Power
     {
@@ -51,6 +54,8 @@ public class CelestialPlayer : MonoBehaviour
     public Power Powers;
     public Power powerInUse = Power.NONE;
 
+    public Stat energy;
+
 
     PowerBehaviour powerBehaviour;
     public CelestialPlayerControls celestialControls;
@@ -61,8 +66,9 @@ public class CelestialPlayer : MonoBehaviour
     public Vector3 OrigPos = new Vector3(20,7,-97);
     [SerializeField] public bool isDying = false;
     [SerializeField] public bool isRespawning = false;
+    public bool isShielded = false;
 
-
+    WaitForSeconds barrierLength = new WaitForSeconds(5);
 
 
     [Header("Animation")]
@@ -97,7 +103,8 @@ public class CelestialPlayer : MonoBehaviour
         celestialAgent.enabled = false;
         celestialControls = GetComponent<CelestialPlayerControls>();
         health = new Stat(100, 100, false);
-        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        energy = new Stat(100, 0, true);
+        //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
 
@@ -117,25 +124,39 @@ public class CelestialPlayer : MonoBehaviour
     }
 
 
- /*   private void OnTriggerEnter(Collider other)
+    /*   private void OnTriggerEnter(Collider other)
+       {
+           //Debug.Log("Entered collision with " + other.gameObject.name);
+           if ((other.gameObject.tag == "Enemy"))
+           {
+               //Debug.Log("Trigger enter");
+
+               //Player is in range of enemy, in invading monster they can pursue the player
+
+
+              // Debug.Log("I've collided with enemy");
+                   enemySeen = true;
+
+              enemyLocation= other.transform.position;
+               enemyTarget = other.transform.gameObject;
+
+           }
+
+       }*/
+
+    public void OnInteract(InputAction.CallbackContext context)
     {
-        //Debug.Log("Entered collision with " + other.gameObject.name);
-        if ((other.gameObject.tag == "Enemy"))
+        if (context.phase == InputActionPhase.Started)
         {
-            //Debug.Log("Trigger enter");
-
-            //Player is in range of enemy, in invading monster they can pursue the player
-
-
-           // Debug.Log("I've collided with enemy");
-                enemySeen = true;
-          
-           enemyLocation= other.transform.position;
-            enemyTarget = other.transform.gameObject;
-
+            Debug.Log("Interacting");
+            interacting = true;
         }
-       
-    }*/
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            Debug.Log("Not interacting anymore");
+            interacting = false;
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -186,24 +207,38 @@ public class CelestialPlayer : MonoBehaviour
 
 
 
-    public bool TakeHit()
+    public bool TakeHit(int damageDealt)
     {
-
-       health.current -= 10;
-        
-        Debug.Log(health.current);
-
-        if (OnHealthChanged != null)
-            OnHealthChanged(health.max, health.current);
-
-        bool isDead = health.current <= 0;
-        if (isDead)
+        if (!isShielded)
         {
-           Respawn();
+            health.current -= damageDealt;
+
+            Debug.Log(health.current);
+
+            if (OnHealthChanged != null)
+                OnHealthChanged(health.max, health.current);
+
+            bool isDead = health.current <= 0;
+            if (isDead)
+            {
+                Respawn();
+            }
+
+            return isDead;
         }
+        return false;
+    }
 
-        return isDead;
+    public void ApplyBarrier()
+    {
+        isShielded = true;
+        StartCoroutine(BarrierWearsOff());
+    }
 
+    private IEnumerator BarrierWearsOff()
+    {
+        yield return barrierLength;
+        isShielded = false;
     }
 
     // public void AttackEnemy()
@@ -281,6 +316,7 @@ public class CelestialPlayer : MonoBehaviour
         isAttacking = true;
         powerInUse = Power.COLDSNAP;
         Debug.Log("start");
+        DarkenAllImages(celestPlayerDpad); //darken the dpad
 
     }
 
@@ -318,6 +354,7 @@ public class CelestialPlayer : MonoBehaviour
         yield return new WaitForSeconds(3f);
         celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
         Destroy(clone);
+        ResetImageColor(celestPlayerDpad); //reset dpad colors
 
     }
 
@@ -335,5 +372,41 @@ public class CelestialPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
        
+    }
+
+    //Darken UI icons
+    void DarkenAllImages(GameObject targetGameObject)
+    {
+        if (targetGameObject != null)
+        {
+            Image[] images = targetGameObject.GetComponentsInChildren<Image>();
+            foreach (Image image in images)
+            {
+                // Create a copy of the current material
+                Material darkenedMaterial = new Material(image.material);
+
+                // Darken the material color
+                Color darkenedColor = darkenedMaterial.color * darkeningAmount;
+                darkenedMaterial.color = darkenedColor;
+
+                // Assign the new material to the image
+                image.material = darkenedMaterial;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Target GameObject is not assigned.");
+        }
+    }
+    
+     // Function to reset color to original
+    public void ResetImageColor(GameObject targetGameObject)
+    {
+        Image[] images = targetGameObject.GetComponentsInChildren<Image>();
+            foreach (Image image in images)
+            {
+                 // Restore the original color
+                 image.material.color = image.color;
+            }
     }
 }

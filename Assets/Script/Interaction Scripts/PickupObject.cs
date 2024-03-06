@@ -7,18 +7,26 @@ public class PickupObject : Interactable
     protected SpriteRenderer spriteRenderer;
 
     [SerializeField] Item item;
+    [SerializeField] ItemStats itemStats;
     [SerializeField] Inventory inventory;
+    [SerializeField] int quantity;
 
-    //public GameObject boxRange;
+    //[SerializeField] GameObjectRuntimeSet playerSet;
 
-    EarthPlayer earthPlayer;
+    private void Awake()
+    {
+        isEarthInteractable = true;
+        isCelestialInteractable = true;
+    }
 
     private void Start()
     {
+        item = new Item(itemStats, quantity);
+
         if (item != null)
         {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            spriteRenderer.sprite = item.Icon;
+            spriteRenderer.sprite = item.stats.Icon;
             spriteRenderer.enabled = true;
         }
         else
@@ -26,38 +34,41 @@ public class PickupObject : Interactable
             spriteRenderer.enabled = false;
             uiObject.SetActive(false);
         }
-
-        players = playerRuntimeSet.Items;
-        foreach (GameObject player in players)
+        foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<EarthPlayer>())
             {
                 earthPlayer = player.GetComponent<EarthPlayer>();
             }
+            else if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
         }
+
     }
 
     private void Update()
     {
         ItemPickup();
+        UpdateUIElement();
     }
 
     public void ItemPickup()
     {
-        if (isInRange && earthPlayer.interacting)
+        if ((p1IsInRange && earthPlayer.interacting) || (p2IsInRange && celestialPlayer.interacting))
         {
             //Debug.Log("Picking up");
             if (item != null)
             {
-                int pickupQuantity = 1; // You can change this to the desired quantity.
-                if (inventory.AddItem(item, pickupQuantity))
+                if (inventory.AddItem(item, item.quantity))
                 {
                     UpdateUIText();
                     Destroy(this.GetComponentInParent<Transform>().gameObject);
                 }
                 else {
                     earthPlayer.displayText.text = "Inventory is full";
-                };
+                }
             }
         }
     }
@@ -72,10 +83,37 @@ public class PickupObject : Interactable
         }
     }
 
+    //Call this when instantiating an item prefab to set the quantity of items being dropped
     public void SetItemQuantity(int newQuantity)
     {
-        item.Quantity = newQuantity;
+        quantity = newQuantity;
+        if(item != null)
+        {
+            item.quantity = quantity;
+        }
     }
-    
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<EarthPlayer>())
+        {
+            p1IsInRange = true;
+        }
+        if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<EarthPlayer>())
+        {
+            p1IsInRange = false;
+        }
+        if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = false;
+        }
+    }
 }

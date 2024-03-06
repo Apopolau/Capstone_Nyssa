@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class RockSlideInteraction : Interactable
 {
-
-    EarthPlayer earthPlayer;
     WaitForSeconds slideClearTime = new WaitForSeconds(4.542f);
     bool isAnimated = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        players = playerRuntimeSet.Items;
-        foreach (GameObject p in players)
+        isEarthInteractable = true;
+    }
+
+    private void Start()
+    {
+        foreach (GameObject player in playerSet.Items)
         {
-            if (p.GetComponent<EarthPlayer>())
+            if (player.GetComponent<EarthPlayer>())
             {
-                earthPlayer = p.GetComponent<EarthPlayer>();
+                earthPlayer = player.GetComponent<EarthPlayer>();
+            }
+            else if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
             }
         }
     }
@@ -27,23 +32,14 @@ public class RockSlideInteraction : Interactable
     {
         OnEarthPlayerInteracts();
         MoveDownward();
+        UpdateUIElement();
     }
 
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        
-    }
-    */
+    
 
     private void OnEarthPlayerInteracts()
     {
-        if(earthPlayer.interacting && isInRange && !isAnimated)
+        if(earthPlayer.interacting && p1IsInRange && !isAnimated)
         {
             Debug.Log("starting animation");
             isAnimated = true;
@@ -65,5 +61,29 @@ public class RockSlideInteraction : Interactable
         
         yield return slideClearTime;
         isAnimated = false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<EarthPlayer>())
+        {
+            p1IsInRange = true;
+        }
+        if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<EarthPlayer>())
+        {
+            p1IsInRange = false;
+        }
+        if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = false;
+        }
     }
 }

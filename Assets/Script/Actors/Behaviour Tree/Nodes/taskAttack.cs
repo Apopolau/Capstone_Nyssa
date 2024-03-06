@@ -40,8 +40,17 @@ public class TaskAttack : BTNode
         if (thisEnemy.inAttackRange && thisEnemy.attackInitiated)
         {
             //yield return attackTime;
-            bool playerIsDead;
-            playerIsDead = thisTarget.GetComponentInParent<CelestialPlayer>().TakeHit();
+            bool playerIsDead = false;
+            //I refactored this a little, you may want to set the damage they can deal in their stats and pass it in here
+            if (!thisTarget.GetComponentInParent<CelestialPlayer>().isShielded)
+            {
+                playerIsDead = thisTarget.GetComponentInParent<CelestialPlayer>().TakeHit(10);
+            }
+            else
+            {
+                thisEnemy.TakeHit(10);
+            }
+            
             transformPos.LookAt(thisTarget.position);
             if (playerIsDead)
             {

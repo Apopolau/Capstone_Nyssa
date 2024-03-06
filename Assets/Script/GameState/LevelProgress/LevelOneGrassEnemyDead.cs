@@ -8,7 +8,7 @@ public class LevelOneGrassEnemyDead : MonoBehaviour
     //Get your Level Manager object's levelOneEvents script
     [SerializeField] LevelOneEvents levelOneEvents;
     [SerializeField] LevelOneProgress levelOneProgress;
-    GameObject treeSeedSpawn;
+    GameObject grassSeedSpawn;
 
    public DialogueTrigger monsterDeadDialouge;
     public CelestialPlayer player;
@@ -41,10 +41,10 @@ public class LevelOneGrassEnemyDead : MonoBehaviour
                 //Instantiate the tree seed here
 
 
-
                 monsterDeadDialouge.TriggerDialogue();
-                ////////will havd to replace this with grass seed after testing 
-                treeSeedSpawn = Instantiate(levelOneProgress.grassPrefab, pos, Quaternion.identity);
+
+                levelOneEvents.OnSecondMonsterDefeated();
+                grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, pos, Quaternion.identity);
                 //Instantiate the tree seed here
 
             }

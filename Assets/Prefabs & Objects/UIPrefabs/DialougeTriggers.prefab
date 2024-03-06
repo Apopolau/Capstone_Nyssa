@@ -62,13 +62,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2803309601337804775}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.3, y: -3.8, z: 20.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 12.3, y: -3.8, z: 117.4}
+  m_LocalScale: {x: 1, y: 1, z: 1.2228}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1761225087951360150}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!65 &4947575137984313234
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -102,16 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueLines:
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: ' I should be able to take care of this'
-      lineFR: 'Je devrais pouvoir m''en occuper!
-
-'
+  dialogue: {fileID: 11400000, guid: 3324f753d1266424b92be08689b15610, type: 2}
 --- !u!114 &7411462751585112628
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,24 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueLines:
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: "Sprout, I\u2019m going to need some help\r\n"
-      lineFR: 'Sprout, je vais avoir besoin de ton aide.
-
-'
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: ' I should be able to take care of this!
-
-'
-      lineFR: "J\u2019arrive! Je peux me d\xE9barrasser de celles-l\xE0 pour toi.\r\n"
+  dialogue: {fileID: 11400000, guid: 8c1306b5d54ed51498af78d9d135add7, type: 2}
 --- !u!114 &1491893729389098716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,13 +158,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4835440343217122390}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 83.1, y: -3.8, z: 20.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: 0.7018058, z: -0, w: 0.7123684}
+  m_LocalPosition: {x: 27.63, y: -3.8, z: 54.51}
+  m_LocalScale: {x: 1.0800453, y: 1, z: 3.4341097}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1761225087951360150}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 89.144, z: 0}
 --- !u!65 &8848819249392660266
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -210,7 +184,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.18, y: 1, z: 12.81}
+  m_Size: {x: 7.18, y: 1, z: 8.17}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1296093042031711168
 MonoBehaviour:
@@ -224,19 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueLines:
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: ' I think I could make a bridge to get across, and clear those rocks.
-
-'
-      lineFR: 'Je crois que je peux construire un pont afin de traverser et bouger
-        ces roches.
-
-'
+  dialogue: {fileID: 11400000, guid: fade81b519bac624087ec836a3a3c3d1, type: 2}
 --- !u!114 &2768328007390765375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,25 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueLines:
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: " It seems like there\u2019s a path up on the other side\r\n"
-      lineFR: "On dirait qu\u2019il y a un chemin de l\u2019autre c\xF4t\xE9.\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: ' I think I could make a bridge to get across, and clear those rocks.
-
-'
-      lineFR: 'Je crois que je peux construire un pont afin de traverser et bouger
-        ces roches.
-
-'
+  dialogue: {fileID: 11400000, guid: 496b551e5e8f23a42a1f433a1bc4dadb, type: 2}
 --- !u!114 &160660317195643085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +278,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 4.43
   m_Center: {x: 0, y: 0, z: 0}
@@ -350,34 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueLines:
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: "Don\u2019t worry little one, we\u2019ll save you!\n\r"
-      lineFR: "Ne t'inqui\xE8te pas, petit canard! Nous allons vous sauver!\r\n\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: "Stay back. That monster is dangerous.\r"
-      lineFR: "Restez en arri\xE8re, je ce monstre est dangereux!\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: "I\u2019ll get it off the duck with my magic!\r\n"
-      lineFR: "Je vais r\xE9cup\xE9rer le canard avec ma magie de la terre!\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: 'I can use my celestial magic to destroy the monster.
-
-'
-      lineFR: "Et je peux utiliser ma magie c\xE9leste pour d\xE9truire le monstre."
+  dialogue: {fileID: 11400000, guid: 6d42df14483e18241b85e0666237e17a, type: 2}
 --- !u!114 &7613083469988248682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823d4af481012394fbe4dc360484a85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiImages: []
-  dialogueBox: {fileID: 0}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   suspendedColor: {r: 0, g: 0, b: 0, a: 1}
+  darkOverlay: {fileID: 0}
+  uiObjectToToggle: []

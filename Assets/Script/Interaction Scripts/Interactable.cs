@@ -4,37 +4,41 @@ using UnityEngine;
 
 public class Interactable : MonoBehaviour
 {
-    protected bool isInRange;
+    [SerializeField] protected GameObjectRuntimeSet playerSet;
+    protected EarthPlayer earthPlayer;
+    protected CelestialPlayer celestialPlayer;
+
+    [SerializeField] protected bool p1IsInRange = false;
+    [SerializeField] protected bool isEarthInteractable = false;
+    [SerializeField] protected bool p2IsInRange = false;
+    [SerializeField] protected bool isCelestialInteractable = false;
     public GameObject uiObject;
-    //[SerializeField] GameObject thing;
 
-    //[SerializeField] protected KeyCode PickupKey = KeyCode.E; //change for controller input
-
-    [SerializeField] protected GameObjectRuntimeSet playerRuntimeSet;
-    protected List<GameObject> players;
-
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
         
     }
 
-    private void OnTriggerStay(Collider player)
+    // Update is called once per frame
+    void Update()
     {
-        if (player.gameObject.tag == "Player1")
-        {
-            isInRange = true;
-            uiObject.SetActive(true);
-
-            // Check if the item is not null before enabling the spriteRenderer
-            //Debug.LogWarning("in range");
-        }
+        //UpdateUIElement();
     }
 
-    private void OnTriggerExit(Collider other)
+    protected void UpdateUIElement()
     {
-        isInRange = false;
-        uiObject.SetActive(false);
-
+        if((p1IsInRange && isEarthInteractable) || (p2IsInRange && isCelestialInteractable))
+        {
+            uiObject.SetActive(true);
+        }
+        else if((!isEarthInteractable && !p2IsInRange) || (!isCelestialInteractable && !p1IsInRange))
+        {
+            uiObject.SetActive(false);
+        }
+        else if(!p1IsInRange && !p2IsInRange)
+        {
+            uiObject.SetActive(false);
+        }
+        
     }
 }

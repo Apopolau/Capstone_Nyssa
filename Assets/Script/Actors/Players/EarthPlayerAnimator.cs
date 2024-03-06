@@ -7,6 +7,8 @@ public class EarthPlayerAnimator : OurAnimator
     public int IfPlantingHash;
     public int IfBuildingHash;
     public int IfTurningHash;
+    public int IfHealingHash;
+    public int IfShieldingHash;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,8 @@ public class EarthPlayerAnimator : OurAnimator
         IfPlantingHash = Animator.StringToHash("IfPlanting");
         IfBuildingHash = Animator.StringToHash("IfBuilding");
         IfTurningHash = Animator.StringToHash("IfTurning");
+        IfHealingHash = Animator.StringToHash("IfHealing");
+        IfShieldingHash = Animator.StringToHash("IfShielding");
     }
 
     public override void ToggleSetWalk()
@@ -41,6 +45,8 @@ public class EarthPlayerAnimator : OurAnimator
             animator.SetBool(IfPlantingHash, false);
             animator.SetBool(IfBuildingHash, false);
             animator.SetBool(IfTurningHash, false);
+            animator.SetBool(IfHealingHash, false);
+            animator.SetBool(IfShieldingHash, false);
         }
     }
 }

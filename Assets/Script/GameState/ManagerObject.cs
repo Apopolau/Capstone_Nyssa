@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Level Manager Object", menuName = "LevelManagerObject")]
+[CreateAssetMenu(fileName = "New Level Manager Object", menuName = "ManagerObject/LevelManagerObject")]
 public class LevelManagerObject : ScriptableObject
 {
     [SerializeField] EventManager eventManager;

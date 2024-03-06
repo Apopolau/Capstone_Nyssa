@@ -14,49 +14,42 @@ public class TurnOffSludgePump : Interactable
     private WaitForSeconds turnTime = new WaitForSeconds(4.958f);
     private bool earthDialogueHasPlayed = false;
     private bool celestialDialogueHasPlayed = false;
+    private bool sludgePumpIsOff = false;
 
-
-    //public GameObject boxRange;
-
-    EarthPlayer earthPlayer;
-
-    /*
-    private void OnValidate()
+    private void Awake()
     {
-
-        if (item != null)
-        {
-            spriteRenderer.sprite = item.Icon;
-            spriteRenderer.enabled = true;
-        }
-        else
-        {
-            spriteRenderer.enabled = false;
-            uiObject.SetActive(false);
-        }
+        isEarthInteractable = true;
     }
-    */
 
-    void Start()
+    private void Start()
     {
-        players = playerRuntimeSet.Items;
-        foreach (GameObject player in players)
+        foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<EarthPlayer>())
             {
                 earthPlayer = player.GetComponent<EarthPlayer>();
             }
+            else if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
         }
+        
     }
 
     private void Update()
     {
-        TurnOff();
+        if (!sludgePumpIsOff)
+        {
+            TurnOff();
+            UpdateUIElement();
+        }
+        
     }
 
     public void TurnOff()
     {
-        if (isInRange && earthPlayer.interacting)
+        if (p1IsInRange && earthPlayer.interacting)
         {
             StartCoroutine(SludgePumpTurnsOff());
              //trigger dialouge after sludge is turned off
@@ -70,29 +63,51 @@ public class TurnOffSludgePump : Interactable
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, false);
         earthPlayer.CallSuspendActions(turnTime);
         yield return turnTime;
+        sludgePumpIsOff = true;
         Debug.Log("Turned off the sludge pump");
         levelOneEvents.OnPumpShutOff();
         uiObject.SetActive(false);
         sludgeOffDialouge.TriggerDialogue();
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfTurningHash, false);
-        earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, true);
+        //earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, true);
     }
 
 
     // trigger dialouge when pump is encountred
      private void OnTriggerEnter(Collider other)
     {
+        if (other.GetComponent<EarthPlayer>())
+        {
+            p1IsInRange = true;
+        }
+        else if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = true;
+        }
+
         // Check if earthPlayer enterted area
-        if (other.CompareTag("Player1") && !earthDialogueHasPlayed)
+        if (p1IsInRange && !earthDialogueHasPlayed)
         {   
             sludgeDialougeEarth.TriggerDialogue();
             earthDialogueHasPlayed = true;
             celestialDialogueHasPlayed = true;
         }
-        else if (other.CompareTag("Player2") && (!earthDialogueHasPlayed && !celestialDialogueHasPlayed))
+        else if (p2IsInRange && (!earthDialogueHasPlayed && !celestialDialogueHasPlayed) && other is CapsuleCollider)
         {
            sludgeDialougeCelest.TriggerDialogue();
            celestialDialogueHasPlayed = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<EarthPlayer>())
+        {
+            p1IsInRange = false;
+        }
+        else if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = false;
         }
     }
 }

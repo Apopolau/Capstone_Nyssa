@@ -6,10 +6,9 @@ public class Bridge : Interactable
 {
     [SerializeField] GameObject pickupTarget;
     [SerializeField] GameObject bridgeGeometry;
-    [SerializeField] GameObjectRuntimeSet playerSet;
+    [SerializeField] GameObject bridgeCollider;
     Material material;
     [SerializeField] Material transparentMaterial;
-    EarthPlayer earthPlayer;
     WaitForSeconds buildTime = new WaitForSeconds(4.542f);
 
     private bool bridgeIsBuilt = false;
@@ -17,17 +16,24 @@ public class Bridge : Interactable
 
     private void Awake()
     {
+        isEarthInteractable = true;
         material = bridgeGeometry.GetComponentInChildren<MeshRenderer>().material;
+        bridgeCollider = bridgeGeometry.GetComponentInChildren<MeshCollider>().gameObject;
+        bridgeCollider.SetActive(false);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach(GameObject p in playerSet.Items)
+        foreach (GameObject player in playerSet.Items)
         {
-            if (p.GetComponent<EarthPlayer>())
+            if (player.GetComponent<EarthPlayer>())
             {
-                earthPlayer = p.GetComponent<EarthPlayer>();
+                earthPlayer = player.GetComponent<EarthPlayer>();
+            }
+            else if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
             }
         }
         bridgeGeometry.GetComponentInChildren<MeshRenderer>().material = transparentMaterial;
@@ -39,6 +45,7 @@ public class Bridge : Interactable
         if (!bridgeIsBuilt)
         {
             StartBridgeBuild();
+            UpdateUIElement();
         }
     }
 
@@ -46,11 +53,15 @@ public class Bridge : Interactable
     {
         if (other.GetComponent<EarthPlayer>())
         {
-            isInRange = true;
+            p1IsInRange = true;
             if (!bridgeIsBuilt)
             {
                 ActivateBridgePreview();
             }
+        }
+        if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = true;
         }
     }
 
@@ -58,11 +69,15 @@ public class Bridge : Interactable
     {
         if (other.GetComponent<EarthPlayer>())
         {
-            isInRange = false;
+            p1IsInRange = false;
             if (!bridgeIsBuilt)
             {
                 DeactivateBridgePreview();
             }
+        }
+        if (other.GetComponent<CelestialPlayer>())
+        {
+            p2IsInRange = false;
         }
     }
 
@@ -82,11 +97,15 @@ public class Bridge : Interactable
 
     private void StartBridgeBuild()
     {
-        if(isInRange && earthPlayer.interacting && earthPlayer.inventory.HasEnoughItems("Tree Log", 3))
+        if(p1IsInRange && earthPlayer.interacting && earthPlayer.inventory.HasEnoughItems("Tree Log", 3))
         {
             bridgeIsBuilt = true;
             pickupTarget.SetActive(false);
             StartCoroutine(BuildBridge());
+        }
+        else if(p1IsInRange && earthPlayer.interacting)
+        {
+            StartCoroutine(NotEnoughLogs());
         }
     }
 
@@ -103,8 +122,15 @@ public class Bridge : Interactable
     private void FinishBridgeBuild()
     {
         earthPlayer.inventory.RemoveItemByName("Tree Log", 3);
-        bridgeGeometry.GetComponentInChildren<MeshCollider>().gameObject.SetActive(true);
+        bridgeCollider.SetActive(true);
         bridgeGeometry.GetComponentInChildren<MeshRenderer>().material = material;
         Destroy(this.gameObject.GetComponent<BoxCollider>());
+    }
+
+    private IEnumerator NotEnoughLogs()
+    {
+        earthPlayer.displayText.text = "Not enough logs";
+        yield return buildTime;
+        earthPlayer.displayText.text = "";
     }
 }

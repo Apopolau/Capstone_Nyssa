@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Level One Progress", menuName = "LevelProgress/LevelOne")]
+[CreateAssetMenu(fileName = "New Level One Progress", menuName = "ManagerObject/LevelProgress/LevelOne")]
 public class LevelOneProgress : LevelProgress
 {
     
@@ -25,7 +25,8 @@ public class LevelOneProgress : LevelProgress
 
     //Drag this from the plant prefabs folder
     [SerializeField]public GameObject treeSeedPrefab;
-    [SerializeField] public GameObject grassPrefab;
+    [SerializeField] public GameObject grassSeedPrefab;
+
 
     public override bool EvaluateFood()
     {

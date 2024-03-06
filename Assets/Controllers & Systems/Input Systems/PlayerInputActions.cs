@@ -89,6 +89,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Heal"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1d112c0-abfe-4969-a55d-b0980585fa63"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ThornShield"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec8b9e47-9253-4fc8-a456-9e33586dd469"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -315,11 +333,55 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""fddf9087-6640-4efc-8d88-3cd3b5f639f5"",
-                    ""path"": ""<Keyboard>/m"",
+                    ""path"": ""<Keyboard>/b"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Debug Tileflip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""df5977d5-d3c0-4305-8c0b-2f121caf853c"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23ef8f42-6352-4f7a-acd1-a5453955faca"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""51de7f16-514c-4f1a-b2b4-db25ad4a4833"",
+                    ""path"": ""<Keyboard>/comma"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThornShield"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6160834d-d714-427e-b56f-e9f26bb69204"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ThornShield"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -490,8 +552,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1ac3baf0-6ffa-4f19-9b7e-bc90895b03b4"",
-                    ""path"": ""<VirtualMouse>/position"",
+                    ""id"": ""1ebd3025-3762-43e5-a6e5-740d068858bb"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -501,8 +563,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1ebd3025-3762-43e5-a6e5-740d068858bb"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""5ecec0e8-98d7-40b0-8f57-45cdd928f836"",
+                    ""path"": ""<VirtualMouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -677,8 +739,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""39666b1c-c6cc-4d2f-ac79-604190b9bc2e"",
-                    ""path"": ""<VirtualMouse>/position"",
+                    ""id"": ""54c3917d-c28d-4525-ad44-b1a2f6c0b08e"",
+                    ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -688,8 +750,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""54c3917d-c28d-4525-ad44-b1a2f6c0b08e"",
-                    ""path"": ""<Mouse>/position"",
+                    ""id"": ""e854b329-e893-40a4-aaba-1ad38d1929fe"",
+                    ""path"": ""<VirtualMouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -796,6 +858,252 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""HealSelect"",
+            ""id"": ""6cb62c2c-1b32-4228-821d-31702da8ba00"",
+            ""actions"": [
+                {
+                    ""name"": ""SelectTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""82e769aa-100d-4e74-9e24-6b93a2a597c1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CancelHeal"",
+                    ""type"": ""Button"",
+                    ""id"": ""b95555b2-d759-4c50-a517-d5ad14236420"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CycleTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""d46b3596-a203-498d-821c-8e373f400721"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""58ddaf7e-4c5b-4177-8b4e-2e6a11a1bd6d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c814826-3f8e-4678-8b5c-f1740d39d912"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d50aaccd-2137-4f12-9e32-18cb23cfc5a5"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelHeal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0e7c1637-5eb7-4f84-ba75-24cfd1dd8225"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelHeal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc76dd53-2be1-4dc7-91b1-33c584ef6b09"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3582948-2284-4451-a4a4-841c00479107"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00722881-9cf2-44c7-aa45-f985dcfbb30b"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""01abce95-61e2-4c1d-8df9-f3155d339c0e"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""BarrierSelect"",
+            ""id"": ""646877bb-de65-4980-8ae5-f1c8b19d81ce"",
+            ""actions"": [
+                {
+                    ""name"": ""SelectTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""769b02b7-4f67-4c69-bfb7-318b57ba475e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CancelBarrier"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4238b88-b498-4160-a6a3-3deda772e752"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CycleTarget"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b5ab5a9-3e9c-4dfc-bbd5-f7251df0abfa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""34dca151-c750-4cf6-8a4d-33b04e42a61a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""356b03c8-7874-47b4-aa86-a30035f3e1dc"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SelectTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f690df43-c1ac-4371-bc93-00b04e9f30e2"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelBarrier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b78a5178-0170-49ce-aeb0-b6f9034b500e"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CancelBarrier"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3bf8e276-63c2-451a-b563-c6abf95c0b6d"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""782b9cfd-e142-4300-86a3-539870dd3526"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""73a77943-21fc-4d77-bd20-ce5cfa8cd7b1"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""772d7bbc-76a3-4ff7-80d1-ef1c2e91f12a"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CycleTarget"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -809,6 +1117,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_EarthPlayerDefault_RemoveBuilding = m_EarthPlayerDefault.FindAction("Remove Building", throwIfNotFound: true);
         m_EarthPlayerDefault_Interact = m_EarthPlayerDefault.FindAction("Interact", throwIfNotFound: true);
         m_EarthPlayerDefault_DebugTileflip = m_EarthPlayerDefault.FindAction("Debug Tileflip", throwIfNotFound: true);
+        m_EarthPlayerDefault_Heal = m_EarthPlayerDefault.FindAction("Heal", throwIfNotFound: true);
+        m_EarthPlayerDefault_ThornShield = m_EarthPlayerDefault.FindAction("ThornShield", throwIfNotFound: true);
         // PlantIsSelected
         m_PlantIsSelected = asset.FindActionMap("PlantIsSelected", throwIfNotFound: true);
         m_PlantIsSelected_Plantplant = m_PlantIsSelected.FindAction("Plantplant", throwIfNotFound: true);
@@ -828,6 +1138,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_DialogueControls = asset.FindActionMap("DialogueControls", throwIfNotFound: true);
         m_DialogueControls_Continue = m_DialogueControls.FindAction("Continue", throwIfNotFound: true);
         m_DialogueControls_Skip = m_DialogueControls.FindAction("Skip", throwIfNotFound: true);
+        // HealSelect
+        m_HealSelect = asset.FindActionMap("HealSelect", throwIfNotFound: true);
+        m_HealSelect_SelectTarget = m_HealSelect.FindAction("SelectTarget", throwIfNotFound: true);
+        m_HealSelect_CancelHeal = m_HealSelect.FindAction("CancelHeal", throwIfNotFound: true);
+        m_HealSelect_CycleTarget = m_HealSelect.FindAction("CycleTarget", throwIfNotFound: true);
+        // BarrierSelect
+        m_BarrierSelect = asset.FindActionMap("BarrierSelect", throwIfNotFound: true);
+        m_BarrierSelect_SelectTarget = m_BarrierSelect.FindAction("SelectTarget", throwIfNotFound: true);
+        m_BarrierSelect_CancelBarrier = m_BarrierSelect.FindAction("CancelBarrier", throwIfNotFound: true);
+        m_BarrierSelect_CycleTarget = m_BarrierSelect.FindAction("CycleTarget", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -896,6 +1216,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_EarthPlayerDefault_RemoveBuilding;
     private readonly InputAction m_EarthPlayerDefault_Interact;
     private readonly InputAction m_EarthPlayerDefault_DebugTileflip;
+    private readonly InputAction m_EarthPlayerDefault_Heal;
+    private readonly InputAction m_EarthPlayerDefault_ThornShield;
     public struct EarthPlayerDefaultActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -907,6 +1229,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @RemoveBuilding => m_Wrapper.m_EarthPlayerDefault_RemoveBuilding;
         public InputAction @Interact => m_Wrapper.m_EarthPlayerDefault_Interact;
         public InputAction @DebugTileflip => m_Wrapper.m_EarthPlayerDefault_DebugTileflip;
+        public InputAction @Heal => m_Wrapper.m_EarthPlayerDefault_Heal;
+        public InputAction @ThornShield => m_Wrapper.m_EarthPlayerDefault_ThornShield;
         public InputActionMap Get() { return m_Wrapper.m_EarthPlayerDefault; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -937,6 +1261,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @DebugTileflip.started += instance.OnDebugTileflip;
             @DebugTileflip.performed += instance.OnDebugTileflip;
             @DebugTileflip.canceled += instance.OnDebugTileflip;
+            @Heal.started += instance.OnHeal;
+            @Heal.performed += instance.OnHeal;
+            @Heal.canceled += instance.OnHeal;
+            @ThornShield.started += instance.OnThornShield;
+            @ThornShield.performed += instance.OnThornShield;
+            @ThornShield.canceled += instance.OnThornShield;
         }
 
         private void UnregisterCallbacks(IEarthPlayerDefaultActions instance)
@@ -962,6 +1292,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @DebugTileflip.started -= instance.OnDebugTileflip;
             @DebugTileflip.performed -= instance.OnDebugTileflip;
             @DebugTileflip.canceled -= instance.OnDebugTileflip;
+            @Heal.started -= instance.OnHeal;
+            @Heal.performed -= instance.OnHeal;
+            @Heal.canceled -= instance.OnHeal;
+            @ThornShield.started -= instance.OnThornShield;
+            @ThornShield.performed -= instance.OnThornShield;
+            @ThornShield.canceled -= instance.OnThornShield;
         }
 
         public void RemoveCallbacks(IEarthPlayerDefaultActions instance)
@@ -1219,6 +1555,130 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public DialogueControlsActions @DialogueControls => new DialogueControlsActions(this);
+
+    // HealSelect
+    private readonly InputActionMap m_HealSelect;
+    private List<IHealSelectActions> m_HealSelectActionsCallbackInterfaces = new List<IHealSelectActions>();
+    private readonly InputAction m_HealSelect_SelectTarget;
+    private readonly InputAction m_HealSelect_CancelHeal;
+    private readonly InputAction m_HealSelect_CycleTarget;
+    public struct HealSelectActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public HealSelectActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SelectTarget => m_Wrapper.m_HealSelect_SelectTarget;
+        public InputAction @CancelHeal => m_Wrapper.m_HealSelect_CancelHeal;
+        public InputAction @CycleTarget => m_Wrapper.m_HealSelect_CycleTarget;
+        public InputActionMap Get() { return m_Wrapper.m_HealSelect; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HealSelectActions set) { return set.Get(); }
+        public void AddCallbacks(IHealSelectActions instance)
+        {
+            if (instance == null || m_Wrapper.m_HealSelectActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HealSelectActionsCallbackInterfaces.Add(instance);
+            @SelectTarget.started += instance.OnSelectTarget;
+            @SelectTarget.performed += instance.OnSelectTarget;
+            @SelectTarget.canceled += instance.OnSelectTarget;
+            @CancelHeal.started += instance.OnCancelHeal;
+            @CancelHeal.performed += instance.OnCancelHeal;
+            @CancelHeal.canceled += instance.OnCancelHeal;
+            @CycleTarget.started += instance.OnCycleTarget;
+            @CycleTarget.performed += instance.OnCycleTarget;
+            @CycleTarget.canceled += instance.OnCycleTarget;
+        }
+
+        private void UnregisterCallbacks(IHealSelectActions instance)
+        {
+            @SelectTarget.started -= instance.OnSelectTarget;
+            @SelectTarget.performed -= instance.OnSelectTarget;
+            @SelectTarget.canceled -= instance.OnSelectTarget;
+            @CancelHeal.started -= instance.OnCancelHeal;
+            @CancelHeal.performed -= instance.OnCancelHeal;
+            @CancelHeal.canceled -= instance.OnCancelHeal;
+            @CycleTarget.started -= instance.OnCycleTarget;
+            @CycleTarget.performed -= instance.OnCycleTarget;
+            @CycleTarget.canceled -= instance.OnCycleTarget;
+        }
+
+        public void RemoveCallbacks(IHealSelectActions instance)
+        {
+            if (m_Wrapper.m_HealSelectActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IHealSelectActions instance)
+        {
+            foreach (var item in m_Wrapper.m_HealSelectActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_HealSelectActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public HealSelectActions @HealSelect => new HealSelectActions(this);
+
+    // BarrierSelect
+    private readonly InputActionMap m_BarrierSelect;
+    private List<IBarrierSelectActions> m_BarrierSelectActionsCallbackInterfaces = new List<IBarrierSelectActions>();
+    private readonly InputAction m_BarrierSelect_SelectTarget;
+    private readonly InputAction m_BarrierSelect_CancelBarrier;
+    private readonly InputAction m_BarrierSelect_CycleTarget;
+    public struct BarrierSelectActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public BarrierSelectActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SelectTarget => m_Wrapper.m_BarrierSelect_SelectTarget;
+        public InputAction @CancelBarrier => m_Wrapper.m_BarrierSelect_CancelBarrier;
+        public InputAction @CycleTarget => m_Wrapper.m_BarrierSelect_CycleTarget;
+        public InputActionMap Get() { return m_Wrapper.m_BarrierSelect; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BarrierSelectActions set) { return set.Get(); }
+        public void AddCallbacks(IBarrierSelectActions instance)
+        {
+            if (instance == null || m_Wrapper.m_BarrierSelectActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BarrierSelectActionsCallbackInterfaces.Add(instance);
+            @SelectTarget.started += instance.OnSelectTarget;
+            @SelectTarget.performed += instance.OnSelectTarget;
+            @SelectTarget.canceled += instance.OnSelectTarget;
+            @CancelBarrier.started += instance.OnCancelBarrier;
+            @CancelBarrier.performed += instance.OnCancelBarrier;
+            @CancelBarrier.canceled += instance.OnCancelBarrier;
+            @CycleTarget.started += instance.OnCycleTarget;
+            @CycleTarget.performed += instance.OnCycleTarget;
+            @CycleTarget.canceled += instance.OnCycleTarget;
+        }
+
+        private void UnregisterCallbacks(IBarrierSelectActions instance)
+        {
+            @SelectTarget.started -= instance.OnSelectTarget;
+            @SelectTarget.performed -= instance.OnSelectTarget;
+            @SelectTarget.canceled -= instance.OnSelectTarget;
+            @CancelBarrier.started -= instance.OnCancelBarrier;
+            @CancelBarrier.performed -= instance.OnCancelBarrier;
+            @CancelBarrier.canceled -= instance.OnCancelBarrier;
+            @CycleTarget.started -= instance.OnCycleTarget;
+            @CycleTarget.performed -= instance.OnCycleTarget;
+            @CycleTarget.canceled -= instance.OnCycleTarget;
+        }
+
+        public void RemoveCallbacks(IBarrierSelectActions instance)
+        {
+            if (m_Wrapper.m_BarrierSelectActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IBarrierSelectActions instance)
+        {
+            foreach (var item in m_Wrapper.m_BarrierSelectActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_BarrierSelectActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public BarrierSelectActions @BarrierSelect => new BarrierSelectActions(this);
     public interface IEarthPlayerDefaultActions
     {
         void OnEarthWalk(InputAction.CallbackContext context);
@@ -1228,6 +1688,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnRemoveBuilding(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnDebugTileflip(InputAction.CallbackContext context);
+        void OnHeal(InputAction.CallbackContext context);
+        void OnThornShield(InputAction.CallbackContext context);
     }
     public interface IPlantIsSelectedActions
     {
@@ -1251,5 +1713,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnContinue(InputAction.CallbackContext context);
         void OnSkip(InputAction.CallbackContext context);
+    }
+    public interface IHealSelectActions
+    {
+        void OnSelectTarget(InputAction.CallbackContext context);
+        void OnCancelHeal(InputAction.CallbackContext context);
+        void OnCycleTarget(InputAction.CallbackContext context);
+    }
+    public interface IBarrierSelectActions
+    {
+        void OnSelectTarget(InputAction.CallbackContext context);
+        void OnCancelBarrier(InputAction.CallbackContext context);
+        void OnCycleTarget(InputAction.CallbackContext context);
     }
 }

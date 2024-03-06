@@ -89,7 +89,12 @@ public class Cell : MonoBehaviour
     private void Update()
     {
         UpdateTileValid();
-        UpdatePlant();
+        //If the player is currently picking a place to plant their plant
+        if (earthPlayer.isPlantSelected && tileIsActivated &&!earthPlayer.isATileSelected)
+        {
+            UpdatePlant();
+        }
+        //Or if they're trying to remove a plant
         if (earthPlayer.isRemovalStarted)
         {
             UpdatePlantRemoval();
@@ -101,6 +106,7 @@ public class Cell : MonoBehaviour
         //virtualMousePosition = virtualMouseInput.virtualMouse.position.value;
     }
 
+    //Updates whether or not this is a tile that can be planted on
     private void UpdateTileValid()
     {
         if (enviroState == EnviroState.POLLUTED || tileHasBuild ||
@@ -148,89 +154,93 @@ public class Cell : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// This runs while the player is still selecting a tile to plant on
+    /// It updates the appearance of the plant preview
+    /// depending on the plant type and tile they're currently hovering over
+    /// </summary>
     private void UpdatePlant()
     {
-        //If the player is currently picking a place to plant their plant
-        if (earthPlayer.isPlantSelected && tileIsActivated)
+        //Move the plant position to the center of the currently highlighted tile
+        earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
+        earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
+
+        //Update the plant type if the player pans over a different kind of tile
+        /////IF TILE IS EARTH
+        if ((this.terrainType == TerrainType.GRASS || this.terrainType == TerrainType.DIRT) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.WATER)
         {
-            //Move the plant position to the center of the currently highlighted tile
-            earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
-            earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
 
-            //Update the plant type if the player pans over a different kind of tile
-            /////IF TILE IS EARTH
-            if ((this.terrainType == TerrainType.GRASS || this.terrainType == TerrainType.DIRT) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.WATER)
+            if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
             {
-
-                if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
-                {
-                    Destroy(earthPlayer.plantSelected);
-                }
-
-                if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
-                {
-                    earthPlayer.plantSelected = Instantiate(earthPlayer.landFlowerPreviewPrefab, earthPlayer.plantParent.transform);
-                }
-                else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
-                {
-                    earthPlayer.plantSelected = Instantiate(earthPlayer.landGrassPreviewPrefab, earthPlayer.plantParent.transform);
-                }
-                earthPlayer.currentTileSelectedType = EarthPlayer.TileSelectedType.LAND;
-            }
-            //////IF TILE IS WATER
-            else if ((this.terrainType == TerrainType.WATER) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.LAND)
-            {
-
-                if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
-                {
-                    Destroy(earthPlayer.plantSelected);
-                }
-
-                if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
-                {
-                    earthPlayer.plantSelected = Instantiate(earthPlayer.waterFlowerPreviewPrefab, earthPlayer.plantParent.transform);
-                }
-                else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
-                {
-                    earthPlayer.plantSelected = Instantiate(earthPlayer.waterGrassPreviewPrefab, earthPlayer.plantParent.transform);
-                }
-                earthPlayer.currentTileSelectedType = EarthPlayer.TileSelectedType.WATER;
+                Destroy(earthPlayer.plantSelected);
             }
 
-            //Handles indication whether it's a valid position or not
-            if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
+            if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
             {
-                if (tileHasBuild || enviroState == EnviroState.POLLUTED || terrainType == TerrainType.WATER)
-                {
-                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
-                    earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
-                }
-                else
-                {
-                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
-                    earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
-                }
+                earthPlayer.plantSelected = Instantiate(earthPlayer.landFlowerPreviewPrefab, earthPlayer.plantParent.transform);
+            }
+            else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
+            {
+                earthPlayer.plantSelected = Instantiate(earthPlayer.landGrassPreviewPrefab, earthPlayer.plantParent.transform);
+            }
+            earthPlayer.currentTileSelectedType = EarthPlayer.TileSelectedType.LAND;
+        }
+        //////IF TILE IS WATER
+        else if ((this.terrainType == TerrainType.WATER) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.LAND)
+        {
+
+            if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
+            {
+                Destroy(earthPlayer.plantSelected);
+            }
+
+            if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
+            {
+                earthPlayer.plantSelected = Instantiate(earthPlayer.waterFlowerPreviewPrefab, earthPlayer.plantParent.transform);
+            }
+            else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
+            {
+                earthPlayer.plantSelected = Instantiate(earthPlayer.waterGrassPreviewPrefab, earthPlayer.plantParent.transform);
+            }
+            earthPlayer.currentTileSelectedType = EarthPlayer.TileSelectedType.WATER;
+        }
+
+        //Handles indication whether it's a valid position or not
+        if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
+        {
+            if (tileHasBuild || enviroState == EnviroState.POLLUTED || terrainType == TerrainType.WATER)
+            {
+                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
             }
             else
             {
-                if (tileHasBuild || enviroState == EnviroState.POLLUTED)
-                {
-                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
-                    earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
-                }
-                else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
-                {
-                    earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
-                    earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
-                }
+                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
             }
-
         }
+        else
+        {
+            if (tileHasBuild || enviroState == EnviroState.POLLUTED)
+            {
+                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
+                earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
+            }
+            else if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.GRASS)
+            {
+                earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = selectableColour;
+                earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+            }
+        }
+
+
     }
 
+    //Modifies the indicators for plant removal while the player selects a tile to remove from
     private void UpdatePlantRemoval()
     {
-        if (earthPlayer.isRemovalStarted && tileIsActivated)
+        if (earthPlayer.isRemovalStarted && tileIsActivated && earthPlayer.earthControls.controls.RemovingPlant.enabled)
         {
             earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
             if (tileHasBuild)
@@ -244,6 +254,7 @@ public class Cell : MonoBehaviour
         }
     }
 
+    //ensures just one tile will be set to activated
     IEnumerator CheckForPlayer()
     {
         while (true)
@@ -261,6 +272,7 @@ public class Cell : MonoBehaviour
         }
     }
 
+    //Identifies the tiles next to this one and stores them in a grid
     private void FindNeighbours()
     {
         float margin = 0.5f;
@@ -322,6 +334,7 @@ public class Cell : MonoBehaviour
         }
     }
 
+    //Helper function to grab anything that's been placed on this tile
     public GameObject GetPlacedObject()
     {
         return placedObject;

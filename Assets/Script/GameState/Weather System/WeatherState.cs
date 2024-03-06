@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weather State", menuName = "WeatherManagers/WeatherState")]
+[CreateAssetMenu(fileName = "Weather State", menuName = "ManagerObject/WeatherManagers/WeatherState")]
 public class WeatherState : ScriptableObject
 {
     public enum TimeOfDay { DAYBREAK, DAY, EVENING, NIGHT };

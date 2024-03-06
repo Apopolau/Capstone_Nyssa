@@ -27,15 +27,22 @@ public abstract class Animal : MonoBehaviour
     public Stat entertained;
     protected bool scared;
     protected bool hiding;
+    protected bool isShielded;
 
     [SerializeField] protected LevelProgress levelProgress;
     public bool hasCleanWater = false;
     public bool hasShelter = false;
     public bool hasAnyFood = false;
 
+    protected WaitForSeconds barrierLength = new WaitForSeconds(5f);
+
     protected abstract IEnumerator UpdateAnimalState();
 
     public abstract bool GetHungryState();
     public abstract bool GetThirstyState();
     public abstract bool GetBoredState();
+
+    public abstract void IsHealed();
+
+    public abstract void ApplyBarrier();
 }

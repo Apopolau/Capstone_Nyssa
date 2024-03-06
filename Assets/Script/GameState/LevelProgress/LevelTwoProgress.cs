@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Level Two Progress", menuName = "LevelProgress/LevelTwo")]
+[CreateAssetMenu(fileName = "New Level Two Progress", menuName = "ManagerObject/LevelProgress/LevelTwo")]
 public class LevelTwoProgress : LevelProgress
 {
     //Start of game condition, saved duck, destroyed oil spill

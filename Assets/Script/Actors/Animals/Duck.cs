@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Duck : Animal
 {
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
+    
     public Duck(bool stuckness)
     {
         stuck = stuckness;
@@ -102,5 +103,23 @@ public class Duck : Animal
     public override bool GetBoredState()
     {
         return entertained.low;
+    }
+
+    //We can put something here to change their texture and such
+    public override void IsHealed()
+    {
+        
+    }
+
+    public override void ApplyBarrier()
+    {
+        isShielded = true;
+        StartCoroutine(BarrierWearsOff());
+    }
+
+    private IEnumerator BarrierWearsOff()
+    {
+        yield return barrierLength;
+        isShielded = false;
     }
 }

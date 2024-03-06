@@ -12,6 +12,7 @@ using UnityEngine.AI;
 
 public class CelestialPlayerMovement : MonoBehaviour
 {
+    public GameObject movementControlsUI;
     // Start is called before the first frame update
     //Rotation of the player
     public Transform orientation;
@@ -47,6 +48,8 @@ public class CelestialPlayerMovement : MonoBehaviour
     Vector3 moveDirection;
     bool isMoveKeyHeld;
     Vector2 inputVector;
+    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+    Vector3 isometricInput;
     int CelestialDeviceID;
     private PlayerInput playerInput;
     private CelestialPlayerInputActions celestialPlayerInputActions;
@@ -70,7 +73,7 @@ public class CelestialPlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        if (GetComponent<CelestialPlayerControls>().thisDevice == CelestialPlayerControls.DeviceUsed.KEYBOARD)
+        if (GetComponent<CelestialPlayerControls>().userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             CelestialDeviceID = Keyboard.current.deviceId;
         }
@@ -105,11 +108,12 @@ public class CelestialPlayerMovement : MonoBehaviour
         if (this.gameObject.tag == "Player2")
         {
 
-           
+
             //inputVector = GetComponent<CelestialPlayerControls>().controls.CelestialPlayerDefault.Walk.ReadValue<Vector2>();
-            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
-           // Debug.Log("celestial FIXED UPDATE CHECK");
-           // Debug.Log("celestial" + inputVector);
+            rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2),
+                0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
+            // Debug.Log("celestial FIXED UPDATE CHECK");
+            // Debug.Log("celestial" + inputVector);
         }
 
         if (rb.velocity != Vector3.zero)
@@ -164,10 +168,13 @@ public class CelestialPlayerMovement : MonoBehaviour
             // Debug.Log("celestialPLAYER" + inputVector);
             horInput = inputVector.x;
             vertInput = inputVector.y;
+            isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
+
             isMoveKeyHeld = true;
             if (horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
             {
                 //Debug.Log("Stopping player movement");
+                isometricInput = Vector3.zero;
                 inputVector = Vector2.zero;
                 return;
             }
@@ -183,9 +190,21 @@ public class CelestialPlayerMovement : MonoBehaviour
             //if (this.GetComponent<NavMeshAgent>())
             //{
             //Debug.Log("Continuing Celestial movement");
-            rb.AddForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2),
+                0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
 
             //}
+        }
+
+        // if player moved disable the UI
+        if (input != Vector2.zero)
+        {
+            // Disable the UI element
+            if (movementControlsUI != null)
+            {
+            
+               movementControlsUI.SetActive(false);
+            }
         }
     }
     public void EndMovement(InputAction.CallbackContext context)
@@ -196,6 +215,7 @@ public class CelestialPlayerMovement : MonoBehaviour
             {
                 //Debug.Log("Cancelling Celestial movement");
                 inputVector = Vector2.zero;
+                isometricInput = Vector3.zero;
             }
         }
     }
@@ -236,7 +256,7 @@ public class CelestialPlayerMovement : MonoBehaviour
             }
 
             // rotate the player object
-            Vector3 inputDir = orientation.forward * vertInput + orientation.right * horInput;
+            Vector3 inputDir = orientation.forward * isometricInput.x + orientation.right * -isometricInput.z;
 
             //if input direction isnt 0 smoothly change the direction using the rotation speed
             if (inputDir != Vector3.zero)
@@ -247,9 +267,9 @@ public class CelestialPlayerMovement : MonoBehaviour
         }
         else
         {
-            
+
             //rotate orientation
-            Vector3 viewDir = player.position - this.GetComponent<NavMeshAgent>().destination;
+            Vector3 viewDir = player.position - this.GetComponent<NavMeshAgent>().steeringTarget;
             if (viewDir != Vector3.zero)
             {
                 orientation.forward = viewDir.normalized;
@@ -302,6 +322,24 @@ public class CelestialPlayerMovement : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //If we're touching the ground
+        if (other.gameObject.layer == 6)
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        //If we're not touching the ground
+        if (other.gameObject.layer == 6)
+        {
+            grounded = false;
+        }
     }
 }
 

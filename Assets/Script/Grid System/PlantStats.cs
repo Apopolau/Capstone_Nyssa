@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Plant Stats", fileName = "PlantStats")]
+[CreateAssetMenu(menuName = "Stats/Plant Stats", fileName = "PlantStats")]
 public class PlantStats : ScriptableObject
 {
     [Header("Basic info")]
@@ -42,4 +42,9 @@ public class PlantStats : ScriptableObject
     [SerializeField] public int juvenileGrowTime;
     [SerializeField] public int matureSeedDropTime;
 
+    [Header("Energy Drop for each Stage")]
+    [SerializeField] public int seedlingEnergy;
+    [SerializeField] public int sproutEnergy;
+    [SerializeField] public int juvenileEnergy;
+    [SerializeField] public int matureEnergy;
 }
