@@ -33,7 +33,7 @@ public class DialogueTrigger : MonoBehaviour
 
 
         DialogueManager.Instance.StartDialogue(dialogue);
-        Debug.Log("DialogueManager started");
+        //Debug.Log("DialogueManager started");
        // uiController.DeactivateAllUI();
     }
 

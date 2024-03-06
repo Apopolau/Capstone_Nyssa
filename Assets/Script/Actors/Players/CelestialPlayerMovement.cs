@@ -49,7 +49,9 @@ public class CelestialPlayerMovement : MonoBehaviour
     bool isMoveKeyHeld;
     Vector2 inputVector;
     Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+    Matrix4x4 isometricRotIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
     Vector3 isometricInput;
+    Vector3 isometricRotInput;
     int CelestialDeviceID;
     private PlayerInput playerInput;
     private CelestialPlayerInputActions celestialPlayerInputActions;
@@ -59,17 +61,11 @@ public class CelestialPlayerMovement : MonoBehaviour
     {
         player = this.GetComponent<Transform>();
         celestialPlayerInputActions = GetComponent<CelestialPlayerControls>().controls;
-        /* playerInput = GetComponent<PlayerInput>();
-         celestialPlayerInputActions = new CelestialPlayerInputActions();
-           if (this.GetComponent<CelestialPlayer>())
-          {
-              celestialPlayerInputActions.CelestialPlayerDefault.Enable();
-              celestialPlayerInputActions.CelestialPlayerDefault.Walk.performed += MovePlayer;
-          }*/
-
+        isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
+        isometricRotInput = isometricRotIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
     }
 
-   void Start()
+    void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -94,7 +90,7 @@ public class CelestialPlayerMovement : MonoBehaviour
         //check if grounded
         if (grounded)
         {
-            rb.drag= groundDrag;
+            rb.drag = groundDrag;
         }
         else
         {
@@ -104,17 +100,7 @@ public class CelestialPlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Vector2 inputVector;
-        if (this.gameObject.tag == "Player2")
-        {
-
-
-            //inputVector = GetComponent<CelestialPlayerControls>().controls.CelestialPlayerDefault.Walk.ReadValue<Vector2>();
-            rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2),
-                0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
-            // Debug.Log("celestial FIXED UPDATE CHECK");
-            // Debug.Log("celestial" + inputVector);
-        }
+        rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
 
         if (rb.velocity != Vector3.zero)
         {
@@ -132,7 +118,7 @@ public class CelestialPlayerMovement : MonoBehaviour
 
     private void MyInput()
     {
-       
+
 
         if (player.gameObject.tag == "Player2")
         {
@@ -150,51 +136,32 @@ public class CelestialPlayerMovement : MonoBehaviour
         }
     }
 
-    public void MovePlayer(InputAction.CallbackContext context, Vector2 input)
+    public void MovePlayer(Vector2 input)
     {
-        //FixedUpdate();
-        //calculate movment direction
-        //move in dirction you are looking
-        //Debug.Log("celestial walking");
+        Debug.Log("Moving");
+        isMoveKeyHeld = true;
 
+        inputVector = input;
+        Debug.Log(inputVector);
+        horInput = inputVector.x;
+        vertInput = inputVector.y;
+        isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
+        isometricRotInput = isometricRotIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
 
-
-        if (context.control.device.deviceId == CelestialDeviceID)
-
+        if (horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > -0.1)
         {
-
-            //inputVector = context.ReadValue<Vector2>();
-            inputVector = input;
-            // Debug.Log("celestialPLAYER" + inputVector);
-            horInput = inputVector.x;
-            vertInput = inputVector.y;
-            isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
-
-            isMoveKeyHeld = true;
-            if (horInput < 0.1 && horInput > -0.1 && vertInput < 0.1 && vertInput > 0.1)
-            {
-                //Debug.Log("Stopping player movement");
-                isometricInput = Vector3.zero;
-                inputVector = Vector2.zero;
-                return;
-            }
-            if (this.GetComponent<NavMeshAgent>())
-            {
-                if (this.GetComponent<NavMeshAgent>().enabled)
-                {
-                    //  this.GetComponent<CelestialPlayer>().enrouteToPlant = false;
-                    this.GetComponent<NavMeshAgent>().ResetPath();
-                    this.GetComponent<NavMeshAgent>().enabled = false;
-                }
-            }
-            //if (this.GetComponent<NavMeshAgent>())
-            //{
-            //Debug.Log("Continuing Celestial movement");
-            rb.AddForce(new Vector3(inputVector.x - isometricInput.x + (inputVector.x / 2),
-                0, inputVector.y - isometricInput.z + (inputVector.y / 2)).normalized * moveSpeed * 10f, ForceMode.Force);
-
-            //}
+            inputVector = Vector2.zero;
+            isometricInput = Vector3.zero;
+            isometricRotInput = Vector3.zero;
+            return;
         }
+        //Call this if the player is in the middle of navigating using the nav agent
+        if (this.GetComponent<NavMeshAgent>().enabled)
+        {
+            ResetNavAgent();
+        }
+
+        rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
 
         // if player moved disable the UI
         if (input != Vector2.zero)
@@ -202,22 +169,18 @@ public class CelestialPlayerMovement : MonoBehaviour
             // Disable the UI element
             if (movementControlsUI != null)
             {
-            
-               movementControlsUI.SetActive(false);
+                movementControlsUI.SetActive(false);
             }
         }
+
+        isMoveKeyHeld = false;
     }
-    public void EndMovement(InputAction.CallbackContext context)
+
+    public void EndMovement()
     {
-        if (context.control.device.deviceId == CelestialDeviceID)
-        {
-            if (context.canceled)
-            {
-                //Debug.Log("Cancelling Celestial movement");
-                inputVector = Vector2.zero;
-                isometricInput = Vector3.zero;
-            }
-        }
+        inputVector = Vector2.zero;
+        isometricInput = Vector3.zero;
+        isometricRotInput = Vector3.zero;
     }
 
     public void StopPlayer()
@@ -238,7 +201,7 @@ public class CelestialPlayerMovement : MonoBehaviour
         }
         //if (this.GetComponent<NavMeshAgent>())
         //{
-            //rb.AddRelativeForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
+        //rb.AddRelativeForce(new Vector3(inputVector.x, 0, inputVector.y).normalized * moveSpeed * 10f, ForceMode.Force);
 
         //}
     }
@@ -250,13 +213,14 @@ public class CelestialPlayerMovement : MonoBehaviour
         {
             //rotate orientation
             Vector3 viewDir = player.position - new Vector3(transform.position.x, player.position.y, transform.position.z);
+            
             if (viewDir != Vector3.zero)
             {
                 orientation.forward = viewDir.normalized;
             }
 
             // rotate the player object
-            Vector3 inputDir = orientation.forward * isometricInput.x + orientation.right * -isometricInput.z;
+            Vector3 inputDir = orientation.forward * isometricRotInput.x + orientation.right * isometricRotInput.z;
 
             //if input direction isnt 0 smoothly change the direction using the rotation speed
             if (inputDir != Vector3.zero)
@@ -283,7 +247,7 @@ public class CelestialPlayerMovement : MonoBehaviour
             {
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
             }
-            
+
         }
     }
 
@@ -302,7 +266,7 @@ public class CelestialPlayerMovement : MonoBehaviour
 
     public void ResetNavAgent()
     {
-        
+
         //this.GetComponent<EarthPlayer>().enrouteToPlant = false;
         this.GetComponent<NavMeshAgent>().ResetPath();
         this.GetComponent<NavMeshAgent>().enabled = false;

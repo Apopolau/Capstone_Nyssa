@@ -10172,6 +10172,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   IfWalkingHash: 0
   IfAttackingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
 --- !u!114 &1189678821
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10253,6 +10255,7 @@ MonoBehaviour:
   player: {fileID: 1308052667}
   isFirst: 0
   isDying: 0
+  isStaggered: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
@@ -17082,6 +17085,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   IfWalkingHash: 0
   IfAttackingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
 --- !u!114 &2089028147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17163,6 +17168,7 @@ MonoBehaviour:
   player: {fileID: 1308052667}
   isFirst: 0
   isDying: 0
+  isStaggered: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
@@ -17768,6 +17774,7 @@ MonoBehaviour:
   player: {fileID: 1308052667}
   isFirst: 0
   isDying: 0
+  isStaggered: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
@@ -19853,6 +19860,10 @@ PrefabInstance:
       propertyPath: split
       value: 
       objectReference: {fileID: 1486187509}
+    - target: {fileID: 8720262574837691327, guid: 451d94f48e48bcd4d90af44997834801, type: 3}
+      propertyPath: userSettingsManager
+      value: 
+      objectReference: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20360,6 +20371,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   IfWalkingHash: 0
   IfAttackingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
 --- !u!1 &6941066977041728376
 GameObject:
   m_ObjectHideFlags: 0

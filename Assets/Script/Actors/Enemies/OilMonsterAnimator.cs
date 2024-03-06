@@ -5,6 +5,8 @@ using UnityEngine;
 public class OilMonsterAnimator : OurAnimator
 {
     public int IfAttackingHash;
+    public int IfDyingHash;
+    public int IfTakingHitHash;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,8 @@ public class OilMonsterAnimator : OurAnimator
         animator = GetComponentInChildren<Animator>();
         IfWalkingHash = Animator.StringToHash("IfWalking");
         IfAttackingHash = Animator.StringToHash("IfAttacking");
+        IfDyingHash = Animator.StringToHash("IfDying");
+        IfTakingHitHash = Animator.StringToHash("IfTakingHit");
     }
 
     public override void ToggleSetWalk()
@@ -36,6 +40,7 @@ public class OilMonsterAnimator : OurAnimator
         {
             animator.SetBool(IfWalkingHash, true);
             animator.SetBool(IfAttackingHash, false);
+            animator.SetBool(IfTakingHitHash, false);
         }
     }
 }
