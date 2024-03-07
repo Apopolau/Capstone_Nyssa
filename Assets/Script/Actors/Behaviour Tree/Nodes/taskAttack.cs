@@ -64,7 +64,7 @@ public class TaskAttack : BTNode
             }
             else
             {
-                Debug.Log("finishing attack");
+                //Debug.Log("finishing attack");
                 //attackcounter += Time.deltaTime;
                 state = NodeState.SUCCESS;
             }

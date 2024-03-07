@@ -584,10 +584,10 @@ public class EarthPlayer : MonoBehaviour
             displayText.text = "Select a target to heal";
             earthControls.controls.EarthPlayerDefault.Disable();
             earthControls.controls.HealSelect.Enable();
-            Debug.Log(validTargets);
+            //Debug.Log(validTargets);
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
-            tileOutline.GetComponent<SpriteRenderer>().color = Color.green;
+            tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
         }
         else if (healUsed)
         {
@@ -608,6 +608,7 @@ public class EarthPlayer : MonoBehaviour
     //Handles staggering the functionality of healing
     private IEnumerator HealingStarted()
     {
+        displayText.text = "";
         Destroy(tileOutline);
         earthControls.controls.HealSelect.Disable();
         CallSuspendActions(healTime);
@@ -656,9 +657,9 @@ public class EarthPlayer : MonoBehaviour
             earthControls.controls.EarthPlayerDefault.Disable();
             earthControls.controls.BarrierSelect.Enable();
             PickClosestTarget();
-            Debug.Log(validTargets);
+            //Debug.Log(validTargets);
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
-            tileOutline.GetComponent<SpriteRenderer>().color = Color.green;
+            tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
         }
         else if (shieldUsed)
         {
@@ -677,6 +678,7 @@ public class EarthPlayer : MonoBehaviour
 
     private IEnumerator BarrierStarted()
     {
+        displayText.text = "";
         Destroy(tileOutline);
         earthControls.controls.BarrierSelect.Disable();
         CallSuspendActions(barrierTime);
@@ -686,6 +688,8 @@ public class EarthPlayer : MonoBehaviour
         thornShield = Instantiate(ThornShieldPrefab, powerTarget.transform);
         if (powerTarget.GetComponent<CelestialPlayer>())
         {
+            thornShield.transform.position = new Vector3(powerTarget.transform.position.x, 
+                powerTarget.transform.position.y + celestialPlayer.GetComponent<CapsuleCollider>().height / 2, powerTarget.transform.position.z);
             powerTarget.GetComponent<CelestialPlayer>().ApplyBarrier();
         }
         else if (powerTarget.GetComponent<Animal>())
@@ -742,8 +746,7 @@ public class EarthPlayer : MonoBehaviour
     private bool CheckIfValidTargets()
     {
         validTargets.Clear();
-        Debug.Log(celestialPlayer);
-        if(JudgeDistance(celestialPlayer.transform.position, this.transform.position, spellRange))
+        if(JudgeDistance(celestialPlayer.transform.position, this.gameObject.transform.position, spellRange))
         {
             validTargets.Add(celestialPlayer.gameObject);
         }
@@ -765,7 +768,7 @@ public class EarthPlayer : MonoBehaviour
     {
         if (right && validTargets.Count > 1)
         {
-            if (validTargets[validTargetIndex + 1] != null)
+            if (validTargetIndex < validTargets.Count - 1)
             {
                 powerTarget = validTargets[validTargetIndex + 1];
                 validTargetIndex++;
@@ -779,10 +782,10 @@ public class EarthPlayer : MonoBehaviour
         }
         else if(!right && validTargets.Count > 1)
         {
-            if (validTargets[validTargetIndex - 1] != null)
+            if (validTargetIndex > 0)
             {
-                powerTarget = validTargets[validTargetIndex + 1];
-                validTargetIndex++;
+                powerTarget = validTargets[validTargetIndex - 1];
+                validTargetIndex--;
             }
             else
             {
@@ -829,7 +832,7 @@ public class EarthPlayer : MonoBehaviour
         float calcDistance = Mathf.Abs((transform1 - transform2).magnitude);
         
 
-        if (calcDistance < distance)
+        if (calcDistance <= distance)
         {
             return true;
         }
@@ -842,6 +845,7 @@ public class EarthPlayer : MonoBehaviour
     //Goes through the current list of targets in range, finds the closest one
     private void PickClosestTarget()
     {
+        closestDistance = spellRange;
         int i = 0;
         foreach(GameObject potTarget in validTargets)
         {

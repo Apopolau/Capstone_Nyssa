@@ -138,11 +138,9 @@ public class CelestialPlayerMovement : MonoBehaviour
 
     public void MovePlayer(Vector2 input)
     {
-        Debug.Log("Moving");
         isMoveKeyHeld = true;
 
         inputVector = input;
-        Debug.Log(inputVector);
         horInput = inputVector.x;
         vertInput = inputVector.y;
         isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));

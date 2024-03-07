@@ -287,7 +287,7 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnTargetSelected(InputAction.CallbackContext context)
     {
-        if(context.control.device.deviceId == myDeviceID)
+        if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
         {
             if (controls.HealSelect.enabled)
             {
