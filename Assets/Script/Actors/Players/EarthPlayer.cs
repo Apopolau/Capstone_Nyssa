@@ -425,6 +425,7 @@ public class EarthPlayer : MonoBehaviour
             {
                 GetComponent<playerMovement>().ResetNavAgent();
             }
+            isPlantSelected = false;
             isATileSelected = false;
             plantSelectedType = PlantSelectedType.NONE;
             Destroy(plantSelected);
@@ -551,6 +552,7 @@ public class EarthPlayer : MonoBehaviour
                 GetComponent<playerMovement>().ResetNavAgent();
             }
             isRemovalStarted = false;
+            
             TurnOffTileSelect(false);
         }
         
@@ -592,6 +594,7 @@ public class EarthPlayer : MonoBehaviour
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
             tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+            uiController.DarkenOverlay(darkenWhilePlanting);
         }
         else if (healUsed)
         {
@@ -629,6 +632,7 @@ public class EarthPlayer : MonoBehaviour
         }
         healUsed = true;
         earthControls.controls.EarthPlayerDefault.Enable();
+        uiController.RestoreUI(darkenWhilePlanting);
         StartCoroutine(HandleHealCooldown());
     }
 
@@ -663,6 +667,7 @@ public class EarthPlayer : MonoBehaviour
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
             tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+            uiController.DarkenOverlay(darkenWhilePlanting);
         }
         else if (shieldUsed)
         {
@@ -701,6 +706,7 @@ public class EarthPlayer : MonoBehaviour
         }
         shieldUsed = true;
         earthControls.controls.EarthPlayerDefault.Enable();
+        uiController.RestoreUI(darkenWhilePlanting);
         StartCoroutine(HandleShieldCooldown());
         StartCoroutine(HandleShieldExpiry());
     }
@@ -827,6 +833,8 @@ public class EarthPlayer : MonoBehaviour
         isATileSelected = tileSelectionState;
         Destroy(tileOutline);
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        HideTileText();
+        uiController.RestoreUI(darkenWhilePlanting);
     }
 
     //Create a list of targets that are in range of your abilities
