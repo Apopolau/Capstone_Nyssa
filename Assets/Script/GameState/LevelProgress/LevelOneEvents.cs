@@ -122,11 +122,10 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, dyingEnemy.transform.position, Quaternion.identity);
-        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, 
-            new Vector3(dyingEnemy.transform.position.x + 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z - 1), Quaternion.identity);
-        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab,
-            new Vector3(dyingEnemy.transform.position.x - 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z + 1), Quaternion.identity);
+        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, enemyPos, Quaternion.identity);
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
         levelOneProgress.shelter = true;
 
         //We want to activate the objective menu here probably, or once the trigger dialogue is done.
@@ -145,11 +144,10 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, dyingEnemy.transform.position, Quaternion.identity);
-        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab,
-            new Vector3(dyingEnemy.transform.position.x + 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z - 1), Quaternion.identity);
-        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab,
-            new Vector3(dyingEnemy.transform.position.x - 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z + 1), Quaternion.identity);
+        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, enemyPos, Quaternion.identity);
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
 
         keyMonsterDefeatCount++;
 
