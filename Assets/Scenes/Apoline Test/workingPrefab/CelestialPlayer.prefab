@@ -2367,7 +2367,7 @@ GameObject:
   - component: {fileID: 2343692040003905913}
   - component: {fileID: 1028325472782930115}
   - component: {fileID: 8053673037830725848}
-  - component: {fileID: 3016795165995379147}
+  - component: {fileID: 6284446020369264983}
   m_Layer: 0
   m_Name: CelestialPlayer
   m_TagString: Player2
@@ -2765,7 +2765,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
   target: {fileID: 3756737779463009657}
---- !u!114 &3016795165995379147
+
+--- !u!114 &6284446020369264983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3232,6 +3233,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 751090f0f39f5424b83c213444ca72ce, type: 3}
       insertIndex: -1
       addedObject: {fileID: 576346163583008015}
+    - targetCorrespondingSourceObject: {fileID: -1328971450476997612, guid: 751090f0f39f5424b83c213444ca72ce, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7455217717582014783}
   m_SourcePrefab: {fileID: 100100000, guid: 751090f0f39f5424b83c213444ca72ce, type: 3}
 --- !u!1 &3705068691660975426 stripped
 GameObject:
@@ -3264,3 +3268,31 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 751090f0f39f5424b83c213444ca72ce, type: 3}
   m_PrefabInstance: {fileID: 4587590812314013715}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5919117530269238279 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1328971450476997612, guid: 751090f0f39f5424b83c213444ca72ce, type: 3}
+  m_PrefabInstance: {fileID: 4587590812314013715}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &7455217717582014783
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919117530269238279}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.09694535
+  m_Height: 0.89
+  m_Direction: 1
+  m_Center: {x: 0.0007843182, y: 0.38, z: 0.0008001806}

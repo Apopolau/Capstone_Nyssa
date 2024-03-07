@@ -17,6 +17,7 @@ public class PowerStats : ScriptableObject
     [SerializeField] public enum surfaceAreaEffect { MIN, MED, MAX };
     [SerializeField] public bool isWeakness;
     [SerializeField] public bool effectsTiles;
+    [SerializeField] public bool isEnabled;
     [SerializeField] public float rechargeTimer;
     [SerializeField] public VisualEffect visualDisplay;
     //[SerializeField] public GameObject visualDisplay;
