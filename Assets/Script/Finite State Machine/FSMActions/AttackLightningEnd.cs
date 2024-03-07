@@ -1,17 +1,17 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/AttackLightningAction")]
-public class AttackLightningAction: FSMAction
+[CreateAssetMenu(menuName = "FSM/Actions/AttackLightningStrikeEnds")]
+public class AttackLightningStrikeEnds : FSMAction
 {
-   
     public override void Execute(BaseStateMachine stateMachine)
     {
         CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
 
 
-        Debug.Log("******take Lightning Damage");
+        Debug.Log("******takeDamage");
         if (player.enemySeen)
         {
             player.Attack();
@@ -24,11 +24,9 @@ public class AttackLightningAction: FSMAction
 
 
         player.isAttacking = false;
-        Debug.Log("******lightning attack complete");
+        Debug.Log("******tattack complete");
 
 
     }
-
-
 
 }

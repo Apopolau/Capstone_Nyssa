@@ -9,10 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ecf1f245dd875e6488cee284a2ba0e6e, type: 3}
-  m_Name: AttackColdSnap
+  m_Script: {fileID: 11500000, guid: c096ec4d241ab3b49ac4887c39f9719a, type: 3}
+  m_Name: BasicAttack
   m_EditorClassIdentifier: 
-  Action:
-  - {fileID: 11400000, guid: 52177f8ee0d01a6428952870974bc045, type: 2}
-  Transitions:
-  - {fileID: 11400000, guid: a3cb6ff834b6018429ae544edc3eda1c, type: 2}
+  powerType: BasoicAttack
+  maxDamage: 20
+  minDamage: 10
+  airPollutionEffect: 0
+  isWeakness: 0
+  effectsTiles: 0
+  rechargeTimer: 2
+  visualDisplay: {fileID: 0}

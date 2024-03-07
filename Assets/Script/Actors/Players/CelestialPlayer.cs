@@ -249,12 +249,17 @@ public class CelestialPlayer : MonoBehaviour
         attack = GetComponent<PowerBehaviour>();
 
         bool playerIsDead;
-        if (enemyTarget)
+        if (enemyTarget && powerInUse==Power.COLDSNAP)
         {
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
         }
-        
-     
+
+
+        if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE)
+        {
+            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.LightningStats.minDamage);
+        }
+
 
 
     }
@@ -320,6 +325,17 @@ public class CelestialPlayer : MonoBehaviour
 
     }
 
+    public void OnLightningStrikeSelected()
+    {
+
+        canLightningStrike = false;
+        isAttacking = true;
+        powerInUse = Power.LIGHTNINGSTRIKE;
+        Debug.Log("startlightning");
+        DarkenAllImages(celestPlayerDpad); //darken the dpad
+
+    }
+
     public IEnumerator animateColdSnap()
     {
      
@@ -363,6 +379,51 @@ public class CelestialPlayer : MonoBehaviour
 
     }
 
+
+
+    public IEnumerator animateLightningStrike()
+    {
+
+        Debug.Log("lighning is animated is animated");
+       
+        VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
+        VisualEffect clone = Instantiate(lightningStrike, new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, enemyTarget.transform.position.z), Quaternion.identity);
+
+        clone.transform.Rotate(-90.0f, 0.0f, 0.0f, Space.World);
+
+
+        //clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
+
+
+        //Attacking animation of player
+        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, true);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
+
+
+
+
+
+
+        // Move our position a step closer to the target.
+        var step = 5 * Time.deltaTime; // calculate distance to move
+
+        if (enemyTarget != null)
+        {
+
+
+        }
+
+
+            isAttacking = true;
+            yield return new WaitForSeconds(3f);
+            celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
+            Destroy(clone, 1f);
+            ResetImageColor(celestPlayerDpad); //reset dpad colors
+        
+
+    }
+
+
     public IEnumerator ResetColdSnap()
     {
 
@@ -373,7 +434,7 @@ public class CelestialPlayer : MonoBehaviour
         canColdSnap = true;
 
     }
-    public IEnumerator ResetThundrerStrike()
+    public IEnumerator ResetLightningStrike()
     {
         yield return new WaitForSeconds(1f);
        

@@ -401,7 +401,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""up"",
                     ""id"": ""bea95190-6609-4444-a7b3-ae329e903299"",
-                    ""path"": ""<Keyboard>/x"",
+                    ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
