@@ -68,7 +68,11 @@ public class CelestialPlayer : MonoBehaviour
     [SerializeField] public bool isRespawning = false;
     public bool isShielded = false;
 
+    //Lengths of animations and abilities
     WaitForSeconds barrierLength = new WaitForSeconds(5);
+    WaitForSeconds staggerLength = new WaitForSeconds(0.958f);
+    WaitForSeconds deathAnimLength = new WaitForSeconds(1.458f);
+    WaitForSeconds iFramesLength = new WaitForSeconds(0.5f);
 
 
     [Header("Animation")]
@@ -91,8 +95,8 @@ public class CelestialPlayer : MonoBehaviour
     public Vector3 enemyLocation;
 
     public event System.Action<int, int> OnHealthChanged;
-
-
+    private bool iFramesOn;
+    private bool isStaggered;
 
 
     private void Awake()
@@ -122,27 +126,6 @@ public class CelestialPlayer : MonoBehaviour
     {
         
     }
-
-
-    /*   private void OnTriggerEnter(Collider other)
-       {
-           //Debug.Log("Entered collision with " + other.gameObject.name);
-           if ((other.gameObject.tag == "Enemy"))
-           {
-               //Debug.Log("Trigger enter");
-
-               //Player is in range of enemy, in invading monster they can pursue the player
-
-
-              // Debug.Log("I've collided with enemy");
-                   enemySeen = true;
-
-              enemyLocation= other.transform.position;
-               enemyTarget = other.transform.gameObject;
-
-           }
-
-       }*/
 
     public void OnInteract(InputAction.CallbackContext context)
     {
@@ -209,7 +192,7 @@ public class CelestialPlayer : MonoBehaviour
 
     public bool TakeHit(int damageDealt)
     {
-        if (!isShielded)
+        if (!isShielded && !iFramesOn)
         {
             health.current -= damageDealt;
 
@@ -221,12 +204,42 @@ public class CelestialPlayer : MonoBehaviour
             bool isDead = health.current <= 0;
             if (isDead)
             {
-                Respawn();
+                StartCoroutine(DeathRoutine());
+            }
+            if (!isDead && !isStaggered)
+            {
+                StartCoroutine(OnStagger());
             }
 
             return isDead;
         }
         return false;
+    }
+
+    private IEnumerator OnStagger()
+    {
+        celestialAnimator.animator.SetBool(celestialAnimator.IfTakingHitHash, true);
+        SuspendActions(staggerLength);
+        yield return staggerLength;
+        celestialAnimator.animator.SetBool(celestialAnimator.IfTakingHitHash, false);
+        isStaggered = false;
+        StartCoroutine(iFrames());
+    }
+
+    private IEnumerator iFrames()
+    {
+        iFramesOn = true;
+        yield return iFramesLength;
+        iFramesOn = false;
+    }
+
+    private IEnumerator DeathRoutine()
+    {
+        celestialAnimator.animator.SetBool(celestialAnimator.IfDyingHash, true);
+        CallSuspendActions(deathAnimLength);
+        yield return deathAnimLength;
+        celestialAnimator.animator.SetBool(celestialAnimator.IfDyingHash, false);
+        Respawn();
     }
 
     public void ApplyBarrier()
@@ -438,6 +451,21 @@ public class CelestialPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(1f);
        
+    }
+
+    public void CallSuspendActions(WaitForSeconds waitTime)
+    {
+        StartCoroutine(SuspendActions(waitTime));
+    }
+
+    private IEnumerator SuspendActions(WaitForSeconds waitTime)
+    {
+        celestialControls.controls.CelestialPlayerDefault.Disable();
+        //celestialControls.controls.PlantIsSelected.Disable();
+        DarkenAllImages(celestPlayerDpad); //indicate no movement is allowed while planting
+        yield return waitTime;
+        celestialControls.controls.CelestialPlayerDefault.Enable();
+        ResetImageColor(celestPlayerDpad);
     }
 
     //Darken UI icons

@@ -5,6 +5,8 @@ using UnityEngine;
 public class CelestialPlayerAnimator : OurAnimator
 {
     public int IfAttackingHash;
+    public int IfDyingHash;
+    public int IfTakingHitHash;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,8 @@ public class CelestialPlayerAnimator : OurAnimator
         animator = GameObject.Find("Celestial_geo").GetComponentInChildren<Animator>();
         IfWalkingHash = Animator.StringToHash("IfWalking");
         IfAttackingHash = Animator.StringToHash("IfAttacking");
+        IfDyingHash = Animator.StringToHash("IfDying");
+        IfTakingHitHash = Animator.StringToHash("IfTakingHit");
     }
 
     public override void ToggleSetWalk()
