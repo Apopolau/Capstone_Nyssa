@@ -137,8 +137,6 @@ public class EarthPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Default controls are on: " + earthControls.controls.EarthPlayerDefault.enabled);
-        //Debug.Log("Planting controls are on: " + earthControls.controls.PlantIsSelected.enabled);
         ActivateTile();
         if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
         {
@@ -161,8 +159,6 @@ public class EarthPlayer : MonoBehaviour
         
         if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
-            //Debug.Log("virtual mouse input: " + virtualMouseInput);
-            //Debug.Log("virtual mouse: " + virtualMouseInput.virtualMouse);
             virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
@@ -259,7 +255,6 @@ public class EarthPlayer : MonoBehaviour
     //This is called at the end of each plant selection function, to capture shared functionality
     private void OnPlantSelectedWrapUp()
     {
-        //Debug.Log("Wrapping up plant selection");
         isPlantSelected = true;
         isATileSelected = false;
         plantSelected.transform.position = this.transform.position;
@@ -561,12 +556,10 @@ public class EarthPlayer : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            Debug.Log("Interacting");
             interacting = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            Debug.Log("Not interacting anymore");
             interacting = false;
         }
     }
@@ -584,7 +577,6 @@ public class EarthPlayer : MonoBehaviour
             displayText.text = "Select a target to heal";
             earthControls.controls.EarthPlayerDefault.Disable();
             earthControls.controls.HealSelect.Enable();
-            //Debug.Log(validTargets);
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
             tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
@@ -657,7 +649,6 @@ public class EarthPlayer : MonoBehaviour
             earthControls.controls.EarthPlayerDefault.Disable();
             earthControls.controls.BarrierSelect.Enable();
             PickClosestTarget();
-            //Debug.Log(validTargets);
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
             tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
         }
@@ -865,8 +856,6 @@ public class EarthPlayer : MonoBehaviour
     {
 
         health.current -= 10;
-
-        Debug.Log(health.current);
 
         if (OnHealthChanged != null)
             OnHealthChanged(health.max, health.current);

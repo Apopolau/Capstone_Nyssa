@@ -24,6 +24,9 @@ public class LevelOneEvents : EventManager
     [SerializeField] TaskListManager task1;
     [SerializeField] TaskListManager task2;
     [SerializeField] TaskListManager task3;
+    [SerializeField] TaskListManager task4;
+    [SerializeField] TaskListManager task5;
+    [SerializeField] TaskListManager task6;
 
     private GameObject grassSeedSpawn;
     private GameObject treeSeedSpawn;
@@ -32,6 +35,13 @@ public class LevelOneEvents : EventManager
     public DialogueTrigger secondMonsterDeadDialouge;
     public DialogueTrigger thirdMonsterDeadDialouge;
     public DialogueTrigger fourthMonsterDeadDialouge;
+    public DialogueTrigger allMonstersDefeatedDialogue;
+    public DialogueTrigger allObjectivesMetDialogue;
+
+    int keyMonsterDefeatCount;
+
+    private bool runDefeatDialogue = false;
+    private bool runReadyToLeaveDialogue = false;
 
 
     // Start is called before the first frame update
@@ -64,6 +74,42 @@ public class LevelOneEvents : EventManager
     void Update()
     {
         EvaluateFoodLevel();
+        if (!runDefeatDialogue)
+        {
+            EvaluateMonsterDefeats();
+        }
+        
+        if (levelOneProgress.EvaluateLevelProgress() && !runReadyToLeaveDialogue)
+        {
+            OnReadyToLeave();
+        }
+    }
+
+    private void EvaluateFoodLevel()
+    {
+        if (levelOneProgress.EvaluateTrees())
+        {
+            task1.CrossOutTask();
+        }
+        if (levelOneProgress.EvaluateGrass())
+        {
+            task2.CrossOutTask();
+        }
+        if (levelOneProgress.EvaluateCattails())
+        {
+            task3.CrossOutTask();
+        }
+    }
+
+    private void EvaluateMonsterDefeats()
+    {
+        if (keyMonsterDefeatCount == 4)
+        {
+            task6.CrossOutTask();
+            levelOneProgress.animalIsSafe = true;
+            runDefeatDialogue = true;
+            allMonstersDefeatedDialogue.TriggerDialogue();
+        }
     }
 
     public void OnFirstMonsterDefeated()
@@ -82,8 +128,12 @@ public class LevelOneEvents : EventManager
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab,
             new Vector3(dyingEnemy.transform.position.x - 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z + 1), Quaternion.identity);
         levelOneProgress.shelter = true;
+
+        //We want to activate the objective menu here probably, or once the trigger dialogue is done.
+
         firstMonsterDeadDialouge.TriggerDialogue();
-        task3.CrossOutTask();
+        keyMonsterDefeatCount++;
+        
     }
 
     public void OnSecondMonsterDefeated()
@@ -100,6 +150,9 @@ public class LevelOneEvents : EventManager
             new Vector3(dyingEnemy.transform.position.x + 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z - 1), Quaternion.identity);
         grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab,
             new Vector3(dyingEnemy.transform.position.x - 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z + 1), Quaternion.identity);
+
+        keyMonsterDefeatCount++;
+
         secondMonsterDeadDialouge.TriggerDialogue();
     }
 
@@ -112,7 +165,7 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        //thirdMonsterDeadDialouge.TriggerDialogue();
+        keyMonsterDefeatCount++;
     }
 
     public void OnFourthMonsterDefeated()
@@ -124,6 +177,11 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+
+        keyMonsterDefeatCount++;
+
+        levelOneProgress.animalHasFriend = true;
+        task4.CrossOutTask();
         fourthMonsterDeadDialouge.TriggerDialogue();
     }
 
@@ -147,15 +205,14 @@ public class LevelOneEvents : EventManager
             }
         }
         levelOneProgress.cleanWater = true;
-        task2.CrossOutTask();
+        task5.CrossOutTask();
     }
 
-    private void EvaluateFoodLevel()
+    public void OnReadyToLeave()
     {
-        if (levelOneProgress.EvaluateFood())
-        {
-            task3.CrossOutTask();
-        }
+        //Set the leave trigger to exit the level to on
+        runReadyToLeaveDialogue = true;
+        allObjectivesMetDialogue.TriggerDialogue();
     }
 
     public void DebugTileFlip()

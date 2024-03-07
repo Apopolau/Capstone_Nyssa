@@ -25,7 +25,9 @@ public abstract class LevelProgress : ScriptableObject
     }
 
     public abstract bool EvaluateFood();
-    protected abstract void EvaluateLevelProgress();
+    public abstract bool EvaluateLevelProgress();
+
+    protected abstract void OnAllObjectivesComplete();
 
     protected abstract void OnPlayerWin();
 

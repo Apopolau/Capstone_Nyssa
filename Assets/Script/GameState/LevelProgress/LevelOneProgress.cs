@@ -15,13 +15,16 @@ public class LevelOneProgress : LevelProgress
     //Defeated the monster up the path
     public bool cleanedLongPath;
     //Cleaned the water at the top of the path
-    public bool hasTurnedOffPump;
+    public bool hasTurnedOffPump = false;
     public bool animalHasEnoughFood = false;
     public bool animalIsSafe = false;
+    public bool animalHasFriend = false;
 
-    int treeGoal = 5;
-    int grassGoal = 7;
-    int cattailGoal = 5;
+    public bool readyToLeave = false;
+
+    int treeGoal = 10;
+    int grassGoal = 15;
+    int cattailGoal = 8;
 
     //Drag this from the plant prefabs folder
     [SerializeField]public GameObject treeSeedPrefab;
@@ -30,9 +33,36 @@ public class LevelOneProgress : LevelProgress
 
     public override bool EvaluateFood()
     {
+        if (EvaluateTrees() && EvaluateGrass() && EvaluateCattails())
+        {
+            animalHasEnoughFood = true;
+            return true;
+        }
+        return false;
+    }
+
+    public bool EvaluateTrees()
+    {
         treeCount = 0;
+
+        foreach (GameObject plant in plantSet.Items)
+        {
+            if (plant.GetComponent<Plant>().stats.plantName == "Tree")
+            {
+                treeCount++;
+            }
+        }
+
+        if (treeCount >= treeGoal)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public bool EvaluateGrass()
+    {
         grassCount = 0;
-        cattailCount = 0;
 
         foreach (GameObject plant in plantSet.Items)
         {
@@ -40,31 +70,47 @@ public class LevelOneProgress : LevelProgress
             {
                 grassCount++;
             }
-            if (plant.GetComponent<Plant>().stats.plantName == "Tree")
-            {
-                treeCount++;
-            }
-            if (plant.GetComponent<Plant>().stats.plantName == "Cattail")
-            {
-                cattailCount++;
-            }
         }
 
-        totalPlants = grassCount + treeCount + cattailCount;
-
-        if (treeCount >= treeGoal && grassCount >= grassGoal && cattailCount >= cattailGoal)
+        if (grassCount >= grassGoal)
         {
             return true;
         }
         return false;
     }
 
-    protected override void EvaluateLevelProgress()
+    public bool EvaluateCattails()
     {
-        if (animalHasEnoughFood && cleanWater && shelter && animalIsSafe)
+        cattailCount = 0;
+
+        foreach (GameObject plant in plantSet.Items)
         {
-            OnPlayerWin();
+            if (plant.GetComponent<Plant>().stats.plantName == "Cattail")
+            {
+                cattailCount++;
+            }
         }
+
+        if (cattailCount >= cattailGoal)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    public override bool EvaluateLevelProgress()
+    {
+        if (animalHasEnoughFood && cleanWater && animalHasFriend && animalIsSafe)
+        {
+            OnAllObjectivesComplete();
+            return true;
+        }
+        return false;
+    }
+
+    protected override void OnAllObjectivesComplete()
+    {
+        readyToLeave = true;
     }
 
     protected override void OnPlayerWin()
