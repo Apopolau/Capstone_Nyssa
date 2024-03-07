@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 
 [CreateAssetMenu(menuName = "Stats/Power Stats", fileName = "PowerStats")]
@@ -17,7 +18,7 @@ public class PowerStats : ScriptableObject
     [SerializeField] public bool isWeakness;
     [SerializeField] public bool effectsTiles;
     [SerializeField] public float rechargeTimer;
-    [SerializeField] public GameObject visualDisplay;
-
+    [SerializeField] public VisualEffect visualDisplay;
+    //[SerializeField] public GameObject visualDisplay;
 
 }

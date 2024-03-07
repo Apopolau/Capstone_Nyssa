@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.AI;
-
+using UnityEngine.VFX;
 public class CelestialPlayer : MonoBehaviour
 {
     
@@ -324,11 +324,14 @@ public class CelestialPlayer : MonoBehaviour
     {
      
         Debug.Log("coldsnap is animated");
-        GameObject coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
+        ///   GameObject coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
+        ///  GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+
+       VisualEffect coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
+        VisualEffect clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
 
 
-    
-        GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+
         //clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
 
 
@@ -347,13 +350,15 @@ public class CelestialPlayer : MonoBehaviour
         if (enemyTarget != null)
         {
             clone.transform.position = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
+            //clone.
+          // clone.SetVector3( enemyTarget.transform.position);
         }
        //clone.GetComponent<Rigidbody>().velocity = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
 
         isAttacking = true;
         yield return new WaitForSeconds(3f);
         celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
-        Destroy(clone);
+        Destroy(clone, 1f);
         ResetImageColor(celestPlayerDpad); //reset dpad colors
 
     }
