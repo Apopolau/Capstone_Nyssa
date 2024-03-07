@@ -37,6 +37,7 @@ public class idleOilSpillTree : BTree
                 new Inverter(new CheckIfDying(enemy)),
                 new Inverter(new CheckIfStaggered(enemy)),
                 new CheckInAttackRange(playerTransform,enemyMeshAgent,player),
+                new Inverter(new CheckIfPlayerDead(player)),
                 new Timer(2f, new taskInitiateAttack(playerTransform,enemyMeshAgent,player)),
                 new TaskAttack(playerTransform,enemyMeshAgent,player,transform),
             }),
@@ -51,6 +52,7 @@ public class idleOilSpillTree : BTree
                 new Inverter(new CheckIfDying(enemy)),
                 new Inverter(new CheckIfStaggered(enemy)),
                 new CheckInRange(enemyMeshAgent),
+                new Inverter(new CheckIfPlayerDead(player)),
                 //new TaskAttackPlayer(enemyMeshAgent,player)
                 //CHASE THE PLAYER
                 new taskChase(playerTransform,enemyMeshAgent,player,transform),
