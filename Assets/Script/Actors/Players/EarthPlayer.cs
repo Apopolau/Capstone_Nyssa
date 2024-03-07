@@ -584,6 +584,7 @@ public class EarthPlayer : MonoBehaviour
             displayText.text = "Select a target to heal";
             earthControls.controls.EarthPlayerDefault.Disable();
             earthControls.controls.HealSelect.Enable();
+            Debug.Log(validTargets);
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
             tileOutline.GetComponent<SpriteRenderer>().color = Color.green;
@@ -655,6 +656,7 @@ public class EarthPlayer : MonoBehaviour
             earthControls.controls.EarthPlayerDefault.Disable();
             earthControls.controls.BarrierSelect.Enable();
             PickClosestTarget();
+            Debug.Log(validTargets);
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
             tileOutline.GetComponent<SpriteRenderer>().color = Color.green;
         }

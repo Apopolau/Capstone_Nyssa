@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
     public EnemyStats enemyStats;
     public CelestialPlayer player;
     public Stat health;
-    [SerializeField] bool isFirst;
+    [SerializeField] EventManager eventManager;
     [SerializeField] public bool isDying =false;
     public bool isStaggered = false;
 
@@ -67,30 +67,12 @@ public class Enemy : MonoBehaviour
 
         if (isDead) {
 
-            Debug.Log("DIEEEEEEEE" );
-            ////change scene herrrre
-            ///
-            if (player.enemyTarget.GetComponent<Enemy>().isFirst)
-            {
-                player.enemyTarget.GetComponent<Enemy>().isDying = true;
-                player.enemyTarget.GetComponent<LevelOneFirstEnemyDead>().CheckIfDead();
-
-
-            }
-            else if (!player.enemyTarget.GetComponent<Enemy>().isFirst)
-            {
-                player.enemyTarget.GetComponent<Enemy>().isDying = true;
-                player.enemyTarget.GetComponent<LevelOneGrassEnemyDead>().CheckIfDead();
-
-
-            }
-            
-
+            //Debug.Log("DIEEEEEEEE" );
             StartCoroutine(Die());
         }
         if (hitPoints > 0)
         {
-            enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, true);
+            
             StartCoroutine(TakePlayerHit());
         }
 
@@ -100,13 +82,11 @@ public class Enemy : MonoBehaviour
     
     private void OnTriggerStay(Collider other)
     {
-        //Debug.Log("Coliding with " + other.gameObject.name);
         if (other.gameObject == playerObj)
         {
             //Player is in range of enemy, in invading monster they can pursue the player
             seesPlayer = true;
             playerLocation = other.transform.position;
-            //Debug.Log("~~~~~~~~~~~~~~~~~~~Coliding with " + other.gameObject.name);
         }
     }
 
@@ -118,26 +98,30 @@ public class Enemy : MonoBehaviour
             //Player is in range of enemy, in invading monster they can pursue the player
             seesPlayer = false;
             playerLocation = other.transform.position;
-
-
-
-
-
-            //Debug.Log("~~~~~~~~~~~~~~~~~Exited collision with " + other.gameObject.name);
         }
     }
 
     private IEnumerator TakePlayerHit()
     {
+        enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, true);
+        isStaggered = true;
         yield return takeHitTime;
         enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, false);
+        isStaggered = false;
     }
 
     private IEnumerator Die()
     {
         isStaggered = true;
+        enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, false);
         enemyAnimator.animator.SetBool(enemyAnimator.IfDyingHash, true);
         yield return deathTime;
+        if (enemyStats.isSpecial)
+        {
+            isDying = true;
+            eventManager.dyingEnemy = this;
+            enemyStats.deathBehaviour.CheckIfDead();
+        }
         Destroy(gameObject);
     }
 }

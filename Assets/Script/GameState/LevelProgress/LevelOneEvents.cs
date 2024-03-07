@@ -24,7 +24,15 @@ public class LevelOneEvents : EventManager
     [SerializeField] TaskListManager task1;
     [SerializeField] TaskListManager task2;
     [SerializeField] TaskListManager task3;
-    
+
+    private GameObject grassSeedSpawn;
+    private GameObject treeSeedSpawn;
+
+    public DialogueTrigger firstMonsterDeadDialouge;
+    public DialogueTrigger secondMonsterDeadDialouge;
+    public DialogueTrigger thirdMonsterDeadDialouge;
+    public DialogueTrigger fourthMonsterDeadDialouge;
+
 
     // Start is called before the first frame update
     void Start()
@@ -68,7 +76,13 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, dyingEnemy.transform.position, Quaternion.identity);
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, 
+            new Vector3(dyingEnemy.transform.position.x + 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z - 1), Quaternion.identity);
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab,
+            new Vector3(dyingEnemy.transform.position.x - 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z + 1), Quaternion.identity);
         levelOneProgress.shelter = true;
+        firstMonsterDeadDialouge.TriggerDialogue();
         task3.CrossOutTask();
     }
 
@@ -81,6 +95,12 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, dyingEnemy.transform.position, Quaternion.identity);
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab,
+            new Vector3(dyingEnemy.transform.position.x + 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z - 1), Quaternion.identity);
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab,
+            new Vector3(dyingEnemy.transform.position.x - 1, dyingEnemy.transform.position.y, dyingEnemy.transform.position.z + 1), Quaternion.identity);
+        secondMonsterDeadDialouge.TriggerDialogue();
     }
 
     public void OnThirdMonsterDefeated()
@@ -92,6 +112,7 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+        //thirdMonsterDeadDialouge.TriggerDialogue();
     }
 
     public void OnFourthMonsterDefeated()
@@ -103,6 +124,7 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+        fourthMonsterDeadDialouge.TriggerDialogue();
     }
 
     public void OnPumpShutOff()

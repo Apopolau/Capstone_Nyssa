@@ -80,7 +80,6 @@ GameObject:
   - component: {fileID: 5804434315703889750}
   - component: {fileID: 6719677676223621316}
   - component: {fileID: 564950624634221338}
-  - component: {fileID: 3325454151170343581}
   - component: {fileID: 4840897772112739693}
   - component: {fileID: 6055277272015157759}
   m_Layer: 0
@@ -152,8 +151,11 @@ MonoBehaviour:
   playerObj: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: cac8e7c2926be4b48b8f35ca1264ab97, type: 2}
   player: {fileID: 0}
+  eventManager: {fileID: 0}
   isFirst: 1
+  isSecond: 0
   isDying: 0
+  isStaggered: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
@@ -237,6 +239,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   IfWalkingHash: 0
   IfAttackingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
 --- !u!114 &564950624634221338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,153 +253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue:
-    dialogueLines:
-    - character:
-        iconLeft: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: '*Qaucks happily*'
-      lineFR: 'Coin-coin! *heureux*
-
-'
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: "You\u2019re very welcome! I\u2019m so glad we could help!\r\n"
-      lineFR: "Vous \xEAtes l\xE0 bienvenue! Nous sommes heureux de pouvoir vous
-        aider!\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: 'I found some seeds buried in the oil. Maybe we can change things here.
-
-'
-      lineFR: "J\u2019ai trouv\xE9 des graines enterr\xE9es dans l'huile. Peut-\xEAtre
-        que nous pourrons changer les choses ici apr\xE8s tout.\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: 'Oh let me see them! I can grow a grove for this duck to live in!
-
-'
-      lineFR: "Oh! Laisse-moi voir! Je peux faire pousser une for\xEAt pour que le
-        canard puisse y vivre dedans.\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: "Hmm. I\u2019m worried though."
-      lineFR: "Hum\u2026 \xC7a m'inqui\xE8te.\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: "That was far from the only monster in this area. It wouldn\u2019t be
-        safe."
-      lineFR: "Je suis certaine que ce n'\xE9tait pas le seul monstre dans cet endroit.
-        Ce n\u2019est pas sauf ici\u2026\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: 'You know what you can do about that!
-
-'
-      lineFR: " Tu sais quoi faire! J\u2019ai confiance en toi!\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: ' Hey little duck, what do you need to live here?
-
-'
-      lineFR: ' Petit canard, de quoi avez-vous besoin afin de vivre ici?'
-    - character:
-        iconLeft: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: ' *Quacks urgently*'
-      lineFR: Coin-coin! *urgent*
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: 'Oh of course! He says he needs clean water, some leaves and grass to
-        eat, and safety from those monsters.
-
-'
-      lineFR: "Ah, bien s\xFBr! Il dit qu\u2019il a besoin de l\u2019eau propre,
-        des feuilles et de l\u2019herbe \xE0 manger, et de la protection contre les
-        monstres.\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 5a02c1a840300564c8b84e69ce8806c2, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: '*Quacks shyly*
-
-'
-      lineFR: 'Coin-coin! *timide*
-
-'
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: 'Oh, and a friend to share the grove with!
-
-'
-      lineFR: "Ah, et un ami pour partager la for\xEAt avec. \r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: 'Hmm, these are tree seeds. I will see if there are grass seeds nearby.
-
-'
-      lineFR: "Hum, ce sont des graines d\u2019arbres. Je vais voir s\u2019il y a
-        des graines d\u2019herbe proche d\u2019ici.\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 1
-      line: If you plant me some trees, they will give me energy to use my powers
-        on the monsters.
-      lineFR: "Si tu plantes des arbres, \xE7a me donnerait de l'\xE9nergie pour
-        utiliser mes pouvoirs contre les monstres. "
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: " Alright, I\u2019ll get started with these. We\u2019ll have a nice forest
-        for you in no time, duck!\r\n"
-      lineFR: " D\u2019accord, je vais commencer avec celles-ci.  Nous allons avoir
-        une belle for\xEAt pour toi en un rien de temps, petit canard!\r\n"
-    - character:
-        iconLeft: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-        iconRight: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-        isLeft: 0
-      line: Stay safe
-      lineFR: Soyez prudent.
---- !u!114 &3325454151170343581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2090664895178657524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3285e2465e5a0274d99ab61586f9a8d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelOneEvents: {fileID: 0}
-  levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
-  monsterDeadDialouge: {fileID: 564950624634221338}
-  player: {fileID: 0}
+  dialogue: {fileID: 0}
 --- !u!114 &4840897772112739693
 MonoBehaviour:
   m_ObjectHideFlags: 0

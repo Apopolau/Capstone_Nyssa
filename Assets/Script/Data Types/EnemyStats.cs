@@ -2,9 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [CreateAssetMenu(menuName = "Stats/Enemy Stats", fileName = "EnemyStats")]
-
 
 public class EnemyStats : ScriptableObject
 {
@@ -17,7 +15,8 @@ public class EnemyStats : ScriptableObject
     [SerializeField] public int plantEffect;
     [SerializeField] public bool canKidnap;
     [SerializeField] public bool canSmother;
-  [SerializeField] public GameObject cost;
-    
+    [SerializeField] public GameObject cost;
+    [SerializeField] public bool isSpecial;
+    [SerializeField] public EnemyDeathBehaviour deathBehaviour;
 
 }

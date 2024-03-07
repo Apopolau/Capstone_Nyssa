@@ -5,6 +5,8 @@ using TMPro;
 
 public abstract class EventManager : MonoBehaviour
 {
+    public Enemy dyingEnemy;
+
     protected void FlipTiles(List<GameObject> tiles)
     {
         foreach (GameObject tile in tiles)

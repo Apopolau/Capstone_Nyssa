@@ -11,13 +11,14 @@ public class taskChase : BTNode
     CelestialPlayer thisPlayer;
     Rigidbody rb;
     private Transform transformPos;
+    private Enemy thisEnemy;
     public taskChase(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player, Transform transform)
     {
         thisAgent = enemyMeshAgent;
         thisTarget = target;
         thisPlayer = player;
         transformPos = transform;
-
+        thisEnemy = thisAgent.GetComponent<Enemy>();
     }
     
 
@@ -26,6 +27,13 @@ public class taskChase : BTNode
         // throw new System.NotImplementedException();
 
         float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
+
+        if(thisEnemy.isStaggered || thisEnemy.isDying)
+        {
+            thisAgent.ResetPath();
+            state = NodeState.FAILURE;
+            return state;
+        }
 
         if (!thisAgent.GetComponent<Enemy>().inAttackRange && thisAgent.GetComponent<Enemy>().seesPlayer)
        

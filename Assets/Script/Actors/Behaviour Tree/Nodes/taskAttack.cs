@@ -24,6 +24,12 @@ public class TaskAttack : BTNode
 
         float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
 
+        if(thisEnemy.isStaggered || thisEnemy.isDying)
+        {
+            thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
+            state = NodeState.FAILURE;
+            return state;
+        }
           
         if (distance <= 10f)
         {
