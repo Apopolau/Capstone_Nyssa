@@ -213,7 +213,7 @@ public class CelestialPlayer : MonoBehaviour
         {
             health.current -= damageDealt;
 
-            Debug.Log(health.current);
+            //Debug.Log(health.current);
 
             if (OnHealthChanged != null)
                 OnHealthChanged(health.max, health.current);

@@ -137,8 +137,6 @@ public class EarthPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("Default controls are on: " + earthControls.controls.EarthPlayerDefault.enabled);
-        //Debug.Log("Planting controls are on: " + earthControls.controls.PlantIsSelected.enabled);
         ActivateTile();
         if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
         {
@@ -161,8 +159,6 @@ public class EarthPlayer : MonoBehaviour
         
         if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
-            //Debug.Log("virtual mouse input: " + virtualMouseInput);
-            //Debug.Log("virtual mouse: " + virtualMouseInput.virtualMouse);
             virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
             virtualMousePosition = virtualMouseInput.cursorTransform.position;
         }
@@ -259,7 +255,6 @@ public class EarthPlayer : MonoBehaviour
     //This is called at the end of each plant selection function, to capture shared functionality
     private void OnPlantSelectedWrapUp()
     {
-        //Debug.Log("Wrapping up plant selection");
         isPlantSelected = true;
         isATileSelected = false;
         plantSelected.transform.position = this.transform.position;
@@ -561,12 +556,10 @@ public class EarthPlayer : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            Debug.Log("Interacting");
             interacting = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            Debug.Log("Not interacting anymore");
             interacting = false;
         }
     }
@@ -586,7 +579,7 @@ public class EarthPlayer : MonoBehaviour
             earthControls.controls.HealSelect.Enable();
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
-            tileOutline.GetComponent<SpriteRenderer>().color = Color.green;
+            tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
         }
         else if (healUsed)
         {
@@ -607,6 +600,7 @@ public class EarthPlayer : MonoBehaviour
     //Handles staggering the functionality of healing
     private IEnumerator HealingStarted()
     {
+        displayText.text = "";
         Destroy(tileOutline);
         earthControls.controls.HealSelect.Disable();
         CallSuspendActions(healTime);
@@ -656,7 +650,7 @@ public class EarthPlayer : MonoBehaviour
             earthControls.controls.BarrierSelect.Enable();
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
-            tileOutline.GetComponent<SpriteRenderer>().color = Color.green;
+            tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
         }
         else if (shieldUsed)
         {
@@ -675,6 +669,7 @@ public class EarthPlayer : MonoBehaviour
 
     private IEnumerator BarrierStarted()
     {
+        displayText.text = "";
         Destroy(tileOutline);
         earthControls.controls.BarrierSelect.Disable();
         CallSuspendActions(barrierTime);
@@ -684,6 +679,8 @@ public class EarthPlayer : MonoBehaviour
         thornShield = Instantiate(ThornShieldPrefab, powerTarget.transform);
         if (powerTarget.GetComponent<CelestialPlayer>())
         {
+            thornShield.transform.position = new Vector3(powerTarget.transform.position.x, 
+                powerTarget.transform.position.y + celestialPlayer.GetComponent<CapsuleCollider>().height / 2, powerTarget.transform.position.z);
             powerTarget.GetComponent<CelestialPlayer>().ApplyBarrier();
         }
         else if (powerTarget.GetComponent<Animal>())
@@ -740,8 +737,7 @@ public class EarthPlayer : MonoBehaviour
     private bool CheckIfValidTargets()
     {
         validTargets.Clear();
-        Debug.Log(celestialPlayer);
-        if(JudgeDistance(celestialPlayer.transform.position, this.transform.position, spellRange))
+        if(JudgeDistance(celestialPlayer.transform.position, this.gameObject.transform.position, spellRange))
         {
             validTargets.Add(celestialPlayer.gameObject);
         }
@@ -763,7 +759,7 @@ public class EarthPlayer : MonoBehaviour
     {
         if (right && validTargets.Count > 1)
         {
-            if (validTargets[validTargetIndex + 1] != null)
+            if (validTargetIndex < validTargets.Count - 1)
             {
                 powerTarget = validTargets[validTargetIndex + 1];
                 validTargetIndex++;
@@ -777,10 +773,10 @@ public class EarthPlayer : MonoBehaviour
         }
         else if(!right && validTargets.Count > 1)
         {
-            if (validTargets[validTargetIndex - 1] != null)
+            if (validTargetIndex > 0)
             {
-                powerTarget = validTargets[validTargetIndex + 1];
-                validTargetIndex++;
+                powerTarget = validTargets[validTargetIndex - 1];
+                validTargetIndex--;
             }
             else
             {
@@ -827,7 +823,7 @@ public class EarthPlayer : MonoBehaviour
         float calcDistance = Mathf.Abs((transform1 - transform2).magnitude);
         
 
-        if (calcDistance < distance)
+        if (calcDistance <= distance)
         {
             return true;
         }
@@ -840,6 +836,7 @@ public class EarthPlayer : MonoBehaviour
     //Goes through the current list of targets in range, finds the closest one
     private void PickClosestTarget()
     {
+        closestDistance = spellRange;
         int i = 0;
         foreach(GameObject potTarget in validTargets)
         {
@@ -859,8 +856,6 @@ public class EarthPlayer : MonoBehaviour
     {
 
         health.current -= 10;
-
-        Debug.Log(health.current);
 
         if (OnHealthChanged != null)
             OnHealthChanged(health.max, health.current);

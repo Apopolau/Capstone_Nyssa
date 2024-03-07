@@ -65,7 +65,6 @@ public class DialogueManager : MonoBehaviour
         if (!dialogueBox.activeSelf)
         {
             dialogueBox.SetActive(true);
-
         }
         else
         {

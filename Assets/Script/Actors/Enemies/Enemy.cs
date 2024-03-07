@@ -12,8 +12,9 @@ public class Enemy : MonoBehaviour
     public EnemyStats enemyStats;
     public CelestialPlayer player;
     public Stat health;
-    [SerializeField] bool isFirst;
+    [SerializeField] EventManager eventManager;
     [SerializeField] public bool isDying =false;
+    public bool isStaggered = false;
 
     //Interaction with the player
     public bool seesPlayer = false;
@@ -28,9 +29,9 @@ public class Enemy : MonoBehaviour
     public bool hasAnimal;
     public bool isKidnapping;
 
-
-
     private WaitForSeconds attackTime = new WaitForSeconds(1);
+    private WaitForSeconds takeHitTime = new WaitForSeconds(1.5f);
+    private WaitForSeconds deathTime = new WaitForSeconds(2.458f);
 
     public event System.Action<int, int> OnHealthChanged;
 
@@ -40,19 +41,11 @@ public class Enemy : MonoBehaviour
         enemyAnimator = GetComponent<OilMonsterAnimator>();
     }
 
-
     // Start is called before the first frame update
-
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         enemyMeshAgent = GetComponent<NavMeshAgent>();
-        //player = GetComponent<CelestialPlayer>();
-
-     
-
-
-
     }
 
     // Update is called once per frame
@@ -63,8 +56,7 @@ public class Enemy : MonoBehaviour
     
     public bool TakeHit( int hitPoints)
     {
-
-
+        
         health.current -= hitPoints;
         bool isDead = health.current <= 0;
 
@@ -75,63 +67,26 @@ public class Enemy : MonoBehaviour
 
         if (isDead) {
 
-            Debug.Log("DIEEEEEEEE" );
-            ////change scene herrrre
-            ///
-            if (player.enemyTarget.GetComponent<Enemy>().isFirst)
-            {
-                player.enemyTarget.GetComponent<Enemy>().isDying = true;
-                player.enemyTarget.GetComponent<LevelOneFirstEnemyDead>().CheckIfDead();
-
-
-            }
-            else if (!player.enemyTarget.GetComponent<Enemy>().isFirst)
-            {
-                player.enemyTarget.GetComponent<Enemy>().isDying = true;
-                player.enemyTarget.GetComponent<LevelOneGrassEnemyDead>().CheckIfDead();
-
-
-            }
+            //Debug.Log("DIEEEEEEEE" );
+            StartCoroutine(Die());
+        }
+        if (hitPoints > 0)
+        {
             
-
-            Die();
+            StartCoroutine(TakePlayerHit());
         }
 
         return isDead;
        
     }
-    /*private void OnTriggerEnter(Collider other)
+    
+    private void OnTriggerStay(Collider other)
     {
-
-       // Debug.Log("Entered collision with " + other.gameObject.name);
-        if (other.gameObject == playerObj)
-        {
-            //Player is in range of enemy, in invading monster they can pursue the player
-            seesPlayer = true;
-            //Debug.Log("~~~~~~~~~~~~~~~~~~~Entered collision with " + other.gameObject.name); 
-            playerLocation = other.transform.position;
-     
-        }
-       /* if (other.gameObject.tag == "plant")
-        {
-            //Player is in range of enemy, in invading monster they can pursue the player
-            seesPlayer = true;
-           // Debug.Log("~~~~~~~~~~~~~~~~~~~Entered collision with " + other.gameObject.name);
-            playerLocation = other.transform.position;
-
-        }
-
-
-    }*/
-        private void OnTriggerStay(Collider other)
-    {
-        //Debug.Log("Coliding with " + other.gameObject.name);
         if (other.gameObject == playerObj)
         {
             //Player is in range of enemy, in invading monster they can pursue the player
             seesPlayer = true;
             playerLocation = other.transform.position;
-            //Debug.Log("~~~~~~~~~~~~~~~~~~~Coliding with " + other.gameObject.name);
         }
     }
 
@@ -143,18 +98,30 @@ public class Enemy : MonoBehaviour
             //Player is in range of enemy, in invading monster they can pursue the player
             seesPlayer = false;
             playerLocation = other.transform.position;
-
-
-
-
-
-            //Debug.Log("~~~~~~~~~~~~~~~~~Exited collision with " + other.gameObject.name);
         }
     }
 
-    private void Die()
+    private IEnumerator TakePlayerHit()
     {
-        
+        enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, true);
+        isStaggered = true;
+        yield return takeHitTime;
+        enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, false);
+        isStaggered = false;
+    }
+
+    private IEnumerator Die()
+    {
+        isStaggered = true;
+        enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, false);
+        enemyAnimator.animator.SetBool(enemyAnimator.IfDyingHash, true);
+        yield return deathTime;
+        if (enemyStats.isSpecial)
+        {
+            isDying = true;
+            eventManager.dyingEnemy = this;
+            enemyStats.deathBehaviour.CheckIfDead();
+        }
         Destroy(gameObject);
     }
 }

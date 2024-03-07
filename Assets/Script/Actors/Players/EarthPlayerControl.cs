@@ -21,7 +21,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     public float moveSpeed;
 
-    bool takinginput=false;
+    bool takinginput = false;
 
     // Whenever either of two gamepads are used, input event will be sent to *all* player objects.
     // So if controller C1 sends an input, both Player 1 and Player 2 will receive it. Same for controller C2.
@@ -49,13 +49,13 @@ public class EarthPlayerControl : MonoBehaviour
         // We need the deviceId of the gamepad that will control this character (the one this script is attached to), so that we can check it later when actions happen.
         // P1's deviceId is at index 0, P2's deviceID is at index 1...
         // For a two player game, we set the playerIndex via the inspector as either 0 or 1 
-        if(Gamepad.all.Count == 0)
+        if (Gamepad.all.Count == 0)
         {
             myDeviceID = Keyboard.current.deviceId;
             myDeviceID2 = Mouse.current.deviceId;
             userSettingsManager.earthControlType = UserSettingsManager.ControlType.KEYBOARD;
         }
-        else if(Gamepad.all.Count == 1)
+        else if (Gamepad.all.Count == 1)
         {
             myDeviceID = Keyboard.current.deviceId;
             myDeviceID2 = Mouse.current.deviceId;
@@ -67,7 +67,6 @@ public class EarthPlayerControl : MonoBehaviour
             userSettingsManager.earthControlType = UserSettingsManager.ControlType.CONTROLLER;
         }
 
-        Debug.Log(myDeviceID);
         //EarthPlayerDefault
         controls.EarthPlayerDefault.Disable();
         controls.EarthPlayerDefault.EarthWalk.performed += OnEarthMovePerformed;
@@ -123,7 +122,7 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnEarthMovePerformed(InputAction.CallbackContext context)
     {
-        if(context.control.device.deviceId == myDeviceID)
+        if (context.control.device.deviceId == myDeviceID)
         {
             if (takinginput == false)
             {
@@ -158,7 +157,6 @@ public class EarthPlayerControl : MonoBehaviour
     {
         if (context.control.device.deviceId == myDeviceID)
         {
-            Debug.Log("call pick tree");
             this.GetComponent<EarthPlayer>().OnTreeSelected(context);
         }
 
@@ -168,7 +166,6 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
-            Debug.Log("call pick flower");
             this.GetComponent<EarthPlayer>().OnFlowerSelected(context);
         }
 
@@ -178,7 +175,6 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
-            Debug.Log("call pick grass");
             this.GetComponent<EarthPlayer>().OnGrassSelected(context);
         }
 
@@ -198,14 +194,12 @@ public class EarthPlayerControl : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
-
-            Debug.Log("call pickup tree");
             this.GetComponent<EarthPlayer>().OnInteract(context);
         }
     }
     private void OnHealPerformed(InputAction.CallbackContext context)
     {
-        if(context.control.device.deviceId == myDeviceID)
+        if (context.control.device.deviceId == myDeviceID)
         {
             earthPlayer.CastHealHandler();
         }
@@ -225,8 +219,7 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnTileFlipped(InputAction.CallbackContext context)
     {
-            Debug.Log("flipping tiles");
-            levelOneEvents.DebugTileFlip();
+        levelOneEvents.DebugTileFlip();
     }
 
 
@@ -237,20 +230,16 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnPlantPlantedPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log("Tried to plant a plant");
         if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
         {
-            Debug.Log("planting plant");
             earthPlayer.PlantPlantingHandler();
         }
     }
 
     private void OnPlantingCancelledPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log("Tried to cancel planting a plant");
         if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
         {
-            Debug.Log("cancelling plant");
             earthPlayer.OnPlantingCancelled();
         }
     }
@@ -265,7 +254,6 @@ public class EarthPlayerControl : MonoBehaviour
     {
         if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
         {
-            Debug.Log("removing plant");
             earthPlayer.PlantRemovingHandler();
         }
     }
@@ -274,7 +262,6 @@ public class EarthPlayerControl : MonoBehaviour
     {
         if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
         {
-            Debug.Log("cancelled removing plant");
             earthPlayer.OnRemovingCancelled();
         }
     }
@@ -287,7 +274,7 @@ public class EarthPlayerControl : MonoBehaviour
     /// <param name="context"></param>
     private void OnTargetSelected(InputAction.CallbackContext context)
     {
-        if(context.control.device.deviceId == myDeviceID)
+        if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.leftButton.wasPressedThisFrame))
         {
             if (controls.HealSelect.enabled)
             {
@@ -298,7 +285,7 @@ public class EarthPlayerControl : MonoBehaviour
                 earthPlayer.InitiateBarrier();
             }
         }
-        
+
     }
 
     private void OnTargetCycled(InputAction.CallbackContext context)
@@ -310,11 +297,11 @@ public class EarthPlayerControl : MonoBehaviour
             {
                 input = Gamepad.all[playerIndex].leftTrigger.ReadValue();
                 input += Gamepad.all[playerIndex].rightTrigger.ReadValue() * -2;
-                if(input < 0)
+                if (input < 0)
                 {
                     earthPlayer.OnCycleTargets(true);
                 }
-                else if(input > 0)
+                else if (input > 0)
                 {
                     earthPlayer.OnCycleTargets(false);
                 }
@@ -332,7 +319,7 @@ public class EarthPlayerControl : MonoBehaviour
                     earthPlayer.OnCycleTargets(false);
                 }
             }
-            
+
         }
     }
 
@@ -386,7 +373,6 @@ public class EarthPlayerControl : MonoBehaviour
     {
         if (context.control.device.deviceId == myDeviceID)
         {
-            Debug.Log("skipping dialogue");
             dialogueManager.EndDialogue();
         }
     }

@@ -2192,6 +2192,7 @@ GameObject:
   - component: {fileID: 4394548441176001214}
   - component: {fileID: 4289947878237477393}
   - component: {fileID: 1222953851676443687}
+  - component: {fileID: 6432642338141535612}
   m_Layer: 0
   m_Name: EarthPlayer
   m_TagString: Player1
@@ -2323,7 +2324,7 @@ MonoBehaviour:
   virtualMousePosition: {x: 0, y: 0}
   playerList: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   animalList: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
-  spellRange: 25
+  spellRange: 50
   treePrefab: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
   landGrassPrefab: {fileID: 8326592455623684711, guid: 2938a7a0c54ca5f448e41f884a596426, type: 3}
   waterGrassPrefab: {fileID: 8326592455623684711, guid: fb6eac0bbccc5fc4784a1140b0696f91, type: 3}
@@ -2719,18 +2720,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823d4af481012394fbe4dc360484a85b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  suspendedColor: {r: 0, g: 0, b: 0, a: 0.89411765}
   darkOverlay: {fileID: 0}
   darkeningAmount: 0.5
-  uiObjectToToggle:
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  keyboardUIObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  controllerUIObjects:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+--- !u!114 &6432642338141535612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033276866688796702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2b31f69b4bda048afc09ddb4cc0885, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardUI: {fileID: 0}
+  controllerUI: {fileID: 0}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!1 &4200965884570861750
 GameObject:
   m_ObjectHideFlags: 0

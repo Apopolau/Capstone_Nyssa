@@ -54,12 +54,19 @@ public class LevelTwoProgress : LevelProgress
         return false;
     }
 
-    protected override void EvaluateLevelProgress()
+    public override bool EvaluateLevelProgress()
     {
-        if (animalHasEnoughFood && animalHasEnoughWater && animalHasShelter && animalIsSafe)
+        if (animalHasEnoughFood && cleanWater && animalIsSafe)
         {
-            OnPlayerWin();
+            OnAllObjectivesComplete();
+            return true;
         }
+        return false;
+    }
+
+    protected override void OnAllObjectivesComplete()
+    {
+
     }
 
     protected override void OnPlayerWin()

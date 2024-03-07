@@ -35,7 +35,7 @@ public class taskInitiateAttack : BTNode
                 thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
             }
 
-            if (thisEnemy.inAttackRange)
+            if (thisEnemy.inAttackRange && !thisEnemy.isDying && !thisEnemy.isStaggered)
             {
                 thisEnemy.attackInitiated = true;
                 thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, true);
