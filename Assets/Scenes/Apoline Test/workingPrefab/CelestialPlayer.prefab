@@ -2367,6 +2367,7 @@ GameObject:
   - component: {fileID: 2343692040003905913}
   - component: {fileID: 1028325472782930115}
   - component: {fileID: 8053673037830725848}
+  - component: {fileID: 3016795165995379147}
   m_Layer: 0
   m_Name: CelestialPlayer
   m_TagString: Player2
@@ -2529,6 +2530,7 @@ MonoBehaviour:
   OrigPos: {x: -6, y: 7, z: -150}
   isDying: 0
   isRespawning: 0
+  isShielded: 0
   treeSeedPrefab: {fileID: 4222843129626314802, guid: 6482a3cc3c478bd44b278f27a007293e, type: 3}
   enemySeen: 1
   enemyTarget: {fileID: 0}
@@ -2763,6 +2765,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
   target: {fileID: 3756737779463009657}
+--- !u!114 &3016795165995379147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159944928166958832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca2142b06a007047b8b498be2f0ad79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyboardUI: {fileID: 0}
+  controllerUI: {fileID: 0}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!1 &7609845917836300610
 GameObject:
   m_ObjectHideFlags: 0
