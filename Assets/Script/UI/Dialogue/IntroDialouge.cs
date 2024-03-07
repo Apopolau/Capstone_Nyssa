@@ -30,8 +30,9 @@ public class IntroDialouge : MonoBehaviour
         {
             
             introDialouge.TriggerDialogue();
-             // Destroy the GameObject collider
-            Destroy(gameObject);
+            // Destroy the GameObject collider
+            //Destroy(gameObject);
+            Destroy(dialogueCollider);
         }
 
        

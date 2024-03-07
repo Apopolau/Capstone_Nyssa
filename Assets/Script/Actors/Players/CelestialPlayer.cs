@@ -282,7 +282,7 @@ public class CelestialPlayer : MonoBehaviour
 
         health.current = 100;
         gameObject.transform.position = OrigPos;
-
+        isDead = false;
     }
     
 

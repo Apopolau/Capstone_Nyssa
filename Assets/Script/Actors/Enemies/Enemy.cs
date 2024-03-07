@@ -40,7 +40,7 @@ public class Enemy : MonoBehaviour
     {
         health = new Stat(enemyStats.maxHealth, enemyStats.maxHealth, false);
         enemyAnimator = GetComponent<OilMonsterAnimator>();
-        eventManager = GetComponent<EventManager>();
+        //eventManager = GetComponent<EventManager>();
     }
 
     // Start is called before the first frame update
@@ -68,8 +68,6 @@ public class Enemy : MonoBehaviour
             OnHealthChanged(health.max, health.current);
 
         if (isDead) {
-
-
             //Debug.Log("DIEEEEEEEE" );
             StartCoroutine(Die());
         }
@@ -115,14 +113,14 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator Die()
     {
+        isDying = true;
         isStaggered = true;
+        eventManager.dyingEnemy = this;
         enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, false);
         enemyAnimator.animator.SetBool(enemyAnimator.IfDyingHash, true);
         yield return deathTime;
         if (enemyStats.isSpecial)
         {
-            isDying = true;
-            eventManager.dyingEnemy = this;
             enemyStats.deathBehaviour.CheckIfDead();
         }
         Destroy(gameObject);
