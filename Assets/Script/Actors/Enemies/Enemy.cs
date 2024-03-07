@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     public CelestialPlayer player;
     public Stat health;
     [SerializeField] EventManager eventManager;
+   //////////////// [SerializeField] LevelOneEvents levelOneEvents;
     [SerializeField] public bool isDying =false;
     public bool isStaggered = false;
 
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
     {
         health = new Stat(enemyStats.maxHealth, enemyStats.maxHealth, false);
         enemyAnimator = GetComponent<OilMonsterAnimator>();
+        eventManager = GetComponent<EventManager>();
     }
 
     // Start is called before the first frame update
@@ -66,6 +68,7 @@ public class Enemy : MonoBehaviour
             OnHealthChanged(health.max, health.current);
 
         if (isDead) {
+
 
             //Debug.Log("DIEEEEEEEE" );
             StartCoroutine(Die());

@@ -293,11 +293,25 @@ public class CelestialPlayer : MonoBehaviour
     {
         if (!isRaining)
         {
-            RainParticleSystem.SetActive(true);
+           // RainParticleSystem.SetActive(true);
             weatherState.skyState = WeatherState.SkyState.RAINY;
             isRaining = true;
         }
-        
+
+        //Debug.Log("It is currently raining");
+        else if (isRaining)
+        {
+           // yield return new WaitForSeconds(10f);
+            //Debug.Log("******It is no longer raining****");
+
+            weatherState.skyState = WeatherState.SkyState.CLEAR;
+    
+            isRaining = false;
+
+        }
+
+
+
 
     }
     public IEnumerator ResetRain()

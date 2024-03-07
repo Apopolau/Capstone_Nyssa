@@ -9,14 +9,19 @@ public class CanColdSnap : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
+
+        PowerBehaviour attack;
+        attack = stateMachine.GetComponent<PowerBehaviour>();
+
+
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking)
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && attack.ColdSnapStats.isEnabled)
         {
             Debug.Log("currentdoing attack");
            
             return true;
         }
-        else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking)
+        else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking && attack.ColdSnapStats.isEnabled)
         {
             //Debug.Log("ColdSnap OVer------");
             return false;
