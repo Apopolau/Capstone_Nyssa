@@ -42,9 +42,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MakeSmog",
+                    "name": "MakeBasic",
                     "type": "Button",
                     "id": "d3ebafe9-90c6-44be-b922-ccd15c656c95",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MakeSmog",
+                    "type": "Button",
+                    "id": "f4e10880-f83b-4802-a8cb-9b930a8c3f47",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -218,7 +227,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MakeSmog",
+                    "action": "MakeBasic",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -295,7 +304,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MakeSmog",
+                    "action": "MakeBasic",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -306,7 +315,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MakeSmog",
+                    "action": "MakeBasic",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -379,7 +388,7 @@
                 {
                     "name": "up",
                     "id": "bea95190-6609-4444-a7b3-ae329e903299",
-                    "path": "<Keyboard>/c",
+                    "path": "<Keyboard>/v",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -408,6 +417,39 @@
                     "action": "MakeInteract",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7f763f6a-8da6-44d1-94a3-f55eb940de76",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MakeSmog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "KeyBoard",
+                    "id": "4f5ecc80-e645-4dff-aeed-d5e6c3ecba1b",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MakeSmog",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "a915dd07-07fa-424f-85ff-94f85c13e5df",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MakeSmog",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },

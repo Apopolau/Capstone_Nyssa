@@ -64,9 +64,18 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""MakeSmog"",
+                    ""name"": ""MakeBasic"",
                     ""type"": ""Button"",
                     ""id"": ""d3ebafe9-90c6-44be-b922-ccd15c656c95"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MakeSmog"",
+                    ""type"": ""Button"",
+                    ""id"": ""f4e10880-f83b-4802-a8cb-9b930a8c3f47"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -240,7 +249,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MakeSmog"",
+                    ""action"": ""MakeBasic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -317,7 +326,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MakeSmog"",
+                    ""action"": ""MakeBasic"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -328,7 +337,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""MakeSmog"",
+                    ""action"": ""MakeBasic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -401,7 +410,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""up"",
                     ""id"": ""bea95190-6609-4444-a7b3-ae329e903299"",
-                    ""path"": ""<Keyboard>/c"",
+                    ""path"": ""<Keyboard>/v"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -430,6 +439,39 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""action"": ""MakeInteract"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7f763f6a-8da6-44d1-94a3-f55eb940de76"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeSmog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""KeyBoard"",
+                    ""id"": ""4f5ecc80-e645-4dff-aeed-d5e6c3ecba1b"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeSmog"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""a915dd07-07fa-424f-85ff-94f85c13e5df"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeSmog"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -540,6 +582,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         m_CelestialPlayerDefault_MakeRain = m_CelestialPlayerDefault.FindAction("MakeRain", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeColdSnap = m_CelestialPlayerDefault.FindAction("MakeColdSnap", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeLighteningStrike = m_CelestialPlayerDefault.FindAction("MakeLighteningStrike", throwIfNotFound: true);
+        m_CelestialPlayerDefault_MakeBasic = m_CelestialPlayerDefault.FindAction("MakeBasic", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeSmog = m_CelestialPlayerDefault.FindAction("MakeSmog", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeSunBeam = m_CelestialPlayerDefault.FindAction("MakeSunBeam", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeDodge = m_CelestialPlayerDefault.FindAction("MakeDodge", throwIfNotFound: true);
@@ -616,6 +659,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     private readonly InputAction m_CelestialPlayerDefault_MakeRain;
     private readonly InputAction m_CelestialPlayerDefault_MakeColdSnap;
     private readonly InputAction m_CelestialPlayerDefault_MakeLighteningStrike;
+    private readonly InputAction m_CelestialPlayerDefault_MakeBasic;
     private readonly InputAction m_CelestialPlayerDefault_MakeSmog;
     private readonly InputAction m_CelestialPlayerDefault_MakeSunBeam;
     private readonly InputAction m_CelestialPlayerDefault_MakeDodge;
@@ -628,6 +672,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         public InputAction @MakeRain => m_Wrapper.m_CelestialPlayerDefault_MakeRain;
         public InputAction @MakeColdSnap => m_Wrapper.m_CelestialPlayerDefault_MakeColdSnap;
         public InputAction @MakeLighteningStrike => m_Wrapper.m_CelestialPlayerDefault_MakeLighteningStrike;
+        public InputAction @MakeBasic => m_Wrapper.m_CelestialPlayerDefault_MakeBasic;
         public InputAction @MakeSmog => m_Wrapper.m_CelestialPlayerDefault_MakeSmog;
         public InputAction @MakeSunBeam => m_Wrapper.m_CelestialPlayerDefault_MakeSunBeam;
         public InputAction @MakeDodge => m_Wrapper.m_CelestialPlayerDefault_MakeDodge;
@@ -653,6 +698,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeLighteningStrike.started += instance.OnMakeLighteningStrike;
             @MakeLighteningStrike.performed += instance.OnMakeLighteningStrike;
             @MakeLighteningStrike.canceled += instance.OnMakeLighteningStrike;
+            @MakeBasic.started += instance.OnMakeBasic;
+            @MakeBasic.performed += instance.OnMakeBasic;
+            @MakeBasic.canceled += instance.OnMakeBasic;
             @MakeSmog.started += instance.OnMakeSmog;
             @MakeSmog.performed += instance.OnMakeSmog;
             @MakeSmog.canceled += instance.OnMakeSmog;
@@ -681,6 +729,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeLighteningStrike.started -= instance.OnMakeLighteningStrike;
             @MakeLighteningStrike.performed -= instance.OnMakeLighteningStrike;
             @MakeLighteningStrike.canceled -= instance.OnMakeLighteningStrike;
+            @MakeBasic.started -= instance.OnMakeBasic;
+            @MakeBasic.performed -= instance.OnMakeBasic;
+            @MakeBasic.canceled -= instance.OnMakeBasic;
             @MakeSmog.started -= instance.OnMakeSmog;
             @MakeSmog.performed -= instance.OnMakeSmog;
             @MakeSmog.canceled -= instance.OnMakeSmog;
@@ -816,6 +867,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         void OnMakeRain(InputAction.CallbackContext context);
         void OnMakeColdSnap(InputAction.CallbackContext context);
         void OnMakeLighteningStrike(InputAction.CallbackContext context);
+        void OnMakeBasic(InputAction.CallbackContext context);
         void OnMakeSmog(InputAction.CallbackContext context);
         void OnMakeSunBeam(InputAction.CallbackContext context);
         void OnMakeDodge(InputAction.CallbackContext context);

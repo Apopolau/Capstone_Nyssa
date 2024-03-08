@@ -34,13 +34,13 @@ public class AttackAnimationAction : FSMAction
             player.StartCoroutine(player.ResetLightningStrike()); 
 
             Debug.Log("coldsnap stopped");
-            stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;
+            stateMachine.GetComponent<CelestialPlayer>().canLightningStrike = false;
 
         }
         //if it isn't raining start rain
         if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.BASIC)
         {
-            Debug.Log("LightningActivated");
+            Debug.Log("BasicActivated");
 
 
 
@@ -48,7 +48,7 @@ public class AttackAnimationAction : FSMAction
             player.StartCoroutine(player.ResetBasic());
 
             Debug.Log("coldsnap stopped");
-            stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;
+            stateMachine.GetComponent<CelestialPlayer>().canBasicAttack = false;
 
         }
 

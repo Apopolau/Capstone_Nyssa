@@ -9,7 +9,7 @@ using UnityEngine.AI;
 using UnityEngine.VFX;
 public class CelestialPlayer : MonoBehaviour
 {
-    
+
     //[SerializeField] private VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
@@ -20,7 +20,7 @@ public class CelestialPlayer : MonoBehaviour
 
     [Header("Rain System")]
     [SerializeField] WeatherState weatherState;
-    [SerializeField] public bool isRaining=false;
+    [SerializeField] public bool isRaining = false;
     [SerializeField] public GameObject RainParticleSystem;
 
 
@@ -63,7 +63,7 @@ public class CelestialPlayer : MonoBehaviour
 
     [Header("Respawn")]
     public Stat health;
-    public Vector3 OrigPos = new Vector3(20,7,-97);
+    public Vector3 OrigPos = new Vector3(20, 7, -97);
     [SerializeField] public bool isDying = false;
     [SerializeField] public bool isRespawning = false;
     public bool isShielded = false;
@@ -91,7 +91,8 @@ public class CelestialPlayer : MonoBehaviour
 
     //Interaction with the player
     public bool enemySeen = false;
-    public GameObject enemyTarget= null;
+    public bool enemyHit = false;
+    public GameObject enemyTarget = null;
     public Vector3 enemyLocation;
 
     public event System.Action<int, int> OnHealthChanged;
@@ -117,14 +118,14 @@ public class CelestialPlayer : MonoBehaviour
         // celestialPlayerInput = GetComponent<CelestialPlayerInputActions>();
         //playerInput = GetComponent<PlayerInput>();
         powerBehaviour = GetComponent<PowerBehaviour>();
-       
+
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void OnInteract(InputAction.CallbackContext context)
@@ -143,10 +144,10 @@ public class CelestialPlayer : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Enemy" )
+        if (other.gameObject.tag == "Enemy")
         {
 
-          //  Debug.Log("Trigger Stay");
+            //  Debug.Log("Trigger Stay");
 
 
             // Debug.Log("Entered collision with " + other.gameObject.name);
@@ -168,9 +169,9 @@ public class CelestialPlayer : MonoBehaviour
 
         if (other.transform.gameObject.tag == "Enemy")
         {
-           /* Debug.Log("----Trigger Exit----" + other.transform.tag);
+            /* Debug.Log("----Trigger Exit----" + other.transform.tag);
 
-            Debug.Log("------Trigger Exit --- " + other.transform.name);*/
+             Debug.Log("------Trigger Exit --- " + other.transform.name);*/
 
 
             //Player is in range of enemy, in invading monster they can pursue the player
@@ -262,7 +263,7 @@ public class CelestialPlayer : MonoBehaviour
         attack = GetComponent<PowerBehaviour>();
 
         bool playerIsDead;
-        if (enemyTarget && powerInUse==Power.COLDSNAP)
+        if (enemyTarget && powerInUse == Power.COLDSNAP)
         {
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
         }
@@ -271,6 +272,12 @@ public class CelestialPlayer : MonoBehaviour
         if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE)
         {
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.LightningStats.minDamage);
+        }
+
+
+        if (enemyTarget && powerInUse == Power.BASIC)
+        {
+            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.BasicAttackStats.minDamage);
         }
 
 
@@ -284,7 +291,7 @@ public class CelestialPlayer : MonoBehaviour
         gameObject.transform.position = OrigPos;
         isDead = false;
     }
-    
+
 
 
     public int GetHealth()
@@ -296,7 +303,7 @@ public class CelestialPlayer : MonoBehaviour
         health.current = newHealthPoint;
 
     }
-    public void SetLocation (Vector3 newPosition)
+    public void SetLocation(Vector3 newPosition)
     {
         gameObject.transform.position = newPosition;
     }
@@ -306,7 +313,7 @@ public class CelestialPlayer : MonoBehaviour
     {
         if (!isRaining)
         {
-           // RainParticleSystem.SetActive(true);
+            // RainParticleSystem.SetActive(true);
             weatherState.skyState = WeatherState.SkyState.RAINY;
             isRaining = true;
         }
@@ -314,11 +321,11 @@ public class CelestialPlayer : MonoBehaviour
         //Debug.Log("It is currently raining");
         else if (isRaining)
         {
-           // yield return new WaitForSeconds(10f);
+            // yield return new WaitForSeconds(10f);
             //Debug.Log("******It is no longer raining****");
 
             weatherState.skyState = WeatherState.SkyState.CLEAR;
-    
+
             isRaining = false;
 
         }
@@ -342,15 +349,26 @@ public class CelestialPlayer : MonoBehaviour
         }
 
     }
-    public void OnSnowFlakeSelected() { 
+    public void OnSnowFlakeSelected() {
 
-        canColdSnap= false;
+        canColdSnap = false;
         isAttacking = true;
         powerInUse = Power.COLDSNAP;
         Debug.Log("start");
         DarkenAllImages(celestPlayerDpad); //darken the dpad
 
     }
+
+    public void OnBasicAttackSelected() {
+    
+        canBasicAttack= false;
+        isAttacking = true;
+        powerInUse = Power.BASIC;
+        Debug.Log("startbasic");
+        DarkenAllImages(celestPlayerDpad); //darken the dpad
+
+
+}
 
     public void OnLightningStrikeSelected()
     {
@@ -475,7 +493,7 @@ public class CelestialPlayer : MonoBehaviour
 
 
         isAttacking = true;
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
         celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
         ResetImageColor(celestPlayerDpad); //reset dpad colors
 
@@ -505,7 +523,7 @@ public class CelestialPlayer : MonoBehaviour
         Debug.Log("coldsnaptimer reset");
 
         yield return new WaitForSeconds(powerBehaviour.BasicAttackStats.rechargeTimer);
-        canColdSnap = true;
+       canBasicAttack = true;
 
     }
 
