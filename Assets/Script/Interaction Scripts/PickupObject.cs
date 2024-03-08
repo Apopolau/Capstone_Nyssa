@@ -115,6 +115,7 @@ public class PickupObject : Interactable
         {
             p2IsInRange = true;
         }
+        /*
         if (other.GetComponent<PickupObject>() && !isBeingAbsorbed)
         {
             if(other.GetComponent<PickupObject>().itemStats.name == itemStats.name && !other.GetComponent<PickupObject>().isBeingAbsorbed)
@@ -123,6 +124,7 @@ public class PickupObject : Interactable
                 StartCoroutine(DestroyNeighbouringObject(other));
             }
         }
+        */
     }
 
     private void OnTriggerExit(Collider other)

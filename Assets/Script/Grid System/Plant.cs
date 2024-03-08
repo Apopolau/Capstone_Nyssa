@@ -11,6 +11,8 @@ public class Plant : Creatable
     public GameObject plantObject;
     [SerializeField] WeatherState weatherState;
     [SerializeField] GameObject energyPrefab;
+    [SerializeField] GameObjectRuntimeSet seedSet;
+    [SerializeField] GameObjectRuntimeSet energySet;
 
     [Header("These set themselves")]
     
@@ -205,8 +207,11 @@ public class Plant : Creatable
             }
             PlacePlant(stats.sproutScale, stats.sproutTileOffset);
             HandleTreeColliders(0.5f, 5);
-            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.seedlingEnergy;
+            if (energySet.Items.Count < 10)
+            {
+                energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+                energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.seedlingEnergy;
+            }
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.SPROUT && growthPoints >= stats.sproutGrowTime)
@@ -221,8 +226,11 @@ public class Plant : Creatable
             }
             PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
             HandleTreeColliders(1f, 5);
-            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
+            if (energySet.Items.Count < 10)
+            {
+                energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+                energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
+            }
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.JUVENILE && growthPoints >= stats.juvenileGrowTime)
@@ -237,14 +245,21 @@ public class Plant : Creatable
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
             HandleTreeColliders(2.5f, 10);
-            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
+            if(energySet.Items.Count < 10)
+            {
+                energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+                energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
+            }
+            
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.MATURE && growthPoints >= stats.matureSeedDropTime)
         {
-            energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-            energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.matureEnergy;
+            if (energySet.Items.Count < 10)
+            {
+                energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+                energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.matureEnergy;
+            }
             DropSeed();
             growthPoints = 0;
         }
@@ -252,8 +267,11 @@ public class Plant : Creatable
 
     private void DropSeed()
     {
-        seed = Instantiate(stats.seedPrefab, this.transform);
-        seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
+        if(seedSet.Items.Count < 10)
+        {
+            seed = Instantiate(stats.seedPrefab, this.transform);
+            seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
+        }
     }
 
     private void HandleTreeColliders(float colliderRadius, float colliderHeight)
