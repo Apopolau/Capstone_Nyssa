@@ -9,7 +9,7 @@ public class AttackBasicEnds : FSMAction
     public override void Execute(BaseStateMachine stateMachine)
     {
         CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
-        CelestialPlayerBasicAttackTrigger staff = stateMachine.GetComponent<CelestialPlayerBasicAttackTrigger>();
+        CelestialPlayerBasicAttackTrigger staff = stateMachine.GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
 
         Debug.Log("******takeDamage");
         if (player.enemySeen && staff.enemyHit)
