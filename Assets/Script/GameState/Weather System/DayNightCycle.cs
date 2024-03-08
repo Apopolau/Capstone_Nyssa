@@ -50,13 +50,14 @@ public class DayNightCycle : MonoBehaviour
         if(GetComponent<MainManagerScript>().levelManager.currentLevel == 1)
         {
             timeOfDayChanges = false;
-            weatherState.dayTime = true;
-            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAY;
         }
         else
         {
             timeOfDayChanges = true;
         }
+        weatherState.dayTime = true;
+        weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAY;
+        weatherState.skyState = WeatherState.SkyState.CLEAR;
     }
 
     void Update()

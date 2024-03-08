@@ -59,9 +59,16 @@ public class EarthPlayer : MonoBehaviour
     private WaitForSeconds barrierTime;
     private WaitForSeconds barrierCooldown;
     private WaitForSeconds barrierActiveTime;
+    private WaitForSeconds iFramesLength;
+    private WaitForSeconds deathAnimLength;
+    private WaitForSeconds staggerLength;
 
     private bool healUsed;
     private bool shieldUsed;
+    private bool isShielded;
+    private bool iFramesOn;
+    private bool isStaggered;
+    private bool isDead;
 
     [SerializeField] float spellRange;
     private float closestDistance;
@@ -92,6 +99,8 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public WeatherState weatherState;
     private Vector3 OrigPos;
     public Stat health;
+
+
 
     public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
@@ -130,6 +139,9 @@ public class EarthPlayer : MonoBehaviour
         healCooldown = new WaitForSeconds(10);
         barrierCooldown = new WaitForSeconds(10);
         barrierActiveTime = new WaitForSeconds(5);
+        iFramesLength = new WaitForSeconds(0.5f);
+        staggerLength = new WaitForSeconds(0.958f);
+        deathAnimLength = new WaitForSeconds(1.458f);
         //playerInput = GetComponent<PlayerInput>();
         //actions = new PlayerInputActions();
     }
@@ -413,6 +425,7 @@ public class EarthPlayer : MonoBehaviour
             {
                 GetComponent<playerMovement>().ResetNavAgent();
             }
+            isPlantSelected = false;
             isATileSelected = false;
             plantSelectedType = PlantSelectedType.NONE;
             Destroy(plantSelected);
@@ -539,6 +552,7 @@ public class EarthPlayer : MonoBehaviour
                 GetComponent<playerMovement>().ResetNavAgent();
             }
             isRemovalStarted = false;
+            
             TurnOffTileSelect(false);
         }
         
@@ -580,6 +594,7 @@ public class EarthPlayer : MonoBehaviour
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
             tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+            uiController.DarkenOverlay(darkenWhilePlanting);
         }
         else if (healUsed)
         {
@@ -617,6 +632,7 @@ public class EarthPlayer : MonoBehaviour
         }
         healUsed = true;
         earthControls.controls.EarthPlayerDefault.Enable();
+        uiController.RestoreUI(darkenWhilePlanting);
         StartCoroutine(HandleHealCooldown());
     }
 
@@ -651,6 +667,7 @@ public class EarthPlayer : MonoBehaviour
             PickClosestTarget();
             tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
             tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+            uiController.DarkenOverlay(darkenWhilePlanting);
         }
         else if (shieldUsed)
         {
@@ -689,6 +706,7 @@ public class EarthPlayer : MonoBehaviour
         }
         shieldUsed = true;
         earthControls.controls.EarthPlayerDefault.Enable();
+        uiController.RestoreUI(darkenWhilePlanting);
         StartCoroutine(HandleShieldCooldown());
         StartCoroutine(HandleShieldExpiry());
     }
@@ -815,6 +833,8 @@ public class EarthPlayer : MonoBehaviour
         isATileSelected = tileSelectionState;
         Destroy(tileOutline);
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        HideTileText();
+        uiController.RestoreUI(darkenWhilePlanting);
     }
 
     //Create a list of targets that are in range of your abilities
@@ -850,33 +870,67 @@ public class EarthPlayer : MonoBehaviour
             }
         }
     }
-    
+
     //If the earth player takes damage
-    public bool TakeHit()
+    public bool TakeHit(int damageDealt)
     {
-
-        health.current -= 10;
-
-        if (OnHealthChanged != null)
-            OnHealthChanged(health.max, health.current);
-
-        bool isDead = health.current <= 0;
-        if (isDead)
+        if (!isShielded && !iFramesOn)
         {
-            Respawn();
+            health.current -= damageDealt;
+
+            //Debug.Log(health.current);
+
+            if (OnHealthChanged != null)
+                OnHealthChanged(health.max, health.current);
+
+            bool isDead = health.current <= 0;
+            if (isDead)
+            {
+                StartCoroutine(DeathRoutine());
+            }
+            if (!isDead && !isStaggered)
+            {
+                StartCoroutine(OnStagger());
+            }
+
+            return isDead;
         }
+        return false;
+    }
 
-        return isDead;
+    private IEnumerator OnStagger()
+    {
+        earthAnimator.animator.SetBool(earthAnimator.IfTakingHitHash, true);
+        SuspendActions(staggerLength);
+        yield return staggerLength;
+        earthAnimator.animator.SetBool(earthAnimator.IfTakingHitHash, false);
+        isStaggered = false;
+        StartCoroutine(iFrames());
+    }
 
+    private IEnumerator iFrames()
+    {
+        iFramesOn = true;
+        yield return iFramesLength;
+        iFramesOn = false;
+    }
+
+    private IEnumerator DeathRoutine()
+    {
+        earthAnimator.animator.SetBool(earthAnimator.IfDyingHash, true);
+        CallSuspendActions(deathAnimLength);
+        yield return deathAnimLength;
+        earthAnimator.animator.SetBool(earthAnimator.IfDyingHash, false);
+        Respawn();
     }
 
     //If the earth player takes so much damage they get defeated
     private void Respawn()
     {
-
+        
         health.current = 100;
         gameObject.transform.position = OrigPos;
-
+        isDead = false;
     }
 
     //Call this if you want to have all player controls turned off for a certain amount of time

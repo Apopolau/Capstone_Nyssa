@@ -236,9 +236,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3913382874448140478}
   - component: {fileID: 6041031469492693536}
-  - component: {fileID: 3393152355903101603}
   - component: {fileID: 7613083469988248682}
-  - component: {fileID: 6905573949862007010}
+  - component: {fileID: 3393152355903101603}
   m_Layer: 0
   m_Name: IntroDialouge
   m_TagString: Untagged
@@ -282,19 +281,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 4.43
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3393152355903101603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8521947405047194189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogue: {fileID: 11400000, guid: 6d42df14483e18241b85e0666237e17a, type: 2}
 --- !u!114 &7613083469988248682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,7 +294,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   introDialouge: {fileID: 3393152355903101603}
---- !u!114 &6905573949862007010
+--- !u!114 &3393152355903101603
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,11 +303,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8521947405047194189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 823d4af481012394fbe4dc360484a85b, type: 3}
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  darkOverlay: {fileID: 0}
-  darkeningAmount: 0.5
-  userSettingsManager: {fileID: 0}
-  keyboardUIObjects: []
-  controllerUIObjects: []
+  dialogue: {fileID: 11400000, guid: 6d42df14483e18241b85e0666237e17a, type: 2}

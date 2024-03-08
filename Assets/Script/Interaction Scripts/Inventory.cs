@@ -98,6 +98,7 @@ public class Inventory : ScriptableObject
     //This is called in RemoveItemByName, so you should generally call that instead
     public bool RemoveItem(Item item, int quantity)
     {
+        int i = 0;
         foreach (var existingItem in items)
         {
             if (existingItem.stats.ItemName == item.stats.ItemName)
@@ -107,7 +108,7 @@ public class Inventory : ScriptableObject
                 // Remove the item from the list if its quantity is zero or less.
                 if (existingItem.quantity <= 0)
                 {
-                    //itemSlots[existingItem.]
+                    itemSlots[i].Item = null;
                     items.Remove(existingItem);
                 }
                 UpdateUIText(); // Call UpdateUIText() after item removal
@@ -115,6 +116,7 @@ public class Inventory : ScriptableObject
                
                 return true;
             }
+            i++;
         }
         return false;
     }

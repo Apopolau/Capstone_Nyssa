@@ -102,7 +102,7 @@ public class CelestialPlayerMovement : MonoBehaviour
     {
         rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
 
-        if (rb.velocity != Vector3.zero)
+        if (rb.velocity.magnitude > new Vector3(0.1f, 0.1f, 0.1f).magnitude)
         {
             GetComponent<CelestialPlayerAnimator>().animator.SetBool(GetComponent<CelestialPlayerAnimator>().IfWalkingHash, true);
         }
