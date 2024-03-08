@@ -58,6 +58,14 @@ public class TurnOffSludgePump : Interactable
 
     private IEnumerator SludgePumpTurnsOff()
     {
+        /*
+        Vector3 viewDir = earthPlayer.transform.position - new Vector3(transform.position.x, earthPlayer.transform.position.y, transform.position.z);
+        if (viewDir != Vector3.zero)
+        {
+            earthPlayer.GetComponent<playerMovement>().orientation.forward = viewDir.normalized;
+        }
+        */
+        //earthPlayer.GetComponent<playerMovement>().playerObj.transform.LookAt()
         earthPlayer.GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfTurningHash, true);
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, false);
