@@ -370,6 +370,7 @@ public class EarthPlayer : MonoBehaviour
     //Call if the player is too far from a tile they selected to plant
     private void ApproachPlant()
     {
+        earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, true);
         earthAgent.enabled = true;
         earthAgent.SetDestination(selectedTile.transform.position);
         enrouteToPlant = true;

@@ -115,7 +115,7 @@ public class playerMovement : MonoBehaviour
         {
             GetComponent<EarthPlayerAnimator>().animator.SetBool(GetComponent<EarthPlayerAnimator>().IfWalkingHash, true);
         }
-        else
+        else if(!GetComponent<NavMeshAgent>().enabled)
         {
             GetComponent<EarthPlayerAnimator>().animator.SetBool(GetComponent<EarthPlayerAnimator>().IfWalkingHash, false);
         }
