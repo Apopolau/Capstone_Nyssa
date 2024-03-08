@@ -31,7 +31,7 @@ public class AttackAnimationAction : FSMAction
 
 
             player.StartCoroutine(player.animateLightningStrike());
-            player.StartCoroutine(player.ResetLightningStrike());
+            player.StartCoroutine(player.ResetLightningStrike()); 
 
             Debug.Log("coldsnap stopped");
             stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;

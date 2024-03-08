@@ -504,7 +504,7 @@ public class CelestialPlayer : MonoBehaviour
 
         Debug.Log("coldsnaptimer reset");
 
-        yield return new WaitForSeconds(powerBehaviour.BasicAttack.rechargeTimer);
+        yield return new WaitForSeconds(powerBehaviour.BasicAttackStats.rechargeTimer);
         canColdSnap = true;
 
     }
