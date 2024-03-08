@@ -26,7 +26,7 @@ public class EnergyPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<CelestialPlayer>())
+        if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             celestialPlayer.energy.current += energyQuantity;
             // Debug log the energy quantity

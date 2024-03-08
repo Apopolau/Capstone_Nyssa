@@ -234,7 +234,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""9c5b4593-75b6-49f5-b8dd-2594130a33a9"",
-                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -245,7 +245,18 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""8f84d75e-4084-4f06-b426-1b0e736e6988"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeBasic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e348ccd7-f83d-4097-8e19-b91e0152ab44"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -289,7 +300,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""up"",
                     ""id"": ""dcddc6f7-ad6a-4f51-ace2-eb48c93b816a"",
-                    ""path"": ""<Keyboard>/z"",
+                    ""path"": ""<Keyboard>/1"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -311,33 +322,11 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""up"",
                     ""id"": ""0e13d44f-1373-491c-8784-f1cb6ceaa6b2"",
-                    ""path"": ""<Keyboard>/x"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MakeColdSnap"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""KeyBoard"",
-                    ""id"": ""9833fa81-63f8-4aea-a888-b0ed52c7804b"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MakeBasic"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""622b1fc4-3eb3-4c78-bb18-6ac5f837c262"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MakeBasic"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -355,7 +344,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""up"",
                     ""id"": ""ed15ce8e-9d55-4e31-8a2b-6be237758022"",
-                    ""path"": ""<Keyboard>/v"",
+                    ""path"": ""<Keyboard>/4"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -377,7 +366,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": ""up"",
                     ""id"": ""836d3692-3388-475d-a2b7-4e06a88be618"",
-                    ""path"": ""<Keyboard>/b"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -397,26 +386,15 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""KeyBoard"",
-                    ""id"": ""8d308be7-5956-4a22-ab5b-0ce4164bdb6c"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MakeLighteningStrike"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""bea95190-6609-4444-a7b3-ae329e903299"",
-                    ""path"": ""<Keyboard>/v"",
+                    ""name"": """",
+                    ""id"": ""46b272b1-6964-4b95-8a73-7f7565686d8c"",
+                    ""path"": ""<Keyboard>/3"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MakeLighteningStrike"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
@@ -443,7 +421,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""7f763f6a-8da6-44d1-94a3-f55eb940de76"",
-                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -452,26 +430,15 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""KeyBoard"",
-                    ""id"": ""4f5ecc80-e645-4dff-aeed-d5e6c3ecba1b"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MakeSmog"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""a915dd07-07fa-424f-85ff-94f85c13e5df"",
+                    ""name"": """",
+                    ""id"": ""cee1fcf7-2a90-47e4-8576-7a0fd6d57dda"",
                     ""path"": ""<Keyboard>/c"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MakeSmog"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 }
             ]
         },

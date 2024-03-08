@@ -84,11 +84,11 @@ public class TurnOffSludgePump : Interactable
     // trigger dialouge when pump is encountred
      private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<EarthPlayer>())
+        if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p1IsInRange = true;
         }
-        else if (other.GetComponent<CelestialPlayer>())
+        else if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p2IsInRange = true;
         }
@@ -109,11 +109,11 @@ public class TurnOffSludgePump : Interactable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<EarthPlayer>())
+        if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p1IsInRange = false;
         }
-        else if (other.GetComponent<CelestialPlayer>())
+        else if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p2IsInRange = false;
         }

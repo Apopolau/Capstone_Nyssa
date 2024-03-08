@@ -7,6 +7,7 @@ public class CelestialPlayerAnimator : OurAnimator
     public int IfAttackingHash;
     public int IfDyingHash;
     public int IfTakingHitHash;
+    public int IfCastingSpellHash;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class CelestialPlayerAnimator : OurAnimator
         IfAttackingHash = Animator.StringToHash("IfAttacking");
         IfDyingHash = Animator.StringToHash("IfDying");
         IfTakingHitHash = Animator.StringToHash("IfTakingHit");
+        IfCastingSpellHash = Animator.StringToHash("IfCastingSpell");
     }
 
     public override void ToggleSetWalk()
@@ -39,6 +41,7 @@ public class CelestialPlayerAnimator : OurAnimator
         {
             animator.SetBool(IfWalkingHash, true);
             animator.SetBool(IfAttackingHash, false);
+            animator.SetBool(IfCastingSpellHash, false);
         }
     }
 }

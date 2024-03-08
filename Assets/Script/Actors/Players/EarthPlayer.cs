@@ -119,8 +119,6 @@ public class EarthPlayer : MonoBehaviour
         OrigPos = this.transform.position;
         health = new Stat(100, 100, false);
         validTargets = new List<GameObject>();
-        
-        
     }
 
     // Start is called before the first frame update

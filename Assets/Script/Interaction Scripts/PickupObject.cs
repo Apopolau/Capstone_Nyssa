@@ -107,11 +107,11 @@ public class PickupObject : Interactable
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.GetComponent<EarthPlayer>())
+        if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p1IsInRange = true;
         }
-        if (other.GetComponent<CelestialPlayer>())
+        if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p2IsInRange = true;
         }
@@ -129,11 +129,11 @@ public class PickupObject : Interactable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.GetComponent<EarthPlayer>())
+        if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p1IsInRange = false;
         }
-        if (other.GetComponent<CelestialPlayer>())
+        if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p2IsInRange = false;
         }

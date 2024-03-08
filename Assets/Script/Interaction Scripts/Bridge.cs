@@ -51,7 +51,7 @@ public class Bridge : Interactable
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.GetComponent<EarthPlayer>())
+        if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p1IsInRange = true;
             if (!bridgeIsBuilt)
@@ -59,9 +59,13 @@ public class Bridge : Interactable
                 ActivateBridgePreview();
             }
         }
-        if (other.GetComponent<CelestialPlayer>())
+        if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p2IsInRange = true;
+            if (!bridgeIsBuilt)
+            {
+                ActivateBridgePreview();
+            }
         }
     }
 
@@ -78,6 +82,10 @@ public class Bridge : Interactable
         if (other.GetComponent<CelestialPlayer>())
         {
             p2IsInRange = false;
+            if (!bridgeIsBuilt)
+            {
+                DeactivateBridgePreview();
+            }
         }
     }
 
@@ -107,6 +115,10 @@ public class Bridge : Interactable
         {
             StartCoroutine(NotEnoughLogs());
         }
+        else if(p2IsInRange && celestialPlayer.interacting)
+        {
+            StartCoroutine(WrongCharacter());
+        }
     }
 
     private IEnumerator BuildBridge()
@@ -130,6 +142,13 @@ public class Bridge : Interactable
     private IEnumerator NotEnoughLogs()
     {
         earthPlayer.displayText.text = "Not enough logs";
+        yield return buildTime;
+        earthPlayer.displayText.text = "";
+    }
+
+    private IEnumerator WrongCharacter()
+    {
+        earthPlayer.displayText.text = "Only Sprout can build this";
         yield return buildTime;
         earthPlayer.displayText.text = "";
     }

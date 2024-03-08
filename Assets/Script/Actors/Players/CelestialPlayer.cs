@@ -397,7 +397,7 @@ public class CelestialPlayer : MonoBehaviour
 
 
         //Attacking animation of player
-        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, true);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
         celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
        
        
@@ -417,8 +417,8 @@ public class CelestialPlayer : MonoBehaviour
        //clone.GetComponent<Rigidbody>().velocity = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
 
         isAttacking = true;
-        yield return new WaitForSeconds(3f);
-        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
+        yield return new WaitForSeconds(1.958f);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
         Destroy(clone, 1f);
         ResetImageColor(celestPlayerDpad); //reset dpad colors
 
@@ -441,7 +441,7 @@ public class CelestialPlayer : MonoBehaviour
 
 
         //Attacking animation of player
-        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, true);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
         celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
 
 
@@ -460,8 +460,8 @@ public class CelestialPlayer : MonoBehaviour
 
 
             isAttacking = true;
-            yield return new WaitForSeconds(3f);
-            celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
+            yield return new WaitForSeconds(1.958f);
+            celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
             Destroy(clone, 1f);
             ResetImageColor(celestPlayerDpad); //reset dpad colors
         
@@ -493,7 +493,7 @@ public class CelestialPlayer : MonoBehaviour
 
 
         isAttacking = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.208f);
         celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
         ResetImageColor(celestPlayerDpad); //reset dpad colors
 
