@@ -7,6 +7,7 @@ public class PowerBehaviour : MonoBehaviour
     //MonsterStats
     [SerializeField] public PowerStats ColdSnapStats;
     [SerializeField] public PowerStats LightningStats;
+    [SerializeField] public PowerStats BasicAttackStats;
     // Start is called before the first frame update
     void Start()
     {

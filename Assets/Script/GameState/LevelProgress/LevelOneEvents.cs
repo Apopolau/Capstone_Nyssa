@@ -130,7 +130,7 @@ public class LevelOneEvents : EventManager
 
         //We want to activate the objective menu here probably, or once the trigger dialogue is done.
         ////////////////////////////////////////////this is where we are going to drop the celestial cold orb!!!/////////////////////////////////////
-
+        
         firstMonsterDeadDialouge.TriggerDialogue();
         keyMonsterDefeatCount++;
         

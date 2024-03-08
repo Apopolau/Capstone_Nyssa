@@ -451,6 +451,37 @@ public class CelestialPlayer : MonoBehaviour
     }
 
 
+    public IEnumerator animateBasicAttack()
+    {
+
+
+       
+        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, true);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
+
+
+
+
+
+
+        // Move our position a step closer to the target.
+        var step = 5 * Time.deltaTime; // calculate distance to move
+
+        if (enemyTarget != null)
+        {
+
+
+        }
+
+
+        isAttacking = true;
+        yield return new WaitForSeconds(3f);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
+        ResetImageColor(celestPlayerDpad); //reset dpad colors
+
+
+    }
+
     public IEnumerator ResetColdSnap()
     {
 
@@ -466,6 +497,19 @@ public class CelestialPlayer : MonoBehaviour
         yield return new WaitForSeconds(1f);
        
     }
+
+    public IEnumerator ResetBasic()
+    {
+
+
+        Debug.Log("coldsnaptimer reset");
+
+        yield return new WaitForSeconds(powerBehaviour.BasicAttack.rechargeTimer);
+        canColdSnap = true;
+
+    }
+
+
 
     public void CallSuspendActions(WaitForSeconds waitTime)
     {
