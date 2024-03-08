@@ -8,8 +8,10 @@ public class EnergyPickup : MonoBehaviour
     [SerializeField] GameObjectRuntimeSet playerSet;
     CelestialPlayer celestialPlayer;
     [SerializeField] public int energyQuantity;
-   // [SerializeField] private Image energyBarFill; // Reference energy bar fill
+    // [SerializeField] private Image energyBarFill; // Reference energy bar fill
+    bool isBeingAbsorbed = false;
 
+    WaitForSeconds absorbDelay = new WaitForSeconds(0.1f);
 
     private void Awake()
     {
@@ -34,6 +36,21 @@ public class EnergyPickup : MonoBehaviour
             IncreaseEnergy();
            
         }
+        if (other.GetComponent<EnergyPickup>() && !isBeingAbsorbed)
+        {
+            other.GetComponent<EnergyPickup>().isBeingAbsorbed = true;
+            StartCoroutine(DestroyNeighbouringObject(other));
+            //energyQuantity += other.GetComponent<EnergyPickup>().energyQuantity;
+            //Destroy(other.gameObject);
+        }
+    }
+
+    private IEnumerator DestroyNeighbouringObject(Collider other)
+    {
+        yield return absorbDelay;
+        //quantity += other.GetComponent<PickupObject>().quantity;
+        energyQuantity++;
+        Destroy(other.gameObject);
     }
 
     private void IncreaseEnergy()

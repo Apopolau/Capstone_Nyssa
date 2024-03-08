@@ -9,7 +9,11 @@ public class PickupObject : Interactable
     [SerializeField] Item item;
     [SerializeField] ItemStats itemStats;
     [SerializeField] Inventory inventory;
-    [SerializeField] int quantity;
+    [SerializeField] public int quantity;
+
+    public bool isBeingAbsorbed = false;
+
+    WaitForSeconds absorbDelay = new WaitForSeconds(0.1f);
 
     //[SerializeField] GameObjectRuntimeSet playerSet;
 
@@ -93,6 +97,14 @@ public class PickupObject : Interactable
         }
     }
 
+    private IEnumerator DestroyNeighbouringObject(Collider other)
+    {
+        yield return absorbDelay;
+        //quantity += other.GetComponent<PickupObject>().quantity;
+        quantity++;
+        Destroy(other.gameObject);
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.GetComponent<EarthPlayer>())
@@ -102,6 +114,14 @@ public class PickupObject : Interactable
         if (other.GetComponent<CelestialPlayer>())
         {
             p2IsInRange = true;
+        }
+        if (other.GetComponent<PickupObject>() && !isBeingAbsorbed)
+        {
+            if(other.GetComponent<PickupObject>().itemStats.name == itemStats.name && !other.GetComponent<PickupObject>().isBeingAbsorbed)
+            {
+                other.GetComponent<PickupObject>().isBeingAbsorbed = true;
+                StartCoroutine(DestroyNeighbouringObject(other));
+            }
         }
     }
 
