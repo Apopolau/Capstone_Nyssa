@@ -4,22 +4,21 @@ using UnityEngine;
 using BehaviourTree;
 using UnityEngine.AI;
 
-public class TaskAwaitDeath : BTNode
+public class TaskHide : BTNode
 {
-    NavMeshAgent thisAgent;
-    public TaskAwaitDeath(NavMeshAgent agent)
+    Animal animal;
+
+    public TaskHide(Animal animal)
     {
-        thisAgent = agent;
+        this.animal = animal;
     }
 
     protected override NodeState OnRun()
     {
-        thisAgent.ResetPath();
+        animal.isHiding = true;
         state = NodeState.SUCCESS;
         return state;
-
     }
 
     protected override void OnReset() { }
 }
-

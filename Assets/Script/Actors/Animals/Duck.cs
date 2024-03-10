@@ -7,18 +7,20 @@ public class Duck : Animal
 {
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
     
+    /*
     public Duck(bool stuckness)
     {
         stuck = stuckness;
     }
+    */
 
     private void Awake()
     {
         hunger = new Stat(100, 100, false);
         thirst = new Stat(50, 50, false);
         entertained = new Stat(150, 150, false);
-        scared = false;
-        hiding = false;
+        isScared = false;
+        isHiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
         //levelProgress = managerObject.GetComponent<LevelProgress>();
@@ -26,6 +28,17 @@ public class Duck : Animal
 
     private void Start()
     {
+        foreach(GameObject player in playerSet.Items)
+        {
+            if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
+            else if(player.GetComponent<EarthPlayer>())
+            {
+                earthPlayer = player.GetComponent<EarthPlayer>();
+            }
+        }
         StartCoroutine(UpdateAnimalState());
     }
 

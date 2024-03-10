@@ -5,33 +5,35 @@ using BehaviourTree;
 using UnityEngine.AI;
 
 //This check condition checks if the object in question is near to any objects in a list
-public class CheckIfInRangeAll : BTCondition
+public class CheckForClosest : BTCondition
 {
     GameObject checkingObject;
+    GameObject storageObject;
     GameObjectRuntimeSet checkObjectSet;
     float distanceRange;
     bool foundObjectInRange;
 
-    // 
-    public CheckIfInRangeAll(GameObject checkingEntity, GameObjectRuntimeSet entitiesCheckedAgainst, float range)
+    public CheckForClosest(GameObject checkingEntity, GameObject storageObject, GameObjectRuntimeSet entitiesCheckedAgainst, float range)
     {
         checkingObject = checkingEntity;
         checkObjectSet = entitiesCheckedAgainst;
         distanceRange = range;
+        this.storageObject = storageObject;
     }
 
-    //Returns true if there's an object of this type in range
+    //Should r
     protected override NodeState OnRun()
     {
-        if(checkObjectSet.Items != null)
+        if (checkObjectSet.Items != null)
         {
             foreach (GameObject g in checkObjectSet.Items)
             {
                 float objectRange = (checkingObject.transform.position - g.transform.position).magnitude;
                 if (Mathf.Abs(objectRange) <= distanceRange)
                 {
+                    distanceRange = objectRange;
+                    storageObject = g;
                     foundObjectInRange = true;
-                    break;
                 }
             }
             if (foundObjectInRange)
@@ -47,7 +49,7 @@ public class CheckIfInRangeAll : BTCondition
         {
             return NodeState.FAILURE;
         }
-        
+
     }
 
     protected override void OnReset() { }
