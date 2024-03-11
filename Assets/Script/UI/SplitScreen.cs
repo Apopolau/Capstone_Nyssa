@@ -24,90 +24,81 @@ public class SplitScreen : MonoBehaviour
 
     bool switching = false;
     int currCam = 1;
-    public int Manager=0;
-    void Start()
-    {
-       
-      
+    public int Manager = 0;
 
 
-    }
-
-    
     // Update is called once per frame
     void Update()
     {
-
-      
-
         //If two players are close enough make camera one, if players are far enough split camera
         if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) > distance)
         {
             SetTwoCams();
-           // Changed();
+            // Changed();
         }
         else if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) < distance)
         {
             SetOneCam();
             //Changed();
         }
-
-
     }
+
     private void Changed()
     {
         GetComponent<Animator>().SetTrigger("Change");
-
     }
 
 
     public void ManageCamera()
-    { 
+    {
         if (Manager == 0)
         {
             SetTwoCams();
             Manager = 1;
         }
         else
-        { 
+        {
             SetOneCam();
             Manager = 0;
         }
-
-
-
-
     }
 
 
-    private void SetTwoCams ()
+    private void SetTwoCams()
     {
-     
-            //GetComponent<Animator>().SetTrigger("Change");
-            mainCam.gameObject.SetActive(false);
-            mainCam.enabled = false;
-            celestialCam.gameObject.SetActive(true);
-            celestialCam.enabled = true;
-            earthCam.gameObject.SetActive(true);
-            earthCam.enabled = true;
 
-            //go into the the plant systems main camera and make sure it is properly set
-            earthPlayer.GetComponent<EarthPlayer>().SetCamera(earthCam);
-        earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = earthVirtualMouseInput;
+        //GetComponent<Animator>().SetTrigger("Change");
+        mainCam.gameObject.SetActive(false);
+        mainCam.enabled = false;
+        celestialCam.gameObject.SetActive(true);
+        celestialCam.enabled = true;
+        earthCam.gameObject.SetActive(true);
+        earthCam.enabled = true;
+
+        //go into the the plant systems main camera and make sure it is properly set
+        earthPlayer.GetComponent<EarthPlayer>().SetCamera(earthCam);
+        earthVirtualMouseInput.cursorTransform.position = earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
+        if (earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        {
+            
+            earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
+            earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = earthVirtualMouseInput;
+            earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
+            earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
+        }
         if (currCam == 1)
         {
-           // Changed();
+            // Changed();
             currCam = 2;
         }
-
-
     }
+
     private void SetOneCam()
     {
         if (currCam == 2)
         {
             currCam = 1;
-           // Changed();
+            // Changed();
 
         }
 
@@ -122,9 +113,18 @@ public class SplitScreen : MonoBehaviour
         earthCam.enabled = false;
         //go into the the plant systems main camera and make sure it is properly set
         earthPlayer.GetComponent<EarthPlayer>().SetCamera(mainCam);
-        earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = virtualMouseInput;
+        virtualMouseInput.cursorTransform.position = earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
 
-       
+        if(earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        {
+            earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
+            earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = virtualMouseInput;
+            earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
+            earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
+        }
+        
+
+
     }
 
 

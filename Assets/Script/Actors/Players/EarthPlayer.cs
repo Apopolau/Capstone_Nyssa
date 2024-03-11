@@ -208,7 +208,7 @@ public class EarthPlayer : MonoBehaviour
             {
                 //We select a type of plant from the input and make a transparent version of it with no stats
                 plantSelectedType = PlantSelectedType.TREE;
-                virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = i_treeSeed;
+                SwitchCursorIcon(i_treeSeed);
                 plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
                 OnPlantSelectedWrapUp();
             }
@@ -234,7 +234,7 @@ public class EarthPlayer : MonoBehaviour
             {
                 //We select a type of plant from the input and make a transparent version of it with no stats
                 plantSelectedType = PlantSelectedType.GRASS;
-                virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = i_grassSeed;
+                SwitchCursorIcon(i_grassSeed);
                 plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
                 OnPlantSelectedWrapUp();
             }
@@ -261,7 +261,7 @@ public class EarthPlayer : MonoBehaviour
             {
                 //We select a type of plant from the input and make a transparent version of it with no stats
                 plantSelectedType = PlantSelectedType.FLOWER;
-                virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = i_flowerSeed;
+                SwitchCursorIcon(i_flowerSeed);
                 plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
                 OnPlantSelectedWrapUp();
             }
@@ -285,19 +285,7 @@ public class EarthPlayer : MonoBehaviour
         earthControls.controls.PlantIsSelected.Enable();
         earthControls.controls.EarthPlayerDefault.Disable();
 
-        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
-        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
-        if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
-        {
-            virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
-            virtualMousePosition = virtualMouseInput.cursorTransform.position;
-        }
-        else if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
-        {
-            virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
-            virtualMousePosition = Mouse.current.position.value;
-        }
-
+        TurnOnCursor();
         DisplayTileText();
         DarkenAllImages(darkenInSelectMode);
         tileOutline = Instantiate(tileOutlinePrefab, this.transform);
@@ -344,7 +332,7 @@ public class EarthPlayer : MonoBehaviour
                 //Switch our controls
                 earthControls.controls.EarthPlayerDefault.Enable();
                 earthControls.controls.PlantIsSelected.Disable();
-                virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+                TurnOffCursor();
             }
             else
             {
@@ -447,17 +435,8 @@ public class EarthPlayer : MonoBehaviour
         earthControls.controls.EarthPlayerDefault.Disable();
 
         //Turn on the virtual mouse cursor
-        virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = i_shovel;
-        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
-        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
-        if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
-        {
-            virtualMousePosition = virtualMouseInput.cursorTransform.position;
-        }
-        else if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
-        {
-            virtualMousePosition = Mouse.current.position.value;
-        }
+        SwitchCursorIcon(i_shovel);
+        TurnOnCursor();
 
         //Create our tile outline effect
         DisplayTileText();
@@ -499,7 +478,7 @@ public class EarthPlayer : MonoBehaviour
                 //Switch our controls
                 earthControls.controls.EarthPlayerDefault.Enable();
                 earthControls.controls.RemovingPlant.Disable();
-                virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+                TurnOffCursor();
             }
             //If we're not close enough, we'll have to get close enough
             else
@@ -728,6 +707,8 @@ public class EarthPlayer : MonoBehaviour
         earthControls.controls.EarthPlayerDefault.Enable();
         earthControls.controls.BarrierSelect.Disable();
     }
+
+
 
     /// <summary>
     /// GENERAL SPELL HELPERS
@@ -963,6 +944,32 @@ public class EarthPlayer : MonoBehaviour
             // Restore the original color
             image.material.color = image.color;
         }
+    }
+
+    public void SwitchCursorIcon(Sprite newSprite)
+    {
+        virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = newSprite;
+    }
+
+    public void TurnOnCursor()
+    {
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
+        virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
+        if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
+        {
+            virtualMouseInput.cursorTransform.position = virtualMouseInput.virtualMouse.position.value;
+            virtualMousePosition = virtualMouseInput.cursorTransform.position;
+        }
+        else if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
+        {
+            virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
+            virtualMousePosition = Mouse.current.position.value;
+        }
+    }
+
+    public void TurnOffCursor()
+    {
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
 
