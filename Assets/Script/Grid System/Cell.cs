@@ -284,7 +284,7 @@ public class Cell : MonoBehaviour
         //Handles indication whether it's a valid position or not
         if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
         {
-            if (tileHasBuild || enviroState == EnviroState.POLLUTED || terrainType == TerrainType.WATER)
+            if (!tileValid || enviroState == EnviroState.POLLUTED || terrainType == TerrainType.WATER)
             {
                 earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
                 earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
@@ -297,7 +297,7 @@ public class Cell : MonoBehaviour
         }
         else
         {
-            if (tileHasBuild || enviroState == EnviroState.POLLUTED)
+            if (!tileValid || enviroState == EnviroState.POLLUTED)
             {
                 earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
                 earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
