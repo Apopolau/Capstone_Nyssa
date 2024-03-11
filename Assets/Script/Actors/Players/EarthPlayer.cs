@@ -87,6 +87,12 @@ public class EarthPlayer : MonoBehaviour
     [SerializeField] public GameObject landFlowerPreviewPrefab;
     [SerializeField] public GameObject waterFlowerPreviewPrefab;
 
+    [Header("Icon Sprites")]
+    [SerializeField] private Sprite i_grassSeed;
+    [SerializeField] private Sprite i_flowerSeed;
+    [SerializeField] private Sprite i_treeSeed;
+    [SerializeField] private Sprite i_shovel;
+
     [Header("VFX")]
     
     [SerializeField] private GameObject ThornShieldPrefab;
@@ -202,13 +208,15 @@ public class EarthPlayer : MonoBehaviour
             {
                 //We select a type of plant from the input and make a transparent version of it with no stats
                 plantSelectedType = PlantSelectedType.TREE;
+                virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = i_treeSeed;
                 plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
                 OnPlantSelectedWrapUp();
             }
         }
         else
         {
-            StartCoroutine(InsufficientSeeds());
+            string insufficentSeeds = "Insufficient seeds of that type";
+            StartCoroutine(ThrowPlayerWarning(insufficentSeeds));
         }
     }
 
@@ -226,13 +234,15 @@ public class EarthPlayer : MonoBehaviour
             {
                 //We select a type of plant from the input and make a transparent version of it with no stats
                 plantSelectedType = PlantSelectedType.GRASS;
+                virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = i_grassSeed;
                 plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
                 OnPlantSelectedWrapUp();
             }
         }
         else
         {
-            StartCoroutine(InsufficientSeeds());
+            string insufficentSeeds = "Insufficient seeds of that type";
+            StartCoroutine(ThrowPlayerWarning(insufficentSeeds));
         }
     }
 
@@ -251,13 +261,15 @@ public class EarthPlayer : MonoBehaviour
             {
                 //We select a type of plant from the input and make a transparent version of it with no stats
                 plantSelectedType = PlantSelectedType.FLOWER;
+                virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = i_flowerSeed;
                 plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
                 OnPlantSelectedWrapUp();
             }
         }
         else
         {
-            StartCoroutine(InsufficientSeeds());
+            string insufficentSeeds = "Insufficient seeds of that type";
+            StartCoroutine(ThrowPlayerWarning(insufficentSeeds));
         }
 
     }
@@ -342,27 +354,14 @@ public class EarthPlayer : MonoBehaviour
         else if (isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
         {
             //Display error message
-            StartCoroutine(InvalidPlantLocation());
+            string invalidTile = "Invalid plant placement";
+            StartCoroutine(ThrowPlayerWarning(invalidTile));
             yield break;
         }
         else
         {
             yield break;
         }
-    }
-
-    private IEnumerator InvalidPlantLocation()
-    {
-        displayText.text = "Invalid plant placement";
-        yield return plantTime;
-        displayText.text = "";
-    }
-
-    private IEnumerator InsufficientSeeds()
-    {
-        displayText.text = "Insufficient seeds of that type";
-        yield return plantTime;
-        displayText.text = "";
     }
 
     //Call if the player is too far from a tile they selected to plant
@@ -446,8 +445,9 @@ public class EarthPlayer : MonoBehaviour
         //Switch our controls
         earthControls.controls.RemovingPlant.Enable();
         earthControls.controls.EarthPlayerDefault.Disable();
-        
+
         //Turn on the virtual mouse cursor
+        virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = i_shovel;
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = true;
         virtualMouseInput.cursorTransform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         if (earthControls.userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
@@ -510,7 +510,8 @@ public class EarthPlayer : MonoBehaviour
         //If the tile has no build
         else if (selectedTile.GetComponent<Cell>().tileIsActivated && !selectedTile.GetComponent<Cell>().tileHasBuild)
         {
-            StartCoroutine(InvalidRemovalTile());
+            string invalidTile = "No valid objects to remove";
+            StartCoroutine(ThrowPlayerWarning(invalidTile));
         }
         else
         {
@@ -535,13 +536,7 @@ public class EarthPlayer : MonoBehaviour
         cellToRemoveFrom.tileHasBuild = false;
     }
 
-    private IEnumerator InvalidRemovalTile()
-    {
-        displayText.text = "No valid objects to remove";
-        yield return plantTime;
-        displayText.text = "";
-    }
-
+    //If removing gets cancelled
     public void OnRemovingCancelled()
     {
         if (isRemovalStarted)
@@ -597,11 +592,13 @@ public class EarthPlayer : MonoBehaviour
         }
         else if (healUsed)
         {
-            StartCoroutine(AbilityOnCooldown());
+            string healOnCooldown = "That ability is still on cooldown";
+            StartCoroutine(ThrowPlayerWarning(healOnCooldown));
         }
         else if (!CheckIfValidTargets())
         {
-            StartCoroutine(NoAvailableTargets());
+            string noValidTargets = "There are no valid targets nearby";
+            StartCoroutine(ThrowPlayerWarning(noValidTargets));
         }
     }
 
@@ -670,11 +667,13 @@ public class EarthPlayer : MonoBehaviour
         }
         else if (shieldUsed)
         {
-            StartCoroutine(AbilityOnCooldown());
+            string shieldOnCooldown = "That ability is still on cooldown";
+            StartCoroutine(ThrowPlayerWarning(shieldOnCooldown));
         }
         else if (!CheckIfValidTargets())
         {
-            StartCoroutine(NoAvailableTargets());
+            string noValidTargets = "There are no valid targets nearby";
+            StartCoroutine(ThrowPlayerWarning(noValidTargets));
         }
     }
 
@@ -734,23 +733,6 @@ public class EarthPlayer : MonoBehaviour
     /// GENERAL SPELL HELPERS
     /// </summary>
     /// <returns></returns>
-
-    /// Warning telling the player the heal is on cooldown
-    private IEnumerator AbilityOnCooldown()
-    {
-        displayText.text = "That ability still on cooldown";
-        yield return plantTime;
-        displayText.text = "";
-    }
-
-    //Warning telling the player they have no valid targets
-    private IEnumerator NoAvailableTargets()
-    {
-        displayText.text = "No valid targets nearby";
-        yield return plantTime;
-        displayText.text = "";
-    }
-
     private bool CheckIfValidTargets()
     {
         validTargets.Clear();
@@ -804,43 +786,11 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
-
-    /// <summary>
-    /// HELPER FUNCTIONS
-    /// </summary>
-    //When highlighting tiles, get information to move indicators
-    private void ActivateTile()
-    {
-        //Only do this if we haven't selected a tile yet
-        if(!isATileSelected)
-        {
-            Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(cameraRay, out hit, 1000, tileMask))
-            {
-                selectedTile = hit.transform.gameObject.GetComponentInParent<Cell>().gameObject;
-            }
-        }
-    }
-
-    //When the player finishes using an ability with a tile select, shut off the appropriate UI and controls
-    private void TurnOffTileSelect(bool tileSelectionState)
-    {
-        earthControls.controls.RemovingPlant.Disable();
-        earthControls.controls.PlantIsSelected.Disable();
-        earthControls.controls.EarthPlayerDefault.Enable();
-        isATileSelected = tileSelectionState;
-        Destroy(tileOutline);
-        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
-        HideTileText();
-        uiController.RestoreUI(darkenWhilePlanting);
-    }
-
     //Create a list of targets that are in range of your abilities
     private bool JudgeDistance(Vector3 transform1, Vector3 transform2, float distance)
     {
         float calcDistance = Mathf.Abs((transform1 - transform2).magnitude);
-        
+
 
         if (calcDistance <= distance)
         {
@@ -857,7 +807,7 @@ public class EarthPlayer : MonoBehaviour
     {
         closestDistance = spellRange;
         int i = 0;
-        foreach(GameObject potTarget in validTargets)
+        foreach (GameObject potTarget in validTargets)
         {
             i++;
             float distanceMeasured = Mathf.Abs((potTarget.transform.position - this.transform.position).magnitude);
@@ -870,7 +820,12 @@ public class EarthPlayer : MonoBehaviour
         }
     }
 
-    //If the earth player takes damage
+
+
+    /// <summary>
+    /// COMBAT FUNCTIONS
+    /// </summary>
+    /// //If the earth player takes damage
     public bool TakeHit(int damageDealt)
     {
         if (!isShielded && !iFramesOn)
@@ -926,29 +881,17 @@ public class EarthPlayer : MonoBehaviour
     //If the earth player takes so much damage they get defeated
     private void Respawn()
     {
-        
+
         health.current = 100;
         gameObject.transform.position = OrigPos;
         isDead = false;
     }
 
-    //Call this if you want to have all player controls turned off for a certain amount of time
-    public void CallSuspendActions(WaitForSeconds waitTime)
-    {
-        StartCoroutine(SuspendActions(waitTime));
-    }
 
-    private IEnumerator SuspendActions(WaitForSeconds waitTime)
-    {
-        earthControls.controls.EarthPlayerDefault.Disable();
-        earthControls.controls.PlantIsSelected.Disable();
-        uiController.DarkenOverlay(darkenWhilePlanting); //indicate no movement is allowed while planting
-        yield return waitTime;
-        earthControls.controls.EarthPlayerDefault.Enable();
-        uiController.RestoreUI(darkenWhilePlanting);
-    }
-
-    //Switch between cameras for splitscreen
+    /// <summary>
+    /// UI FUNCTIONS
+    /// </summary>
+//Switch between cameras for splitscreen
     public void SetCamera(Camera switchCam)
     {
         mainCamera = switchCam;
@@ -966,10 +909,11 @@ public class EarthPlayer : MonoBehaviour
         }
 
         // Activate the GameObject
-         selectTileText.gameObject.SetActive(true);
+        selectTileText.gameObject.SetActive(true);
 
     }
 
+    //Hides that UI element
     public void HideTileText()
     {
         // Check if the Image component is disabled
@@ -982,9 +926,10 @@ public class EarthPlayer : MonoBehaviour
         // Activate the GameObject
         selectTileText.gameObject.SetActive(false);
 
-    
+
     }
 
+    //Darkens the UI images for the earth player when they can't be used
     void DarkenAllImages(GameObject targetGameObject)
     {
         if (targetGameObject != null)
@@ -1008,16 +953,70 @@ public class EarthPlayer : MonoBehaviour
             Debug.LogWarning("Target GameObject is not assigned.");
         }
     }
-    
-     // Function to reset color to original
+
+    // Function to reset color to original
     public void ResetImageColor(GameObject targetGameObject)
     {
         Image[] images = targetGameObject.GetComponentsInChildren<Image>();
-            foreach (Image image in images)
-            {
-                 // Restore the original color
-                 image.material.color = image.color;
-            }
+        foreach (Image image in images)
+        {
+            // Restore the original color
+            image.material.color = image.color;
+        }
     }
-    
+
+
+    /// <summary>
+    /// HELPER FUNCTIONS
+    /// </summary>
+    //When highlighting tiles, get information to move indicators
+    private void ActivateTile()
+    {
+        //Only do this if we haven't selected a tile yet
+        if(!isATileSelected)
+        {
+            Ray cameraRay = mainCamera.ScreenPointToRay(virtualMousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(cameraRay, out hit, 1000, tileMask))
+            {
+                selectedTile = hit.transform.gameObject.GetComponentInParent<Cell>().gameObject;
+            }
+        }
+    }
+
+    //When the player finishes using an ability with a tile select, shut off the appropriate UI and controls
+    private void TurnOffTileSelect(bool tileSelectionState)
+    {
+        earthControls.controls.RemovingPlant.Disable();
+        earthControls.controls.PlantIsSelected.Disable();
+        earthControls.controls.EarthPlayerDefault.Enable();
+        isATileSelected = tileSelectionState;
+        Destroy(tileOutline);
+        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        HideTileText();
+        uiController.RestoreUI(darkenWhilePlanting);
+    }
+
+    private IEnumerator ThrowPlayerWarning(string textInfo)
+    {
+        displayText.text = textInfo;
+        yield return plantTime;
+        displayText.text = "";
+    }
+
+    //Call this if you want to have all player controls turned off for a certain amount of time
+    public void CallSuspendActions(WaitForSeconds waitTime)
+    {
+        StartCoroutine(SuspendActions(waitTime));
+    }
+
+    private IEnumerator SuspendActions(WaitForSeconds waitTime)
+    {
+        earthControls.controls.EarthPlayerDefault.Disable();
+        earthControls.controls.PlantIsSelected.Disable();
+        uiController.DarkenOverlay(darkenWhilePlanting); //indicate no movement is allowed while planting
+        yield return waitTime;
+        earthControls.controls.EarthPlayerDefault.Enable();
+        uiController.RestoreUI(darkenWhilePlanting);
+    }
 }
