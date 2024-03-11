@@ -90,7 +90,7 @@ public class DuckTree : BTree
                         {
                             new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.grassSet, 20),
                             new CheckForClosestGrass(thisDuck, thisDuck.grassSet, 20),
-                            new taskInitiatePathTo(duckAgent, thisDuck.closestGrass.transform, duckAnimator),
+                            new taskInitiatePathToGrass(duckAgent, duckAnimator),
                             new TaskHide(thisDuck)
                         }),
 
@@ -129,7 +129,7 @@ public class DuckTree : BTree
                         {
                             new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.grassSet, 20),
                             new CheckForClosestGrass(thisDuck, thisDuck.grassSet, 20),
-                            new taskInitiatePathTo(duckAgent, thisDuck.closestGrass.transform, duckAnimator),
+                            new taskInitiatePathToGrass(duckAgent, duckAnimator),
                             new TaskHide(thisDuck)
                         }),
                     })
@@ -167,7 +167,7 @@ public class DuckTree : BTree
                                     new CheckIfAnyFood(thisDuck),
                                     new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.buildSet, 5),
                                     new CheckForClosest(thisDuck.gameObject, thisDuck.closestFood, thisDuck.foodSet, 50),
-                                    new taskInitiatePathTo(duckAgent, thisDuck.closestFood.transform, duckAnimator),
+                                    new taskInitiatePathToFood(duckAgent, duckAnimator),
                                     new Timer(2f, new TaskInitiateAnimation(duckAnimator.animator, duckAnimator.IfEatingHash, nonEatingAnimations)),
                                     new TaskRestoreStat(thisDuck.hunger)
                                 }),
