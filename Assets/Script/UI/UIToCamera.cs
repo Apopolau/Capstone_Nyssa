@@ -24,7 +24,7 @@ public class UIToCamera : MonoBehaviour
         //Quaternion rotation = Quaternion.Euler(cameraRotation.eulerAngles.x, cameraRotation.eulerAngles.z - GetComponentInParent<Transform>().rotation.y, cameraRotation.eulerAngles.y);
 
         // Apply rotation around the Z-axis only
-        transform.forward = -mainCamera.forward;
+        transform.forward = mainCamera.forward;
         //transform.rotation = Quaternion.Euler(0, 0, 0);
     }
 }

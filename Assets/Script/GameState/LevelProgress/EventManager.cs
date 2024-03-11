@@ -5,6 +5,7 @@ using TMPro;
 
 public abstract class EventManager : MonoBehaviour
 {
+    [SerializeField] protected GameObject objectiveList;
     public Enemy dyingEnemy;
 
     protected void FlipTiles(List<GameObject> tiles)

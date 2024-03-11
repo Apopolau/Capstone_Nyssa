@@ -14,6 +14,8 @@ public abstract class LevelProgress : ScriptableObject
     protected int treeCount;
     protected int grassCount;
     protected int cattailCount;
+    protected int flowerCount;
+    protected int lilyCount;
     public int totalPlants;
     public bool cleanWater = false;
     public bool shelter = false;

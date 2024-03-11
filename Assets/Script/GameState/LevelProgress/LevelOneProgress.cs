@@ -122,4 +122,20 @@ public class LevelOneProgress : LevelProgress
     {
 
     }
+
+    public int GetTreeCount()
+    {
+        return treeCount;
+    }
+
+    public int GetGrassCount()
+    {
+        return grassCount;
+    }
+
+    public int GetCattailCount()
+    {
+        return cattailCount;
+    }
+
 }

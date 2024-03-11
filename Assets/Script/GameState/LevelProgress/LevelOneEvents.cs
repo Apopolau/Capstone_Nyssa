@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class LevelOneEvents : EventManager
 {
@@ -27,6 +29,7 @@ public class LevelOneEvents : EventManager
     [SerializeField] TaskListManager task4;
     [SerializeField] TaskListManager task5;
     [SerializeField] TaskListManager task6;
+    [SerializeField] TaskListManager task7;
 
     private GameObject grassSeedSpawn;
     private GameObject treeSeedSpawn;
@@ -42,6 +45,7 @@ public class LevelOneEvents : EventManager
 
     private bool runDefeatDialogue = false;
     private bool runReadyToLeaveDialogue = false;
+    private bool hasEncounteredBridge = false;
 
 
     // Start is called before the first frame update
@@ -87,6 +91,9 @@ public class LevelOneEvents : EventManager
 
     private void EvaluateFoodLevel()
     {
+        task1.GetComponent<TextMeshProUGUI>().text = $"- Plant 6 trees ({levelOneProgress.GetTreeCount()}/6)";
+        task2.GetComponent<TextMeshProUGUI>().text = $"- Plant 8 grass ({levelOneProgress.GetGrassCount()}/8)";
+        task3.GetComponent<TextMeshProUGUI>().text = $"- Plant 4 cattails ({levelOneProgress.GetCattailCount()}/4)";
         if (levelOneProgress.EvaluateTrees())
         {
             task1.CrossOutTask();
@@ -133,7 +140,7 @@ public class LevelOneEvents : EventManager
         
         firstMonsterDeadDialouge.TriggerDialogue();
         keyMonsterDefeatCount++;
-        
+        objectiveList.SetActive(true);
     }
 
     public void OnSecondMonsterDefeated()
@@ -212,6 +219,20 @@ public class LevelOneEvents : EventManager
         //Set the leave trigger to exit the level to on
         runReadyToLeaveDialogue = true;
         allObjectivesMetDialogue.TriggerDialogue();
+    }
+
+    public void OnBridgeEncountered()
+    {
+        if (!hasEncounteredBridge)
+        {
+            task7.gameObject.SetActive(true);
+            hasEncounteredBridge = true;
+        }
+    }
+
+    public void OnBridgeBuilt()
+    {
+        task7.CrossOutTask();
     }
 
     public void DebugTileFlip()

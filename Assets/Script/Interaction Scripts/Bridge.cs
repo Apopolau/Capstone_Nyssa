@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bridge : Interactable
 {
+    [SerializeField] LevelOneEvents levelOneEvents;
     [SerializeField] GameObject pickupTarget;
     [SerializeField] GameObject bridgeGeometry;
     [SerializeField] GameObject bridgeCollider;
@@ -94,6 +95,7 @@ public class Bridge : Interactable
         previewOn = true;
         bridgeGeometry.SetActive(true);
         pickupTarget.SetActive(true);
+        levelOneEvents.OnBridgeEncountered();
     }
 
     private void DeactivateBridgePreview()
@@ -136,6 +138,7 @@ public class Bridge : Interactable
         earthPlayer.inventory.RemoveItemByName("Tree Log", 3);
         bridgeCollider.SetActive(true);
         bridgeGeometry.GetComponentInChildren<MeshRenderer>().material = material;
+        levelOneEvents.OnBridgeBuilt();
         Destroy(this.gameObject.GetComponent<BoxCollider>());
     }
 
