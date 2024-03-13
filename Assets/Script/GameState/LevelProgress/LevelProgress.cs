@@ -19,6 +19,7 @@ public abstract class LevelProgress : ScriptableObject
     public int totalPlants;
     public bool cleanWater = false;
     public bool shelter = false;
+    public bool readyToLeave = false;
 
 
     public void SetObjectiveText(TextMeshProUGUI incObjectiveText)

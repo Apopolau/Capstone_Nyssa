@@ -20,8 +20,6 @@ public class LevelOneProgress : LevelProgress
     public bool animalIsSafe = false;
     public bool animalHasFriend = false;
 
-    public bool readyToLeave = false;
-
     int treeGoal = 10;
     int grassGoal = 15;
     int cattailGoal = 8;
