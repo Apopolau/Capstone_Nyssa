@@ -12,13 +12,13 @@ public class DialogueManager : MonoBehaviour
     public Image characterIconLeft;
     public Image characterIconRight;
     public TextMeshProUGUI dialogueArea;
-   //public TextMeshProUGUI dialogueAreaFR;
+    //public TextMeshProUGUI dialogueAreaFR;
 
-    private Queue<DialogueLine> lines;
+    private Queue<DialogueEvent> events;
 
     public bool isDialogueActive = false;
     public GameObject dialogueBox; // Reference to the entire dialogue box
-                                   
+
     public EarthCharacterUIController uiController;// Reference to the UI controller script
     public SplitScreen split;
 
@@ -53,7 +53,7 @@ public class DialogueManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
 
-        lines = new Queue<DialogueLine>();
+        events = new Queue<DialogueEvent>();
     }
 
     public void StartDialogue(Dialogue dialogue)
@@ -108,28 +108,28 @@ public class DialogueManager : MonoBehaviour
 
 
 
-        lines.Clear();
+        events.Clear();
 
-        foreach (DialogueLine dialogueLine in dialogue.dialogueLines)
+        foreach (DialogueEvent dialogueEvent in dialogue.dialogueEvents)
         {
-            lines.Enqueue(dialogueLine);
+            events.Enqueue(dialogueEvent);
         }
 
-        DisplayNextDialogueLine();
+        HandleNextEvents();
 
     }
 
     private void AssignCharacter(DialogueLine currentLine)
     {
-        if(currentLine.speaker == DialogueLine.Character.CELESTE)
+        if (currentLine.speaker == DialogueLine.Character.CELESTE)
         {
             currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Celeste"));
         }
-        else if(currentLine.speaker == DialogueLine.Character.SPROUT)
+        else if (currentLine.speaker == DialogueLine.Character.SPROUT)
         {
             currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Sprout"));
         }
-        else if(currentLine.speaker == DialogueLine.Character.DUCK)
+        else if (currentLine.speaker == DialogueLine.Character.DUCK)
         {
             currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Duck"));
         }
@@ -146,7 +146,7 @@ public class DialogueManager : MonoBehaviour
             currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Nyssa"));
         }
 
-        if(currentLine.emotion == DialogueLine.Emotion.DEFAULT)
+        if (currentLine.emotion == DialogueLine.Emotion.DEFAULT)
         {
             currentSprite = currentCharacter.characterSprites.Default;
         }
@@ -172,17 +172,30 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void DisplayNextDialogueLine()
+    public void HandleNextEvents()
     {
-        if (lines.Count == 0)
+        if (events.Count == 0)
         {
             EndDialogue();
 
             return;
         }
 
-        DialogueLine currentLine = lines.Dequeue();
+        DialogueEvent currentEvent = events.Dequeue();
 
+        if (currentEvent is DialogueLine)
+        {
+            DisplayNextDialogueLine((DialogueLine)currentEvent);
+        }
+        else if(currentEvent is DialogueCameraPan)
+        {
+            HandleCameraPan((DialogueCameraPan)currentEvent);
+        }
+
+    }
+
+    public void DisplayNextDialogueLine(DialogueLine currentLine)
+    {
         // Clear the dialogue areas
         dialogueArea.text = "";
         //dialogueAreaFR.text = "";
@@ -210,10 +223,6 @@ public class DialogueManager : MonoBehaviour
             characterIconLeft.CrossFadeAlpha(0f, 0f, true);
         }
 
-        //display all text at once
-       //dialogueArea.text = currentLine.line;
-        //dialogueAreaFR.text = currentLine.lineFR;
-
         // Determine which language to display based on the user's language setting
         switch (userSettingsManager.chosenLanguage)
         {
@@ -226,7 +235,13 @@ public class DialogueManager : MonoBehaviour
                 dialogueArea.text = currentLine.lineFR;
                 Debug.Log("French text should display");
                 break;
+
         }
+    }
+
+    public void HandleCameraPan(DialogueCameraPan pan)
+    {
+
     }
 
     //display letter by letter

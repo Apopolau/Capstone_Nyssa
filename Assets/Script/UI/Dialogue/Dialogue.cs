@@ -6,5 +6,5 @@ using UnityEngine;
 public class Dialogue : ScriptableObject
 {
     public UserSettingsManager userSettingsManager;
-    public List<DialogueLine> dialogueLines = new List<DialogueLine>();
+    public List<DialogueEvent> dialogueEvents = new List<DialogueEvent>();
 }

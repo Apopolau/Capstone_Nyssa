@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Line", menuName = "Dialogue/Line")]
-public class DialogueLine : ScriptableObject
+public class DialogueLine : DialogueEvent
 {
     public enum Character { CELESTE, SPROUT, DUCK, HEDGEHOG, FOX, NYSSA };
     [SerializeField] public Character speaker;
