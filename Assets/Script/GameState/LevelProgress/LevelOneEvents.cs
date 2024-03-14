@@ -6,13 +6,16 @@ using TMPro;
 
 public class LevelOneEvents : EventManager
 {
+    [Header("Scene Data")]
     [SerializeField] LevelOneProgress levelOneProgress;
 
+    [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
     //[SerializeField] GameObject river;
     //[SerializeField] GameObject lake;
     [SerializeField] GameObject water;
 
+    [Header("Parent objects of tile grids")]
     [SerializeField] GameObject firstAreaGrid;
     [SerializeField] GameObject secondAreaGrid;
     [SerializeField] GameObject thirdAreaGrid;
@@ -23,6 +26,7 @@ public class LevelOneEvents : EventManager
     List<GameObject> thirdAreaTiles = new List<GameObject>();
     List<GameObject> fourthAreaTiles = new List<GameObject>();
 
+    [Header("Objective tasks")]
     [SerializeField] TaskListManager task1;
     [SerializeField] TaskListManager task2;
     [SerializeField] TaskListManager task3;
@@ -34,12 +38,17 @@ public class LevelOneEvents : EventManager
     private GameObject grassSeedSpawn;
     private GameObject treeSeedSpawn;
 
+    [Header("Dialogue triggers")]
     public DialogueTrigger firstMonsterDeadDialouge;
     public DialogueTrigger secondMonsterDeadDialouge;
     public DialogueTrigger thirdMonsterDeadDialouge;
     public DialogueTrigger fourthMonsterDeadDialouge;
     public DialogueTrigger allMonstersDefeatedDialogue;
     public DialogueTrigger allObjectivesMetDialogue;
+
+    [Header("Ducks")]
+    [SerializeField] private GameObject duck1;
+    [SerializeField] private GameObject duck2;
 
     int keyMonsterDefeatCount;
 
@@ -71,7 +80,8 @@ public class LevelOneEvents : EventManager
         {
             fourthAreaTiles.Add(childTransform.gameObject);
         }
-
+        duck1.SetActive(true);
+        duck2.SetActive(true);
     }
 
     // Update is called once per frame

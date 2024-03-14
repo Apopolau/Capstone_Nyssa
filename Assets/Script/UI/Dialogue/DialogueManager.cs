@@ -45,10 +45,7 @@ public class DialogueManager : MonoBehaviour
             {
                 celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
             }
-
         }
-
-
     }
 
     private void Awake()

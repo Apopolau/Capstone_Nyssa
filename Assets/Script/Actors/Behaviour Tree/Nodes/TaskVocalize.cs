@@ -6,24 +6,24 @@ using UnityEngine.AI;
 
 public class TaskVocalize : BTNode
 {
-    GameObject player;
     NavMeshAgent thisAgent;
     float playerRange;
+    Animal thisAnimal;
 
-    public TaskVocalize(NavMeshAgent thisAgent, GameObject player, float range)
+    public TaskVocalize(NavMeshAgent thisAgent, Animal animal, float range)
     {
         this.thisAgent = thisAgent;
-        this.player = player;
         playerRange = range;
+        thisAnimal = animal;
     }
 
 
     protected override NodeState OnRun()
     {
-        float distance = (thisAgent.transform.position - player.transform.position).magnitude;
+        float distance = (thisAgent.transform.position - thisAnimal.GetClosestPlayer().transform.position).magnitude;
         if(distance <= playerRange)
         {
-            thisAgent.GetComponent<Transform>().LookAt(player.transform);
+            thisAgent.GetComponent<Transform>().LookAt(thisAnimal.GetClosestPlayer().transform);
             //Do a popup here
             //Also do a sound, like a quack
             state = NodeState.RUNNING;

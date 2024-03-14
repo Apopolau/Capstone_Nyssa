@@ -6,13 +6,6 @@ using UnityEngine.AI;
 public class Duck : Animal
 {
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
-    
-    /*
-    public Duck(bool stuckness)
-    {
-        stuck = stuckness;
-    }
-    */
 
     private void Awake()
     {
@@ -26,26 +19,29 @@ public class Duck : Animal
         //levelProgress = managerObject.GetComponent<LevelProgress>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        foreach(GameObject player in playerSet.Items)
+        foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<CelestialPlayer>())
             {
                 celestialPlayer = player.GetComponent<CelestialPlayer>();
             }
-            else if(player.GetComponent<EarthPlayer>())
+            else if (player.GetComponent<EarthPlayer>())
             {
                 earthPlayer = player.GetComponent<EarthPlayer>();
             }
         }
+    }
+
+    private void Start()
+    {
         StartCoroutine(UpdateAnimalState());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        UpdateAnimalState();
+        CheckLevelState();
     }
 
     override protected IEnumerator UpdateAnimalState()
@@ -117,6 +113,8 @@ public class Duck : Animal
     {
         return entertained.low;
     }
+
+    
 
     //We can put something here to change their texture and such
     public override void IsHealed()

@@ -18,10 +18,10 @@ public class DuckTree : BTree
     {
         thisDuck = GetComponent<Duck>();
         duckAgent = GetComponent<NavMeshAgent>();
-        earthPlayer = thisDuck.earthPlayer;
-        celestialPlayer = thisDuck.celestialPlayer;
+        earthPlayer = thisDuck.GetEarthPlayer();
+        celestialPlayer = thisDuck.GetCelestialPlayer();
         weatherState = thisDuck.weatherState;
-        duckAnimator = thisDuck.animalAnimator;
+        duckAnimator = thisDuck.GetAnimator();
 
         List<int> nonEatingAnimations;
         nonEatingAnimations = new List<int>();
@@ -152,8 +152,8 @@ public class DuckTree : BTree
                             //Add a check for if the player is nearby
                             new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.playerSet, 15),
                             new CheckIfAnimating(duckAnimator),
-                            new CheckForClosest(thisDuck.gameObject, thisDuck.closestPlayer, thisDuck.playerSet, 15),
-                            new Timer(3f, new TaskVocalize(duckAgent, thisDuck.closestPlayer, 15))
+                            new CheckForClosestPlayer(thisDuck, 15),
+                            new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15))
                         }),
                         //Check if hungry first, find food
                         new Sequence(new List<BTNode>
@@ -166,7 +166,7 @@ public class DuckTree : BTree
                                 {
                                     new CheckIfAnyFood(thisDuck),
                                     new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.buildSet, 5),
-                                    new CheckForClosest(thisDuck.gameObject, thisDuck.closestFood, thisDuck.foodSet, 50),
+                                    new CheckForClosestFood(thisDuck, 50),
                                     new taskInitiatePathToFood(duckAgent, duckAnimator),
                                     new Timer(2f, new TaskInitiateAnimation(duckAnimator.animator, duckAnimator.IfEatingHash, nonEatingAnimations)),
                                     new TaskRestoreStat(thisDuck.hunger)
@@ -175,8 +175,8 @@ public class DuckTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new Inverter(new CheckIfAnyFood(thisDuck)),
-                                    new CheckForClosest(thisDuck.gameObject, thisDuck.closestPlayer, thisDuck.playerSet, 30),
-                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck.closestPlayer, 15))
+                                    new CheckForClosestPlayer(thisDuck, 15),
+                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15))
                                 })
                             })
                         }),
@@ -198,8 +198,8 @@ public class DuckTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new Inverter(new CheckIfAnyWater(thisDuck)),
-                                    new CheckForClosest(thisDuck.gameObject, thisDuck.closestPlayer, thisDuck.playerSet, 30),
-                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck.closestPlayer, 15))
+                                    new CheckForClosestPlayer(thisDuck, 15),
+                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15))
                                 })
                                 
                             })
@@ -215,7 +215,7 @@ public class DuckTree : BTree
                     })
                 })
             })
-        }) ;
+        }); ;
         return root;
         
     }

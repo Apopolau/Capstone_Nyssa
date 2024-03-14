@@ -18,10 +18,10 @@ public class HedgehogTree : BTree
     {
         thisHog = GetComponent<Hedgehog>();
         hogAgent = GetComponent<NavMeshAgent>();
-        earthPlayer = thisHog.earthPlayer;
-        celestialPlayer = thisHog.celestialPlayer;
+        earthPlayer = thisHog.GetEarthPlayer();
+        celestialPlayer = thisHog.GetCelestialPlayer();
         weatherState = thisHog.weatherState;
-        hogAnimator = thisHog.animalAnimator;
+        hogAnimator = thisHog.GetAnimator();
 
         List<int> nonEatingAnimations;
         nonEatingAnimations = new List<int>();
@@ -152,8 +152,8 @@ public class HedgehogTree : BTree
                             //Add a check for if the player is nearby
                             new CheckIfInRangeAll(thisHog.gameObject, thisHog.playerSet, 15),
                             new CheckIfAnimating(hogAnimator),
-                            new CheckForClosest(thisHog.gameObject, thisHog.closestPlayer, thisHog.playerSet, 15),
-                            new Timer(3f, new TaskVocalize(hogAgent, thisHog.closestPlayer, 15))
+                            new CheckForClosest(thisHog.gameObject, ref thisHog.closestPlayer, thisHog.playerSet, 15),
+                            new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15))
                         }),
                         //Check if hungry first, find food
                         new Sequence(new List<BTNode>
@@ -166,7 +166,7 @@ public class HedgehogTree : BTree
                                 {
                                     new CheckIfAnyFood(thisHog),
                                     new CheckIfInRangeAll(thisHog.gameObject, thisHog.buildSet, 5),
-                                    new CheckForClosest(thisHog.gameObject, thisHog.closestFood, thisHog.foodSet, 50),
+                                    new CheckForClosestFood(thisHog, 50),
                                     new taskInitiatePathToFood(hogAgent, hogAnimator),
                                     new Timer(2f, new TaskInitiateAnimation(hogAnimator.animator, hogAnimator.IfEatingHash, nonEatingAnimations)),
                                     new TaskRestoreStat(thisHog.hunger)
@@ -175,8 +175,8 @@ public class HedgehogTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new Inverter(new CheckIfAnyFood(thisHog)),
-                                    new CheckForClosest(thisHog.gameObject, thisHog.closestPlayer, thisHog.playerSet, 30),
-                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog.closestPlayer, 15))
+                                    new CheckForClosest(thisHog.gameObject, ref thisHog.closestPlayer, thisHog.playerSet, 30),
+                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15))
                                 })
                             })
                         }),
@@ -198,8 +198,8 @@ public class HedgehogTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new Inverter(new CheckIfAnyWater(thisHog)),
-                                    new CheckForClosest(thisHog.gameObject, thisHog.closestPlayer, thisHog.playerSet, 30),
-                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog.closestPlayer, 15))
+                                    new CheckForClosest(thisHog.gameObject, ref thisHog.closestPlayer, thisHog.playerSet, 30),
+                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15))
                                 })
                                 
                             })

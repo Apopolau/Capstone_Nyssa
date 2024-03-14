@@ -20,12 +20,12 @@ public class taskInitiatePathToGrass : BTNode
 
     protected override NodeState OnRun()
     {
-        bool inRange = Mathf.Abs((thisAgent.transform.position - animal.closestGrass.transform.position).magnitude) <= thisAgent.stoppingDistance;
+        bool inRange = Mathf.Abs((thisAgent.transform.position - animal.GetClosestGrass().transform.position).magnitude) <= thisAgent.stoppingDistance;
 
         //If we're not at the destination but we can reach it
         if (!inRange && thisAgent.path.status != NavMeshPathStatus.PathInvalid)
         {
-            thisAgent.SetDestination(animal.closestGrass.transform.position);
+            thisAgent.SetDestination(animal.GetClosestGrass().transform.position);
             thisAnimator.ToggleSetWalk();
             state = NodeState.RUNNING;
         }

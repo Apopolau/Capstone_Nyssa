@@ -19,26 +19,30 @@ public class Hedgehog : Animal
         //levelProgress = managerObject.GetComponent<LevelProgress>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        foreach(GameObject player in playerSet.Items)
+        foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<CelestialPlayer>())
             {
                 celestialPlayer = player.GetComponent<CelestialPlayer>();
             }
-            else if(player.GetComponent<EarthPlayer>())
+            else if (player.GetComponent<EarthPlayer>())
             {
                 earthPlayer = player.GetComponent<EarthPlayer>();
             }
         }
+    }
+
+    private void Start()
+    {
         StartCoroutine(UpdateAnimalState());
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateAnimalState();
+        CheckLevelState();
     }
 
     override protected IEnumerator UpdateAnimalState()

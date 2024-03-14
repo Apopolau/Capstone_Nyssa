@@ -5,38 +5,39 @@ using BehaviourTree;
 using UnityEngine.AI;
 
 //This check condition checks if the object in question is near to any objects in a list
-public class CheckForClosestGrass : BTCondition
+public class CheckForClosestFood : BTCondition
 {
     Animal thisAnimal;
-    //GameObject storageObject;
-    GameObjectRuntimeSet checkObjectSet;
     float distanceRange;
-    bool foundObjectInRange;
+    float newRange;
+    bool foundFoodInRange;
 
-    public CheckForClosestGrass(Animal animal, GameObjectRuntimeSet entitiesCheckedAgainst, float range)
+    public CheckForClosestFood(Animal animal, float range)
     {
         thisAnimal = animal;
-        checkObjectSet = entitiesCheckedAgainst;
         distanceRange = range;
+        newRange = distanceRange;
     }
 
     //Should r
     protected override NodeState OnRun()
     {
-        foundObjectInRange = false;
-        if (checkObjectSet.Items != null)
+        foundFoodInRange = false;
+        newRange = distanceRange;
+
+        if (thisAnimal.foodSet.Items != null)
         {
-            foreach (GameObject g in checkObjectSet.Items)
+            foreach (GameObject g in thisAnimal.foodSet.Items)
             {
                 float objectRange = (thisAnimal.transform.position - g.transform.position).magnitude;
-                if (Mathf.Abs(objectRange) <= distanceRange)
+                if (Mathf.Abs(objectRange) <= distanceRange || Mathf.Abs(objectRange) <= newRange)
                 {
-                    distanceRange = objectRange;
+                    newRange = objectRange;
                     thisAnimal.SetClosestFood(g);
-                    foundObjectInRange = true;
+                    foundFoodInRange = true;
                 }
             }
-            if (foundObjectInRange)
+            if (foundFoodInRange)
             {
                 return NodeState.SUCCESS;
             }
@@ -49,6 +50,7 @@ public class CheckForClosestGrass : BTCondition
         {
             return NodeState.FAILURE;
         }
+
 
     }
 

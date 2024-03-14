@@ -11,13 +11,13 @@ public abstract class Animal : MonoBehaviour
     public GameObject waterWaypoint;
 
     [Header("These variables set themselves")]
-    public NavMeshAgent navAgent;
-    public AnimalAnimator animalAnimator;
-    public EarthPlayer earthPlayer;
-    public CelestialPlayer celestialPlayer;
-    public GameObject closestGrass;
-    public GameObject closestFood;
-    public GameObject closestPlayer;
+    [SerializeField] protected NavMeshAgent navAgent;
+    [SerializeField] protected AnimalAnimator animalAnimator;
+    [SerializeField] protected EarthPlayer earthPlayer;
+    [SerializeField] protected CelestialPlayer celestialPlayer;
+    [SerializeField] public GameObject closestGrass;
+    [SerializeField] public GameObject closestFood;
+    [SerializeField] public GameObject closestPlayer;
 
     [Header("These can be set on the prefab")]
     [SerializeField] public GameObjectRuntimeSet playerSet;
@@ -53,11 +53,63 @@ public abstract class Animal : MonoBehaviour
 
     protected WaitForSeconds barrierLength = new WaitForSeconds(5f);
 
+    
+
     protected abstract IEnumerator UpdateAnimalState();
 
     public abstract bool GetHungryState();
     public abstract bool GetThirstyState();
     public abstract bool GetBoredState();
+
+    public EarthPlayer GetEarthPlayer()
+    {
+        return earthPlayer;
+    }
+
+    public CelestialPlayer GetCelestialPlayer()
+    {
+        return celestialPlayer;
+    }
+
+    public GameObject GetClosestFood()
+    {
+        return closestFood;
+    }
+
+    public void SetClosestFood(GameObject newFood)
+    {
+        closestFood = newFood;
+    }
+
+    public GameObject GetClosestGrass()
+    {
+        return closestGrass;
+    }
+
+    public void SetClosestGrass(GameObject newGrass)
+    {
+        closestGrass = newGrass;
+    }
+
+    public NavMeshAgent GetNavMeshAgent()
+    {
+        return navAgent;
+    }
+
+    public AnimalAnimator GetAnimator()
+    {
+        return animalAnimator;
+    }
+
+    public GameObject GetClosestPlayer()
+    {
+        return closestPlayer;
+    }
+
+    public void SetClosestPlayer(GameObject newPlayer)
+    {
+        closestPlayer = newPlayer;
+    }
 
     public abstract void IsHealed();
 

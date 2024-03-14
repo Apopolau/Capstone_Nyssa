@@ -842,6 +842,14 @@ PrefabInstance:
       value: LevelOneManager
       objectReference: {fileID: 0}
     - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      propertyPath: duck1
+      value: 
+      objectReference: {fileID: 875022647}
+    - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      propertyPath: duck2
+      value: 
+      objectReference: {fileID: 595465343}
+    - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       propertyPath: task1
       value: 
       objectReference: {fileID: 608448187}
@@ -3396,6 +3404,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Duck
       objectReference: {fileID: 0}
+    - target: {fileID: 5665216156270961092, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: stuck
       value: 1
@@ -3849,6 +3861,11 @@ PrefabInstance:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 483243675201850293, guid: 790776f26879db74b9bee9b64dfc27c6, type: 3}
   m_PrefabInstance: {fileID: 608448172}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &595465343 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5665216156270961092, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+  m_PrefabInstance: {fileID: 541074691}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &595531148 stripped
 Transform:
@@ -6462,6 +6479,11 @@ Transform:
   - {fileID: 88508176}
   m_Father: {fileID: 1489933520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &875022647 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5665216156270961092, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+  m_PrefabInstance: {fileID: 1806025542}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &876349079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8443,6 +8465,7 @@ MonoBehaviour:
   enemyAnimator: {fileID: 0}
   playerObj: {fileID: 864819264}
   enemyStats: {fileID: 11400000, guid: 69199dabbfcb03e4d8c5c67b6ab1f554, type: 2}
+  playerSet: {fileID: 0}
   player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0
@@ -12952,7 +12975,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3668103021458720016, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.05520557
       objectReference: {fileID: 0}
     - target: {fileID: 3668103021458720016, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: m_LocalRotation.x
@@ -12960,7 +12983,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3668103021458720016, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.998475
       objectReference: {fileID: 0}
     - target: {fileID: 3668103021458720016, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: m_LocalRotation.z
@@ -12972,7 +12995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3668103021458720016, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -186.329
       objectReference: {fileID: 0}
     - target: {fileID: 3668103021458720016, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -12981,6 +13004,10 @@ PrefabInstance:
     - target: {fileID: 5665216156270961092, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: m_Name
       value: Duck
+      objectReference: {fileID: 0}
+    - target: {fileID: 5665216156270961092, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: stuck
@@ -15057,6 +15084,7 @@ MonoBehaviour:
   enemyAnimator: {fileID: 0}
   playerObj: {fileID: 864819264}
   enemyStats: {fileID: 11400000, guid: 2585b475c2775754ab5946550ea00ae3, type: 2}
+  playerSet: {fileID: 0}
   player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0
@@ -15900,6 +15928,7 @@ MonoBehaviour:
   enemyAnimator: {fileID: 0}
   playerObj: {fileID: 864819264}
   enemyStats: {fileID: 11400000, guid: fdc634cd0e758e641bb22ce60aaf4dee, type: 2}
+  playerSet: {fileID: 0}
   player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0

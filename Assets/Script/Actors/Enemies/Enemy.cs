@@ -10,12 +10,15 @@ public class Enemy : MonoBehaviour
    //Drag and drop player here
     public GameObject playerObj;
     public EnemyStats enemyStats;
+    public GameObjectRuntimeSet playerSet; 
     public CelestialPlayer player;
     public Stat health;
     [SerializeField] EventManager eventManager;
    //////////////// [SerializeField] LevelOneEvents levelOneEvents;
     [SerializeField] public bool isDying =false;
     public bool isStaggered = false;
+
+    private GameObject closestPlayer;
 
     //Interaction with the player
     public bool seesPlayer = false;
@@ -100,6 +103,16 @@ public class Enemy : MonoBehaviour
             seesPlayer = false;
             playerLocation = other.transform.position;
         }
+    }
+
+    public GameObject GetClosestPlayer()
+    {
+        return closestPlayer;
+    }
+
+    public void SetClosestPlayer(GameObject newPlayer)
+    {
+        closestPlayer = newPlayer;
     }
 
     private IEnumerator TakePlayerHit()

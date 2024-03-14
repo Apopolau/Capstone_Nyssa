@@ -13,7 +13,7 @@ public class CheckForClosest : BTCondition
     float distanceRange;
     bool foundObjectInRange;
 
-    public CheckForClosest(GameObject checkingEntity, GameObject storageObject, GameObjectRuntimeSet entitiesCheckedAgainst, float range)
+    public CheckForClosest(GameObject checkingEntity, ref GameObject storageObject, GameObjectRuntimeSet entitiesCheckedAgainst, float range)
     {
         checkingObject = checkingEntity;
         checkObjectSet = entitiesCheckedAgainst;
@@ -24,6 +24,7 @@ public class CheckForClosest : BTCondition
     //Should r
     protected override NodeState OnRun()
     {
+        foundObjectInRange = false;
         if (checkObjectSet.Items != null)
         {
             foreach (GameObject g in checkObjectSet.Items)
