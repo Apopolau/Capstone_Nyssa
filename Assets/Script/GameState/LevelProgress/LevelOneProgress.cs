@@ -20,10 +20,6 @@ public class LevelOneProgress : LevelProgress
     public bool animalIsSafe = false;
     public bool animalHasFriend = false;
 
-    int treeGoal = 10;
-    int grassGoal = 15;
-    int cattailGoal = 8;
-
     //Drag this from the plant prefabs folder
     [SerializeField]public GameObject treeSeedPrefab;
     [SerializeField] public GameObject grassSeedPrefab;
@@ -39,62 +35,7 @@ public class LevelOneProgress : LevelProgress
         return false;
     }
 
-    public bool EvaluateTrees()
-    {
-        treeCount = 0;
-
-        foreach (GameObject plant in plantSet.Items)
-        {
-            if (plant.GetComponent<Plant>().stats.plantName == "Tree")
-            {
-                treeCount++;
-            }
-        }
-
-        if (treeCount >= treeGoal)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public bool EvaluateGrass()
-    {
-        grassCount = 0;
-
-        foreach (GameObject plant in plantSet.Items)
-        {
-            if (plant.GetComponent<Plant>().stats.plantName == "Grass")
-            {
-                grassCount++;
-            }
-        }
-
-        if (grassCount >= grassGoal)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    public bool EvaluateCattails()
-    {
-        cattailCount = 0;
-
-        foreach (GameObject plant in plantSet.Items)
-        {
-            if (plant.GetComponent<Plant>().stats.plantName == "Cattail")
-            {
-                cattailCount++;
-            }
-        }
-
-        if (cattailCount >= cattailGoal)
-        {
-            return true;
-        }
-        return false;
-    }
+    
 
     public override bool EvaluateLevelProgress()
     {
@@ -120,20 +61,4 @@ public class LevelOneProgress : LevelProgress
     {
 
     }
-
-    public int GetTreeCount()
-    {
-        return treeCount;
-    }
-
-    public int GetGrassCount()
-    {
-        return grassCount;
-    }
-
-    public int GetCattailCount()
-    {
-        return cattailCount;
-    }
-
 }

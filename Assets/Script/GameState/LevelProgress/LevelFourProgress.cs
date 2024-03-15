@@ -14,34 +14,11 @@ public class LevelFourProgress : LevelProgress
     //public bool animalHasShelter = false;
     public bool animalIsSafe = false;
 
-    int treeGoal = 5;
-    int grassGoal = 7;
-    int cattailGoal = 5;
-
     public override bool EvaluateFood()
     {
-        treeCount = 0;
-        grassCount = 0;
-        cattailCount = 0;
-
-        foreach (GameObject plant in plantSet.Items)
+        if (EvaluateTrees() && EvaluateGrass() && EvaluateCattails() && EvaluateFlowers() && EvaluateLilies())
         {
-            if (plant.GetComponent<Plant>().stats.plantName == "Grass")
-            {
-                grassCount++;
-            }
-            if (plant.GetComponent<Plant>().stats.plantName == "Tree")
-            {
-                treeCount++;
-            }
-            if (plant.GetComponent<Plant>().stats.plantName == "Cattail")
-            {
-                cattailCount++;
-            }
-        }
-
-        if (treeCount >= treeGoal && grassCount >= grassGoal && cattailCount >= cattailGoal)
-        {
+            animalHasEnoughFood = true;
             return true;
         }
         return false;
