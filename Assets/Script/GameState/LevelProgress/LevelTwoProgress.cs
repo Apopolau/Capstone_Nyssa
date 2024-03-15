@@ -29,47 +29,6 @@ public class LevelTwoProgress : LevelProgress
     int flowerGoal = 5;
     int lilyGoal = 8;
 
-    /*
-    public override bool EvaluateFood()
-    {
-        treeCount = 0;
-        grassCount = 0;
-        cattailCount = 0;
-        flowerCount = 0;
-        lilyCount = 0;
-
-        foreach (GameObject plant in plantSet.Items)
-        {
-            if (plant.GetComponent<Plant>().stats.plantName == "Grass")
-            {
-                grassCount++;
-            }
-            if (plant.GetComponent<Plant>().stats.plantName == "Tree")
-            {
-                treeCount++;
-            }
-            if (plant.GetComponent<Plant>().stats.plantName == "Cattail")
-            {
-                cattailCount++;
-            }
-            if (plant.GetComponent<Plant>().stats.plantName == "Flower")
-            {
-                flowerCount++;
-            }
-            if (plant.GetComponent<Plant>().stats.plantName == "Lily")
-            {
-                lilyCount++;
-            }
-        }
-
-        if (treeCount >= treeGoal && grassCount >= grassGoal && cattailCount >= cattailGoal && flowerCount >= flowerGoal && lilyCount >= lilyGoal)
-        {
-            return true;
-        }
-        return false;
-    }
-    */
-
     public override bool EvaluateLevelProgress()
     {
         if (animalHasEnoughFood && cleanWater && animalIsSafe)
