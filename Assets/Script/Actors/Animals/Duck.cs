@@ -7,6 +7,8 @@ public class Duck : Animal
 {
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
 
+    [SerializeField] DialogueCameraPan panToDuck;
+
     private void Awake()
     {
         hunger = new Stat(100, 100, false);
@@ -16,6 +18,7 @@ public class Duck : Animal
         isHiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
+        panToDuck.SetPanToThis(this.gameObject);
         //levelProgress = managerObject.GetComponent<LevelProgress>();
     }
 

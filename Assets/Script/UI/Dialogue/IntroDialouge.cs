@@ -23,7 +23,7 @@ public class IntroDialouge : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         // Check if earthChar entered collider which is the initial position
         if (other.CompareTag("Player1"))

@@ -39,6 +39,7 @@ public class LevelOneEvents : EventManager
     private GameObject treeSeedSpawn;
 
     [Header("Dialogue triggers")]
+    [SerializeField] GameObject leaveTriggerObj;
     public DialogueTrigger firstMonsterDeadDialouge;
     public DialogueTrigger secondMonsterDeadDialouge;
     public DialogueTrigger thirdMonsterDeadDialouge;
@@ -229,6 +230,7 @@ public class LevelOneEvents : EventManager
         //Set the leave trigger to exit the level to on
         runReadyToLeaveDialogue = true;
         allObjectivesMetDialogue.TriggerDialogue();
+        leaveTriggerObj.SetActive(true);
     }
 
     public void OnBridgeEncountered()

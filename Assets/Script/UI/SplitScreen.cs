@@ -19,28 +19,48 @@ public class SplitScreen : MonoBehaviour
     [SerializeField] public float distance;
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public VirtualMouseInput earthVirtualMouseInput;
+    [SerializeField] private DialogueCameraPan returnToOrigin;
 
     DialogueManager dialogue;
+    bool inCutscene = false;
 
     bool switching = false;
     int currCam = 1;
     public int Manager = 0;
 
+    private void Start()
+    {
+        returnToOrigin.SetPanToThis(this.gameObject);
+        SetOneCam();
+    }
 
     // Update is called once per frame
     void Update()
     {
         //If two players are close enough make camera one, if players are far enough split camera
-        if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) > distance)
+        if (!inCutscene)
         {
-            SetTwoCams();
-            // Changed();
+            if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) > distance)
+            {
+                SetTwoCams();
+                // Changed();
+            }
+            else if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) < distance)
+            {
+                SetOneCam();
+                //Changed();
+            }
         }
-        else if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) < distance)
-        {
-            SetOneCam();
-            //Changed();
-        }
+    }
+
+    public void EnterCutscene()
+    {
+        inCutscene = true;
+    }
+
+    public void ExitCutscene()
+    {
+        inCutscene = false;
     }
 
     private void Changed()
