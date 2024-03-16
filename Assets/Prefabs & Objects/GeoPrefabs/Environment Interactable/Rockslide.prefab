@@ -600,14 +600,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5708132736867260016}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.68375593, z: -0, w: 0.7297108}
-  m_LocalPosition: {x: -108.1, y: -4.19, z: -40.84}
+  m_LocalRotation: {x: -0, y: 0.6842677, z: -0, w: -0.729231}
+  m_LocalPosition: {x: -108.12387, y: -2.2500744, z: -40.550545}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4048950970096214212}
   m_Father: {fileID: 9105947208277114259}
-  m_LocalEulerAnglesHint: {x: 0, y: -86.276, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 273.64398, z: 0}
 --- !u!114 &2586280834659760344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -633,6 +633,7 @@ GameObject:
   - component: {fileID: -2585586141729202073}
   - component: {fileID: 6204542181772123257}
   - component: {fileID: 7477407236795265179}
+  - component: {fileID: 1353080739151421104}
   m_Layer: 0
   m_Name: Rockslide
   m_TagString: Untagged
@@ -723,6 +724,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 20
   m_Center: {x: -120, y: -20, z: -40}
+--- !u!114 &1353080739151421104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7930062619879064927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fccc9f1a1f3af438f153e72921b30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnToOrigin: {fileID: 11400000, guid: 5de1ba106a851de468f346e120a3f214, type: 2}
 --- !u!1001 &1507878781237601137
 PrefabInstance:
   m_ObjectHideFlags: 0

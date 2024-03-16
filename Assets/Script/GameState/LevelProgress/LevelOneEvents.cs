@@ -102,9 +102,9 @@ public class LevelOneEvents : EventManager
 
     private void EvaluateFoodLevel()
     {
-        task1.GetComponent<TextMeshProUGUI>().text = $"- Plant 6 trees ({levelOneProgress.GetTreeCount()}/6)";
-        task2.GetComponent<TextMeshProUGUI>().text = $"- Plant 8 grass ({levelOneProgress.GetGrassCount()}/8)";
-        task3.GetComponent<TextMeshProUGUI>().text = $"- Plant 4 cattails ({levelOneProgress.GetCattailCount()}/4)";
+        task1.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetTreeGoal()} trees ({levelOneProgress.GetTreeCount()}/{levelOneProgress.GetTreeGoal()})";
+        task2.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetGrassGoal()} grass ({levelOneProgress.GetGrassCount()}/{levelOneProgress.GetGrassGoal()})";
+        task3.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetCattailGoal()} cattails ({levelOneProgress.GetCattailCount()}/{levelOneProgress.GetCattailGoal()})";
         if (levelOneProgress.EvaluateTrees())
         {
             task1.CrossOutTask();
@@ -117,6 +117,7 @@ public class LevelOneEvents : EventManager
         {
             task3.CrossOutTask();
         }
+        levelOneProgress.EvaluateFood();
     }
 
     private void EvaluateMonsterDefeats()
@@ -170,6 +171,9 @@ public class LevelOneEvents : EventManager
 
         keyMonsterDefeatCount++;
 
+        duck1.GetComponent<Duck>().SetUpperBankOn();
+        duck2.GetComponent<Duck>().SetUpperBankOn();
+
         secondMonsterDeadDialouge.TriggerDialogue();
     }
 
@@ -182,6 +186,10 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+
+        duck1.GetComponent<Duck>().SetFarBankOn();
+        duck2.GetComponent<Duck>().SetFarBankOn();
+
         keyMonsterDefeatCount++;
     }
 
@@ -194,6 +202,9 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+
+        duck1.GetComponent<Duck>().SetHalfwayPointOn();
+        duck2.GetComponent<Duck>().SetHalfwayPointOn();
 
         keyMonsterDefeatCount++;
 

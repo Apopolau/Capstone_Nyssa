@@ -296,11 +296,11 @@ public class DialogueManager : MonoBehaviour
 
         if (pan.GetPanType() == DialogueCameraPan.PanType.OBJECT)
         {
-            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position, pan.GetPanObject().transform.position, ref panVelocity, pan.GetPanSpeed(), 100, 1);
+            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position, pan.GetPanObject().transform.position + pan.GetPanOffset(), ref panVelocity, pan.GetPanSpeed(), 100, 1);
         }
         else if (pan.GetPanType() == DialogueCameraPan.PanType.LOCATION)
         {
-            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position, pan.GetPanLocation(), ref panVelocity, pan.GetPanSpeed(), 100, 1);
+            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position, pan.GetPanLocation() + pan.GetPanOffset(), ref panVelocity, pan.GetPanSpeed(), 100, 1);
         }
     }
 

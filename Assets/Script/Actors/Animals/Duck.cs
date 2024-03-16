@@ -7,7 +7,16 @@ public class Duck : Animal
 {
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
 
-    [SerializeField] DialogueCameraPan panToDuck;
+    //[SerializeField] DialogueCameraPan panToDuck;
+
+    //Used to determine where duck will randomly wander
+    [Header("Duck Random Pathing Points")]
+    [SerializeField] public List<GameObject> duckWayPoints;
+    //Corresponds to waypoints
+    bool CanGoToUpperArea;
+    bool CanGoToFarBank;
+    bool CanGoToHalfwayPoint;
+    bool CanGoToTopArea;
 
     private void Awake()
     {
@@ -18,7 +27,7 @@ public class Duck : Animal
         isHiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
-        panToDuck.SetPanToThis(this.gameObject);
+        //panToDuck.SetPanToThis(this.gameObject);
         //levelProgress = managerObject.GetComponent<LevelProgress>();
     }
 
@@ -135,5 +144,26 @@ public class Duck : Animal
     {
         yield return barrierLength;
         isShielded = false;
+    }
+
+    //Helpers
+    public void SetUpperBankOn()
+    {
+        CanGoToUpperArea = true;
+    }
+
+    public void SetFarBankOn()
+    {
+        CanGoToFarBank = true;
+    }
+
+    public void SetHalfwayPointOn()
+    {
+        CanGoToHalfwayPoint = true;
+    }
+
+    public void SetTopAreaOn()
+    {
+        CanGoToTopArea = true;
     }
 }

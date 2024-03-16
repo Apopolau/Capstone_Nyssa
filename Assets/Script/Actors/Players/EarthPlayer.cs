@@ -332,7 +332,7 @@ public class EarthPlayer : MonoBehaviour
                 //Switch our controls
                 earthControls.controls.EarthPlayerDefault.Enable();
                 earthControls.controls.PlantIsSelected.Disable();
-                TurnOffCursor();
+                //TurnOffCursor();
             }
             else
             {
@@ -999,7 +999,7 @@ public class EarthPlayer : MonoBehaviour
         earthControls.controls.EarthPlayerDefault.Enable();
         isATileSelected = tileSelectionState;
         Destroy(tileOutline);
-        virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
+        TurnOffCursor();
         HideTileText();
         uiController.RestoreUI(darkenWhilePlanting);
     }

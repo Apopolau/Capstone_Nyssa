@@ -12,6 +12,7 @@ public class DialogueCameraPan : DialogueEvent
     //You'll set one of these two based on previous setting
     [SerializeField] GameObject panToObject;
     [SerializeField] Vector3 pointToPanTo;
+    [SerializeField] Vector3 panOffset;
 
     //Controls how fast we pan, and how far we zoom in
     [SerializeField] float panSpeed;
@@ -51,5 +52,10 @@ public class DialogueCameraPan : DialogueEvent
     public void SetPanToThis(GameObject objectToSet)
     {
         panToObject = objectToSet;
+    }
+
+    public Vector3 GetPanOffset()
+    {
+        return panOffset;
     }
 }

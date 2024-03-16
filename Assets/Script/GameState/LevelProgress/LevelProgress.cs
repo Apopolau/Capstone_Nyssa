@@ -17,11 +17,11 @@ public abstract class LevelProgress : ScriptableObject
     [SerializeField] protected int flowerGoal;
     [SerializeField] protected int lilyGoal;
 
-    protected int treeCount;
-    protected int grassCount;
-    protected int cattailCount;
-    protected int flowerCount;
-    protected int lilyCount;
+    [SerializeField] protected int treeCount;
+    [SerializeField] protected int grassCount;
+    [SerializeField] protected int cattailCount;
+    [SerializeField] protected int flowerCount;
+    [SerializeField] protected int lilyCount;
 
     public int totalPlants;
     public bool cleanWater = false;
@@ -137,9 +137,19 @@ public abstract class LevelProgress : ScriptableObject
         return treeCount;
     }
 
+    public int GetTreeGoal()
+    {
+        return treeGoal;
+    }
+
     public int GetGrassCount()
     {
         return grassCount;
+    }
+
+    public int GetGrassGoal()
+    {
+        return grassGoal;
     }
 
     public int GetCattailCount()
@@ -147,14 +157,29 @@ public abstract class LevelProgress : ScriptableObject
         return cattailCount;
     }
 
+    public int GetCattailGoal()
+    {
+        return cattailGoal;
+    }
+
     public int GetFlowerCount()
     {
         return flowerCount;
     }
 
+    public int GetFlowerGoal()
+    {
+        return flowerGoal;
+    }
+
     public int GetLilyCount()
     {
         return lilyCount;
+    }
+
+    public int GetLilyGoal()
+    {
+        return lilyGoal;
     }
 
     protected abstract void OnAllObjectivesComplete();

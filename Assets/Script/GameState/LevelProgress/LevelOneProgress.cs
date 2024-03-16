@@ -35,8 +35,6 @@ public class LevelOneProgress : LevelProgress
         return false;
     }
 
-    
-
     public override bool EvaluateLevelProgress()
     {
         if (animalHasEnoughFood && cleanWater && animalHasFriend && animalIsSafe)

@@ -199,28 +199,19 @@ public class Cell : MonoBehaviour
                         if(c != null)
                         {
                             c.shouldBeGrass = true;
-                            foreach (Cell cc in c.neighbours)
+                            if(placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.JUVENILE ||
+                                placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.MATURE)
                             {
-                                if(cc != null)
-                                {
-                                    cc.shouldBeGrass = true;
-                                }
-                                
+                                ConvertToGrass(c.neighbours);
                             }
+                            
                         }
                         
                     }
                 }
                 else
                 {
-                    foreach (Cell c in neighbours)
-                    {
-                        if(c != null)
-                        {
-                            c.shouldBeGrass = true;
-                        }
-                        
-                    }
+                    ConvertToGrass(neighbours);
                 }
                 
             }
@@ -344,6 +335,18 @@ public class Cell : MonoBehaviour
             }
 
             yield return waitTime;
+        }
+    }
+
+    private void ConvertToGrass(Cell[] cellList)
+    {
+        foreach (Cell cc in cellList)
+        {
+            if (cc != null)
+            {
+                cc.shouldBeGrass = true;
+            }
+
         }
     }
 

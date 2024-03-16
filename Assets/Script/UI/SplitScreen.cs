@@ -19,7 +19,7 @@ public class SplitScreen : MonoBehaviour
     [SerializeField] public float distance;
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public VirtualMouseInput earthVirtualMouseInput;
-    [SerializeField] private DialogueCameraPan returnToOrigin;
+    
 
     DialogueManager dialogue;
     bool inCutscene = false;
@@ -30,7 +30,7 @@ public class SplitScreen : MonoBehaviour
 
     private void Start()
     {
-        returnToOrigin.SetPanToThis(this.gameObject);
+        
         SetOneCam();
     }
 
