@@ -129,7 +129,7 @@ public class LevelFourEvents : EventManager
             }
         }
         */
-        levelFourProgress.cleanWater = true;
+        levelFourProgress.animalHasWater = true;
         //task2.CrossOutTask();
     }
     

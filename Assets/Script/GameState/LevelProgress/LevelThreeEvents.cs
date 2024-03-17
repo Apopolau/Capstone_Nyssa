@@ -151,7 +151,7 @@ public class LevelThreeEvents : EventManager
             }
         }
         */
-        levelThreeProgress.cleanWater = true;
+        levelThreeProgress.animalHasWater = true;
         //task2.CrossOutTask();
     }
     

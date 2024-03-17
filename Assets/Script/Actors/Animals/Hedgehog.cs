@@ -81,7 +81,7 @@ public class Hedgehog : Animal
             hasAnyFood = false;
         }
 
-        if (levelProgress.cleanWater)
+        if (levelProgress.animalHasWater)
         {
             hasCleanWater = true;
         }
@@ -90,7 +90,7 @@ public class Hedgehog : Animal
             hasCleanWater = false;
         }
 
-        if (levelProgress.shelter)
+        if (levelProgress.animalHasShelter)
         {
             hasShelter = true;
         }

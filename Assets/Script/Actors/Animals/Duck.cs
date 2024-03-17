@@ -92,7 +92,7 @@ public class Duck : Animal
             hasAnyFood = false;
         }
 
-        if (levelProgress.cleanWater)
+        if (levelProgress.animalHasWater)
         {
             hasCleanWater = true;
         }
@@ -101,7 +101,7 @@ public class Duck : Animal
             hasCleanWater = false;
         }
 
-        if (levelProgress.shelter)
+        if (levelProgress.animalHasShelter)
         {
             hasShelter = true;
         }
@@ -125,8 +125,6 @@ public class Duck : Animal
     {
         return entertained.low;
     }
-
-    
 
     //We can put something here to change their texture and such
     public override void IsHealed()

@@ -14,6 +14,7 @@ public class LevelFourProgress : LevelProgress
     //public bool animalHasShelter = false;
     public bool animalIsSafe = false;
 
+    /*
     public override bool EvaluateFood()
     {
         if (EvaluateTrees() && EvaluateGrass() && EvaluateCattails() && EvaluateFlowers() && EvaluateLilies())
@@ -33,6 +34,7 @@ public class LevelFourProgress : LevelProgress
         }
         return false;
     }
+    */
 
     protected override void OnAllObjectivesComplete()
     {

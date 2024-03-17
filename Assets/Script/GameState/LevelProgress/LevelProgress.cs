@@ -24,18 +24,42 @@ public abstract class LevelProgress : ScriptableObject
     [SerializeField] protected int lilyCount;
 
     public int totalPlants;
-    public bool cleanWater = false;
-    public bool shelter = false;
+    public bool animalHasEnoughFood = false;
+    public bool animalIsSafe = false;
+    public bool animalHasFriend = false;
+    public bool animalHasWater = false;
+    public bool animalHasShelter = false;
     public bool readyToLeave = false;
 
+
+    private void OnDisable()
+    {
+        animalHasEnoughFood = false;
+        animalIsSafe = false;
+        animalHasFriend = false;
+        animalHasWater = false;
+        animalHasShelter = false;
+        readyToLeave = false;
+    }
 
     public void SetObjectiveText(TextMeshProUGUI incObjectiveText)
     {
         objectiveText = incObjectiveText;
     }
 
-    public abstract bool EvaluateFood();
-    public abstract bool EvaluateLevelProgress();
+    //public abstract bool EvaluateFood();
+    //public abstract bool EvaluateLevelProgress();
+
+
+    /// <summary>
+    /// FUNCTIONS FOR GETTING FOOD AMOUNTS
+    /// </summary>
+    /// <returns></returns>
+    /// 
+    public int GetTotalPlantCount()
+    {
+        return plantSet.Items.Count;
+    }
 
     public bool EvaluateTrees()
     {
@@ -182,6 +206,33 @@ public abstract class LevelProgress : ScriptableObject
         return lilyGoal;
     }
 
+
+    /// <summary>
+    /// FUNCTIONS FOR MEASURING LEVEL COMPLETENESS
+    /// </summary>
+    public bool GetFoodStatus()
+    {
+        return animalHasEnoughFood;
+    }
+
+    public bool GetWaterStatus()
+    {
+        return animalHasWater;
+    }
+
+    public bool GetSafetyStatus()
+    {
+        return animalIsSafe;
+    }
+
+    public bool GetFriendStatus()
+    {
+        return animalHasFriend;
+    }
+
+    ///
+    ///FUNCTIONS FOR WRAPPING UP THE LEVEL
+    ///
     protected abstract void OnAllObjectivesComplete();
 
     protected abstract void OnPlayerWin();

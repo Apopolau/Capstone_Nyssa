@@ -57,10 +57,23 @@ public abstract class Animal : MonoBehaviour
 
     protected abstract IEnumerator UpdateAnimalState();
 
+    /// <summary>
+    /// STATE HELPERS
+    /// </summary>
+    /// <returns></returns>
     public abstract bool GetHungryState();
     public abstract bool GetThirstyState();
     public abstract bool GetBoredState();
 
+    public void Unstuck()
+    {
+        isStuck = false;
+    }
+
+    /// <summary>
+    /// REFERENCE HELPERS
+    /// </summary>
+    /// <returns></returns>
     public EarthPlayer GetEarthPlayer()
     {
         return earthPlayer;
@@ -110,6 +123,10 @@ public abstract class Animal : MonoBehaviour
     {
         closestPlayer = newPlayer;
     }
+
+    /// <summary>
+    /// POWER HELPERS
+    /// </summary>
 
     public abstract void IsHealed();
 

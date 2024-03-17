@@ -57,6 +57,8 @@ public class LevelOneEvents : EventManager
     private bool runReadyToLeaveDialogue = false;
     private bool hasEncounteredBridge = false;
 
+    WaitForSeconds delayTime = new WaitForSeconds(0.1f);
+
 
     // Start is called before the first frame update
     void Start()
@@ -83,41 +85,115 @@ public class LevelOneEvents : EventManager
         }
         duck1.SetActive(true);
         duck2.SetActive(true);
+
+        StartCoroutine(EvaluateFoodLevel());
     }
 
     // Update is called once per frame
     void Update()
     {
-        EvaluateFoodLevel();
+        //EvaluateFoodLevel();
         if (!runDefeatDialogue)
         {
             EvaluateMonsterDefeats();
         }
         
-        if (levelOneProgress.EvaluateLevelProgress() && !runReadyToLeaveDialogue)
+        if (EvaluateLevelCompletion() && !runReadyToLeaveDialogue)
         {
             OnReadyToLeave();
         }
+        levelOneProgress.totalPlants = levelOneProgress.GetTotalPlantCount();
     }
 
-    private void EvaluateFoodLevel()
+    private IEnumerator EvaluateFoodLevel()
     {
-        task1.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetTreeGoal()} trees ({levelOneProgress.GetTreeCount()}/{levelOneProgress.GetTreeGoal()})";
-        task2.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetGrassGoal()} grass ({levelOneProgress.GetGrassCount()}/{levelOneProgress.GetGrassGoal()})";
-        task3.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetCattailGoal()} cattails ({levelOneProgress.GetCattailCount()}/{levelOneProgress.GetCattailGoal()})";
-        if (levelOneProgress.EvaluateTrees())
+        while (true)
         {
-            task1.CrossOutTask();
+            yield return delayTime;
+
+            if (levelOneProgress.EvaluateTrees())
+            {
+                task1.CrossOutTask();
+            }
+            if (levelOneProgress.EvaluateGrass())
+            {
+                task2.CrossOutTask();
+            }
+            if (levelOneProgress.EvaluateCattails())
+            {
+                task3.CrossOutTask();
+            }
+
+            //Display each task as either strikethrough or not
+            if (task1.GetTaskCompletion())
+            {
+                task1.GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelOneProgress.GetTreeGoal()} trees ({levelOneProgress.GetTreeCount()}/{levelOneProgress.GetTreeGoal()})</s>" ;
+            }
+            else
+            {
+                task1.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetTreeGoal()} trees ({levelOneProgress.GetTreeCount()}/{levelOneProgress.GetTreeGoal()})";
+            }
+            if (task2.GetTaskCompletion())
+            {
+                task2.GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelOneProgress.GetGrassGoal()} grass ({levelOneProgress.GetGrassCount()}/{levelOneProgress.GetGrassGoal()})</s>";
+            }
+            else
+            {
+                task2.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetGrassGoal()} grass ({levelOneProgress.GetGrassCount()}/{levelOneProgress.GetGrassGoal()})";
+            }
+            if (task3.GetTaskCompletion())
+            {
+                task3.GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelOneProgress.GetCattailGoal()} cattails ({levelOneProgress.GetCattailCount()}/{levelOneProgress.GetCattailGoal()})</s>";
+            }
+            else
+            {
+                task3.GetComponent<TextMeshProUGUI>().text = $"- Plant {levelOneProgress.GetCattailGoal()} cattails ({levelOneProgress.GetCattailCount()}/{levelOneProgress.GetCattailGoal()})";
+            }
+
+            SetFoodCompletion();
         }
-        if (levelOneProgress.EvaluateGrass())
+        
+    }
+
+    private void SetFoodCompletion()
+    {
+        if(task1.GetTaskCompletion() && task2.GetTaskCompletion() && task3.GetTaskCompletion())
         {
-            task2.CrossOutTask();
+            levelOneProgress.animalHasEnoughFood = true;
         }
-        if (levelOneProgress.EvaluateCattails())
+    }
+
+    private void SetWaterCompletion()
+    {
+        if (task5.GetTaskCompletion())
         {
-            task3.CrossOutTask();
+            levelOneProgress.animalHasWater = true;
         }
-        levelOneProgress.EvaluateFood();
+    }
+
+    private void SetSafetyCompletion()
+    {
+        if (task6.GetTaskCompletion())
+        {
+            levelOneProgress.animalIsSafe = true;
+        }
+    }
+
+    private void SetFriendCompletion()
+    {
+        if (task4.GetTaskCompletion())
+        {
+            levelOneProgress.animalHasFriend = true;
+        }
+    }
+
+    private bool EvaluateLevelCompletion()
+    {
+        if(levelOneProgress.GetFoodStatus() && levelOneProgress.GetWaterStatus() && levelOneProgress.GetFriendStatus() && levelOneProgress.GetSafetyStatus())
+        {
+            return true;
+        }
+        return false;
     }
 
     private void EvaluateMonsterDefeats()
@@ -125,7 +201,7 @@ public class LevelOneEvents : EventManager
         if (keyMonsterDefeatCount == 4)
         {
             task6.CrossOutTask();
-            levelOneProgress.animalIsSafe = true;
+            SetSafetyCompletion();
             runDefeatDialogue = true;
             allMonstersDefeatedDialogue.TriggerDialogue();
         }
@@ -145,7 +221,7 @@ public class LevelOneEvents : EventManager
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, enemyPos, Quaternion.identity);
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
-        levelOneProgress.shelter = true;
+        levelOneProgress.animalHasShelter = true;
 
         //We want to activate the objective menu here probably, or once the trigger dialogue is done.
         ////////////////////////////////////////////this is where we are going to drop the celestial cold orb!!!/////////////////////////////////////
@@ -153,6 +229,7 @@ public class LevelOneEvents : EventManager
         firstMonsterDeadDialouge.TriggerDialogue();
         keyMonsterDefeatCount++;
         objectiveList.SetActive(true);
+        duck1.GetComponent<Duck>().Unstuck();
     }
 
     public void OnSecondMonsterDefeated()
@@ -187,6 +264,8 @@ public class LevelOneEvents : EventManager
             }
         }
 
+        duck2.GetComponent<Duck>().Unstuck();
+
         duck1.GetComponent<Duck>().SetFarBankOn();
         duck2.GetComponent<Duck>().SetFarBankOn();
 
@@ -208,8 +287,8 @@ public class LevelOneEvents : EventManager
 
         keyMonsterDefeatCount++;
 
-        levelOneProgress.animalHasFriend = true;
         task4.CrossOutTask();
+        SetFriendCompletion();
         fourthMonsterDeadDialouge.TriggerDialogue();
     }
 
@@ -232,8 +311,9 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        levelOneProgress.cleanWater = true;
+        
         task5.CrossOutTask();
+        SetWaterCompletion();
     }
 
     public void OnReadyToLeave()

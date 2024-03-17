@@ -19,6 +19,7 @@ public class LevelThreeProgress : LevelProgress
     //public bool animalHasShelter = false;
     public bool animalIsSafe = false;
 
+    /*
     public override bool EvaluateLevelProgress()
     {
         if (animalHasEnoughFood && cleanWater && animalIsSafe)
@@ -29,6 +30,7 @@ public class LevelThreeProgress : LevelProgress
         return false;
     }
 
+    
     public override bool EvaluateFood()
     {
         if (EvaluateTrees() && EvaluateGrass() && EvaluateCattails() && EvaluateFlowers() && EvaluateLilies())
@@ -38,6 +40,7 @@ public class LevelThreeProgress : LevelProgress
         }
         return false;
     }
+    */
 
     protected override void OnAllObjectivesComplete()
     {
