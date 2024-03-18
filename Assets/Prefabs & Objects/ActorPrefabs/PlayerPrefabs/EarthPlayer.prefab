@@ -91,7 +91,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171755612282903135}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 81.00898}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -99,7 +99,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1030, y: 525}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8874280056829446184
@@ -561,6 +561,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerObj: {fileID: 0}
+  isDying: 0
+  isRespawning: 0
+  interacting: 0
+  OrigPos: {x: 0, y: 0, z: 0}
   plantParent: {fileID: 0}
   virtualMouseInput: {fileID: 0}
   mainCamera: {fileID: 0}
@@ -608,7 +613,6 @@ MonoBehaviour:
   earthAnimator: {fileID: 0}
   earthControls: {fileID: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
-  interacting: 0
   inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
 --- !u!114 &1030210978683770242
 MonoBehaviour:
@@ -661,7 +665,7 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  levelOneEvents: {fileID: 0}
+  eventManager: {fileID: 0}
   dialogueManager: {fileID: 0}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
   myDeviceID: 0
@@ -935,13 +939,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
   IfWalkingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
   IfPlantingHash: 0
   IfBuildingHash: 0
   IfTurningHash: 0
   IfHealingHash: 0
   IfShieldingHash: 0
-  IfDyingHash: 0
-  IfTakingHitHash: 0
 --- !u!114 &4394548441176001214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1282,7 +1286,7 @@ Transform:
   m_GameObject: {fileID: 6679904417498013195}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1029.83, y: -509.63, z: -83.3}
+  m_LocalPosition: {x: 0, y: 9, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1483,7 +1487,7 @@ Transform:
   m_GameObject: {fileID: 7213464411712009074}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
