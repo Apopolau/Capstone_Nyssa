@@ -34,22 +34,29 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private List<DialogueCharacter> dialogueCharacters;
     private DialogueCharacter currentCharacter;
     private Sprite currentSprite;
+    [SerializeField] private DialogueCameraPan panToOrigin;
 
     public float typingSpeed = 0.2f;
 
     //Camera speed variables
+    //Zoom variables, zooming in and out
     private float zoom;
     private float zoomMultiplier;
-    private Vector3 panVal;
-    private float panMultiplier;
     private float zoomVelocity = 0f;
-    private Vector3 panVelocity = new Vector3(0, 0, 0);
-    private float smoothTime = 0.25f;
     private float maxZoom = 60f;
     private float minZoom = 5f;
-    private bool panningOn;
 
-    WaitForSecondsRealtime panTime = new WaitForSecondsRealtime(3f);
+    //Pan variables, moving around the map
+    private Vector3 panVal;
+    private float panMultiplier;
+    private Vector3 panVelocity = new Vector3(0, 0, 0);
+
+    //private float smoothTime = 0.25f;
+
+    [SerializeField] private bool panningOn;
+    [SerializeField] private bool returningToOrigin;
+
+    //WaitForSecondsRealtime panTime = new WaitForSecondsRealtime(3f);
 
     private void OnEnable()
     {
@@ -81,9 +88,14 @@ public class DialogueManager : MonoBehaviour
         {
             HandleCameraPan((DialogueCameraPan)currentEvent);
         }
+        if (returningToOrigin)
+        {
+            ReturnCameraToOrigin();
+        }
 
     }
 
+    //Initiate the dialogue
     public void StartDialogue(Dialogue dialogue)
     {
         // Activate the dialogue box if it's currently inactive
@@ -138,6 +150,71 @@ public class DialogueManager : MonoBehaviour
 
     }
 
+    public void HandleDialogueContinue()
+    {
+
+        if(!panningOn && !returningToOrigin)
+        {
+            HandleNextEvents();
+        }
+
+    }
+
+    //Figures out what to do with each dialogue event in the list
+    public void HandleNextEvents()
+    {
+        if (events.Count == 0)
+        {
+            EndDialogue();
+
+            return;
+        }
+
+        currentEvent = events.Dequeue();
+
+        if (currentEvent is DialogueLine)
+        {
+
+            DisplayNextDialogueLine((DialogueLine)currentEvent);
+        }
+        else if (currentEvent is DialogueCameraPan)
+        {
+            panningOn = true;
+            StartCoroutine(TurnPanOff((DialogueCameraPan)currentEvent));
+            //HandleCameraPan((DialogueCameraPan)currentEvent);
+        }
+        else if (currentEvent is DialogueMissionEnd)
+        {
+            HandleSceneTransition((DialogueMissionEnd)currentEvent);
+        }
+
+    }
+
+    //Wraps up the dialogue when we run out of events
+    public void EndDialogue()
+    {
+        ReturnCameraToOrigin();
+        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        {
+            dialogueBox.SetActive(false); // Deactivate the dialogue box
+            isDialogueActive = false; // Set the dialogue state to inactive
+        }
+        // Toggle other UI elements visibility
+        uiController.ToggleOtherUIElements(true); // Pass true to reactivate other UI elements
+
+
+        //Turn off the dialogue controls and turn on the default controls of both players
+        earthPlayer.earthControls.controls.DialogueControls.Disable();
+        earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
+        celestialPlayer.celestialControls.controls.DialogueControls.Disable();
+        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+
+        split.ExitCutscene();
+        Time.timeScale = 1f;
+
+    }
+
+    //When displaying a dialogue line, handles the sprites
     private void AssignCharacter(DialogueLine currentLine)
     {
         if (currentLine.speaker == DialogueLine.Character.CELESTE)
@@ -191,35 +268,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void HandleNextEvents()
-    {
-        if (events.Count == 0)
-        {
-            EndDialogue();
-
-            return;
-        }
-
-        currentEvent = events.Dequeue();
-
-        if (currentEvent is DialogueLine)
-        {
-
-            DisplayNextDialogueLine((DialogueLine)currentEvent);
-        }
-        else if (currentEvent is DialogueCameraPan)
-        {
-            panningOn = true;
-            StartCoroutine(TurnPanOff());
-            //HandleCameraPan((DialogueCameraPan)currentEvent);
-        }
-        else if (currentEvent is DialogueMissionEnd)
-        {
-            HandleSceneTransition((DialogueMissionEnd)currentEvent);
-        }
-
-    }
-
+    //When displaying a dialogue line, handles the text
     public void DisplayNextDialogueLine(DialogueLine currentLine)
     {
         if (!dialogueBox.activeSelf)
@@ -274,9 +323,10 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    //This runs if the dialogue event is a camera pan, handles the movement
     public void HandleCameraPan(DialogueCameraPan pan)
     {
-        
+
         //Time.timeScale = 1f;
         if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
         {
@@ -304,15 +354,16 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public IEnumerator TurnPanOff()
+    //Handles moving to the next dialogue event once the animation time is up
+    public IEnumerator TurnPanOff(DialogueCameraPan pan)
     {
-        yield return panTime;
+        yield return pan.GetAnimationTime();
 
         panningOn = false;
         HandleNextEvents();
-
     }
 
+    //Handles moving on to the next level/cutscene once the final dialogue of the mission is done
     public void HandleSceneTransition(DialogueMissionEnd nextMission)
     {
         SceneManager.LoadScene(nextMission.GetTargetScene());
@@ -328,25 +379,23 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EndDialogue()
+    //Handles setting the camera back to its previous state when the dialogue is over
+    private void ReturnCameraToOrigin()
     {
-        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        if (mainCam.orthographicSize < 59)
         {
-            dialogueBox.SetActive(false); // Deactivate the dialogue box
-            isDialogueActive = false; // Set the dialogue state to inactive
+            returningToOrigin = true;
+            mainCam.orthographicSize = Mathf.SmoothDamp(mainCam.orthographicSize, 60, ref zoomVelocity, 60, 100, 1);
         }
-        // Toggle other UI elements visibility
-        uiController.ToggleOtherUIElements(true); // Pass true to reactivate other UI elements
-
-
-        //Turn off the dialogue controls and turn on the default controls of both players
-        earthPlayer.earthControls.controls.DialogueControls.Disable();
-        earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
-        celestialPlayer.celestialControls.controls.DialogueControls.Disable();
-        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
-
-        split.ExitCutscene();
-        Time.timeScale = 1f;
-
+        if (mainCam.gameObject.transform.position != Vector3.zero)
+        {
+            returningToOrigin = true;
+            mainCam.gameObject.transform.position = Vector3.Slerp(mainCam.gameObject.transform.position, Vector3.zero, 1);
+        }
+        else if (mainCam.orthographicSize > 59 && mainCam.gameObject.transform.position == Vector3.zero)
+        {
+            mainCam.orthographicSize = 60;
+            returningToOrigin = false;
+        }
     }
 }

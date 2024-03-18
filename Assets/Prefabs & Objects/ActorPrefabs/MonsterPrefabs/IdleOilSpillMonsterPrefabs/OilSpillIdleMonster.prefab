@@ -161,9 +161,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 1600394031809458323}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 0}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 1f76211bb31335d4780aeb69861ed393, type: 2}
-  player: {fileID: 0}
   eventManager: {fileID: 0}
   isDying: 0
   isStaggered: 0
@@ -171,6 +172,8 @@ MonoBehaviour:
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 10
+  sightRange: 50
   hasAnimal: 0
   isKidnapping: 0
 --- !u!135 &3683027411586778587
@@ -347,7 +350,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3883103833900914226}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.9210448}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -355,7 +358,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -5.038208, y: -2.5827026}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2537969077426258366

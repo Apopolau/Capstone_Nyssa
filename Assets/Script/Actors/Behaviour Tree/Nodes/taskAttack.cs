@@ -7,22 +7,18 @@ public class TaskAttack : BTNode
 {
     NavMeshAgent thisAgent;
     Enemy thisEnemy;
-    private Transform thisTarget;
-    private Transform transformPos;
 
 
-    public TaskAttack(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player, Transform transform)
+    public TaskAttack(Enemy enemy)
     {
-        thisAgent = enemyMeshAgent;
-        thisTarget = target;
-        thisEnemy = enemyMeshAgent.GetComponent<Enemy>();
-        transformPos = transform;
+        thisEnemy = enemy;
+        thisAgent = enemy.GetComponent<NavMeshAgent>();
     }
 
     protected override NodeState OnRun()
     {
 
-        float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
+        float distance = Vector3.Distance(thisEnemy.GetClosestPlayer().transform.position, thisAgent.transform.position);
 
         if(thisEnemy.isStaggered || thisEnemy.isDying)
         {
@@ -30,16 +26,9 @@ public class TaskAttack : BTNode
             state = NodeState.FAILURE;
             return state;
         }
-          
-        if (distance <= 10f)
+
+        if (!thisEnemy.inAttackRange)
         {
-            // Debug.Log(distance);
-            thisEnemy.inAttackRange = true;
-     
-        }
-        else
-        {
-            thisEnemy.inAttackRange = false;
             thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
         }
 
@@ -48,16 +37,16 @@ public class TaskAttack : BTNode
             //yield return attackTime;
             bool playerIsDead = false;
             //I refactored this a little, you may want to set the damage they can deal in their stats and pass it in here
-            if (!thisTarget.GetComponentInParent<CelestialPlayer>().isShielded)
+            if (!thisEnemy.GetClosestPlayer().GetComponentInParent<Player>().GetShielded())
             {
-                playerIsDead = thisTarget.GetComponentInParent<CelestialPlayer>().TakeHit(10);
+                playerIsDead = thisEnemy.GetClosestPlayer().GetComponentInParent<Player>().TakeHit(10);
             }
             else
             {
                 thisEnemy.TakeHit(10);
             }
             
-            transformPos.LookAt(thisTarget.position);
+            thisEnemy.transform.LookAt(thisEnemy.GetClosestPlayer().transform.position);
             if (playerIsDead)
             {
                 state = NodeState.FAILURE;

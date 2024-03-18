@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CelestialPlayerAnimator : OurAnimator
+public class CelestialPlayerAnimator : PlayerAnimator
 {
     public int IfAttackingHash;
-    public int IfDyingHash;
-    public int IfTakingHitHash;
     public int IfCastingSpellHash;
 
     // Start is called before the first frame update

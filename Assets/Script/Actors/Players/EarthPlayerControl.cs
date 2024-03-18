@@ -367,7 +367,7 @@ public class EarthPlayerControl : MonoBehaviour
             }
             if (input > 0)
             {
-                dialogueManager.HandleNextEvents();
+                dialogueManager.HandleDialogueContinue();
             }
         }
     }

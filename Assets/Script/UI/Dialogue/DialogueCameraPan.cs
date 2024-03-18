@@ -19,6 +19,14 @@ public class DialogueCameraPan : DialogueEvent
     [SerializeField] float zoomSpeed;
     [SerializeField] float zoomAmount;
 
+    WaitForSecondsRealtime animationTime;
+    [SerializeField] float f_animationTime;
+
+    private void OnEnable()
+    {
+        animationTime = new WaitForSecondsRealtime(f_animationTime);
+    }
+
     public float GetPanSpeed()
     {
         return panSpeed;
@@ -57,5 +65,10 @@ public class DialogueCameraPan : DialogueEvent
     public Vector3 GetPanOffset()
     {
         return panOffset;
+    }
+
+    public WaitForSecondsRealtime GetAnimationTime()
+    {
+        return animationTime;
     }
 }

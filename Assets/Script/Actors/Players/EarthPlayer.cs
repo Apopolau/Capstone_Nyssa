@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.AI;
 
-public class EarthPlayer : MonoBehaviour
+public class EarthPlayer : Player
 {
     [Header("These need to be set up in each scene")]
     [SerializeField] public GameObject plantParent;
@@ -65,10 +65,7 @@ public class EarthPlayer : MonoBehaviour
 
     private bool healUsed;
     private bool shieldUsed;
-    private bool isShielded;
-    private bool iFramesOn;
-    private bool isStaggered;
-    private bool isDead;
+    
 
     [SerializeField] float spellRange;
     private float closestDistance;
@@ -103,15 +100,7 @@ public class EarthPlayer : MonoBehaviour
     private NavMeshAgent earthAgent;
     public EarthPlayerControl earthControls;
     [SerializeField] public WeatherState weatherState;
-    private Vector3 OrigPos;
-    public Stat health;
-
-
-
-    public bool interacting = false;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
-
-    public event System.Action<int, int> OnHealthChanged;
 
 
     private void Awake()
@@ -802,73 +791,6 @@ public class EarthPlayer : MonoBehaviour
     }
 
 
-
-    /// <summary>
-    /// COMBAT FUNCTIONS
-    /// </summary>
-    /// //If the earth player takes damage
-    public bool TakeHit(int damageDealt)
-    {
-        if (!isShielded && !iFramesOn)
-        {
-            health.current -= damageDealt;
-
-            //Debug.Log(health.current);
-
-            if (OnHealthChanged != null)
-                OnHealthChanged(health.max, health.current);
-
-            bool isDead = health.current <= 0;
-            if (isDead)
-            {
-                StartCoroutine(DeathRoutine());
-            }
-            if (!isDead && !isStaggered)
-            {
-                StartCoroutine(OnStagger());
-            }
-
-            return isDead;
-        }
-        return false;
-    }
-
-    private IEnumerator OnStagger()
-    {
-        earthAnimator.animator.SetBool(earthAnimator.IfTakingHitHash, true);
-        SuspendActions(staggerLength);
-        yield return staggerLength;
-        earthAnimator.animator.SetBool(earthAnimator.IfTakingHitHash, false);
-        isStaggered = false;
-        StartCoroutine(iFrames());
-    }
-
-    private IEnumerator iFrames()
-    {
-        iFramesOn = true;
-        yield return iFramesLength;
-        iFramesOn = false;
-    }
-
-    private IEnumerator DeathRoutine()
-    {
-        earthAnimator.animator.SetBool(earthAnimator.IfDyingHash, true);
-        CallSuspendActions(deathAnimLength);
-        yield return deathAnimLength;
-        earthAnimator.animator.SetBool(earthAnimator.IfDyingHash, false);
-        Respawn();
-    }
-
-    //If the earth player takes so much damage they get defeated
-    private void Respawn()
-    {
-
-        health.current = 100;
-        gameObject.transform.position = OrigPos;
-        isDead = false;
-    }
-
-
     /// <summary>
     /// UI FUNCTIONS
     /// </summary>
@@ -1012,12 +934,8 @@ public class EarthPlayer : MonoBehaviour
     }
 
     //Call this if you want to have all player controls turned off for a certain amount of time
-    public void CallSuspendActions(WaitForSeconds waitTime)
-    {
-        StartCoroutine(SuspendActions(waitTime));
-    }
 
-    private IEnumerator SuspendActions(WaitForSeconds waitTime)
+    protected override IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
         earthControls.controls.EarthPlayerDefault.Disable();
         earthControls.controls.PlantIsSelected.Disable();

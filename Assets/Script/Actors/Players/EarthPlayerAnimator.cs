@@ -2,15 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EarthPlayerAnimator : OurAnimator
+public class EarthPlayerAnimator : PlayerAnimator
 {
     public int IfPlantingHash;
     public int IfBuildingHash;
     public int IfTurningHash;
     public int IfHealingHash;
     public int IfShieldingHash;
-    public int IfDyingHash;
-    public int IfTakingHitHash;
 
     // Start is called before the first frame update
     void Start()

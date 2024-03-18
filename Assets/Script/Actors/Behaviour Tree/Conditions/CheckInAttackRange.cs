@@ -5,21 +5,17 @@ using BehaviourTree;
 using UnityEngine.AI;
 public class CheckInAttackRange : BTCondition
 {
-    private Transform thisTarget;
-    NavMeshAgent thisAgent;
-    CelestialPlayer thisPlayer;
+    Enemy thisEnemy;
 
-    public CheckInAttackRange(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player)
+    public CheckInAttackRange(Enemy enemy)
     {
-        thisAgent = enemyMeshAgent;
-        thisTarget = target;
-        thisPlayer = player;
+        thisEnemy = enemy;
     }
 
     protected override NodeState OnRun()
     {
-        float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
-        if (thisAgent.GetComponent<Enemy>().inAttackRange)
+        //float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
+        if (thisEnemy.inAttackRange)
         {
            // Debug.Log("in attack range");
             //place enemy animation here

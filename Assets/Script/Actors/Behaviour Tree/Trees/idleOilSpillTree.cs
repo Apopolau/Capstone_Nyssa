@@ -25,7 +25,7 @@ public class idleOilSpillTree : BTree
     protected override BTNode SetupTree()
     {
         enemyMeshAgent = transform.GetComponent<NavMeshAgent>();
-        player = transform.GetComponent<Enemy>().playerObj.GetComponent<CelestialPlayer>();
+        player = transform.GetComponent<Enemy>().celestialPlayer;
         enemy = transform.GetComponent<Enemy>();
         rb = GetComponent<Rigidbody>();
 
@@ -36,10 +36,10 @@ public class idleOilSpillTree : BTree
             {
                 new Inverter(new CheckIfDying(enemy)),
                 new Inverter(new CheckIfStaggered(enemy)),
-                new CheckInAttackRange(playerTransform,enemyMeshAgent,player),
-                new Inverter(new CheckIfPlayerDead(player)),
-                new Timer(2f, new taskInitiateAttack(playerTransform,enemyMeshAgent,player)),
-                new TaskAttack(playerTransform,enemyMeshAgent,player,transform),
+                new CheckInAttackRange(enemy),
+                new Inverter(new CheckIfPlayerDead(enemy)),
+                new Timer(2f, new taskInitiateAttack(enemy)),
+                new TaskAttack(enemy)
             }),
 
             new Sequence(new List<BTNode>
@@ -52,10 +52,10 @@ public class idleOilSpillTree : BTree
                 new Inverter(new CheckIfDying(enemy)),
                 new Inverter(new CheckIfStaggered(enemy)),
                 new CheckInRange(enemyMeshAgent),
-                new Inverter(new CheckIfPlayerDead(player)),
+                new Inverter(new CheckIfPlayerDead(enemy)),
                 //new TaskAttackPlayer(enemyMeshAgent,player)
                 //CHASE THE PLAYER
-                new taskChase(playerTransform,enemyMeshAgent,player,transform),
+                new taskChase(enemy)
              }),
            
 

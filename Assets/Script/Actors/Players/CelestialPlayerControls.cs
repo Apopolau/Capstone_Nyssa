@@ -199,7 +199,7 @@ public class CelestialPlayerControls : MonoBehaviour
             }
             if (input > 0)
             {
-                dialogueManager.HandleNextEvents();
+                dialogueManager.HandleDialogueContinue();
             }
         }
     }
