@@ -14,10 +14,10 @@ public class LevelThreeProgress : LevelProgress
 
     bool hasSavedRabbit;
 
-    public bool animalHasEnoughFood = false;
+    //public bool animalHasEnoughFood = false;
     //public bool animalHasEnoughWater = false;
     //public bool animalHasShelter = false;
-    public bool animalIsSafe = false;
+    //public bool animalIsSafe = false;
 
     /*
     public override bool EvaluateLevelProgress()

@@ -16,6 +16,7 @@ public class LevelOneEvents : EventManager
     [SerializeField] GameObject water;
 
     [Header("Parent objects of tile grids")]
+    [SerializeField] GameObject tileGrid;
     [SerializeField] GameObject firstAreaGrid;
     [SerializeField] GameObject secondAreaGrid;
     [SerializeField] GameObject thirdAreaGrid;
@@ -58,7 +59,31 @@ public class LevelOneEvents : EventManager
     private bool hasEncounteredBridge = false;
 
     WaitForSeconds delayTime = new WaitForSeconds(0.1f);
+    WaitForSeconds extraDelayTime = new WaitForSeconds(1);
 
+    private bool firstAreaClear = false;
+    private bool secondAreaClear = false;
+    private bool thirdAreaClear = false;
+    private bool fourthAreaClear = false;
+
+    //If different conversion milestones have been met
+    private bool areaOneMOneMet = false;
+    private bool areaOneMTwoMet = false;
+    private bool areaTwoMOneMet = false;
+    private bool areaTwoMTwoMet = false;
+    private bool areaThreeMOneMet = false;
+    private bool areaThreeMTwoMet = false;
+    private bool areaFourMOneMet = false;
+    private bool areaFourMTwoMet = false;
+
+    [Header("Visual Update Assets")]
+    
+    [SerializeField] private GameObject factory;
+    [SerializeField] private List<GameObject> pipes;
+    [SerializeField] private GameObject tank;
+    [SerializeField] private Material cleanFactoryMaterial;
+    [SerializeField] private Material cleanPipeMaterial;
+    [SerializeField] private Material cleanTankMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -68,12 +93,12 @@ public class LevelOneEvents : EventManager
         {
             firstAreaTiles.Add(childTransform.gameObject);
         }
-        
+
         foreach (Transform childTransform in secondAreaGrid.transform)
         {
             secondAreaTiles.Add(childTransform.gameObject);
         }
-        
+
         foreach (Transform childTransform in thirdAreaGrid.transform)
         {
             thirdAreaTiles.Add(childTransform.gameObject);
@@ -86,7 +111,15 @@ public class LevelOneEvents : EventManager
         duck1.SetActive(true);
         duck2.SetActive(true);
 
+        SetTerrainLayers();
+
         StartCoroutine(EvaluateFoodLevel());
+        StartCoroutine(EvaluateBeautyLevel());
+    }
+
+    private void OnDisable()
+    {
+        ResetTerrain();
     }
 
     // Update is called once per frame
@@ -97,7 +130,7 @@ public class LevelOneEvents : EventManager
         {
             EvaluateMonsterDefeats();
         }
-        
+
         if (EvaluateLevelCompletion() && !runReadyToLeaveDialogue)
         {
             OnReadyToLeave();
@@ -105,6 +138,10 @@ public class LevelOneEvents : EventManager
         levelOneProgress.totalPlants = levelOneProgress.GetTotalPlantCount();
     }
 
+    /// <summary>
+    /// EVALUATE OBJECTIVES FROM LIST
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator EvaluateFoodLevel()
     {
         while (true)
@@ -127,7 +164,7 @@ public class LevelOneEvents : EventManager
             //Display each task as either strikethrough or not
             if (task1.GetTaskCompletion())
             {
-                task1.GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelOneProgress.GetTreeGoal()} trees ({levelOneProgress.GetTreeCount()}/{levelOneProgress.GetTreeGoal()})</s>" ;
+                task1.GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelOneProgress.GetTreeGoal()} trees ({levelOneProgress.GetTreeCount()}/{levelOneProgress.GetTreeGoal()})</s>";
             }
             else
             {
@@ -152,12 +189,12 @@ public class LevelOneEvents : EventManager
 
             SetFoodCompletion();
         }
-        
+
     }
 
     private void SetFoodCompletion()
     {
-        if(task1.GetTaskCompletion() && task2.GetTaskCompletion() && task3.GetTaskCompletion())
+        if (task1.GetTaskCompletion() && task2.GetTaskCompletion() && task3.GetTaskCompletion())
         {
             levelOneProgress.animalHasEnoughFood = true;
         }
@@ -187,15 +224,6 @@ public class LevelOneEvents : EventManager
         }
     }
 
-    private bool EvaluateLevelCompletion()
-    {
-        if(levelOneProgress.GetFoodStatus() && levelOneProgress.GetWaterStatus() && levelOneProgress.GetFriendStatus() && levelOneProgress.GetSafetyStatus())
-        {
-            return true;
-        }
-        return false;
-    }
-
     private void EvaluateMonsterDefeats()
     {
         if (keyMonsterDefeatCount == 4)
@@ -207,12 +235,299 @@ public class LevelOneEvents : EventManager
         }
     }
 
-    public void OnFirstMonsterDefeated()
+    //Final level evaluation
+    private bool EvaluateLevelCompletion()
     {
+        if (levelOneProgress.GetFoodStatus() && levelOneProgress.GetWaterStatus() && levelOneProgress.GetFriendStatus() && levelOneProgress.GetSafetyStatus())
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+    /// <summary>
+    /// FUNCTIONS FOR HANDLING LEVEL VISUAL UPDATES
+    /// </summary>
+    //This function runs the overall level updates
+    private IEnumerator EvaluateBeautyLevel()
+    {
+        while (true)
+        {
+            yield return delayTime;
+            if (firstAreaClear)
+            {
+                EvaluateAreaOne();
+            }
+            if (secondAreaClear)
+            {
+                EvaluateAreaTwo();
+            }
+            if (thirdAreaClear)
+            {
+                EvaluateAreaThree();
+            }
+            if (fourthAreaClear)
+            {
+                EvaluateAreaFour();
+            }
+
+            int plantCount = 0;
+            int tileCount = firstAreaTiles.Count + secondAreaTiles.Count + thirdAreaTiles.Count + fourthAreaTiles.Count;
+
+            //Calculate the total amount of plants that have been planted
+            plantCount = levelOneProgress.totalPlants;
+
+            //We want to start changing up the ambient sounds as the map gets improved
+            if (plantCount > tileCount / 4)
+            {
+
+            }
+            else if (plantCount > tileCount / 2)
+            {
+
+            }
+            else if (plantCount > tileCount / 4 + tileCount / 2)
+            {
+
+            }
+        }
         
+    }
+
+    //Handles the first area where players spawn
+    private void EvaluateAreaOne()
+    {
+        int plantCount = 0;
+        int tileCount = firstAreaTiles.Count;
         foreach (GameObject go in firstAreaTiles)
         {
-            if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            if (go.GetComponentInChildren<Plant>())
+            {
+                plantCount++;
+            }
+        }
+        if (plantCount > tileCount / 4 && plantCount < tileCount / 2)
+        {
+            if (!areaOneMOneMet)
+            {
+                //follow x axis
+                for(int i = -100; i < -2; i += 8)
+                {
+                    //follow z axis
+                    for(int j = -114; j < -10; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[1]);
+                    }
+                }
+
+                areaOneMOneMet = true;
+            }
+        }
+        else if (plantCount > tileCount / 2)
+        {
+            if (!areaOneMTwoMet)
+            {
+                //follow x axis
+                for (int i = -100; i < -2; i += 8)
+                {
+                    //follow z axis
+                    for (int j = -114; j < -10; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[2]);
+                    }
+                }
+                areaOneMTwoMet = true;
+            }
+        }
+    }
+
+    //Handles the platform directly above area one
+    private void EvaluateAreaTwo()
+    {
+        int plantCount = 0;
+        int tileCount = secondAreaTiles.Count;
+        foreach (GameObject go in secondAreaTiles)
+        {
+            if (go.GetComponentInChildren<Plant>())
+            {
+                plantCount++;
+            }
+        }
+        if (plantCount > tileCount / 4 && plantCount < tileCount / 2)
+        {
+            if (!areaTwoMOneMet)
+            {
+                //follow x axis
+                for (int i = 7; i < 84; i += 8)
+                {
+                    //follow z axis
+                    for (int j = -135; j < -21; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[1]);
+                    }
+                }
+                areaTwoMOneMet = true;
+            }
+        }
+        else if (plantCount > tileCount / 2)
+        {
+            if (!areaTwoMTwoMet)
+            {
+                //follow x axis
+                for (int i = 7; i < 84; i += 8)
+                {
+                    //follow z axis
+                    for (int j = -135; j < -21; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[2]);
+                    }
+                }
+                areaTwoMTwoMet = true;
+            }
+        }
+    }
+
+    //Handles the far bank, across the bridge
+    private void EvaluateAreaThree()
+    {
+        int plantCount = 0;
+        int tileCount = thirdAreaTiles.Count;
+        foreach (GameObject go in thirdAreaTiles)
+        {
+            if (go.GetComponentInChildren<Plant>())
+            {
+                plantCount++;
+            }
+        }
+        if (plantCount > tileCount / 4 && plantCount < tileCount / 2)
+        {
+            if (!areaThreeMOneMet)
+            {
+                //follow x axis
+                for (int i = -100; i < -16; i += 8)
+                {
+                    //follow z axis
+                    for (int j = -100; j < 0; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[1]);
+                    }
+                }
+                areaThreeMOneMet = true;
+            }
+        }
+        else if (plantCount > tileCount / 2)
+        {
+            if (!areaThreeMTwoMet)
+            {
+                //follow x axis
+                for (int i = -100; i < -16; i += 8)
+                {
+                    //follow z axis
+                    for (int j = -100; j < 0; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[2]);
+                    }
+                }
+                areaThreeMTwoMet = true;
+            }
+        }
+    }
+
+    //Handles the sludge pump area
+    private void EvaluateAreaFour()
+    {
+        int plantCount = 0;
+        int tileCount = fourthAreaTiles.Count;
+        foreach (GameObject go in fourthAreaTiles)
+        {
+            if (go.GetComponentInChildren<Plant>())
+            {
+                plantCount++;
+            }
+        }
+        if (plantCount > tileCount / 4 && plantCount < tileCount / 2)
+        {
+            if (!areaFourMOneMet)
+            {
+                //Sludge pump area
+                //follow x axis
+                for (int i = 96; i < 209; i += 8)
+                {
+                    //follow z axis
+                    for (int j = -55; j < 85; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[1]);
+                    }
+                }
+                //Middle platform
+                for (int i = 2; i < 81; i += 8)
+                {
+                    //follow z axis
+                    for (int j = 4; j < 92; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[1]);
+                    }
+                }
+                areaFourMOneMet = true;
+            }
+        }
+        else if (plantCount > tileCount / 2)
+        {
+            if (!areaFourMTwoMet)
+            {
+                //Sludge pump area
+                //follow x axis
+                for (int i = 96; i < 209; i += 8)
+                {
+                    //follow z axis
+                    for (int j = -55; j < 85; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[2]);
+                    }
+                }
+                //Middle platform
+                for (int i = 2; i < 81; i += 8)
+                {
+                    //follow z axis
+                    for (int j = 4; j < 92; j += 8)
+                    {
+                        Vector3 pos = new Vector3(i, 0, j);
+                        ChangeTexture(pos, layers[2]);
+                    }
+                }
+
+                factory.GetComponent<MeshRenderer>().material = cleanFactoryMaterial;
+                foreach(GameObject go in pipes)
+                {
+                    go.GetComponent<MeshRenderer>().material = cleanPipeMaterial;
+                }
+                tank.GetComponent<MeshRenderer>().material = cleanTankMaterial;
+
+                areaFourMTwoMet = true;
+            }
+        }
+    }
+
+
+    /// <summary>
+    /// EVENTS RELATED TO DEFEATING MONSTERS
+    /// </summary>
+    public void OnFirstMonsterDefeated()
+    {
+
+        foreach (GameObject go in firstAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
@@ -225,10 +540,11 @@ public class LevelOneEvents : EventManager
 
         //We want to activate the objective menu here probably, or once the trigger dialogue is done.
         ////////////////////////////////////////////this is where we are going to drop the celestial cold orb!!!/////////////////////////////////////
-        
+
         firstMonsterDeadDialouge.TriggerDialogue();
         keyMonsterDefeatCount++;
         objectiveList.SetActive(true);
+        firstAreaClear = true;
         duck1.GetComponent<Duck>().Unstuck();
     }
 
@@ -251,6 +567,8 @@ public class LevelOneEvents : EventManager
         duck1.GetComponent<Duck>().SetUpperBankOn();
         duck2.GetComponent<Duck>().SetUpperBankOn();
 
+        secondAreaClear = true;
+
         secondMonsterDeadDialouge.TriggerDialogue();
     }
 
@@ -268,6 +586,8 @@ public class LevelOneEvents : EventManager
 
         duck1.GetComponent<Duck>().SetFarBankOn();
         duck2.GetComponent<Duck>().SetFarBankOn();
+
+        thirdAreaClear = true;
 
         keyMonsterDefeatCount++;
     }
@@ -287,11 +607,16 @@ public class LevelOneEvents : EventManager
 
         keyMonsterDefeatCount++;
 
+        fourthAreaClear = true;
+
         task4.CrossOutTask();
         SetFriendCompletion();
         fourthMonsterDeadDialouge.TriggerDialogue();
     }
 
+    /// <summary>
+    /// OTHER EVENTS
+    /// </summary>
     public void OnPumpShutOff()
     {
         water.GetComponent<Renderer>().material = cleanWaterMaterial;
@@ -299,7 +624,7 @@ public class LevelOneEvents : EventManager
         //lake.GetComponent<Renderer>().material = cleanWaterMaterial;
         foreach (GameObject go in firstAreaTiles)
         {
-            if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
@@ -311,17 +636,9 @@ public class LevelOneEvents : EventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        
+
         task5.CrossOutTask();
         SetWaterCompletion();
-    }
-
-    public void OnReadyToLeave()
-    {
-        //Set the leave trigger to exit the level to on
-        runReadyToLeaveDialogue = true;
-        allObjectivesMetDialogue.TriggerDialogue();
-        leaveTriggerObj.SetActive(true);
     }
 
     public void OnBridgeEncountered()
@@ -338,6 +655,23 @@ public class LevelOneEvents : EventManager
         task7.CrossOutTask();
     }
 
+    /// <summary>
+    /// WHEN THE PLAYER HAS COMPLETED ALL OBJECTIVES
+    /// </summary>
+    public void OnReadyToLeave()
+    {
+        //Set the leave trigger to exit the level to on
+        runReadyToLeaveDialogue = true;
+        allObjectivesMetDialogue.TriggerDialogue();
+        leaveTriggerObj.SetActive(true);
+    }
+
+
+
+
+    /// <summary>
+    /// DEBUG TOOLS
+    /// </summary>
     public void DebugTileFlip()
     {
         foreach (GameObject go in firstAreaTiles)

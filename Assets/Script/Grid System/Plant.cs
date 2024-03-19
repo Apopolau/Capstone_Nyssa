@@ -190,7 +190,7 @@ public class Plant : Creatable
         }
     }
 
-    //Refactor this back out of being an IEnumerator, use growth points instead
+    //Handles what to do when the plant has been in each stage of growth with enough nutrients
     private void AdvancePlantStage()
     {
 
@@ -231,6 +231,7 @@ public class Plant : Creatable
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
                 energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
             }
+
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.JUVENILE && growthPoints >= stats.juvenileGrowTime)
@@ -250,7 +251,9 @@ public class Plant : Creatable
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
                 energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
             }
-            
+
+            DropSeed();
+
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.MATURE && growthPoints >= stats.matureSeedDropTime)

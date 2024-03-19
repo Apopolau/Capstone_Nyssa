@@ -111,11 +111,7 @@ public class Cell : MonoBehaviour
     //Updates whether or not this is a tile that can be planted on
     private void UpdateTileValid()
     {
-        //Can't plant on polluted tiles or tiles with builds
-        if (enviroState == EnviroState.POLLUTED || tileHasBuild)
-        {
-            tileValid = false;
-        }
+        
         //Don't let them plant a tree on a tile next to a tree, or in the water
         if(earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
         {
@@ -135,6 +131,10 @@ public class Cell : MonoBehaviour
                             tileValid = false;
                             break;
                         }
+                        else if(enviroState == EnviroState.POLLUTED || tileHasBuild)
+                        {
+                            tileValid = false;
+                        }
                         else
                         {
                             tileValid = true;
@@ -143,6 +143,11 @@ public class Cell : MonoBehaviour
                 }
                 
             }
+        }
+        //Can't plant on polluted tiles or tiles with builds
+        else if (enviroState == EnviroState.POLLUTED || tileHasBuild)
+        {
+            tileValid = false;
         }
         else
         {
