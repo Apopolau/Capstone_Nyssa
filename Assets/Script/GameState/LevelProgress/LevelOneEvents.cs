@@ -119,7 +119,7 @@ public class LevelOneEvents : EventManager
 
     private void OnDisable()
     {
-        ResetTerrain();
+       // ResetTerrain();
     }
 
     // Update is called once per frame
