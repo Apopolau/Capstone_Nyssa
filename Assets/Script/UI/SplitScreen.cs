@@ -11,8 +11,8 @@ public class SplitScreen : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField] GameObject earthPlayer;
-    [SerializeField] GameObject celestialPlayer;
+    [SerializeField] public GameObject earthPlayer;
+    [SerializeField] public GameObject celestialPlayer;
     [SerializeField] public Camera earthCam;
     [SerializeField] public Camera celestialCam;
     [SerializeField] public Camera mainCam;
@@ -21,22 +21,23 @@ public class SplitScreen : MonoBehaviour
     [SerializeField] public VirtualMouseInput earthVirtualMouseInput;
     
 
-    DialogueManager dialogue;
-    bool inCutscene = false;
+    public DialogueManager dialogue;
+    public bool inCutscene = false;
 
-    bool switching = false;
-    int currCam = 1;
+    public bool switching = false;
+    public int currCam = 1;
     public int Manager = 0;
 
     private void Start()
     {
         
-        SetOneCam();
+        //SetOneCam();
     }
 
     // Update is called once per frame
     void Update()
     {
+        /*
         //If two players are close enough make camera one, if players are far enough split camera
         if (!inCutscene)
         {
@@ -51,6 +52,7 @@ public class SplitScreen : MonoBehaviour
                 //Changed();
             }
         }
+        */
     }
 
     public void EnterCutscene()
@@ -68,7 +70,7 @@ public class SplitScreen : MonoBehaviour
         GetComponent<Animator>().SetTrigger("Change");
     }
 
-
+    /*
     public void ManageCamera()
     {
         if (Manager == 0)
@@ -82,6 +84,7 @@ public class SplitScreen : MonoBehaviour
             Manager = 0;
         }
     }
+    */
 
 
     private void SetTwoCams()
@@ -122,7 +125,6 @@ public class SplitScreen : MonoBehaviour
 
         }
 
-
         mainCam.transform.position = Vector3.Lerp(earthPlayer.transform.position, celestialPlayer.transform.position, 0.5f);
 
         mainCam.gameObject.SetActive(true);
@@ -142,9 +144,6 @@ public class SplitScreen : MonoBehaviour
             earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
             earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
         }
-        
-
-
     }
 
 
