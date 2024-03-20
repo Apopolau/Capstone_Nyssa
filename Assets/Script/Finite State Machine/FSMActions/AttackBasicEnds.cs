@@ -11,7 +11,7 @@ public class AttackBasicEnds : FSMAction
         CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
         CelestialPlayerBasicAttackTrigger staff = stateMachine.GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
 
-        Debug.Log("******takeDamage");
+        //Debug.Log("******takeDamage");
         if (player.enemySeen && staff.enemyHit)
         {
             player.Attack();
@@ -24,7 +24,7 @@ public class AttackBasicEnds : FSMAction
 
 
         player.isAttacking = false;
-        Debug.Log("******tattack complete");
+        //Debug.Log("******tattack complete");
 
 
     }

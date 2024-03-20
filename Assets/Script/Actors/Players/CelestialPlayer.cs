@@ -109,12 +109,12 @@ public class CelestialPlayer : Player
     {
         if (context.phase == InputActionPhase.Started)
         {
-            Debug.Log("Interacting");
+            //Debug.Log("Interacting");
             interacting = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            Debug.Log("Not interacting anymore");
+            //Debug.Log("Not interacting anymore");
             interacting = false;
         }
     }

@@ -197,7 +197,7 @@ public class Plant : Creatable
         if (currentPlantStage == PlantStats.PlantStage.SEEDLING && growthPoints >= stats.seedlingGrowTime)
         {
             //yield return new WaitForSeconds(stats.seedlingGrowTime);
-            Debug.Log("Plant should be growing");
+            //Debug.Log("Plant should be growing");
             currentPlantStage = PlantStats.PlantStage.SPROUT;
             currentPollutionContribution = stats.sproutAirPollutionBonus;
             //SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
@@ -206,7 +206,7 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.sproutImage;
             }
             PlacePlant(stats.sproutScale, stats.sproutTileOffset);
-            HandleTreeColliders(0.5f, 5);
+            HandleTreeColliders(0.5f, 5, 0, Vector3.zero);
             if (energySet.Items.Count < 10)
             {
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
@@ -225,7 +225,7 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.juvenileImage;
             }
             PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
-            HandleTreeColliders(1f, 5);
+            HandleTreeColliders(1f, 50, 0, Vector3.zero);
             if (energySet.Items.Count < 10)
             {
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
@@ -245,8 +245,8 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.matureImage;
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
-            HandleTreeColliders(2.5f, 10);
-            if(energySet.Items.Count < 10)
+            HandleTreeColliders(2.5f, 10, 12, new Vector3(-2, 18.2f, 2));
+            if (energySet.Items.Count < 10)
             {
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
                 energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
@@ -277,7 +277,7 @@ public class Plant : Creatable
         }
     }
 
-    private void HandleTreeColliders(float colliderRadius, float colliderHeight)
+    private void HandleTreeColliders(float colliderRadius, float colliderHeight, float sphereRadius, Vector3 sphereCenter)
     {
         if (this.GetComponent<CapsuleCollider>() != null)
         {
@@ -285,6 +285,12 @@ public class Plant : Creatable
             collider.radius = colliderRadius;
             collider.height = colliderHeight;
             //collider.center = colliderYPosition;
+        }
+        if(this.GetComponent<SphereCollider>() != null)
+        {
+            SphereCollider collider = this.GetComponent<SphereCollider>();
+            collider.radius = sphereRadius;
+            collider.center = sphereCenter;
         }
     }
 

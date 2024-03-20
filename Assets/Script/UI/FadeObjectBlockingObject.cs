@@ -6,6 +6,7 @@ using UnityEngine;
 //Github: https://github.com/llamacademy/urp-fading-standard-shaders/tree/main
 public class FadeObjectBlockingObject : MonoBehaviour
 {
+    Shader spriteShader;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Transform target;
     [SerializeField] private Camera mainCamera;
@@ -23,6 +24,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
 
     private void Start()
     {
+        spriteShader = Shader.Find("Sprites/Default");
         StartCoroutine(CheckForObjects());
     }
 
@@ -30,11 +32,9 @@ public class FadeObjectBlockingObject : MonoBehaviour
     {
         while (true)
         {
-            int hits = Physics.RaycastNonAlloc(
-                mainCamera.transform.position,
-                (target.transform.position + targetPositionOffset - mainCamera.transform.position).normalized,
-                Hits,
-                Vector3.Distance(mainCamera.transform.position, target.transform.position + targetPositionOffset),
+            Vector3 realCameraPos = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCamera.nearClipPlane));
+            int hits = Physics.RaycastNonAlloc(realCameraPos, (target.transform.position + targetPositionOffset - realCameraPos).normalized,
+                Hits, Vector3.Distance(realCameraPos, target.transform.position + targetPositionOffset),
                 layerMask);
             if(hits > 0)
             {
@@ -66,22 +66,27 @@ public class FadeObjectBlockingObject : MonoBehaviour
 
     private IEnumerator FadeObjectOut(ObjectFader objectFader)
     {
+        
         foreach(Material material in objectFader.materials)
         {
-            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-            material.SetInt("_ZWrite", 0);
-            material.SetInt("_Surface", 1);
+            if(material.shader != spriteShader)
+            {
+                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+                material.SetInt("_ZWrite", 0);
+                material.SetInt("_Surface", 1);
 
-            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
+                material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Transparent;
 
-            material.SetShaderPassEnabled("DepthOnly", false);
-            material.SetShaderPassEnabled("SHADOWCASTER", retainShadows);
+                material.SetShaderPassEnabled("DepthOnly", false);
+                material.SetShaderPassEnabled("SHADOWCASTER", retainShadows);
 
-            material.SetOverrideTag("RenderType", "Transparent");
+                material.SetOverrideTag("RenderType", "Transparent");
 
-            material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+                material.EnableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
+            }
+            
         }
         float time = 0;
 
@@ -136,20 +141,23 @@ public class FadeObjectBlockingObject : MonoBehaviour
 
         foreach (Material material in objectFader.materials)
         {
-            material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-            material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-            material.SetInt("_ZWrite", 1);
-            material.SetInt("_Surface", 0);
+            if (material.shader != spriteShader)
+            {
+                material.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+                material.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+                material.SetInt("_ZWrite", 1);
+                material.SetInt("_Surface", 0);
 
-            material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
+                material.renderQueue = (int)UnityEngine.Rendering.RenderQueue.Geometry;
 
-            material.SetShaderPassEnabled("DepthOnly", true);
-            material.SetShaderPassEnabled("SHADOWCASTER", true);
+                material.SetShaderPassEnabled("DepthOnly", true);
+                material.SetShaderPassEnabled("SHADOWCASTER", true);
 
-            material.SetOverrideTag("RenderType", "Opaque");
+                material.SetOverrideTag("RenderType", "Opaque");
 
-            material.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
-            material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+                material.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
+                material.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+            }
         }
 
         if (runningCoroutines.ContainsKey(objectFader))
