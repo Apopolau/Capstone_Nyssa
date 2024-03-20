@@ -60,6 +60,11 @@ public class DayNightCycle : MonoBehaviour
         weatherState.skyState = WeatherState.SkyState.CLEAR;
     }
 
+    private void OnEnable()
+    {
+        UpdateLighting();
+    }
+
     void Update()
     {
         if (Application.isPlaying && timeOfDayChanges)
@@ -69,11 +74,6 @@ public class DayNightCycle : MonoBehaviour
             UpdateLighting();
         }
 
-    }
-
-    private void OnValidate()
-    {
-        UpdateLighting();
     }
 
     private void UpdateSun()
