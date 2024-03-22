@@ -53,6 +53,7 @@ public class Cell : MonoBehaviour
     public bool tileValid = true;
     public bool tileIsActivated = false;
     public bool tileHasBuild = false;
+    public bool shouldBeGrass = false;
 
     //private VirtualMouseInput virtualMouseInput;
     //[SerializeField] private Camera mainCamera;
@@ -81,6 +82,7 @@ public class Cell : MonoBehaviour
         //earthPlayer = playerSet.GetItemIndex(0).GetComponent<EarthPlayer>();
         StartCoroutine(CheckForPlayer());
         StartCoroutine(UpdateTileAppearance());
+        StartCoroutine(UpdateNeighbours());
         tileVector.x = this.transform.position.x;
         tileVector.y = this.transform.position.z;
 
@@ -109,8 +111,41 @@ public class Cell : MonoBehaviour
     //Updates whether or not this is a tile that can be planted on
     private void UpdateTileValid()
     {
-        if (enviroState == EnviroState.POLLUTED || tileHasBuild ||
-            (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE && terrainType == TerrainType.WATER))
+        
+        //Don't let them plant a tree on a tile next to a tree, or in the water
+        if(earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
+        {
+            if(terrainType == TerrainType.WATER)
+            {
+                tileValid = false;
+                return;
+            }
+            foreach(Cell c in neighbours)
+            {
+                if (c != null)
+                {
+                    if (c.tileHasBuild)
+                    {
+                        if (c.placedObject.GetComponent<Plant>().stats.plantName == "Tree")
+                        {
+                            tileValid = false;
+                            break;
+                        }
+                        else if(enviroState == EnviroState.POLLUTED || tileHasBuild)
+                        {
+                            tileValid = false;
+                        }
+                        else
+                        {
+                            tileValid = true;
+                        }
+                    }
+                }
+                
+            }
+        }
+        //Can't plant on polluted tiles or tiles with builds
+        else if (enviroState == EnviroState.POLLUTED || tileHasBuild)
         {
             tileValid = false;
         }
@@ -120,6 +155,7 @@ public class Cell : MonoBehaviour
         }
     }
 
+    //Handles flipping tiles based on various settings
     private IEnumerator UpdateTileAppearance()
     {
         while (true)
@@ -140,7 +176,7 @@ public class Cell : MonoBehaviour
                 }
                 else
                 {
-                    if (tileHasBuild)
+                    if (tileHasBuild || shouldBeGrass)
                     {
                         GetComponentInChildren<MeshRenderer>().material.mainTexture = fullGrassTile;
                     }
@@ -151,6 +187,41 @@ public class Cell : MonoBehaviour
                 }
             }
             yield return new WaitForSeconds(0.2f);
+        }
+    }
+
+    private IEnumerator UpdateNeighbours()
+    {
+        //I'm so sorry for this stupid nested statement
+        while (true)
+        {
+            if (tileHasBuild)
+            {
+                if(placedObject.GetComponent<Plant>().stats.plantName == "Tree")
+                {
+                    foreach(Cell c in neighbours)
+                    {
+                        if(c != null)
+                        {
+                            c.shouldBeGrass = true;
+                            if(placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.JUVENILE ||
+                                placedObject.GetComponent<Plant>().currentPlantStage == PlantStats.PlantStage.MATURE)
+                            {
+                                ConvertToGrass(c.neighbours);
+                            }
+                            
+                        }
+                        
+                    }
+                }
+                else
+                {
+                    ConvertToGrass(neighbours);
+                }
+                
+            }
+            yield return new WaitForSeconds(0.2f);
+
         }
     }
 
@@ -209,7 +280,7 @@ public class Cell : MonoBehaviour
         //Handles indication whether it's a valid position or not
         if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.TREE)
         {
-            if (tileHasBuild || enviroState == EnviroState.POLLUTED || terrainType == TerrainType.WATER)
+            if (!tileValid || enviroState == EnviroState.POLLUTED || terrainType == TerrainType.WATER)
             {
                 earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
                 earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
@@ -222,7 +293,7 @@ public class Cell : MonoBehaviour
         }
         else
         {
-            if (tileHasBuild || enviroState == EnviroState.POLLUTED)
+            if (!tileValid || enviroState == EnviroState.POLLUTED)
             {
                 earthPlayer.plantSelected.GetComponentInChildren<SpriteRenderer>().color = unselectableColour;
                 earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
@@ -269,6 +340,18 @@ public class Cell : MonoBehaviour
             }
 
             yield return waitTime;
+        }
+    }
+
+    private void ConvertToGrass(Cell[] cellList)
+    {
+        foreach (Cell cc in cellList)
+        {
+            if (cc != null)
+            {
+                cc.shouldBeGrass = true;
+            }
+
         }
     }
 

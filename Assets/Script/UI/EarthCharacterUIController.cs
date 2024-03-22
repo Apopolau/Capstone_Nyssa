@@ -7,13 +7,14 @@ using TMPro;
 
 public class EarthCharacterUIController : MonoBehaviour
 {
-   
+   //PlantingOverlay
     public Image darkOverlay;
 
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
     public UserSettingsManager userSettingsManager;
 
+    //Earth player icons keyboard, celestial player icons keyboard, heal icon, thorn icon
     public GameObject[] keyboardUIObjects; // UI elements for keyboard control
     public GameObject[] controllerUIObjects; // UI elements for controller control
 

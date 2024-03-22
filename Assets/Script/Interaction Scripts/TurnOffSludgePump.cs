@@ -15,6 +15,9 @@ public class TurnOffSludgePump : Interactable
     private bool earthDialogueHasPlayed = false;
     private bool celestialDialogueHasPlayed = false;
     private bool sludgePumpIsOff = false;
+    private playerMovement pMovement;
+    float step;
+    float speed = 1;
 
     private void Awake()
     {
@@ -23,11 +26,13 @@ public class TurnOffSludgePump : Interactable
 
     private void Start()
     {
+        step = speed * Time.deltaTime;
         foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<EarthPlayer>())
             {
                 earthPlayer = player.GetComponent<EarthPlayer>();
+                pMovement = earthPlayer.GetComponent<playerMovement>();
             }
             else if (player.GetComponent<CelestialPlayer>())
             {
@@ -58,15 +63,10 @@ public class TurnOffSludgePump : Interactable
 
     private IEnumerator SludgePumpTurnsOff()
     {
-        /*
-        Vector3 viewDir = earthPlayer.transform.position - new Vector3(transform.position.x, earthPlayer.transform.position.y, transform.position.z);
-        if (viewDir != Vector3.zero)
-        {
-            earthPlayer.GetComponent<playerMovement>().orientation.forward = viewDir.normalized;
-        }
-        */
-        //earthPlayer.GetComponent<playerMovement>().playerObj.transform.LookAt()
-        earthPlayer.GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+        Vector3 lookVector = new Vector3(pMovement.playerObj.transform.position.x,
+            this.transform.position.y, pMovement.playerObj.transform.position.z);
+        Vector3 rotateVector = Vector3.RotateTowards(pMovement.playerObj.transform.position, lookVector, step, 0f);
+        pMovement.playerObj.rotation = Quaternion.LookRotation(rotateVector);
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfTurningHash, true);
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, false);
         earthPlayer.CallSuspendActions(turnTime);

@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.AI;
 using UnityEngine.VFX;
-public class CelestialPlayer : MonoBehaviour
+public class CelestialPlayer : Player
 {
 
     //[SerializeField] private VirtualMouseInput virtualMouseInput;
@@ -28,7 +28,6 @@ public class CelestialPlayer : MonoBehaviour
 
 
     [SerializeField] public bool isAttacking = false;
-    [SerializeField] public bool isDead = false;
     [SerializeField] public bool canBasicAttack = true;
     [SerializeField] public bool canColdSnap = true;
     [SerializeField] public bool canLightningStrike = true;
@@ -36,8 +35,6 @@ public class CelestialPlayer : MonoBehaviour
     [SerializeField] public bool canSetFogTrap = true;
     [SerializeField] public bool canSetFrostTrap = true;
     [SerializeField] public bool canSunBeam = true;
-
-    public bool interacting = false;
 
     public enum Power
     {
@@ -60,26 +57,13 @@ public class CelestialPlayer : MonoBehaviour
     PowerBehaviour powerBehaviour;
     public CelestialPlayerControls celestialControls;
 
-
-    [Header("Respawn")]
-    public Stat health;
-    public Vector3 OrigPos = new Vector3(20, 7, -97);
-    [SerializeField] public bool isDying = false;
-    [SerializeField] public bool isRespawning = false;
-    public bool isShielded = false;
-
     //Lengths of animations and abilities
     WaitForSeconds barrierLength = new WaitForSeconds(5);
-    WaitForSeconds staggerLength = new WaitForSeconds(0.958f);
-    WaitForSeconds deathAnimLength = new WaitForSeconds(1.458f);
-    WaitForSeconds iFramesLength = new WaitForSeconds(0.5f);
+    
 
 
     [Header("Animation")]
     private CelestialPlayerAnimator celestialAnimator;
-
-
-
 
     [SerializeField] public GameObject treeSeedPrefab;
     //private CelestialPlayerInputActions celestialPlayerInput;
@@ -87,22 +71,15 @@ public class CelestialPlayer : MonoBehaviour
     // [Header("Lightning System")]
     // Start is called before the first frame update
 
-
-
     //Interaction with the player
     public bool enemySeen = false;
     public bool enemyHit = false;
     public GameObject enemyTarget = null;
     public Vector3 enemyLocation;
 
-    public event System.Action<int, int> OnHealthChanged;
-    private bool iFramesOn;
-    private bool isStaggered;
-
-
     private void Awake()
     {
-
+        OrigPos = new Vector3(20, 7, -97);
         celestialAnimator = GetComponent<CelestialPlayerAnimator>();
         celestialAgent = GetComponent<NavMeshAgent>();
         celestialAgent.enabled = false;
@@ -132,12 +109,12 @@ public class CelestialPlayer : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            Debug.Log("Interacting");
+            //Debug.Log("Interacting");
             interacting = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            Debug.Log("Not interacting anymore");
+            //Debug.Log("Not interacting anymore");
             interacting = false;
         }
     }
@@ -187,62 +164,6 @@ public class CelestialPlayer : MonoBehaviour
         }
     }
 
-
-
-
-
-    public bool TakeHit(int damageDealt)
-    {
-        if (!isShielded && !iFramesOn)
-        {
-            health.current -= damageDealt;
-
-            //Debug.Log(health.current);
-
-            if (OnHealthChanged != null)
-                OnHealthChanged(health.max, health.current);
-
-            bool isDead = health.current <= 0;
-            if (isDead)
-            {
-                StartCoroutine(DeathRoutine());
-            }
-            if (!isDead && !isStaggered)
-            {
-                StartCoroutine(OnStagger());
-            }
-
-            return isDead;
-        }
-        return false;
-    }
-
-    private IEnumerator OnStagger()
-    {
-        celestialAnimator.animator.SetBool(celestialAnimator.IfTakingHitHash, true);
-        SuspendActions(staggerLength);
-        yield return staggerLength;
-        celestialAnimator.animator.SetBool(celestialAnimator.IfTakingHitHash, false);
-        isStaggered = false;
-        StartCoroutine(iFrames());
-    }
-
-    private IEnumerator iFrames()
-    {
-        iFramesOn = true;
-        yield return iFramesLength;
-        iFramesOn = false;
-    }
-
-    private IEnumerator DeathRoutine()
-    {
-        celestialAnimator.animator.SetBool(celestialAnimator.IfDyingHash, true);
-        CallSuspendActions(deathAnimLength);
-        yield return deathAnimLength;
-        celestialAnimator.animator.SetBool(celestialAnimator.IfDyingHash, false);
-        Respawn();
-    }
-
     public void ApplyBarrier()
     {
         isShielded = true;
@@ -282,30 +203,6 @@ public class CelestialPlayer : MonoBehaviour
 
 
 
-    }
-
-    private void Respawn()
-    {
-
-        health.current = 100;
-        gameObject.transform.position = OrigPos;
-        isDead = false;
-    }
-
-
-
-    public int GetHealth()
-    {
-        return health.current;
-    }
-    public void SetHealth(int newHealthPoint)
-    {
-        health.current = newHealthPoint;
-
-    }
-    public void SetLocation(Vector3 newPosition)
-    {
-        gameObject.transform.position = newPosition;
     }
 
     //if player selects raindrop
@@ -351,7 +248,10 @@ public class CelestialPlayer : MonoBehaviour
     }
     public void OnSnowFlakeSelected() {
 
-        canColdSnap = false;
+        if (canColdSnap)
+        {
+            canColdSnap = false;
+        }
         isAttacking = true;
         powerInUse = Power.COLDSNAP;
         Debug.Log("start");
@@ -520,21 +420,14 @@ public class CelestialPlayer : MonoBehaviour
     {
 
 
-        Debug.Log("coldsnaptimer reset");
+        Debug.Log("basic reset");
 
         yield return new WaitForSeconds(powerBehaviour.BasicAttackStats.rechargeTimer);
        canBasicAttack = true;
 
     }
 
-
-
-    public void CallSuspendActions(WaitForSeconds waitTime)
-    {
-        StartCoroutine(SuspendActions(waitTime));
-    }
-
-    private IEnumerator SuspendActions(WaitForSeconds waitTime)
+    protected override IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
         celestialControls.controls.CelestialPlayerDefault.Disable();
         //celestialControls.controls.PlantIsSelected.Disable();

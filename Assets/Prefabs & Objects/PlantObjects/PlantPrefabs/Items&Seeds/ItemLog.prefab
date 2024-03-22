@@ -96,11 +96,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60cf5c9443e094746a31c5a387e2696e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiObject: {fileID: 4587303010789976130}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  p1IsInRange: 0
+  isEarthInteractable: 0
+  p2IsInRange: 0
+  isCelestialInteractable: 0
+  uiObject: {fileID: 4587303010789976130}
+  item:
+    stats: {fileID: 0}
+    quantity: 0
   itemStats: {fileID: 11400000, guid: 0ce4169d48f087a48871f254f4d010bf, type: 2}
   inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
   quantity: 3
+  isBeingAbsorbed: 0
 --- !u!1 &4433869016309858906
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,15 +305,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3847169033450053639, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.73
+      value: -2.9385357
       objectReference: {fileID: 0}
     - target: {fileID: 3847169033450053639, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.77
+      value: 2.3624995
       objectReference: {fileID: 0}
     - target: {fileID: 3847169033450053639, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0
+      value: -0.1414216
       objectReference: {fileID: 0}
     - target: {fileID: 3847169033450053639, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
       propertyPath: m_LocalRotation.w
@@ -345,18 +353,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8901620671769712149, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8901620671769712149, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
-      propertyPath: m_LocalRotation.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8901620671769712149, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8901620671769712149, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7230368545150131242, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
+    - {fileID: 2352243716063534365, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

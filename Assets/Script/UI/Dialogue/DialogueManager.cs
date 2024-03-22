@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Rendering.Universal;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -12,15 +14,17 @@ public class DialogueManager : MonoBehaviour
     public Image characterIconLeft;
     public Image characterIconRight;
     public TextMeshProUGUI dialogueArea;
-   //public TextMeshProUGUI dialogueAreaFR;
+    //public TextMeshProUGUI dialogueAreaFR;
 
-    private Queue<DialogueLine> lines;
+    private Queue<DialogueEvent> events;
+    private DialogueEvent currentEvent;
 
     public bool isDialogueActive = false;
     public GameObject dialogueBox; // Reference to the entire dialogue box
-                                   
+
     public EarthCharacterUIController uiController;// Reference to the UI controller script
     public SplitScreen split;
+    public Camera mainCam;
 
     [SerializeField] private GameObjectRuntimeSet playerSet;
     private EarthPlayer earthPlayer;
@@ -30,8 +34,29 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private List<DialogueCharacter> dialogueCharacters;
     private DialogueCharacter currentCharacter;
     private Sprite currentSprite;
+    [SerializeField] private DialogueCameraPan panToOrigin;
 
     public float typingSpeed = 0.2f;
+
+    //Camera speed variables
+    //Zoom variables, zooming in and out
+    private float zoom;
+    private float zoomMultiplier;
+    private float zoomVelocity = 0f;
+    private float maxZoom = 60f;
+    private float minZoom = 5f;
+
+    //Pan variables, moving around the map
+    private Vector3 panVal;
+    private float panMultiplier;
+    private Vector3 panVelocity = new Vector3(0, 0, 0);
+
+    //private float smoothTime = 0.25f;
+
+    [SerializeField] private bool panningOn;
+    [SerializeField] private bool returningToOrigin;
+
+    //WaitForSecondsRealtime panTime = new WaitForSecondsRealtime(3f);
 
     private void OnEnable()
     {
@@ -45,10 +70,7 @@ public class DialogueManager : MonoBehaviour
             {
                 celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
             }
-
         }
-
-
     }
 
     private void Awake()
@@ -56,21 +78,30 @@ public class DialogueManager : MonoBehaviour
         if (Instance == null)
             Instance = this;
 
-        lines = new Queue<DialogueLine>();
+        events = new Queue<DialogueEvent>();
+        mainCam = Camera.main;
     }
 
+    private void Update()
+    {
+        if (panningOn)
+        {
+            HandleCameraPan((DialogueCameraPan)currentEvent);
+        }
+        if (returningToOrigin)
+        {
+            ReturnCameraToOrigin();
+        }
+
+    }
+
+    //Initiate the dialogue
     public void StartDialogue(Dialogue dialogue)
     {
         // Activate the dialogue box if it's currently inactive
-        if (!dialogueBox.activeSelf)
-        {
-            dialogueBox.SetActive(true);
-        }
-        else
-        {
-            isDialogueActive = true;
-        }
 
+        Time.timeScale = 0f;
+        split.EnterCutscene();
 
         // Toggle other UI elements visibility
         uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
@@ -107,32 +138,94 @@ public class DialogueManager : MonoBehaviour
             celestialPlayer.celestialControls.controls.DialogueControls.Enable();
             celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
         }
-        Time.timeScale = 0f;
 
+        events.Clear();
 
-
-        lines.Clear();
-
-        foreach (DialogueLine dialogueLine in dialogue.dialogueLines)
+        foreach (DialogueEvent dialogueEvent in dialogue.dialogueEvents)
         {
-            lines.Enqueue(dialogueLine);
+            events.Enqueue(dialogueEvent);
         }
 
-        DisplayNextDialogueLine();
+        HandleNextEvents();
 
     }
 
+    public void HandleDialogueContinue()
+    {
+
+        if(!panningOn && !returningToOrigin)
+        {
+            HandleNextEvents();
+        }
+
+    }
+
+    //Figures out what to do with each dialogue event in the list
+    public void HandleNextEvents()
+    {
+        if (events.Count == 0)
+        {
+            EndDialogue();
+
+            return;
+        }
+
+        currentEvent = events.Dequeue();
+
+        if (currentEvent is DialogueLine)
+        {
+
+            DisplayNextDialogueLine((DialogueLine)currentEvent);
+        }
+        else if (currentEvent is DialogueCameraPan)
+        {
+            panningOn = true;
+            StartCoroutine(TurnPanOff((DialogueCameraPan)currentEvent));
+            //HandleCameraPan((DialogueCameraPan)currentEvent);
+        }
+        else if (currentEvent is DialogueMissionEnd)
+        {
+            HandleSceneTransition((DialogueMissionEnd)currentEvent);
+        }
+
+    }
+
+    //Wraps up the dialogue when we run out of events
+    public void EndDialogue()
+    {
+        ReturnCameraToOrigin();
+        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        {
+            dialogueBox.SetActive(false); // Deactivate the dialogue box
+            isDialogueActive = false; // Set the dialogue state to inactive
+        }
+        // Toggle other UI elements visibility
+        uiController.ToggleOtherUIElements(true); // Pass true to reactivate other UI elements
+
+
+        //Turn off the dialogue controls and turn on the default controls of both players
+        earthPlayer.earthControls.controls.DialogueControls.Disable();
+        earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
+        celestialPlayer.celestialControls.controls.DialogueControls.Disable();
+        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+
+        split.ExitCutscene();
+        Time.timeScale = 1f;
+
+    }
+
+    //When displaying a dialogue line, handles the sprites
     private void AssignCharacter(DialogueLine currentLine)
     {
-        if(currentLine.speaker == DialogueLine.Character.CELESTE)
+        if (currentLine.speaker == DialogueLine.Character.CELESTE)
         {
             currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Celeste"));
         }
-        else if(currentLine.speaker == DialogueLine.Character.SPROUT)
+        else if (currentLine.speaker == DialogueLine.Character.SPROUT)
         {
             currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Sprout"));
         }
-        else if(currentLine.speaker == DialogueLine.Character.DUCK)
+        else if (currentLine.speaker == DialogueLine.Character.DUCK)
         {
             currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Duck"));
         }
@@ -149,7 +242,7 @@ public class DialogueManager : MonoBehaviour
             currentCharacter = dialogueCharacters.Find(character => character.characterName.Equals("Nyssa"));
         }
 
-        if(currentLine.emotion == DialogueLine.Emotion.DEFAULT)
+        if (currentLine.emotion == DialogueLine.Emotion.DEFAULT)
         {
             currentSprite = currentCharacter.characterSprites.Default;
         }
@@ -175,16 +268,17 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void DisplayNextDialogueLine()
+    //When displaying a dialogue line, handles the text
+    public void DisplayNextDialogueLine(DialogueLine currentLine)
     {
-        if (lines.Count == 0)
+        if (!dialogueBox.activeSelf)
         {
-            EndDialogue();
-
-            return;
+            dialogueBox.SetActive(true);
         }
-
-        DialogueLine currentLine = lines.Dequeue();
+        else
+        {
+            isDialogueActive = true;
+        }
 
         // Clear the dialogue areas
         dialogueArea.text = "";
@@ -213,10 +307,6 @@ public class DialogueManager : MonoBehaviour
             characterIconLeft.CrossFadeAlpha(0f, 0f, true);
         }
 
-        //display all text at once
-       //dialogueArea.text = currentLine.line;
-        //dialogueAreaFR.text = currentLine.lineFR;
-
         // Determine which language to display based on the user's language setting
         switch (userSettingsManager.chosenLanguage)
         {
@@ -229,7 +319,54 @@ public class DialogueManager : MonoBehaviour
                 dialogueArea.text = currentLine.lineFR;
                 Debug.Log("French text should display");
                 break;
+
         }
+    }
+
+    //This runs if the dialogue event is a camera pan, handles the movement
+    public void HandleCameraPan(DialogueCameraPan pan)
+    {
+
+        //Time.timeScale = 1f;
+        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        {
+            dialogueBox.SetActive(false); // Deactivate the dialogue box
+            isDialogueActive = false; // Set the dialogue state to inactive
+        }
+
+        //We want to switch to single screen for dialogue I think
+        if (split.Manager == 1)
+        {
+
+        }
+
+        zoom = mainCam.orthographicSize;
+        //zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+        mainCam.orthographicSize = Mathf.SmoothDamp(mainCam.orthographicSize, pan.GetZoomAmount(), ref zoomVelocity, pan.GetZoomSpeed(), 100, 1);
+
+        if (pan.GetPanType() == DialogueCameraPan.PanType.OBJECT)
+        {
+            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position, pan.GetPanObject().transform.position + pan.GetPanOffset(), ref panVelocity, pan.GetPanSpeed(), 100, 1);
+        }
+        else if (pan.GetPanType() == DialogueCameraPan.PanType.LOCATION)
+        {
+            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position, pan.GetPanLocation() + pan.GetPanOffset(), ref panVelocity, pan.GetPanSpeed(), 100, 1);
+        }
+    }
+
+    //Handles moving to the next dialogue event once the animation time is up
+    public IEnumerator TurnPanOff(DialogueCameraPan pan)
+    {
+        yield return pan.GetAnimationTime();
+
+        panningOn = false;
+        HandleNextEvents();
+    }
+
+    //Handles moving on to the next level/cutscene once the final dialogue of the mission is done
+    public void HandleSceneTransition(DialogueMissionEnd nextMission)
+    {
+        SceneManager.LoadScene(nextMission.GetTargetScene());
     }
 
     //display letter by letter
@@ -242,24 +379,23 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void EndDialogue()
+    //Handles setting the camera back to its previous state when the dialogue is over
+    private void ReturnCameraToOrigin()
     {
-        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        if (mainCam.orthographicSize < 59)
         {
-            dialogueBox.SetActive(false); // Deactivate the dialogue box
-            isDialogueActive = false; // Set the dialogue state to inactive
+            returningToOrigin = true;
+            mainCam.orthographicSize = Mathf.SmoothDamp(mainCam.orthographicSize, 60, ref zoomVelocity, 60, 100, 1);
         }
-        // Toggle other UI elements visibility
-        uiController.ToggleOtherUIElements(true); // Pass true to reactivate other UI elements
-
-
-        //Turn off the dialogue controls and turn on the default controls of both players
-        earthPlayer.earthControls.controls.DialogueControls.Disable();
-        earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
-        celestialPlayer.celestialControls.controls.DialogueControls.Disable();
-        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
-
-        Time.timeScale = 1f;
-
+        if (mainCam.gameObject.transform.position != Vector3.zero)
+        {
+            returningToOrigin = true;
+            mainCam.gameObject.transform.position = Vector3.Slerp(mainCam.gameObject.transform.position, Vector3.zero, 1);
+        }
+        else if (mainCam.orthographicSize > 59 && mainCam.gameObject.transform.position == Vector3.zero)
+        {
+            mainCam.orthographicSize = 60;
+            returningToOrigin = false;
+        }
     }
 }

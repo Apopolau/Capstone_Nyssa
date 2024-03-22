@@ -931,6 +931,14 @@ PrefabInstance:
       value: LevelOneManager
       objectReference: {fileID: 0}
     - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      propertyPath: duck1
+      value: 
+      objectReference: {fileID: 1150465742}
+    - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      propertyPath: duck2
+      value: 
+      objectReference: {fileID: 1350536653}
+    - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       propertyPath: task1
       value: 
       objectReference: {fileID: 608448187}
@@ -1446,6 +1454,10 @@ PrefabInstance:
       propertyPath: darkenWhilePlanting
       value: 
       objectReference: {fileID: 608448180}
+    - target: {fileID: 3297893822877032068, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 921268330}
     - target: {fileID: 4033276866688796702, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_Name
       value: EarthPlayer
@@ -6280,6 +6292,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5015184762695812656, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 921268330}
     - target: {fileID: 5752642823608885967, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: keyboardUI
       value: 
@@ -8932,6 +8948,11 @@ Transform:
   - {fileID: 568922921}
   m_Father: {fileID: 1489933520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1150465742 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5665216156270961092, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+  m_PrefabInstance: {fileID: 541074691}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1161093539
 GameObject:
   m_ObjectHideFlags: 0
@@ -9240,9 +9261,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 1189678822}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 864819264}
+  playerSet: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 69199dabbfcb03e4d8c5c67b6ab1f554, type: 2}
-  player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
@@ -9250,6 +9272,8 @@ MonoBehaviour:
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 0
+  sightRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!54 &1189678825
@@ -10191,6 +10215,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3205939521337848368, guid: a643ff446a648f74182b62a772feaab2, type: 3}
   m_PrefabInstance: {fileID: 1327516485}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1350536653 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5665216156270961092, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+  m_PrefabInstance: {fileID: 1806025542}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1355685723
 PrefabInstance:
@@ -11209,6 +11238,10 @@ MonoBehaviour:
   distance: 130
   virtualMouseInput: {fileID: 608448181}
   earthVirtualMouseInput: {fileID: 1761140673}
+  dialogue: {fileID: 0}
+  inCutscene: 0
+  switching: 0
+  currCam: 1
   Manager: 0
 --- !u!1 &1489933519
 GameObject:
@@ -12520,22 +12553,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1618798835}
     m_Modifications:
+    - target: {fileID: 467021779845909824, guid: 85bcd523da048584a84d81691caccb66, type: 3}
+      propertyPath: m_Name
+      value: Rockslide
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205145726685203972, guid: 85bcd523da048584a84d81691caccb66, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205145726685203972, guid: 85bcd523da048584a84d81691caccb66, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2205145726685203972, guid: 85bcd523da048584a84d81691caccb66, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2586280834659760344, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1081010119}
-    - target: {fileID: 4048950970096214212, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4048950970096214212, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4048950970096214212, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5708132736867260016, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -12567,10 +12604,6 @@ PrefabInstance:
     - target: {fileID: 6987381848557000553, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7930062619879064927, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
-      propertyPath: m_Name
-      value: ROCKSLIDE
       objectReference: {fileID: 0}
     - target: {fileID: 8367480010192199803, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12629,10 +12662,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 85bcd523da048584a84d81691caccb66, type: 3}
 --- !u!4 &1625271024 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 9105947208277114259, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
+  m_CorrespondingSourceObject: {fileID: 2205145726685203972, guid: 85bcd523da048584a84d81691caccb66, type: 3}
   m_PrefabInstance: {fileID: 1625271023}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1637581987
@@ -15895,9 +15928,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 2089028148}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 864819264}
+  playerSet: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 2585b475c2775754ab5946550ea00ae3, type: 2}
-  player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
@@ -15905,6 +15939,8 @@ MonoBehaviour:
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 0
+  sightRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!54 &2089028151
@@ -16738,9 +16774,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 1600394033433807149}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 864819264}
+  playerSet: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: fdc634cd0e758e641bb22ce60aaf4dee, type: 2}
-  player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
@@ -16748,6 +16785,8 @@ MonoBehaviour:
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 0
+  sightRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!65 &995156375940036571

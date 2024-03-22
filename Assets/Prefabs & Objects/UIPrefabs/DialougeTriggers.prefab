@@ -43,10 +43,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5100849740859043839}
-  - component: {fileID: 4947575137984313234}
   - component: {fileID: 7999703534209030642}
   - component: {fileID: 7411462751585112628}
   - component: {fileID: 1491893729389098716}
+  - component: {fileID: 6460252821312904712}
   m_Layer: 0
   m_Name: LandslideDialouge
   m_TagString: Untagged
@@ -63,33 +63,12 @@ Transform:
   m_GameObject: {fileID: 2803309601337804775}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 12.3, y: -3.8, z: 117.4}
+  m_LocalPosition: {x: 32.91301, y: -3.8, z: 124.88505}
   m_LocalScale: {x: 1, y: 1, z: 1.2228}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1761225087951360150}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!65 &4947575137984313234
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2803309601337804775}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7.18, y: 1, z: 12.81}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7999703534209030642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +109,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   landslideDialouge1: {fileID: 7999703534209030642}
   landslideDialouge2: {fileID: 7411462751585112628}
+--- !u!135 &6460252821312904712
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2803309601337804775}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 25
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4835440343217122390
 GameObject:
   m_ObjectHideFlags: 0
@@ -184,8 +184,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.18, y: 1, z: 8.17}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 16.799639, y: 3.0827122, z: 24.044853}
+  m_Center: {x: 4.809829, y: 1.0413561, z: -6.0866857}
 --- !u!114 &1296093042031711168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +254,7 @@ Transform:
   m_GameObject: {fileID: 8521947405047194189}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.1, z: -33.9}
+  m_LocalPosition: {x: 1, y: -3.5000014, z: -33.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

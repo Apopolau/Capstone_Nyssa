@@ -6,16 +6,16 @@ using UnityEngine.AI;
 
 public class CheckIfPlayerDead : BTCondition
 {
-    CelestialPlayer thisPlayer;
+    Enemy thisEnemy;
 
-    public CheckIfPlayerDead(CelestialPlayer player)
+    public CheckIfPlayerDead(Enemy enemy)
     {
-        thisPlayer = player;
+        thisEnemy = enemy;
     }
 
     protected override NodeState OnRun()
     {
-        if (thisPlayer.isDead)
+        if (thisEnemy.GetClosestPlayer().GetComponent<Player>().IsDead())
         {
             return NodeState.SUCCESS;
         }

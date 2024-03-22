@@ -6,19 +6,20 @@ using UnityEngine.AI;
 
 public class taskChase : BTNode
 {
-    private Transform thisTarget;
+    //private Transform thisTarget;
     NavMeshAgent thisAgent;
-    CelestialPlayer thisPlayer;
-    Rigidbody rb;
-    private Transform transformPos;
+    //CelestialPlayer thisPlayer;
+    //Rigidbody rb;
+    //private Transform transformPos;
     private Enemy thisEnemy;
-    public taskChase(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player, Transform transform)
+    public taskChase(Enemy enemy)
     {
-        thisAgent = enemyMeshAgent;
-        thisTarget = target;
-        thisPlayer = player;
-        transformPos = transform;
-        thisEnemy = thisAgent.GetComponent<Enemy>();
+        thisEnemy = enemy;
+        thisAgent = thisEnemy.GetComponent<NavMeshAgent>();
+        //thisTarget = target;
+        //thisPlayer = player;
+        //transformPos = transform;
+        
     }
     
 
@@ -26,7 +27,7 @@ public class taskChase : BTNode
     {
         // throw new System.NotImplementedException();
 
-        float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
+        float distance = Vector3.Distance(thisEnemy.GetClosestPlayer().transform.position, thisAgent.transform.position);
 
         if(thisEnemy.isStaggered || thisEnemy.isDying)
         {
@@ -41,15 +42,12 @@ public class taskChase : BTNode
             //Debug.Log("I'm chasing baby");
 
 
-          thisAgent.SetDestination(thisTarget.position);
-            transformPos.LookAt(thisTarget.position);
+          thisAgent.SetDestination(thisEnemy.GetClosestPlayer().transform.position);
+            thisEnemy.transform.LookAt(thisEnemy.GetClosestPlayer().transform.position);
 
 
-            if (distance  <= 10f)
+            if (thisEnemy.inAttackRange)
             {
-               // Debug.Log("broether i am close and can attack" +distance);
-                thisAgent.GetComponent<Enemy>().inAttackRange = true;
-
                 state = NodeState.FAILURE;
             }
             state = NodeState.RUNNING;
@@ -66,9 +64,6 @@ public class taskChase : BTNode
         {
             state = NodeState.FAILURE;
         }
-
-
-
 
             return state;
 

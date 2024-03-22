@@ -8,7 +8,7 @@ public class EarthPlayerControl : MonoBehaviour
     private EarthPlayer earthPlayer;
     public PlayerInputActions controls;
     public InputAction pickTreeAction;
-    public LevelOneEvents levelOneEvents;
+    public EventManager eventManager;
     public DialogueManager dialogueManager;
     public UserSettingsManager userSettingsManager;
 
@@ -77,7 +77,7 @@ public class EarthPlayerControl : MonoBehaviour
         controls.EarthPlayerDefault.RemoveBuilding.performed += OnRemovePlant;
         controls.EarthPlayerDefault.Interact.started += OnInteract;
         controls.EarthPlayerDefault.Interact.canceled += OnInteract;
-        controls.EarthPlayerDefault.DebugTileflip.performed += OnTileFlipped;
+        //controls.EarthPlayerDefault.DebugTileflip.performed += OnTileFlipped;
         controls.EarthPlayerDefault.Heal.started += OnHealPerformed;
         controls.EarthPlayerDefault.ThornShield.started += OnThornShieldPerformed;
 
@@ -217,10 +217,13 @@ public class EarthPlayerControl : MonoBehaviour
     /// DEBUG CONTROLS (DEFAULT)
     /// </summary>
     /// <param name="context"></param>
+    
+    /*
     private void OnTileFlipped(InputAction.CallbackContext context)
     {
-        levelOneEvents.DebugTileFlip();
+        eventManager.DebugTileFlip();
     }
+    */
 
 
 
@@ -364,7 +367,7 @@ public class EarthPlayerControl : MonoBehaviour
             }
             if (input > 0)
             {
-                dialogueManager.DisplayNextDialogueLine();
+                dialogueManager.HandleDialogueContinue();
             }
         }
     }

@@ -7,15 +7,21 @@ public class Enemy : MonoBehaviour
 {
     public NavMeshAgent enemyMeshAgent;
     public OilMonsterAnimator enemyAnimator;
-   //Drag and drop player here
-    public GameObject playerObj;
+    //Drag and drop player here
+    public GameObjectRuntimeSet playerSet;
+    public CelestialPlayer celestialPlayer;
+    public EarthPlayer earthPlayer;
+    //public GameObject playerObj;
     public EnemyStats enemyStats;
-    public CelestialPlayer player;
+    
+    
     public Stat health;
     [SerializeField] EventManager eventManager;
    //////////////// [SerializeField] LevelOneEvents levelOneEvents;
     [SerializeField] public bool isDying =false;
     public bool isStaggered = false;
+    public bool isColliding = false;
+    private GameObject closestPlayer;
 
     //Interaction with the player
     public bool seesPlayer = false;
@@ -24,7 +30,8 @@ public class Enemy : MonoBehaviour
     public Vector3 playerLocation;
     Rigidbody rb;
 
-
+    [SerializeField] float attackRange;
+    [SerializeField] float sightRange;
 
     //Interaction with the animal
     public bool hasAnimal;
@@ -48,11 +55,49 @@ public class Enemy : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         enemyMeshAgent = GetComponent<NavMeshAgent>();
+        foreach(GameObject g in playerSet.Items)
+        {
+            if (g.GetComponent<EarthPlayer>())
+            {
+                earthPlayer = g.GetComponent<EarthPlayer>();
+            }
+            else if (g.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = g.GetComponent<CelestialPlayer>();
+            }
+        }
+        StartCoroutine(CalculatePlayerDistance());
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    private IEnumerator CalculatePlayerDistance()
+    {
+        while (true)
+        {
+            //arbitrarily using attack time since it's 1s. May need to change in future
+            yield return attackTime;
+            float distance = sightRange;
+            seesPlayer = false;
+            inAttackRange = false;
+            foreach (GameObject go in playerSet.Items)
+            {
+                if (Mathf.Abs((go.GetComponent<Player>().GetGeo().transform.position - this.transform.position).magnitude) < distance)
+                {
+                    distance = Mathf.Abs((go.GetComponent<Player>().GetGeo().transform.position - this.transform.position).magnitude);
+                    closestPlayer = go;
+                    seesPlayer = true;
+                }
+            }
+            if (distance < attackRange)
+            {
+                inAttackRange = true;
+            }
+        }
         
     }
     
@@ -80,7 +125,40 @@ public class Enemy : MonoBehaviour
         return isDead;
        
     }
-    
+
+
+
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+   
+            isColliding = true;
+         
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+
+            isColliding = false;
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    /*
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject == playerObj)
@@ -100,6 +178,17 @@ public class Enemy : MonoBehaviour
             seesPlayer = false;
             playerLocation = other.transform.position;
         }
+    }
+    */
+
+    public GameObject GetClosestPlayer()
+    {
+        return closestPlayer;
+    }
+
+    public void SetClosestPlayer(GameObject newPlayer)
+    {
+        closestPlayer = newPlayer;
     }
 
     private IEnumerator TakePlayerHit()

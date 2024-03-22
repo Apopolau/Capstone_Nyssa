@@ -47,7 +47,7 @@ public class AttackAnimationAction : FSMAction
             player.StartCoroutine(player.animateBasicAttack());
             player.StartCoroutine(player.ResetBasic());
 
-            Debug.Log("coldsnap stopped");
+            Debug.Log("basic stopped");
             stateMachine.GetComponent<CelestialPlayer>().canBasicAttack = false;
 
         }

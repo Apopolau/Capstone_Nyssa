@@ -25,4 +25,9 @@ public class TaskListManager : MonoBehaviour
             textComponent.text = "<s>" + textComponent.text + "</s>"; // TextMeshPro supports rich text
         }
     }
+
+    public bool GetTaskCompletion()
+    {
+        return isTaskCompleted;
+    }
 }

@@ -8,33 +8,20 @@ public class taskInitiateAttack : BTNode
 {
     NavMeshAgent thisAgent;
     Enemy thisEnemy;
-    private Transform thisTarget;
 
-    public taskInitiateAttack(Transform target, NavMeshAgent enemyMeshAgent, CelestialPlayer player)
+    public taskInitiateAttack(Enemy enemy)
     {
-        thisAgent = enemyMeshAgent;
-        thisTarget = target;
-        thisEnemy = enemyMeshAgent.GetComponent<Enemy>();
+        thisEnemy = enemy;
+        thisAgent = enemy.GetComponent<NavMeshAgent>();
     }
 
     protected override NodeState OnRun()
     {
 
-        float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
+        float distance = Vector3.Distance(thisEnemy.GetClosestPlayer().transform.position, thisAgent.transform.position);
 
         if (!thisEnemy.attackInitiated)
         {
-            if (distance <= 10f)
-            {
-                // Debug.Log(distance);
-                thisEnemy.inAttackRange = true;
-            }
-            else
-            {
-                thisEnemy.inAttackRange = false;
-                thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
-            }
-
             if (thisEnemy.inAttackRange && !thisEnemy.isDying && !thisEnemy.isStaggered)
             {
                 thisEnemy.attackInitiated = true;

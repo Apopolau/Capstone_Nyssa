@@ -11,106 +11,119 @@ public class SplitScreen : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    [SerializeField] GameObject earthPlayer;
-    [SerializeField] GameObject celestialPlayer;
+    [SerializeField] public GameObject earthPlayer;
+    [SerializeField] public GameObject celestialPlayer;
     [SerializeField] public Camera earthCam;
     [SerializeField] public Camera celestialCam;
     [SerializeField] public Camera mainCam;
     [SerializeField] public float distance;
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public VirtualMouseInput earthVirtualMouseInput;
+    
 
-    DialogueManager dialogue;
+    public DialogueManager dialogue;
+    public bool inCutscene = false;
 
-    bool switching = false;
-    int currCam = 1;
-    public int Manager=0;
-    void Start()
+    public bool switching = false;
+    public int currCam = 1;
+    public int Manager = 0;
+
+    private void Start()
     {
-       
-      
-
-
+        
+        //SetOneCam();
     }
 
-    
     // Update is called once per frame
     void Update()
     {
-
-      
-
+        /*
         //If two players are close enough make camera one, if players are far enough split camera
-        if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) > distance)
+        if (!inCutscene)
         {
-            SetTwoCams();
-           // Changed();
+            if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) > distance)
+            {
+                SetTwoCams();
+                // Changed();
+            }
+            else if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) < distance)
+            {
+                SetOneCam();
+                //Changed();
+            }
         }
-        else if (Vector3.Distance(earthPlayer.transform.position, celestialPlayer.transform.position) < distance)
-        {
-            SetOneCam();
-            //Changed();
-        }
-
-
+        */
     }
+
+    public void EnterCutscene()
+    {
+        inCutscene = true;
+    }
+
+    public void ExitCutscene()
+    {
+        inCutscene = false;
+    }
+
     private void Changed()
     {
         GetComponent<Animator>().SetTrigger("Change");
-
     }
 
-
+    /*
     public void ManageCamera()
-    { 
+    {
         if (Manager == 0)
         {
             SetTwoCams();
             Manager = 1;
         }
         else
-        { 
+        {
             SetOneCam();
             Manager = 0;
         }
-
-
-
-
     }
+    */
 
 
-    private void SetTwoCams ()
+    private void SetTwoCams()
     {
-     
-            //GetComponent<Animator>().SetTrigger("Change");
-            mainCam.gameObject.SetActive(false);
-            mainCam.enabled = false;
-            celestialCam.gameObject.SetActive(true);
-            celestialCam.enabled = true;
-            earthCam.gameObject.SetActive(true);
-            earthCam.enabled = true;
 
-            //go into the the plant systems main camera and make sure it is properly set
-            earthPlayer.GetComponent<EarthPlayer>().SetCamera(earthCam);
-        earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = earthVirtualMouseInput;
+        //GetComponent<Animator>().SetTrigger("Change");
+        mainCam.gameObject.SetActive(false);
+        mainCam.enabled = false;
+        celestialCam.gameObject.SetActive(true);
+        celestialCam.enabled = true;
+        earthCam.gameObject.SetActive(true);
+        earthCam.enabled = true;
+
+        //go into the the plant systems main camera and make sure it is properly set
+        earthPlayer.GetComponent<EarthPlayer>().SetCamera(earthCam);
+        earthVirtualMouseInput.cursorTransform.position = earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
+        if (earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        {
+            
+            earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
+            earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = earthVirtualMouseInput;
+            earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
+            earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
+        }
         if (currCam == 1)
         {
-           // Changed();
+            // Changed();
             currCam = 2;
         }
-
-
     }
+
     private void SetOneCam()
     {
         if (currCam == 2)
         {
             currCam = 1;
-           // Changed();
+            // Changed();
 
         }
-
 
         mainCam.transform.position = Vector3.Lerp(earthPlayer.transform.position, celestialPlayer.transform.position, 0.5f);
 
@@ -122,9 +135,15 @@ public class SplitScreen : MonoBehaviour
         earthCam.enabled = false;
         //go into the the plant systems main camera and make sure it is properly set
         earthPlayer.GetComponent<EarthPlayer>().SetCamera(mainCam);
-        earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = virtualMouseInput;
+        virtualMouseInput.cursorTransform.position = earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
 
-       
+        if(earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        {
+            earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
+            earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = virtualMouseInput;
+            earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
+            earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
+        }
     }
 
 

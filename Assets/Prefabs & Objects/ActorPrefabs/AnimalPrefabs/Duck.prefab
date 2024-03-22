@@ -32,6 +32,37 @@ Transform:
   - {fileID: 1562778063697594552}
   m_Father: {fileID: 3668103021458720016}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3645209631482356489
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7117513122354662221}
+  m_Layer: 0
+  m_Name: UiTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7117513122354662221
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645209631482356489}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3668103021458720016}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5665216156270961092
 GameObject:
   m_ObjectHideFlags: 0
@@ -43,6 +74,7 @@ GameObject:
   - component: {fileID: 3668103021458720016}
   - component: {fileID: 4652905001960518181}
   - component: {fileID: 8670618033757916726}
+  - component: {fileID: 9048775179981755489}
   - component: {fileID: 2690869621331035147}
   - component: {fileID: 7021329453745983797}
   - component: {fileID: 2293652205981867178}
@@ -70,6 +102,7 @@ Transform:
   m_Children:
   - {fileID: 3605927682115549236}
   - {fileID: 4171676351237390294}
+  - {fileID: 7117513122354662221}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4652905001960518181
@@ -116,15 +149,47 @@ MonoBehaviour:
   waterWaypoint: {fileID: 0}
   navAgent: {fileID: 0}
   animalAnimator: {fileID: 0}
+  earthPlayer: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  closestGrass: {fileID: 0}
+  closestFood: {fileID: 0}
+  closestPlayer: {fileID: 0}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   enemySet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
   buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
+  foodSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
+  grassSet: {fileID: 11400000, guid: c50479ae29688984d94f86bfe3821cf3, type: 2}
+  waterImage: {fileID: 0}
+  foodImage: {fileID: 0}
+  shelterImage: {fileID: 0}
+  friendImage: {fileID: 0}
+  sproutImage: {fileID: 0}
+  celesteImage: {fileID: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  uiTarget: {fileID: 0}
+  isStuck: 0
   midAnimation: 0
+  isScared: 0
+  isHiding: 0
+  isShielded: 0
+  isEscorted: 0
+  isKidnapped: 0
   levelProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
   hasCleanWater: 0
   hasShelter: 0
   hasAnyFood: 0
+--- !u!114 &9048775179981755489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665216156270961092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf67caaa66964e4b8df565bf153872a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2690869621331035147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +339,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83914e36fafb0614da7c48c127cfda67, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83914e36fafb0614da7c48c127cfda67, type: 3}
       propertyPath: m_LocalRotation.x
@@ -282,7 +347,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83914e36fafb0614da7c48c127cfda67, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83914e36fafb0614da7c48c127cfda67, type: 3}
       propertyPath: m_LocalRotation.z
@@ -294,7 +359,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83914e36fafb0614da7c48c127cfda67, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 83914e36fafb0614da7c48c127cfda67, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bridge : Interactable
 {
+    [SerializeField] LevelOneEvents levelOneEvents;
     [SerializeField] GameObject pickupTarget;
     [SerializeField] GameObject bridgeGeometry;
     [SerializeField] GameObject bridgeCollider;
@@ -13,6 +14,8 @@ public class Bridge : Interactable
 
     private bool bridgeIsBuilt = false;
     private bool previewOn;
+
+    [SerializeField] private float interactDistance;
 
     private void Awake()
     {
@@ -51,9 +54,10 @@ public class Bridge : Interactable
 
     private void OnTriggerStay(Collider other)
     {
+        CalcDistance();
         if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
-            p1IsInRange = true;
+            //p1IsInRange = true;
             if (!bridgeIsBuilt)
             {
                 ActivateBridgePreview();
@@ -61,7 +65,7 @@ public class Bridge : Interactable
         }
         if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
-            p2IsInRange = true;
+            //p2IsInRange = true;
             if (!bridgeIsBuilt)
             {
                 ActivateBridgePreview();
@@ -71,9 +75,10 @@ public class Bridge : Interactable
 
     private void OnTriggerExit(Collider other)
     {
+        CalcDistance();
         if (other.GetComponent<EarthPlayer>())
         {
-            p1IsInRange = false;
+            //p1IsInRange = false;
             if (!bridgeIsBuilt)
             {
                 DeactivateBridgePreview();
@@ -81,11 +86,32 @@ public class Bridge : Interactable
         }
         if (other.GetComponent<CelestialPlayer>())
         {
-            p2IsInRange = false;
+            //p2IsInRange = false;
             if (!bridgeIsBuilt)
             {
                 DeactivateBridgePreview();
             }
+        }
+    }
+
+    private void CalcDistance()
+    {
+        if(Mathf.Abs((earthPlayer.GetGeo().transform.position - this.transform.position).magnitude) < interactDistance)
+        {
+            p1IsInRange = true;
+        }
+        else
+        {
+            p1IsInRange = false;
+        }
+
+        if (Mathf.Abs((celestialPlayer.GetGeo().transform.position - this.transform.position).magnitude) < interactDistance)
+        {
+            p2IsInRange = true;
+        }
+        else
+        {
+            p2IsInRange = false;
         }
     }
 
@@ -94,6 +120,7 @@ public class Bridge : Interactable
         previewOn = true;
         bridgeGeometry.SetActive(true);
         pickupTarget.SetActive(true);
+        levelOneEvents.OnBridgeEncountered();
     }
 
     private void DeactivateBridgePreview()
@@ -136,6 +163,7 @@ public class Bridge : Interactable
         earthPlayer.inventory.RemoveItemByName("Tree Log", 3);
         bridgeCollider.SetActive(true);
         bridgeGeometry.GetComponentInChildren<MeshRenderer>().material = material;
+        levelOneEvents.OnBridgeBuilt();
         Destroy(this.gameObject.GetComponent<BoxCollider>());
     }
 

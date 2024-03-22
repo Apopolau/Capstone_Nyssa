@@ -20,7 +20,7 @@ public class CheckIfInRangeAll : BTCondition
         distanceRange = range;
     }
 
-    //Returns true if it's night time
+    //Returns true if there's an object of this type in range
     protected override NodeState OnRun()
     {
         if(checkObjectSet.Items != null)

@@ -6,22 +6,44 @@ using UnityEngine.AI;
 public class Duck : Animal
 {
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
-    
-    public Duck(bool stuckness)
-    {
-        stuck = stuckness;
-    }
+
+    //[SerializeField] DialogueCameraPan panToDuck;
+
+    //Used to determine where duck will randomly wander
+    [Header("Duck Random Pathing Points")]
+    [SerializeField] public List<GameObject> duckWayPoints;
+    //Corresponds to waypoints
+    bool CanGoToUpperArea;
+    bool CanGoToFarBank;
+    bool CanGoToHalfwayPoint;
+    bool CanGoToTopArea;
 
     private void Awake()
     {
         hunger = new Stat(100, 100, false);
         thirst = new Stat(50, 50, false);
         entertained = new Stat(150, 150, false);
-        scared = false;
-        hiding = false;
+        isScared = false;
+        isHiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
+        //panToDuck.SetPanToThis(this.gameObject);
         //levelProgress = managerObject.GetComponent<LevelProgress>();
+    }
+
+    private void OnEnable()
+    {
+        foreach (GameObject player in playerSet.Items)
+        {
+            if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
+            else if (player.GetComponent<EarthPlayer>())
+            {
+                earthPlayer = player.GetComponent<EarthPlayer>();
+            }
+        }
     }
 
     private void Start()
@@ -29,10 +51,9 @@ public class Duck : Animal
         StartCoroutine(UpdateAnimalState());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        UpdateAnimalState();
+        CheckLevelState();
     }
 
     override protected IEnumerator UpdateAnimalState()
@@ -71,7 +92,7 @@ public class Duck : Animal
             hasAnyFood = false;
         }
 
-        if (levelProgress.cleanWater)
+        if (levelProgress.animalHasWater)
         {
             hasCleanWater = true;
         }
@@ -80,7 +101,7 @@ public class Duck : Animal
             hasCleanWater = false;
         }
 
-        if (levelProgress.shelter)
+        if (levelProgress.animalHasShelter)
         {
             hasShelter = true;
         }
@@ -121,5 +142,26 @@ public class Duck : Animal
     {
         yield return barrierLength;
         isShielded = false;
+    }
+
+    //Helpers
+    public void SetUpperBankOn()
+    {
+        CanGoToUpperArea = true;
+    }
+
+    public void SetFarBankOn()
+    {
+        CanGoToFarBank = true;
+    }
+
+    public void SetHalfwayPointOn()
+    {
+        CanGoToHalfwayPoint = true;
+    }
+
+    public void SetTopAreaOn()
+    {
+        CanGoToTopArea = true;
     }
 }

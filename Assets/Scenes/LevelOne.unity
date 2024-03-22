@@ -6300,7 +6300,7 @@ PrefabInstance:
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: RainParticleSystem
       value: 
-      objectReference: {fileID: 1198917779}
+      objectReference: {fileID: 1019292971}
     - target: {fileID: 7159944928166958832, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_Name
       value: CelestialPlayer
@@ -6308,6 +6308,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3016795165995379147, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
     - {fileID: 6284446020369264983, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+    - {fileID: 5752642823608885967, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -7510,6 +7511,11 @@ Transform:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0d7b6ac69d86b364783ad113959decb2, type: 3}
   m_PrefabInstance: {fileID: 1924902458}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1019292971 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1872162656605278360, guid: 1cfb5c01860113c48b40bd782fb9f464, type: 3}
+  m_PrefabInstance: {fileID: 883370115}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1024530258
 GameObject:
@@ -9232,9 +9238,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 1189678822}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 864819264}
+  playerSet: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 69199dabbfcb03e4d8c5c67b6ab1f554, type: 2}
-  player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
@@ -9242,6 +9249,8 @@ MonoBehaviour:
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 0
+  sightRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!54 &1189678825
@@ -9313,11 +9322,6 @@ Transform:
   - {fileID: 1307875538}
   m_Father: {fileID: 2021568332}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1198917779 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1872162656605278360, guid: 1cfb5c01860113c48b40bd782fb9f464, type: 3}
-  m_PrefabInstance: {fileID: 883370115}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1215707245
 GameObject:
   m_ObjectHideFlags: 0
@@ -11201,6 +11205,10 @@ MonoBehaviour:
   distance: 130
   virtualMouseInput: {fileID: 608448181}
   earthVirtualMouseInput: {fileID: 1761140673}
+  dialogue: {fileID: 0}
+  inCutscene: 0
+  switching: 0
+  currCam: 1
   Manager: 0
 --- !u!1 &1489933519
 GameObject:
@@ -12516,15 +12524,15 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1081010119}
-    - target: {fileID: 4048950970096214212, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
+    - target: {fileID: 4012284236637965067, guid: 199d9b3e123239143bf05701136d2f2d, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4048950970096214212, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
+    - target: {fileID: 4012284236637965067, guid: 199d9b3e123239143bf05701136d2f2d, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4048950970096214212, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
+    - target: {fileID: 4012284236637965067, guid: 199d9b3e123239143bf05701136d2f2d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
@@ -12560,9 +12568,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7930062619879064927, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
+    - target: {fileID: 2972135358141651352, guid: 199d9b3e123239143bf05701136d2f2d, type: 3}
       propertyPath: m_Name
-      value: ROCKSLIDE
+      value: Rockslide
       objectReference: {fileID: 0}
     - target: {fileID: 8367480010192199803, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12621,10 +12629,10 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 199d9b3e123239143bf05701136d2f2d, type: 3}
 --- !u!4 &1625271024 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 9105947208277114259, guid: e3ea37884c5e7314da0e7b6ade010512, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4012284236637965067, guid: 199d9b3e123239143bf05701136d2f2d, type: 3}
   m_PrefabInstance: {fileID: 1625271023}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1637581987
@@ -15887,9 +15895,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 2089028148}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 864819264}
+  playerSet: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 2585b475c2775754ab5946550ea00ae3, type: 2}
-  player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
@@ -15897,6 +15906,8 @@ MonoBehaviour:
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 0
+  sightRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!54 &2089028151
@@ -16730,9 +16741,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 1600394033433807149}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 864819264}
+  playerSet: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: fdc634cd0e758e641bb22ce60aaf4dee, type: 2}
-  player: {fileID: 1308052667}
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
@@ -16740,6 +16752,8 @@ MonoBehaviour:
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 0
+  sightRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!65 &995156375940036571
