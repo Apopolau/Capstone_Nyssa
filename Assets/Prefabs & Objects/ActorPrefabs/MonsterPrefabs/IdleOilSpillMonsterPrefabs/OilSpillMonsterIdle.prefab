@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3180781065985642723}
   - component: {fileID: 4779612178590244767}
   - component: {fileID: 8833756717692015255}
-  - component: {fileID: 1210686151350853954}
   - component: {fileID: 2730557045051775339}
   - component: {fileID: 3184461929693250869}
   - component: {fileID: 5395403267800613273}
@@ -53,15 +52,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 0}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 0}
+  playerSet: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: cac8e7c2926be4b48b8f35ca1264ab97, type: 2}
-  player: {fileID: 0}
-  isFirst: 0
+  eventManager: {fileID: 0}
   isDying: 0
+  isStaggered: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 0
+  sightRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!114 &8833756717692015255
@@ -80,22 +83,6 @@ MonoBehaviour:
   startingHealth: 10
   currHealth: 0
   playerTransform: {fileID: 0}
---- !u!114 &1210686151350853954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2571962352454458197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3285e2465e5a0274d99ab61586f9a8d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  levelOneEvents: {fileID: 0}
-  levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
-  monsterDeadDialouge: {fileID: 0}
-  player: {fileID: 0}
 --- !u!114 &2730557045051775339
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +98,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   IfWalkingHash: 0
   IfAttackingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
 --- !u!195 &3184461929693250869
 NavMeshAgent:
   m_ObjectHideFlags: 0

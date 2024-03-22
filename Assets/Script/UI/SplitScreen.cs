@@ -30,8 +30,7 @@ public class SplitScreen : MonoBehaviour
 
     private void Start()
     {
-        
-        //SetOneCam();
+        SetOneCam();
     }
 
     // Update is called once per frame
