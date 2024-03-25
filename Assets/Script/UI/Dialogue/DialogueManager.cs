@@ -107,6 +107,7 @@ public class DialogueManager : MonoBehaviour
         uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
 
         //Turn off other player controls, turn on dialogue controls
+        /*
         if (!earthPlayer.earthControls.controls.DialogueControls.enabled)
         {
             //Don't change this order - the cancellation functions turn the default map back on, so it needs to be turned back off after
@@ -133,6 +134,9 @@ public class DialogueManager : MonoBehaviour
             earthPlayer.earthControls.controls.DialogueControls.Enable();
             earthPlayer.earthControls.controls.EarthPlayerDefault.Disable();
         }
+        */
+        earthPlayer.ToggleDialogueState(true);
+
         if (!celestialPlayer.celestialControls.controls.DialogueControls.enabled)
         {
             celestialPlayer.celestialControls.controls.DialogueControls.Enable();
@@ -180,6 +184,7 @@ public class DialogueManager : MonoBehaviour
         else if (currentEvent is DialogueCameraPan)
         {
             panningOn = true;
+            earthPlayer.TogglePanning(true);
             StartCoroutine(TurnPanOff((DialogueCameraPan)currentEvent));
             //HandleCameraPan((DialogueCameraPan)currentEvent);
         }
@@ -204,14 +209,16 @@ public class DialogueManager : MonoBehaviour
 
 
         //Turn off the dialogue controls and turn on the default controls of both players
-        earthPlayer.earthControls.controls.DialogueControls.Disable();
-        earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
+        
+        //earthPlayer.earthControls.controls.DialogueControls.Disable();
+        //earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
         celestialPlayer.celestialControls.controls.DialogueControls.Disable();
         celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
 
         split.ExitCutscene();
         Time.timeScale = 1f;
 
+        earthPlayer.ToggleDialogueState(false);
     }
 
     //When displaying a dialogue line, handles the sprites
@@ -317,7 +324,6 @@ public class DialogueManager : MonoBehaviour
             case UserSettingsManager.GameLanguage.FRENCH:
                 // Display French dialogue
                 dialogueArea.text = currentLine.lineFR;
-                Debug.Log("French text should display");
                 break;
 
         }
@@ -326,7 +332,8 @@ public class DialogueManager : MonoBehaviour
     //This runs if the dialogue event is a camera pan, handles the movement
     public void HandleCameraPan(DialogueCameraPan pan)
     {
-
+        //Sets states related to panning and dialogue
+        
         //Time.timeScale = 1f;
         if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
         {
@@ -359,6 +366,7 @@ public class DialogueManager : MonoBehaviour
     {
         yield return pan.GetAnimationTime();
 
+        earthPlayer.TogglePanning(false);
         panningOn = false;
         HandleNextEvents();
     }

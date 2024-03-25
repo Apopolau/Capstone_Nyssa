@@ -23,6 +23,7 @@ public abstract class Player : MonoBehaviour
 
     public event System.Action<int, int> OnHealthChanged;
 
+    WaitForSeconds barrierLength = new WaitForSeconds(5);
     WaitForSeconds staggerLength = new WaitForSeconds(0.958f);
     WaitForSeconds deathAnimLength = new WaitForSeconds(1.458f);
     WaitForSeconds iFramesLength = new WaitForSeconds(0.5f);
@@ -55,6 +56,7 @@ public abstract class Player : MonoBehaviour
 
     private IEnumerator OnStagger()
     {
+        isStaggered = true;
         GetComponent<PlayerAnimator>().animator.SetBool(GetComponent<PlayerAnimator>().IfTakingHitHash, true);
         CallSuspendActions(staggerLength);
         yield return staggerLength;
@@ -65,9 +67,11 @@ public abstract class Player : MonoBehaviour
 
     private IEnumerator DeathRoutine()
     {
+        isDying = true;
         GetComponent<PlayerAnimator>().animator.SetBool(GetComponent<PlayerAnimator>().IfDyingHash, true);
         CallSuspendActions(deathAnimLength);
         yield return deathAnimLength;
+        isDying = false;
         GetComponent<PlayerAnimator>().animator.SetBool(GetComponent<PlayerAnimator>().IfDyingHash, false);
         Respawn();
     }
@@ -77,6 +81,18 @@ public abstract class Player : MonoBehaviour
         iFramesOn = true;
         yield return iFramesLength;
         iFramesOn = false;
+    }
+
+    public void ApplyBarrier()
+    {
+        isShielded = true;
+        StartCoroutine(BarrierWearsOff());
+    }
+
+    private IEnumerator BarrierWearsOff()
+    {
+        yield return barrierLength;
+        isShielded = false;
     }
 
     private void Respawn()
@@ -119,8 +135,15 @@ public abstract class Player : MonoBehaviour
 
     protected abstract IEnumerator SuspendActions(WaitForSeconds waitTime);
 
+    protected abstract IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange);
+
     public bool IsDead()
     {
         return isDead;
+    }
+
+    public bool IsStaggered()
+    {
+        return isStaggered;
     }
 }

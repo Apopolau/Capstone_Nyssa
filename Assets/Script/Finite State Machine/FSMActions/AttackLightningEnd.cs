@@ -6,11 +6,15 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "FSM/Actions/AttackLightningStrikeEnds")]
 public class AttackLightningStrikeEnds : FSMAction
 {
+    CelestialPlayer player;
+
+    public override void EnterState(BaseStateMachine stateMachine)
+    {
+        player = stateMachine.GetComponent<CelestialPlayer>();
+    }
+
     public override void Execute(BaseStateMachine stateMachine)
     {
-        CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
-
-
         Debug.Log("******takeDamage");
         if (player.enemySeen)
         {
@@ -29,4 +33,8 @@ public class AttackLightningStrikeEnds : FSMAction
 
     }
 
+    public override void ExitState(BaseStateMachine stateMachine)
+    {
+        
+    }
 }

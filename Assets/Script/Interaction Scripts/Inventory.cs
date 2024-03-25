@@ -31,7 +31,6 @@ public class Inventory : ScriptableObject
 
     public bool AddItem(Item item, int quantity)
     {
-        //Debug.Log("Quantity was: " + quantity);
         if (IsFull())
         {
             return false;
@@ -83,10 +82,9 @@ public class Inventory : ScriptableObject
             RemoveItem(itemToRemove, quantity);
 
             // Add a log message to check the current inventory after removal
-            //Debug.Log("Current inventory:");
             foreach (var item in items)
             {
-                Debug.Log($"Item: {item.stats.ItemName}, Quantity: {item.quantity}");
+                //Debug.Log($"Item: {item.stats.ItemName}, Quantity: {item.quantity}");
             }
         }
         else
@@ -163,7 +161,7 @@ public class Inventory : ScriptableObject
         // Display quantity changes in the console log.
         foreach (Item item in items)
         {
-            Debug.Log($"Item: {item.stats.ItemName}, Quantity: {item.quantity}");
+            //Debug.Log($"Item: {item.stats.ItemName}, Quantity: {item.quantity}");
         }
     }
 

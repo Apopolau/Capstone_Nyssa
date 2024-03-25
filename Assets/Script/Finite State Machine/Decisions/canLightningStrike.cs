@@ -11,7 +11,7 @@ public class CanLightningStrike: Decision
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
         if (stateMachine.GetComponent<CelestialPlayer>().isAttacking)
         {
-            Debug.Log("currently doing lightning attack");
+            //Debug.Log("currently doing lightning attack");
 
             return true;
         }

@@ -15,9 +15,9 @@ public class CanColdSnap : Decision
 
 
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().canColdSnap  && stateMachine.GetComponent<PowerBehaviour>().ColdSnapStats.isEnabled)
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<PowerBehaviour>().ColdSnapStats.isEnabled)
         {
-            Debug.Log("currentdoing cold snap attack");
+            //Debug.Log("currentdoing attack");
            
             return true;
         }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32583743, g: 0.309359, b: 0.3104538, a: 1}
+  m_IndirectSpecularColor: {r: 0.32583743, g: 0.30935916, b: 0.3104538, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1365,6 +1365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EarthPlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 4289947878237477393, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5061027297478944643, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1420,7 +1424,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4033276866688796702, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1703031000}
   m_SourcePrefab: {fileID: 100100000, guid: 553568dfccc23274285fac4a878252df, type: 3}
 --- !u!1001 &191688454
 PrefabInstance:
@@ -8024,6 +8031,7 @@ MonoBehaviour:
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
+  isColliding: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
@@ -15594,6 +15602,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4033276866688796702, guid: 553568dfccc23274285fac4a878252df, type: 3}
   m_PrefabInstance: {fileID: 182956335}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1703031000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703030984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756bb4aa12122ee47bc2eb9c1aa2419d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialState: {fileID: 11400000, guid: 82bf6f7fca030c1489ebd052b7aeb307, type: 2}
 --- !u!4 &1704703764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0d7b6ac69d86b364783ad113959decb2, type: 3}
@@ -18514,6 +18535,7 @@ MonoBehaviour:
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
+  isColliding: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
@@ -19312,6 +19334,7 @@ MonoBehaviour:
   eventManager: {fileID: 645999400}
   isDying: 0
   isStaggered: 0
+  isColliding: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0

@@ -63,14 +63,23 @@ public class TurnOffSludgePump : Interactable
 
     private IEnumerator SludgePumpTurnsOff()
     {
-        Vector3 lookVector = new Vector3(pMovement.playerObj.transform.position.x,
-            this.transform.position.y, pMovement.playerObj.transform.position.z);
-        Vector3 rotateVector = Vector3.RotateTowards(pMovement.playerObj.transform.position, lookVector, step, 0f);
-        pMovement.playerObj.rotation = Quaternion.LookRotation(rotateVector);
+        //Make the player turn to the sludge pump
+        earthPlayer.SetTurnTarget(this.transform.position);
+        earthPlayer.ToggleTurning();
+
+        //Set appropriate animations
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfTurningHash, true);
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfWalkingHash, false);
-        earthPlayer.CallSuspendActions(turnTime);
+
+        //Change player state
+        earthPlayer.SetSuspensionTime(turnTime);
+        earthPlayer.ToggleInteractingState();
+        //earthPlayer.CallSuspendActions(turnTime);
         yield return turnTime;
+        earthPlayer.ToggleInteractingState();
+
+        earthPlayer.ToggleTurning();
+
         sludgePumpIsOff = true;
         Debug.Log("Turned off the sludge pump");
         levelOneEvents.OnPumpShutOff();

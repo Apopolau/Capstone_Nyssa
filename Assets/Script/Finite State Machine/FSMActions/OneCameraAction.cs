@@ -11,36 +11,43 @@ public class OneCameraAction : FSMAction
 {
     SplitScreen splitScreen;
 
-    public override void Execute(BaseStateMachine stateMachine)
+    public override void EnterState(BaseStateMachine stateMachine)
     {
         splitScreen = stateMachine.GetComponent<SplitScreen>();
 
-        
-        if (splitScreen.currCam == 2)
-        {
-            splitScreen.mainCam.gameObject.SetActive(true);
-            splitScreen.mainCam.enabled = true;
-            splitScreen.celestialCam.gameObject.SetActive(false);
-            splitScreen.celestialCam.enabled = false;
-            splitScreen.earthCam.gameObject.SetActive(false);
-            splitScreen.earthCam.enabled = false;
-            //go into the the plant systems main camera and make sure it is properly set
-            splitScreen.earthPlayer.GetComponent<EarthPlayer>().SetCamera(splitScreen.mainCam);
-            splitScreen.virtualMouseInput.cursorTransform.position = splitScreen.earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
+        splitScreen.mainCam.gameObject.SetActive(true);
+        splitScreen.mainCam.enabled = true;
+        splitScreen.celestialCam.gameObject.SetActive(false);
+        splitScreen.celestialCam.enabled = false;
+        splitScreen.earthCam.gameObject.SetActive(false);
+        splitScreen.earthCam.enabled = false;
+        //go into the the plant systems main camera and make sure it is properly set
+        splitScreen.earthPlayer.GetComponent<EarthPlayer>().SetCamera(splitScreen.mainCam);
+        splitScreen.virtualMouseInput.cursorTransform.position = splitScreen.earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
 
-            if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || splitScreen.earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || splitScreen.earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        {
+            splitScreen.earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
+            splitScreen.earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = splitScreen.virtualMouseInput;
+            splitScreen.earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(splitScreen.virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
+            if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().GetInPlantSelection() || splitScreen.earthPlayer.GetComponent<EarthPlayer>().GetInRemovalSelection())
             {
-                splitScreen.earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
-                splitScreen.earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = splitScreen.virtualMouseInput;
-                splitScreen.earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(splitScreen.virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
                 splitScreen.earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
             }
-            splitScreen.currCam = 1;
         }
+        splitScreen.currCam = 1;
+    }
 
+    public override void Execute(BaseStateMachine stateMachine)
+    {
         if (!splitScreen.inCutscene)
         {
             splitScreen.mainCam.transform.position = Vector3.Lerp(splitScreen.earthPlayer.transform.position, splitScreen.celestialPlayer.transform.position, 0.5f);
         }
+    }
+
+    public override void ExitState(BaseStateMachine stateMachine)
+    {
+
     }
 }

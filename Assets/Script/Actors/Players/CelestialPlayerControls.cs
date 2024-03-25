@@ -135,8 +135,6 @@ public class CelestialPlayerControls : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
 
-        //Debug.Log("call start rain");
-
 
         //<CelestialPlayer>().isRaining = true;
         this.GetComponent<CelestialPlayer>().OnRainDropSelected();
@@ -176,8 +174,6 @@ public class CelestialPlayerControls : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId == myDeviceID)
         {
-
-            //Debug.Log("call pickup tree");
             this.GetComponent<CelestialPlayer>().OnInteract(context);
         }
     }
@@ -208,7 +204,6 @@ public class CelestialPlayerControls : MonoBehaviour
     {
         if (context.control.device.deviceId == myDeviceID)
         {
-            Debug.Log("skipping dialogue");
             dialogueManager.EndDialogue();
         }
     }

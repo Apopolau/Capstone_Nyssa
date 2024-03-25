@@ -58,7 +58,7 @@ public class CelestialPlayer : Player
     public CelestialPlayerControls celestialControls;
 
     //Lengths of animations and abilities
-    WaitForSeconds barrierLength = new WaitForSeconds(5);
+   
     
 
 
@@ -109,12 +109,10 @@ public class CelestialPlayer : Player
     {
         if (context.phase == InputActionPhase.Started)
         {
-            //Debug.Log("Interacting");
             interacting = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
         {
-            //Debug.Log("Not interacting anymore");
             interacting = false;
         }
     }
@@ -123,11 +121,6 @@ public class CelestialPlayer : Player
     {
         if (other.gameObject.tag == "Enemy")
         {
-
-            //  Debug.Log("Trigger Stay");
-
-
-            // Debug.Log("Entered collision with " + other.gameObject.name);
             //Player is in range of enemy, in invading monster they can pursue the player
             enemySeen = true;
 
@@ -138,19 +131,8 @@ public class CelestialPlayer : Player
     }
     private void OnTriggerExit(Collider other)
     {
-        //Debug.Log("Trigger Exit");
-
-        /*Debug.Log("Trigger Exit" + other.transform.tag);
-
-        Debug.Log("Trigger Exit-- - " + other.transform.name);*/
-
         if (other.transform.gameObject.tag == "Enemy")
         {
-            /* Debug.Log("----Trigger Exit----" + other.transform.tag);
-
-             Debug.Log("------Trigger Exit --- " + other.transform.name);*/
-
-
             //Player is in range of enemy, in invading monster they can pursue the player
             enemySeen = false;
 
@@ -162,18 +144,6 @@ public class CelestialPlayer : Player
 
 
         }
-    }
-
-    public void ApplyBarrier()
-    {
-        isShielded = true;
-        StartCoroutine(BarrierWearsOff());
-    }
-
-    private IEnumerator BarrierWearsOff()
-    {
-        yield return barrierLength;
-        isShielded = false;
     }
 
     // public void AttackEnemy()
@@ -214,12 +184,9 @@ public class CelestialPlayer : Player
             weatherState.skyState = WeatherState.SkyState.RAINY;
             isRaining = true;
         }
-
-        //Debug.Log("It is currently raining");
         else if (isRaining)
         {
             // yield return new WaitForSeconds(10f);
-            //Debug.Log("******It is no longer raining****");
 
             weatherState.skyState = WeatherState.SkyState.CLEAR;
 
@@ -233,11 +200,9 @@ public class CelestialPlayer : Player
     }
     public IEnumerator ResetRain()
     {
-        //Debug.Log("It is currently raining");
         if (isRaining)
         {
             yield return new WaitForSeconds(10f);
-            //Debug.Log("******It is no longer raining****");
 
             weatherState.skyState = WeatherState.SkyState.CLEAR;
             RainParticleSystem.SetActive(false);
@@ -435,6 +400,13 @@ public class CelestialPlayer : Player
         yield return waitTime;
         celestialControls.controls.CelestialPlayerDefault.Enable();
         ResetImageColor(celestPlayerDpad);
+    }
+
+    protected override IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange)
+    {
+        
+        yield return waitTime;
+        
     }
 
     //Darken UI icons

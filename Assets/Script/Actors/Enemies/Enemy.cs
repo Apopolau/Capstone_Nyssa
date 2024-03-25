@@ -107,13 +107,10 @@ public class Enemy : MonoBehaviour
         health.current -= hitPoints;
         bool isDead = health.current <= 0;
 
-        Debug.Log("Enemy:" + health.current);
-
         if (OnHealthChanged != null)
             OnHealthChanged(health.max, health.current);
 
         if (isDead) {
-            //Debug.Log("DIEEEEEEEE" );
             StartCoroutine(Die());
         }
         if (hitPoints > 0)
@@ -126,16 +123,13 @@ public class Enemy : MonoBehaviour
        
     }
 
-
-
-
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
-   
+
             isColliding = true;
-         
+
         }
     }
 
@@ -148,38 +142,6 @@ public class Enemy : MonoBehaviour
 
         }
     }
-
-
-
-
-
-
-
-
-
-
-    /*
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject == playerObj)
-        {
-            //Player is in range of enemy, in invading monster they can pursue the player
-            seesPlayer = true;
-            playerLocation = other.transform.position;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-       // Debug.Log("Exited collision with " + other.gameObject.name);
-        if (other.gameObject == playerObj)
-        {
-            //Player is in range of enemy, in invading monster they can pursue the player
-            seesPlayer = false;
-            playerLocation = other.transform.position;
-        }
-    }
-    */
 
     public GameObject GetClosestPlayer()
     {

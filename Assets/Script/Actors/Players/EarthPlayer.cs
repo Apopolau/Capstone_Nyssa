@@ -22,6 +22,23 @@ public class EarthPlayer : Player
     [SerializeField] private GameObject darkenWhilePlanting;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
+    [Header("State machine elements")]
+    private BaseStateMachine stateMachine;
+    //Player contains isStaggered
+    //Player contains isDying
+    private bool inInteraction_FSM = false;
+    private bool inPlantSelection_FSM = false;
+    private bool inRemovalSelection_FSM = false;
+    private bool inHealSelection_FSM = false;
+    private bool inBarrierSelection_FSM = false;
+    private bool inDialogue_FSM = false;
+    private bool inPanning_FSM = false;
+    //Note: this is for animations where the player should stop moving
+    private bool isMidAnimation_FSM;
+
+    private Vector3 turnToTarget;
+    private bool isTurning;
+
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
     public bool isRemovalStarted = false;
@@ -63,6 +80,8 @@ public class EarthPlayer : Player
     private WaitForSeconds deathAnimLength;
     private WaitForSeconds staggerLength;
 
+    private WaitForSeconds suspensionTime;
+
     private bool healUsed;
     private bool shieldUsed;
     
@@ -88,7 +107,7 @@ public class EarthPlayer : Player
     [SerializeField] private Sprite i_grassSeed;
     [SerializeField] private Sprite i_flowerSeed;
     [SerializeField] private Sprite i_treeSeed;
-    [SerializeField] private Sprite i_shovel;
+    [SerializeField] public Sprite i_shovel;
 
     [Header("VFX")]
     
@@ -98,6 +117,7 @@ public class EarthPlayer : Player
     public bool enrouteToPlant = false;
     public EarthPlayerAnimator earthAnimator;
     private NavMeshAgent earthAgent;
+    private playerMovement pMovement;
     public EarthPlayerControl earthControls;
     [SerializeField] public WeatherState weatherState;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
@@ -105,10 +125,12 @@ public class EarthPlayer : Player
 
     private void Awake()
     {
+        stateMachine = GetComponent<BaseStateMachine>();
         earthAnimator = GetComponent<EarthPlayerAnimator>();
         earthControls = GetComponent<EarthPlayerControl>();
         earthAgent = GetComponent<NavMeshAgent>();
         earthAgent.enabled = false;
+        pMovement = GetComponent<playerMovement>();
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
         virtualMousePosition = new Vector3();
         OrigPos = this.transform.position;
@@ -135,15 +157,13 @@ public class EarthPlayer : Player
         iFramesLength = new WaitForSeconds(0.5f);
         staggerLength = new WaitForSeconds(0.958f);
         deathAnimLength = new WaitForSeconds(1.458f);
-        //playerInput = GetComponent<PlayerInput>();
-        //actions = new PlayerInputActions();
     }
 
     // Update is called once per frame
     void Update()
     {
         ActivateTile();
-        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
+        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance + 2)
         {
             this.GetComponent<playerMovement>().ResetNavAgent();
             if (isPlantSelected)
@@ -159,6 +179,14 @@ public class EarthPlayer : Player
 
     }
 
+    private void FixedUpdate()
+    {
+        if (isTurning)
+        {
+            TurnToTarget();
+        }
+    }
+
     private void LateUpdate()
     {
         
@@ -172,8 +200,6 @@ public class EarthPlayer : Player
             virtualMouseInput.cursorTransform.position = Mouse.current.position.value;
             virtualMousePosition = Mouse.current.position.value;
         }
-        
-
     }
 
     
@@ -266,18 +292,9 @@ public class EarthPlayer : Player
     //This is called at the end of each plant selection function, to capture shared functionality
     private void OnPlantSelectedWrapUp()
     {
-        isPlantSelected = true;
-        isATileSelected = false;
-        plantSelected.transform.position = this.transform.position;
-
-        //Switch our controls
-        earthControls.controls.PlantIsSelected.Enable();
-        earthControls.controls.EarthPlayerDefault.Disable();
-
-        TurnOnCursor();
-        DisplayTileText();
-        DarkenAllImages(darkenInSelectMode);
-        tileOutline = Instantiate(tileOutlinePrefab, this.transform);
+        inPlantSelection_FSM = true;
+        //isPlantSelected = true;
+        //isATileSelected = false;
     }
 
 
@@ -297,31 +314,28 @@ public class EarthPlayer : Player
         //Have to add checks to make sure they are on a tile
         if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
         {
-            TurnOffTileSelect(true);
-            Destroy(plantSelected);
-            HideTileText();
-            ResetImageColor(darkenInSelectMode); 
-            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
+            //isATileSelected = true;
+            inPlantSelection_FSM = false;
+            
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance + 2)
             {
-                enrouteToPlant = false;
                 isPlantSelected = false;
+                enrouteToPlant = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                //Destroy(tileOutline);
-                //This is a good place to initiate a planting animation
+
+                //Pause other controls, initiate animation
                 GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
-                //Set other animations to false
+                inInteraction_FSM = true;
                 StartCoroutine(SuspendActions(plantTime));
+                //After wait time
                 yield return plantTime;
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, false);
+                inInteraction_FSM = false;
+                
                 PlantPlant(activeTileCell);
                 plantSelectedType = PlantSelectedType.NONE;
-
-                //Switch our controls
-                earthControls.controls.EarthPlayerDefault.Enable();
-                earthControls.controls.PlantIsSelected.Disable();
-                //TurnOffCursor();
             }
             else
             {
@@ -402,9 +416,9 @@ public class EarthPlayer : Player
             }
             isPlantSelected = false;
             isATileSelected = false;
+            inPlantSelection_FSM = false;
+            
             plantSelectedType = PlantSelectedType.NONE;
-            Destroy(plantSelected);
-            TurnOffTileSelect(false);
         }
     }
 
@@ -417,20 +431,9 @@ public class EarthPlayer : Player
     public void OnRemovePlant()
     {
         //Mark that we've started the process
-        isRemovalStarted = true;
         isATileSelected = false;
-        //Switch our controls
-        earthControls.controls.RemovingPlant.Enable();
-        earthControls.controls.EarthPlayerDefault.Disable();
-
-        //Turn on the virtual mouse cursor
-        SwitchCursorIcon(i_shovel);
-        TurnOnCursor();
-
-        //Create our tile outline effect
-        DisplayTileText();
-        DarkenAllImages(darkenInSelectMode);
-        tileOutline = Instantiate(tileOutlinePrefab, this.transform);
+        isRemovalStarted = true;
+        inRemovalSelection_FSM = true;
     }
 
     //Called when the player selects a tile to remove a plant from
@@ -444,30 +447,26 @@ public class EarthPlayer : Player
         //Check if the tile they highlighted has a plant on it
         if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
         {
-            
-            TurnOffTileSelect(true);
-            HideTileText();
-            ResetImageColor(darkenInSelectMode); 
+            inRemovalSelection_FSM = false;
+            //isATileSelected = true;
             //If we're close enough to the plant, we can go ahead and remove it
-            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance)
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < earthAgent.stoppingDistance + 2)
             {
                 isRemovalStarted = false;
                 enrouteToPlant = false;
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                //Set our animations
+                //Pause other controls and start animations
                 GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
+                inInteraction_FSM = true;
                 StartCoroutine(SuspendActions(plantTime));
                 yield return plantTime;
+                //Set things back
+                inInteraction_FSM = false;
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, false);
                 
                 RemovePlant(activeTileCell);
-
-                //Switch our controls
-                earthControls.controls.EarthPlayerDefault.Enable();
-                earthControls.controls.RemovingPlant.Disable();
-                TurnOffCursor();
             }
             //If we're not close enough, we'll have to get close enough
             else
@@ -513,9 +512,9 @@ public class EarthPlayer : Player
             {
                 GetComponent<playerMovement>().ResetNavAgent();
             }
+            isATileSelected = false;
             isRemovalStarted = false;
-            
-            TurnOffTileSelect(false);
+            inRemovalSelection_FSM = false;
         }
         
     }
@@ -532,6 +531,7 @@ public class EarthPlayer : Player
     {
         if (context.phase == InputActionPhase.Started)
         {
+            //Do not confuse this for the bool that controls the state machine
             interacting = true;
         }
         else if (context.phase == InputActionPhase.Canceled)
@@ -549,14 +549,7 @@ public class EarthPlayer : Player
     {
         if (!healUsed && CheckIfValidTargets())
         {
-            //HealSelectMode();
-            displayText.text = "Select a target to heal";
-            earthControls.controls.EarthPlayerDefault.Disable();
-            earthControls.controls.HealSelect.Enable();
-            PickClosestTarget();
-            tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
-            tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
-            uiController.DarkenOverlay(darkenWhilePlanting);
+            inHealSelection_FSM = true;
         }
         else if (healUsed)
         {
@@ -579,16 +572,22 @@ public class EarthPlayer : Player
     //Handles staggering the functionality of healing
     private IEnumerator HealingStarted()
     {
+        /*
         displayText.text = "";
         Destroy(tileOutline);
         earthControls.controls.HealSelect.Disable();
+        */
+        inHealSelection_FSM = false;
+        inInteraction_FSM = true;
         CallSuspendActions(healTime);
         earthAnimator.animator.SetBool(earthAnimator.IfHealingHash, true);
         yield return healTime;
+        inInteraction_FSM = false;
         earthAnimator.animator.SetBool(earthAnimator.IfHealingHash, false);
-        if (powerTarget.GetComponent<CelestialPlayer>())
+        
+        if (powerTarget.GetComponent<Player>())
         {
-            powerTarget.GetComponent<CelestialPlayer>().TakeHit(-20);
+            powerTarget.GetComponent<Player>().TakeHit(-20);
         }
         else if (powerTarget.GetComponent<Animal>())
         {
@@ -597,6 +596,7 @@ public class EarthPlayer : Player
         healUsed = true;
         earthControls.controls.EarthPlayerDefault.Enable();
         uiController.RestoreUI(darkenWhilePlanting);
+        
         StartCoroutine(HandleHealCooldown());
     }
 
@@ -610,10 +610,11 @@ public class EarthPlayer : Player
     //If the player backs out after initiating picking a heal target
     public void OnHealingCancelled()
     {
-        Destroy(tileOutline);
-        displayText.text = "";
-        earthControls.controls.EarthPlayerDefault.Enable();
-        earthControls.controls.HealSelect.Disable();
+        inHealSelection_FSM = false;
+        //Destroy(tileOutline);
+        //displayText.text = "";
+        //earthControls.controls.EarthPlayerDefault.Enable();
+        //earthControls.controls.HealSelect.Disable();
     }
 
 
@@ -625,13 +626,7 @@ public class EarthPlayer : Player
     {
         if (!shieldUsed && CheckIfValidTargets())
         {
-            displayText.text = "Select a target to shield";
-            earthControls.controls.EarthPlayerDefault.Disable();
-            earthControls.controls.BarrierSelect.Enable();
-            PickClosestTarget();
-            tileOutline = Instantiate(tileOutlinePrefab, powerTarget.transform);
-            tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
-            uiController.DarkenOverlay(darkenWhilePlanting);
+            inBarrierSelection_FSM = true;
         }
         else if (shieldUsed)
         {
@@ -652,19 +647,21 @@ public class EarthPlayer : Player
 
     private IEnumerator BarrierStarted()
     {
-        displayText.text = "";
-        Destroy(tileOutline);
-        earthControls.controls.BarrierSelect.Disable();
+        inBarrierSelection_FSM = false;
+
+        inInteraction_FSM = true;
         CallSuspendActions(barrierTime);
         earthAnimator.animator.SetBool(earthAnimator.IfShieldingHash, true);
         yield return barrierTime;
         earthAnimator.animator.SetBool(earthAnimator.IfShieldingHash, false);
+        inInteraction_FSM = false;
+
         thornShield = Instantiate(ThornShieldPrefab, powerTarget.transform);
-        if (powerTarget.GetComponent<CelestialPlayer>())
+        if (powerTarget.GetComponent<Player>())
         {
             thornShield.transform.position = new Vector3(powerTarget.transform.position.x, 
-                powerTarget.transform.position.y + celestialPlayer.GetComponent<CapsuleCollider>().height / 2, powerTarget.transform.position.z);
-            powerTarget.GetComponent<CelestialPlayer>().ApplyBarrier();
+                powerTarget.transform.position.y + powerTarget.GetComponent<CapsuleCollider>().height / 2, powerTarget.transform.position.z);
+            powerTarget.GetComponent<Player>().ApplyBarrier();
         }
         else if (powerTarget.GetComponent<Animal>())
         {
@@ -691,10 +688,7 @@ public class EarthPlayer : Player
 
     public void OnBarrierCancelled()
     {
-        Destroy(tileOutline);
-        displayText.text = "";
-        earthControls.controls.EarthPlayerDefault.Enable();
-        earthControls.controls.BarrierSelect.Disable();
+        inBarrierSelection_FSM = false;
     }
 
 
@@ -706,6 +700,7 @@ public class EarthPlayer : Player
     private bool CheckIfValidTargets()
     {
         validTargets.Clear();
+        validTargets.Add(this.gameObject);
         if(JudgeDistance(celestialPlayer.transform.position, this.gameObject.transform.position, spellRange))
         {
             validTargets.Add(celestialPlayer.gameObject);
@@ -773,7 +768,7 @@ public class EarthPlayer : Player
     }
 
     //Goes through the current list of targets in range, finds the closest one
-    private void PickClosestTarget()
+    public void PickClosestTarget()
     {
         closestDistance = spellRange;
         int i = 0;
@@ -790,11 +785,16 @@ public class EarthPlayer : Player
         }
     }
 
+    public GameObject GetPowerTarget()
+    {
+        return powerTarget;
+    }
+
 
     /// <summary>
     /// UI FUNCTIONS
     /// </summary>
-//Switch between cameras for splitscreen
+    //Switch between cameras for splitscreen
     public void SetCamera(Camera switchCam)
     {
         mainCamera = switchCam;
@@ -828,12 +828,10 @@ public class EarthPlayer : Player
 
         // Activate the GameObject
         selectTileText.gameObject.SetActive(false);
-
-
     }
 
     //Darkens the UI images for the earth player when they can't be used
-    void DarkenAllImages(GameObject targetGameObject)
+    public void DarkenAllImages(GameObject targetGameObject)
     {
         if (targetGameObject != null)
         {
@@ -868,6 +866,26 @@ public class EarthPlayer : Player
         }
     }
 
+    //Handles UI components of tile select
+    public void TurnOnTileSelect(Transform target)
+    {
+        //tileOutline = Instantiate(tileOutlinePrefab, target.transform);
+        TurnOnCursor();
+        DisplayTileText();
+        uiController.DarkenOverlay(darkenWhilePlanting);
+        DarkenAllImages(GetPlantDarkenObject());
+    }
+
+    //When the player finishes using an ability with a tile select, shut off the appropriate UI and controls
+    public void TurnOffTileSelect()
+    {
+        TurnOffCursor();
+        HideTileText();
+        uiController.RestoreUI(darkenWhilePlanting);
+        ResetImageColor(GetPlantDarkenObject());
+        Destroy(tileOutline);
+    }
+
     public void SwitchCursorIcon(Sprite newSprite)
     {
         virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite = newSprite;
@@ -894,6 +912,16 @@ public class EarthPlayer : Player
         virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
+    public GameObject GetTileOutlinePrefab()
+    {
+        return tileOutlinePrefab;
+    }
+
+    public GameObject GetPlantDarkenObject()
+    {
+        return darkenInSelectMode;
+    }
+
 
     /// <summary>
     /// HELPER FUNCTIONS
@@ -913,19 +941,6 @@ public class EarthPlayer : Player
         }
     }
 
-    //When the player finishes using an ability with a tile select, shut off the appropriate UI and controls
-    private void TurnOffTileSelect(bool tileSelectionState)
-    {
-        earthControls.controls.RemovingPlant.Disable();
-        earthControls.controls.PlantIsSelected.Disable();
-        earthControls.controls.EarthPlayerDefault.Enable();
-        isATileSelected = tileSelectionState;
-        Destroy(tileOutline);
-        TurnOffCursor();
-        HideTileText();
-        uiController.RestoreUI(darkenWhilePlanting);
-    }
-
     private IEnumerator ThrowPlayerWarning(string textInfo)
     {
         displayText.text = textInfo;
@@ -933,15 +948,142 @@ public class EarthPlayer : Player
         displayText.text = "";
     }
 
+    public void SetTurnTarget(Vector3 target)
+    {
+        turnToTarget = target;
+    }
+
+    public void TurnToTarget()
+    {
+        float step;
+        float speed = 1;
+        step = speed * Time.deltaTime;
+        Vector3 lookVector = new Vector3(pMovement.playerObj.transform.position.x,
+            turnToTarget.y, pMovement.playerObj.transform.position.z);
+        Vector3 rotateVector = Vector3.RotateTowards(pMovement.playerObj.transform.position, lookVector, step, 0f);
+        pMovement.playerObj.rotation = Quaternion.LookRotation(rotateVector);
+
+    }
+
+    public void ToggleTurning()
+    {
+        if (isTurning)
+        {
+            isTurning = false;
+        }
+        else if (!isTurning)
+        {
+            isTurning = true;
+        }
+    }
+
+    /// <summary>
+    /// HELPER FUNCTIONS FOR STATE MACHINE
+    /// </summary>
+    /// <returns></returns>
     //Call this if you want to have all player controls turned off for a certain amount of time
+    protected override IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange)
+    {
+        //earthControls.controls.EarthPlayerDefault.Disable();
+        //earthControls.controls.PlantIsSelected.Disable();
+        uiController.DarkenOverlay(darkenWhilePlanting); //indicate no movement is allowed while planting
+        yield return waitTime;
+        //earthControls.controls.EarthPlayerDefault.Enable();
+        //Use this to switch off of whatever action is happening
+        boolToChange = false;
+        uiController.RestoreUI(darkenWhilePlanting);
+    }
 
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
-        earthControls.controls.EarthPlayerDefault.Disable();
-        earthControls.controls.PlantIsSelected.Disable();
-        uiController.DarkenOverlay(darkenWhilePlanting); //indicate no movement is allowed while planting
+
         yield return waitTime;
-        earthControls.controls.EarthPlayerDefault.Enable();
-        uiController.RestoreUI(darkenWhilePlanting);
+
+    }
+
+    public WaitForSeconds GetSuspensionTime()
+    {
+        return suspensionTime;
+    }
+
+    public void SetSuspensionTime(WaitForSeconds timeToSuspend)
+    {
+        suspensionTime = timeToSuspend;
+    }
+
+
+    //Return if the player is in the middle of interacting
+    public bool GetIsInteracting()
+    {
+        return inInteraction_FSM;
+    }
+
+    public bool GetInPlantSelection()
+    {
+        return inPlantSelection_FSM;
+    }
+
+    public bool GetInRemovalSelection()
+    {
+        return inRemovalSelection_FSM;
+    }
+
+    public bool GetInHealSelection()
+    {
+        return inHealSelection_FSM;
+    }
+
+    public bool GetInBarrierSelection()
+    {
+        return inBarrierSelection_FSM;
+    }
+
+    public bool GetInDialogue()
+    {
+        return inDialogue_FSM;
+    }
+    
+    public void ToggleDialogueState()
+    {
+        if (inDialogue_FSM)
+        {
+            inDialogue_FSM = false;
+        }
+        if (!inDialogue_FSM)
+        {
+            inDialogue_FSM = true;
+        }
+    }
+
+    public void ToggleDialogueState(bool newState)
+    {
+        inDialogue_FSM = newState;
+    }
+
+    public void TogglePanning(bool newState)
+    {
+        inPanning_FSM = newState;
+    }
+
+    public bool GetIsPanning()
+    {
+        return inPanning_FSM;
+    }
+
+    public void ToggleInteractingState()
+    {
+        if (inInteraction_FSM)
+        {
+            inInteraction_FSM = false;
+        }
+        else if (!inInteraction_FSM)
+        {
+            inInteraction_FSM = true;
+        }
+    }
+
+    public bool GetMidAnimation()
+    {
+        return isMidAnimation_FSM;
     }
 }

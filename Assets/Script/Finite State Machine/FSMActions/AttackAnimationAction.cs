@@ -6,19 +6,23 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "FSM/Actions/AttackAnimationAction")]
 public class AttackAnimationAction : FSMAction
 {
+    CelestialPlayer player;
+    public override void EnterState(BaseStateMachine stateMachine)
+    {
+        player = stateMachine.GetComponent<CelestialPlayer>();
+    }
+
     public override void Execute(BaseStateMachine stateMachine)
     {
-        CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
+
 
         if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.COLDSNAP)
         {
             Debug.Log("ColdSnapActivated");
 
-          
-           
             player.StartCoroutine(player.animateColdSnap());
             player.StartCoroutine(player.ResetColdSnap());
-           
+
             Debug.Log("coldsnap stopped");
             stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;
 
@@ -31,7 +35,7 @@ public class AttackAnimationAction : FSMAction
 
 
             player.StartCoroutine(player.animateLightningStrike());
-            player.StartCoroutine(player.ResetLightningStrike()); 
+            player.StartCoroutine(player.ResetLightningStrike());
 
             Debug.Log("coldsnap stopped");
             stateMachine.GetComponent<CelestialPlayer>().canLightningStrike = false;
@@ -52,6 +56,12 @@ public class AttackAnimationAction : FSMAction
 
         }
 
+
+    }
+
+    public override void ExitState(BaseStateMachine stateMachine)
+    {
+        
     }
 
 }

@@ -17,14 +17,11 @@ public class CheckInAttackRange : BTCondition
         //float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
         if (thisEnemy.inAttackRange)
         {
-           // Debug.Log("in attack range");
             //place enemy animation here
-          //  thisAgent.GetComponent<Renderer>().material.SetColor("_Color", Color.blue);
             return NodeState.SUCCESS;
         }
         else
         {
-           // Debug.Log("not in attack range");
             return NodeState.FAILURE;
         }
     }

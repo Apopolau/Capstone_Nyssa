@@ -30,7 +30,7 @@ public class EnergyPickup : MonoBehaviour
         {
             celestialPlayer.energy.current += energyQuantity;
             // Debug log the energy quantity
-            Debug.Log("Energy quantity increased by: " + energyQuantity);
+            //Debug.Log("Energy quantity increased by: " + energyQuantity);
             Destroy(this.gameObject);
             
             IncreaseEnergy();

@@ -41,8 +41,7 @@ public class EarthCharacterUIController : MonoBehaviour
 
         // Activate the GameObject
         darkOverlay.gameObject.SetActive(true);
-
-        Debug.Log("Overlay is being activated"); */
+        */
 
         if (targetGameObject != null)
         {
@@ -82,7 +81,7 @@ public class EarthCharacterUIController : MonoBehaviour
         // Loop through the UI objects in the selected array
         foreach (GameObject uiObject in uiObjectsToToggle)
         {
-              Debug.Log("Toggling UI object: " + uiObject.name);
+              //Debug.Log("Toggling UI object: " + uiObject.name);
             // Toggle the visibility of the UI object based on the isActive parameter
             uiObject.SetActive(isActive);
         }

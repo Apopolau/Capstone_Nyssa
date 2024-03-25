@@ -150,10 +150,20 @@ public class Bridge : Interactable
 
     private IEnumerator BuildBridge()
     {
-        earthPlayer.GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+        //Get the player turning towards the bridge as they start building
+        earthPlayer.SetTurnTarget(this.transform.position);
+        earthPlayer.ToggleTurning();
+        //Set animations
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfBuildingHash, true);
-        earthPlayer.CallSuspendActions(buildTime);
+
+        //Initiate state change
+        earthPlayer.SetSuspensionTime(buildTime);
+        earthPlayer.ToggleInteractingState();
+        //earthPlayer.CallSuspendActions(buildTime);
         yield return buildTime;
+        earthPlayer.ToggleInteractingState();
+        earthPlayer.ToggleTurning();
+
         earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfBuildingHash, false);
         FinishBridgeBuild();
     }

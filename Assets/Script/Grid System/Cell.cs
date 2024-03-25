@@ -92,12 +92,12 @@ public class Cell : MonoBehaviour
     {
         UpdateTileValid();
         //If the player is currently picking a place to plant their plant
-        if (earthPlayer.isPlantSelected && tileIsActivated &&!earthPlayer.isATileSelected)
+        if ((earthPlayer.isPlantSelected) && (tileIsActivated) && (!earthPlayer.isATileSelected))
         {
             UpdatePlant();
         }
         //Or if they're trying to remove a plant
-        if (earthPlayer.isRemovalStarted)
+        if ((earthPlayer.isRemovalStarted) && (!earthPlayer.isATileSelected))
         {
             UpdatePlantRemoval();
         }
@@ -234,9 +234,12 @@ public class Cell : MonoBehaviour
     private void UpdatePlant()
     {
         //Move the plant position to the center of the currently highlighted tile
-        earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
-        earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
-
+        if(earthPlayer.plantSelected != null && earthPlayer.tileOutline != null)
+        {
+            earthPlayer.plantSelected.transform.position = buildingTarget.transform.position;
+            earthPlayer.tileOutline.transform.position = buildingTarget.transform.position;
+        }
+        
         //Update the plant type if the player pans over a different kind of tile
         /////IF TILE IS EARTH
         if ((this.terrainType == TerrainType.GRASS || this.terrainType == TerrainType.DIRT) && earthPlayer.currentTileSelectedType == EarthPlayer.TileSelectedType.WATER)

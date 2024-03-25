@@ -6,10 +6,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "FSM/Actions/AttackBasicEnds")]
 public class AttackBasicEnds : FSMAction
 {
+    CelestialPlayer player;
+    CelestialPlayerBasicAttackTrigger staff;
+
+    public override void EnterState(BaseStateMachine stateMachine)
+    {
+        player = stateMachine.GetComponent<CelestialPlayer>();
+        staff = stateMachine.GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
+    }
+
+
     public override void Execute(BaseStateMachine stateMachine)
     {
-        CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
-        CelestialPlayerBasicAttackTrigger staff = stateMachine.GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
 
         //Debug.Log("******takeDamage");
         if (player.enemySeen && staff.enemyHit)
@@ -29,5 +37,9 @@ public class AttackBasicEnds : FSMAction
 
     }
 
+    public override void ExitState(BaseStateMachine stateMachine)
+    {
+        
+    }
 }
 

@@ -15,7 +15,7 @@ public class LevelOneEvents : EventManager
     //[SerializeField] GameObject lake;
     [SerializeField] GameObject water;
 
-    [Header("Parent objects of tile grids")]
+    [Header("Tile grids")]
     [SerializeField] GameObject tileGrid;
     [SerializeField] GameObject firstAreaGrid;
     [SerializeField] GameObject secondAreaGrid;
@@ -26,6 +26,11 @@ public class LevelOneEvents : EventManager
     List<GameObject> secondAreaTiles = new List<GameObject>();
     List<GameObject> thirdAreaTiles = new List<GameObject>();
     List<GameObject> fourthAreaTiles = new List<GameObject>();
+
+    private bool firstAreaClear = false;
+    private bool secondAreaClear = false;
+    private bool thirdAreaClear = false;
+    private bool fourthAreaClear = false;
 
     [Header("Objective tasks")]
     [SerializeField] TaskListManager task1;
@@ -60,11 +65,6 @@ public class LevelOneEvents : EventManager
 
     WaitForSeconds delayTime = new WaitForSeconds(0.1f);
     WaitForSeconds extraDelayTime = new WaitForSeconds(1);
-
-    private bool firstAreaClear = false;
-    private bool secondAreaClear = false;
-    private bool thirdAreaClear = false;
-    private bool fourthAreaClear = false;
 
     //If different conversion milestones have been met
     private bool areaOneMOneMet = false;
@@ -137,6 +137,8 @@ public class LevelOneEvents : EventManager
         }
         levelOneProgress.totalPlants = levelOneProgress.GetTotalPlantCount();
     }
+
+
 
     /// <summary>
     /// EVALUATE OBJECTIVES FROM LIST
@@ -244,6 +246,7 @@ public class LevelOneEvents : EventManager
         }
         return false;
     }
+
 
 
     /// <summary>
@@ -519,6 +522,8 @@ public class LevelOneEvents : EventManager
     }
 
 
+
+
     /// <summary>
     /// EVENTS RELATED TO DEFEATING MONSTERS
     /// </summary>
@@ -533,9 +538,9 @@ public class LevelOneEvents : EventManager
             }
         }
         Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
-        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, enemyPos, Quaternion.identity);
-        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
-        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, enemyPos, Quaternion.identity);
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
+        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
         levelOneProgress.animalHasShelter = true;
 
         //We want to activate the objective menu here probably, or once the trigger dialogue is done.
@@ -558,9 +563,9 @@ public class LevelOneEvents : EventManager
             }
         }
         Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
-        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, enemyPos, Quaternion.identity);
-        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
-        grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, enemyPos, Quaternion.identity);
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
+        treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
 
         keyMonsterDefeatCount++;
 
@@ -614,6 +619,8 @@ public class LevelOneEvents : EventManager
         fourthMonsterDeadDialouge.TriggerDialogue();
     }
 
+
+
     /// <summary>
     /// OTHER EVENTS
     /// </summary>
@@ -655,6 +662,8 @@ public class LevelOneEvents : EventManager
         task7.CrossOutTask();
     }
 
+
+
     /// <summary>
     /// WHEN THE PLAYER HAS COMPLETED ALL OBJECTIVES
     /// </summary>
@@ -665,7 +674,6 @@ public class LevelOneEvents : EventManager
         allObjectivesMetDialogue.TriggerDialogue();
         leaveTriggerObj.SetActive(true);
     }
-
 
 
 

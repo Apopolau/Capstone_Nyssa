@@ -5,10 +5,17 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "FSM/Actions/RespawnAction")]
 public class RespawnAction : FSMAction
 {
+
+    CelestialPlayer player;
+
+    public override void EnterState(BaseStateMachine stateMachine)
+    {
+        player = stateMachine.GetComponent<CelestialPlayer>();
+    }
+
+
     public override void Execute(BaseStateMachine stateMachine)
     {
-        CelestialPlayer player = stateMachine.GetComponent<CelestialPlayer>();
-
         if (!stateMachine.GetComponent<CelestialPlayer>().isRespawning)
         {
 
@@ -18,6 +25,11 @@ public class RespawnAction : FSMAction
 
         }
 
+
+    }
+
+    public override void ExitState(BaseStateMachine stateMachine)
+    {
 
     }
 }

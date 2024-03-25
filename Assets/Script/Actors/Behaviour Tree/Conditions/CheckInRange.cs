@@ -16,13 +16,10 @@ public class CheckInRange : BTCondition
     {
         if (agent.GetComponent<Enemy>().seesPlayer )
         {
-            //Debug.Log("in range");
-
             return NodeState.SUCCESS;
         }
         else
         {
-            //Debug.Log("not in range");
             return NodeState.FAILURE;
         }
     }
