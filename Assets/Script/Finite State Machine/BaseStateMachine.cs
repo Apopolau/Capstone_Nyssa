@@ -9,6 +9,11 @@ public class BaseStateMachine : MonoBehaviour
     private void Awake()
     {
         CurrentState = _initialState;
+        
+    }
+
+    private void Start()
+    {
         CurrentState.EnterState(this);
     }
 
