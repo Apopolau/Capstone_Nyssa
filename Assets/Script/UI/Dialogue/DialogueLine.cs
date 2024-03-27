@@ -16,6 +16,4 @@ public class DialogueLine : DialogueEvent
     public string line;
     [TextArea(3, 10)]
     public string lineFR; // Text for French language
-
-    public bool skippable;
 }

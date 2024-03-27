@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class DialogueEvent : ScriptableObject
 {
-    
+    protected bool skippable;
+
+    public bool GetIsSkippable()
+    {
+        return skippable;
+    }
 }

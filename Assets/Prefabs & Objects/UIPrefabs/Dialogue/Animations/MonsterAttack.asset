@@ -9,14 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea1bd4211a1163248a3db13b4405934f, type: 3}
-  m_Name: PanToCelesteSlow
+  m_Script: {fileID: 11500000, guid: 2a981f0919236c34abf9340a1c3c7212, type: 3}
+  m_Name: MonsterAttack
   m_EditorClassIdentifier: 
-  panType: 0
-  panToObject: {fileID: 0}
-  pointToPanTo: {x: 0, y: 0, z: 0}
-  panOffset: {x: -100, y: 0, z: -100}
-  panSpeed: 120
-  zoomSpeed: 120
-  zoomAmount: 20
-  f_animationTime: 3
+  animationName: IfAttacking
+  animationDuration: 2.125
+  animationDelay: 0.8
+  targetAnimator: {fileID: 0}

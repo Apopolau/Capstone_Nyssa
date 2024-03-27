@@ -9,11 +9,16 @@ public class EndLevelOneDialogueTrigger : MonoBehaviour
     [SerializeField] public TextMeshProUGUI displayText;
     bool playerOnePresent;
     bool playerTwoPresent;
+    bool hasRunDialogue;
 
     private void Update()
     {
-        RunMissionEnd();
-        ShowText();
+        if (!hasRunDialogue)
+        {
+            RunMissionEnd();
+            ShowText();
+        }
+        
     }
 
     private void OnTriggerStay(Collider other)
@@ -60,6 +65,7 @@ public class EndLevelOneDialogueTrigger : MonoBehaviour
     {
         if(playerOnePresent && playerTwoPresent)
         {
+            hasRunDialogue = true;
             endMissionDialogue.TriggerDialogue();
         }
     }
