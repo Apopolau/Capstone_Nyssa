@@ -214,7 +214,7 @@ public class DialogueManager : MonoBehaviour
         //earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
         celestialPlayer.celestialControls.controls.DialogueControls.Disable();
         celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
-
+        Debug.Log("shit is enabled");
         split.ExitCutscene();
         Time.timeScale = 1f;
 

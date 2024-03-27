@@ -148,7 +148,6 @@ public class CelestialPlayerControls : MonoBehaviour
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
-        Debug.Log("Trying to attack");
         this.GetComponent<CelestialPlayer>().OnBasicAttackSelected();
 
     }

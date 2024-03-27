@@ -19,12 +19,13 @@ public class AttackAnimationAction : FSMAction
         if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.COLDSNAP)
         {
             Debug.Log("ColdSnapActivated");
-
-            player.StartCoroutine(player.animateColdSnap());
-            player.StartCoroutine(player.ResetColdSnap());
-
+            if (!player.canColdSnap)
+            {
+                player.StartCoroutine(player.animateColdSnap());
+                player.StartCoroutine(player.ResetColdSnap());
+            }
             Debug.Log("coldsnap stopped");
-            stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;
+
 
         }
         //if it isn't raining start rain
@@ -33,12 +34,13 @@ public class AttackAnimationAction : FSMAction
             Debug.Log("LightningActivated");
 
 
-
-            player.StartCoroutine(player.animateLightningStrike());
-            player.StartCoroutine(player.ResetLightningStrike());
-
-            Debug.Log("coldsnap stopped");
-            stateMachine.GetComponent<CelestialPlayer>().canLightningStrike = false;
+            if (!player.canLightningStrike)
+            {
+                player.StartCoroutine(player.animateLightningStrike());
+                player.StartCoroutine(player.ResetLightningStrike());
+            }
+            Debug.Log("lightning  stopped");
+     
 
         }
         //if it isn't raining start rain
@@ -47,12 +49,14 @@ public class AttackAnimationAction : FSMAction
             Debug.Log("BasicActivated");
 
 
+            if (!player.canBasicAttack)
+            {
+                player.StartCoroutine(player.animateBasicAttack());
+                player.StartCoroutine(player.ResetBasic());
 
-            player.StartCoroutine(player.animateBasicAttack());
-            player.StartCoroutine(player.ResetBasic());
-
+            }
             Debug.Log("basic stopped");
-            stateMachine.GetComponent<CelestialPlayer>().canBasicAttack = false;
+         
 
         }
 

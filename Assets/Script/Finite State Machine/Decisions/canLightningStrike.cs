@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "FSM/Decisions/canLightiningStrike")]
+[CreateAssetMenu(menuName = "FSM/Decisions/CanLightningStrike")]
 public class CanLightningStrike: Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking)
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().canLightningStrike && stateMachine.GetComponent<PowerBehaviour>().LightningStats.isEnabled)
         {
             //Debug.Log("currently doing lightning attack");
 

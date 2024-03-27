@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32583743, g: 0.309359, b: 0.3104538, a: 1}
+  m_IndirectSpecularColor: {r: 0.32785472, g: 0.31164402, b: 0.3123275, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -919,6 +919,10 @@ PrefabInstance:
       propertyPath: duck2
       value: 
       objectReference: {fileID: 595465343}
+    - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      propertyPath: power
+      value: 
+      objectReference: {fileID: 1308052688}
     - target: {fileID: 3328214192355188500, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       propertyPath: task1
       value: 
@@ -6314,9 +6318,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 921268330}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: canSetFogTrap
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: celestPlayerDpad
       value: 
       objectReference: {fileID: 608448178}
+    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: celestialControls
+      value: 
+      objectReference: {fileID: 1308052691}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: RainParticleSystem
       value: 
@@ -8838,6 +8850,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e822071274fa4b42ae1ad708c2a7c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1308052688 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2343692040003905913, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+  m_PrefabInstance: {fileID: 864819263}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864819264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148462aabad96c44bb98802b853e59a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1308052691 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 616051488619230335, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+  m_PrefabInstance: {fileID: 864819263}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864819264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2364ef076166ff498bc871ac666f656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1316675815
@@ -21043,6 +21077,63 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &7740035193943136801
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2038581939254420909, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_Name
+      value: PS_ColdOrb
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -71.60516
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0019254684
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -21.27732
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3751823213501903460, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 22406bd511865e145b4b0a8c3ced7a59, type: 3}
 --- !u!54 &7886797499806344448
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -21375,3 +21466,4 @@ SceneRoots:
   - {fileID: 608448172}
   - {fileID: 1366952314}
   - {fileID: 1951941721}
+  - {fileID: 7740035193943136801}

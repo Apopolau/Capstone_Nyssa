@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.VFX;
 
 public class LevelOneEvents : EventManager
 {
@@ -53,6 +54,10 @@ public class LevelOneEvents : EventManager
     public DialogueTrigger allMonstersDefeatedDialogue;
     public DialogueTrigger allObjectivesMetDialogue;
 
+    [Header("PowerDrop")]
+    [SerializeField] private PowerBehaviour power;
+    private GameObject powerDrop;
+
     [Header("Ducks")]
     [SerializeField] private GameObject duck1;
     [SerializeField] private GameObject duck2;
@@ -84,6 +89,9 @@ public class LevelOneEvents : EventManager
     [SerializeField] private Material cleanFactoryMaterial;
     [SerializeField] private Material cleanPipeMaterial;
     [SerializeField] private Material cleanTankMaterial;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -542,9 +550,16 @@ public class LevelOneEvents : EventManager
         grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
         grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
         levelOneProgress.animalHasShelter = true;
+        powerDrop = Instantiate( power.ColdSnapStats.powerDropPrefab, enemyPos, Quaternion.identity);
+
+
+
 
         //We want to activate the objective menu here probably, or once the trigger dialogue is done.
-        ////////////////////////////////////////////this is where we are going to drop the celestial cold orb!!!/////////////////////////////////////
+        ////////////////////////////////////////////this is where we are going to drop the celestial cold orb!!!//////////////////////////////////////////////
+     ///   GetComponent<CelestialPlayer>().PowerDrop((GetComponent<PowerBehaviour>().ColdSnapStats), enemyPos);
+   
+
 
         firstMonsterDeadDialouge.TriggerDialogue();
         keyMonsterDefeatCount++;

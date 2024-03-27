@@ -27,7 +27,7 @@ public class taskInitiateAttack : BTNode
                 thisEnemy.attackInitiated = true;
                 thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, true);
                 state = NodeState.SUCCESS;
-                Debug.Log("am attacking");
+                Debug.Log("enemy attacking");
             }
             else
             {

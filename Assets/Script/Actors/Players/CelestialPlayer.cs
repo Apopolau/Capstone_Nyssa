@@ -36,6 +36,9 @@ public class CelestialPlayer : Player
     [SerializeField] public bool canSetFrostTrap = true;
     [SerializeField] public bool canSunBeam = true;
 
+    private bool isTargeted = false;
+    GameObject coldOrb;
+
     public enum Power
     {
         NONE,
@@ -52,15 +55,20 @@ public class CelestialPlayer : Player
     public Power powerInUse = Power.NONE;
 
     public Stat energy;
-
-
     PowerBehaviour powerBehaviour;
     public CelestialPlayerControls celestialControls;
 
-    //Lengths of animations and abilities
-   
-    
+    [Header("Power Drop Assets")]
+    private VisualEffect powerDrop;
 
+
+    //Lengths of animations and abilities
+    private WaitForSeconds dodgeAnimTime;
+    private WaitForSeconds specialPowerAnimTime;
+    private WaitForSeconds basicPowerAnimTime;
+    private WaitForSeconds basicCoolDownTime;
+    private WaitForSeconds coldSnapCoolDownTime;
+    private WaitForSeconds lightningCoolDownTime;
 
     [Header("Animation")]
     private CelestialPlayerAnimator celestialAnimator;
@@ -92,16 +100,35 @@ public class CelestialPlayer : Player
 
     void Start()
     {
-        // celestialPlayerInput = GetComponent<CelestialPlayerInputActions>();
-        //playerInput = GetComponent<PlayerInput>();
-        powerBehaviour = GetComponent<PowerBehaviour>();
 
-    }
+        powerBehaviour = GetComponent<PowerBehaviour>();
+        basicPowerAnimTime = new WaitForSeconds(1.208f);
+        specialPowerAnimTime = new WaitForSeconds(1.958f);
+        //dodgeAnimTime = new WaitForSeconds();
+        coldSnapCoolDownTime = new WaitForSeconds(powerBehaviour.ColdSnapStats.rechargeTimer);
+        basicCoolDownTime = new WaitForSeconds(powerBehaviour. BasicAttackStats.rechargeTimer);
+        lightningCoolDownTime = new WaitForSeconds(powerBehaviour.BasicAttackStats.rechargeTimer);
+
+
+
+
+
+
+
+
+
+
+
+}
 
 
     // Update is called once per frame
     void Update()
     {
+        if (isTargeted)
+        {
+            ShootTowardsTarget(coldOrb);
+        }
 
     }
 
@@ -139,11 +166,17 @@ public class CelestialPlayer : Player
             enemyLocation = other.transform.position;
             enemyTarget = null;
 
-            //enemyTarget = null;
+   
 
 
 
         }
+    }
+
+    public void PowerDrop(PowerStats power, Vector3 position)
+    {
+        powerDrop= Instantiate(power.visualDisplay, position, Quaternion.identity);
+
     }
 
     // public void AttackEnemy()
@@ -157,18 +190,21 @@ public class CelestialPlayer : Player
         if (enemyTarget && powerInUse == Power.COLDSNAP)
         {
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
+            powerInUse = Power.NONE;
         }
 
 
         if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE)
         {
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.LightningStats.minDamage);
+            powerInUse = Power.NONE;
         }
 
 
         if (enemyTarget && powerInUse == Power.BASIC)
         {
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.BasicAttackStats.minDamage);
+            powerInUse = Power.NONE;
         }
 
 
@@ -246,45 +282,67 @@ public class CelestialPlayer : Player
 
     }
 
+
+
+
+    public void ShootTowardsTarget(GameObject Orb)
+    {
+        var step = 20 * Time.deltaTime; // calculate distance to move
+       Orb.transform.position = Vector3.MoveTowards(Orb.transform.position, enemyTarget.transform.position, step);
+        Orb.transform.LookAt(enemyTarget.transform.position, Vector3.up);
+
+    }
+
     public IEnumerator animateColdSnap()
     {
      
         Debug.Log("coldsnap is animated");
-        ///   GameObject coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
-        ///  GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+        ///-----------   GameObject coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
+        ///-----------  GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+        ///////////////////////////////////////////////////////////////////////////////USING VFX/////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///// We should also set up a boolean of sorts to change from vfx to physical
+        //VisualEffect coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
+        //VisualEffect clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
 
-       VisualEffect coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
-        VisualEffect clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+
+        //----------clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
 
 
 
-        //clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
 
+
+        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity );
 
         //Attacking animation of player
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
         celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
-       
+
        
 
 
 
 
         // Move our position a step closer to the target.
-        var step = 5 * Time.deltaTime; // calculate distance to move
+       /////////////////// var step = 50 * Time.deltaTime; // calculate distance to move
 
         if (enemyTarget != null)
-        {
-            clone.transform.position = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
-            //clone.
-          // clone.SetVector3( enemyTarget.transform.position);
+        {//////////////////////////////////////////////////VFX///////////////////////////////////////////////////////////////
+            //clone.transform.position = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
+            isTargeted = true;
+            
+            ////////////////////coldOrb.transform.position = Vector3.MoveTowards(coldOrb.transform.position, enemyTarget.transform.position, step);
+           // coldOrb.SetDestination(enemyTarget.transform.position);
         }
        //clone.GetComponent<Rigidbody>().velocity = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
 
         isAttacking = true;
-        yield return new WaitForSeconds(1.958f);
+        StartCoroutine(SuspendActions(specialPowerAnimTime));
+        yield return specialPowerAnimTime;
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
-        Destroy(clone, 1f);
+        //////////////////////////////////////////////////VFX///////////////////////////////////////////////////////////////
+        ///Destroy(clone, 1f);
+        isTargeted = false;
+        Destroy(coldOrb, 1f);
         ResetImageColor(celestPlayerDpad); //reset dpad colors
 
     }
@@ -294,7 +352,10 @@ public class CelestialPlayer : Player
     public IEnumerator animateLightningStrike()
     {
 
-        Debug.Log("lighning is animated is animated");
+
+      
+
+        Debug.Log("lightning is animated");
        
         VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
         VisualEffect clone = Instantiate(lightningStrike, new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, enemyTarget.transform.position.z), Quaternion.identity);
@@ -324,11 +385,12 @@ public class CelestialPlayer : Player
         }
 
 
-            isAttacking = true;
-            yield return new WaitForSeconds(1.958f);
-            celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
-            Destroy(clone, 1f);
-            ResetImageColor(celestPlayerDpad); //reset dpad colors
+        isAttacking = true;
+        StartCoroutine(SuspendActions(specialPowerAnimTime));
+        yield return specialPowerAnimTime;
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
+        Destroy(clone, 1f);
+        ResetImageColor(celestPlayerDpad); //reset dpad colors
         
 
     }
@@ -344,7 +406,7 @@ public class CelestialPlayer : Player
 
 
 
-
+    
 
 
         // Move our position a step closer to the target.
@@ -367,23 +429,26 @@ public class CelestialPlayer : Player
 
     public IEnumerator ResetColdSnap()
     {
-
+        //powerInUse = Power.NONE;
 
         Debug.Log("coldsnaptimer reset");
       
         yield return new WaitForSeconds(powerBehaviour.ColdSnapStats.rechargeTimer);
+  
         canColdSnap = true;
 
     }
     public IEnumerator ResetLightningStrike()
     {
+        //powerInUse = Power.NONE;
         yield return new WaitForSeconds(1f);
-       
+        canLightningStrike = true;
+
     }
 
     public IEnumerator ResetBasic()
     {
-
+        //powerInUse = Power.NONE;
 
         Debug.Log("basic reset");
 
