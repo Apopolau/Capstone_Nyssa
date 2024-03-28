@@ -80,13 +80,14 @@ GameObject:
   - component: {fileID: 2293652205981867178}
   - component: {fileID: 643746350714191412}
   - component: {fileID: 392309290221925033}
+  - component: {fileID: 2332831829506939876}
   m_Layer: 0
   m_Name: Duck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3668103021458720016
 Transform:
   m_ObjectHideFlags: 0
@@ -167,7 +168,7 @@ MonoBehaviour:
   celesteImage: {fileID: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   uiTarget: {fileID: 0}
-  isStuck: 0
+  isStuck: 1
   midAnimation: 0
   isScared: 0
   isHiding: 0
@@ -178,6 +179,12 @@ MonoBehaviour:
   hasCleanWater: 0
   hasShelter: 0
   hasAnyFood: 0
+  duckWayPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &9048775179981755489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -286,6 +293,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &2332831829506939876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5665216156270961092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fccc9f1a1f3af438f153e72921b30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToPanTo: []
 --- !u!1 &8922225341176706880
 GameObject:
   m_ObjectHideFlags: 0

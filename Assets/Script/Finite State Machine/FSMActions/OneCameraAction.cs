@@ -42,7 +42,11 @@ public class OneCameraAction : FSMAction
     {
         if (!splitScreen.inCutscene)
         {
-            splitScreen.mainCam.transform.position = Vector3.Lerp(splitScreen.earthPlayer.transform.position, splitScreen.celestialPlayer.transform.position, 0.5f);
+            Vector3 earthPos = new Vector3(splitScreen.earthPlayer.transform.position.x,
+                splitScreen.earthPlayer.transform.position.y, splitScreen.earthPlayer.transform.position.z);
+            Vector3 celestialPos = new Vector3(splitScreen.celestialPlayer.transform.position.x,
+                splitScreen.celestialPlayer.transform.position.y, splitScreen.celestialPlayer.transform.position.z);
+            splitScreen.gameObject.transform.position = Vector3.Lerp(earthPos, celestialPos, 0.3f);
         }
     }
 

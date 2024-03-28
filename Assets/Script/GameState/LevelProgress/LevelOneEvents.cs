@@ -8,6 +8,7 @@ public class LevelOneEvents : EventManager
 {
     [Header("Scene Data")]
     [SerializeField] LevelOneProgress levelOneProgress;
+    [SerializeField] GameObject dialogueManager;
 
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
@@ -110,6 +111,7 @@ public class LevelOneEvents : EventManager
         }
         duck1.SetActive(true);
         duck2.SetActive(true);
+        dialogueManager.SetActive(true);
 
         SetTerrainLayers();
 

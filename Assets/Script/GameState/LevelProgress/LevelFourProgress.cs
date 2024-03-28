@@ -7,13 +7,6 @@ public class LevelFourProgress : LevelProgress
 {
     bool hasFoundRabbit;
 
-    bool securedWater;
-
-    public bool animalHasEnoughFood = false;
-    //public bool animalHasEnoughWater = false;
-    //public bool animalHasShelter = false;
-    public bool animalIsSafe = false;
-
     /*
     public override bool EvaluateFood()
     {

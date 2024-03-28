@@ -460,9 +460,9 @@ GameObject:
   - component: {fileID: 4394548441176001214}
   - component: {fileID: 1222953851676443687}
   - component: {fileID: 6432642338141535612}
-  - component: {fileID: 4975378969085066082}
   - component: {fileID: 8002460639596102495}
   - component: {fileID: 3297893822877032068}
+  - component: {fileID: 5311896352438793669}
   m_Layer: 0
   m_Name: EarthPlayer
   m_TagString: Player1
@@ -1025,19 +1025,6 @@ MonoBehaviour:
   keyboardUI: {fileID: 0}
   controllerUI: {fileID: 0}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
---- !u!114 &4975378969085066082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4033276866688796702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17fccc9f1a1f3af438f153e72921b30d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  returnToOrigin: {fileID: 11400000, guid: 7c2b9544a4d07044bb61d83026a7fe79, type: 2}
 --- !u!114 &8002460639596102495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1050,7 +1037,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fccc9f1a1f3af438f153e72921b30d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  returnToOrigin: {fileID: 11400000, guid: c6fc112bd4632f34eabd2e754307081d, type: 2}
+  objectToPanTo:
+  - {fileID: 11400000, guid: c6fc112bd4632f34eabd2e754307081d, type: 2}
+  - {fileID: 11400000, guid: 7c2b9544a4d07044bb61d83026a7fe79, type: 2}
 --- !u!114 &3297893822877032068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1073,6 +1062,19 @@ MonoBehaviour:
   targetPositionOffset: {x: 0, y: 1, z: 0}
   fadeSpeed: 1
   objectsBlockingView: []
+--- !u!114 &5311896352438793669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033276866688796702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756bb4aa12122ee47bc2eb9c1aa2419d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialState: {fileID: 11400000, guid: 82bf6f7fca030c1489ebd052b7aeb307, type: 2}
 --- !u!1 &4352397716575000703
 GameObject:
   m_ObjectHideFlags: 0
