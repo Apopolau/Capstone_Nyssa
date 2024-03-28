@@ -85,7 +85,7 @@ public class SplitScreen : MonoBehaviour
     }
     */
 
-
+    /*
     private void SetTwoCams()
     {
 
@@ -114,6 +114,7 @@ public class SplitScreen : MonoBehaviour
             currCam = 2;
         }
     }
+    */
 
     private void SetOneCam()
     {
@@ -124,7 +125,7 @@ public class SplitScreen : MonoBehaviour
 
         }
 
-        mainCam.transform.position = Vector3.Lerp(earthPlayer.transform.position, celestialPlayer.transform.position, 0.5f);
+        //mainCam.transform.position = Vector3.Lerp(earthPlayer.transform.position, celestialPlayer.transform.position, 0.5f);
 
         mainCam.gameObject.SetActive(true);
         mainCam.enabled = true;

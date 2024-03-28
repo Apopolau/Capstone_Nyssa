@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "FSM/Decisions/IsPanning")]
-public class IsPanning : Decision
+public class IsWaiting : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
-        if (stateMachine.GetComponent<EarthPlayer>().GetIsPanning())
+        if (stateMachine.GetComponent<EarthPlayer>().GetIsWaiting())
         {
             //Debug.Log("Panning");
             return true;

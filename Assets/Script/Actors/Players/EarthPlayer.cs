@@ -32,7 +32,7 @@ public class EarthPlayer : Player
     private bool inHealSelection_FSM = false;
     private bool inBarrierSelection_FSM = false;
     private bool inDialogue_FSM = false;
-    private bool inPanning_FSM = false;
+    private bool inWaiting_FSM = false;
     //Note: this is for animations where the player should stop moving
     private bool isMidAnimation_FSM;
 
@@ -1060,14 +1060,14 @@ public class EarthPlayer : Player
         inDialogue_FSM = newState;
     }
 
-    public void TogglePanning(bool newState)
+    public void ToggleWaiting(bool newState)
     {
-        inPanning_FSM = newState;
+        inWaiting_FSM = newState;
     }
 
-    public bool GetIsPanning()
+    public bool GetIsWaiting()
     {
-        return inPanning_FSM;
+        return inWaiting_FSM;
     }
 
     public void ToggleInteractingState()
