@@ -219,6 +219,7 @@ public class Enemy : MonoBehaviour
         closestPlayer = newPlayer;
     }
 
+
     private IEnumerator TakePlayerHit()
     {
         enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, true);
@@ -242,4 +243,7 @@ public class Enemy : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+
+
 }

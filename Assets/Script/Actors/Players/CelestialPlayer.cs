@@ -211,6 +211,105 @@ public class CelestialPlayer : Player
 
     }
 
+    public void ColdSnapAttack()
+    {
+
+        
+
+        bool playerIsDead;
+        if (enemyTarget && powerInUse == Power.COLDSNAP && canColdSnap == false)
+        {
+            Power weakness = GetEnemyWeakness(enemyTarget);
+            int HitPoints = GetPowerHitDamage(weakness);
+            Debug.Log("Hitpoints:" + HitPoints);
+            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
+            
+        }
+        powerInUse = Power.NONE;
+        /*
+         if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE)
+         {
+             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.LightningStats.minDamage);
+             powerInUse = Power.NONE;
+         }
+
+
+         if (enemyTarget && powerInUse == Power.BASIC)
+         {
+             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.BasicAttackStats.minDamage);
+             powerInUse = Power.NONE;
+         }*/
+
+
+
+    }
+
+    public int GetPowerHitDamage(Power weakness)
+    {
+        PowerBehaviour attack;
+        attack = GetComponent<PowerBehaviour>();
+        int powerDamage=0;
+        if (powerInUse == Power.BASIC)
+        {
+            powerDamage = Random.Range(attack.BasicAttackStats.minDamage, attack.BasicAttackStats.maxDamage);
+            
+            return powerDamage;
+        }
+
+
+        if (powerInUse == Power.COLDSNAP)
+        {
+            if (weakness == Power.COLDSNAP)
+            {
+                powerDamage= attack.ColdSnapStats.maxDamage;
+            }
+            else if (weakness != Power.COLDSNAP)
+            {
+                powerDamage = attack.ColdSnapStats.minDamage;
+
+            }
+            return powerDamage;
+        }
+
+
+
+
+        if (powerInUse == Power.LIGHTNINGSTRIKE)
+        {
+            if (weakness == Power.LIGHTNINGSTRIKE)
+            {
+                powerDamage = attack.LightningStats.maxDamage;
+            }
+            else if (weakness != Power.COLDSNAP)
+            {
+                powerDamage = attack.LightningStats.minDamage;
+
+            }
+            return powerDamage;
+        }
+        return 0;
+
+       
+    }
+
+    public Power GetEnemyWeakness(GameObject enemyTarget)
+    {
+        if (enemyTarget.GetComponent<Enemy>().enemyStats.enemyType == EnemyStats.enemyTypes.OilMonster)
+        {
+            return Power.COLDSNAP;
+        }
+        return Power.NONE;
+
+    }
+
+
+
+
+
+
+
+
+
     //if player selects raindrop
     public void OnRainDropSelected()
     {
@@ -255,7 +354,7 @@ public class CelestialPlayer : Player
         }*/
         isAttacking = true;
         powerInUse = Power.COLDSNAP;
-        Debug.Log("start");
+        Debug.Log("OnSnowFlakeSelected");
         DarkenAllImages(celestPlayerDpad); //darken the dpad
 
     }
@@ -329,7 +428,7 @@ public class CelestialPlayer : Player
         {//////////////////////////////////////////////////VFX///////////////////////////////////////////////////////////////
             //clone.transform.position = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
             isTargeted = true;
-            Attack();
+            ColdSnapAttack();
             ////////////////////coldOrb.transform.position = Vector3.MoveTowards(coldOrb.transform.position, enemyTarget.transform.position, step);
            // coldOrb.SetDestination(enemyTarget.transform.position);
         }
@@ -438,9 +537,9 @@ public class CelestialPlayer : Player
     public IEnumerator ColdSnapCoolDownTime()
     {
         Debug.Log("coldsnaptimer reset");
-
-       yield return new WaitForSeconds(55f);
-      // yield return new (powerBehaviour.ColdSnapStats.rechargeTimer);
+        //yield return new WaitForSeconds(55f);
+       // yield return new WaitForSeconds(55f);
+       yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
         Debug.Log("coldsnaptimer copy");
         canColdSnap = true;
     }

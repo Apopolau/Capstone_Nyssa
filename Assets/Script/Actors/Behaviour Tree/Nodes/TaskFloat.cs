@@ -54,7 +54,7 @@ public class TaskFloat : BTNode
 
         if (!isSet)
         {
-         Debug.Log("not set");
+         //Debug.Log("not set");
             if (NavMesh.SamplePosition(randomPoint, out hit, 10.0f, NavMesh.AllAreas))
             {
                 newPos = hit.position;
@@ -104,8 +104,8 @@ public class TaskFloat : BTNode
             {
                 if (validPos)
                 {
-                    Debug.Log(transformPos.position);
-                    Debug.Log(newPos);
+                   // Debug.Log(transformPos.position);
+                   //Debug.Log(newPos);
                     thisAgent.SetDestination(newPos);
                     state = NodeState.SUCCESS;
                 }

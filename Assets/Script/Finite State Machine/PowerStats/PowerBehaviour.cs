@@ -23,8 +23,12 @@ public class PowerBehaviour : MonoBehaviour
     {
         return powerStats.rechargeTimer;
     }
+    public float getRechargeTimerFloat(PowerStats powerStats)
+    {
+        return powerStats.rechargeFloatTimer;
+    }
 
-   void setEnabled(PowerStats powerStats)
+    void setEnabled(PowerStats powerStats)
     {
         powerStats.isEnabled = true;
        

@@ -6,8 +6,9 @@ using UnityEngine;
 
 public class EnemyStats : ScriptableObject
 {
+    public enum enemyTypes { OilMonster, PlasticBag, Smog };
     [Header("Basic info")]
-    [SerializeField] public string enemyType;
+    public enemyTypes enemyType;
     [SerializeField] public int maxHealth;
     [SerializeField] public float attackRate;
     [SerializeField] public int maxDamage;
