@@ -5,6 +5,9 @@ using TMPro;
 
 public abstract class LevelEventManager : EventManager
 {
+    [SerializeField] protected GameObjectRuntimeSet playerSet;
+    protected CelestialPlayer celestialPlayer;
+    protected EarthPlayer earthPlayer;
     [SerializeField] protected GameObject objectiveList;
     [SerializeField] AmbientSoundLibrary ambientSounds;
     public Enemy dyingEnemy;

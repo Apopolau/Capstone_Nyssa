@@ -73,6 +73,24 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       insertIndex: 2
       addedObject: {fileID: 3426407758838150730}
+    - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 560810236520194074}
+    - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8166555296727488535}
+    - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7540678903715615292}
+    - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7474066682892620428}
+    - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4285750560391720844}
+    - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3081410312761727100}
   m_SourcePrefab: {fileID: 100100000, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
 --- !u!1 &1002314583612977226 stripped
 GameObject:
@@ -92,13 +110,113 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectiveList: {fileID: 0}
+  ambientSounds: {fileID: 0}
   dyingEnemy: {fileID: 0}
+  terrain: {fileID: 0}
+  terrainData1: {fileID: 0}
+  terrainData2: {fileID: 0}
   levelTwoProgress: {fileID: 11400000, guid: d72188606e7e6e9409fddb57f1bcf001, type: 2}
-  cleanWaterMaterial: {fileID: 0}
+  cleanWaterMaterial: {fileID: 2100000, guid: e33eb5d28521d5f4188aec862cee5330, type: 2}
   lake: {fileID: 0}
-  firstAreaGrid: {fileID: 0}
-  secondAreaGrid: {fileID: 0}
-  thirdAreaGrid: {fileID: 0}
+  tileGrid: {fileID: 0}
+  mainAreaGrid: {fileID: 0}
+  hedgehogAreaGrid: {fileID: 0}
+  loggingAreaGrid: {fileID: 0}
+  buildingAreaGrid: {fileID: 0}
   task1: {fileID: 0}
   task2: {fileID: 0}
   task3: {fileID: 0}
+  task4: {fileID: 0}
+  task5: {fileID: 0}
+  task6: {fileID: 0}
+  task7: {fileID: 0}
+  task8: {fileID: 0}
+  leaveTriggerObj: {fileID: 0}
+  firstMonsterDeadDialouge: {fileID: 560810236520194074}
+  secondMonsterDeadDialouge: {fileID: 8166555296727488535}
+  thirdMonsterDeadDialouge: {fileID: 7540678903715615292}
+  fourthMonsterDeadDialouge: {fileID: 7474066682892620428}
+  allMonstersDefeatedDialogue: {fileID: 4285750560391720844}
+  allObjectivesMetDialogue: {fileID: 3081410312761727100}
+  hog1: {fileID: 0}
+  hog2: {fileID: 0}
+  nyssa: {fileID: 0}
+  facility: {fileID: 0}
+--- !u!114 &560810236520194074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002314583612977226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 11400000, guid: 54897584b03a5c246870962483a0be06, type: 2}
+--- !u!114 &8166555296727488535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002314583612977226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 11400000, guid: aeba91c8177622641b177243ed5fada9, type: 2}
+--- !u!114 &7540678903715615292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002314583612977226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 11400000, guid: 1d45644048579a548aefa413375d3f5e, type: 2}
+--- !u!114 &7474066682892620428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002314583612977226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 11400000, guid: 64d5e64b13c654542b512bfecc5a8586, type: 2}
+--- !u!114 &4285750560391720844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002314583612977226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 11400000, guid: a4214e1be4b3a1f499f363a9b4209fb9, type: 2}
+--- !u!114 &3081410312761727100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002314583612977226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 11400000, guid: 98aa6ecd5c1df0b41ada56f8fbe09f87, type: 2}

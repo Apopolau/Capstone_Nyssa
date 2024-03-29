@@ -102,6 +102,18 @@ public class LevelTwoEvents : LevelEventManager
             buildingAreaTiles.Add(childTransform.gameObject);
         }
 
+        foreach(GameObject player in playerSet.Items)
+        {
+            if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
+            else if (player.GetComponent<EarthPlayer>())
+            {
+                earthPlayer = player.GetComponent<EarthPlayer>();
+            }
+        }
+
         hog1.SetActive(true);
         hog2.SetActive(true);
 
@@ -109,6 +121,9 @@ public class LevelTwoEvents : LevelEventManager
 
         StartCoroutine(EvaluateFoodLevel());
         StartCoroutine(EvaluateBeautyLevel());
+
+        earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
+        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
     }
 
     // Update is called once per frame
@@ -326,19 +341,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaOneMOneMet)
             {
-                //follow x axis
-                /*
-                for (int i = -100; i < -2; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -114; j < -10; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
-                */
-
+                //Put coords here, call ApplyTextureChangeOverArea()
                 areaOneMOneMet = true;
             }
         }
@@ -567,18 +570,11 @@ public class LevelTwoEvents : LevelEventManager
         flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
         levelTwoProgress.animalHasShelter = true;
 
-        //We want to activate the objective menu here probably, or once the trigger dialogue is done.
-        ////////////////////////////////////////////this is where we are going to drop the celestial cold orb!!!/////////////////////////////////////
-
         firstMonsterDeadDialouge.TriggerDialogue();
         keyMonsterDefeatCount++;
         objectiveList.SetActive(true);
         firstAreaClear = true;
         hog1.GetComponent<Hedgehog>().Unstuck();
-        /*
-        levelTwoProgress.shelter = true;
-        task3.CrossOutTask();
-        */
     }
 
     public void OnSecondMonsterDefeated()
