@@ -17,9 +17,8 @@ public class AttackColdSnapEnds : FSMAction
     {
         //Debug.Log("******takeDamage");
         if(player.enemySeen)
-        {
-            player.Attack();
-
+        { 
+    
 
         }
  

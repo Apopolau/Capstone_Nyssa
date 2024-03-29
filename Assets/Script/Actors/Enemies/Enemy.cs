@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
     public OilMonsterAnimator enemyAnimator;
     //Drag and drop player here
     public GameObjectRuntimeSet playerSet;
+    public GameObjectRuntimeSet plantSet;
     public CelestialPlayer celestialPlayer;
     public EarthPlayer earthPlayer;
     //public GameObject playerObj;
@@ -22,6 +23,14 @@ public class Enemy : MonoBehaviour
     public bool isStaggered = false;
     public bool isColliding = false;
     private GameObject closestPlayer;
+    private GameObject closestPlant;
+
+
+    //Interaction with plants
+    public bool seesPlant = false;
+    public bool inSmotherRange = false;
+    public bool smotherInitiated = false;
+    public Vector3 plantLocation;
 
     //Interaction with the player
     public bool seesPlayer = false;
@@ -29,7 +38,7 @@ public class Enemy : MonoBehaviour
     public bool attackInitiated = false;
     public Vector3 playerLocation;
     Rigidbody rb;
-
+    [SerializeField] float smotherRange;
     [SerializeField] float attackRange;
     [SerializeField] float sightRange;
 
@@ -67,6 +76,8 @@ public class Enemy : MonoBehaviour
             }
         }
         StartCoroutine(CalculatePlayerDistance());
+        StartCoroutine(CalculatePlantDistance());
+
     }
 
     // Update is called once per frame
@@ -100,7 +111,37 @@ public class Enemy : MonoBehaviour
         }
         
     }
-    
+    private IEnumerator CalculatePlantDistance()
+    {
+        while (true)
+        {
+            Debug.Log("its true,calculating distance");
+            //arbitrarily using attack time since it's 1s. May need to change in future
+            yield return attackTime;
+            float distance = sightRange;
+            seesPlant = false;
+            inSmotherRange = false;
+            foreach (GameObject plant in plantSet.Items)
+            {
+                Debug.Log("Going through the plants");
+                if (Mathf.Abs((plant.GetComponent<Plant>().transform.position - this.transform.position).magnitude) < distance)
+                {
+                    distance = Mathf.Abs((plant.GetComponent<Plant>().transform.position - this.transform.position).magnitude);
+                    closestPlant = plant;
+                    seesPlant = true;
+                    Debug.Log("Plastic Bag Sees a plant");
+                }
+            }
+            if (distance < smotherRange)
+            {
+                Debug.Log("in smother range");
+
+                inSmotherRange = true;
+            }
+        }
+
+    }
+
     public bool TakeHit( int hitPoints)
     {
         
@@ -123,12 +164,21 @@ public class Enemy : MonoBehaviour
        
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
 
             isColliding = true;
+
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+
+            isColliding = false;
 
         }
     }
@@ -142,6 +192,22 @@ public class Enemy : MonoBehaviour
 
         }
     }
+    public GameObject GetClosestPlant()
+    {
+        return closestPlant;
+    
+    }
+
+    public void SetClosestPlant(GameObject nextPlant)
+    {
+        closestPlant = nextPlant;
+    }
+
+
+
+
+
+
 
     public GameObject GetClosestPlayer()
     {

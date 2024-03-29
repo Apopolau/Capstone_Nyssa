@@ -25,7 +25,7 @@ public class taskChase : BTNode
 
     protected override NodeState OnRun()
     {
-        // throw new System.NotImplementedException();
+
 
         float distance = Vector3.Distance(thisEnemy.GetClosestPlayer().transform.position, thisAgent.transform.position);
 

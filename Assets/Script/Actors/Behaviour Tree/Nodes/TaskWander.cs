@@ -4,7 +4,7 @@ using UnityEngine;
 using BehaviourTree;
 using UnityEngine.AI;
 // Reference 
-public class TaskFloat : BTNode
+public class TaskWander : BTNode
 {
     NavMeshAgent thisAgent;
     Enemy thisEnemy;
@@ -19,12 +19,12 @@ public class TaskFloat : BTNode
     Vector3 newPos = Vector3.zero;
 
 
-    public float range=20;
+    public float range = 20;
 
 
 
 
-    public TaskFloat(Enemy enemy, Rigidbody rbi, NavMeshAgent enemyMeshAgent, Transform transform)
+    public TaskWander(Enemy enemy, Rigidbody rbi, NavMeshAgent enemyMeshAgent, Transform transform)
     {
         thisEnemy = enemy;
         thisAgent = enemyMeshAgent;
@@ -38,23 +38,23 @@ public class TaskFloat : BTNode
           {
               state = NodeState.FAILURE;
           }*/
-      //  Debug.Log("floating");
+        //  Debug.Log("floating");
         //Get a random point inside of a sphere based on the range given and the current position
         Vector3 randomPoint = transformPos.position + Random.insideUnitSphere * range;
-  
-        bool validPos=false;
+
+        bool validPos = false;
         NavMeshHit hit;
 
         if (thisEnemy.seesPlant)
         {
-           // Debug.Log("SeePlantBreak");
+            // Debug.Log("SeePlantBreak");
             state = NodeState.FAILURE;
         }
-    
+
 
         if (!isSet)
         {
-         Debug.Log("not set");
+            Debug.Log("not set");
             if (NavMesh.SamplePosition(randomPoint, out hit, 10.0f, NavMesh.AllAreas))
             {
                 newPos = hit.position;
@@ -72,9 +72,9 @@ public class TaskFloat : BTNode
         }
 
 
-     if (isSet)
+        if (isSet)
         {
-          // Debug.Log("set");
+            // Debug.Log("set");
             float distance = Vector3.Distance(thisAgent.transform.position, newPos);
 
             //Debug.Log("distance" + distance + "NewPos" + newPos + "currPos" + thisAgent.transform.position);
@@ -82,20 +82,20 @@ public class TaskFloat : BTNode
             //check if the enemy has reached the new position if so pause
             if (distance < 1f)
             {
-             
 
-                  //rb.MovePosition( wPoint.position);
-          // thisAgent.transform.position = newPos;
+
+                //rb.MovePosition( wPoint.position);
+                // thisAgent.transform.position = newPos;
                 waitCounter = 0f;
-           
-               // Debug.Log(newPos);
+
+                // Debug.Log(newPos);
                 isSet = false;
                 //Debug.Log("waiting");
                 state = NodeState.RUNNING;
             }
             else if (thisEnemy.isColliding)
             {
-               // Debug.Log("Collided");
+                // Debug.Log("Collided");
                 isSet = false;
 
             }

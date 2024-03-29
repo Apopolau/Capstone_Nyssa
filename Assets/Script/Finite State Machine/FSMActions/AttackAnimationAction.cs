@@ -16,13 +16,16 @@ public class AttackAnimationAction : FSMAction
     {
 
 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.COLDSNAP)
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.COLDSNAP && stateMachine.GetComponent<CelestialPlayer>().canColdSnap ==true)
         {
+           stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;
             Debug.Log("ColdSnapActivated");
             if (!player.canColdSnap)
             {
                 player.StartCoroutine(player.animateColdSnap());
-                player.StartCoroutine(player.ResetColdSnap());
+                // player.StartCoroutine(player.ResetColdSnap());
+                player.ResetColdSnap();
+               
             }
             Debug.Log("coldsnap stopped");
 

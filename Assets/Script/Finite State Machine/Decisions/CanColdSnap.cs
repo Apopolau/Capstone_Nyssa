@@ -15,13 +15,12 @@ public class CanColdSnap : Decision
 
 
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<PowerBehaviour>().ColdSnapStats.isEnabled)
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<PowerBehaviour>().ColdSnapStats.isEnabled && stateMachine.GetComponent<CelestialPlayer>().canColdSnap)
         {
-            //Debug.Log("currentdoing attack");
-           
+         
             return true;
         }
-        else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking || !attack.ColdSnapStats.isEnabled)
+        else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking || !attack.ColdSnapStats.isEnabled || !stateMachine.GetComponent<CelestialPlayer>().canColdSnap)
         {
             //Debug.Log("ColdSnap OVer------");
             return false;

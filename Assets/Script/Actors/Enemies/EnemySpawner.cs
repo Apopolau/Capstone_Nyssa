@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject enemyOilPrefab;
+    [SerializeField]private GameObject enemyOilPrefab;
     // Start is called before the first frame update
 
-    private float enemyOilSpawnInterval = 5.5f;
+    [SerializeField] private float enemyOilSpawnInterval;
     void Start()
     {
         StartCoroutine(spawnEnemy(enemyOilPrefab, enemyOilSpawnInterval));
@@ -18,7 +17,7 @@ public class EnemySpawner : MonoBehaviour
    private IEnumerator spawnEnemy(GameObject enemy, float interval) 
    {
         yield return new WaitForSeconds(interval);
-        GameObject newEnemy = Instantiate(enemy, new Vector3(0f, 0f, 0f), Quaternion.identity);
+        GameObject newEnemy = Instantiate(enemy, this.transform.position, Quaternion.identity);
         StartCoroutine(spawnEnemy(enemy, interval));
     }
 }

@@ -19,7 +19,7 @@ public class PowerBehaviour : MonoBehaviour
     {
         return powerStats.maxDamage;
     }
-    public float getRechargeTimer(PowerStats powerStats)
+    public WaitForSeconds getRechargeTimer(PowerStats powerStats)
     {
         return powerStats.rechargeTimer;
     }

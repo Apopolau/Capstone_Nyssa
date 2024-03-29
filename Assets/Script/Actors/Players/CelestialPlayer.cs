@@ -105,9 +105,9 @@ public class CelestialPlayer : Player
         basicPowerAnimTime = new WaitForSeconds(1.208f);
         specialPowerAnimTime = new WaitForSeconds(1.958f);
         //dodgeAnimTime = new WaitForSeconds();
-        coldSnapCoolDownTime = new WaitForSeconds(powerBehaviour.ColdSnapStats.rechargeTimer);
-        basicCoolDownTime = new WaitForSeconds(powerBehaviour. BasicAttackStats.rechargeTimer);
-        lightningCoolDownTime = new WaitForSeconds(powerBehaviour.BasicAttackStats.rechargeTimer);
+        coldSnapCoolDownTime = powerBehaviour.ColdSnapStats.rechargeTimer;
+        basicCoolDownTime =powerBehaviour. BasicAttackStats.rechargeTimer;
+        lightningCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
 
 
 
@@ -187,7 +187,7 @@ public class CelestialPlayer : Player
         attack = GetComponent<PowerBehaviour>();
 
         bool playerIsDead;
-        if (enemyTarget && powerInUse == Power.COLDSNAP)
+        if (enemyTarget && powerInUse == Power.COLDSNAP && canColdSnap == false)
         {
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
             powerInUse = Power.NONE;
@@ -249,10 +249,10 @@ public class CelestialPlayer : Player
     }
     public void OnSnowFlakeSelected() {
 
-        if (canColdSnap)
+       /* if (canColdSnap)
         {
             canColdSnap = false;
-        }
+        }*/
         isAttacking = true;
         powerInUse = Power.COLDSNAP;
         Debug.Log("start");
@@ -329,7 +329,7 @@ public class CelestialPlayer : Player
         {//////////////////////////////////////////////////VFX///////////////////////////////////////////////////////////////
             //clone.transform.position = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
             isTargeted = true;
-            
+            Attack();
             ////////////////////coldOrb.transform.position = Vector3.MoveTowards(coldOrb.transform.position, enemyTarget.transform.position, step);
            // coldOrb.SetDestination(enemyTarget.transform.position);
         }
@@ -427,17 +427,26 @@ public class CelestialPlayer : Player
 
     }
 
-    public IEnumerator ResetColdSnap()
+    public void ResetColdSnap()
     {
-        //powerInUse = Power.NONE;
-
-        Debug.Log("coldsnaptimer reset");
-      
-        yield return new WaitForSeconds(powerBehaviour.ColdSnapStats.rechargeTimer);
-  
-        canColdSnap = true;
+        StartCoroutine(ColdSnapCoolDownTime());
+       
+    
 
     }
+
+    public IEnumerator ColdSnapCoolDownTime()
+    {
+        Debug.Log("coldsnaptimer reset");
+
+       yield return new WaitForSeconds(55f);
+      // yield return new (powerBehaviour.ColdSnapStats.rechargeTimer);
+        Debug.Log("coldsnaptimer copy");
+        canColdSnap = true;
+    }
+
+
+
     public IEnumerator ResetLightningStrike()
     {
         //powerInUse = Power.NONE;
@@ -452,7 +461,7 @@ public class CelestialPlayer : Player
 
         Debug.Log("basic reset");
 
-        yield return new WaitForSeconds(powerBehaviour.BasicAttackStats.rechargeTimer);
+        yield return powerBehaviour.BasicAttackStats.rechargeTimer;
        canBasicAttack = true;
 
     }

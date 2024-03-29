@@ -24,14 +24,53 @@ public class plasticBagMonsterTree : BTree
         // Your behaviour tree will go in here: put your sequences after "new List<BTNode>"
         BTNode root = new Selector(new List<BTNode>
         {
+            //ATACK PLANT SEQUENCE
+            
+        new Sequence(new List<BTNode>
+        {
+              new Inverter(new CheckIfDying(enemy)),
+              new Inverter(new CheckIfStaggered(enemy)),
+              new CheckInSmotherRange(enemy),
+              new Timer(2f, new TaskInitiateSmother(enemy)),
+              new TaskSmotherPlant(enemy),
+
+
+
+
+
+        }),
+
+        
+           new Sequence(new List<BTNode>
+           {
+                new Inverter(new CheckIfDying(enemy)),
+              new Inverter(new CheckIfStaggered(enemy)),
+              new CheckIfPlantSpotted(enemy),
+              new TaskPathToPlant(enemy),
+
+
+
+
+
+           }),
+
+
+
+
+
+
+
 
         new Sequence(new List<BTNode>
-            {
+        {
+            ////PATROL SEQUENCE
+            new Inverter(new CheckIfDying(enemy)),
+            new TaskFloat( enemy,rb,enemyMeshAgent, transform),
+
+
+        }),
           
-                ////PATROL SEQUENCE
-                new Inverter(new CheckIfDying(enemy)),
-                new TaskFloat( enemy,rb,enemyMeshAgent, transform),
-            }),
+               
             new Sequence(new List<BTNode>
             {
                 new TaskAwaitDeath(enemyMeshAgent)

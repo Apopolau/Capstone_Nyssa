@@ -34,6 +34,7 @@ public class Plant : Creatable
     [SerializeField] private int growthPoints;
     private WaitForSeconds growthRate = new WaitForSeconds(1);
     public bool isSmothered;
+    public bool isDying;
     public PlantStats.PlantStage currentPlantStage;
 
     private GameObject seed;
@@ -411,10 +412,13 @@ public class Plant : Creatable
         health.current -= Mathf.Clamp(damageTaken, 0, health.max);
 
         if (OnHealthChanged != null)
-            OnHealthChanged(health.max, health.current);
+        { OnHealthChanged(health.max, health.current);
+            Debug.Log("current health is" + health.current);
+        }
 
         if (health.current <= 0)
         {
+            isDying = true;
             PlantDies();
         }
     }
