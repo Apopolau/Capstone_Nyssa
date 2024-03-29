@@ -9,7 +9,6 @@ public class CtrlsPlantingAction : FSMAction
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
-        Debug.Log("Entering planting");
         earthPlayer = stateMachine.GetComponent<EarthPlayer>();
 
         //Activate and deactivate the appropriate controls
@@ -53,7 +52,5 @@ public class CtrlsPlantingAction : FSMAction
 
         //Update UI components
         earthPlayer.TurnOffTileSelect();
-
-        Debug.Log("Turning off planting");
     }
 }

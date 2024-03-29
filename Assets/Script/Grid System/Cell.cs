@@ -97,7 +97,7 @@ public class Cell : MonoBehaviour
             UpdatePlant();
         }
         //Or if they're trying to remove a plant
-        if ((earthPlayer.isRemovalStarted) && (!earthPlayer.isATileSelected))
+        if ((earthPlayer.isRemovalStarted) && (tileIsActivated) && (!earthPlayer.isATileSelected))
         {
             UpdatePlantRemoval();
         }

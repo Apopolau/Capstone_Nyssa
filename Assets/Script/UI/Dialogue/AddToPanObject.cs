@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class AddToPanObject : MonoBehaviour
 {
-    [SerializeField] private DialogueCameraPan returnToOrigin;
+    [SerializeField] private List<DialogueCameraPan> objectToPanTo;
 
-    private void Start()
+    private void OnEnable()
     {
-        returnToOrigin.SetPanToThis(this.gameObject);
+        foreach (DialogueCameraPan pan in objectToPanTo)
+        {
+            pan.SetPanToThis(this.gameObject);
+        }
     }
 }

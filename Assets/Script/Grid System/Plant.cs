@@ -207,7 +207,7 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.sproutImage;
             }
             PlacePlant(stats.sproutScale, stats.sproutTileOffset);
-            HandleTreeColliders(0.5f, 5, 0, Vector3.zero);
+            HandleTreeColliders(0.5f, 1, 5, 0, Vector3.zero);
             if (energySet.Items.Count < 10)
             {
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
@@ -226,7 +226,7 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.juvenileImage;
             }
             PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
-            HandleTreeColliders(1f, 50, 0, Vector3.zero);
+            HandleTreeColliders(1f, 50, 1, 0, Vector3.zero);
             if (energySet.Items.Count < 10)
             {
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
@@ -246,7 +246,7 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.matureImage;
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
-            HandleTreeColliders(2.5f, 10, 12, new Vector3(-2, 18.2f, 2));
+            HandleTreeColliders(2.5f, 25, 10, 12, new Vector3(0, 17.5f, -1.5f));
             if (energySet.Items.Count < 10)
             {
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
@@ -278,13 +278,14 @@ public class Plant : Creatable
         }
     }
 
-    private void HandleTreeColliders(float colliderRadius, float colliderHeight, float sphereRadius, Vector3 sphereCenter)
+    private void HandleTreeColliders(float c_ColliderRadius, float c_ColliderHeight, float c_ColliderCenter, float sphereRadius, Vector3 sphereCenter)
     {
         if (this.GetComponent<CapsuleCollider>() != null)
         {
             CapsuleCollider collider = this.GetComponent<CapsuleCollider>();
-            collider.radius = colliderRadius;
-            collider.height = colliderHeight;
+            collider.radius = c_ColliderRadius;
+            collider.height = c_ColliderHeight;
+            collider.center = new Vector3(collider.center.x, c_ColliderCenter, collider.center.z);
             //collider.center = colliderYPosition;
         }
         if(this.GetComponent<SphereCollider>() != null)

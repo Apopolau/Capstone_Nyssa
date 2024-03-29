@@ -20,17 +20,18 @@ public class CtrlsRemovingAction : FSMAction
         earthPlayer.earthControls.controls.BarrierSelect.Disable();
         earthPlayer.earthControls.controls.HealSelect.Disable();
 
-        //Set our appropriate bools
-        earthPlayer.isRemovalStarted = true;
-        earthPlayer.isATileSelected = false;
-
         //Create necessary prefabs
         //earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
 
         //Update the UI
         earthPlayer.SwitchCursorIcon(earthPlayer.i_shovel);
         //TurnOnTileSelect manages enabling most of the functionality of tile selection
+        earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
         earthPlayer.TurnOnTileSelect(earthPlayer.transform);
+
+        //Set our appropriate bools
+        earthPlayer.isRemovalStarted = true;
+        earthPlayer.isATileSelected = false;
     }
 
     public override void Execute(BaseStateMachine stateMachine)

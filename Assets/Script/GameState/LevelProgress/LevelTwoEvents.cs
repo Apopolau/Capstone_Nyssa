@@ -105,7 +105,7 @@ public class LevelTwoEvents : EventManager
         hog1.SetActive(true);
         hog2.SetActive(true);
 
-        SetTerrainLayers();
+        InitializeTerrain();
 
         StartCoroutine(EvaluateFoodLevel());
         StartCoroutine(EvaluateBeautyLevel());
@@ -327,6 +327,7 @@ public class LevelTwoEvents : EventManager
             if (!areaOneMOneMet)
             {
                 //follow x axis
+                /*
                 for (int i = -100; i < -2; i += 8)
                 {
                     //follow z axis
@@ -336,6 +337,7 @@ public class LevelTwoEvents : EventManager
                         ChangeTexture(pos, layers[1]);
                     }
                 }
+                */
 
                 areaOneMOneMet = true;
             }
@@ -344,6 +346,7 @@ public class LevelTwoEvents : EventManager
         {
             if (!areaOneMTwoMet)
             {
+                /*
                 //follow x axis
                 for (int i = -100; i < -2; i += 8)
                 {
@@ -354,6 +357,7 @@ public class LevelTwoEvents : EventManager
                         ChangeTexture(pos, layers[2]);
                     }
                 }
+                */
                 areaOneMTwoMet = true;
             }
         }
@@ -375,6 +379,7 @@ public class LevelTwoEvents : EventManager
         {
             if (!areaTwoMOneMet)
             {
+                /*
                 //follow x axis
                 for (int i = 7; i < 84; i += 8)
                 {
@@ -385,6 +390,7 @@ public class LevelTwoEvents : EventManager
                         ChangeTexture(pos, layers[1]);
                     }
                 }
+                */
                 areaTwoMOneMet = true;
             }
         }
@@ -392,6 +398,7 @@ public class LevelTwoEvents : EventManager
         {
             if (!areaTwoMTwoMet)
             {
+                /*
                 //follow x axis
                 for (int i = 7; i < 84; i += 8)
                 {
@@ -402,6 +409,7 @@ public class LevelTwoEvents : EventManager
                         ChangeTexture(pos, layers[2]);
                     }
                 }
+                */
                 areaTwoMTwoMet = true;
             }
         }
@@ -423,6 +431,7 @@ public class LevelTwoEvents : EventManager
         {
             if (!areaThreeMOneMet)
             {
+                /*
                 //follow x axis
                 for (int i = -100; i < -16; i += 8)
                 {
@@ -433,6 +442,7 @@ public class LevelTwoEvents : EventManager
                         ChangeTexture(pos, layers[1]);
                     }
                 }
+                */
                 areaThreeMOneMet = true;
             }
         }
@@ -440,6 +450,7 @@ public class LevelTwoEvents : EventManager
         {
             if (!areaThreeMTwoMet)
             {
+                /*
                 //follow x axis
                 for (int i = -100; i < -16; i += 8)
                 {
@@ -450,6 +461,7 @@ public class LevelTwoEvents : EventManager
                         ChangeTexture(pos, layers[2]);
                     }
                 }
+                */
                 areaThreeMTwoMet = true;
             }
         }
@@ -473,6 +485,7 @@ public class LevelTwoEvents : EventManager
             {
                 //Sludge pump area
                 //follow x axis
+                /*
                 for (int i = 96; i < 209; i += 8)
                 {
                     //follow z axis
@@ -492,6 +505,7 @@ public class LevelTwoEvents : EventManager
                         ChangeTexture(pos, layers[1]);
                     }
                 }
+                */
                 areaFourMOneMet = true;
             }
         }
@@ -501,6 +515,7 @@ public class LevelTwoEvents : EventManager
             {
                 //Sludge pump area
                 //follow x axis
+                /*
                 for (int i = 96; i < 209; i += 8)
                 {
                     //follow z axis
@@ -520,6 +535,7 @@ public class LevelTwoEvents : EventManager
                         ChangeTexture(pos, layers[2]);
                     }
                 }
+                */
 
                 /*
                 factory.GetComponent<MeshRenderer>().material = cleanFactoryMaterial;

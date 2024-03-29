@@ -9,6 +9,7 @@ public class LevelOneEvents : EventManager
 {
     [Header("Scene Data")]
     [SerializeField] LevelOneProgress levelOneProgress;
+    [SerializeField] GameObject dialogueManager;
 
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
@@ -118,8 +119,13 @@ public class LevelOneEvents : EventManager
         }
         duck1.SetActive(true);
         duck2.SetActive(true);
+        dialogueManager.SetActive(true);
 
-        SetTerrainLayers();
+        InitializeTerrain();
+        if (!hasFlipped)
+        {
+            DuplicateTerrain();
+        }
 
         StartCoroutine(EvaluateFoodLevel());
         StartCoroutine(EvaluateBeautyLevel());
@@ -127,7 +133,7 @@ public class LevelOneEvents : EventManager
 
     private void OnDisable()
     {
-       // ResetTerrain();
+       ResetTerrain();
     }
 
     // Update is called once per frame
@@ -318,38 +324,29 @@ public class LevelOneEvents : EventManager
                 plantCount++;
             }
         }
+        //Once the player reaches the first milestone
         if (plantCount > tileCount / 4 && plantCount < tileCount / 2)
         {
             if (!areaOneMOneMet)
             {
-                //follow x axis
-                for(int i = -100; i < -2; i += 8)
-                {
-                    //follow z axis
-                    for(int j = -114; j < -10; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
+                //Main switch to dirt
+                ApplyTextureChangeOverArea(-100, -2, -114, -10, 8, 1, 1);
+                //Switch the path back
+                ApplyTextureChangeOverArea(-47, -43, -88, -21, 4, 4, 0.1f);
 
                 areaOneMOneMet = true;
             }
         }
+        //Once the player reaches the second milestone
         else if (plantCount > tileCount / 2)
         {
             if (!areaOneMTwoMet)
             {
-                //follow x axis
-                for (int i = -100; i < -2; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -114; j < -10; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
+                //Main switch to grass
+                ApplyTextureChangeOverArea(-100, -2, -114, -10, 8, 2, 1);
+                //Switch the path back
+                ApplyTextureChangeOverArea(-47, -43, -88, -21, 4, 4, 0.1f);
+
                 areaOneMTwoMet = true;
             }
         }
@@ -371,16 +368,9 @@ public class LevelOneEvents : EventManager
         {
             if (!areaTwoMOneMet)
             {
-                //follow x axis
-                for (int i = 7; i < 84; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -135; j < -21; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
+                //Main switch to dirt
+                ApplyTextureChangeOverArea(7, 84, -135, -21, 8, 1, 1);
+
                 areaTwoMOneMet = true;
             }
         }
@@ -388,16 +378,9 @@ public class LevelOneEvents : EventManager
         {
             if (!areaTwoMTwoMet)
             {
-                //follow x axis
-                for (int i = 7; i < 84; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -135; j < -21; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
+                //Main switch to grass
+                ApplyTextureChangeOverArea(7, 84, -135, -21, 8, 2, 1);
+
                 areaTwoMTwoMet = true;
             }
         }
@@ -419,16 +402,11 @@ public class LevelOneEvents : EventManager
         {
             if (!areaThreeMOneMet)
             {
-                //follow x axis
-                for (int i = -100; i < -16; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -100; j < 0; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
+                //Main switch to dirt texture
+                ApplyTextureChangeOverArea(-100, 0, 0, 100, 8, 1, 1f);
+                //Switch part of it to a path
+                ApplyTextureChangeOverArea(-45, -41, 2, 74, 4, 4, 0.1f);
+
                 areaThreeMOneMet = true;
             }
         }
@@ -436,16 +414,11 @@ public class LevelOneEvents : EventManager
         {
             if (!areaThreeMTwoMet)
             {
-                //follow x axis
-                for (int i = -100; i < -16; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -100; j < 0; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
+                //Main area grass texture
+                ApplyTextureChangeOverArea(-100, 0, 0, 100, 8, 2, 1);
+                //Maintain the path
+                ApplyTextureChangeOverArea(-45, -41, 2, 74, 4, 4, 0.1f);
+
                 areaThreeMTwoMet = true;
             }
         }
@@ -467,27 +440,13 @@ public class LevelOneEvents : EventManager
         {
             if (!areaFourMOneMet)
             {
+
+                
                 //Sludge pump area
-                //follow x axis
-                for (int i = 96; i < 209; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -55; j < 85; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
+                ApplyTextureChangeOverArea(96, 209, -55, 85, 8, 1, 1);
                 //Middle platform
-                for (int i = 2; i < 81; i += 8)
-                {
-                    //follow z axis
-                    for (int j = 4; j < 92; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
+                ApplyTextureChangeOverArea(2, 81, 4, 92, 8, 1, 1);
+
                 areaFourMOneMet = true;
             }
         }
@@ -496,26 +455,9 @@ public class LevelOneEvents : EventManager
             if (!areaFourMTwoMet)
             {
                 //Sludge pump area
-                //follow x axis
-                for (int i = 96; i < 209; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -55; j < 85; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
+                ApplyTextureChangeOverArea(96, 209, -55, 85, 8, 2, 1);
                 //Middle platform
-                for (int i = 2; i < 81; i += 8)
-                {
-                    //follow z axis
-                    for (int j = 4; j < 92; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
+                ApplyTextureChangeOverArea(2, 81, 4, 92, 8, 2, 1);
 
                 factory.GetComponent<MeshRenderer>().material = cleanFactoryMaterial;
                 foreach(GameObject go in pipes)

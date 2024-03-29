@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8484278331407762736}
   - component: {fileID: 7465645748006121048}
   - component: {fileID: 5207513874751091066}
+  - component: {fileID: -8025315994935271608}
   m_Layer: 0
   m_Name: SmogMonsterIdle
   m_TagString: Untagged
@@ -34,7 +35,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2399637216884423438}
+  - {fileID: 5241570856126507742}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &519360258743655180
@@ -51,16 +52,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 0}
   enemyAnimator: {fileID: 0}
-  playerObj: {fileID: 0}
+  playerSet: {fileID: 0}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 0}
-  player: {fileID: 0}
   eventManager: {fileID: 0}
   isDying: 0
   isStaggered: 0
+  isColliding: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  attackRange: 0
+  sightRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!114 &7145633093003380795
@@ -148,7 +153,24 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1001 &2794343006324301029
+--- !u!114 &-8025315994935271608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951011047699265629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb953ad42c4eef44ea027a6a96ba9266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  IfWalkingHash: 0
+  IfAttackingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
+--- !u!1001 &5708160319667866933
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -156,79 +178,74 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7875459936262026101}
     m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - target: {fileID: 919132149155446097, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_Name
-      value: smogMonster_final
+      value: monsterSmog-Idle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8599015403319835192}
-  m_SourcePrefab: {fileID: 100100000, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
---- !u!4 &2399637216884423438 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
-  m_PrefabInstance: {fileID: 2794343006324301029}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3028365055721972148 stripped
+      addedObject: {fileID: 7993782789147946141}
+  m_SourcePrefab: {fileID: 100100000, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+--- !u!1 &4897132708880560228 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 0e7873809da79394b94fe0f19b8e5cd5, type: 3}
-  m_PrefabInstance: {fileID: 2794343006324301029}
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+  m_PrefabInstance: {fileID: 5708160319667866933}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &8599015403319835192
+--- !u!95 &7993782789147946141
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3028365055721972148}
+  m_GameObject: {fileID: 4897132708880560228}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a29b6f04485236747aa3d0ecd963da35, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -239,3 +256,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &5241570856126507742 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+  m_PrefabInstance: {fileID: 5708160319667866933}
+  m_PrefabAsset: {fileID: 0}

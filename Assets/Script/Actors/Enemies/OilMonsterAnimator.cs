@@ -8,10 +8,15 @@ public class OilMonsterAnimator : OurAnimator
     public int IfDyingHash;
     public int IfTakingHitHash;
 
+    private void Awake()
+    {
+        SetAnimations();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        SetAnimations();
+        
         
     }
 

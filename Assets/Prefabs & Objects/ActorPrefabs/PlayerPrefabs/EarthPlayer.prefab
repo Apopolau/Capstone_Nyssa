@@ -460,7 +460,6 @@ GameObject:
   - component: {fileID: 4394548441176001214}
   - component: {fileID: 1222953851676443687}
   - component: {fileID: 6432642338141535612}
-  - component: {fileID: 4975378969085066082}
   - component: {fileID: 8002460639596102495}
   - component: {fileID: 3297893822877032068}
   - component: {fileID: 5311896352438793669}
@@ -1026,19 +1025,6 @@ MonoBehaviour:
   keyboardUI: {fileID: 0}
   controllerUI: {fileID: 0}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
---- !u!114 &4975378969085066082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4033276866688796702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17fccc9f1a1f3af438f153e72921b30d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  returnToOrigin: {fileID: 11400000, guid: 7c2b9544a4d07044bb61d83026a7fe79, type: 2}
 --- !u!114 &8002460639596102495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1051,7 +1037,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17fccc9f1a1f3af438f153e72921b30d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  returnToOrigin: {fileID: 11400000, guid: c6fc112bd4632f34eabd2e754307081d, type: 2}
+  objectToPanTo:
+  - {fileID: 11400000, guid: c6fc112bd4632f34eabd2e754307081d, type: 2}
+  - {fileID: 11400000, guid: 7c2b9544a4d07044bb61d83026a7fe79, type: 2}
 --- !u!114 &3297893822877032068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1069,7 +1057,7 @@ MonoBehaviour:
     m_Bits: 3072
   target: {fileID: 8893157228811693227}
   mainCamera: {fileID: 0}
-  fadedAlpha: 0.33
+  fadedAlpha: 0.4
   retainShadows: 1
   targetPositionOffset: {x: 0, y: 1, z: 0}
   fadeSpeed: 1
@@ -1202,6 +1190,7 @@ GameObject:
   - component: {fileID: 6893268081360846755}
   - component: {fileID: 9177073892041827000}
   - component: {fileID: 3847295979027859047}
+  - component: {fileID: 3167647562493282372}
   m_Layer: 0
   m_Name: EarthCamera
   m_TagString: Untagged
@@ -1328,6 +1317,19 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &3167647562493282372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6452403677766255320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectRuntimeSet: {fileID: 11400000, guid: de514a6c00f3c3542b8aece5fa086744, type: 2}
 --- !u!1 &6679904417498013195
 GameObject:
   m_ObjectHideFlags: 0
@@ -1574,7 +1576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b5359528c703141904a9d0ee6a58d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  cameraSet: {fileID: 11400000, guid: de514a6c00f3c3542b8aece5fa086744, type: 2}
 --- !u!1 &8170333152614298398
 GameObject:
   m_ObjectHideFlags: 0
