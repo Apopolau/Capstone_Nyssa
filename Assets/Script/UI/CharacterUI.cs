@@ -10,7 +10,7 @@ public class HealthUI : MonoBehaviour
 
     Transform ui;
     Image healthSlider;
-    Transform cam;
+    //Transform cam;
 
     private enum TypeObjectAttached { EARTHPLAYER, CELESTIALPLAYER, MONSTER, BUILD};
     TypeObjectAttached typeObjectAttached;
@@ -25,7 +25,7 @@ public class HealthUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        cam = Camera.main.transform;
+        //cam = Camera.main.transform;
         foreach(Canvas c in GetComponentsInChildren<Canvas>())
         {
             if(c.renderMode == RenderMode.WorldSpace)
@@ -72,7 +72,7 @@ public class HealthUI : MonoBehaviour
             if(ui != null)
             {
                 ui.position = target.position;
-                ui.forward = -cam.forward;
+                //ui.forward = -cam.forward;
             }
 
         }

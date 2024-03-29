@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0b5359528c703141904a9d0ee6a58d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 0}
+  cameraSet: {fileID: 11400000, guid: de514a6c00f3c3542b8aece5fa086744, type: 2}
 --- !u!1 &1704709326146620824
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6719677676223621316}
   - component: {fileID: 4840897772112739693}
   - component: {fileID: 6055277272015157759}
+  - component: {fileID: 136383110719407848}
   m_Layer: 0
   m_Name: OilSpillIdleMonster
   m_TagString: Enemy
@@ -168,6 +169,7 @@ MonoBehaviour:
   eventManager: {fileID: 0}
   isDying: 0
   isStaggered: 0
+  isColliding: 0
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
@@ -211,7 +213,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 1
-  m_StoppingDistance: 0
+  m_StoppingDistance: 6
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -250,7 +252,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29603e278d459f4ba23a1381a25bb08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 7476623895178863548}
   IfWalkingHash: 0
   IfAttackingHash: 0
   IfDyingHash: 0
@@ -292,6 +294,20 @@ CapsuleCollider:
   m_Height: 0.045
   m_Direction: 1
   m_Center: {x: 0, y: 0.02, z: 0}
+--- !u!114 &136383110719407848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090664895178657524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38c898db3ddeb44f8c1f078dc6aaf77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationToSet:
+  - {fileID: 11400000, guid: c2fcfe388840ed645995049c33e871c9, type: 2}
 --- !u!1 &2898012355351432001
 GameObject:
   m_ObjectHideFlags: 0

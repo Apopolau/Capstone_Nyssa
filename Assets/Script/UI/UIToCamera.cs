@@ -4,27 +4,39 @@ using UnityEngine;
 
 public class UIToCamera : MonoBehaviour
 {
-    [SerializeField] Transform mainCamera;
+    //[SerializeField] Transform mainCamera;
+    [SerializeField] GameObjectRuntimeSet cameraSet;
+    private WaitForSeconds turnInterval;
     // Start is called before the first frame update
-    void Awake()
+
+    private void Start()
     {
-        mainCamera = Camera.main.transform;
+        turnInterval = new WaitForSeconds(0.1f);
+        StartCoroutine(TurnToCamera());
+        foreach (var camera in cameraSet.Items)
+        {
+            if (camera != null)
+            {
+                transform.forward = camera.GetComponent<Camera>().transform.forward;
+                break;
+            }
+        }
     }
 
-    // Update is called once per frame
-    void LateUpdate()
+    private IEnumerator TurnToCamera()
     {
-       // Get the camera's rotation
-        //Quaternion cameraRotation = mainCamera.transform.rotation;
+        while (true)
+        {
+            yield return turnInterval;
 
-        // Ensure that the pickupTarget is always facing the camera, including its rotation
-        //transform.LookAt(mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCamera.transform.position.z)));
-
-        // Extract the Z-axis rotation from the camera's rotation
-        //Quaternion rotation = Quaternion.Euler(cameraRotation.eulerAngles.x, cameraRotation.eulerAngles.z - GetComponentInParent<Transform>().rotation.y, cameraRotation.eulerAngles.y);
-
-        // Apply rotation around the Z-axis only
-        transform.forward = mainCamera.forward;
-        //transform.rotation = Quaternion.Euler(0, 0, 0);
+            foreach (var camera in cameraSet.Items)
+            {
+                if (camera != null)
+                {
+                    transform.forward = camera.GetComponent<Camera>().transform.forward;
+                    break;
+                }
+            }
+        }
     }
 }

@@ -431,9 +431,8 @@ public class EarthPlayer : Player
     public void OnRemovePlant()
     {
         //Mark that we've started the process
-        isATileSelected = false;
-        isRemovalStarted = true;
         inRemovalSelection_FSM = true;
+        
     }
 
     //Called when the player selects a tile to remove a plant from

@@ -216,14 +216,13 @@ public class DialogueManager : MonoBehaviour
         uiController.ToggleOtherUIElements(true); // Pass true to reactivate other UI elements
 
 
-        //Restore Celeste's default controls
+        //Restore both characters' default controls
         celestialPlayer.celestialControls.controls.DialogueControls.Disable();
         celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+        earthPlayer.ToggleDialogueState(false);
 
         split.ExitCutscene();
         Time.timeScale = 1f;
-
-        earthPlayer.ToggleDialogueState(false);
     }
 
 

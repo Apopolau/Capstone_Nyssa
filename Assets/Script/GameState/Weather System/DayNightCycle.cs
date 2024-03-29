@@ -55,7 +55,7 @@ public class DayNightCycle : MonoBehaviour
         {
             timeOfDayChanges = true;
         }
-        weatherState.dayTime = true;
+        weatherState.SetDayTime(true);
         weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAY;
         weatherState.skyState = WeatherState.SkyState.CLEAR;
     }
