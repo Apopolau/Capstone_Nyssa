@@ -539,6 +539,45 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""CutsceneControls"",
+            ""id"": ""c2d89142-1cf0-4439-a9cf-c2220e7ebe95"",
+            ""actions"": [
+                {
+                    ""name"": ""NextSlide"",
+                    ""type"": ""Button"",
+                    ""id"": ""00ca7ae6-0c3f-4315-a148-2da7ae47ad4f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""364178c3-9ee8-4b3c-9455-aecc5d5577b6"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextSlide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f319d16-d452-490e-ac9c-005b6d77dac7"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextSlide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -561,6 +600,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         m_DialogueControls = asset.FindActionMap("DialogueControls", throwIfNotFound: true);
         m_DialogueControls_Continue = m_DialogueControls.FindAction("Continue", throwIfNotFound: true);
         m_DialogueControls_Skip = m_DialogueControls.FindAction("Skip", throwIfNotFound: true);
+        // CutsceneControls
+        m_CutsceneControls = asset.FindActionMap("CutsceneControls", throwIfNotFound: true);
+        m_CutsceneControls_NextSlide = m_CutsceneControls.FindAction("NextSlide", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -828,6 +870,52 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         }
     }
     public DialogueControlsActions @DialogueControls => new DialogueControlsActions(this);
+
+    // CutsceneControls
+    private readonly InputActionMap m_CutsceneControls;
+    private List<ICutsceneControlsActions> m_CutsceneControlsActionsCallbackInterfaces = new List<ICutsceneControlsActions>();
+    private readonly InputAction m_CutsceneControls_NextSlide;
+    public struct CutsceneControlsActions
+    {
+        private @CelestialPlayerInputActions m_Wrapper;
+        public CutsceneControlsActions(@CelestialPlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @NextSlide => m_Wrapper.m_CutsceneControls_NextSlide;
+        public InputActionMap Get() { return m_Wrapper.m_CutsceneControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CutsceneControlsActions set) { return set.Get(); }
+        public void AddCallbacks(ICutsceneControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CutsceneControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CutsceneControlsActionsCallbackInterfaces.Add(instance);
+            @NextSlide.started += instance.OnNextSlide;
+            @NextSlide.performed += instance.OnNextSlide;
+            @NextSlide.canceled += instance.OnNextSlide;
+        }
+
+        private void UnregisterCallbacks(ICutsceneControlsActions instance)
+        {
+            @NextSlide.started -= instance.OnNextSlide;
+            @NextSlide.performed -= instance.OnNextSlide;
+            @NextSlide.canceled -= instance.OnNextSlide;
+        }
+
+        public void RemoveCallbacks(ICutsceneControlsActions instance)
+        {
+            if (m_Wrapper.m_CutsceneControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICutsceneControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CutsceneControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CutsceneControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CutsceneControlsActions @CutsceneControls => new CutsceneControlsActions(this);
     public interface ICelestialPlayerDefaultActions
     {
         void OnCelestialWalk(InputAction.CallbackContext context);
@@ -848,5 +936,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     {
         void OnContinue(InputAction.CallbackContext context);
         void OnSkip(InputAction.CallbackContext context);
+    }
+    public interface ICutsceneControlsActions
+    {
+        void OnNextSlide(InputAction.CallbackContext context);
     }
 }

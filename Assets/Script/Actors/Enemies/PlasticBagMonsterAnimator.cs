@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OilMonsterAnimator : OurAnimator
+public class PlasticBagMonsterAnimator : OurAnimator
 {
-    public int IfAttackingHash;
+    public int IfChokingHash;
     public int IfDyingHash;
     public int IfTakingHitHash;
 
@@ -16,26 +16,25 @@ public class OilMonsterAnimator : OurAnimator
     // Start is called before the first frame update
     void Start()
     {
-        
-        
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     protected override void SetAnimations()
     {
         animator = GetComponentInChildren<Animator>();
         IfWalkingHash = Animator.StringToHash("IfWalking");
-        IfAttackingHash = Animator.StringToHash("IfAttacking");
+        IfChokingHash = Animator.StringToHash("IfChoking");
         IfDyingHash = Animator.StringToHash("IfDying");
         IfTakingHitHash = Animator.StringToHash("IfTakingHit");
     }
 
-    
     public override void ToggleSetWalk()
     {
         if (animator.GetBool(IfWalkingHash))
@@ -45,9 +44,8 @@ public class OilMonsterAnimator : OurAnimator
         else if (!animator.GetBool(IfWalkingHash))
         {
             animator.SetBool(IfWalkingHash, true);
-            animator.SetBool(IfAttackingHash, false);
+            animator.SetBool(IfChokingHash, false);
             animator.SetBool(IfTakingHitHash, false);
         }
     }
-    
 }

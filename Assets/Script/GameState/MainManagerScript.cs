@@ -5,11 +5,11 @@ using UnityEngine;
 public class MainManagerScript : MonoBehaviour
 {
     [SerializeField] public LevelManagerObject levelManager;
-    [SerializeField] EventManager eventManager;
+    [SerializeField] LevelEventManager eventManager;
 
     private void Awake()
     {
-        eventManager = GetComponent<EventManager>();
+        eventManager = GetComponent<LevelEventManager>();
         levelManager.SetEventManager(eventManager);
     }
 }

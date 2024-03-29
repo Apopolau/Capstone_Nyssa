@@ -11,6 +11,8 @@ public class CelestialPlayerControls : MonoBehaviour
     public CelestialPlayerInputActions controls;
     public InputActionReference rainAction;
     public InputAction celestialActions;
+    public MainMenu mainMenu;
+    public CutsceneManager cutsceneManager;
     public DialogueManager dialogueManager;
     public UserSettingsManager userSettingsManager;
     // public CelestialPlayerInputActions cele;
@@ -86,10 +88,27 @@ public class CelestialPlayerControls : MonoBehaviour
         //We may want to switch this one to be active when we start up the game instead of the default
         controls.MenuControls.Disable();
 
+        controls.CutsceneControls.Disable();
+        controls.CutsceneControls.NextSlide.started += OnNextSlideSelected;
+
         //When in dialogue
-        controls.DialogueControls.Enable();
+        controls.DialogueControls.Disable();
         controls.DialogueControls.Continue.started += OnContinuePerformed;
         controls.DialogueControls.Skip.started += OnSkipPerformed;
+
+        //Set our starting controls based on context
+        if (mainMenu != null)
+        {
+            controls.MenuControls.Enable();
+        }
+        else if(cutsceneManager != null)
+        {
+            controls.CutsceneControls.Enable();
+        }
+        else if (dialogueManager != null)
+        {
+            controls.DialogueControls.Enable();
+        }
     }
 
     private void OnCelestialMovePerformed(InputAction.CallbackContext context)
@@ -175,6 +194,14 @@ public class CelestialPlayerControls : MonoBehaviour
         if (context.control.device.deviceId == myDeviceID)
         {
             this.GetComponent<CelestialPlayer>().OnInteract(context);
+        }
+    }
+
+    private void OnNextSlideSelected(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            cutsceneManager.NextImage();
         }
     }
 

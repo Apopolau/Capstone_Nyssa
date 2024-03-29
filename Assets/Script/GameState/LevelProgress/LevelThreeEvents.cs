@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class LevelThreeEvents : EventManager
+public class LevelThreeEvents : LevelEventManager
 {
 
     /// <summary>

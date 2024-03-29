@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class LevelOneEvents : EventManager
+public class LevelOneEvents : LevelEventManager
 {
     [Header("Scene Data")]
     [SerializeField] LevelOneProgress levelOneProgress;
