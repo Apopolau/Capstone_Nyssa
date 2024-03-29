@@ -215,6 +215,7 @@ public class DialogueManager : MonoBehaviour
         // Toggle other UI elements visibility
         uiController.ToggleOtherUIElements(true); // Pass true to reactivate other UI elements
 
+        panningOn = false;
 
         //Restore both characters' default controls
         celestialPlayer.celestialControls.controls.DialogueControls.Disable();
