@@ -629,10 +629,10 @@ MonoBehaviour:
   waterGrassPreviewPrefab: {fileID: 8326592455623684711, guid: d6b142561e779ec4eaa392fad207b22d, type: 3}
   landFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 82cd7f247c015654cb325a2356a51c3f, type: 3}
   waterFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 6c0ae7c3c763d1f48815522aabb11b6d, type: 3}
-  i_grassSeed: {fileID: 21300000, guid: 7fac58b044ebd4840af7c9ad0aa6ee2d, type: 3}
+  i_grassSeed: {fileID: 21300000, guid: a21d89e5834c2ea44899aa531871441d, type: 3}
   i_flowerSeed: {fileID: 0}
-  i_treeSeed: {fileID: 21300000, guid: 6445ef88f4380304f804c0b6e05aba7f, type: 3}
-  i_shovel: {fileID: 21300000, guid: dce7433a96b66364ba83dd7d9f988057, type: 3}
+  i_treeSeed: {fileID: 21300000, guid: 26a7a5e743792f949babe4c9073a58d5, type: 3}
+  i_shovel: {fileID: 21300000, guid: 04ee6cc18436db74588a01e4a749139e, type: 3}
   ThornShieldPrefab: {fileID: 699971024190529053, guid: d4d187bc0a511bd40896d295d703326c, type: 3}
   enrouteToPlant: 0
   earthAnimator: {fileID: 0}
@@ -690,7 +690,9 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
+  mainMenu: {fileID: 0}
   eventManager: {fileID: 0}
+  cutsceneManager: {fileID: 0}
   dialogueManager: {fileID: 0}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
   myDeviceID: 0
@@ -945,6 +947,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 4b5ab5a9-3e9c-4dfc-bbd5-f7251df0abfa
     m_ActionName: BarrierSelect/CycleTarget[/Keyboard/rightArrow,/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8f670c1c-3b92-45d0-9929-796fc56f41c9
+    m_ActionName: CutsceneControls/NextSlide[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: EarthPlayerDefault
