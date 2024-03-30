@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32583743, g: 0.30935916, b: 0.3104538, a: 1}
+  m_IndirectSpecularColor: {r: 0.32785472, g: 0.31164402, b: 0.3123275, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10739,6 +10739,7 @@ MonoBehaviour:
   enemyMeshAgent: {fileID: 1189678822}
   enemyAnimator: {fileID: 0}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 69199dabbfcb03e4d8c5c67b6ab1f554, type: 2}
@@ -10746,10 +10747,15 @@ MonoBehaviour:
   isDying: 0
   isStaggered: 0
   isColliding: 0
+  seesPlant: 0
+  inSmotherRange: 0
+  smotherInitiated: 0
+  plantLocation: {x: 0, y: 0, z: 0}
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  smotherRange: 0
   attackRange: 0
   sightRange: 0
   hasAnimal: 0
@@ -16196,6 +16202,7 @@ MonoBehaviour:
   enemyMeshAgent: {fileID: 2089028148}
   enemyAnimator: {fileID: 0}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 2585b475c2775754ab5946550ea00ae3, type: 2}
@@ -16203,10 +16210,15 @@ MonoBehaviour:
   isDying: 0
   isStaggered: 0
   isColliding: 0
+  seesPlant: 0
+  inSmotherRange: 0
+  smotherInitiated: 0
+  plantLocation: {x: 0, y: 0, z: 0}
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  smotherRange: 0
   attackRange: 0
   sightRange: 0
   hasAnimal: 0
@@ -17131,6 +17143,7 @@ MonoBehaviour:
   enemyMeshAgent: {fileID: 1600394033433807149}
   enemyAnimator: {fileID: 0}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: fdc634cd0e758e641bb22ce60aaf4dee, type: 2}
@@ -17138,10 +17151,15 @@ MonoBehaviour:
   isDying: 0
   isStaggered: 0
   isColliding: 0
+  seesPlant: 0
+  inSmotherRange: 0
+  smotherInitiated: 0
+  plantLocation: {x: 0, y: 0, z: 0}
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  smotherRange: 0
   attackRange: 0
   sightRange: 0
   hasAnimal: 0
@@ -18707,6 +18725,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1308052667}
+    - target: {fileID: 989046953387641571, guid: f152c6031e4b2944cae7423592e76233, type: 3}
+      propertyPath: plantSet
+      value: 
+      objectReference: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
     - target: {fileID: 989046953387641571, guid: f152c6031e4b2944cae7423592e76233, type: 3}
       propertyPath: playerObj
       value: 
