@@ -244,6 +244,49 @@ public class CelestialPlayer : Player
 
     }
 
+
+
+    public void BasicAttack()
+    {
+
+
+
+        bool playerIsDead;
+        if (enemyTarget && powerInUse == Power.BASIC && canBasicAttack == false)
+        {
+            Power weakness = GetEnemyWeakness(enemyTarget);
+            int HitPoints = GetPowerHitDamage(weakness);
+            Debug.Log("Hitpoints:" + HitPoints);
+            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
+
+        }
+        powerInUse = Power.NONE;
+  
+
+
+
+    }
+
+
+    public void LightningAttack()
+    {
+
+
+        bool playerIsDead;
+        if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE && canLightningStrike == false)
+        {
+            Power weakness = GetEnemyWeakness(enemyTarget);
+            int HitPoints = GetPowerHitDamage(weakness);
+            Debug.Log("Hitpoints:" + HitPoints);
+            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
+
+        }
+        powerInUse = Power.NONE;
+
+
+
+    }
+
     public int GetPowerHitDamage(Power weakness)
     {
         PowerBehaviour attack;
@@ -297,6 +340,11 @@ public class CelestialPlayer : Player
         if (enemyTarget.GetComponent<Enemy>().enemyStats.enemyType == EnemyStats.enemyTypes.OilMonster)
         {
             return Power.COLDSNAP;
+        }
+
+        if (enemyTarget.GetComponent<Enemy>().enemyStats.enemyType == EnemyStats.enemyTypes.Smog)
+        {
+            return Power.MOONTIDE;
         }
         return Power.NONE;
 

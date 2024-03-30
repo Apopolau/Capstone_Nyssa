@@ -35,6 +35,7 @@ public class OilMonsterAnimator : OurAnimator
         IfTakingHitHash = Animator.StringToHash("IfTakingHit");
     }
 
+    
     public override void ToggleSetWalk()
     {
         if (animator.GetBool(IfWalkingHash))
@@ -48,4 +49,5 @@ public class OilMonsterAnimator : OurAnimator
             animator.SetBool(IfTakingHitHash, false);
         }
     }
+    
 }

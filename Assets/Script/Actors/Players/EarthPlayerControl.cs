@@ -8,7 +8,9 @@ public class EarthPlayerControl : MonoBehaviour
     private EarthPlayer earthPlayer;
     public PlayerInputActions controls;
     public InputAction pickTreeAction;
+    public MainMenu mainMenu;
     public EventManager eventManager;
+    public CutsceneManager cutsceneManager;
     public DialogueManager dialogueManager;
     public UserSettingsManager userSettingsManager;
 
@@ -109,10 +111,27 @@ public class EarthPlayerControl : MonoBehaviour
         //We may want to switch this one to be active when we start up the game instead of the default
         controls.MenuControls.Disable();
 
+        controls.CutsceneControls.Disable();
+        controls.CutsceneControls.NextSlide.started += OnNextSlideSelected;
+
         //When in dialogue
-        controls.DialogueControls.Enable();
+        controls.DialogueControls.Disable();
         controls.DialogueControls.Continue.started += OnContinuePerformed;
         controls.DialogueControls.Skip.started += OnSkipPerformed;
+
+        //Set our starting controls based on context
+        if (mainMenu != null)
+        {
+            controls.MenuControls.Enable();
+        }
+        else if (cutsceneManager != null)
+        {
+            controls.CutsceneControls.Enable();
+        }
+        else if (dialogueManager != null)
+        {
+            controls.DialogueControls.Enable();
+        }
     }
 
 
@@ -153,6 +172,7 @@ public class EarthPlayerControl : MonoBehaviour
             this.GetComponent<playerMovement>().EndMovement(context);
         }
     }
+
     private void OnPickTree(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == myDeviceID)
@@ -161,6 +181,7 @@ public class EarthPlayerControl : MonoBehaviour
         }
 
     }
+
     private void OnPickFlower(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -170,6 +191,7 @@ public class EarthPlayerControl : MonoBehaviour
         }
 
     }
+
     private void OnPickGrass(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -179,6 +201,7 @@ public class EarthPlayerControl : MonoBehaviour
         }
 
     }
+
     private void OnRemovePlant(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -197,6 +220,7 @@ public class EarthPlayerControl : MonoBehaviour
             this.GetComponent<EarthPlayer>().OnInteract(context);
         }
     }
+
     private void OnHealPerformed(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == myDeviceID)
@@ -217,15 +241,6 @@ public class EarthPlayerControl : MonoBehaviour
     /// DEBUG CONTROLS (DEFAULT)
     /// </summary>
     /// <param name="context"></param>
-    
-    /*
-    private void OnTileFlipped(InputAction.CallbackContext context)
-    {
-        eventManager.DebugTileFlip();
-    }
-    */
-
-
 
     /// <summary>
     /// PLANTING PLANT CONTROLS
@@ -291,6 +306,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     }
 
+
     private void OnTargetCycled(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == myDeviceID)
@@ -326,6 +342,7 @@ public class EarthPlayerControl : MonoBehaviour
         }
     }
 
+
     private void OnHealCancelled(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
@@ -333,6 +350,7 @@ public class EarthPlayerControl : MonoBehaviour
             earthPlayer.OnHealingCancelled();
         }
     }
+
 
     private void OnBarrierCancelled(InputAction.CallbackContext context)
     {
@@ -346,7 +364,16 @@ public class EarthPlayerControl : MonoBehaviour
     /// MENU CONTROLS
     /// </summary>
 
-
+    ///
+    ///
+    ///
+    private void OnNextSlideSelected(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            cutsceneManager.NextImage();
+        }
+    }
 
     /// <summary>
     /// DIALOGUE CONTROLS

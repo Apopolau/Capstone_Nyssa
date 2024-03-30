@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     
     
     public Stat health;
-    [SerializeField] EventManager eventManager;
+    [SerializeField] LevelEventManager eventManager;
    //////////////// [SerializeField] LevelOneEvents levelOneEvents;
     [SerializeField] public bool isDying =false;
     public bool isStaggered = false;

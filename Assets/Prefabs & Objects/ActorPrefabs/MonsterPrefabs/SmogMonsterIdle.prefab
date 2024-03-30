@@ -52,18 +52,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 0}
   enemyAnimator: {fileID: 0}
-  playerSet: {fileID: 0}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
-  enemyStats: {fileID: 0}
+  enemyStats: {fileID: 11400000, guid: 5ab4aaee5b3805d4eaf3fd9625f9ae5c, type: 2}
   eventManager: {fileID: 0}
   isDying: 0
   isStaggered: 0
   isColliding: 0
+  seesPlant: 0
+  inSmotherRange: 0
+  smotherInitiated: 0
+  plantLocation: {x: 0, y: 0, z: 0}
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  smotherRange: 0
   attackRange: 0
   sightRange: 0
   hasAnimal: 0
@@ -149,10 +155,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 4
+  m_Height: 25
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 12, z: 0}
 --- !u!114 &-8025315994935271608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +185,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 7875459936262026101}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -188,7 +206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.1140289
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       propertyPath: m_LocalRotation.w
