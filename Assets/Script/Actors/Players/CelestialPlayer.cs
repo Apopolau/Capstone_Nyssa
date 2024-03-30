@@ -16,6 +16,7 @@ public class CelestialPlayer : Player
     [SerializeField] private GameObject celestPlayerDpad;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
+    [SerializeField] public Image coldSnapFill;
     private NavMeshAgent celestialAgent;
 
     [Header("Rain System")]
@@ -109,15 +110,7 @@ public class CelestialPlayer : Player
         basicCoolDownTime =powerBehaviour. BasicAttackStats.rechargeTimer;
         lightningCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
 
-
-
-
-
-
-
-
-
-
+        StartCoroutine(CooldownRadialFill()); 
 
 }
 
@@ -214,7 +207,6 @@ public class CelestialPlayer : Player
     public void ColdSnapAttack()
     {
 
-        
 
         bool playerIsDead;
         if (enemyTarget && powerInUse == Power.COLDSNAP && canColdSnap == false)
@@ -574,12 +566,34 @@ public class CelestialPlayer : Player
 
     }
 
+    // Method to handle cooldown for the radial fill UI based on ColdSnap cooldown
+    private IEnumerator CooldownRadialFill()
+    {
+        float cooldownDuration = powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
+        float timer = 0f;
+        float startFillAmount = 1f;
+        float endFillAmount = 0f;
+
+        // Gradually decrease fill amount over ColdSnap cooldown duration
+        while (timer < cooldownDuration)
+        {
+            float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
+            coldSnapFill.fillAmount = fillAmount;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure fill amount is exactly 0
+        coldSnapFill.fillAmount = endFillAmount;
+
+        // Allow ColdSnap power to be used again
+        canColdSnap = true;
+    }
+
     public void ResetColdSnap()
     {
         StartCoroutine(ColdSnapCoolDownTime());
-       
-    
-
+        StartCoroutine(CooldownRadialFill()); 
     }
 
     public IEnumerator ColdSnapCoolDownTime()
@@ -591,8 +605,6 @@ public class CelestialPlayer : Player
         Debug.Log("coldsnaptimer copy");
         canColdSnap = true;
     }
-
-
 
     public IEnumerator ResetLightningStrike()
     {
@@ -665,4 +677,6 @@ public class CelestialPlayer : Player
                  image.material.color = image.color;
             }
     }
+
+
 }
