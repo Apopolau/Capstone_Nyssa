@@ -115,7 +115,7 @@ public class Enemy : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("its true,calculating distance");
+            //Debug.Log("its true,calculating distance");
             //arbitrarily using attack time since it's 1s. May need to change in future
             yield return attackTime;
             float distance = sightRange;

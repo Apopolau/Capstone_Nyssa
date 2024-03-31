@@ -97,14 +97,6 @@ public class PickupObject : Interactable
         }
     }
 
-    private IEnumerator DestroyNeighbouringObject(Collider other)
-    {
-        yield return absorbDelay;
-        //quantity += other.GetComponent<PickupObject>().quantity;
-        quantity++;
-        Destroy(other.gameObject);
-    }
-
     private void OnTriggerStay(Collider other)
     {
         if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
@@ -115,16 +107,6 @@ public class PickupObject : Interactable
         {
             p2IsInRange = true;
         }
-        /*
-        if (other.GetComponent<PickupObject>() && !isBeingAbsorbed)
-        {
-            if(other.GetComponent<PickupObject>().itemStats.name == itemStats.name && !other.GetComponent<PickupObject>().isBeingAbsorbed)
-            {
-                other.GetComponent<PickupObject>().isBeingAbsorbed = true;
-                StartCoroutine(DestroyNeighbouringObject(other));
-            }
-        }
-        */
     }
 
     private void OnTriggerExit(Collider other)

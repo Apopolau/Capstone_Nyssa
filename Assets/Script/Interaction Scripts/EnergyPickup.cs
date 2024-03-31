@@ -36,15 +36,6 @@ public class EnergyPickup : MonoBehaviour
             IncreaseEnergy();
            
         }
-        /*
-        if (other.GetComponent<EnergyPickup>() && !isBeingAbsorbed)
-        {
-            other.GetComponent<EnergyPickup>().isBeingAbsorbed = true;
-            StartCoroutine(DestroyNeighbouringObject(other));
-            //energyQuantity += other.GetComponent<EnergyPickup>().energyQuantity;
-            //Destroy(other.gameObject);
-        }
-        */
     }
 
     private IEnumerator DestroyNeighbouringObject(Collider other)
