@@ -61,17 +61,7 @@ public class DialogueManager : MonoBehaviour
 
     private void OnEnable()
     {
-        for (int i = 0; i < playerSet.Items.Count; i++)
-        {
-            if (playerSet.Items[i].GetComponent<EarthPlayer>())
-            {
-                earthPlayer = playerSet.Items[i].GetComponent<EarthPlayer>();
-            }
-            else if (playerSet.Items[i].GetComponent<CelestialPlayer>())
-            {
-                celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
-            }
-        }
+        SetReferences();
     }
 
     private void Awake()
@@ -107,6 +97,21 @@ public class DialogueManager : MonoBehaviour
     {
         
     }
+    
+    private void SetReferences()
+    {
+        for (int i = 0; i < playerSet.Items.Count; i++)
+        {
+            if (playerSet.Items[i].GetComponent<EarthPlayer>())
+            {
+                earthPlayer = playerSet.Items[i].GetComponent<EarthPlayer>();
+            }
+            else if (playerSet.Items[i].GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
+            }
+        }
+    }
 
     /// <summary>
     /// MAIN DIALOGUE PROGRESS FUNCTIONS
@@ -122,6 +127,11 @@ public class DialogueManager : MonoBehaviour
 
         // Toggle other UI elements visibility
         uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
+
+        if(earthPlayer == null || celestialPlayer == null)
+        {
+            SetReferences();
+        }
 
         earthPlayer.ToggleDialogueState(true);
 
