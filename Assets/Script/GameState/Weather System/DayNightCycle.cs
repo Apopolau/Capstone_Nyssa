@@ -84,14 +84,15 @@ public class DayNightCycle : MonoBehaviour
     private void UpdateLighting()
     {
         float timeFraction = timeOfDay / 24;
+        /*
         if(timeFraction < 5)
         {
-            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.NIGHT;
+            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.NIGHT);
             weatherState.SetDayTime(false);
         }
         else if (timeFraction > 5 && timeFraction < 6)
         {
-            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAYBREAK;
+            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.DAYBREAK);
             weatherState.SetDayTime(true);
         }
         else if(timeFraction > 6 && timeFraction < 18)
@@ -109,6 +110,34 @@ public class DayNightCycle : MonoBehaviour
             weatherState.currentTimeOfDay = WeatherState.TimeOfDay.NIGHT;
             weatherState.SetDayTime(false);
         }
+        */
+
+        if (timeOfDay < 5)
+        {
+            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.NIGHT);
+            weatherState.SetDayTime(false);
+        }
+        else if (timeOfDay > 5 && timeOfDay < 6)
+        {
+            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.DAYBREAK);
+            weatherState.SetDayTime(true);
+        }
+        else if (timeOfDay > 6 && timeOfDay < 18)
+        {
+            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.DAY);
+            weatherState.SetDayTime(true);
+        }
+        else if (timeOfDay > 18 && timeOfDay < 21)
+        {
+            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.EVENING);
+            weatherState.SetDayTime(true);
+        }
+        else if (timeOfDay > 21)
+        {
+            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.NIGHT);
+            weatherState.SetDayTime(false);
+        }
+
         RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeFraction);
         RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeFraction);
         directionalLight.color = directionalLightColor.Evaluate(timeFraction);
