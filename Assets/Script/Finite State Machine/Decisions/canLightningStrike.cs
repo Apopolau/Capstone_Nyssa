@@ -8,18 +8,25 @@ public class CanLightningStrike: Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
-        // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().canLightningStrike && stateMachine.GetComponent<PowerBehaviour>().LightningStats.isEnabled)
+        Debug.Log("Can LS Falseeeeeeee");
+        PowerBehaviour attack;
+        attack = stateMachine.GetComponent<PowerBehaviour>();
+ 
+        if (stateMachine.GetComponent<CelestialPlayer>().buttonLightningStrike && stateMachine.GetComponent<CelestialPlayer>().canLightningStrike && stateMachine.GetComponent<PowerBehaviour>().LightningStats.isEnabled && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.LIGHTNINGSTRIKE)
         {
-            //Debug.Log("currently doing lightning attack");
+            stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
 
+            Debug.Log("Can LS True");
             return true;
         }
-        else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking)
-        {
-       
+       /* else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking || !attack.LightningStats.isEnabled || !stateMachine.GetComponent<CelestialPlayer>().canLightningStrike)
+        { 
+            Debug.Log("Can LS False");
+     
+
+      
             return false;
-        }
+        }*/
         return false;
     }
 }

@@ -22,11 +22,16 @@ public class CelestialPlayer : Player
     [SerializeField] WeatherState weatherState;
     [SerializeField] public bool isRaining = false;
     [SerializeField] public GameObject RainParticleSystem;
+    
+    [Header("Button press")]
 
-
+    [SerializeField] public bool buttonBasicAttack = false;
+    [SerializeField] public bool buttonColdSnap = false;
+    [SerializeField] public bool buttonLightningStrike = false;
+    [SerializeField] public bool buttonMoonTide = false;
+   
     [Header("Attack")]
-
-
+    CelestialPlayerBasicAttackTrigger staff;
     [SerializeField] public bool isAttacking = false;
     [SerializeField] public bool canBasicAttack = true;
     [SerializeField] public bool canColdSnap = true;
@@ -37,7 +42,6 @@ public class CelestialPlayer : Player
     [SerializeField] public bool canSunBeam = true;
 
     private bool isTargeted = false;
-    GameObject coldOrb;
 
     public enum Power
     {
@@ -60,7 +64,8 @@ public class CelestialPlayer : Player
 
     [Header("Power Drop Assets")]
     private VisualEffect powerDrop;
-
+    GameObject coldOrb;
+    GameObject moonTide;
 
     //Lengths of animations and abilities
     private WaitForSeconds dodgeAnimTime;
@@ -108,18 +113,8 @@ public class CelestialPlayer : Player
         coldSnapCoolDownTime = powerBehaviour.ColdSnapStats.rechargeTimer;
         basicCoolDownTime =powerBehaviour. BasicAttackStats.rechargeTimer;
         lightningCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
-
-
-
-
-
-
-
-
-
-
-
-}
+        staff =GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
+    }
 
 
     // Update is called once per frame
@@ -148,6 +143,7 @@ public class CelestialPlayer : Player
     {
         if (other.gameObject.tag == "Enemy")
         {
+            Debug.Log(other.transform.gameObject);
             //Player is in range of enemy, in invading monster they can pursue the player
             enemySeen = true;
 
@@ -173,44 +169,214 @@ public class CelestialPlayer : Player
         }
     }
 
+    //POWER BUTTONS
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+    /// Celestial Player Control >> Power buttons are selected >> Heads int FSM CAN_____powersname____
+    /// 
+    public void OnSnowFlakeSelected()
+    {
+        //COLDSNAP POWER
+        //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
+        buttonColdSnap = true;
+        powerInUse = Power.COLDSNAP;
+        Debug.Log("OnSnowFlakeSelected");
+        DarkenAllImages(celestPlayerDpad); //darken the dpad
+
+    }
+
+    public void OnBasicAttackSelected()
+    {
+        //BASICATTACK POWER
+        //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
+        buttonBasicAttack = true; ;
+        powerInUse = Power.BASIC;
+        Debug.Log("startbasic");
+        DarkenAllImages(celestPlayerDpad); //darken the dpad
+
+
+    }
+
+    public void OnLightningStrikeSelected()
+    {
+        //LIGHTNINGSTRIKE POWER 
+        //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
+        buttonLightningStrike = true;
+        powerInUse = Power.LIGHTNINGSTRIKE;
+        Debug.Log("startlightning");
+        DarkenAllImages(celestPlayerDpad); //darken the dpad
+
+    }
+
+
+    public void OnMoonTideSelected()
+    {
+        //MOONTIDE POWER
+        //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
+        buttonMoonTide = true;
+        powerInUse = Power.MOONTIDE;
+        Debug.Log("Start Moontide");
+        DarkenAllImages(celestPlayerDpad);//darken the dpad
+    }
+
+    //POWEER ANIMATION
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+    /// Celestial Player Control >> Powers are animated>> Heads into Reseting the Power 
+    /// 
+    public IEnumerator animateColdSnap()
+    {
+        //COLDSNAP POWER
+        //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
+
+        Debug.Log("coldsnap is animated");
+        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+
+        //Attacking animation of player
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
+
+        //If enemy is around make the cold orb target said enemy >> update 
+        if (enemyTarget != null)
+        {
+            isTargeted = true;
+            ColdSnapAttack();
+        }
+
+        //Stop action during the course of animation and yield time
+        StartCoroutine(SuspendActions(specialPowerAnimTime));
+        yield return specialPowerAnimTime;
+
+        //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
+        isTargeted = false;
+        Destroy(coldOrb, 1f);
+        ResetImageColor(celestPlayerDpad); //reset dpad colors
+        isAttacking = false;
+
+    }
+
+    public IEnumerator animateBasicAttack()
+    {
+        //BASIC ATTACK
+        //TO BE CHANGED!!!!!!!
+
+        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, true);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
+
+        //If enemy is around call the basic attack
+        if (enemyTarget != null && staff.enemyHit)
+        {
+            BasicAttack();
+
+        }
+
+
+        StartCoroutine(SuspendActions(basicPowerAnimTime));
+        yield return basicPowerAnimTime;
+        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
+        ResetImageColor(celestPlayerDpad); //reset dpad colors
+        isAttacking = false;
+
+    }
+
+
+
+    public IEnumerator animateLightningStrike()
+    {
+
+        //LIGHTNINGSTRIKE POWER
+        //TO BE CHANGED!!!!!!!
+        Debug.Log("lightning is animated");
+
+        VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
+        VisualEffect clone = Instantiate(lightningStrike, new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, enemyTarget.transform.position.z), Quaternion.identity);
+
+        clone.transform.Rotate(-90.0f, 0.0f, 0.0f, Space.World);
+
+        //Attacking animation of player
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
+
+
+        // Move our position a step closer to the target.
+        var step = 5 * Time.deltaTime; // calculate distance to move
+
+        if (enemyTarget != null)
+        {
+            LightningAttack();
+
+        }
+
+
+        //Stop action during the course of animation and yield time
+        StartCoroutine(SuspendActions(specialPowerAnimTime));
+        yield return specialPowerAnimTime;
+
+        //reset animation, reset isattacking, detroy visual asset and reset DPAD
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
+        Destroy(clone, 1f);
+        ResetImageColor(celestPlayerDpad); //reset dpad colors
+        isAttacking = false;
+
+    }
+
+
+        public IEnumerator animateMoonTide()
+    {
+        //MOONTIDE POWER
+        //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
+
+        Debug.Log("moontide is animated");
+        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+
+        //Attacking animation of player
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
+        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
+
+        //If enemy is around make the cold orb target said enemy >> update 
+        if (enemyTarget != null)
+        {
+            isTargeted = true;
+            MoonTideAttack();
+        }
+
+        //Stop action during the course of animation and yield time
+        StartCoroutine(SuspendActions(specialPowerAnimTime));
+        yield return specialPowerAnimTime;
+
+        //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
+        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
+        isTargeted = false;
+        Destroy(coldOrb, 1f);
+        ResetImageColor(celestPlayerDpad); //reset dpad colors
+        isAttacking = false;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void PowerDrop(PowerStats power, Vector3 position)
     {
         powerDrop= Instantiate(power.visualDisplay, position, Quaternion.identity);
 
     }
 
-    // public void AttackEnemy()
-    public void Attack()
-    {
-
-        PowerBehaviour attack;
-        attack = GetComponent<PowerBehaviour>();
-
-        bool playerIsDead;
-        if (enemyTarget && powerInUse == Power.COLDSNAP && canColdSnap == false)
-        {
-            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.ColdSnapStats.maxDamage);
-            powerInUse = Power.NONE;
-        }
-
-
-        if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE)
-        {
-            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.LightningStats.minDamage);
-            powerInUse = Power.NONE;
-        }
-
-
-        if (enemyTarget && powerInUse == Power.BASIC)
-        {
-            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.BasicAttackStats.minDamage);
-            powerInUse = Power.NONE;
-        }
-
-
-
-    }
-
+   
     public void ColdSnapAttack()
     {
 
@@ -226,20 +392,6 @@ public class CelestialPlayer : Player
             
         }
         powerInUse = Power.NONE;
-        /*
-         if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE)
-         {
-             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.LightningStats.minDamage);
-             powerInUse = Power.NONE;
-         }
-
-
-         if (enemyTarget && powerInUse == Power.BASIC)
-         {
-             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(attack.BasicAttackStats.minDamage);
-             powerInUse = Power.NONE;
-         }*/
-
 
 
     }
@@ -287,6 +439,27 @@ public class CelestialPlayer : Player
 
     }
 
+
+    public void MoonTideAttack()
+    {
+
+
+
+        bool playerIsDead;
+        if (enemyTarget && powerInUse == Power.MOONTIDE && canMoonTide == false)
+        {
+            Power weakness = GetEnemyWeakness(enemyTarget);
+            int HitPoints = GetPowerHitDamage(weakness);
+            Debug.Log("Hitpoints:" + HitPoints);
+            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
+
+        }
+        powerInUse = Power.NONE;
+
+
+    }
+
+
     public int GetPowerHitDamage(Power weakness)
     {
         PowerBehaviour attack;
@@ -314,7 +487,20 @@ public class CelestialPlayer : Player
             return powerDamage;
         }
 
+        if (powerInUse == Power.MOONTIDE)
+        {
+            if (weakness == Power.MOONTIDE)
+            {
+                powerDamage = attack.MoonTideAttackStats.maxDamage;
+            }
+            else if (weakness != Power.MOONTIDE)
+            {
+                powerDamage = attack.MoonTideAttackStats.minDamage;
 
+            }
+
+            return powerDamage;
+        }
 
 
         if (powerInUse == Power.LIGHTNINGSTRIKE)
@@ -323,11 +509,12 @@ public class CelestialPlayer : Player
             {
                 powerDamage = attack.LightningStats.maxDamage;
             }
-            else if (weakness != Power.COLDSNAP)
+            else if (weakness != Power.LIGHTNINGSTRIKE)
             {
                 powerDamage = attack.LightningStats.minDamage;
 
             }
+         
             return powerDamage;
         }
         return 0;
@@ -394,42 +581,6 @@ public class CelestialPlayer : Player
         }
 
     }
-    public void OnSnowFlakeSelected() {
-
-       /* if (canColdSnap)
-        {
-            canColdSnap = false;
-        }*/
-        isAttacking = true;
-        powerInUse = Power.COLDSNAP;
-        Debug.Log("OnSnowFlakeSelected");
-        DarkenAllImages(celestPlayerDpad); //darken the dpad
-
-    }
-
-    public void OnBasicAttackSelected() {
-    
-        canBasicAttack= false;
-        isAttacking = true;
-        powerInUse = Power.BASIC;
-        Debug.Log("startbasic");
-        DarkenAllImages(celestPlayerDpad); //darken the dpad
-
-
-}
-
-    public void OnLightningStrikeSelected()
-    {
-
-        canLightningStrike = false;
-        isAttacking = true;
-        powerInUse = Power.LIGHTNINGSTRIKE;
-        Debug.Log("startlightning");
-        DarkenAllImages(celestPlayerDpad); //darken the dpad
-
-    }
-
-
 
 
     public void ShootTowardsTarget(GameObject Orb)
@@ -440,139 +591,8 @@ public class CelestialPlayer : Player
 
     }
 
-    public IEnumerator animateColdSnap()
-    {
-     
-        Debug.Log("coldsnap is animated");
-        ///-----------   GameObject coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
-        ///-----------  GameObject clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
-        ///////////////////////////////////////////////////////////////////////////////USING VFX/////////////////////////////////////////////////////////////////////////////////////////////////////////
-        ///// We should also set up a boolean of sorts to change from vfx to physical
-        //VisualEffect coldOrb = powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualDisplay;
-        //VisualEffect clone= Instantiate(coldOrb,new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
 
 
-        //----------clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
-
-
-
-
-
-        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity );
-
-        //Attacking animation of player
-        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
-        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
-
-       
-
-
-
-
-        // Move our position a step closer to the target.
-       /////////////////// var step = 50 * Time.deltaTime; // calculate distance to move
-
-        if (enemyTarget != null)
-        {//////////////////////////////////////////////////VFX///////////////////////////////////////////////////////////////
-            //clone.transform.position = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
-            isTargeted = true;
-            ColdSnapAttack();
-            ////////////////////coldOrb.transform.position = Vector3.MoveTowards(coldOrb.transform.position, enemyTarget.transform.position, step);
-           // coldOrb.SetDestination(enemyTarget.transform.position);
-        }
-       //clone.GetComponent<Rigidbody>().velocity = Vector3.MoveTowards(clone.transform.position, enemyTarget.transform.position, step);
-
-        isAttacking = true;
-        StartCoroutine(SuspendActions(specialPowerAnimTime));
-        yield return specialPowerAnimTime;
-        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
-        //////////////////////////////////////////////////VFX///////////////////////////////////////////////////////////////
-        ///Destroy(clone, 1f);
-        isTargeted = false;
-        Destroy(coldOrb, 1f);
-        ResetImageColor(celestPlayerDpad); //reset dpad colors
-
-    }
-
-
-
-    public IEnumerator animateLightningStrike()
-    {
-
-
-      
-
-        Debug.Log("lightning is animated");
-       
-        VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
-        VisualEffect clone = Instantiate(lightningStrike, new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, enemyTarget.transform.position.z), Quaternion.identity);
-
-        clone.transform.Rotate(-90.0f, 0.0f, 0.0f, Space.World);
-
-
-        //clone.GetComponent<Rigidbody>().velocity = clone.transform.forward * 10;
-
-
-        //Attacking animation of player
-        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
-        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
-
-
-
-
-
-
-        // Move our position a step closer to the target.
-        var step = 5 * Time.deltaTime; // calculate distance to move
-
-        if (enemyTarget != null)
-        {
-
-
-        }
-
-
-        isAttacking = true;
-        StartCoroutine(SuspendActions(specialPowerAnimTime));
-        yield return specialPowerAnimTime;
-        celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
-        Destroy(clone, 1f);
-        ResetImageColor(celestPlayerDpad); //reset dpad colors
-        
-
-    }
-
-
-    public IEnumerator animateBasicAttack()
-    {
-
-
-       
-        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, true);
-        celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
-
-
-
-    
-
-
-        // Move our position a step closer to the target.
-        var step = 5 * Time.deltaTime; // calculate distance to move
-
-        if (enemyTarget != null)
-        {
-
-
-        }
-
-
-        isAttacking = true;
-        yield return new WaitForSeconds(1.208f);
-        celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
-        ResetImageColor(celestPlayerDpad); //reset dpad colors
-
-
-    }
 
     public void ResetColdSnap()
     {
@@ -594,24 +614,58 @@ public class CelestialPlayer : Player
 
 
 
-    public IEnumerator ResetLightningStrike()
+    public void ResetLightningStrike()
     {
-        //powerInUse = Power.NONE;
-        yield return new WaitForSeconds(1f);
-        canLightningStrike = true;
+        StartCoroutine(LightningCoolDownTime());
+
+    
+
+    }
+    public IEnumerator LightningCoolDownTime()
+    {
+        Debug.Log("Lightning time reset");
+  
+        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats));
+        Debug.Log("Lightning timer copy");
+       canLightningStrike = true;
+    }
+
+    public void ResetBasic()
+    {
+        StartCoroutine(BasicCoolDownTime());
+
+   
+    }
+    public IEnumerator BasicCoolDownTime()
+    {
+        Debug.Log("Basic time reset");
+
+        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats));
+        Debug.Log("Basic timer copy");
+        canBasicAttack = true;
+    }
+
+
+    public void ResetMoonTide()
+    {
+        StartCoroutine(MoonTideCoolDownTime());
+
+
 
     }
 
-    public IEnumerator ResetBasic()
+    public IEnumerator MoonTideCoolDownTime()
     {
-        //powerInUse = Power.NONE;
-
-        Debug.Log("basic reset");
-
-        yield return powerBehaviour.BasicAttackStats.rechargeTimer;
-       canBasicAttack = true;
-
+        Debug.Log("MoonTideReset");
+        //yield return new WaitForSeconds(55f);
+        // yield return new WaitForSeconds(55f);
+        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats));
+        Debug.Log("MoonTidetimer copy");
+        canMoonTide= true;
     }
+
+
+
 
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime)
     {

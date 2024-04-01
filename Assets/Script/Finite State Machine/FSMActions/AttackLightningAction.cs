@@ -17,7 +17,7 @@ public class AttackLightningAction: FSMAction
         Debug.Log("******take Lightning Damage");
         if (player.enemySeen)
         {
-            player.Attack();
+           // player.LightningAttack();
 
 
         }

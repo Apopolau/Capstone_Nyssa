@@ -15,10 +15,17 @@ public class AttackLightningStrikeEnds : FSMAction
 
     public override void Execute(BaseStateMachine stateMachine)
     {
+     
+
+
+    }
+
+    public override void ExitState(BaseStateMachine stateMachine)
+    {
         Debug.Log("******takeDamage");
         if (player.enemySeen)
         {
-            player.Attack();
+            //player.LightningAttack();
 
 
         }
@@ -29,12 +36,5 @@ public class AttackLightningStrikeEnds : FSMAction
 
         player.isAttacking = false;
         Debug.Log("******tattack complete");
-
-
-    }
-
-    public override void ExitState(BaseStateMachine stateMachine)
-    {
-        
     }
 }

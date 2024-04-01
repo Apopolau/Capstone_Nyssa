@@ -12,7 +12,7 @@ public class AttackBasicEnds : FSMAction
     public override void EnterState(BaseStateMachine stateMachine)
     {
         player = stateMachine.GetComponent<CelestialPlayer>();
-        staff = stateMachine.GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
+       staff = stateMachine.GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
     }
 
 
@@ -22,7 +22,7 @@ public class AttackBasicEnds : FSMAction
         //Debug.Log("******takeDamage");
         if (player.enemySeen && staff.enemyHit)
         {
-            player.Attack();
+           // player.BasicAttack();
 
 
         }

@@ -82,6 +82,15 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""MakeMoonTide"",
+                    ""type"": ""Button"",
+                    ""id"": ""500ce0fc-19bf-4e6e-867f-dead47e87ecf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""MakeSunBeam"",
                     ""type"": ""Button"",
                     ""id"": ""a1268b76-f0a0-4d53-ab24-df712bd1790d"",
@@ -439,6 +448,28 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""action"": ""MakeSmog"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""61767073-c3a7-45ec-8c88-87960151a80d"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeMoonTide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6bd5bfa-6b31-4c44-ab4c-c0d02a008363"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MakeMoonTide"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -590,6 +621,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         m_CelestialPlayerDefault_MakeLighteningStrike = m_CelestialPlayerDefault.FindAction("MakeLighteningStrike", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeBasic = m_CelestialPlayerDefault.FindAction("MakeBasic", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeSmog = m_CelestialPlayerDefault.FindAction("MakeSmog", throwIfNotFound: true);
+        m_CelestialPlayerDefault_MakeMoonTide = m_CelestialPlayerDefault.FindAction("MakeMoonTide", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeSunBeam = m_CelestialPlayerDefault.FindAction("MakeSunBeam", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeDodge = m_CelestialPlayerDefault.FindAction("MakeDodge", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeInteract = m_CelestialPlayerDefault.FindAction("MakeInteract", throwIfNotFound: true);
@@ -670,6 +702,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     private readonly InputAction m_CelestialPlayerDefault_MakeLighteningStrike;
     private readonly InputAction m_CelestialPlayerDefault_MakeBasic;
     private readonly InputAction m_CelestialPlayerDefault_MakeSmog;
+    private readonly InputAction m_CelestialPlayerDefault_MakeMoonTide;
     private readonly InputAction m_CelestialPlayerDefault_MakeSunBeam;
     private readonly InputAction m_CelestialPlayerDefault_MakeDodge;
     private readonly InputAction m_CelestialPlayerDefault_MakeInteract;
@@ -683,6 +716,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         public InputAction @MakeLighteningStrike => m_Wrapper.m_CelestialPlayerDefault_MakeLighteningStrike;
         public InputAction @MakeBasic => m_Wrapper.m_CelestialPlayerDefault_MakeBasic;
         public InputAction @MakeSmog => m_Wrapper.m_CelestialPlayerDefault_MakeSmog;
+        public InputAction @MakeMoonTide => m_Wrapper.m_CelestialPlayerDefault_MakeMoonTide;
         public InputAction @MakeSunBeam => m_Wrapper.m_CelestialPlayerDefault_MakeSunBeam;
         public InputAction @MakeDodge => m_Wrapper.m_CelestialPlayerDefault_MakeDodge;
         public InputAction @MakeInteract => m_Wrapper.m_CelestialPlayerDefault_MakeInteract;
@@ -713,6 +747,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeSmog.started += instance.OnMakeSmog;
             @MakeSmog.performed += instance.OnMakeSmog;
             @MakeSmog.canceled += instance.OnMakeSmog;
+            @MakeMoonTide.started += instance.OnMakeMoonTide;
+            @MakeMoonTide.performed += instance.OnMakeMoonTide;
+            @MakeMoonTide.canceled += instance.OnMakeMoonTide;
             @MakeSunBeam.started += instance.OnMakeSunBeam;
             @MakeSunBeam.performed += instance.OnMakeSunBeam;
             @MakeSunBeam.canceled += instance.OnMakeSunBeam;
@@ -744,6 +781,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeSmog.started -= instance.OnMakeSmog;
             @MakeSmog.performed -= instance.OnMakeSmog;
             @MakeSmog.canceled -= instance.OnMakeSmog;
+            @MakeMoonTide.started -= instance.OnMakeMoonTide;
+            @MakeMoonTide.performed -= instance.OnMakeMoonTide;
+            @MakeMoonTide.canceled -= instance.OnMakeMoonTide;
             @MakeSunBeam.started -= instance.OnMakeSunBeam;
             @MakeSunBeam.performed -= instance.OnMakeSunBeam;
             @MakeSunBeam.canceled -= instance.OnMakeSunBeam;
@@ -924,6 +964,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         void OnMakeLighteningStrike(InputAction.CallbackContext context);
         void OnMakeBasic(InputAction.CallbackContext context);
         void OnMakeSmog(InputAction.CallbackContext context);
+        void OnMakeMoonTide(InputAction.CallbackContext context);
         void OnMakeSunBeam(InputAction.CallbackContext context);
         void OnMakeDodge(InputAction.CallbackContext context);
         void OnMakeInteract(InputAction.CallbackContext context);

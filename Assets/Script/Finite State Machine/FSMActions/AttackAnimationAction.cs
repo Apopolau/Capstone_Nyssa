@@ -23,7 +23,7 @@ public class AttackAnimationAction : FSMAction
             if (!player.canColdSnap)
             {
                 player.StartCoroutine(player.animateColdSnap());
-                // player.StartCoroutine(player.ResetColdSnap());
+             
                 player.ResetColdSnap();
                
             }
@@ -31,31 +31,34 @@ public class AttackAnimationAction : FSMAction
 
 
         }
-        //if it isn't raining start rain
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.LIGHTNINGSTRIKE)
+
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.LIGHTNINGSTRIKE && stateMachine.GetComponent<CelestialPlayer>().canLightningStrike == true)
         {
+            stateMachine.GetComponent<CelestialPlayer>().canLightningStrike = false;
             Debug.Log("LightningActivated");
 
 
             if (!player.canLightningStrike)
             {
                 player.StartCoroutine(player.animateLightningStrike());
-                player.StartCoroutine(player.ResetLightningStrike());
+                player.ResetLightningStrike();
             }
             Debug.Log("lightning  stopped");
      
 
         }
-        //if it isn't raining start rain
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.BASIC)
+
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.BASIC && stateMachine.GetComponent<CelestialPlayer>().canBasicAttack == true)
         {
+            stateMachine.GetComponent<CelestialPlayer>().canBasicAttack = false;
+
             Debug.Log("BasicActivated");
 
 
             if (!player.canBasicAttack)
             {
                 player.StartCoroutine(player.animateBasicAttack());
-                player.StartCoroutine(player.ResetBasic());
+                player.ResetBasic();
 
             }
             Debug.Log("basic stopped");
@@ -63,12 +66,29 @@ public class AttackAnimationAction : FSMAction
 
         }
 
+        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.MOONTIDE &&  stateMachine.GetComponent<CelestialPlayer>().canMoonTide)
+        {
+            stateMachine.GetComponent<CelestialPlayer>().canMoonTide = false;
+
+            Debug.Log("MoonTideActivated");
+
+
+            if (!player.canMoonTide)
+            {
+                player.StartCoroutine(player.animateMoonTide());
+                player.ResetMoonTide();
+
+            }
+            Debug.Log("MoonTide stopped");
+
+
+        }
 
     }
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        
+       
     }
 
 }

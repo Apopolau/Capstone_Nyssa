@@ -24,7 +24,7 @@ public class plasticBagMonsterTree : BTree
         // Your behaviour tree will go in here: put your sequences after "new List<BTNode>"
         BTNode root = new Selector(new List<BTNode>
         {
-            //ATACK PLANT SEQUENCE
+            //ATTACK PLANT SEQUENCE
             
         new Sequence(new List<BTNode>
         {
@@ -41,6 +41,7 @@ public class plasticBagMonsterTree : BTree
         }),
 
         
+           
            new Sequence(new List<BTNode>
            {
                 new Inverter(new CheckIfDying(enemy)),

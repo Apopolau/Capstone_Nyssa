@@ -81,6 +81,7 @@ public class CelestialPlayerControls : MonoBehaviour
         controls.CelestialPlayerDefault.MakeBasic.performed += OnBasicAttackPerformed;
         controls.CelestialPlayerDefault.MakeColdSnap.performed += OnColdSnapPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.CelestialPlayerDefault.MakeLighteningStrike.performed += OnLightningStrikePerformed;
+        controls.CelestialPlayerDefault.MakeMoonTide.performed += OnMoonTidePerformed;
         controls.CelestialPlayerDefault.MakeInteract.started += OnInteract;
         controls.CelestialPlayerDefault.MakeInteract.canceled += OnInteract;
 
@@ -184,6 +185,15 @@ public class CelestialPlayerControls : MonoBehaviour
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
         if (context.control.device.deviceId != myDeviceID) return;
         this.GetComponent<CelestialPlayer>().OnLightningStrikeSelected();
+
+    }
+
+    private void OnMoonTidePerformed(InputAction.CallbackContext context)
+    {
+        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        if (context.control.device.deviceId != myDeviceID) return;
+        this.GetComponent<CelestialPlayer>().OnMoonTideSelected();
+
 
     }
 

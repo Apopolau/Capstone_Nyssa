@@ -15,7 +15,7 @@ public class idleOilSpillTree : BTree
     public static float speed = 2f;
 
     //Enemy Health
-    [SerializeField] private float startingHealth = 10;
+    [SerializeField] private float startingHealth;
     [SerializeField] private float currHealth;
     [SerializeField] private Transform playerTransform;
 
