@@ -53,6 +53,7 @@ public class DayNightCycle : MonoBehaviour
         }
         else
         {
+            timeOfDay = 10;
             timeOfDayChanges = true;
         }
         weatherState.SetDayTime(true);
@@ -83,34 +84,7 @@ public class DayNightCycle : MonoBehaviour
 
     private void UpdateLighting()
     {
-        float timeFraction = timeOfDay / 24;
-        /*
-        if(timeFraction < 5)
-        {
-            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.NIGHT);
-            weatherState.SetDayTime(false);
-        }
-        else if (timeFraction > 5 && timeFraction < 6)
-        {
-            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.DAYBREAK);
-            weatherState.SetDayTime(true);
-        }
-        else if(timeFraction > 6 && timeFraction < 18)
-        {
-            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAY;
-            weatherState.SetDayTime(true);
-        }
-        else if(timeFraction > 18 && timeFraction < 21)
-        {
-            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.EVENING;
-            weatherState.SetDayTime(true);
-        }
-        else if (timeFraction > 21)
-        {
-            weatherState.currentTimeOfDay = WeatherState.TimeOfDay.NIGHT;
-            weatherState.SetDayTime(false);
-        }
-        */
+        //float timeFraction = timeOfDay / 24;
 
         if (timeOfDay < 5)
         {
@@ -138,11 +112,11 @@ public class DayNightCycle : MonoBehaviour
             weatherState.SetDayTime(false);
         }
 
-        RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeFraction);
-        RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeFraction);
-        directionalLight.color = directionalLightColor.Evaluate(timeFraction);
+        RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeOfDay);
+        RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeOfDay);
+        directionalLight.color = directionalLightColor.Evaluate(timeOfDay);
         float H, S, V;
-        Color.RGBToHSV((directionalLightIntensity.Evaluate(timeFraction)), out H, out S, out V);
+        Color.RGBToHSV((directionalLightIntensity.Evaluate(timeOfDay)), out H, out S, out V);
         directionalLight.intensity =V;
         //print(directionalLightColor.Evaluate(timeFraction));
         //print(V);
