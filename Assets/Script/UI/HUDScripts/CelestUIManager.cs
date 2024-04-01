@@ -5,7 +5,9 @@ using UnityEngine;
 public class CelestUIManager : MonoBehaviour
 {
     public GameObject keyboardUI;
+    public GameObject controlsKeyboardUI;
     public GameObject controllerUI;
+    public GameObject controlsControllerUI;
 
     public UserSettingsManager userSettingsManager;
 
@@ -17,15 +19,19 @@ public class CelestUIManager : MonoBehaviour
 
     private void SetUIBasedOnControlType()
     {
-        if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
+        if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             keyboardUI.SetActive(true);
+            controlsKeyboardUI.SetActive(true);
             controllerUI.SetActive(false);
+            controlsControllerUI.SetActive(false);
         }
-        else if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
+        else if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
             keyboardUI.SetActive(false);
+            controlsKeyboardUI.SetActive(false);
             controllerUI.SetActive(true);
+            controlsControllerUI.SetActive(true);
         }
     }
 }

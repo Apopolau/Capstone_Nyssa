@@ -5,7 +5,9 @@ using UnityEngine;
 public class EarthUIManager : MonoBehaviour
 {
     public GameObject keyboardUI;
+    public GameObject controlsKeyboardUI;
     public GameObject controllerUI;
+    public GameObject controlsControllerUI;
 
     public UserSettingsManager userSettingsManager;
 
@@ -20,12 +22,16 @@ public class EarthUIManager : MonoBehaviour
         if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             keyboardUI.SetActive(true);
+            controlsKeyboardUI.SetActive(true);
             controllerUI.SetActive(false);
+            controlsControllerUI.SetActive(false);
         }
         else if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
             keyboardUI.SetActive(false);
+            controlsKeyboardUI.SetActive(false);
             controllerUI.SetActive(true);
+            controlsControllerUI.SetActive(true);
         }
     }
 

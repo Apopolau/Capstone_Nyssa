@@ -67,13 +67,15 @@ public class EarthCharacterUIController : MonoBehaviour
     }
 
 
-    //public GameObject[] uiObjectToToggle; // Array of UI images to toggle
 
     // Method to toggle the visibility of other UI elements
     public void ToggleOtherUIElements(bool isActive)
     {
          // Check the current control type from the UserSettingsManager
         UserSettingsManager.ControlType currentControlType = userSettingsManager.earthControlType;
+        
+        // Log the current control type
+        Debug.Log("Current Control Type: " + currentControlType);
 
         // Determine which array of UI objects to use based on the current control type
         GameObject[] uiObjectsToToggle = (currentControlType == UserSettingsManager.ControlType.KEYBOARD) ? keyboardUIObjects : controllerUIObjects;
@@ -81,7 +83,7 @@ public class EarthCharacterUIController : MonoBehaviour
         // Loop through the UI objects in the selected array
         foreach (GameObject uiObject in uiObjectsToToggle)
         {
-              //Debug.Log("Toggling UI object: " + uiObject.name);
+            Debug.Log("Toggling UI object: " + uiObject.name);
             // Toggle the visibility of the UI object based on the isActive parameter
             uiObject.SetActive(isActive);
         }
