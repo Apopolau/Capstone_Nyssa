@@ -117,6 +117,7 @@ public class LevelOneEvents : LevelEventManager
         {
             fourthAreaTiles.Add(childTransform.gameObject);
         }
+
         duck1.SetActive(true);
         duck2.SetActive(true);
         dialogueManager.SetActive(true);

@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382116edf4527b849b710b1b24274f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   objectiveList: {fileID: 0}
   ambientSounds: {fileID: 0}
   dyingEnemy: {fileID: 0}
@@ -116,11 +117,13 @@ MonoBehaviour:
   terrainData1: {fileID: 0}
   terrainData2: {fileID: 0}
   levelTwoProgress: {fileID: 11400000, guid: d72188606e7e6e9409fddb57f1bcf001, type: 2}
+  dialogueManager: {fileID: 0}
   cleanWaterMaterial: {fileID: 2100000, guid: e33eb5d28521d5f4188aec862cee5330, type: 2}
   lake: {fileID: 0}
   tileGrid: {fileID: 0}
-  mainAreaGrid: {fileID: 0}
   hedgehogAreaGrid: {fileID: 0}
+  mainAreaGrid: {fileID: 0}
+  farLeftGrid: {fileID: 0}
   loggingAreaGrid: {fileID: 0}
   buildingAreaGrid: {fileID: 0}
   task1: {fileID: 0}
@@ -140,8 +143,11 @@ MonoBehaviour:
   allObjectivesMetDialogue: {fileID: 3081410312761727100}
   hog1: {fileID: 0}
   hog2: {fileID: 0}
+  hog3: {fileID: 0}
+  fox: {fileID: 0}
   nyssa: {fileID: 0}
   facility: {fileID: 0}
+  loggingBuilding: {fileID: 0}
 --- !u!114 &560810236520194074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 11400000, guid: 64d5e64b13c654542b512bfecc5a8586, type: 2}
+  dialogue: {fileID: 11400000, guid: 4e7a667cd12c1cc438d1b74bcad6a8cb, type: 2}
 --- !u!114 &4285750560391720844
 MonoBehaviour:
   m_ObjectHideFlags: 0
