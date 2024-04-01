@@ -36,7 +36,7 @@ public class DialogueManager : MonoBehaviour
     private Sprite currentSprite;
     [SerializeField] private DialogueCameraPan panToOrigin;
 
-    public float typingSpeed = 0.2f;
+    public float typingSpeed = 0.5f;
 
     //Camera speed variables
     //Zoom variables, zooming in and out
@@ -242,57 +242,58 @@ public class DialogueManager : MonoBehaviour
     /// FUNCTIONS TO HANDLE EACH TYPE OF DIALOGUE EVENT
     /// </summary>
     //When displaying a dialogue line, handles the text
-    public void DisplayNextDialogueLine(DialogueLine currentLine)
+    //When displaying a dialogue line, handles the text
+public void DisplayNextDialogueLine(DialogueLine currentLine)
+{
+    if (!dialogueBox.activeSelf)
     {
-        if (!dialogueBox.activeSelf)
-        {
-            dialogueBox.SetActive(true);
-        }
-        else
-        {
-            isDialogueActive = true;
-        }
-
-        // Clear the dialogue areas
-        dialogueArea.text = "";
-
-        // Clear both character icons
-        characterIconLeft.sprite = null;
-        characterIconRight.sprite = null;
-
-        AssignCharacter(currentLine);
-
-        if (currentCharacter.isLeft)
-        {
-            characterIconLeft.sprite = currentSprite;
-            // Fade in characterIconLeft
-            characterIconLeft.CrossFadeAlpha(1f, 0f, true);
-            // Fade out characterIconRight
-            characterIconRight.CrossFadeAlpha(0f, 0f, true);
-        }
-        else if (!currentCharacter.isLeft)
-        {
-            characterIconRight.sprite = currentSprite;
-            // Fade in characterIconRight
-            characterIconRight.CrossFadeAlpha(1f, 0f, true);
-            // Fade out characterIconLeft
-            characterIconLeft.CrossFadeAlpha(0f, 0f, true);
-        }
-
-        // Determine which language to display based on the user's language setting
-        switch (userSettingsManager.chosenLanguage)
-        {
-            case UserSettingsManager.GameLanguage.ENGLISH:
-                // Display English dialogue
-                dialogueArea.text = currentLine.line;
-                break;
-            case UserSettingsManager.GameLanguage.FRENCH:
-                // Display French dialogue
-                dialogueArea.text = currentLine.lineFR;
-                break;
-
-        }
+        dialogueBox.SetActive(true);
     }
+    else
+    {
+        isDialogueActive = true;
+    }
+
+    // Clear the dialogue areas
+    dialogueArea.text = "";
+
+    // Clear both character icons
+    characterIconLeft.sprite = null;
+    characterIconRight.sprite = null;
+
+    AssignCharacter(currentLine);
+
+    if (currentCharacter.isLeft)
+    {
+        characterIconLeft.sprite = currentSprite;
+        // Fade in characterIconLeft
+        characterIconLeft.CrossFadeAlpha(1f, 0f, true);
+        // Fade out characterIconRight
+        characterIconRight.CrossFadeAlpha(0f, 0f, true);
+    }
+    else if (!currentCharacter.isLeft)
+    {
+        characterIconRight.sprite = currentSprite;
+        // Fade in characterIconRight
+        characterIconRight.CrossFadeAlpha(1f, 0f, true);
+        // Fade out characterIconLeft
+        characterIconLeft.CrossFadeAlpha(0f, 0f, true);
+    }
+
+    // Determine which language to display based on the user's language setting
+    switch (userSettingsManager.chosenLanguage)
+    {
+        case UserSettingsManager.GameLanguage.ENGLISH:
+            // Display English dialogue
+            StartCoroutine(TypeSentence(dialogueArea, currentLine.line));
+            break;
+        case UserSettingsManager.GameLanguage.FRENCH:
+            // Display French dialogue
+            StartCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
+            break;
+    }
+}
+
 
     //This runs if the dialogue event is a camera pan, handles the movement
     public void HandleCameraPan(DialogueCameraPan pan)
@@ -529,10 +530,11 @@ public class DialogueManager : MonoBehaviour
     //display letter by letter
     IEnumerator TypeSentence(TextMeshProUGUI dialogueArea, string line)
     {
+        dialogueArea.text = ""; // Clear the text initially
         foreach (char letter in line.ToCharArray())
         {
             dialogueArea.text += letter;
-            yield return null;
+            yield return new WaitForSeconds(typingSpeed); // Wait for typingSpeed seconds before showing the next letter
         }
     }
 
