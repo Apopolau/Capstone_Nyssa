@@ -17,7 +17,7 @@ public class idleOilSpillTree : BTree
     //Enemy Health
     [SerializeField] private float startingHealth;
     [SerializeField] private float currHealth;
-    [SerializeField] private Transform playerTransform;
+   // [SerializeField] private Transform playerTransform;
 
     //collider attackCollider or attack range
     //collider chase collider or chase range

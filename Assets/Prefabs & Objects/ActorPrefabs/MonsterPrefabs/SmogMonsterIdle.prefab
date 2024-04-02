@@ -49,9 +49,11 @@ GameObject:
   - component: {fileID: 615113482463824637}
   - component: {fileID: 6913918093050167382}
   - component: {fileID: 5823709353557781660}
+  - component: {fileID: 1078641644227940917}
+  - component: {fileID: 4514425187417883027}
   m_Layer: 0
   m_Name: SmogMonsterIdle
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,8 +88,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5de78d831a2fec741a7db18fead08d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMeshAgent: {fileID: 0}
-  enemyAnimator: {fileID: 0}
+  enemyMeshAgent: {fileID: 8484278331407762736}
+  enemyAnimator: {fileID: 4514425187417883027}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
   celestialPlayer: {fileID: 0}
@@ -202,7 +204,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951011047699265629}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bb953ad42c4eef44ea027a6a96ba9266, type: 3}
   m_Name: 
@@ -254,6 +256,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectToPanTo:
   - {fileID: 11400000, guid: 85c4cc6f5e248eb4aa754b0d40d50f21, type: 2}
+--- !u!114 &1078641644227940917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951011047699265629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f052c2b43435d584fb39ae66b0b2169a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 10
+  currHealth: 0
+  playerTransform: {fileID: 7875459936262026101}
+--- !u!114 &4514425187417883027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951011047699265629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29603e278d459f4ba23a1381a25bb08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 7993782789147946141}
+  IfWalkingHash: 0
+  IfAttackingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
 --- !u!1 &7007120478323709562
 GameObject:
   m_ObjectHideFlags: 0

@@ -75,7 +75,10 @@ public class smogMonsterTree : BTree
           
                 ////PATROL SEQUENCE
                 new Inverter(new CheckIfDying(enemy)),
-                //new TaskPatrol( enemy,rb,enemyMeshAgent, transform, waypoints),
+               // new TaskInvasionPatrol( enemy,rb,enemyMeshAgent, transform, waypoints),
+                //take waypoints that are located with the scene and simply go through those
+                //if they are close to an animal kidnapp
+                // if they are close to a person attack
             }),
 
             new Sequence(new List<BTNode>

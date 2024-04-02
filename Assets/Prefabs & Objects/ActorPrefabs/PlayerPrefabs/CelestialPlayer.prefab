@@ -433,7 +433,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2460830548351178292
 RectTransform:
   m_ObjectHideFlags: 0
@@ -443,14 +443,14 @@ RectTransform:
   m_GameObject: {fileID: 3335018865272805905}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.51387, y: 0.51387, z: 0.51387}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1535612768956697560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -3.4}
   m_SizeDelta: {x: 89, y: 37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1345946994592685247
@@ -784,15 +784,15 @@ RectTransform:
   m_GameObject: {fileID: 7098490275979654792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.51387, y: 0.51387, z: 0.51387}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1535612768956697560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 89, y: 37}
+  m_AnchoredPosition: {x: 0, y: -4.17}
+  m_SizeDelta: {x: 147, y: 147}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5188146051547509145
 CanvasRenderer:
@@ -815,14 +815,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0.68235296}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.68235296}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 745ada5fbe203804b9e4b4995af82f8a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31971e56f0f01aa4dab4992289564964, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -858,6 +858,7 @@ GameObject:
   - component: {fileID: 832134979749964034}
   - component: {fileID: 5015184762695812656}
   - component: {fileID: 2867037157773853061}
+  - component: {fileID: 2887321969620239026}
   m_Layer: 0
   m_Name: CelestialPlayer
   m_TagString: Player2
@@ -1016,7 +1017,7 @@ MonoBehaviour:
   buttonLightningStrike: 0
   buttonMoonTide: 0
   isAttacking: 0
-  canBasicAttack: 0
+  canBasicAttack: 1
   canColdSnap: 1
   canLightningStrike: 1
   canMoonTide: 1
@@ -1201,6 +1202,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 00ca7ae6-0c3f-4315-a148-2da7ae47ad4f
     m_ActionName: CutsceneControls/NextSlide[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 500ce0fc-19bf-4e6e-867f-dead47e87ecf
+    m_ActionName: CelestialPlayerDefault/MakeMoonTide[/Keyboard/4]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: CelestialPlayerDefault
@@ -1289,9 +1294,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyboardUI: {fileID: 0}
-  controlsKeyboardUI: {fileID: 0}
+  controlsKeyboardUI: {fileID: 3335018865272805905}
   controllerUI: {fileID: 0}
-  controlsControllerUI: {fileID: 0}
+  controlsControllerUI: {fileID: 7098490275979654792}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!114 &832134979749964034
 MonoBehaviour:
@@ -1331,6 +1336,20 @@ MonoBehaviour:
   fadeSpeed: 1
   objectsBlockingView: []
 --- !u!114 &2867037157773853061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159944928166958832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46648af44cb0b744dadb0075069e8c43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  celestialPlayer: {fileID: 7093202383440998290}
+  radialFillImage: {fileID: 0}
+--- !u!114 &2887321969620239026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

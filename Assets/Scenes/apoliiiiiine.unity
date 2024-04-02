@@ -23819,6 +23819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2afc984d493fbbd4d966111f2312cfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weatherState: {fileID: 0}
   enemyOilPrefab: {fileID: 4505594305641103696, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
   enemyOilSpawnInterval: 30
 --- !u!4 &1724274062
@@ -25210,10 +25211,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 815085631057488080, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.807
-      objectReference: {fileID: 0}
     - target: {fileID: 2989750651381753438, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
       propertyPath: earthPlayer
       value: 
@@ -25226,6 +25223,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlasticBagMonster
       objectReference: {fileID: 0}
+    - target: {fileID: 5758235279620162026, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2dfa18a1d0e1cca44a70c6feb169e825, type: 2}
     - target: {fileID: 6685533045644963737, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
       propertyPath: m_LocalPosition.x
       value: -65.8
@@ -25266,15 +25267,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6916918732284162177, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7481523953459454751, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4505594305641103696, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1951941733}
   m_SourcePrefab: {fileID: 100100000, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
+--- !u!1 &1951941722 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4505594305641103696, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
+  m_PrefabInstance: {fileID: 1951941721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1951941723 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5758235279620162026, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
+  m_PrefabInstance: {fileID: 1951941721}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1951941733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951941722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41bbbdb8a2bdf3f47a3af0a6f10457e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1951941723}
+  IfWalkingHash: 0
+  IfChokingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
 --- !u!1 &1962712175
 GameObject:
   m_ObjectHideFlags: 0

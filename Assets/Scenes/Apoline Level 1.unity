@@ -1866,17 +1866,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2989750651381753438, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
-      propertyPath: enemyAnimator
-      value: 
-      objectReference: {fileID: 1604046770}
     - target: {fileID: 4505594305641103696, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
       propertyPath: m_Name
       value: PlasticBagMonster
-      objectReference: {fileID: 0}
-    - target: {fileID: 5037506367857578727, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6685533045644963737, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1918,23 +1910,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7481523953459454751, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4505594305641103696, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1604046770}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
---- !u!95 &179073685 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 5758235279620162026, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
-  m_PrefabInstance: {fileID: 175620370}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &182956335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6338,6 +6318,63 @@ Transform:
   - {fileID: 2096393118}
   m_Father: {fileID: 1489933520}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &691958345
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1951011047699265629, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_Name
+      value: SmogMonsterIdle
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -81.33992
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.4953766
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -68.38574
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7875459936262026101, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
 --- !u!1001 &699072233
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11099,7 +11136,6 @@ MonoBehaviour:
   - {fileID: 776612488}
   startingHealth: 100
   currHealth: 100
-  playerTransform: {fileID: 1308052669}
 --- !u!195 &1189678822
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -13376,28 +13412,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 982d8739fe5f8c541abc09db726259e8, type: 3}
   m_PrefabInstance: {fileID: 1593337786}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1604046760 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4505594305641103696, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
-  m_PrefabInstance: {fileID: 175620370}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1604046770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1604046760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c29603e278d459f4ba23a1381a25bb08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 179073685}
-  IfWalkingHash: 0
-  IfAttackingHash: 0
-  IfDyingHash: 0
-  IfTakingHitHash: 0
 --- !u!1 &1604418720
 GameObject:
   m_ObjectHideFlags: 0
@@ -16638,7 +16652,6 @@ MonoBehaviour:
   - {fileID: 1246782178}
   startingHealth: 100
   currHealth: 100
-  playerTransform: {fileID: 1308052669}
 --- !u!195 &2089028148
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -19590,7 +19603,6 @@ MonoBehaviour:
   - {fileID: 316622743}
   startingHealth: 100
   currHealth: 100
-  playerTransform: {fileID: 1308052669}
 --- !u!4 &5902704440999044117
 Transform:
   m_ObjectHideFlags: 0
@@ -20811,3 +20823,4 @@ SceneRoots:
   - {fileID: 278518793}
   - {fileID: 608448172}
   - {fileID: 175620370}
+  - {fileID: 691958345}
