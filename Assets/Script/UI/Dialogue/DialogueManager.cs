@@ -56,8 +56,8 @@ public class DialogueManager : MonoBehaviour
 
     //private float smoothTime = 0.25f;
 
-    [SerializeField] private bool panningOn;
-    [SerializeField] private bool returningToOrigin;
+    [SerializeField] private bool panningOn = false;
+    [SerializeField] private bool returningToOrigin = false;
     private Vector3 moveVelocity;
     private float turnVelocity;
     private bool dialoguePan;
@@ -86,11 +86,11 @@ public class DialogueManager : MonoBehaviour
         if (panningOn)
         {
             //Handle the two types of panning
-            if (currentEvent is DialogueCameraPan)
+            if (activeEvent is DialogueCameraPan)
             {
                 HandleCameraPan((DialogueCameraPan)activeEvent);
             }
-            else if (currentEvent is DialoguePanAndText)
+            else if (activeEvent is DialoguePanAndText)
             {
                 HandleCameraPanDialogue((DialoguePanAndText)activeEvent);
             }
@@ -166,6 +166,7 @@ public class DialogueManager : MonoBehaviour
             events.Enqueue(dialogueEvent);
         }
 
+        eventEnded = true;
         HandleNextEvents();
 
     }
@@ -191,22 +192,26 @@ public class DialogueManager : MonoBehaviour
         }
 
         //HaltCoroutines();
+        currentEvent = events.Peek();
+        activeEvent = currentEvent;
 
         if (midTyping)
         {
             Debug.Log("mid typing");
             HaltTyping();
         }
-        else if(eventEnded)
+        else if(eventEnded || currentEvent.GetIsSkippable())
         {
+            Debug.Log("Running next event");
             eventEnded = false;
-            activeEvent = currentEvent;
             if (currentEvent is DialogueLine)
             {
+                Debug.Log("Next event is a line");
                 DisplayNextDialogueLine((DialogueLine)currentEvent);
             }
             else if (currentEvent is DialogueCameraPan)
             {
+                Debug.Log("Next event is a pan");
                 dialoguePan = false;
                 panningOn = true;
                 earthPlayer.ToggleWaiting(true);
@@ -215,6 +220,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (currentEvent is DialoguePanAndText)
             {
+                Debug.Log("Next event is a line and a pan");
                 DialoguePanAndText panLineEvent = currentEvent as DialoguePanAndText;
 
                 dialoguePan = true;
@@ -225,10 +231,12 @@ public class DialogueManager : MonoBehaviour
             }
             else if (currentEvent is DialogueAnimation)
             {
+                Debug.Log("Next event is an animation");
                 HandleAnimation((DialogueAnimation)currentEvent);
             }
             else if (currentEvent is DialogueMoveEvent)
             {
+                Debug.Log("Next event is movement");
                 movingOn = true;
                 earthPlayer.ToggleWaiting(true);
                 currentMove = (DialogueMoveEvent)currentEvent;
@@ -236,11 +244,11 @@ public class DialogueManager : MonoBehaviour
             }
             else if (currentEvent is DialogueMissionEnd)
             {
+                Debug.Log("Next event is the end of the level");
                 HandleSceneTransition((DialogueMissionEnd)currentEvent);
             }
+            currentEvent = events.Dequeue();
         }
-
-        currentEvent = events.Dequeue();
     }
 
     //Wraps up the dialogue when we run out of events
@@ -332,6 +340,7 @@ public class DialogueManager : MonoBehaviour
     //This runs if the dialogue event is a camera pan, handles the movement
     public void HandleCameraPan(DialogueCameraPan pan)
     {
+        Debug.Log("Panning");
         //Sets states related to panning and dialogue
 
         //Time.timeScale = 1f;
@@ -374,6 +383,7 @@ public class DialogueManager : MonoBehaviour
 
     public void HandleCameraPanDialogue(DialoguePanAndText pan)
     {
+        Debug.Log("Panning and displaying a line");
         DialogueCameraPan cameraPan = pan.dialogueCameraPan;
         //DialogueLine currentLine = pan.dialogueLine;
 
@@ -589,8 +599,10 @@ public class DialogueManager : MonoBehaviour
 
     private void HaltTyping()
     {
+        Debug.Log("Attempting to halt typing");
         if (activeEvent.GetIsSkippable())
         {
+            Debug.Log("Halting typing");
             DialogueLine currentLine = (DialogueLine)activeEvent;
             switch (userSettingsManager.chosenLanguage)
             {

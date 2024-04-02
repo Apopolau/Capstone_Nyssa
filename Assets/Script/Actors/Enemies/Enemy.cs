@@ -123,18 +123,18 @@ public class Enemy : MonoBehaviour
             inSmotherRange = false;
             foreach (GameObject plant in plantSet.Items)
             {
-                Debug.Log("Going through the plants");
+                //Debug.Log("Going through the plants");
                 if (Mathf.Abs((plant.GetComponent<Plant>().transform.position - this.transform.position).magnitude) < distance)
                 {
                     distance = Mathf.Abs((plant.GetComponent<Plant>().transform.position - this.transform.position).magnitude);
                     closestPlant = plant;
                     seesPlant = true;
-                    Debug.Log("Plastic Bag Sees a plant");
+                    //Debug.Log("Plastic Bag Sees a plant");
                 }
             }
             if (distance < smotherRange)
             {
-                Debug.Log("in smother range");
+                //Debug.Log("in smother range");
 
                 inSmotherRange = true;
             }

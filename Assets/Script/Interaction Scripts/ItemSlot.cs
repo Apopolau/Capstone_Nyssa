@@ -63,7 +63,7 @@ public class ItemSlot : MonoBehaviour
 
     public void SetItem(Item newItem)
     {
-        Debug.Log("Item being set: " + newItem.stats.name);
+        //Debug.Log("Item being set: " + newItem.stats.name);
         _item = newItem;
     }
 

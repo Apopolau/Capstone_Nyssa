@@ -8,7 +8,7 @@ public class CanLightningStrike: Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
-        Debug.Log("Can LS Falseeeeeeee");
+        //Debug.Log("Can LS Falseeeeeeee");
         PowerBehaviour attack;
         attack = stateMachine.GetComponent<PowerBehaviour>();
  
@@ -16,7 +16,7 @@ public class CanLightningStrike: Decision
         {
             stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
 
-            Debug.Log("Can LS True");
+            //Debug.Log("Can LS True");
             return true;
         }
         stateMachine.GetComponent<CelestialPlayer>().buttonLightningStrike = false;

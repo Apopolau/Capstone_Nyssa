@@ -149,7 +149,7 @@ public class CelestialPlayer : Player
     {
         if (other.gameObject.tag == "Enemy")
         {
-            Debug.Log(other.transform.gameObject);
+            //Debug.Log(other.transform.gameObject);
             //Player is in range of enemy, in invading monster they can pursue the player
             enemySeen = true;
 
