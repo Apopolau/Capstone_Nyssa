@@ -185,6 +185,7 @@ public class Inventory : ScriptableObject
     //No more slots left
     public bool IsFull()
     {
+        Debug.Log(this.name);
         return items.Count >= itemSlots.Count;
     }
 

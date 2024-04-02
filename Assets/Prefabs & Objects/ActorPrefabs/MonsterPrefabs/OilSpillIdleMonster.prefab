@@ -140,8 +140,8 @@ GameObject:
   - component: {fileID: 8789228387621246342}
   - component: {fileID: 8693387035530993666}
   - component: {fileID: 3919838605589282462}
+  - component: {fileID: 1134255115409707525}
   - component: {fileID: 6889421697060786377}
-  - component: {fileID: 2832246318173308284}
   - component: {fileID: 354479892945874935}
   m_Layer: 0
   m_Name: OilSpillIdleMonster
@@ -207,14 +207,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyMeshAgent: {fileID: 6889421697060786377}
-  playerObj: {fileID: 0}
+  enemyAnimator: {fileID: 0}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
+  celestialPlayer: {fileID: 0}
+  earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: cac8e7c2926be4b48b8f35ca1264ab97, type: 2}
-  player: {fileID: 0}
-  isFirst: 0
+  eventManager: {fileID: 0}
   isDying: 0
+  isStaggered: 0
+  isColliding: 0
+  seesPlant: 0
+  inSmotherRange: 0
+  smotherInitiated: 0
+  plantLocation: {x: 0, y: 0, z: 0}
   seesPlayer: 0
   inAttackRange: 0
+  attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  smotherRange: 0
+  attackRange: 0
+  sightRange: 0
+  hasAnimal: 0
+  isKidnapping: 0
 --- !u!135 &3919838605589282462
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -236,6 +251,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1134255115409707525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5913674526504397533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06cee73ab613d174da0ccda7f83d78b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!195 &6889421697060786377
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -258,25 +285,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2832246318173308284
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5913674526504397533}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12eedac5f0d09cf4cbdb8eb006a69188, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waypoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  startingHealth: 100
-  currHealth: 100
-  playerTransform: {fileID: 0}
 --- !u!114 &354479892945874935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,7 +298,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
-  ifAttackingHash: 0
+  IfWalkingHash: 0
+  IfAttackingHash: 0
+  IfDyingHash: 0
+  IfTakingHitHash: 0
 --- !u!1 &8344188139315059696
 GameObject:
   m_ObjectHideFlags: 0

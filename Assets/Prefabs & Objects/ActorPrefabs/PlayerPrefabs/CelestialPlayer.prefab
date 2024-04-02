@@ -153,14 +153,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2590418954938022080}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0.6924608, z: -0, w: 0.7214556}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4044475409540052984}
   m_Father: {fileID: 4687744544096372904}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -87.65, z: 0}
 --- !u!1 &2953831253588448032
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,7 +996,7 @@ MonoBehaviour:
   isDying: 0
   isRespawning: 0
   interacting: 0
-  OrigPos: {x: -64.5517, y: 0, z: -105}
+  OrigPos: {x: 346, y: -0.00002288818, z: 29}
   mainCamera: {fileID: 0}
   tileMask:
     serializedVersion: 2
@@ -1192,6 +1192,10 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: f4e10880-f83b-4802-a8cb-9b930a8c3f47
     m_ActionName: CelestialPlayerDefault/MakeSmog[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 00ca7ae6-0c3f-4315-a148-2da7ae47ad4f
+    m_ActionName: CutsceneControls/NextSlide[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: CelestialPlayerDefault
@@ -1279,7 +1283,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyboardUI: {fileID: 0}
+  controlsKeyboardUI: {fileID: 0}
   controllerUI: {fileID: 0}
+  controlsControllerUI: {fileID: 0}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!114 &832134979749964034
 MonoBehaviour:

@@ -16,7 +16,6 @@ public class Hedgehog : Animal
         isHiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
-        //levelProgress = managerObject.GetComponent<LevelProgress>();
     }
 
     private void OnEnable()
@@ -43,6 +42,7 @@ public class Hedgehog : Animal
     void Update()
     {
         CheckLevelState();
+        SetWalkingState();
     }
 
     override protected IEnumerator UpdateAnimalState()

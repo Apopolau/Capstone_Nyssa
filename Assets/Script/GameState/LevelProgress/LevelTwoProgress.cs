@@ -11,12 +11,15 @@ public class LevelTwoProgress : LevelProgress
     bool hasSavedHedgehog;
     //Defeated the monster on the short path
     bool hasFlowerSeeds;
+    bool hasMoonTide;
     //Cleared the rock slide
 
     //Defeated the monster up the path
     bool cleanedSidePath;
     //Cleaned the water at the top of the path
     bool hasShutOffDevice;
+
+
 
     protected override void OnAllObjectivesComplete()
     {
@@ -31,5 +34,10 @@ public class LevelTwoProgress : LevelProgress
     protected override void OnPlayerLoss()
     {
 
+    }
+
+    public bool GetMoonTideStatus()
+    {
+        return hasMoonTide;
     }
 }

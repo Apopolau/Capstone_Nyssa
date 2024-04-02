@@ -36,7 +36,8 @@ public class DialogueManager : MonoBehaviour
     private Sprite currentSprite;
     [SerializeField] private DialogueCameraPan panToOrigin;
 
-    public float typingSpeed = 0.5f;
+    public float typingSpeed = 0.25f;
+    bool midTyping = false;
 
     //Camera speed variables
     //Zoom variables, zooming in and out
@@ -55,7 +56,12 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField] private bool panningOn;
     [SerializeField] private bool returningToOrigin;
+    private Vector3 moveVelocity;
+    private float turnVelocity;
     private bool dialoguePan;
+
+    private bool movingOn = false;
+    DialogueMoveEvent currentMove;
 
     //WaitForSecondsRealtime panTime = new WaitForSecondsRealtime(3f);
 
@@ -91,13 +97,17 @@ public class DialogueManager : MonoBehaviour
         {
             ReturnCameraToOrigin();
         }
+        if (movingOn)
+        {
+            HandleMoving(currentMove);
+        }
     }
 
     private void FixedUpdate()
     {
-        
+
     }
-    
+
     private void SetReferences()
     {
         for (int i = 0; i < playerSet.Items.Count; i++)
@@ -128,7 +138,7 @@ public class DialogueManager : MonoBehaviour
         // Toggle other UI elements visibility
         uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
 
-        if(earthPlayer == null || celestialPlayer == null)
+        if (earthPlayer == null || celestialPlayer == null)
         {
             SetReferences();
         }
@@ -161,7 +171,7 @@ public class DialogueManager : MonoBehaviour
     public void HandleDialogueContinue()
     {
 
-        if(!panningOn && !returningToOrigin)
+        if (!panningOn && !returningToOrigin)
         {
             HandleNextEvents();
         }
@@ -178,44 +188,62 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        //HaltCoroutines();
+
+        if (midTyping)
+        {
+            Debug.Log("mid typing");
+            HaltTyping();
+        }
+        else
+        {
+            if (currentEvent is DialogueLine)
+            {
+                DisplayNextDialogueLine((DialogueLine)currentEvent);
+            }
+            else if (currentEvent is DialogueCameraPan)
+            {
+                dialoguePan = false;
+                panningOn = true;
+                earthPlayer.ToggleWaiting(true);
+                StartCoroutine(TurnPanOff((DialogueCameraPan)currentEvent));
+                //HandleCameraPan((DialogueCameraPan)currentEvent);
+            }
+            else if (currentEvent is DialoguePanAndText)
+            {
+                DialoguePanAndText panLineEvent = currentEvent as DialoguePanAndText;
+
+                dialoguePan = true;
+                panningOn = true;
+                earthPlayer.ToggleWaiting(true);
+                DisplayNextDialogueLine(panLineEvent.dialogueLine);
+                StartCoroutine(TurnPanOff(panLineEvent));
+            }
+            else if (currentEvent is DialogueAnimation)
+            {
+                HandleAnimation((DialogueAnimation)currentEvent);
+            }
+            else if (currentEvent is DialogueMoveEvent)
+            {
+                movingOn = true;
+                earthPlayer.ToggleWaiting(true);
+                currentMove = (DialogueMoveEvent)currentEvent;
+                StartCoroutine(TurnMoveOff(currentMove));
+            }
+            else if (currentEvent is DialogueMissionEnd)
+            {
+                HandleSceneTransition((DialogueMissionEnd)currentEvent);
+            }
+        }
+
         currentEvent = events.Dequeue();
-
-        if (currentEvent is DialogueLine)
-        {
-            DisplayNextDialogueLine((DialogueLine)currentEvent);
-        }
-        else if (currentEvent is DialogueCameraPan)
-        {
-            dialoguePan = false;
-            panningOn = true;
-            earthPlayer.ToggleWaiting(true);
-            StartCoroutine(TurnPanOff((DialogueCameraPan)currentEvent));
-            //HandleCameraPan((DialogueCameraPan)currentEvent);
-        }
-        else if(currentEvent is DialoguePanAndText)
-        {
-            DialoguePanAndText panLineEvent = currentEvent as DialoguePanAndText;
-
-            dialoguePan = true;
-            panningOn = true;
-            earthPlayer.ToggleWaiting(true);
-            DisplayNextDialogueLine(panLineEvent.dialogueLine);
-            StartCoroutine(TurnPanOff(panLineEvent));
-        }
-        else if(currentEvent is DialogueAnimation)
-        {
-            HandleAnimation((DialogueAnimation)currentEvent);
-        }
-        else if (currentEvent is DialogueMissionEnd)
-        {
-            HandleSceneTransition((DialogueMissionEnd)currentEvent);
-        }
-
     }
 
     //Wraps up the dialogue when we run out of events
     public void EndDialogue()
     {
+        HaltCoroutines();
+        HaltTyping();
         ReturnCameraToOrigin();
         if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
         {
@@ -243,56 +271,57 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     //When displaying a dialogue line, handles the text
     //When displaying a dialogue line, handles the text
-public void DisplayNextDialogueLine(DialogueLine currentLine)
-{
-    if (!dialogueBox.activeSelf)
+    public void DisplayNextDialogueLine(DialogueLine currentLine)
     {
-        dialogueBox.SetActive(true);
-    }
-    else
-    {
-        isDialogueActive = true;
-    }
+        Debug.Log("displaying next dialogue");
+        if (!dialogueBox.activeSelf)
+        {
+            dialogueBox.SetActive(true);
+        }
+        else
+        {
+            isDialogueActive = true;
+        }
 
-    // Clear the dialogue areas
-    dialogueArea.text = "";
+        // Clear the dialogue areas
+        dialogueArea.text = "";
 
-    // Clear both character icons
-    characterIconLeft.sprite = null;
-    characterIconRight.sprite = null;
+        // Clear both character icons
+        characterIconLeft.sprite = null;
+        characterIconRight.sprite = null;
 
-    AssignCharacter(currentLine);
+        AssignCharacter(currentLine);
 
-    if (currentCharacter.isLeft)
-    {
-        characterIconLeft.sprite = currentSprite;
-        // Fade in characterIconLeft
-        characterIconLeft.CrossFadeAlpha(1f, 0f, true);
-        // Fade out characterIconRight
-        characterIconRight.CrossFadeAlpha(0f, 0f, true);
+        if (currentCharacter.isLeft)
+        {
+            characterIconLeft.sprite = currentSprite;
+            // Fade in characterIconLeft
+            characterIconLeft.CrossFadeAlpha(1f, 0f, true);
+            // Fade out characterIconRight
+            characterIconRight.CrossFadeAlpha(0f, 0f, true);
+        }
+        else if (!currentCharacter.isLeft)
+        {
+            characterIconRight.sprite = currentSprite;
+            // Fade in characterIconRight
+            characterIconRight.CrossFadeAlpha(1f, 0f, true);
+            // Fade out characterIconLeft
+            characterIconLeft.CrossFadeAlpha(0f, 0f, true);
+        }
+
+        // Determine which language to display based on the user's language setting
+        switch (userSettingsManager.chosenLanguage)
+        {
+            case UserSettingsManager.GameLanguage.ENGLISH:
+                // Display English dialogue
+                StartCoroutine(TypeSentence(dialogueArea, currentLine.line));
+                break;
+            case UserSettingsManager.GameLanguage.FRENCH:
+                // Display French dialogue
+                StartCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
+                break;
+        }
     }
-    else if (!currentCharacter.isLeft)
-    {
-        characterIconRight.sprite = currentSprite;
-        // Fade in characterIconRight
-        characterIconRight.CrossFadeAlpha(1f, 0f, true);
-        // Fade out characterIconLeft
-        characterIconLeft.CrossFadeAlpha(0f, 0f, true);
-    }
-
-    // Determine which language to display based on the user's language setting
-    switch (userSettingsManager.chosenLanguage)
-    {
-        case UserSettingsManager.GameLanguage.ENGLISH:
-            // Display English dialogue
-            StartCoroutine(TypeSentence(dialogueArea, currentLine.line));
-            break;
-        case UserSettingsManager.GameLanguage.FRENCH:
-            // Display French dialogue
-            StartCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
-            break;
-    }
-}
 
 
     //This runs if the dialogue event is a camera pan, handles the movement
@@ -337,10 +366,11 @@ public void DisplayNextDialogueLine(DialogueLine currentLine)
         }
     }
 
+
     public void HandleCameraPanDialogue(DialoguePanAndText pan)
     {
         DialogueCameraPan cameraPan = pan.dialogueCameraPan;
-        DialogueLine currentLine = pan.dialogueLine;
+        //DialogueLine currentLine = pan.dialogueLine;
 
         if (!dialogueBox.activeSelf) // Check if the dialogue box is currently active
         {
@@ -351,46 +381,6 @@ public void DisplayNextDialogueLine(DialogueLine currentLine)
         //We want to switch to single screen for dialogue I think
         if (split.Manager == 1)
         {
-
-        }
-
-        // Clear the dialogue areas
-        dialogueArea.text = "";
-
-        // Clear both character icons
-        characterIconLeft.sprite = null;
-        characterIconRight.sprite = null;
-
-        AssignCharacter(currentLine);
-
-        if (currentCharacter.isLeft)
-        {
-            characterIconLeft.sprite = currentSprite;
-            // Fade in characterIconLeft
-            characterIconLeft.CrossFadeAlpha(1f, 0f, true);
-            // Fade out characterIconRight
-            characterIconRight.CrossFadeAlpha(0f, 0f, true);
-        }
-        else if (!currentCharacter.isLeft)
-        {
-            characterIconRight.sprite = currentSprite;
-            // Fade in characterIconRight
-            characterIconRight.CrossFadeAlpha(1f, 0f, true);
-            // Fade out characterIconLeft
-            characterIconLeft.CrossFadeAlpha(0f, 0f, true);
-        }
-
-        // Determine which language to display based on the user's language setting
-        switch (userSettingsManager.chosenLanguage)
-        {
-            case UserSettingsManager.GameLanguage.ENGLISH:
-                // Display English dialogue
-                dialogueArea.text = currentLine.line;
-                break;
-            case UserSettingsManager.GameLanguage.FRENCH:
-                // Display French dialogue
-                dialogueArea.text = currentLine.lineFR;
-                break;
 
         }
 
@@ -423,6 +413,20 @@ public void DisplayNextDialogueLine(DialogueLine currentLine)
         StartCoroutine(RunAnimation(animation));
 
         HandleNextEvents();
+    }
+
+    public void HandleMoving(DialogueMoveEvent moveEvent)
+    {
+        GameObject objectToMove = moveEvent.GetObjectToMove();
+        if (moveEvent.GetPosition() != Vector3.zero)
+        {
+            objectToMove.transform.position = Vector3.SmoothDamp(objectToMove.transform.position, moveEvent.GetPosition(), ref moveVelocity, moveEvent.GetMovementSpeed());
+        }
+        if (!Quaternion.Equals(moveEvent.GetRotation(), 0))
+        {
+            objectToMove.transform.rotation = Quaternion.Slerp(objectToMove.transform.rotation, moveEvent.GetRotation(), moveEvent.GetRotationSpeed());
+        }
+
     }
 
     //Handles moving on to the next level/cutscene once the final dialogue of the mission is done
@@ -466,6 +470,14 @@ public void DisplayNextDialogueLine(DialogueLine currentLine)
 
         earthPlayer.ToggleWaiting(false);
         panningOn = false;
+    }
+
+    public IEnumerator TurnMoveOff(DialogueMoveEvent moveEvent)
+    {
+        yield return moveEvent.GetAnimationTimer();
+
+        earthPlayer.ToggleWaiting(false);
+        movingOn = false;
     }
 
     /// <summary>
@@ -530,12 +542,66 @@ public void DisplayNextDialogueLine(DialogueLine currentLine)
     //display letter by letter
     IEnumerator TypeSentence(TextMeshProUGUI dialogueArea, string line)
     {
+        midTyping = true;
         dialogueArea.text = ""; // Clear the text initially
         foreach (char letter in line.ToCharArray())
         {
             dialogueArea.text += letter;
-            yield return new WaitForSeconds(typingSpeed); // Wait for typingSpeed seconds before showing the next letter
+            yield return new WaitForSecondsRealtime(typingSpeed); // Wait for typingSpeed seconds before showing the next letter
         }
+        midTyping = false;
+    }
+
+    private void HaltCoroutines()
+    {
+        Debug.Log("Halting coroutines");
+        if(currentEvent is DialogueCameraPan)
+        {
+            DialogueCameraPan currentpan = (DialogueCameraPan)currentEvent;
+            StopCoroutine(TurnPanOff(currentpan));
+        }
+        else if(currentEvent is DialoguePanAndText)
+        {
+            DialoguePanAndText currentpan = (DialoguePanAndText)currentEvent;
+            StopCoroutine(TurnPanOff(currentpan));
+            HaltTyping();
+        }
+        else if(currentEvent is DialogueLine)
+        {
+            HaltTyping();
+        }
+        /*
+        else if(currentEvent is DialogueMoveEvent)
+        {
+            HaltMove();
+        }*/
+    }
+
+    private void HaltTyping()
+    {
+        if (currentEvent.GetIsSkippable())
+        {
+            DialogueLine currentLine = (DialogueLine)currentEvent;
+            switch (userSettingsManager.chosenLanguage)
+            {
+                case UserSettingsManager.GameLanguage.ENGLISH:
+                    // Display English dialogue
+                    StopCoroutine(TypeSentence(dialogueArea, currentLine.line));
+                    dialogueArea.text = currentLine.line;
+                    break;
+                case UserSettingsManager.GameLanguage.FRENCH:
+                    // Display French dialogue
+                    StopCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
+                    dialogueArea.text = currentLine.lineFR;
+                    break;
+            }
+            midTyping = false;
+        }
+    }
+
+    private void HaltMove()
+    {
+        
     }
 
     //Handles setting the camera back to its previous state when the dialogue is over

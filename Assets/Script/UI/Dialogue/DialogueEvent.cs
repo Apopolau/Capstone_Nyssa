@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DialogueEvent : ScriptableObject
 {
-    protected bool skippable;
+    [SerializeField] protected bool skippable;
 
     public bool GetIsSkippable()
     {

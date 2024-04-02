@@ -15,7 +15,7 @@ public class FoxEncounterTrigger : MonoBehaviour
         {
             foxEncounter1.TriggerDialogue();
             foxTrigger2.SetActive(true);
-            //Set fox behaviour in motion
+            fox.GetComponent<Fox>().GoToTriggerSpot();
             // Destroy the GameObject collider
             Destroy(gameObject);
         }
