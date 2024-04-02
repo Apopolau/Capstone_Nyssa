@@ -15386,7 +15386,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b4e9bce327a76940a0db16c5f5b91eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fox: {fileID: 0}
+  fox: {fileID: 5771508904376783839}
   foxEncounter2: {fileID: 1901093709}
 --- !u!1 &1902514280
 GameObject:
@@ -16224,6 +16224,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1247048518}
     m_Modifications:
+    - target: {fileID: 616051488619230335, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: dialogueManager
+      value: 
+      objectReference: {fileID: 2814006587503948986}
     - target: {fileID: 4687744544096372904, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 346.3412
@@ -16296,6 +16300,10 @@ PrefabInstance:
       propertyPath: moonTideFill
       value: 
       objectReference: {fileID: 1113230467}
+    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: canBasicAttack
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: celestPlayerDpad
       value: 
@@ -16926,6 +16934,11 @@ Transform:
   - {fileID: 514033684}
   m_Father: {fileID: 866213375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2105172134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1766973543993312774, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+  m_PrefabInstance: {fileID: 2814006587503948983}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2105622737 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5643593239073719392, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
@@ -17617,6 +17630,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3255432201064989319, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+      propertyPath: keyboardUIObjects.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255432201064989319, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+      propertyPath: keyboardUIObjects.Array.data[5]
+      value: 
+      objectReference: {fileID: 330094292}
+    - target: {fileID: 3255432201064989319, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+      propertyPath: keyboardUIObjects.Array.data[7]
+      value: 
+      objectReference: {fileID: 2105172134}
+    - target: {fileID: 3255432201064989319, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+      propertyPath: keyboardUIObjects.Array.data[8]
+      value: 
+      objectReference: {fileID: 2105172134}
+    - target: {fileID: 3255432201064989319, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+      propertyPath: controllerUIObjects.Array.data[6]
+      value: 
+      objectReference: {fileID: 330094293}
     - target: {fileID: 3259905175071341328, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -17829,6 +17862,18 @@ PrefabInstance:
       propertyPath: mainCam
       value: 
       objectReference: {fileID: 1527470863}
+    - target: {fileID: 7708078953061159800, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+      propertyPath: panningOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708078953061159800, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+      propertyPath: typingSpeed
+      value: 0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 7708078953061159800, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+      propertyPath: returningToOrigin
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8671899429714427612, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

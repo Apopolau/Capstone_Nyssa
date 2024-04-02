@@ -108,7 +108,7 @@ public class CelestialPlayerControls : MonoBehaviour
         }
         else if (dialogueManager != null)
         {
-            controls.DialogueControls.Enable();
+            //controls.DialogueControls.Enable();
         }
     }
 
