@@ -13,6 +13,8 @@ public class DayNightCycle : MonoBehaviour
 
     [Header("Time of Day")]
     [SerializeField, Range(0, 24)] private float timeOfDay;
+    [SerializeField] private float timeRaw;
+    [SerializeField] private float timeScale;
 
     [Header("World Light Presets")]
     [SerializeField] private Gradient directionalLightColor;
@@ -70,8 +72,12 @@ public class DayNightCycle : MonoBehaviour
     {
         if (Application.isPlaying && timeOfDayChanges)
         {
+            /*
             timeOfDay += Time.deltaTime;
             timeOfDay %= 24;
+            */
+            timeRaw += Time.deltaTime;
+            timeOfDay = timeRaw % (24 * timeScale);
             UpdateLighting();
         }
 
@@ -116,8 +122,8 @@ public class DayNightCycle : MonoBehaviour
         RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeOfDay);
         directionalLight.color = directionalLightColor.Evaluate(timeOfDay);
         float H, S, V;
-        Color.RGBToHSV((directionalLightIntensity.Evaluate(timeOfDay)), out H, out S, out V);
-        directionalLight.intensity =V;
+        Color.RGBToHSV(directionalLightIntensity.Evaluate(timeOfDay), out H, out S, out V);
+        directionalLight.intensity = V;
         //print(directionalLightColor.Evaluate(timeFraction));
         //print(V);
     }

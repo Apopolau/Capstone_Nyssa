@@ -27,8 +27,6 @@ public class Duck : Animal
         isHiding = false;
         animalAnimator = GetComponentInChildren<AnimalAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
-        //panToDuck.SetPanToThis(this.gameObject);
-        //levelProgress = managerObject.GetComponent<LevelProgress>();
     }
 
     private void OnEnable()
@@ -54,6 +52,7 @@ public class Duck : Animal
     private void Update()
     {
         CheckLevelState();
+        SetWalkingState();
     }
 
     override protected IEnumerator UpdateAnimalState()

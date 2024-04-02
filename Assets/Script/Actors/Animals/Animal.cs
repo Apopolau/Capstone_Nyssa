@@ -65,6 +65,18 @@ public abstract class Animal : MonoBehaviour
     public abstract bool GetThirstyState();
     public abstract bool GetBoredState();
 
+    public void SetWalkingState()
+    {
+        if (GetComponent<Rigidbody>().velocity.magnitude > new Vector3(0.1f, 0.1f, 0.1f).magnitude)
+        {
+            GetComponent<AnimalAnimator>().animator.SetBool(GetComponent<AnimalAnimator>().IfWalkingHash, true);
+        }
+        else if (!GetComponent<NavMeshAgent>().enabled)
+        {
+            GetComponent<AnimalAnimator>().animator.SetBool(GetComponent<AnimalAnimator>().IfWalkingHash, false);
+        }
+    }
+
     public void Unstuck()
     {
         isStuck = false;

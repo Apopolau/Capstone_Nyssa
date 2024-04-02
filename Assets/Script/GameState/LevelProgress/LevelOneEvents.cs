@@ -118,6 +118,19 @@ public class LevelOneEvents : LevelEventManager
             fourthAreaTiles.Add(childTransform.gameObject);
         }
 
+        foreach (GameObject player in playerSet.Items)
+        {
+            if (player.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = player.GetComponent<CelestialPlayer>();
+            }
+            else if (player.GetComponent<EarthPlayer>())
+            {
+                earthPlayer = player.GetComponent<EarthPlayer>();
+                earthPlayer.inventory = levelOneProgress.GetInventory();
+            }
+        }
+
         duck1.SetActive(true);
         duck2.SetActive(true);
         dialogueManager.SetActive(true);
@@ -632,7 +645,6 @@ public class LevelOneEvents : LevelEventManager
         allObjectivesMetDialogue.TriggerDialogue();
         leaveTriggerObj.SetActive(true);
     }
-
 
 
     /// <summary>

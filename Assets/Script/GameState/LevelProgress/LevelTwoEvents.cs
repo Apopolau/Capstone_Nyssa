@@ -9,6 +9,8 @@ public class LevelTwoEvents : LevelEventManager
     [Header("Scene Data")]
     [SerializeField] LevelTwoProgress levelTwoProgress;
     [SerializeField] GameObject dialogueManager;
+    [SerializeField] Item grassSeed;
+    [SerializeField] Item treeSeed;
 
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
@@ -32,7 +34,6 @@ public class LevelTwoEvents : LevelEventManager
     private bool secondAreaClear = false;
     private bool thirdAreaClear = false;
     private bool fourthAreaClear = false;
-    private bool fifthAreaClear = false;
 
     private bool staticMonstersDefeated = false;
     private bool spawnsDestroyed = false;
@@ -74,6 +75,7 @@ public class LevelTwoEvents : LevelEventManager
     private bool runDefeatDialogue = false;
     private bool runReadyToLeaveDialogue = false;
     private bool hasEncounteredLadder = false;
+    private bool hasFoundNyssa = false;
 
     WaitForSeconds delayTime = new WaitForSeconds(0.1f);
     WaitForSeconds extraDelayTime = new WaitForSeconds(1);
@@ -87,8 +89,6 @@ public class LevelTwoEvents : LevelEventManager
     private bool areaThreeMTwoMet = false;
     private bool areaFourMOneMet = false;
     private bool areaFourMTwoMet = false;
-    private bool areaFiveMOneMet = false;
-    private bool areaFiveMTwoMet = false;
 
     [Header("Visual Update Assets")]
     [SerializeField] private GameObject facility;
@@ -131,11 +131,16 @@ public class LevelTwoEvents : LevelEventManager
             else if (player.GetComponent<EarthPlayer>())
             {
                 earthPlayer = player.GetComponent<EarthPlayer>();
+                PopulateInventory();
+                earthPlayer.inventory = levelTwoProgress.GetInventory();
             }
         }
 
         hog1.SetActive(true);
         hog2.SetActive(true);
+        hog3.SetActive(true);
+        fox.SetActive(true);
+        nyssa.SetActive(true);
         
 
         InitializeTerrain();
@@ -372,7 +377,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaOneMOneMet)
             {
-                //Put coords here, call ApplyTextureChangeOverArea()
+                ApplyTextureChangeOverArea(172, 250, 6, 60, 8, 1, 1);
                 areaOneMOneMet = true;
             }
         }
@@ -380,18 +385,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaOneMTwoMet)
             {
-                /*
-                //follow x axis
-                for (int i = -100; i < -2; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -114; j < -10; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
-                */
+                ApplyTextureChangeOverArea(172, 250, 6, 60, 8, 2, 1);
                 areaOneMTwoMet = true;
             }
         }
@@ -413,18 +407,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaTwoMOneMet)
             {
-                /*
-                //follow x axis
-                for (int i = 7; i < 84; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -135; j < -21; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
-                */
+                ApplyTextureChangeOverArea(-147, 120, -45, 70, 8, 1, 1);
                 areaTwoMOneMet = true;
             }
         }
@@ -432,18 +415,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaTwoMTwoMet)
             {
-                /*
-                //follow x axis
-                for (int i = 7; i < 84; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -135; j < -21; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
-                */
+                ApplyTextureChangeOverArea(-147, 120, -45, 70, 8, 2, 1);
                 areaTwoMTwoMet = true;
             }
         }
@@ -465,18 +437,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaThreeMOneMet)
             {
-                /*
-                //follow x axis
-                for (int i = -100; i < -16; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -100; j < 0; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
-                */
+                ApplyTextureChangeOverArea(45, 165, -160, -56, 8, 1, 1);
                 areaThreeMOneMet = true;
             }
         }
@@ -484,18 +445,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaThreeMTwoMet)
             {
-                /*
-                //follow x axis
-                for (int i = -100; i < -16; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -100; j < 0; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
-                */
+                ApplyTextureChangeOverArea(45, 165, -160, -56, 8, 2, 1);
                 areaThreeMTwoMet = true;
             }
         }
@@ -517,29 +467,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaFourMOneMet)
             {
-                //Sludge pump area
-                //follow x axis
-                /*
-                for (int i = 96; i < 209; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -55; j < 85; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
-                //Middle platform
-                for (int i = 2; i < 81; i += 8)
-                {
-                    //follow z axis
-                    for (int j = 4; j < 92; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[1]);
-                    }
-                }
-                */
+                ApplyTextureChangeOverArea(-335, -175, -90, 45, 8, 1, 1);
                 areaFourMOneMet = true;
             }
         }
@@ -547,40 +475,9 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaFourMTwoMet)
             {
-                //Sludge pump area
-                //follow x axis
-                /*
-                for (int i = 96; i < 209; i += 8)
-                {
-                    //follow z axis
-                    for (int j = -55; j < 85; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
-                //Middle platform
-                for (int i = 2; i < 81; i += 8)
-                {
-                    //follow z axis
-                    for (int j = 4; j < 92; j += 8)
-                    {
-                        Vector3 pos = new Vector3(i, 0, j);
-                        ChangeTexture(pos, layers[2]);
-                    }
-                }
-                */
-
-                /*
-                factory.GetComponent<MeshRenderer>().material = cleanFactoryMaterial;
-                foreach (GameObject go in pipes)
-                {
-                    go.GetComponent<MeshRenderer>().material = cleanPipeMaterial;
-                }
-                tank.GetComponent<MeshRenderer>().material = cleanTankMaterial;
+                ApplyTextureChangeOverArea(-335, -175, -90, 45, 8, 1, 1);
 
                 areaFourMTwoMet = true;
-                */
             }
         }
     }
@@ -659,7 +556,7 @@ public class LevelTwoEvents : LevelEventManager
             }
         }
 
-        fifthAreaClear = true;
+        fourthAreaClear = true;
         SetFriendCompletion();
         hog2.GetComponent<Hedgehog>().Unstuck();
         hog3.GetComponent<Hedgehog>().Unstuck();
@@ -705,6 +602,16 @@ public class LevelTwoEvents : LevelEventManager
             }
         }
         SetWaterCompletion();
+    }
+
+
+    ///
+    /// MISC
+    /// 
+    private void PopulateInventory()
+    {
+        levelTwoProgress.GetInventory().AddItem(grassSeed, grassSeed.quantity);
+        levelTwoProgress.GetInventory().AddItem(treeSeed, treeSeed.quantity);
     }
 
     /// <summary>

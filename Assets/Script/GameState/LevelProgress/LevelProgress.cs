@@ -8,6 +8,7 @@ public abstract class LevelProgress : ScriptableObject
 {
     [SerializeField] protected GameObjectRuntimeSet plantSet;
     [SerializeField] protected TextMeshProUGUI objectiveText;
+    [SerializeField] protected Inventory inventory;
 
     protected int currentPlayerLevel;
 
@@ -228,6 +229,11 @@ public abstract class LevelProgress : ScriptableObject
     public bool GetFriendStatus()
     {
         return animalHasFriend;
+    }
+
+    public Inventory GetInventory()
+    {
+        return inventory;
     }
 
     ///
