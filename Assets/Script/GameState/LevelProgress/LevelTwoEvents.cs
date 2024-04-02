@@ -12,6 +12,7 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] GameObject inventorySlotManager;
     [SerializeField] Item grassSeed;
     [SerializeField] Item treeSeed;
+    [SerializeField] private PowerBehaviour power;
 
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
@@ -50,6 +51,8 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] TaskListManager task8;
 
     private GameObject flowerSeedSpawn;
+    private GameObject powerDrop;
+
 
     [Header("Dialogue triggers")]
     [SerializeField] GameObject leaveTriggerObj;
@@ -125,11 +128,12 @@ public class LevelTwoEvents : LevelEventManager
 
         inventorySlotManager.SetActive(true);
 
-        foreach(GameObject player in playerSet.Items)
+        foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<CelestialPlayer>())
             {
                 celestialPlayer = player.GetComponent<CelestialPlayer>();
+                SetCelestialPowers();
             }
             else if (player.GetComponent<EarthPlayer>())
             {
@@ -144,7 +148,7 @@ public class LevelTwoEvents : LevelEventManager
         hog3.SetActive(true);
         fox.SetActive(true);
         nyssa.SetActive(true);
-        
+
 
         InitializeTerrain();
         if (!hasFlipped)
@@ -167,7 +171,7 @@ public class LevelTwoEvents : LevelEventManager
             EvaluateMonsterDefeats();
         }
 
-        if(EvaluateLevelCompletion() && !runReadyToLeaveDialogue)
+        if (EvaluateLevelCompletion() && !runReadyToLeaveDialogue)
         {
             OnReadyToLeave();
         }
@@ -297,7 +301,7 @@ public class LevelTwoEvents : LevelEventManager
         //Set an evaluation for spawns here
 
         //Finally if both are true, set this to true
-        if(staticMonstersDefeated && spawnsDestroyed)
+        if (staticMonstersDefeated && spawnsDestroyed)
         {
             SetSafetyCompletion();
         }
@@ -487,18 +491,15 @@ public class LevelTwoEvents : LevelEventManager
 
     public void OnFirstMonsterDefeated()
     {
-        
+
         foreach (GameObject go in hedgehogAreaTiles)
         {
-            if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
-        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, enemyPos, Quaternion.identity);
-        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
-        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
+
         levelTwoProgress.animalHasShelter = true;
 
         firstMonsterDeadDialouge.TriggerDialogue();
@@ -519,6 +520,7 @@ public class LevelTwoEvents : LevelEventManager
             }
         }
         secondMonsterDeadDialouge.TriggerDialogue();
+        powerDrop = Instantiate(power.MoonTideAttackStats.powerDropPrefab, dyingEnemy.transform.position, Quaternion.identity);
         keyMonsterDefeatCount++;
         secondAreaClear = true;
         //Cause Celeste's tidal wave to drop here
@@ -543,6 +545,11 @@ public class LevelTwoEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+
+        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
+        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, enemyPos, Quaternion.identity);
+        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
+        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
 
         thirdAreaClear = true;
         fourthAreaClear = true;
@@ -571,7 +578,7 @@ public class LevelTwoEvents : LevelEventManager
     {
         keyMonsterDefeatCount -= 1;
         area3MonsterCount -= 1;
-        if(area3MonsterCount <= 0)
+        if (area3MonsterCount <= 0)
         {
             OnThirdMonsterDefeated();
         }
@@ -587,14 +594,14 @@ public class LevelTwoEvents : LevelEventManager
         }
     }
 
-    
+
     public void OnFacilityShutOff()
     {
         //river.GetComponent<Renderer>().material = cleanWaterMaterial;
         lake.GetComponent<Renderer>().material = cleanWaterMaterial;
-        foreach(GameObject go in mainAreaTiles)
+        foreach (GameObject go in mainAreaTiles)
         {
-            if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
@@ -618,6 +625,14 @@ public class LevelTwoEvents : LevelEventManager
     {
         levelTwoProgress.GetInventory().AddItem(grassSeed, grassSeed.quantity);
         levelTwoProgress.GetInventory().AddItem(treeSeed, treeSeed.quantity);
+    }
+
+    private void SetCelestialPowers()
+    {
+        celestialPlayer.GetComponent<PowerBehaviour>().setEnabled(power.ColdSnapStats);
+        celestialPlayer.GetComponent<PowerBehaviour>().setEnabled(power.LightningStats);
+        celestialPlayer.GetComponent<PowerBehaviour>().setDisabled(power.MoonTideAttackStats);
+        levelTwoProgress.SetPowers(false);
     }
 
     /// <summary>

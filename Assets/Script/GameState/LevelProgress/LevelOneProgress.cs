@@ -8,6 +8,12 @@ public class LevelOneProgress : LevelProgress
     //Drag this from the plant prefabs folder
     [SerializeField]public GameObject treeSeedPrefab;
     [SerializeField] public GameObject grassSeedPrefab;
+    private bool hasColdsnap;
+
+    public override void SetPowers(bool active)
+    {
+        hasColdsnap = active;
+    }
 
     protected override void OnAllObjectivesComplete()
     {

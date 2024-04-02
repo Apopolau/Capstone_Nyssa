@@ -8,6 +8,11 @@ public class LevelThreeProgress : LevelProgress
     bool hasOpenedBridge1;
     bool hasOpenedBridge2;
 
+    public override void SetPowers(bool active)
+    {
+        //
+    }
+
     protected override void OnAllObjectivesComplete()
     {
 

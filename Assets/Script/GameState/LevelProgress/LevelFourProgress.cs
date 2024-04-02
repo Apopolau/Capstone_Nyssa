@@ -29,6 +29,11 @@ public class LevelFourProgress : LevelProgress
     }
     */
 
+    public override void SetPowers(bool active)
+    {
+        //
+    }
+
     protected override void OnAllObjectivesComplete()
     {
 

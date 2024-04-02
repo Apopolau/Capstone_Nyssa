@@ -123,6 +123,7 @@ public class LevelOneEvents : LevelEventManager
             if (player.GetComponent<CelestialPlayer>())
             {
                 celestialPlayer = player.GetComponent<CelestialPlayer>();
+                SetCelestialPowers();
             }
             else if (player.GetComponent<EarthPlayer>())
             {
@@ -631,6 +632,15 @@ public class LevelOneEvents : LevelEventManager
     public void OnBridgeBuilt()
     {
         task7.CrossOutTask();
+    }
+
+
+    private void SetCelestialPowers()
+    {
+        celestialPlayer.GetComponent<PowerBehaviour>().setDisabled(power.ColdSnapStats);
+        celestialPlayer.GetComponent<PowerBehaviour>().setEnabled(power.LightningStats);
+        celestialPlayer.GetComponent<PowerBehaviour>().setDisabled(power.MoonTideAttackStats);
+        levelOneProgress.SetPowers(false);
     }
 
 

@@ -237,6 +237,11 @@ public abstract class LevelProgress : ScriptableObject
     }
 
     ///
+    ///HELPER FUNCTIONS
+    ///
+    public abstract void SetPowers(bool active);
+
+    ///
     ///FUNCTIONS FOR WRAPPING UP THE LEVEL
     ///
     protected abstract void OnAllObjectivesComplete();

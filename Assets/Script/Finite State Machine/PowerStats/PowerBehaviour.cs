@@ -36,5 +36,12 @@ public class PowerBehaviour : MonoBehaviour
        
     }
 
+    public void setDisabled(PowerStats powerStats)
+    {
+        Debug.Log("Stat is enabled");
+        powerStats.isEnabled = false;
+
+    }
+
 
 }

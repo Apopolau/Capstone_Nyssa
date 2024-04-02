@@ -7,6 +7,7 @@ public class PowerDrop : Interactable
 {
     public CelestialPlayer.Power powerDrop;
     public PowerBehaviour powerBehaviour;
+    [SerializeField] private LevelProgress levelProgress;
     /// <summary>
     /// start a dialogue
     /// Tell Celest ow to use it
@@ -66,10 +67,14 @@ public class PowerDrop : Interactable
        if (powerDrop==CelestialPlayer.Power.COLDSNAP)
         {
             Debug.Log("return cold snap stats");
-            
-          
-            
+            levelProgress.SetPowers(true);
             return powerBehaviour.ColdSnapStats;
+        }
+       if(powerDrop == CelestialPlayer.Power.MOONTIDE)
+        {
+            Debug.Log("return cold snap stats");
+            levelProgress.SetPowers(true);
+            return powerBehaviour.MoonTideAttackStats;
         }
         return null;
     }

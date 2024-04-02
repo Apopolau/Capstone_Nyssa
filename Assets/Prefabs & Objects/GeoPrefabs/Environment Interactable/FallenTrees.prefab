@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6012692173586563631}
   - component: {fileID: 8642703920897805587}
   - component: {fileID: -7582965136113442535}
+  - component: {fileID: 6749053627314181864}
   - component: {fileID: 3363045644916158158}
   m_Layer: 0
   m_Name: FallenTrees
@@ -105,7 +106,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a8e34cd98000bf4d815388169550cb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  approachDebrisDialogue: {fileID: -7582965136113442535}
+  levelTwoProgress: {fileID: 11400000, guid: d72188606e7e6e9409fddb57f1bcf001, type: 2}
+  prePowerApproachDialogue: {fileID: -7582965136113442535}
+  postPowerApproachDialogue: {fileID: 6749053627314181864}
 --- !u!114 &-7582965136113442535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +122,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 11400000, guid: 7c57ba386aa5fe046968d2b705882277, type: 2}
+--- !u!114 &6749053627314181864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9036249067086619259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogue: {fileID: 11400000, guid: 8d0b1b3ae7811a44a9c3e16b905f487f, type: 2}
 --- !u!135 &3363045644916158158
 SphereCollider:
   m_ObjectHideFlags: 0

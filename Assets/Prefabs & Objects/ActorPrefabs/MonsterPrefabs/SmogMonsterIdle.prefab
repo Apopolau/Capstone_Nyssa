@@ -41,16 +41,15 @@ GameObject:
   m_Component:
   - component: {fileID: 7875459936262026101}
   - component: {fileID: 519360258743655180}
-  - component: {fileID: 7145633093003380795}
   - component: {fileID: 8484278331407762736}
   - component: {fileID: 7465645748006121048}
   - component: {fileID: 5207513874751091066}
-  - component: {fileID: -8025315994935271608}
-  - component: {fileID: 615113482463824637}
-  - component: {fileID: 6913918093050167382}
-  - component: {fileID: 5823709353557781660}
   - component: {fileID: 1078641644227940917}
   - component: {fileID: 4514425187417883027}
+  - component: {fileID: 6913918093050167382}
+  - component: {fileID: 7145633093003380795}
+  - component: {fileID: 615113482463824637}
+  - component: {fileID: 5823709353557781660}
   m_Layer: 0
   m_Name: SmogMonsterIdle
   m_TagString: Enemy
@@ -112,19 +111,6 @@ MonoBehaviour:
   sightRange: 50
   hasAnimal: 0
   isKidnapping: 0
---- !u!114 &7145633093003380795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951011047699265629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameObjectRuntimeSet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
 --- !u!195 &8484278331407762736
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -193,69 +179,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 4
+  m_Radius: 6.756052
   m_Height: 25
   m_Direction: 1
-  m_Center: {x: 0, y: 12, z: 0}
---- !u!114 &-8025315994935271608
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951011047699265629}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb953ad42c4eef44ea027a6a96ba9266, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  IfWalkingHash: 0
-  IfAttackingHash: 0
-  IfDyingHash: 0
-  IfTakingHitHash: 0
---- !u!114 &615113482463824637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951011047699265629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a38c898db3ddeb44f8c1f078dc6aaf77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationToSet:
-  - {fileID: 11400000, guid: ffa0832bbc2ad614fb7ab856f872ec02, type: 2}
---- !u!114 &6913918093050167382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951011047699265629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d294fb0d0f162d44bfbd80440072a51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
-  target: {fileID: 8738957182932924120}
---- !u!114 &5823709353557781660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1951011047699265629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17fccc9f1a1f3af438f153e72921b30d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToPanTo:
-  - {fileID: 11400000, guid: 85c4cc6f5e248eb4aa754b0d40d50f21, type: 2}
+  m_Center: {x: -0.2611704, y: 11.999996, z: 0.008256912}
 --- !u!114 &1078641644227940917
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,6 +215,61 @@ MonoBehaviour:
   IfAttackingHash: 0
   IfDyingHash: 0
   IfTakingHitHash: 0
+--- !u!114 &6913918093050167382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951011047699265629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d294fb0d0f162d44bfbd80440072a51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
+  target: {fileID: 8738957182932924120}
+--- !u!114 &7145633093003380795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951011047699265629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectRuntimeSet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
+--- !u!114 &615113482463824637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951011047699265629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38c898db3ddeb44f8c1f078dc6aaf77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationToSet:
+  - {fileID: 11400000, guid: ffa0832bbc2ad614fb7ab856f872ec02, type: 2}
+--- !u!114 &5823709353557781660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951011047699265629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17fccc9f1a1f3af438f153e72921b30d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToPanTo:
+  - {fileID: 11400000, guid: 85c4cc6f5e248eb4aa754b0d40d50f21, type: 2}
 --- !u!1 &7007120478323709562
 GameObject:
   m_ObjectHideFlags: 0

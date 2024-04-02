@@ -36,6 +36,11 @@ public class LevelTwoProgress : LevelProgress
 
     }
 
+    public override void SetPowers(bool active)
+    {
+        hasMoonTide = active;
+    }
+
     public bool GetMoonTideStatus()
     {
         return hasMoonTide;

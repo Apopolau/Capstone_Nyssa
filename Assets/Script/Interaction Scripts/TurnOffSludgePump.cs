@@ -103,11 +103,10 @@ public class TurnOffSludgePump : Interactable
         }
 
         // Check if earthPlayer enterted area
-        if (p1IsInRange && !earthDialogueHasPlayed)
+        if (p1IsInRange && (!earthDialogueHasPlayed && !celestialDialogueHasPlayed) && other is CapsuleCollider)
         {   
             sludgeDialougeEarth.TriggerDialogue();
             earthDialogueHasPlayed = true;
-            celestialDialogueHasPlayed = true;
         }
         else if (p2IsInRange && (!earthDialogueHasPlayed && !celestialDialogueHasPlayed) && other is CapsuleCollider)
         {

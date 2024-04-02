@@ -17,7 +17,7 @@ public class FoxEncounterTrigger : MonoBehaviour
             foxTrigger2.SetActive(true);
             fox.GetComponent<Fox>().GoToTriggerSpot();
             // Destroy the GameObject collider
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }

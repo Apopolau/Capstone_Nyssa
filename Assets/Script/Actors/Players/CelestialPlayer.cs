@@ -96,7 +96,7 @@ public class CelestialPlayer : Player
 
     private void Awake()
     {
-        OrigPos = new Vector3(20, 7, -97);
+        OrigPos = this.transform.position;
         celestialAnimator = GetComponent<CelestialPlayerAnimator>();
         celestialAgent = GetComponent<NavMeshAgent>();
         celestialAgent.enabled = false;
