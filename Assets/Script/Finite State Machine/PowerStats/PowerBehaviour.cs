@@ -29,8 +29,9 @@ public class PowerBehaviour : MonoBehaviour
         return powerStats.rechargeFloatTimer;
     }
 
-    void setEnabled(PowerStats powerStats)
+    public void setEnabled(PowerStats powerStats)
     {
+        Debug.Log("Stat is enabled");
         powerStats.isEnabled = true;
        
     }

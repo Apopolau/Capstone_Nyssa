@@ -5,14 +5,28 @@ using UnityEngine.UI;
 
 public class PollutionLevelManager : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] GameObjectRuntimeSet buildSet;
     [SerializeField] GameObjectRuntimeSet monsterSet;
+    [SerializeField] GameObject RainParticleSystem;
 
+    [Header("Pollution Icon")]
+    [SerializeField] private Image earthIcon;
+    [SerializeField] private Sprite happyLevelImage;
+    [SerializeField] private Sprite sadLevelImage;
+    [SerializeField] private Sprite desperateLevelImage;
+
+    [Header("Bar References")]
     [SerializeField] private Image pollutionLevelBar;
+
+    [Header("Stats")]
     [SerializeField] private int basePollutionLevel;
     [SerializeField] private int maxPollution;
     [SerializeField] private float acidRainThreshold;
     [SerializeField] private float acidRainHardThreshold;
+    [SerializeField] private Color c_cleanRain;
+    [SerializeField] private Color c_lightAcid;
+    [SerializeField] private Color c_heavyAcid;
 
     WaitForSeconds checkDelay = new WaitForSeconds(0.5f);
 
@@ -25,12 +39,6 @@ public class PollutionLevelManager : MonoBehaviour
     {
         CalculatePollutionLevel();
         StartCoroutine(PollutionCalcRoutine());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private IEnumerator PollutionCalcRoutine()
@@ -54,14 +62,17 @@ public class PollutionLevelManager : MonoBehaviour
         if (pollutionPercent >= acidRainThreshold && pollutionPercent < acidRainHardThreshold)
         {
             weatherState.acidRainState = WeatherState.AcidRainState.LIGHT;
+            earthIcon.sprite = sadLevelImage;
         }
         else if (pollutionPercent >= acidRainHardThreshold)
         {
             weatherState.acidRainState = WeatherState.AcidRainState.HEAVY;
+            earthIcon.sprite = desperateLevelImage;
         }
         else
         {
             weatherState.acidRainState = WeatherState.AcidRainState.NONE;
+            earthIcon.sprite = happyLevelImage;
         }
 
     }

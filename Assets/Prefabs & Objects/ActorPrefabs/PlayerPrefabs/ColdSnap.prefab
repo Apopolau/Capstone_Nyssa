@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4970401022697550319}
   - component: {fileID: 6077892874087667797}
   - component: {fileID: 478099915860998399}
-  - component: {fileID: 1214571143874858505}
+  - component: {fileID: 3341248202097375316}
   m_Layer: 0
   m_Name: ColdSnap
   m_TagString: Untagged
@@ -107,12 +107,12 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1214571143874858505
+--- !u!114 &3341248202097375316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4978352977368840990}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60cf5c9443e094746a31c5a387e2696e, type: 3}
+  m_Script: {fileID: 11500000, guid: 984e0ee1afdf14248b13da2aa2b14f26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
@@ -130,10 +130,3 @@ MonoBehaviour:
   p2IsInRange: 0
   isCelestialInteractable: 0
   uiObject: {fileID: 0}
-  item:
-    stats: {fileID: 0}
-    quantity: 0
-  itemStats: {fileID: 0}
-  inventory: {fileID: 0}
-  quantity: 0
-  isBeingAbsorbed: 0

@@ -19,14 +19,7 @@ public class CanLightningStrike: Decision
             Debug.Log("Can LS True");
             return true;
         }
-       /* else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking || !attack.LightningStats.isEnabled || !stateMachine.GetComponent<CelestialPlayer>().canLightningStrike)
-        { 
-            Debug.Log("Can LS False");
-     
-
-      
-            return false;
-        }*/
+        stateMachine.GetComponent<CelestialPlayer>().buttonLightningStrike = false;
         return false;
     }
 }

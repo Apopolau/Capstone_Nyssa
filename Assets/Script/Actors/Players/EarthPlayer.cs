@@ -15,6 +15,7 @@ public class EarthPlayer : Player
     [SerializeField] public Camera mainCamera;
     [SerializeField] public TextMeshProUGUI displayText;
     [SerializeField] public Image selectTileText;
+    [SerializeField] public Image playerWarningBG;
 
     // Reference to the UI controller script
     public EarthCharacterUIController uiController;
@@ -943,8 +944,18 @@ public class EarthPlayer : Player
     private IEnumerator ThrowPlayerWarning(string textInfo)
     {
         displayText.text = textInfo;
+        // Check if the Image component is disabled
+        if (!playerWarningBG.enabled)
+        {
+            playerWarningBG.enabled = true;
+        }
+      
+        playerWarningBG.gameObject.SetActive(true);
         yield return plantTime;
         displayText.text = "";
+        playerWarningBG.enabled = false;
+       
+
     }
 
     public void SetTurnTarget(Vector3 target)

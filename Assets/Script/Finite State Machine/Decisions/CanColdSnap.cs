@@ -20,11 +20,8 @@ public class CanColdSnap : Decision
             Debug.Log("Can CS True");
             return true;
         }
-      /*  else if (stateMachine.GetComponent<CelestialPlayer>().buttonColdSnap && !attack.ColdSnapStats.isEnabled || stateMachine.GetComponent<CelestialPlayer>().buttonColdSnap && !stateMachine.GetComponent<CelestialPlayer>().canColdSnap)
-        {
-          
-            return false;
-        }*/
+
+        stateMachine.GetComponent<CelestialPlayer>().buttonColdSnap = false;
         return false;
     }
 }

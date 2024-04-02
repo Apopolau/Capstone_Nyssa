@@ -23,7 +23,9 @@ public class CanMoonTide : Decision
             Debug.Log("Can MY True");
             return true;
         }
-    
+        stateMachine.GetComponent<CelestialPlayer>().buttonMoonTide = false;
+
+
         return false;
     }
 }

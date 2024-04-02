@@ -8,6 +8,7 @@ public class LevelTwoEvents : LevelEventManager
 {
     [Header("Scene Data")]
     [SerializeField] LevelTwoProgress levelTwoProgress;
+    [SerializeField] GameObject dialogueManager;
 
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
@@ -15,13 +16,15 @@ public class LevelTwoEvents : LevelEventManager
 
     [Header("Tile grids")]
     [SerializeField] GameObject tileGrid;
-    [SerializeField] GameObject mainAreaGrid;
     [SerializeField] GameObject hedgehogAreaGrid;
+    [SerializeField] GameObject mainAreaGrid;
+    [SerializeField] GameObject farLeftGrid;
     [SerializeField] GameObject loggingAreaGrid;
     [SerializeField] GameObject buildingAreaGrid;
 
     List<GameObject> mainAreaTiles = new List<GameObject>();
     List<GameObject> hedgehogAreaTiles = new List<GameObject>();
+    List<GameObject> farLeftTiles = new List<GameObject>();
     List<GameObject> loggingAreaTiles = new List<GameObject>();
     List<GameObject> buildingAreaTiles = new List<GameObject>();
 
@@ -29,6 +32,10 @@ public class LevelTwoEvents : LevelEventManager
     private bool secondAreaClear = false;
     private bool thirdAreaClear = false;
     private bool fourthAreaClear = false;
+    private bool fifthAreaClear = false;
+
+    private bool staticMonstersDefeated = false;
+    private bool spawnsDestroyed = false;
 
     [Header("Objective tasks")]
     [SerializeField] TaskListManager task1;
@@ -54,10 +61,15 @@ public class LevelTwoEvents : LevelEventManager
     [Header("Hedgehogs")]
     [SerializeField] private GameObject hog1;
     [SerializeField] private GameObject hog2;
+    [SerializeField] private GameObject hog3;
+    [SerializeField] private GameObject fox;
     [SerializeField] private GameObject nyssa;
 
     int keyMonsterDefeatCount;
-    int monsterCount = 4;
+    int monsterCount = 7;
+
+    int area3MonsterCount = 2;
+    int area4MonsterCount = 3;
 
     private bool runDefeatDialogue = false;
     private bool runReadyToLeaveDialogue = false;
@@ -75,23 +87,31 @@ public class LevelTwoEvents : LevelEventManager
     private bool areaThreeMTwoMet = false;
     private bool areaFourMOneMet = false;
     private bool areaFourMTwoMet = false;
+    private bool areaFiveMOneMet = false;
+    private bool areaFiveMTwoMet = false;
 
     [Header("Visual Update Assets")]
     [SerializeField] private GameObject facility;
+    [SerializeField] private GameObject loggingBuilding;
 
     // Start is called before the first frame update
     void Start()
     {
-        foreach (Transform childTransform in mainAreaGrid.transform)
-        {
-            mainAreaTiles.Add(childTransform.gameObject);
-        }
-        
         foreach (Transform childTransform in hedgehogAreaGrid.transform)
         {
             hedgehogAreaTiles.Add(childTransform.gameObject);
         }
-        
+
+        foreach (Transform childTransform in mainAreaGrid.transform)
+        {
+            mainAreaTiles.Add(childTransform.gameObject);
+        }
+
+        foreach (Transform childTransform in farLeftGrid.transform)
+        {
+            farLeftTiles.Add(childTransform.gameObject);
+        }
+
         foreach (Transform childTransform in loggingAreaGrid.transform)
         {
             loggingAreaTiles.Add(childTransform.gameObject);
@@ -116,8 +136,13 @@ public class LevelTwoEvents : LevelEventManager
 
         hog1.SetActive(true);
         hog2.SetActive(true);
+        
 
         InitializeTerrain();
+        if (!hasFlipped)
+        {
+            DuplicateTerrain();
+        }
 
         StartCoroutine(EvaluateFoodLevel());
         StartCoroutine(EvaluateBeautyLevel());
@@ -257,10 +282,16 @@ public class LevelTwoEvents : LevelEventManager
     {
         if (keyMonsterDefeatCount == monsterCount)
         {
-            task7.CrossOutTask();
-            SetSafetyCompletion();
+            staticMonstersDefeated = true;
             runDefeatDialogue = true;
             allMonstersDefeatedDialogue.TriggerDialogue();
+        }
+        //Set an evaluation for spawns here
+
+        //Finally if both are true, set this to true
+        if(staticMonstersDefeated && spawnsDestroyed)
+        {
+            SetSafetyCompletion();
         }
     }
 
@@ -557,7 +588,7 @@ public class LevelTwoEvents : LevelEventManager
     public void OnFirstMonsterDefeated()
     {
         
-        foreach (GameObject go in mainAreaTiles)
+        foreach (GameObject go in hedgehogAreaTiles)
         {
             if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
             {
@@ -580,22 +611,6 @@ public class LevelTwoEvents : LevelEventManager
     public void OnSecondMonsterDefeated()
     {
 
-        foreach (GameObject go in hedgehogAreaTiles)
-        {
-            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
-            {
-                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
-            }
-        }
-        /*
-        levelTwoProgress.shelter = true;
-        task3.CrossOutTask();
-        */
-    }
-
-    public void OnThirdMonsterDefeated()
-    {
-
         foreach (GameObject go in loggingAreaTiles)
         {
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
@@ -603,10 +618,34 @@ public class LevelTwoEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        /*
-        levelTwoProgress.shelter = true;
-        task3.CrossOutTask();
-        */
+        secondMonsterDeadDialouge.TriggerDialogue();
+        keyMonsterDefeatCount++;
+        secondAreaClear = true;
+        //Cause Celeste's tidal wave to drop here
+    }
+
+    public void OnThirdMonsterDefeated()
+    {
+        foreach (GameObject go in mainAreaTiles)
+        {
+            Debug.Log(go);
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+
+        foreach (GameObject go in farLeftTiles)
+        {
+            Debug.Log(go);
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+
+        thirdAreaClear = true;
+        fourthAreaClear = true;
     }
 
     public void OnFourthMonsterDefeated()
@@ -619,35 +658,54 @@ public class LevelTwoEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        /*
-        levelTwoProgress.shelter = true;
-        task3.CrossOutTask();
-        */
+
+        fifthAreaClear = true;
+        SetFriendCompletion();
+        hog2.GetComponent<Hedgehog>().Unstuck();
+        hog3.GetComponent<Hedgehog>().Unstuck();
     }
 
-    /*
-    public void OnPumpShutOff()
+    public void CountDownArea3Monsters()
+    {
+        keyMonsterDefeatCount -= 1;
+        area3MonsterCount -= 1;
+        if(area3MonsterCount <= 0)
+        {
+            OnThirdMonsterDefeated();
+        }
+    }
+
+    public void CountDownArea4Monsters()
+    {
+        keyMonsterDefeatCount -= 1;
+        area4MonsterCount -= 1;
+        if (area4MonsterCount <= 0)
+        {
+            OnFourthMonsterDefeated();
+        }
+    }
+
+    
+    public void OnFacilityShutOff()
     {
         //river.GetComponent<Renderer>().material = cleanWaterMaterial;
         lake.GetComponent<Renderer>().material = cleanWaterMaterial;
-        foreach(GameObject go in firstAreaTiles)
+        foreach(GameObject go in mainAreaTiles)
         {
             if(go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        foreach (GameObject go in thirdAreaTiles)
+        foreach (GameObject go in buildingAreaTiles)
         {
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        levelTwoProgress.cleanWater = true;
-        task2.CrossOutTask();
+        SetWaterCompletion();
     }
-    */
 
     /// <summary>
     /// WHEN THE PLAYER HAS COMPLETED ALL OBJECTIVES

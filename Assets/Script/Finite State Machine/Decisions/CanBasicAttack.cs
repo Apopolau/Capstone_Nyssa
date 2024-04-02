@@ -21,13 +21,7 @@ public class CanBasicAttack: Decision
             stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
             return true;
         }
-       /* else if (!stateMachine.GetComponent<CelestialPlayer>().isAttacking || !attack.BasicAttackStats.isEnabled || !stateMachine.GetComponent<CelestialPlayer>().canBasicAttack)
-        {
-    
-            Debug.Log("Can Basic False");
-
-            return false;
-        }*/
+        stateMachine.GetComponent<CelestialPlayer>().buttonBasicAttack=false;
         return false;
     }
 }

@@ -20,4 +20,14 @@ public class WeatherState : ScriptableObject
     {
         dayTime = isDay;
     }
+
+    public TimeOfDay GetTimeOfDay()
+    {
+        return currentTimeOfDay;
+    }
+
+    public void SetTimeOfDay(TimeOfDay timeOfDay)
+    {
+        currentTimeOfDay = timeOfDay;
+    }
 }

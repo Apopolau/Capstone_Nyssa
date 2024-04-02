@@ -16,6 +16,10 @@ public class CelestialPlayer : Player
     [SerializeField] private GameObject celestPlayerDpad;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
+    [SerializeField] public Image coldSnapFill;
+    [SerializeField] public Image lightingStrikeFill;
+    [SerializeField] public Image moonTideFill;
+    [SerializeField] public Image rainFill;
     private NavMeshAgent celestialAgent;
 
     [Header("Rain System")]
@@ -114,6 +118,8 @@ public class CelestialPlayer : Player
         basicCoolDownTime =powerBehaviour. BasicAttackStats.rechargeTimer;
         lightningCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
         staff =GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
+
+        StartCoroutine(CoolDownImageFill(coldSnapFill));
     }
 
 
@@ -326,7 +332,7 @@ public class CelestialPlayer : Player
         //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
 
         Debug.Log("moontide is animated");
-        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y , gameObject.transform.position.z), Quaternion.identity);
 
         //Attacking animation of player
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
@@ -380,7 +386,6 @@ public class CelestialPlayer : Player
     public void ColdSnapAttack()
     {
 
-        
 
         bool playerIsDead;
         if (enemyTarget && powerInUse == Power.COLDSNAP && canColdSnap == false)
@@ -597,16 +602,13 @@ public class CelestialPlayer : Player
     public void ResetColdSnap()
     {
         StartCoroutine(ColdSnapCoolDownTime());
-       
-    
-
+        StartCoroutine(CoolDownImageFill(coldSnapFill));
     }
 
     public IEnumerator ColdSnapCoolDownTime()
     {
         Debug.Log("coldsnaptimer reset");
-        //yield return new WaitForSeconds(55f);
-       // yield return new WaitForSeconds(55f);
+        buttonBasicAttack = false;
        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
         Debug.Log("coldsnaptimer copy");
         canColdSnap = true;
@@ -624,7 +626,7 @@ public class CelestialPlayer : Player
     public IEnumerator LightningCoolDownTime()
     {
         Debug.Log("Lightning time reset");
-  
+        buttonLightningStrike = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats));
         Debug.Log("Lightning timer copy");
        canLightningStrike = true;
@@ -639,7 +641,7 @@ public class CelestialPlayer : Player
     public IEnumerator BasicCoolDownTime()
     {
         Debug.Log("Basic time reset");
-
+        buttonBasicAttack = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats));
         Debug.Log("Basic timer copy");
         canBasicAttack = true;
@@ -649,20 +651,46 @@ public class CelestialPlayer : Player
     public void ResetMoonTide()
     {
         StartCoroutine(MoonTideCoolDownTime());
-
-
-
     }
 
-    public IEnumerator MoonTideCoolDownTime()
-    {
-        Debug.Log("MoonTideReset");
-        //yield return new WaitForSeconds(55f);
-        // yield return new WaitForSeconds(55f);
-        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats));
-        Debug.Log("MoonTidetimer copy");
-        canMoonTide= true;
-    }
+
+
+
+        private IEnumerator CoolDownImageFill(Image fillImage)
+        {
+            float cooldownDuration = powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
+            float timer = 0f;
+            float startFillAmount = 1f;
+            float endFillAmount = 0f;
+
+            // Gradually decrease fill amount over cooldown duration
+            while (timer < cooldownDuration)
+            {
+                float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
+                fillImage.fillAmount = fillAmount;
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            // Ensure fill amount is exactly 0
+            fillImage.fillAmount = endFillAmount;
+        }
+
+
+
+
+
+
+
+        public IEnumerator MoonTideCoolDownTime()
+        {
+            Debug.Log("MoonTideReset");
+        buttonMoonTide = false;
+            yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats));
+            Debug.Log("MoonTidetimer copy");
+            canMoonTide = true;
+        }
+       
 
 
 
@@ -719,4 +747,6 @@ public class CelestialPlayer : Player
                  image.material.color = image.color;
             }
     }
+
+
 }
