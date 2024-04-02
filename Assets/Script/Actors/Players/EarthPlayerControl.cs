@@ -130,7 +130,7 @@ public class EarthPlayerControl : MonoBehaviour
         }
         else if (dialogueManager != null)
         {
-            controls.DialogueControls.Enable();
+           // controls.DialogueControls.Enable();
         }
     }
 

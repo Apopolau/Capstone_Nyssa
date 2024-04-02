@@ -18,6 +18,7 @@ public class DialogueManager : MonoBehaviour
 
     private Queue<DialogueEvent> events;
     private DialogueEvent currentEvent;
+    private DialogueEvent activeEvent;
 
     public bool isDialogueActive = false;
     public GameObject dialogueBox; // Reference to the entire dialogue box
@@ -38,6 +39,7 @@ public class DialogueManager : MonoBehaviour
 
     public float typingSpeed = 0.25f;
     bool midTyping = false;
+    bool eventEnded = true;
 
     //Camera speed variables
     //Zoom variables, zooming in and out
@@ -86,11 +88,11 @@ public class DialogueManager : MonoBehaviour
             //Handle the two types of panning
             if (currentEvent is DialogueCameraPan)
             {
-                HandleCameraPan((DialogueCameraPan)currentEvent);
+                HandleCameraPan((DialogueCameraPan)activeEvent);
             }
             else if (currentEvent is DialoguePanAndText)
             {
-                HandleCameraPanDialogue((DialoguePanAndText)currentEvent);
+                HandleCameraPanDialogue((DialoguePanAndText)activeEvent);
             }
         }
         if (returningToOrigin)
@@ -195,8 +197,10 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("mid typing");
             HaltTyping();
         }
-        else
+        else if(eventEnded)
         {
+            eventEnded = false;
+            activeEvent = currentEvent;
             if (currentEvent is DialogueLine)
             {
                 DisplayNextDialogueLine((DialogueLine)currentEvent);
@@ -321,6 +325,7 @@ public class DialogueManager : MonoBehaviour
                 StartCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
                 break;
         }
+        eventEnded = true;
     }
 
 
@@ -449,6 +454,7 @@ public class DialogueManager : MonoBehaviour
         yield return animation.GetAnimationTime();
         animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), false);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.Normal;
+        eventEnded = true;
     }
 
     //Handles moving to the next dialogue event once the animation time is up
@@ -460,6 +466,7 @@ public class DialogueManager : MonoBehaviour
         panningOn = false;
         if (!dialoguePan)
         {
+            eventEnded = true;
             HandleNextEvents();
         }
     }
@@ -468,6 +475,7 @@ public class DialogueManager : MonoBehaviour
     {
         yield return pan.dialogueCameraPan.GetAnimationTime();
 
+        eventEnded = true;
         earthPlayer.ToggleWaiting(false);
         panningOn = false;
     }
@@ -478,6 +486,7 @@ public class DialogueManager : MonoBehaviour
 
         earthPlayer.ToggleWaiting(false);
         movingOn = false;
+        eventEnded = true;
     }
 
     /// <summary>
@@ -550,23 +559,24 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(typingSpeed); // Wait for typingSpeed seconds before showing the next letter
         }
         midTyping = false;
+        eventEnded = true;
     }
 
     private void HaltCoroutines()
     {
         Debug.Log("Halting coroutines");
-        if(currentEvent is DialogueCameraPan)
+        if(activeEvent is DialogueCameraPan)
         {
-            DialogueCameraPan currentpan = (DialogueCameraPan)currentEvent;
+            DialogueCameraPan currentpan = (DialogueCameraPan)activeEvent;
             StopCoroutine(TurnPanOff(currentpan));
         }
-        else if(currentEvent is DialoguePanAndText)
+        else if(activeEvent is DialoguePanAndText)
         {
-            DialoguePanAndText currentpan = (DialoguePanAndText)currentEvent;
+            DialoguePanAndText currentpan = (DialoguePanAndText)activeEvent;
             StopCoroutine(TurnPanOff(currentpan));
             HaltTyping();
         }
-        else if(currentEvent is DialogueLine)
+        else if(activeEvent is DialogueLine)
         {
             HaltTyping();
         }
@@ -579,9 +589,9 @@ public class DialogueManager : MonoBehaviour
 
     private void HaltTyping()
     {
-        if (currentEvent.GetIsSkippable())
+        if (activeEvent.GetIsSkippable())
         {
-            DialogueLine currentLine = (DialogueLine)currentEvent;
+            DialogueLine currentLine = (DialogueLine)activeEvent;
             switch (userSettingsManager.chosenLanguage)
             {
                 case UserSettingsManager.GameLanguage.ENGLISH:

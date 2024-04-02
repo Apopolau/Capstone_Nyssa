@@ -77,7 +77,7 @@ public class DayNightCycle : MonoBehaviour
             timeOfDay %= 24;
             */
             timeRaw += Time.deltaTime;
-            timeOfDay = timeRaw % (24 * timeScale);
+            timeOfDay = timeRaw %= (24 * timeScale);
             UpdateLighting();
         }
 
