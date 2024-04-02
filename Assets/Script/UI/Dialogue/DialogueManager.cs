@@ -202,16 +202,13 @@ public class DialogueManager : MonoBehaviour
         }
         else if(eventEnded || currentEvent.GetIsSkippable())
         {
-            Debug.Log("Running next event");
             eventEnded = false;
             if (currentEvent is DialogueLine)
             {
-                Debug.Log("Next event is a line");
                 DisplayNextDialogueLine((DialogueLine)currentEvent);
             }
             else if (currentEvent is DialogueCameraPan)
             {
-                Debug.Log("Next event is a pan");
                 dialoguePan = false;
                 panningOn = true;
                 earthPlayer.ToggleWaiting(true);
@@ -220,7 +217,6 @@ public class DialogueManager : MonoBehaviour
             }
             else if (currentEvent is DialoguePanAndText)
             {
-                Debug.Log("Next event is a line and a pan");
                 DialoguePanAndText panLineEvent = currentEvent as DialoguePanAndText;
 
                 dialoguePan = true;
@@ -231,7 +227,6 @@ public class DialogueManager : MonoBehaviour
             }
             else if (currentEvent is DialogueAnimation)
             {
-                Debug.Log("Next event is an animation");
                 HandleAnimation((DialogueAnimation)currentEvent);
             }
             else if (currentEvent is DialogueMoveEvent)
@@ -244,7 +239,6 @@ public class DialogueManager : MonoBehaviour
             }
             else if (currentEvent is DialogueMissionEnd)
             {
-                Debug.Log("Next event is the end of the level");
                 HandleSceneTransition((DialogueMissionEnd)currentEvent);
             }
             currentEvent = events.Dequeue();
@@ -285,7 +279,6 @@ public class DialogueManager : MonoBehaviour
     //When displaying a dialogue line, handles the text
     public void DisplayNextDialogueLine(DialogueLine currentLine)
     {
-        Debug.Log("displaying next dialogue");
         if (!dialogueBox.activeSelf)
         {
             dialogueBox.SetActive(true);
@@ -340,7 +333,6 @@ public class DialogueManager : MonoBehaviour
     //This runs if the dialogue event is a camera pan, handles the movement
     public void HandleCameraPan(DialogueCameraPan pan)
     {
-        Debug.Log("Panning");
         //Sets states related to panning and dialogue
 
         //Time.timeScale = 1f;
@@ -383,7 +375,6 @@ public class DialogueManager : MonoBehaviour
 
     public void HandleCameraPanDialogue(DialoguePanAndText pan)
     {
-        Debug.Log("Panning and displaying a line");
         DialogueCameraPan cameraPan = pan.dialogueCameraPan;
         //DialogueLine currentLine = pan.dialogueLine;
 

@@ -17,6 +17,7 @@ public class EarthCharacterUIController : MonoBehaviour
     //Earth player icons keyboard, celestial player icons keyboard, heal icon, thorn icon
     public GameObject[] keyboardUIObjects; // UI elements for keyboard control
     public GameObject[] controllerUIObjects; // UI elements for controller control
+    public GameObject inventory;
 
     // Function to restore UI elements
     public void RestoreUI(GameObject targetGameObject)
@@ -32,17 +33,6 @@ public class EarthCharacterUIController : MonoBehaviour
 
     public void DarkenOverlay(GameObject targetGameObject)
     {
-        /* // Check if the Image component is disabled
-        if (!darkOverlay.enabled)
-        {
-            // Enable the Image component
-            darkOverlay.enabled = true;
-        }
-
-        // Activate the GameObject
-        darkOverlay.gameObject.SetActive(true);
-        */
-
         if (targetGameObject != null)
         {
             Image[] images = targetGameObject.GetComponentsInChildren<Image>();
@@ -71,6 +61,7 @@ public class EarthCharacterUIController : MonoBehaviour
     // Method to toggle the visibility of other UI elements
     public void ToggleOtherUIElements(bool isActive)
     {
+        ToggleInventory(isActive);
          // Check the current control type from the UserSettingsManager
         UserSettingsManager.ControlType currentControlType = userSettingsManager.earthControlType;
         
@@ -80,14 +71,74 @@ public class EarthCharacterUIController : MonoBehaviour
         // Determine which array of UI objects to use based on the current control type
         GameObject[] uiObjectsToToggle = (currentControlType == UserSettingsManager.ControlType.KEYBOARD) ? keyboardUIObjects : controllerUIObjects;
 
-        // Loop through the UI objects in the selected array
         foreach (GameObject uiObject in uiObjectsToToggle)
         {
             Debug.Log("Toggling UI object: " + uiObject.name);
             // Toggle the visibility of the UI object based on the isActive parameter
             uiObject.SetActive(isActive);
         }
+
     }
 
-    
+    public void ToggleInventory(bool isActive)
+    {
+        if (isActive)
+        {
+            Image[] inventoryImages = inventory.GetComponentsInChildren<Image>();
+
+            foreach(Image image in inventoryImages)
+            {
+                if (image.GetComponent<ItemSlot>())
+                {
+                    if(image.GetComponent<ItemSlot>().Item != null)
+                    {
+                        image.enabled = true;
+
+                    }
+                }
+                else
+                {
+                    image.enabled = true;
+                }
+            }
+            TextMeshPro[] text = inventory.GetComponentsInChildren<TextMeshPro>();
+            foreach(TextMeshPro txt in text)
+            {
+                if(txt.text != "")
+                {
+                    txt.gameObject.SetActive(true);
+                }
+            }
+            
+        }
+        else if (!isActive)
+        {
+            Image[] inventoryImages = inventory.GetComponentsInChildren<Image>();
+
+            foreach (Image image in inventoryImages)
+            {
+                if (image.GetComponent<ItemSlot>())
+                {
+                    if (image.GetComponent<ItemSlot>().Item != null)
+                    {
+                        image.enabled = false;
+
+                    }
+                }
+                else
+                {
+                    image.enabled = false;
+                }
+            }
+            TextMeshPro[] text = inventory.GetComponentsInChildren<TextMeshPro>();
+            foreach (TextMeshPro txt in text)
+            {
+                if (txt.text != "")
+                {
+                    txt.gameObject.SetActive(false);
+                }
+            }
+
+        }
+    }
 }

@@ -9,6 +9,7 @@ public class LevelTwoEvents : LevelEventManager
     [Header("Scene Data")]
     [SerializeField] LevelTwoProgress levelTwoProgress;
     [SerializeField] GameObject dialogueManager;
+    [SerializeField] GameObject inventorySlotManager;
     [SerializeField] Item grassSeed;
     [SerializeField] Item treeSeed;
 
@@ -121,6 +122,8 @@ public class LevelTwoEvents : LevelEventManager
         {
             buildingAreaTiles.Add(childTransform.gameObject);
         }
+
+        inventorySlotManager.SetActive(true);
 
         foreach(GameObject player in playerSet.Items)
         {
@@ -557,7 +560,9 @@ public class LevelTwoEvents : LevelEventManager
         }
 
         fourthAreaClear = true;
+        task8.CrossOutTask();
         SetFriendCompletion();
+        fourthMonsterDeadDialouge.TriggerDialogue();
         hog2.GetComponent<Hedgehog>().Unstuck();
         hog3.GetComponent<Hedgehog>().Unstuck();
     }
@@ -601,6 +606,7 @@ public class LevelTwoEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+        task6.CrossOutTask();
         SetWaterCompletion();
     }
 

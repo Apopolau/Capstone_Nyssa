@@ -10,7 +10,7 @@ public class ApproachingFacilityTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if earthPlayer enterted area
-        if (other.CompareTag("Player1"))
+        if (other.CompareTag("Player1") && other is CapsuleCollider)
         {
             sproutApproachTrigger.TriggerDialogue();
             // Destroy the GameObject collider
