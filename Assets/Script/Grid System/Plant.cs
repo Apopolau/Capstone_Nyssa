@@ -13,6 +13,7 @@ public class Plant : Creatable
     [SerializeField] GameObject energyPrefab;
     [SerializeField] GameObjectRuntimeSet seedSet;
     [SerializeField] GameObjectRuntimeSet energySet;
+    Inventory inventory;
 
     [Header("These set themselves")]
     
@@ -246,7 +247,7 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.matureImage;
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
-            HandleTreeColliders(2.5f, 25, 10, 12, new Vector3(0, 17.5f, -1.5f));
+            HandleTreeColliders(2.5f, 25, 10, 14, new Vector3(0, 18.5f, -1.5f));
             if (energySet.Items.Count < 10)
             {
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
@@ -275,6 +276,7 @@ public class Plant : Creatable
         {
             seed = Instantiate(stats.seedPrefab, this.transform);
             seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
+            seed.GetComponent<PickupObject>().SetInventory(inventory);
         }
     }
 
@@ -450,5 +452,10 @@ public class Plant : Creatable
         tilePlantedOn.tileHasBuild = false;
         tilePlantedOn.placedObject = null;
         Destroy(this.gameObject);
+    }
+
+    public void SetInventory(Inventory newInventory)
+    {
+        inventory = newInventory;
     }
 }

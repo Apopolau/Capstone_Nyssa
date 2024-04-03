@@ -391,15 +391,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3462690462426893458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.51387, y: 0.51387, z: 0.51387}
+  m_LocalPosition: {x: 0, y: 0, z: -9.5}
+  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 896460277499946769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 2.21, y: -17.76}
   m_SizeDelta: {x: 89, y: 37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5733752166048339531
@@ -632,7 +632,7 @@ MonoBehaviour:
   landFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 82cd7f247c015654cb325a2356a51c3f, type: 3}
   waterFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 6c0ae7c3c763d1f48815522aabb11b6d, type: 3}
   i_grassSeed: {fileID: 21300000, guid: a21d89e5834c2ea44899aa531871441d, type: 3}
-  i_flowerSeed: {fileID: 0}
+  i_flowerSeed: {fileID: 21300000, guid: e55962e0b42b27144b5c274602447ed5, type: 3}
   i_treeSeed: {fileID: 21300000, guid: 26a7a5e743792f949babe4c9073a58d5, type: 3}
   i_shovel: {fileID: 21300000, guid: 04ee6cc18436db74588a01e4a749139e, type: 3}
   ThornShieldPrefab: {fileID: 699971024190529053, guid: d4d187bc0a511bd40896d295d703326c, type: 3}
@@ -664,6 +664,7 @@ MonoBehaviour:
   jumpForce: 8
   jumpCoolDown: 0.25
   airMultiplier: 0.4
+  gravityScale: 8
   jumpKeyP1: 32
   jumpKeyP2: 271
   playerHeight: 8
@@ -1018,6 +1019,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  inventory: {fileID: 0}
 --- !u!114 &6432642338141535612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1644,16 +1646,16 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8557892789263032690}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.51387, y: 0.51387, z: 0.51387}
+  m_LocalPosition: {x: 0, y: 0, z: -2.1}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 896460277499946769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 89, y: 37}
+  m_AnchoredPosition: {x: 0, y: -17.1}
+  m_SizeDelta: {x: 147, y: 147}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5075791783558889969
 CanvasRenderer:
@@ -1676,14 +1678,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 0.68235296}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.8235294}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 64e063d0240f40340a3952ac022d2289, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 31971e56f0f01aa4dab4992289564964, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1728,7 +1730,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3382972403950901607
 CanvasRenderer:
@@ -1760,7 +1762,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: c08500e75c1581d4daacd1a363ff46f6, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

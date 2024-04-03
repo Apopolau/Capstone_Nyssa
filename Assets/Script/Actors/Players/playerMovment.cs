@@ -33,6 +33,7 @@ public class playerMovement : MonoBehaviour
     public float jumpCoolDown;
     public float airMultiplier;
     bool readyToJump = true;
+    [SerializeField] private float gravityScale;
 
     //Keys Based on player
     public KeyCode jumpKeyP1 = KeyCode.Space;
@@ -118,6 +119,10 @@ public class playerMovement : MonoBehaviour
         else if(!GetComponent<NavMeshAgent>().enabled)
         {
             GetComponent<EarthPlayerAnimator>().animator.SetBool(GetComponent<EarthPlayerAnimator>().IfWalkingHash, false);
+        }
+        if (!grounded)
+        {
+            rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
         }
     }
 
