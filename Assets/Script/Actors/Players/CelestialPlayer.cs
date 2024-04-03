@@ -661,6 +661,11 @@ public class CelestialPlayer : Player
             float startFillAmount = 1f;
             float endFillAmount = 0f;
 
+               // Check if the fillImage is active, if not, activate it
+        if (!fillImage.gameObject.activeSelf)
+        {
+            fillImage.gameObject.SetActive(true);
+        }
             // Gradually decrease fill amount over cooldown duration
             while (timer < cooldownDuration)
             {
