@@ -15,6 +15,7 @@ public class CelestialPlayer : Player
     [SerializeField] private LayerMask tileMask;
     [SerializeField] private GameObject celestPlayerDpad;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
+    
 
     [SerializeField] public Image coldSnapFill;
     [SerializeField] public Image lightingStrikeFill;
@@ -119,7 +120,7 @@ public class CelestialPlayer : Player
         lightningCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
         staff =GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
 
-        StartCoroutine(CoolDownImageFill(coldSnapFill));
+        StartCoroutine(CoolDownImageFill(lightingStrikeFill));
     }
 
 
@@ -619,9 +620,7 @@ public class CelestialPlayer : Player
     public void ResetLightningStrike()
     {
         StartCoroutine(LightningCoolDownTime());
-
-    
-
+        StartCoroutine(CoolDownImageFill(lightingStrikeFill));
     }
     public IEnumerator LightningCoolDownTime()
     {
@@ -655,14 +654,18 @@ public class CelestialPlayer : Player
 
 
 
-
-        private IEnumerator CoolDownImageFill(Image fillImage)
-        {
+    public IEnumerator CoolDownImageFill(Image fillImage)
+    {
             float cooldownDuration = powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
             float timer = 0f;
             float startFillAmount = 1f;
             float endFillAmount = 0f;
 
+               // Check if the fillImage is active, if not, activate it
+        if (!fillImage.gameObject.activeSelf)
+        {
+            fillImage.gameObject.SetActive(true);
+        }
             // Gradually decrease fill amount over cooldown duration
             while (timer < cooldownDuration)
             {
@@ -674,7 +677,7 @@ public class CelestialPlayer : Player
 
             // Ensure fill amount is exactly 0
             fillImage.fillAmount = endFillAmount;
-        }
+    }
 
 
 
