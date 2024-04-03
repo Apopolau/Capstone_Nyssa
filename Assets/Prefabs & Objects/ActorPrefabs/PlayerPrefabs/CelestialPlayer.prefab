@@ -344,8 +344,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2460830548351178292}
-  - {fileID: 5504828769882533610}
+  - {fileID: 4881477123463989621}
   m_Father: {fileID: 7109321749684227353}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -428,12 +427,12 @@ GameObject:
   - component: {fileID: 1345946994592685247}
   - component: {fileID: 288471037331372835}
   m_Layer: 0
-  m_Name: Keyboard
+  m_Name: keyboardMovement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2460830548351178292
 RectTransform:
   m_ObjectHideFlags: 0
@@ -441,12 +440,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3335018865272805905}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1535612768956697560}
+  m_Father: {fileID: 4881477123463989621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -554,6 +553,43 @@ Transform:
   - {fileID: 1535612768956697560}
   m_Father: {fileID: 6426648623294971910}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6546438542620677038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4881477123463989621}
+  m_Layer: 0
+  m_Name: basicMovement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4881477123463989621
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6546438542620677038}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5504828769882533610}
+  - {fileID: 2460830548351178292}
+  m_Father: {fileID: 1535612768956697560}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6624548673606173672
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,7 +805,7 @@ GameObject:
   - component: {fileID: 5188146051547509145}
   - component: {fileID: 7633809686328793884}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: controllerMovement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -782,12 +818,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7098490275979654792}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1535612768956697560}
+  m_Father: {fileID: 4881477123463989621}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1043,7 +1079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b59386db4bc354b459dc008dca47a806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementControlsUI: {fileID: 3755683655815299897}
+  movementControlsUI: {fileID: 3335018865272805905}
   orientation: {fileID: 4238128337393036034}
   player: {fileID: 0}
   playerObj: {fileID: 4044718525688173982}
@@ -1294,9 +1330,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   keyboardUI: {fileID: 0}
-  controlsKeyboardUI: {fileID: 3335018865272805905}
+  controlsKeyboardUI: {fileID: 0}
   controllerUI: {fileID: 0}
-  controlsControllerUI: {fileID: 7098490275979654792}
+  controlsControllerUI: {fileID: 6546438542620677038}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!114 &832134979749964034
 MonoBehaviour:

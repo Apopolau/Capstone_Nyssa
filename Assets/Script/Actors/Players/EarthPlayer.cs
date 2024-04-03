@@ -178,6 +178,18 @@ public class EarthPlayer : Player
             
         }
 
+        if (plantSelectedType != null)
+        {
+            Debug.Log("plant is selected");
+            // Activate the UI image
+            //plantingUIImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            // Deactivate the UI image if no plant is selected
+            //plantingUIImage.gameObject.SetActive(false);
+        }
+
     }
 
     private void FixedUpdate()
