@@ -97,6 +97,11 @@ public class PickupObject : Interactable
         }
     }
 
+    public void SetInventory(Inventory newInventory)
+    {
+        inventory = newInventory;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))

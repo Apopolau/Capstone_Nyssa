@@ -23,6 +23,9 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
         //Initiate targeting
         earthPlayer.PickClosestTarget();
 
+        earthPlayer.SetTurnTarget(earthPlayer.GetPowerTarget().transform.position);
+        earthPlayer.ToggleTurning();
+
         //Instantiate appropriate objects
         earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.GetPowerTarget().transform);
         earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
@@ -34,13 +37,15 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
 
     public override void Execute(BaseStateMachine stateMachine)
     {
-        
+        Vector3 targetLocation = new Vector3(earthPlayer.GetPowerTarget().transform.position.x, earthPlayer.GetPowerTarget().transform.position.y + 1, earthPlayer.GetPowerTarget().transform.position.z);
+        earthPlayer.tileOutline.transform.position = targetLocation;
     }
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
         //Turn our barrier controls back off
         earthPlayer.earthControls.controls.HealSelect.Disable();
+        earthPlayer.ToggleTurning();
 
         //Restore the UI
         earthPlayer.displayText.text = "";

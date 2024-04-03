@@ -14,7 +14,9 @@ public class DayNightCycle : MonoBehaviour
     [Header("Time of Day")]
     [SerializeField, Range(0, 24)] private float timeOfDay;
     [SerializeField] private float timeRaw;
+    [SerializeField] private float scaledTime;
     [SerializeField] private float timeScale;
+    [SerializeField] private int nightsPassed;
 
     [Header("World Light Presets")]
     [SerializeField] private Gradient directionalLightColor;
@@ -77,7 +79,9 @@ public class DayNightCycle : MonoBehaviour
             timeOfDay %= 24;
             */
             timeRaw += Time.deltaTime;
-            timeOfDay = timeRaw %= (24 * timeScale);
+            scaledTime = timeRaw / timeScale;
+            nightsPassed = (int)scaledTime / 24;
+            timeOfDay = scaledTime % 24;
             UpdateLighting();
         }
 
@@ -126,5 +130,10 @@ public class DayNightCycle : MonoBehaviour
         directionalLight.intensity = V;
         //print(directionalLightColor.Evaluate(timeFraction));
         //print(V);
+    }
+
+    public int NightsPassed()
+    {
+        return nightsPassed;
     }
 }

@@ -400,6 +400,7 @@ public class EarthPlayer : Player
                 tempPlantPlanted = Instantiate(waterGrassPrefab, activeTileCell.buildingTarget.transform);
             }
         }
+        tempPlantPlanted.GetComponent<Plant>().SetInventory(inventory);
         plantsPlanted.Add(tempPlantPlanted);
         int finalIndex = plantsPlanted.Count - 1;
         activeTileCell.placedObject = plantsPlanted[finalIndex];
@@ -734,6 +735,7 @@ public class EarthPlayer : Player
                 validTargetIndex = 0;
             }
             tileOutline.transform.position = powerTarget.transform.position;
+            SetTurnTarget(powerTarget.transform.position);
         }
         else if(!right && validTargets.Count > 1)
         {
@@ -748,6 +750,7 @@ public class EarthPlayer : Player
                 validTargetIndex = validTargets.Count - 1;
             }
             tileOutline.transform.position = powerTarget.transform.position;
+            SetTurnTarget(powerTarget.transform.position);
         }
     }
 
@@ -966,7 +969,7 @@ public class EarthPlayer : Player
     public void TurnToTarget()
     {
         float step;
-        float speed = 1;
+        float speed = 0.3f;
         step = speed * Time.deltaTime;
         Vector3 lookVector = new Vector3(pMovement.playerObj.transform.position.x,
             turnToTarget.y, pMovement.playerObj.transform.position.z);

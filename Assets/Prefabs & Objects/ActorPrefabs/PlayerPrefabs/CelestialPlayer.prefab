@@ -857,7 +857,6 @@ GameObject:
   - component: {fileID: 5752642823608885967}
   - component: {fileID: 832134979749964034}
   - component: {fileID: 5015184762695812656}
-  - component: {fileID: 2867037157773853061}
   - component: {fileID: 2887321969620239026}
   m_Layer: 0
   m_Name: CelestialPlayer
@@ -1055,6 +1054,7 @@ MonoBehaviour:
   jumpForce: 8
   jumpCoolDown: 0.25
   airMultiplier: 0.4
+  gravityScale: 8
   jumpKeyP1: 32
   jumpKeyP2: 271
   playerHeight: 8
@@ -1335,20 +1335,6 @@ MonoBehaviour:
   targetPositionOffset: {x: 0, y: 1, z: 0}
   fadeSpeed: 1
   objectsBlockingView: []
---- !u!114 &2867037157773853061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7159944928166958832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46648af44cb0b744dadb0075069e8c43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  celestialPlayer: {fileID: 7093202383440998290}
-  radialFillImage: {fileID: 0}
 --- !u!114 &2887321969620239026
 MonoBehaviour:
   m_ObjectHideFlags: 0

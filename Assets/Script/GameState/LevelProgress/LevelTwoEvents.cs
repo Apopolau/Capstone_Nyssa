@@ -548,8 +548,11 @@ public class LevelTwoEvents : LevelEventManager
 
         Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
         flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, enemyPos, Quaternion.identity);
+        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
         flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
+        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
         flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
+        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
 
         thirdAreaClear = true;
         fourthAreaClear = true;
