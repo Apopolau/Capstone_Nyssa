@@ -11,7 +11,7 @@ public class LevelTwoProgress : LevelProgress
     bool hasSavedHedgehog;
     //Defeated the monster on the short path
     bool hasFlowerSeeds;
-    bool hasMoonTide;
+    bool hasMoonTide = false;
     //Cleared the rock slide
 
     //Defeated the monster up the path
