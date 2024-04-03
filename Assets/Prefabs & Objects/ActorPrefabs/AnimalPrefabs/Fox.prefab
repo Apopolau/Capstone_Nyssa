@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8705872294788497160}
   - component: {fileID: 2906999800888013163}
   - component: {fileID: 5477290125158561831}
+  - component: {fileID: 2300890220153589942}
   - component: {fileID: 5754742930633984077}
   - component: {fileID: 6216512458912780763}
   - component: {fileID: 208207923508479372}
@@ -23,7 +24,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7247374361532633313
 Transform:
   m_ObjectHideFlags: 0
@@ -63,10 +64,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!195 &8705872294788497160
 NavMeshAgent:
@@ -160,6 +161,18 @@ MonoBehaviour:
   hasShelter: 0
   hasAnyFood: 0
   triggerArea: {fileID: 0}
+--- !u!114 &2300890220153589942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73972206450328811}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ecbceae21eae7840a5006a42a4c7596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5754742930633984077
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -163,4 +163,9 @@ public class Fox : Animal
     {
         navAgent.SetDestination(triggerArea.transform.position);
     }
+
+    public void EnableBehaviourTree()
+    {
+        this.GetComponent<FoxTree>().enabled = true;
+    }
 }
