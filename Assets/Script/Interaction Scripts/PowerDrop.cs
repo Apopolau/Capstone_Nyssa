@@ -2,10 +2,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PowerDrop : Interactable
 {
     public CelestialPlayer.Power powerDrop;
+
+    public CelestialPlayer celestialPlayer;
+    public Image coldSnapFill;
     public PowerBehaviour powerBehaviour;
     [SerializeField] private LevelProgress levelProgress;
     /// <summary>
@@ -68,6 +72,7 @@ public class PowerDrop : Interactable
         {
             Debug.Log("return cold snap stats");
             levelProgress.SetPowers(true);
+           //StartCoroutine(celestialPlayer.CoolDownImageFill(coldSnapFill));
             return powerBehaviour.ColdSnapStats;
         }
        if(powerDrop == CelestialPlayer.Power.MOONTIDE)
@@ -80,6 +85,7 @@ public class PowerDrop : Interactable
     }
 
     //You may want a UI function here to turn up the button corresponding to this power, here
+    
     //Then call it in PowerPickup
 
     //Make sure there's a collider on it for this
