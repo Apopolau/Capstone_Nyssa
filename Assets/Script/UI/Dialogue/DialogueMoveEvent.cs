@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Movement", menuName = "Dialogue/Move")]
 public class DialogueMoveEvent : DialogueEvent
 {
+    [SerializeField] private bool playsOut;
     [SerializeField] private GameObject targetGameObject;
     [SerializeField] private Vector3 position;
     [SerializeField] private Quaternion rotation;
@@ -47,5 +48,10 @@ public class DialogueMoveEvent : DialogueEvent
     public void SetMoveToThis(GameObject objectToSet)
     {
         targetGameObject = objectToSet;
+    }
+
+    public bool MovePlaysOut()
+    {
+        return playsOut;
     }
 }

@@ -238,9 +238,17 @@ public class DialogueManager : MonoBehaviour
             {
                 Debug.Log("Next event is movement");
                 movingOn = true;
-                eventEnded = true;
-                earthPlayer.ToggleWaiting(true);
+
                 currentMove = (DialogueMoveEvent)currentEvent;
+                if (currentMove.MovePlaysOut())
+                {
+
+                }
+                else
+                {
+                    eventEnded = true;
+                    HandleNextEvents();
+                }
                 StartCoroutine(TurnMoveOff(currentMove));
             }
             else if (currentEvent is DialogueMissionEnd)
@@ -379,7 +387,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-
     public void HandleCameraPanDialogue(DialoguePanAndText pan)
     {
         DialogueCameraPan cameraPan = pan.dialogueCameraPan;
@@ -490,10 +497,18 @@ public class DialogueManager : MonoBehaviour
 
     public IEnumerator TurnMoveOff(DialogueMoveEvent moveEvent)
     {
+        if (moveEvent.MovePlaysOut())
+        {
+            earthPlayer.ToggleWaiting(true);
+        }
         
         yield return moveEvent.GetAnimationTimer();
 
-        earthPlayer.ToggleWaiting(false);
+        if (moveEvent.MovePlaysOut())
+        {
+            eventEnded = true;
+            earthPlayer.ToggleWaiting(false);
+        }
         movingOn = false;
     }
 

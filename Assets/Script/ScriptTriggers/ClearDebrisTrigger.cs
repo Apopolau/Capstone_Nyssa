@@ -7,8 +7,8 @@ public class ClearDebrisTrigger : MonoBehaviour
     [SerializeField] private LevelTwoProgress levelTwoProgress;
     [SerializeField] private DialogueTrigger prePowerApproachDialogue;
     [SerializeField] private DialogueTrigger postPowerApproachDialogue;
-    bool hasTriggered1;
-    bool hasTriggered2;
+    bool hasTriggered1 = false;
+    bool hasTriggered2 = false;
 
     private void OnTriggerEnter(Collider other)
     {
