@@ -44,14 +44,14 @@ GameObject:
   - component: {fileID: 8484278331407762736}
   - component: {fileID: 7465645748006121048}
   - component: {fileID: 5207513874751091066}
-  - component: {fileID: 1078641644227940917}
+  - component: {fileID: 3826372743576368253}
   - component: {fileID: 4514425187417883027}
   - component: {fileID: 6913918093050167382}
   - component: {fileID: 7145633093003380795}
   - component: {fileID: 615113482463824637}
   - component: {fileID: 5823709353557781660}
   m_Layer: 0
-  m_Name: SmogMonsterIdle
+  m_Name: SmogMonsterInvader
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,13 +91,18 @@ MonoBehaviour:
   enemyAnimator: {fileID: 4514425187417883027}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
+  animalSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
-  enemyStats: {fileID: 11400000, guid: 391e83e306d24f34583c1242b624d6a6, type: 2}
+  enemyStats: {fileID: 11400000, guid: 5ab4aaee5b3805d4eaf3fd9625f9ae5c, type: 2}
+  invaderEnemyRoutes: {fileID: 8380131726015751106, guid: 0ccb8ac502c0d1746a593fdf16b88f46, type: 3}
   eventManager: {fileID: 0}
   isDying: 0
   isStaggered: 0
   isColliding: 0
+  isInvader: 1
+  isPathSelected: 0
+  chosenPath: []
   seesPlant: 0
   inSmotherRange: 0
   smotherInitiated: 0
@@ -108,7 +113,10 @@ MonoBehaviour:
   playerLocation: {x: 0, y: 0, z: 0}
   smotherRange: 0
   attackRange: 10
+  kidnapRange: 15
   sightRange: 50
+  seesAnimal: 0
+  inKidnapRange: 0
   hasAnimal: 0
   isKidnapping: 0
 --- !u!195 &8484278331407762736
@@ -125,7 +133,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -183,7 +191,7 @@ CapsuleCollider:
   m_Height: 25
   m_Direction: 1
   m_Center: {x: -0.2611704, y: 11.999996, z: 0.008256912}
---- !u!114 &1078641644227940917
+--- !u!114 &3826372743576368253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -192,12 +200,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1951011047699265629}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f052c2b43435d584fb39ae66b0b2169a, type: 3}
+  m_Script: {fileID: 11500000, guid: fc1f1300ee224eb4aa3562b3951490f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
   currHealth: 0
-  playerTransform: {fileID: 7875459936262026101}
+  playerTransform: {fileID: 0}
 --- !u!114 &4514425187417883027
 MonoBehaviour:
   m_ObjectHideFlags: 0

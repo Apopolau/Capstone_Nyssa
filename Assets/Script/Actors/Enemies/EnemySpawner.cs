@@ -36,7 +36,7 @@ public class EnemySpawner : MonoBehaviour
         }
         else if(!spawnsOn)
         {
-            if (!weatherState.dayTime)
+          //  if (!weatherState.dayTime)
             {
                 spawnsOn = true;
                 StartCoroutine(spawnEnemy(enemyOilPrefab, enemyOilSpawnInterval));

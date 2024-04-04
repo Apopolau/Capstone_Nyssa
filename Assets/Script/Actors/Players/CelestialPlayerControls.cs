@@ -77,6 +77,7 @@ public class CelestialPlayerControls : MonoBehaviour
         controls.CelestialPlayerDefault.Disable();
         controls.CelestialPlayerDefault.CelestialWalk.performed += OnCelestialMovePerformed;
         controls.CelestialPlayerDefault.CelestialWalk.canceled += OnCelestialMoveCancelled;
+        controls.CelestialPlayerDefault.MakeDodge.performed += OnDodgePerformed;
         controls.CelestialPlayerDefault.MakeRain.performed += OnMakeRain; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.CelestialPlayerDefault.MakeBasic.performed += OnBasicAttackPerformed;
         controls.CelestialPlayerDefault.MakeColdSnap.performed += OnColdSnapPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
@@ -148,6 +149,20 @@ public class CelestialPlayerControls : MonoBehaviour
         {
             this.GetComponent<CelestialPlayerMovement>().EndMovement();
         }
+    }
+    private void OnDodgePerformed(InputAction.CallbackContext context)
+    {
+        // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
+        if (context.control.device.deviceId != myDeviceID) return;
+
+
+        //<CelestialPlayer>().isRaining = true;
+        this.GetComponent<CelestialPlayer>().OnDodgeSelected(context);
+        //rainAction.ToInputAction(BaseStateMachine.)
+        //https://gamedevbeginner.com/input-in-unity-made-easy-complete-guide-to-the-new-system/#:~:text=To%20do%20that%2C%20right%2Dclick,Input%20Actions%20from%20the%20menu.&text=To%20create%20an%20Input%20Actions,Input%20Actions%20in%20the%20menu.
+        //PlayerInput.switchcurrentactionMap("Menu");
+
+
     }
 
     private void OnMakeRain(InputAction.CallbackContext context)

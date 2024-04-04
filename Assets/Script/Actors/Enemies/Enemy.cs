@@ -10,11 +10,14 @@ public class Enemy : MonoBehaviour
     //Drag and drop player here
     public GameObjectRuntimeSet playerSet;
     public GameObjectRuntimeSet plantSet;
+    public GameObjectRuntimeSet animalSet;
+
     public CelestialPlayer celestialPlayer;
     public EarthPlayer earthPlayer;
     //public GameObject playerObj;
     public EnemyStats enemyStats;
-    
+
+    public EnemyInvadingPath invaderEnemyRoutes;
     
     public Stat health;
     [SerializeField] LevelEventManager eventManager;
@@ -22,8 +25,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] public bool isDying =false;
     public bool isStaggered = false;
     public bool isColliding = false;
+
+ 
     private GameObject closestPlayer;
     private GameObject closestPlant;
+    private GameObject closestAnimal;
 
 
     //Interaction with plants
@@ -40,11 +46,20 @@ public class Enemy : MonoBehaviour
     Rigidbody rb;
     [SerializeField] float smotherRange;
     [SerializeField] float attackRange;
+    [SerializeField] float kidnapRange;
     [SerializeField] float sightRange;
 
     //Interaction with the animal
-    public bool hasAnimal;
-    public bool isKidnapping;
+    public bool seesAnimal = false;
+    public bool inKidnapRange = false;
+    public bool hasAnimal = false;
+    public bool isKidnapping = false;
+    public Transform escapeRoute = null;
+
+    //InvaderCoder
+    public bool isInvader;
+    public bool isPathSelected = false;
+    public List<Transform> chosenPath;
 
     private WaitForSeconds attackTime = new WaitForSeconds(1);
     private WaitForSeconds takeHitTime = new WaitForSeconds(1.5f);
@@ -77,6 +92,11 @@ public class Enemy : MonoBehaviour
         }
         StartCoroutine(CalculatePlayerDistance());
         StartCoroutine(CalculatePlantDistance());
+        if (isInvader)
+        {
+            StartCoroutine(CalculateAnimalDistance());
+
+        }
 
     }
 
@@ -93,7 +113,7 @@ public class Enemy : MonoBehaviour
             //arbitrarily using attack time since it's 1s. May need to change in future
             yield return attackTime;
             float distance = sightRange;
-            seesPlayer = false;
+            seesPlant = false;
             inAttackRange = false;
             foreach (GameObject go in playerSet.Items)
             {
@@ -128,7 +148,9 @@ public class Enemy : MonoBehaviour
                 {
                     distance = Mathf.Abs((plant.GetComponent<Plant>().transform.position - this.transform.position).magnitude);
                     closestPlant = plant;
-                    seesPlant = true;
+                    //if its already smothered dont gang up
+                    if (!plant.GetComponent<Plant>().isSmothered)
+                    { seesPlant = true; }
                     //Debug.Log("Plastic Bag Sees a plant");
                 }
             }
@@ -137,6 +159,33 @@ public class Enemy : MonoBehaviour
                 //Debug.Log("in smother range");
 
                 inSmotherRange = true;
+            }
+        }
+
+    }
+    private IEnumerator CalculateAnimalDistance()
+    {
+        while (true)
+        {
+            //arbitrarily using attack time since it's 1s. May need to change in future
+            yield return attackTime;
+            float distance = sightRange;
+            seesAnimal = false;
+            inKidnapRange = false;
+            foreach (GameObject animal in animalSet.Items)
+            {
+                if (Mathf.Abs((animal.transform.position - this.transform.position).magnitude) < distance)
+                {
+                    distance = Mathf.Abs((animal.transform.position - this.transform.position).magnitude);
+                    closestAnimal = animal;
+                    if (!animal.GetComponent<Animal>().isKidnapped) 
+                    { seesAnimal = true; }
+                        
+                }
+            }
+            if (distance < kidnapRange)
+            {
+                inKidnapRange = true;
             }
         }
 
@@ -198,11 +247,21 @@ public class Enemy : MonoBehaviour
     
     }
 
-    public void SetClosestPlant(GameObject nextPlant)
+    public void SetClosestPlant(GameObject nextAnimal)
     {
-        closestPlant = nextPlant;
+        closestPlant = nextAnimal;
     }
 
+    public GameObject GetClosestAnimal()
+    {
+        return closestAnimal;
+
+    }
+
+    public void SetClosestAnimal(GameObject nextAnimal)
+    {
+        closestAnimal = nextAnimal;
+    }
 
 
 
