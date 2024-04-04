@@ -37,6 +37,7 @@ public class TaskFindEscapeRoute : BTNode
         {
             escapeWaypoint = thisEnemy.invaderEnemyRoutes.getClosestEscapeRoute(thisEnemy);
             thisEnemy.invaderEnemyRoutes.setClosestEscapeRoute(thisEnemy, escapeWaypoint);
+        
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped = true;
 
 

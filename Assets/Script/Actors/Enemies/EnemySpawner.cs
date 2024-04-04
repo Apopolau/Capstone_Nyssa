@@ -61,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
     //Check the Day 
     //If day is furth alonge e.g. its day 3 
     ///////make spawn interval lesser
-    ///////make it do that smog monsters and oil monsters also appear
+    ///////make it so that smog monsters and oil monsters also appear
     ///
 
 }

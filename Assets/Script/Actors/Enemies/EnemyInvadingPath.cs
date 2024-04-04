@@ -29,15 +29,15 @@ public class EnemyInvadingPath : MonoBehaviour
        pathsList.Add(pathThreeWaypoints);
        pathsList.Add(pathFourWaypoints);
         pathCount = pathsList.Count;
-        Debug.Log("path count:" + pathCount);
+       
     }
     public List<Transform> getRandomPath()
     {
 
         int index = Random.Range(0, pathCount - 1);
         Debug.Log("You have chosen oath number:" + index);
-       
-        return pathsList[index];
+        return pathsList[1];
+        // return pathsList[index];
     }
     public void setEnemiesPath(Enemy enemy, List<Transform> selectedPath)
     {

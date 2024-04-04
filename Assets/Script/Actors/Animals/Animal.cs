@@ -45,6 +45,7 @@ public abstract class Animal : MonoBehaviour
     public bool isShielded;
     public bool isEscorted;
     public bool isKidnapped;
+    public Enemy kidnapper;
 
     [SerializeField] protected LevelProgress levelProgress;
     public bool hasCleanWater = false;
