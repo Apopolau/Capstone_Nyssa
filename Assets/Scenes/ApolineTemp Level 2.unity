@@ -4964,7 +4964,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &582559855
 Transform:
   m_ObjectHideFlags: 0
@@ -4993,8 +4993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
-  plasticBagMonsterPrefab: {fileID: 919132149155446097, guid: 7b4e2f75359f1aa47b771419827c7c36, type: 3}
-  enemyOilInvaderPrefab: {fileID: 2090664895178657524, guid: f152c6031e4b2944cae7423592e76233, type: 3}
+  plasticBagMonsterPrefab: {fileID: 0}
   smogMonsterInvaderPrefab: {fileID: 1951011047699265629, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
   spawnInterval: 30
 --- !u!1001 &619621890
@@ -7604,16 +7603,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1001608614}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2afc984d493fbbd4d966111f2312cfa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
-  plasticBagMonsterPrefab: {fileID: 0}
-  enemyOilInvaderPrefab: {fileID: 0}
-  smogMonsterInvaderPrefab: {fileID: 0}
-  spawnInterval: 0
+  plasticBagMonsterPrefab: {fileID: 919132149155446097, guid: 7b4e2f75359f1aa47b771419827c7c36, type: 3}
+  smogMonsterInvaderPrefab: {fileID: 1951011047699265629, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
+  spawnInterval: 30
 --- !u!1001 &1006989773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17124,6 +17122,10 @@ PrefabInstance:
     - target: {fileID: 1872162656605278360, guid: 1cfb5c01860113c48b40bd782fb9f464, type: 3}
       propertyPath: m_Name
       value: RainParticleSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 1872162656605278360, guid: 1cfb5c01860113c48b40bd782fb9f464, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
