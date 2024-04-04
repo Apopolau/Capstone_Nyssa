@@ -8,7 +8,7 @@ public class DialogueMoveEvent : DialogueEvent
     [SerializeField] private bool playsOut;
 
     [SerializeField] private bool hasMove;
-    [SerializeField] private bool locationMoveType;
+    [SerializeField] private bool hasLocationMove;
     [SerializeField] private GameObject targetMoveObject;
     [SerializeField] private bool hasObjectMove;
     [SerializeField] private GameObject targetLocationObject;
@@ -28,7 +28,7 @@ public class DialogueMoveEvent : DialogueEvent
 
     public bool IsLocationMoveType()
     {
-        return locationMoveType;
+        return hasLocationMove;
     }
 
     public bool IsObjectMoveType()
