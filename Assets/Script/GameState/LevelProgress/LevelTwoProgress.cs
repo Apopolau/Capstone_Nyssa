@@ -11,7 +11,7 @@ public class LevelTwoProgress : LevelProgress
     bool hasSavedHedgehog;
     //Defeated the monster on the short path
     bool hasFlowerSeeds;
-    bool hasMoonTide;
+    bool hasMoonTide = false;
     //Cleared the rock slide
 
     //Defeated the monster up the path
@@ -38,11 +38,13 @@ public class LevelTwoProgress : LevelProgress
 
     public override void SetPowers(bool active)
     {
+        Debug.Log("Setting moontide to " + active);
         hasMoonTide = active;
     }
 
     public bool GetMoonTideStatus()
     {
+        Debug.Log("Moontide is " + hasMoonTide);
         return hasMoonTide;
     }
 }

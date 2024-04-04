@@ -18,7 +18,12 @@ public class EarthPlayer : Player
     [SerializeField] public Image playerWarningBG;
 
     // Reference to the UI controller script
+
+    [Header("UI elements")]
     public EarthCharacterUIController uiController;
+
+    public GameObject plantingControlsUI; 
+     public GameObject spellsControlsUI; //assign controlsUI
     [SerializeField] private GameObject darkenInSelectMode;
     [SerializeField] private GameObject darkenWhilePlanting;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
@@ -177,6 +182,8 @@ public class EarthPlayer : Player
             }
             
         }
+
+        
 
     }
 
@@ -400,6 +407,7 @@ public class EarthPlayer : Player
                 tempPlantPlanted = Instantiate(waterGrassPrefab, activeTileCell.buildingTarget.transform);
             }
         }
+        tempPlantPlanted.GetComponent<Plant>().SetInventory(inventory);
         plantsPlanted.Add(tempPlantPlanted);
         int finalIndex = plantsPlanted.Count - 1;
         activeTileCell.placedObject = plantsPlanted[finalIndex];
@@ -734,6 +742,7 @@ public class EarthPlayer : Player
                 validTargetIndex = 0;
             }
             tileOutline.transform.position = powerTarget.transform.position;
+            SetTurnTarget(powerTarget.transform.position);
         }
         else if(!right && validTargets.Count > 1)
         {
@@ -748,6 +757,7 @@ public class EarthPlayer : Player
                 validTargetIndex = validTargets.Count - 1;
             }
             tileOutline.transform.position = powerTarget.transform.position;
+            SetTurnTarget(powerTarget.transform.position);
         }
     }
 
@@ -966,7 +976,7 @@ public class EarthPlayer : Player
     public void TurnToTarget()
     {
         float step;
-        float speed = 1;
+        float speed = 0.3f;
         step = speed * Time.deltaTime;
         Vector3 lookVector = new Vector3(pMovement.playerObj.transform.position.x,
             turnToTarget.y, pMovement.playerObj.transform.position.z);

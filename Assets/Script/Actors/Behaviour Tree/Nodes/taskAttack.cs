@@ -43,7 +43,7 @@ public class TaskAttack : BTNode
             }
             else
             {
-                thisEnemy.TakeHit(10);
+                thisEnemy.TakeHit(25);
             }
             
             thisEnemy.transform.LookAt(thisEnemy.GetClosestPlayer().transform.position);

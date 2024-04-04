@@ -5,17 +5,50 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Movement", menuName = "Dialogue/Move")]
 public class DialogueMoveEvent : DialogueEvent
 {
-    [SerializeField] private GameObject targetGameObject;
+    [SerializeField] private bool playsOut;
+
+    [SerializeField] private bool hasMove;
+    [SerializeField] private bool locationMoveType;
+    [SerializeField] private GameObject targetMoveObject;
+    [SerializeField] private bool hasObjectMove;
+    [SerializeField] private GameObject targetLocationObject;
     [SerializeField] private Vector3 position;
+    [SerializeField] private bool hasRotation;
     [SerializeField] private Quaternion rotation;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private float animationTimer;
     [SerializeField] private WaitForSecondsRealtime animationTime;
 
+
+    public bool HasMove()
+    {
+        return hasMove;
+    }
+
+    public bool IsLocationMoveType()
+    {
+        return locationMoveType;
+    }
+
+    public bool IsObjectMoveType()
+    {
+        return hasObjectMove;
+    }
+
+    public bool HasRotation()
+    {
+        return hasRotation;
+    }
+
     public GameObject GetObjectToMove()
     {
-        return targetGameObject;
+        return targetMoveObject;
+    }
+
+    public GameObject GetObjectToMoveTo()
+    {
+        return targetLocationObject;
     }
 
     public Vector3 GetPosition()
@@ -44,8 +77,18 @@ public class DialogueMoveEvent : DialogueEvent
         return animationTime;
     }
 
-    public void SetMoveToThis(GameObject objectToSet)
+    public void SetThisObjectToMove(GameObject objectToSet)
     {
-        targetGameObject = objectToSet;
+        targetMoveObject = objectToSet;
+    }
+
+    public void SetLocationToThis(GameObject objectToSet)
+    {
+        targetLocationObject = objectToSet;
+    }
+
+    public bool MovePlaysOut()
+    {
+        return playsOut;
     }
 }

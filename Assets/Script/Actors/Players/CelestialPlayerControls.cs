@@ -102,13 +102,20 @@ public class CelestialPlayerControls : MonoBehaviour
         if (mainMenu != null)
         {
             controls.MenuControls.Enable();
+            controls.CutsceneControls.Disable();
+            controls.CelestialPlayerDefault.Disable();
         }
-        else if(cutsceneManager != null)
+        else if (cutsceneManager != null)
         {
             controls.CutsceneControls.Enable();
+            controls.MenuControls.Disable();
+            controls.CelestialPlayerDefault.Disable();
         }
         else if (dialogueManager != null)
         {
+            controls.CutsceneControls.Disable();
+            controls.MenuControls.Disable();
+            controls.CelestialPlayerDefault.Enable();
             //controls.DialogueControls.Enable();
         }
     }

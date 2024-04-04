@@ -31,11 +31,6 @@ public class Inventory : ScriptableObject
 
     public bool AddItem(Item item, int quantity)
     {
-        if (IsFull())
-        {
-            return false;
-        }
-
         // Check if the item already exists in the inventory.
         foreach (var existingItem in items)
         {
@@ -45,6 +40,11 @@ public class Inventory : ScriptableObject
                 RefreshUI();
                 return true;
             }
+        }
+
+        if (IsFull())
+        {
+            return false;
         }
 
         // If the item is not in the inventory, add a new one.

@@ -32,6 +32,7 @@ public class CelestialPlayerMovement : MonoBehaviour
     public float jumpCoolDown;
     public float airMultiplier;
     bool readyToJump = true;
+    [SerializeField] private float gravityScale;
 
     //Keys Based on player
     public KeyCode jumpKeyP1 = KeyCode.Space;
@@ -101,7 +102,7 @@ public class CelestialPlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
-
+        
         if (rb.velocity.magnitude > new Vector3(0.1f, 0.1f, 0.1f).magnitude)
         {
             GetComponent<CelestialPlayerAnimator>().animator.SetBool(GetComponent<CelestialPlayerAnimator>().IfWalkingHash, true);
@@ -114,6 +115,10 @@ public class CelestialPlayerMovement : MonoBehaviour
 
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
+        if (!grounded)
+        {
+            rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
+        }
     }
 
     private void MyInput()

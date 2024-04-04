@@ -123,14 +123,21 @@ public class EarthPlayerControl : MonoBehaviour
         if (mainMenu != null)
         {
             controls.MenuControls.Enable();
+            controls.CutsceneControls.Disable();
+            controls.EarthPlayerDefault.Disable();
         }
         else if (cutsceneManager != null)
         {
             controls.CutsceneControls.Enable();
+            controls.MenuControls.Disable();
+            controls.EarthPlayerDefault.Disable();
         }
         else if (dialogueManager != null)
         {
-           // controls.DialogueControls.Enable();
+            controls.CutsceneControls.Disable();
+            controls.MenuControls.Disable();
+            controls.EarthPlayerDefault.Enable();
+            //controls.DialogueControls.Enable();
         }
     }
 

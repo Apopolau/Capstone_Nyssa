@@ -13,6 +13,7 @@ public class Plant : Creatable
     [SerializeField] GameObject energyPrefab;
     [SerializeField] GameObjectRuntimeSet seedSet;
     [SerializeField] GameObjectRuntimeSet energySet;
+    Inventory inventory;
 
     [Header("These set themselves")]
     
@@ -246,7 +247,7 @@ public class Plant : Creatable
                 spriteRenderer.sprite = stats.matureImage;
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
-            HandleTreeColliders(2.5f, 25, 10, 12, new Vector3(0, 17.5f, -1.5f));
+            HandleTreeColliders(2.5f, 25, 10, 14, new Vector3(0, 18.5f, -1.5f));
             if (energySet.Items.Count < 10)
             {
                 energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
@@ -275,6 +276,7 @@ public class Plant : Creatable
         {
             seed = Instantiate(stats.seedPrefab, this.transform);
             seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
+            seed.GetComponent<PickupObject>().SetInventory(inventory);
         }
     }
 
@@ -433,12 +435,14 @@ public class Plant : Creatable
                 logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
                 logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
                 logs.GetComponent<PickupObject>().SetItemQuantity(1);
+                logs.GetComponent<PickupObject>().SetInventory(inventory);
             }
             else if (currentPlantStage == PlantStats.PlantStage.MATURE)
             {
                 logs = Instantiate(stats.treeLogPrefab, tilePlantedOn.transform);
                 logs.transform.localPosition.Set(logs.transform.localPosition.x, logs.transform.localPosition.y + 1f, logs.transform.localPosition.z);
                 logs.GetComponent<PickupObject>().SetItemQuantity(3);
+                logs.GetComponent<PickupObject>().SetInventory(inventory);
             }
         }
         if (currentPlantStage == PlantStats.PlantStage.SEEDLING || currentPlantStage == PlantStats.PlantStage.SPROUT)
@@ -446,9 +450,15 @@ public class Plant : Creatable
             seed = Instantiate(stats.seedPrefab, tilePlantedOn.transform);
             seed.transform.localPosition.Set(seed.transform.localPosition.x, seed.transform.localPosition.y + 1f, seed.transform.localPosition.z);
             seed.GetComponent<PickupObject>().SetItemQuantity(1);
+            seed.GetComponent<PickupObject>().SetInventory(inventory);
         }
         tilePlantedOn.tileHasBuild = false;
         tilePlantedOn.placedObject = null;
         Destroy(this.gameObject);
+    }
+
+    public void SetInventory(Inventory newInventory)
+    {
+        inventory = newInventory;
     }
 }

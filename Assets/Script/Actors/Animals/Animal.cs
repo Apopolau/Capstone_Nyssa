@@ -71,7 +71,15 @@ public abstract class Animal : MonoBehaviour
         {
             GetComponent<AnimalAnimator>().animator.SetBool(GetComponent<AnimalAnimator>().IfWalkingHash, true);
         }
+        else if (GetComponent<NavMeshAgent>().hasPath)
+        {
+            GetComponent<AnimalAnimator>().animator.SetBool(GetComponent<AnimalAnimator>().IfWalkingHash, true);
+        }
         else if (!GetComponent<NavMeshAgent>().enabled)
+        {
+            GetComponent<AnimalAnimator>().animator.SetBool(GetComponent<AnimalAnimator>().IfWalkingHash, false);
+        }
+        else
         {
             GetComponent<AnimalAnimator>().animator.SetBool(GetComponent<AnimalAnimator>().IfWalkingHash, false);
         }

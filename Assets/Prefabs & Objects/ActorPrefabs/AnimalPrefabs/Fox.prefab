@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8705872294788497160}
   - component: {fileID: 2906999800888013163}
   - component: {fileID: 5477290125158561831}
+  - component: {fileID: 2300890220153589942}
   - component: {fileID: 5754742930633984077}
   - component: {fileID: 6216512458912780763}
   - component: {fileID: 208207923508479372}
@@ -23,7 +24,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7247374361532633313
 Transform:
   m_ObjectHideFlags: 0
@@ -63,10 +64,10 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!195 &8705872294788497160
 NavMeshAgent:
@@ -78,11 +79,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 10
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 3
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -160,6 +161,18 @@ MonoBehaviour:
   hasShelter: 0
   hasAnyFood: 0
   triggerArea: {fileID: 0}
+--- !u!114 &2300890220153589942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73972206450328811}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ecbceae21eae7840a5006a42a4c7596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5754742930633984077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,7 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1970ad8ed1e940747802bdc1fcec8d8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveToSet:
+  objectToMoveToSet: []
+  objectToMoveSet:
   - {fileID: 11400000, guid: 4edd18b1901e2fc43a782f2b60d18845, type: 2}
   - {fileID: 11400000, guid: 5e897625fd455cc42b0c4cb37c0626b1, type: 2}
 --- !u!1 &6181435207192587300
@@ -275,15 +289,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: f85e95429fbfe7f45aeb6172f3065aa7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f85e95429fbfe7f45aeb6172f3065aa7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f85e95429fbfe7f45aeb6172f3065aa7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f85e95429fbfe7f45aeb6172f3065aa7, type: 3}
       propertyPath: m_LocalPosition.x
