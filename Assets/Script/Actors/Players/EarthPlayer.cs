@@ -18,7 +18,12 @@ public class EarthPlayer : Player
     [SerializeField] public Image playerWarningBG;
 
     // Reference to the UI controller script
+
+    [Header("UI elements")]
     public EarthCharacterUIController uiController;
+
+    public GameObject plantingControlsUI; 
+     public GameObject spellsControlsUI; //assign controlsUI
     [SerializeField] private GameObject darkenInSelectMode;
     [SerializeField] private GameObject darkenWhilePlanting;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
@@ -178,17 +183,7 @@ public class EarthPlayer : Player
             
         }
 
-        if (plantSelectedType != null)
-        {
-            Debug.Log("plant is selected");
-            // Activate the UI image
-            //plantingUIImage.gameObject.SetActive(true);
-        }
-        else
-        {
-            // Deactivate the UI image if no plant is selected
-            //plantingUIImage.gameObject.SetActive(false);
-        }
+        
 
     }
 

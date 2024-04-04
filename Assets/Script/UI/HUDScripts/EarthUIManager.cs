@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class EarthUIManager : MonoBehaviour
 {
-    public GameObject keyboardUI;
+   /* public GameObject keyboardUI;
     public GameObject controlsKeyboardUI;
     public GameObject controllerUI;
-    public GameObject controlsControllerUI;
+    public GameObject controlsControllerUI; */
+
+    [SerializeField] private GameObject[] keyboardUIObjects;
+    [SerializeField] private GameObject[] controllerUIObjects;
 
     public UserSettingsManager userSettingsManager;
 
@@ -17,21 +20,29 @@ public class EarthUIManager : MonoBehaviour
         SetUIBasedOnControlType();
     }
 
+   
+
     private void SetUIBasedOnControlType()
     {
+        // Check the control type and activate/deactivate UI objects accordingly
         if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
-            keyboardUI.SetActive(true);
-            controlsKeyboardUI.SetActive(true);
-            controllerUI.SetActive(false);
-            controlsControllerUI.SetActive(false);
+            SetUIObjectsActive(keyboardUIObjects, true);
+            SetUIObjectsActive(controllerUIObjects, false);
         }
         else if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
-            keyboardUI.SetActive(false);
-            controlsKeyboardUI.SetActive(false);
-            controllerUI.SetActive(true);
-            controlsControllerUI.SetActive(true);
+            SetUIObjectsActive(keyboardUIObjects, false);
+            SetUIObjectsActive(controllerUIObjects, true);
+        }
+    }
+
+    private void SetUIObjectsActive(GameObject[] uiObjects, bool setActive)
+    {
+        // Loop through each UI object in the array and set its active state
+        foreach (var obj in uiObjects)
+        {
+            obj.SetActive(setActive);
         }
     }
 

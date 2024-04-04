@@ -33,6 +33,8 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
         //Update the UI
         earthPlayer.displayText.text = "Select a target to heal";
         earthPlayer.uiController.DarkenOverlay(earthPlayer.GetPlantDarkenObject());
+        if (earthPlayer.spellsControlsUI != null)
+        { earthPlayer.spellsControlsUI.SetActive(true); }
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -51,5 +53,7 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
         earthPlayer.displayText.text = "";
         Destroy(earthPlayer.tileOutline);
         earthPlayer.uiController.RestoreUI(earthPlayer.GetPlantDarkenObject());
+        if (earthPlayer.spellsControlsUI != null)
+        { earthPlayer.spellsControlsUI.SetActive(false); }
     }
 }

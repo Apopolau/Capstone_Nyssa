@@ -32,6 +32,8 @@ public class CtrlsSelectionBarrierAction : FSMAction
         //Update UI
         earthPlayer.displayText.text = "Select a target to shield";
         earthPlayer.uiController.DarkenOverlay(earthPlayer.GetPlantDarkenObject());
+        if (earthPlayer.spellsControlsUI != null)
+        { earthPlayer.spellsControlsUI.SetActive(true); }
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -50,5 +52,7 @@ public class CtrlsSelectionBarrierAction : FSMAction
         //Update UI
         earthPlayer.displayText.text = "";
         Destroy(earthPlayer.tileOutline);
+        if (earthPlayer.spellsControlsUI != null)
+        { earthPlayer.spellsControlsUI.SetActive(false); }
     }
 }

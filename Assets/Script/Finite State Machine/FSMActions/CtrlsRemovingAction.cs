@@ -28,6 +28,8 @@ public class CtrlsRemovingAction : FSMAction
         //TurnOnTileSelect manages enabling most of the functionality of tile selection
         earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
         earthPlayer.TurnOnTileSelect(earthPlayer.transform);
+         if (earthPlayer.plantingControlsUI != null)
+        { earthPlayer.plantingControlsUI.SetActive(true); }
 
         //Set our appropriate bools
         earthPlayer.isRemovalStarted = true;
@@ -50,6 +52,8 @@ public class CtrlsRemovingAction : FSMAction
         //TurnOffTileSelect manages disabling most of the functionality of tile selection
         earthPlayer.TurnOffTileSelect();
         earthPlayer.HideTileText();
+         if (earthPlayer.plantingControlsUI != null)
+        { earthPlayer.plantingControlsUI.SetActive(false); }
         earthPlayer.ResetImageColor(earthPlayer.GetPlantDarkenObject());
     }
 }
