@@ -190,7 +190,7 @@ public class Ladder : Interactable
         ladderGeometry.GetComponentInChildren<MeshRenderer>().material = material;
         //levelTwoEvents.OnBridgeBuilt();
         ladderIsBuilt = true;
-        popupText.GetComponent<TextMeshPro>().text = "Climb";
+        popupText.GetComponent<TextMeshProUGUI>().text = "Climb";
         logImage.SetActive(false);
         //Destroy(this.gameObject.GetComponent<BoxCollider>());
     }
