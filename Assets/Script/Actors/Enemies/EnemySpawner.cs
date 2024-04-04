@@ -5,16 +5,19 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private WeatherState weatherState;
-    [SerializeField] private GameObject enemyOilPrefab;
+    [SerializeField] private GameObject plasticBagMonsterPrefab;
+    [SerializeField] private GameObject enemyOilInvaderPrefab;
+    [SerializeField] private GameObject smogMonsterInvaderPrefab;
+    GameObject currSpawnedEnemy;
 
     private bool startedSpawns;
     private bool spawnsOn;
 
-    [SerializeField] private float enemyOilSpawnInterval;
+    [SerializeField] private float spawnInterval;
 
     void Start()
     {
-        StartCoroutine(spawnEnemy(enemyOilPrefab, enemyOilSpawnInterval));
+        //StartCoroutine(spawnEnemy(currSpawnedEnemy, spawnInterval));
         
     }
 
@@ -36,10 +39,10 @@ public class EnemySpawner : MonoBehaviour
         }
         else if(!spawnsOn)
         {
-          //  if (!weatherState.dayTime)
+           if (!weatherState.dayTime)
             {
                 spawnsOn = true;
-                StartCoroutine(spawnEnemy(enemyOilPrefab, enemyOilSpawnInterval));
+                StartCoroutine(spawnEnemy(currSpawnedEnemy, spawnInterval));
             }
         }
     }
@@ -48,8 +51,17 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
+
             yield return new WaitForSeconds(interval);
             GameObject newEnemy = Instantiate(enemy, this.transform.position, Quaternion.identity);
         }
     }
+
+
+    //Check the Day 
+    //If day is furth alonge e.g. its day 3 
+    ///////make spawn interval lesser
+    ///////make it do that smog monsters and oil monsters also appear
+    ///
+
 }
