@@ -73,6 +73,7 @@ public class Ladder : Interactable
             if (ladderIsBuilt)
             {
                 TriggerLadderClimb();
+                TurnOnPopup();
             }
         }
         if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
@@ -85,6 +86,7 @@ public class Ladder : Interactable
             if (ladderIsBuilt)
             {
                 TriggerLadderClimb();
+                TurnOnPopup();
             }
         }
     }
@@ -99,6 +101,10 @@ public class Ladder : Interactable
             {
                 DeactivateLadderPreview();
             }
+            if (ladderIsBuilt)
+            {
+                TurnOffPopup();
+            }
         }
         if (other.GetComponent<CelestialPlayer>())
         {
@@ -106,6 +112,10 @@ public class Ladder : Interactable
             if (!ladderIsBuilt)
             {
                 DeactivateLadderPreview();
+            }
+            if (ladderIsBuilt)
+            {
+                TurnOffPopup();
             }
         }
     }
@@ -135,7 +145,7 @@ public class Ladder : Interactable
     {
         previewOn = true;
         ladderGeometry.SetActive(true);
-        pickupTarget.SetActive(true);
+        TurnOnPopup();
         //levelTwoEvents.OnLadderEncountered();
     }
 
@@ -143,6 +153,16 @@ public class Ladder : Interactable
     {
         previewOn = false;
         ladderGeometry.SetActive(false);
+        TurnOffPopup();
+    }
+
+    private void TurnOnPopup()
+    {
+        pickupTarget.SetActive(true);
+    }
+
+    private void TurnOffPopup()
+    {
         pickupTarget.SetActive(false);
     }
 
@@ -150,7 +170,6 @@ public class Ladder : Interactable
     {
         if(p1IsInRange && earthPlayer.interacting && earthPlayer.inventory.HasEnoughItems("Tree Log", 3))
         {
-            ladderIsBuilt = true;
             pickupTarget.SetActive(false);
             StartCoroutine(BuildLadder());
         }
