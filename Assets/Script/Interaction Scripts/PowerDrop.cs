@@ -9,7 +9,6 @@ public class PowerDrop : Interactable
     public CelestialPlayer.Power powerDrop;
 
    //public CelestialPlayer.coldSnapFill coldSnapFill;
-    public CelestialPlayer celestialPlayer;
     public Image coldSnapFill;
     public PowerBehaviour powerBehaviour;
     [SerializeField] private LevelProgress levelProgress;
