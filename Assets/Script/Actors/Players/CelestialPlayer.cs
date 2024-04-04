@@ -96,6 +96,8 @@ public class CelestialPlayer : Player
     public GameObject enemyTarget = null;
     public Vector3 enemyLocation;
 
+    private bool inRangeOfPuzzle = false;
+
     private void Awake()
     {
         OrigPos = this.transform.position;
@@ -170,6 +172,16 @@ public class CelestialPlayer : Player
             enemyTarget = other.transform.gameObject;
 
         }
+        if (other.GetComponent<ClearDebrisTrigger>())
+        {
+            inRangeOfPuzzle = true;
+            enemyTarget = other.transform.gameObject;
+        }
+        else if (other.GetComponent<ShutOffTerminal>())
+        {
+            inRangeOfPuzzle = true;
+            enemyTarget = other.GetComponent<ShutOffTerminal>().GetStrikeTarget();
+        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -180,11 +192,11 @@ public class CelestialPlayer : Player
 
             enemyLocation = other.transform.position;
             enemyTarget = null;
-
-   
-
-
-
+        }
+        if (other.GetComponent<ClearDebrisTrigger>() || other.GetComponent<ShutOffTerminal>())
+        {
+            inRangeOfPuzzle = false;
+            enemyTarget = null;
         }
     }
 
@@ -319,16 +331,20 @@ public class CelestialPlayer : Player
         // Move our position a step closer to the target.
         var step = 5 * Time.deltaTime; // calculate distance to move
 
-        if (enemyTarget != null)
+        if (enemyTarget != null && enemyTarget.GetComponent<Enemy>())
         {
             LightningAttack();
 
         }
 
-
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(specialPowerAnimTime));
         yield return specialPowerAnimTime;
+
+        if (enemyTarget != null && enemyTarget.GetComponentInParent<ShutOffTerminal>())
+        {
+            enemyTarget.GetComponentInParent<ShutOffTerminal>().TerminalShutOff();
+        }
 
         //reset animation, reset isattacking, detroy visual asset and reset DPAD
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
@@ -352,7 +368,7 @@ public class CelestialPlayer : Player
         celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
 
         //If enemy is around make the cold orb target said enemy >> update 
-        if (enemyTarget != null)
+        if (enemyTarget != null && enemyTarget.GetComponent<Enemy>())
         {
             isTargeted = true;
             MoonTideAttack();
@@ -361,6 +377,11 @@ public class CelestialPlayer : Player
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(specialPowerAnimTime));
         yield return specialPowerAnimTime;
+
+        if(enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())
+        {
+            enemyTarget.GetComponent<ClearDebrisTrigger>().InitiateClear();
+        }
 
         //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
@@ -684,7 +705,7 @@ public class CelestialPlayer : Player
             // Gradually decrease fill amount over cooldown duration
             while (timer < cooldownDuration)
             {
-                Debug.Log("entering loop of coroutine");
+                //Debug.Log("entering loop of coroutine");
                 float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
                 fillImage.fillAmount = fillAmount;
                 timer += Time.deltaTime;
