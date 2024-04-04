@@ -16,7 +16,8 @@ public class CelestialPlayer : Player
     [SerializeField] private GameObject celestPlayerDpad;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
     
-
+    
+    [Header("Buttons Overlay")]
     [SerializeField] public Image coldSnapFill;
     [SerializeField] public Image lightingStrikeFill;
     [SerializeField] public Image moonTideFill;
@@ -570,6 +571,7 @@ public class CelestialPlayer : Player
             // RainParticleSystem.SetActive(true);
             weatherState.skyState = WeatherState.SkyState.RAINY;
             isRaining = true;
+            rainFill.enabled = false;
         }
         else if (isRaining)
         {
@@ -578,6 +580,7 @@ public class CelestialPlayer : Player
             weatherState.skyState = WeatherState.SkyState.CLEAR;
 
             isRaining = false;
+            rainFill.enabled = true;
 
         }
 
@@ -614,6 +617,7 @@ public class CelestialPlayer : Player
     public void ResetColdSnap()
     {
         StartCoroutine(ColdSnapCoolDownTime());
+        coldSnapFill.enabled = true;
         StartCoroutine(CoolDownImageFill(coldSnapFill));
     }
 
@@ -661,6 +665,8 @@ public class CelestialPlayer : Player
     public void ResetMoonTide()
     {
         StartCoroutine(MoonTideCoolDownTime());
+        moonTideFill.enabled = true;
+        StartCoroutine(CoolDownImageFill(moonTideFill));
     }
 
 
@@ -671,23 +677,25 @@ public class CelestialPlayer : Player
             float timer = 0f;
             float startFillAmount = 1f;
             float endFillAmount = 0f;
-
+            Debug.Log("entering coroutine");
                // Check if the fillImage is active, if not, activate it
-        if (!fillImage.gameObject.activeSelf)
-        {
-            fillImage.gameObject.SetActive(true);
-        }
+
+          
             // Gradually decrease fill amount over cooldown duration
             while (timer < cooldownDuration)
             {
+                Debug.Log("entering loop of coroutine");
                 float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
                 fillImage.fillAmount = fillAmount;
                 timer += Time.deltaTime;
                 yield return null;
+
             }
 
             // Ensure fill amount is exactly 0
             fillImage.fillAmount = endFillAmount;
+
+            Debug.Log("cooling down power");
     }
 
 

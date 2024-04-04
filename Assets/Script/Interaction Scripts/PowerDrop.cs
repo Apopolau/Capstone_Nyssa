@@ -8,7 +8,8 @@ public class PowerDrop : Interactable
 {
     public CelestialPlayer.Power powerDrop;
 
-    //public CelestialPlayer celestialPlayer;
+   //public CelestialPlayer.coldSnapFill coldSnapFill;
+    public CelestialPlayer celestialPlayer;
     public Image coldSnapFill;
     public PowerBehaviour powerBehaviour;
     [SerializeField] private LevelProgress levelProgress;
@@ -57,6 +58,7 @@ public class PowerDrop : Interactable
             Debug.Log("Item is OCCURRING");
             PowerStats currPowerStats = getPowerDropStatRef(powerDrop);
             powerBehaviour.setEnabled(currPowerStats);
+           
 
             //////////////////////////////////Will need to create a new UI for this
 
@@ -72,13 +74,16 @@ public class PowerDrop : Interactable
         {
             Debug.Log("return cold snap stats");
             levelProgress.SetPowers(true);
-           //StartCoroutine(celestialPlayer.CoolDownImageFill(coldSnapFill));
+            celestialPlayer.coldSnapFill.enabled = false;
+            StartCoroutine(celestialPlayer.CoolDownImageFill(celestialPlayer.coldSnapFill));
             return powerBehaviour.ColdSnapStats;
         }
        if(powerDrop == CelestialPlayer.Power.MOONTIDE)
         {
             Debug.Log("return cold snap stats");
             levelProgress.SetPowers(true);
+            celestialPlayer.moonTideFill.enabled = false;
+            StartCoroutine(celestialPlayer.CoolDownImageFill(celestialPlayer.moonTideFill));
             return powerBehaviour.MoonTideAttackStats;
         }
         return null;
