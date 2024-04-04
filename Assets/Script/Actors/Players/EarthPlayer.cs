@@ -28,6 +28,9 @@ public class EarthPlayer : Player
     [SerializeField] private GameObject darkenWhilePlanting;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
+    public Image healCooldownOverlay;
+    public Image thornCooldownOverlay;
+
     [Header("State machine elements")]
     private BaseStateMachine stateMachine;
     //Player contains isStaggered
@@ -78,9 +81,9 @@ public class EarthPlayer : Player
 
     private WaitForSeconds plantTime;
     private WaitForSeconds healTime;
-    private WaitForSeconds healCooldown;
+    private float healCooldown = 10f;
     private WaitForSeconds barrierTime;
-    private WaitForSeconds barrierCooldown;
+    private float barrierCooldown = 10f;
     private WaitForSeconds barrierActiveTime;
     private WaitForSeconds iFramesLength;
     private WaitForSeconds deathAnimLength;
@@ -157,8 +160,8 @@ public class EarthPlayer : Player
         plantTime = new WaitForSeconds(4.542f);
         healTime = new WaitForSeconds(0.7f);
         barrierTime = new WaitForSeconds(1.458f);
-        healCooldown = new WaitForSeconds(10);
-        barrierCooldown = new WaitForSeconds(10);
+        //healCooldown = new WaitForSeconds(10);
+        //barrierCooldown = new WaitForSeconds(10);
         barrierActiveTime = new WaitForSeconds(5);
         iFramesLength = new WaitForSeconds(0.5f);
         staggerLength = new WaitForSeconds(0.958f);
@@ -558,11 +561,14 @@ public class EarthPlayer : Player
         if (!healUsed && CheckIfValidTargets())
         {
             inHealSelection_FSM = true;
+            healCooldownOverlay.enabled = true;
+            
         }
         else if (healUsed)
         {
             string healOnCooldown = "That ability is still on cooldown";
             StartCoroutine(ThrowPlayerWarning(healOnCooldown));
+           
         }
         else if (!CheckIfValidTargets())
         {
@@ -575,6 +581,7 @@ public class EarthPlayer : Player
     public void InitiateHealing()
     {
         StartCoroutine(HealingStarted());
+       
     }
 
     //Handles staggering the functionality of healing
@@ -606,12 +613,15 @@ public class EarthPlayer : Player
         uiController.RestoreUI(darkenWhilePlanting);
         
         StartCoroutine(HandleHealCooldown());
+        healCooldownOverlay.gameObject.SetActive(true);
+        StartCoroutine(CoolDownImageFill(healCooldownOverlay, healCooldown));
+        
     }
 
     //Resets the cooldown on the heal
     private IEnumerator HandleHealCooldown()
     {
-        yield return healCooldown;
+        yield return new WaitForSeconds(healCooldown);
         healUsed = false;
     }
 
@@ -678,13 +688,20 @@ public class EarthPlayer : Player
         shieldUsed = true;
         earthControls.controls.EarthPlayerDefault.Enable();
         uiController.RestoreUI(darkenWhilePlanting);
+
+        
+
         StartCoroutine(HandleShieldCooldown());
+        
+        thornCooldownOverlay.gameObject.SetActive(true);
+        StartCoroutine(CoolDownImageFill(thornCooldownOverlay, barrierCooldown));
+
         StartCoroutine(HandleShieldExpiry());
     }
 
     private IEnumerator HandleShieldCooldown()
     {
-        yield return barrierCooldown;
+        yield return new WaitForSeconds(barrierCooldown);
         shieldUsed = false;
     }
 
@@ -932,6 +949,29 @@ public class EarthPlayer : Player
         return darkenInSelectMode;
     }
 
+    // handle cool down for thorn and heal powers
+    public IEnumerator CoolDownImageFill(Image fillImage, float cooldown)
+    {
+        float timer = 0f;
+        float startFillAmount = 1f;
+        float endFillAmount = 0f;
+
+        // Gradually decrease fill amount over cooldown duration
+        while (timer < cooldown)
+        {
+            float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldown);
+            fillImage.fillAmount = fillAmount;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure fill amount is exactly 0
+        fillImage.fillAmount = endFillAmount;
+
+        Debug.Log("cooldown finished");
+    }
+
+    
 
     /// <summary>
     /// HELPER FUNCTIONS
@@ -996,6 +1036,8 @@ public class EarthPlayer : Player
             isTurning = true;
         }
     }
+
+    
 
     /// <summary>
     /// HELPER FUNCTIONS FOR STATE MACHINE
