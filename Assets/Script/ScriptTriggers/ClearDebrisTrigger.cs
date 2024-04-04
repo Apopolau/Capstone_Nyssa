@@ -13,6 +13,11 @@ public class ClearDebrisTrigger : MonoBehaviour
     WaitForSeconds debrisClearTime = new WaitForSeconds(4.542f);
     bool isAnimated = false;
 
+    private void Update()
+    {
+        ClearDebris();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         // Check if earthPlayer enterted area
@@ -34,6 +39,11 @@ public class ClearDebrisTrigger : MonoBehaviour
         }
     }
 
+    public void InitiateClear()
+    {
+        StartCoroutine(LetTimerRun());
+    }
+
     private void ClearDebris()
     {
         if (isAnimated)
@@ -45,7 +55,7 @@ public class ClearDebrisTrigger : MonoBehaviour
 
     private IEnumerator LetTimerRun()
     {
-
+        isAnimated = true;
         yield return debrisClearTime;
         isAnimated = false;
     }
