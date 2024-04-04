@@ -15,6 +15,8 @@ public class PlantingUIIndicator : MonoBehaviour
     public Image grassImage;
     public Image treeImage;
 
+    public Image flowerImage;
+
     [SerializeField] private GameObject shovelUIOverlay;
 
     private void Update()
