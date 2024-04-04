@@ -139,6 +139,10 @@ public class Fox : Animal
     public void SetOpeningDialogueDone(bool status)
     {
         openingDialogueTriggered = status;
+        if (openingDialogueTriggered)
+        {
+            EnableBehaviourTree();
+        }
     }
 
     //We can put something here to change their texture and such
@@ -162,6 +166,7 @@ public class Fox : Animal
     public void GoToTriggerSpot()
     {
         navAgent.SetDestination(triggerArea.transform.position);
+        animalAnimator.animator.SetBool(animalAnimator.IfWalkingHash, true);
     }
 
     public void EnableBehaviourTree()

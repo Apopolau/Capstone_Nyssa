@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Ladder : Interactable
 {
@@ -21,6 +22,9 @@ public class Ladder : Interactable
     [SerializeField] DialogueTrigger celestialClimbDown;
 
     [SerializeField] private float interactDistance;
+
+    [SerializeField] GameObject popupText;
+    [SerializeField] GameObject logImage;
 
     private void Awake()
     {
@@ -51,8 +55,9 @@ public class Ladder : Interactable
         if (!ladderIsBuilt)
         {
             StartLadderBuild();
-            UpdateUIElement();
+            
         }
+        UpdateUIElement();
     }
 
     private void OnTriggerStay(Collider other)
@@ -184,7 +189,10 @@ public class Ladder : Interactable
         earthPlayer.inventory.RemoveItemByName("Tree Log", 3);
         ladderGeometry.GetComponentInChildren<MeshRenderer>().material = material;
         //levelTwoEvents.OnBridgeBuilt();
-        Destroy(this.gameObject.GetComponent<BoxCollider>());
+        ladderIsBuilt = true;
+        popupText.GetComponent<TextMeshPro>().text = "Climb";
+        logImage.SetActive(false);
+        //Destroy(this.gameObject.GetComponent<BoxCollider>());
     }
 
     private IEnumerator NotEnoughLogs()

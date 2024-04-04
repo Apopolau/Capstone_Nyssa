@@ -240,11 +240,7 @@ public class DialogueManager : MonoBehaviour
                 movingOn = true;
 
                 currentMove = (DialogueMoveEvent)currentEvent;
-                if (currentMove.MovePlaysOut())
-                {
-
-                }
-                else
+                if (!currentMove.MovePlaysOut())
                 {
                     eventEnded = true;
                     HandleNextEvents();
@@ -436,12 +432,21 @@ public class DialogueManager : MonoBehaviour
 
     public void HandleMoving(DialogueMoveEvent moveEvent)
     {
+
         GameObject objectToMove = moveEvent.GetObjectToMove();
-        if (moveEvent.GetPosition() != Vector3.zero)
+        if (moveEvent.HasMove())
         {
-            objectToMove.transform.position = Vector3.SmoothDamp(objectToMove.transform.position, moveEvent.GetPosition(), ref moveVelocity, moveEvent.GetMovementSpeed());
+            if (moveEvent.IsObjectMoveType())
+            {
+                objectToMove.transform.position = Vector3.SmoothDamp(objectToMove.transform.position,
+                    moveEvent.GetObjectToMoveTo().transform.position, ref moveVelocity, moveEvent.GetMovementSpeed());
+            }
+            else if (moveEvent.IsLocationMoveType())
+            {
+                objectToMove.transform.position = Vector3.SmoothDamp(objectToMove.transform.position, moveEvent.GetPosition(), ref moveVelocity, moveEvent.GetMovementSpeed());
+            }
         }
-        if (!Quaternion.Equals(moveEvent.GetRotation(), Quaternion.identity))
+        if (moveEvent.HasRotation())
         {
             objectToMove.transform.rotation = Quaternion.RotateTowards(objectToMove.transform.rotation, moveEvent.GetRotation(), moveEvent.GetRotationSpeed());
         }
@@ -639,15 +644,30 @@ public class DialogueManager : MonoBehaviour
     {
         if(currentMove != null)
         {
-            if(currentMove.GetPosition() != Vector3.zero)
+            if (currentMove.HasMove())
             {
-                currentMove.GetObjectToMove().transform.position = currentMove.GetPosition();
+                if (currentMove.IsLocationMoveType())
+                {
+                    currentMove.GetObjectToMove().transform.position = currentMove.GetPosition();
+                }
+                else if (currentMove.IsObjectMoveType())
+                {
+                    currentMove.GetObjectToMove().transform.position = currentMove.GetObjectToMoveTo().transform.position;
+                }
             }
-            if(currentMove.GetRotation() != Quaternion.identity)
+
+            if (currentMove.HasRotation())
             {
                 currentMove.GetObjectToMove().transform.rotation = currentMove.GetRotation();
             }
+            StopCoroutine(TurnMoveOff(currentMove));
         }
+        if(activeEvent is DialogueMoveEvent)
+        {
+            DialogueMoveEvent eventToTurnOff = activeEvent as DialogueMoveEvent;
+            StopCoroutine(TurnMoveOff(eventToTurnOff));
+        }
+
     }
 
     //Handles setting the camera back to its previous state when the dialogue is over

@@ -514,11 +514,10 @@ public class LevelOneEvents : LevelEventManager
 
 
 
-
         //We want to activate the objective menu here probably, or once the trigger dialogue is done.
         ////////////////////////////////////////////this is where we are going to drop the celestial cold orb!!!//////////////////////////////////////////////
-     ///   GetComponent<CelestialPlayer>().PowerDrop((GetComponent<PowerBehaviour>().ColdSnapStats), enemyPos);
-   
+        ///   GetComponent<CelestialPlayer>().PowerDrop((GetComponent<PowerBehaviour>().ColdSnapStats), enemyPos);
+
 
 
         firstMonsterDeadDialouge.TriggerDialogue();

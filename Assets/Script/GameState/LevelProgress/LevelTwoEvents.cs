@@ -13,6 +13,8 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] Item grassSeed;
     [SerializeField] Item treeSeed;
     [SerializeField] private PowerBehaviour power;
+    [SerializeField] private GameObject spawn1;
+    [SerializeField] private GameObject spawn2;
 
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
@@ -267,6 +269,7 @@ public class LevelTwoEvents : LevelEventManager
 
     private void SetWaterCompletion()
     {
+        task6.CrossOutTask();
         if (task6.GetTaskCompletion())
         {
             levelTwoProgress.animalHasWater = true;
@@ -275,6 +278,7 @@ public class LevelTwoEvents : LevelEventManager
 
     private void SetSafetyCompletion()
     {
+        task7.CrossOutTask();
         if (task7.GetTaskCompletion())
         {
             levelTwoProgress.animalIsSafe = true;
@@ -283,6 +287,7 @@ public class LevelTwoEvents : LevelEventManager
 
     private void SetFriendCompletion()
     {
+        task8.CrossOutTask();
         if (task8.GetTaskCompletion())
         {
             levelTwoProgress.animalHasFriend = true;
@@ -299,7 +304,10 @@ public class LevelTwoEvents : LevelEventManager
             allMonstersDefeatedDialogue.TriggerDialogue();
         }
         //Set an evaluation for spawns here
-
+        if(!spawn1.activeSelf && !spawn2.activeSelf)
+        {
+            spawnsDestroyed = true;
+        }
         //Finally if both are true, set this to true
         if (staticMonstersDefeated && spawnsDestroyed)
         {
@@ -520,9 +528,11 @@ public class LevelTwoEvents : LevelEventManager
             }
         }
         secondMonsterDeadDialouge.TriggerDialogue();
-        powerDrop = Instantiate(power.MoonTideAttackStats.powerDropPrefab, dyingEnemy.transform.position, Quaternion.identity);
+        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 1, dyingEnemy.transform.position.z);
+        powerDrop = Instantiate(power.MoonTideAttackStats.powerDropPrefab, enemyPos, Quaternion.identity);
         keyMonsterDefeatCount++;
         secondAreaClear = true;
+        spawn1.SetActive(false);
         //Cause Celeste's tidal wave to drop here
     }
 
@@ -530,7 +540,7 @@ public class LevelTwoEvents : LevelEventManager
     {
         foreach (GameObject go in mainAreaTiles)
         {
-            Debug.Log(go);
+            //Debug.Log(go);
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
@@ -539,7 +549,7 @@ public class LevelTwoEvents : LevelEventManager
 
         foreach (GameObject go in farLeftTiles)
         {
-            Debug.Log(go);
+            //Debug.Log(go);
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
@@ -618,6 +628,7 @@ public class LevelTwoEvents : LevelEventManager
         }
         task6.CrossOutTask();
         SetWaterCompletion();
+        spawn2.SetActive(false);
     }
 
 

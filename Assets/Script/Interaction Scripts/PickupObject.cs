@@ -14,6 +14,7 @@ public class PickupObject : Interactable
     public bool isBeingAbsorbed = false;
 
     WaitForSeconds absorbDelay = new WaitForSeconds(0.1f);
+    WaitForSeconds inventoryDisplay = new WaitForSeconds(3);
 
     //[SerializeField] GameObjectRuntimeSet playerSet;
 
@@ -71,10 +72,17 @@ public class PickupObject : Interactable
                     Destroy(this.GetComponentInParent<Transform>().gameObject);
                 }
                 else {
-                    earthPlayer.displayText.text = "Inventory is full";
+                    StartCoroutine(ThrowInventoryWarning());
                 }
             }
         }
+    }
+
+    private IEnumerator ThrowInventoryWarning()
+    {
+        earthPlayer.displayText.text = "Inventory is full";
+        yield return inventoryDisplay;
+        earthPlayer.displayText.text = "";
     }
 
     private void UpdateUIText()

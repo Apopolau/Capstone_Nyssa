@@ -38,11 +38,13 @@ public class LevelTwoProgress : LevelProgress
 
     public override void SetPowers(bool active)
     {
+        Debug.Log("Setting moontide to " + active);
         hasMoonTide = active;
     }
 
     public bool GetMoonTideStatus()
     {
+        Debug.Log("Moontide is " + hasMoonTide);
         return hasMoonTide;
     }
 }

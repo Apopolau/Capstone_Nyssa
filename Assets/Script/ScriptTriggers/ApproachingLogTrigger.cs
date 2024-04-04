@@ -13,7 +13,7 @@ public class ApproachingLogTrigger : MonoBehaviour
         {
             approachLogDialogue.TriggerDialogue();
             // Destroy the GameObject collider
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
