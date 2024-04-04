@@ -42,7 +42,7 @@ public class TaskKidnapAnimal : BTNode
         if (thisEnemy.inKidnapRange)
         {
 
-
+            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().kidnapper = thisEnemy;
             thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped = true;
 
 

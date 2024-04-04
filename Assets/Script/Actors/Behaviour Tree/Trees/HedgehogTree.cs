@@ -53,11 +53,20 @@ public class HedgehogTree : BTree
             new Selector(new List<BTNode>
             {
                 ///
+                /// GO WITH ENEMY IF KIDNAPPED
+                /// 
+                 new Sequence(new List<BTNode>
+                {
+                    new CheckIfKidnapped(thisHog),
+                    new TaskGetKidnapped(thisHog, hogAgent, transform)
+                }),
+                ///
                 ///STAY IN PLACE IF STUCK
                 ///
                 new Sequence(new List<BTNode>
                 {
                     new CheckIfStuck(thisHog),
+                    new Inverter( new CheckIfKidnapped(thisHog)),
                     new TaskAwaitDeath(hogAgent)
                 }),
 

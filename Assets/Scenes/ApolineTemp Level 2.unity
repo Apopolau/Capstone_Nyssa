@@ -4964,7 +4964,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &582559855
 Transform:
   m_ObjectHideFlags: 0
@@ -4993,8 +4993,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
-  enemyOilPrefab: {fileID: 1854843585}
-  enemyOilSpawnInterval: 30
+  plasticBagMonsterPrefab: {fileID: 0}
+  smogMonsterInvaderPrefab: {fileID: 1951011047699265629, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
+  spawnInterval: 30
 --- !u!1001 &619621890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6853,7 +6854,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7875459936262026101, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -284.8
+      value: 74
       objectReference: {fileID: 0}
     - target: {fileID: 7875459936262026101, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6890,6 +6891,10 @@ PrefabInstance:
     - target: {fileID: 7875459936262026101, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8484278331407762736, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
+      propertyPath: m_Speed
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7604,8 +7609,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
-  enemyOilPrefab: {fileID: 1951011047699265629, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
-  enemyOilSpawnInterval: 30
+  plasticBagMonsterPrefab: {fileID: 919132149155446097, guid: 7b4e2f75359f1aa47b771419827c7c36, type: 3}
+  smogMonsterInvaderPrefab: {fileID: 1951011047699265629, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
+  spawnInterval: 30
 --- !u!1001 &1006989773
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11210,7 +11216,7 @@ PrefabInstance:
       objectReference: {fileID: 120290000}
     - target: {fileID: 1527861654803304021, guid: 1cf37c2553b0d454386d16aaebf4d1e3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -277.40536
+      value: -83.3
       objectReference: {fileID: 0}
     - target: {fileID: 1527861654803304021, guid: 1cf37c2553b0d454386d16aaebf4d1e3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -11218,7 +11224,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1527861654803304021, guid: 1cf37c2553b0d454386d16aaebf4d1e3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -76.54251
+      value: 5.2
       objectReference: {fileID: 0}
     - target: {fileID: 1527861654803304021, guid: 1cf37c2553b0d454386d16aaebf4d1e3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15323,11 +15329,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2155472256782070553, guid: f152c6031e4b2944cae7423592e76233, type: 3}
   m_PrefabInstance: {fileID: 1854843583}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1854843585 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2090664895178657524, guid: f152c6031e4b2944cae7423592e76233, type: 3}
-  m_PrefabInstance: {fileID: 1854843583}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1863697909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17122,6 +17123,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RainParticleSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 1872162656605278360, guid: 1cfb5c01860113c48b40bd782fb9f464, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18755,6 +18760,14 @@ PrefabInstance:
       propertyPath: task8
       value: 
       objectReference: {fileID: 2814006587503948987}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: spawn1
+      value: 
+      objectReference: {fileID: 1001608614}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: spawn2
+      value: 
+      objectReference: {fileID: 582559854}
     - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: terrain
       value: 
