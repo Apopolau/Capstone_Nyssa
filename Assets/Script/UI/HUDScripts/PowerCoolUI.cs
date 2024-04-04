@@ -14,7 +14,7 @@ public class PowerCoolUI : MonoBehaviour
 
     private void Start()
     {
-        radialFillImage.fillAmount = 1f; // Set initial fill amount to 1
+//        radialFillImage.fillAmount = 1f; // Set initial fill amount to 1
     }
 
     private void Update()

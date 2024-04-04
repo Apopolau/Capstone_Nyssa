@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class PickupObject : Interactable
 {
@@ -11,10 +13,15 @@ public class PickupObject : Interactable
     [SerializeField] Inventory inventory;
     [SerializeField] public int quantity;
 
+    //public EarthUIManager earthUIManager;
+
     public bool isBeingAbsorbed = false;
 
     WaitForSeconds absorbDelay = new WaitForSeconds(0.1f);
     WaitForSeconds inventoryDisplay = new WaitForSeconds(3);
+
+    public UserSettingsManager userSettingsManager;
+    [SerializeField] public TextMeshProUGUI pickupLetter; // Reference to the TextMeshPro component
 
     //[SerializeField] GameObjectRuntimeSet playerSet;
 
@@ -51,12 +58,27 @@ public class PickupObject : Interactable
             }
         }
 
+        // Access the user settings manager
+        //userSettingsManager = earthUIManager.userSettingsManager;
+
+        GameObject textObject = GameObject.Find("Letter"); 
+        if (textObject != null)
+        {
+            pickupLetter = textObject.GetComponent<TextMeshProUGUI>();
+            if (pickupLetter == null)
+            {
+                Debug.LogError("TextMeshPro component not found on the object named: " + textObject.name);
+            }
+        }
+
+        UpdatePickupLetter();
     }
 
     private void Update()
     {
         ItemPickup();
         UpdateUIElement();
+        UpdatePickupLetter();
     }
 
     public void ItemPickup()
@@ -133,4 +155,18 @@ public class PickupObject : Interactable
             p2IsInRange = false;
         }
     }
+
+   private void UpdatePickupLetter()
+    {
+        // Update the text based on the control type from the user settings manager
+        if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
+        {
+            pickupLetter.text = "P"; //only changing one letter
+        } 
+        else if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
+        {
+            pickupLetter.text = "A"; 
+        }
+        
+    } 
 }
