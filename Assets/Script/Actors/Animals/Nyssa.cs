@@ -54,7 +54,7 @@ public class Nyssa : Animal
                 SetPickup();
             }
         }
-        else if(earthPlayer.interacting && beingHeld)
+        else if(!earthPlayer.GetIsHoldingNyssa() && beingHeld)
         {
             UnSetPickup();
         }

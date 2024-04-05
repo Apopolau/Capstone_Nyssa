@@ -198,7 +198,10 @@ public abstract class Animal : MonoBehaviour
             float yPos = Mathf.Clamp(uiTarget.transform.position.x, 0f, Screen.height);
             kidnapIcon.transform.position = new Vector3(xPos, yPos, 0);
 
-            //kidnapIcon.transform.GetChild(0).GetChild(0).RotateAround(this.gameObject.transform.position, kidnapIcon.transform.GetChild(0).GetChild(1).transform.position, 5 * Time.deltaTime);
+            Vector3 pointToRotateTowards = new Vector3(kidnapIcon.transform.GetChild(0).GetChild(1).transform.position.x,
+                kidnapIcon.transform.GetChild(0).GetChild(1).transform.position.y, 0);
+
+            kidnapIcon.transform.GetChild(0).GetChild(0).RotateAround(this.gameObject.transform.position, pointToRotateTowards, 5 * Time.deltaTime);
         }
     }
 }
