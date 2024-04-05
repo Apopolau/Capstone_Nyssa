@@ -13,7 +13,7 @@ public class CelestialPlayer : Player
     //[SerializeField] private VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
-    [SerializeField] private GameObject celestPlayerDpad;
+    //[SerializeField] private GameObject celestPlayerDpad;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
     
     
@@ -22,6 +22,11 @@ public class CelestialPlayer : Player
     [SerializeField] public Image lightingStrikeFill;
     [SerializeField] public Image moonTideFill;
     [SerializeField] public Image rainFill;
+
+    [SerializeField] public Image CTRLColdSnapFill;
+    [SerializeField] public Image CTRLightingStrikeFill;
+    [SerializeField] public Image CTRLMoonTideFill;
+    [SerializeField] public Image CTRLRainFill;
     private NavMeshAgent celestialAgent;
 
     [Header("Rain System")]
@@ -123,7 +128,10 @@ public class CelestialPlayer : Player
         lightningCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
         staff =GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
 
+
         StartCoroutine(CoolDownImageFill(lightingStrikeFill));
+        StartCoroutine(CoolDownImageFill(CTRLightingStrikeFill));
+        
     }
 
 
@@ -211,7 +219,7 @@ public class CelestialPlayer : Player
         buttonColdSnap = true;
         powerInUse = Power.COLDSNAP;
         Debug.Log("OnSnowFlakeSelected");
-        DarkenAllImages(celestPlayerDpad); //darken the dpad
+        //DarkenAllImages(celestPlayerDpad); //darken the dpad
 
     }
 
@@ -222,7 +230,7 @@ public class CelestialPlayer : Player
         buttonBasicAttack = true; ;
         powerInUse = Power.BASIC;
         Debug.Log("startbasic");
-        DarkenAllImages(celestPlayerDpad); //darken the dpad
+        //DarkenAllImages(celestPlayerDpad); //darken the dpad
 
 
     }
@@ -234,7 +242,7 @@ public class CelestialPlayer : Player
         buttonLightningStrike = true;
         powerInUse = Power.LIGHTNINGSTRIKE;
         Debug.Log("startlightning");
-        DarkenAllImages(celestPlayerDpad); //darken the dpad
+       // DarkenAllImages(celestPlayerDpad); //darken the dpad
 
     }
 
@@ -246,7 +254,7 @@ public class CelestialPlayer : Player
         buttonMoonTide = true;
         powerInUse = Power.MOONTIDE;
         Debug.Log("Start Moontide");
-        DarkenAllImages(celestPlayerDpad);//darken the dpad
+        //DarkenAllImages(celestPlayerDpad);//darken the dpad
     }
 
     //POWEER ANIMATION
@@ -280,7 +288,7 @@ public class CelestialPlayer : Player
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
         isTargeted = false;
         Destroy(coldOrb, 1f);
-        ResetImageColor(celestPlayerDpad); //reset dpad colors
+        //ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
 
     }
@@ -304,7 +312,7 @@ public class CelestialPlayer : Player
         StartCoroutine(SuspendActions(basicPowerAnimTime));
         yield return basicPowerAnimTime;
         celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
-        ResetImageColor(celestPlayerDpad); //reset dpad colors
+        //ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
 
     }
@@ -352,7 +360,7 @@ public class CelestialPlayer : Player
         //reset animation, reset isattacking, detroy visual asset and reset DPAD
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
         Destroy(clone, 1f);
-        ResetImageColor(celestPlayerDpad); //reset dpad colors
+        //ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
 
     }
@@ -390,7 +398,7 @@ public class CelestialPlayer : Player
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
         isTargeted = false;
         Destroy(coldOrb, 1f);
-        ResetImageColor(celestPlayerDpad); //reset dpad colors
+        //ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
 
     }
@@ -596,7 +604,8 @@ public class CelestialPlayer : Player
             // RainParticleSystem.SetActive(true);
             weatherState.skyState = WeatherState.SkyState.RAINY;
             isRaining = true;
-            rainFill.enabled = true;
+            rainFill.enabled = false;
+            CTRLRainFill.enabled = true;
         }
         else if (isRaining)
         {
@@ -605,7 +614,8 @@ public class CelestialPlayer : Player
             weatherState.skyState = WeatherState.SkyState.CLEAR;
 
             isRaining = false;
-            rainFill.enabled = false;
+            rainFill.enabled = true;
+            CTRLRainFill.enabled = false;
 
         }
 
@@ -643,7 +653,9 @@ public class CelestialPlayer : Player
     {
         StartCoroutine(ColdSnapCoolDownTime());
         coldSnapFill.enabled = true;
+        CTRLColdSnapFill.enabled = true;
         StartCoroutine(CoolDownImageFill(coldSnapFill));
+        StartCoroutine(CoolDownImageFill(CTRLColdSnapFill));
     }
 
     public IEnumerator ColdSnapCoolDownTime()
@@ -661,6 +673,7 @@ public class CelestialPlayer : Player
     {
         StartCoroutine(LightningCoolDownTime());
         StartCoroutine(CoolDownImageFill(lightingStrikeFill));
+        StartCoroutine(CoolDownImageFill(CTRLightingStrikeFill));
     }
     public IEnumerator LightningCoolDownTime()
     {
@@ -691,15 +704,15 @@ public class CelestialPlayer : Player
     {
         StartCoroutine(MoonTideCoolDownTime());
         moonTideFill.enabled = true;
+        CTRLMoonTideFill.enabled = true;
         StartCoroutine(CoolDownImageFill(moonTideFill));
+        StartCoroutine(CoolDownImageFill(CTRLMoonTideFill));
     }
 
 
 
     public IEnumerator CoolDownImageFill(Image fillImage)
     {
-        
-     
 
             float cooldownDuration = CoolDownTime( powerInUse);
             float timer = 0f;
@@ -771,10 +784,10 @@ public class CelestialPlayer : Player
     {
         celestialControls.controls.CelestialPlayerDefault.Disable();
         //celestialControls.controls.PlantIsSelected.Disable();
-        DarkenAllImages(celestPlayerDpad); //indicate no movement is allowed while planting
+        //DarkenAllImages(celestPlayerDpad); //indicate no movement is allowed while planting
         yield return waitTime;
         celestialControls.controls.CelestialPlayerDefault.Enable();
-        ResetImageColor(celestPlayerDpad);
+        //ResetImageColor(celestPlayerDpad);
     }
 
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange)

@@ -21,7 +21,7 @@ public class PickupObject : Interactable
     WaitForSeconds inventoryDisplay = new WaitForSeconds(3);
 
     public UserSettingsManager userSettingsManager;
-    [SerializeField] public TextMeshProUGUI pickupLetter; // Reference to the TextMeshPro component
+    [SerializeField] GameObject pickupLetter; // Reference to the TextMeshPro component
 
     //[SerializeField] GameObjectRuntimeSet playerSet;
 
@@ -61,15 +61,8 @@ public class PickupObject : Interactable
         // Access the user settings manager
         //userSettingsManager = earthUIManager.userSettingsManager;
 
-        GameObject textObject = GameObject.Find("Letter"); 
-        if (textObject != null)
-        {
-            pickupLetter = textObject.GetComponent<TextMeshProUGUI>();
-            if (pickupLetter == null)
-            {
-                Debug.LogError("TextMeshPro component not found on the object named: " + textObject.name);
-            }
-        }
+        //GameObject textObject = GameObject.Find("Letter"); 
+        
 
         UpdatePickupLetter();
     }
@@ -161,11 +154,11 @@ public class PickupObject : Interactable
         // Update the text based on the control type from the user settings manager
         if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
-            pickupLetter.text = "P"; //only changing one letter
+            pickupLetter.GetComponent<TextMeshProUGUI>().text = "P";
         } 
         else if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
-            pickupLetter.text = "A"; 
+           pickupLetter.GetComponent<TextMeshProUGUI>().text = "A";
         }
         
     } 
