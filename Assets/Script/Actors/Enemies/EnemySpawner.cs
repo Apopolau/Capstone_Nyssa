@@ -50,6 +50,7 @@ public class EnemySpawner : MonoBehaviour
                 if (index < 6)
                 {
                     currSpawnedEnemy = plasticBagMonsterPrefab;
+                   
                 }
                 else
                 {

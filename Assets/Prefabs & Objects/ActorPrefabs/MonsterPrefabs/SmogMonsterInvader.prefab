@@ -100,9 +100,6 @@ MonoBehaviour:
   isDying: 0
   isStaggered: 0
   isColliding: 0
-  isInvader: 1
-  isPathSelected: 0
-  chosenPath: []
   seesPlant: 0
   inSmotherRange: 0
   smotherInitiated: 0
@@ -119,6 +116,10 @@ MonoBehaviour:
   inKidnapRange: 0
   hasAnimal: 0
   isKidnapping: 0
+  escapeRoute: {fileID: 0}
+  isInvader: 1
+  isPathSelected: 0
+  chosenPath: []
 --- !u!195 &8484278331407762736
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -129,7 +130,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 5
-  m_Speed: 3.5
+  m_Speed: 8
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
