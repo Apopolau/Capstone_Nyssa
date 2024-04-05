@@ -130,10 +130,36 @@ public class PickupObject : Interactable
         if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p1IsInRange = true;
+
+            // Update the text based on the control type from the user settings manager
+            if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
+            {
+                pickupLetter.GetComponent<TextMeshProUGUI>().text = "P";
+            } 
+            else if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
+            {
+            pickupLetter.GetComponent<TextMeshProUGUI>().text = "A";
+            }
         }
         if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p2IsInRange = true;
+
+            // Update pickup letter based on celestial player's control type
+            if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
+            {
+                pickupLetter.GetComponent<TextMeshProUGUI>().text = "E";
+            } 
+            else if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.CONTROLLER)
+            {
+                pickupLetter.GetComponent<TextMeshProUGUI>().text = "A";
+            }
+        }
+
+        // If one player goes out of range, update pickup letter back to "P" if EarthPlayer is still in range
+        if (!p2IsInRange && p1IsInRange && userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
+        {
+            pickupLetter.GetComponent<TextMeshProUGUI>().text = "P";
         }
     }
 
@@ -142,24 +168,18 @@ public class PickupObject : Interactable
         if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p1IsInRange = false;
+
         }
         if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p2IsInRange = false;
+
         }
     }
 
    private void UpdatePickupLetter()
     {
-        // Update the text based on the control type from the user settings manager
-        if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
-        {
-            pickupLetter.GetComponent<TextMeshProUGUI>().text = "P";
-        } 
-        else if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
-        {
-           pickupLetter.GetComponent<TextMeshProUGUI>().text = "A";
-        }
+        
         
     } 
 }

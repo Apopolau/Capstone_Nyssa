@@ -54,16 +54,20 @@ public class Duck : Animal
         CheckLevelState();
         SetWalkingState();
         MoveKidnapIcon();
-        if (earthPlayer.GetIsInteracting() && inRangeOfEscort)
+        if (earthPlayer.interacting && inRangeOfEscort)
         {
-            if (isEscorted)
+            if (!isEscorted)
             {
                 SetEscort(true);
             }
-            else if (!isEscorted)
+            else if (isEscorted)
             {
                 SetEscort(false);
             }
+        }
+        if (isEscorted && uiTarget.activeSelf)
+        {
+            uiTarget.SetActive(false);
         }
     }
 
@@ -126,7 +130,7 @@ public class Duck : Animal
     {
         if (!weatherState.dayTime)
         {
-            if (other.GetComponent<EarthPlayer>())
+            if (other.GetComponent<EarthPlayer>() && !isEscorted)
             {
                 uiTarget.SetActive(true);
                 inRangeOfEscort = true;

@@ -44,6 +44,7 @@ public class EarthPlayer : Player
     private bool inBarrierSelection_FSM = false;
     private bool inDialogue_FSM = false;
     private bool inWaiting_FSM = false;
+    private bool inHoldingNyssa_FSM = false;
     //Note: this is for animations where the player should stop moving
     private bool isMidAnimation_FSM;
 
@@ -132,6 +133,7 @@ public class EarthPlayer : Player
     public EarthPlayerControl earthControls;
     [SerializeField] public WeatherState weatherState;
     public Inventory inventory; // hold a reference to the Inventory scriptable object
+    public GameObject nyssaHoldTarget;
 
 
     private void Awake()
@@ -555,7 +557,26 @@ public class EarthPlayer : Player
 
     public void PickUpNyssa()
     {
+        Debug.Log("Picking up Nyssa");
+        inHoldingNyssa_FSM = true;
+        earthAnimator.animator.SetBool(earthAnimator.IfCarryingHash, true);
+    }
 
+    public void PutDownNyssa()
+    {
+        Debug.Log("Putting down Nyssa");
+        inHoldingNyssa_FSM = false;
+        earthAnimator.animator.SetBool(earthAnimator.IfCarryingHash, false);
+    }
+
+    public GameObject GetNyssaTarget()
+    {
+        return nyssaHoldTarget;
+    }
+
+    public void SetHoldingNyssa(bool isHolding)
+    {
+        inHoldingNyssa_FSM = isHolding;
     }
 
     /// <summary>
@@ -1112,6 +1133,11 @@ public class EarthPlayer : Player
     public bool GetInDialogue()
     {
         return inDialogue_FSM;
+    }
+
+    public bool GetIsHoldingNyssa()
+    {
+        return inHoldingNyssa_FSM;
     }
     
     public void ToggleDialogueState()

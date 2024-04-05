@@ -1165,6 +1165,164 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""HoldingNyssa"",
+            ""id"": ""77d5e3d9-54db-47f6-b9a5-f5891cadcf01"",
+            ""actions"": [
+                {
+                    ""name"": ""EarthWalk"",
+                    ""type"": ""Value"",
+                    ""id"": ""7dc7389f-b6a9-45a8-b2f9-2ce4b278504c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PutNyssaDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""7921fa13-3bf1-49b0-bbb2-045f0b630d58"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""Controller"",
+                    ""id"": ""9b239d2b-1d9b-4ddb-8c35-1281cd5f9119"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": ""StickDeadzone(min=0.2,max=1)"",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""d5a0496c-7161-4aca-804a-7024e0bfb1d3"",
+                    ""path"": ""<Gamepad>/leftStick/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""2399c89c-e1ca-44bb-9bcd-b886e36a16c9"",
+                    ""path"": ""<Gamepad>/leftStick/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""df38c073-f07f-452b-9b27-ff2b680fb679"",
+                    ""path"": ""<Gamepad>/leftStick/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""9cd4b6a9-2c5f-436b-98d0-cc01fa71d570"",
+                    ""path"": ""<Gamepad>/leftStick/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Keyboard"",
+                    ""id"": ""03d2ce32-5ee9-4dea-ad17-06cb922bb356"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""d565f95b-d5df-4851-99d2-5d9305294f7b"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6e36ed41-afaf-4b6a-bda9-cadac21ff4b2"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""c0acea95-2c28-4956-b313-5036e183f39f"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""32a38de6-fc8e-48f4-9a4d-4924146ec51e"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EarthWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6e151e89-317b-42f9-ba11-9f2d6140379e"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PutNyssaDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c354c73-d32e-485d-aa81-8eb8aadcd5ec"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PutNyssaDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -1212,6 +1370,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // CutsceneControls
         m_CutsceneControls = asset.FindActionMap("CutsceneControls", throwIfNotFound: true);
         m_CutsceneControls_NextSlide = m_CutsceneControls.FindAction("NextSlide", throwIfNotFound: true);
+        // HoldingNyssa
+        m_HoldingNyssa = asset.FindActionMap("HoldingNyssa", throwIfNotFound: true);
+        m_HoldingNyssa_EarthWalk = m_HoldingNyssa.FindAction("EarthWalk", throwIfNotFound: true);
+        m_HoldingNyssa_PutNyssaDown = m_HoldingNyssa.FindAction("PutNyssaDown", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1789,6 +1951,60 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public CutsceneControlsActions @CutsceneControls => new CutsceneControlsActions(this);
+
+    // HoldingNyssa
+    private readonly InputActionMap m_HoldingNyssa;
+    private List<IHoldingNyssaActions> m_HoldingNyssaActionsCallbackInterfaces = new List<IHoldingNyssaActions>();
+    private readonly InputAction m_HoldingNyssa_EarthWalk;
+    private readonly InputAction m_HoldingNyssa_PutNyssaDown;
+    public struct HoldingNyssaActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public HoldingNyssaActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @EarthWalk => m_Wrapper.m_HoldingNyssa_EarthWalk;
+        public InputAction @PutNyssaDown => m_Wrapper.m_HoldingNyssa_PutNyssaDown;
+        public InputActionMap Get() { return m_Wrapper.m_HoldingNyssa; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(HoldingNyssaActions set) { return set.Get(); }
+        public void AddCallbacks(IHoldingNyssaActions instance)
+        {
+            if (instance == null || m_Wrapper.m_HoldingNyssaActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_HoldingNyssaActionsCallbackInterfaces.Add(instance);
+            @EarthWalk.started += instance.OnEarthWalk;
+            @EarthWalk.performed += instance.OnEarthWalk;
+            @EarthWalk.canceled += instance.OnEarthWalk;
+            @PutNyssaDown.started += instance.OnPutNyssaDown;
+            @PutNyssaDown.performed += instance.OnPutNyssaDown;
+            @PutNyssaDown.canceled += instance.OnPutNyssaDown;
+        }
+
+        private void UnregisterCallbacks(IHoldingNyssaActions instance)
+        {
+            @EarthWalk.started -= instance.OnEarthWalk;
+            @EarthWalk.performed -= instance.OnEarthWalk;
+            @EarthWalk.canceled -= instance.OnEarthWalk;
+            @PutNyssaDown.started -= instance.OnPutNyssaDown;
+            @PutNyssaDown.performed -= instance.OnPutNyssaDown;
+            @PutNyssaDown.canceled -= instance.OnPutNyssaDown;
+        }
+
+        public void RemoveCallbacks(IHoldingNyssaActions instance)
+        {
+            if (m_Wrapper.m_HoldingNyssaActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IHoldingNyssaActions instance)
+        {
+            foreach (var item in m_Wrapper.m_HoldingNyssaActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_HoldingNyssaActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public HoldingNyssaActions @HoldingNyssa => new HoldingNyssaActions(this);
     public interface IEarthPlayerDefaultActions
     {
         void OnEarthWalk(InputAction.CallbackContext context);
@@ -1839,5 +2055,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface ICutsceneControlsActions
     {
         void OnNextSlide(InputAction.CallbackContext context);
+    }
+    public interface IHoldingNyssaActions
+    {
+        void OnEarthWalk(InputAction.CallbackContext context);
+        void OnPutNyssaDown(InputAction.CallbackContext context);
     }
 }

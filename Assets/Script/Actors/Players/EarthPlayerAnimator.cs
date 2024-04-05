@@ -9,6 +9,7 @@ public class EarthPlayerAnimator : PlayerAnimator
     public int IfTurningHash;
     public int IfHealingHash;
     public int IfShieldingHash;
+    public int IfCarryingHash;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class EarthPlayerAnimator : PlayerAnimator
         IfShieldingHash = Animator.StringToHash("IfShielding");
         IfDyingHash = Animator.StringToHash("IfDying");
         IfTakingHitHash = Animator.StringToHash("IfTakingHit");
+        IfCarryingHash = Animator.StringToHash("IfCarrying");
     }
 
     public override void ToggleSetWalk()
@@ -49,6 +51,7 @@ public class EarthPlayerAnimator : PlayerAnimator
             animator.SetBool(IfTurningHash, false);
             animator.SetBool(IfHealingHash, false);
             animator.SetBool(IfShieldingHash, false);
+            //animator.SetBool(IfHoldingHash, false);
         }
     }
 }
