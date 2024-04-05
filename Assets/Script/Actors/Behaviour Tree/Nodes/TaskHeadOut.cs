@@ -39,6 +39,8 @@ public class TaskHeadOut : BTNode
         if (thisEnemy.isStaggered || thisEnemy.isDying)
         {
             thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped = false;
+            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
+            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().ResetOrigSpeed();
             state = NodeState.FAILURE;
         }
         else

@@ -21,14 +21,16 @@ public class TaskFindEscapeRoute : BTNode
         if (thisEnemy.isStaggered || thisEnemy.isDying)
         {
             thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped = false;
-            // thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
+            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
+            thisAgent.speed = 7;
             state = NodeState.FAILURE;
             return state;
         }
         if (!thisEnemy.inKidnapRange)
         {
-
             thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped = false;
+            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
+            thisAgent.speed = 7;
             state = NodeState.FAILURE;
             return state;
         }
@@ -37,6 +39,10 @@ public class TaskFindEscapeRoute : BTNode
         {
             escapeWaypoint = thisEnemy.invaderEnemyRoutes.getClosestEscapeRoute(thisEnemy);
             thisEnemy.invaderEnemyRoutes.setClosestEscapeRoute(thisEnemy, escapeWaypoint);
+            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().SetCurrSpeed();
+            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().GetNavMeshAgent().speed = 8;
+            thisAgent.speed = 8;
+
         
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped = true;
 
