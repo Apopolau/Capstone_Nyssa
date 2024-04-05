@@ -70,6 +70,7 @@ public class EnemySpawner : MonoBehaviour
         {
 
          
+            //if daynight cycle.nights passed is bigger  that 2 interval decrease
             yield return new WaitForSeconds(interval);
             GameObject newEnemy = Instantiate(currSpawnedEnemy, this.transform.position, Quaternion.identity);
         }
