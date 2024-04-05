@@ -108,7 +108,7 @@ public class DayNightCycle : MonoBehaviour
             weatherState.SetDayTime(false);
         }
         else if (timeOfDay > 5 && timeOfDay < 6)
-        {
+        {//////20.83----25
             weatherState.SetTimeOfDay(WeatherState.TimeOfDay.DAYBREAK);
             weatherState.SetDayTime(true);
         }
@@ -118,7 +118,7 @@ public class DayNightCycle : MonoBehaviour
             weatherState.SetDayTime(true);
         }
         else if (timeOfDay > 18 && timeOfDay < 21)
-        {
+        {//83.3 ------ 87.5
             weatherState.SetTimeOfDay(WeatherState.TimeOfDay.EVENING);
             weatherState.SetDayTime(true);
         }
@@ -127,13 +127,24 @@ public class DayNightCycle : MonoBehaviour
             weatherState.SetTimeOfDay(WeatherState.TimeOfDay.NIGHT);
             weatherState.SetDayTime(false);
         }
-
-        RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeOfDay/24);
-        RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeOfDay/24);
-        directionalLight.color = directionalLightColor.Evaluate(timeOfDay/24);
-        float H, S, V;
-        Color.RGBToHSV(directionalLightIntensity.Evaluate(timeOfDay/24), out H, out S, out V);
-        directionalLight.intensity = V;
+        if (weatherState.acidRainState == WeatherState.AcidRainState.NONE)
+        {
+            RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeOfDay / 24);
+            RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeOfDay / 24);
+            directionalLight.color = directionalLightColor.Evaluate(timeOfDay / 24);
+            float H, S, V;
+            Color.RGBToHSV(directionalLightIntensity.Evaluate(timeOfDay / 24), out H, out S, out V);
+            directionalLight.intensity = V;
+        }
+         else if(weatherState.acidRainState == WeatherState.AcidRainState.LIGHT || weatherState.acidRainState == WeatherState.AcidRainState.HEAVY)
+        {
+            RenderSettings.ambientEquatorColor = dirtyEquatorColor.Evaluate(timeOfDay / 24);
+            RenderSettings.ambientSkyColor = dirtyEquatorColor.Evaluate(timeOfDay / 24);
+            directionalLight.color = dirtyDirectionalLightColor.Evaluate(timeOfDay / 24);
+            float H, S, V;
+            Color.RGBToHSV(dirtyDirectionalLightIntensity.Evaluate(timeOfDay / 24), out H, out S, out V);
+            directionalLight.intensity = V;
+        }
         //print(directionalLightColor.Evaluate(timeFraction));
         //print(V);
     }

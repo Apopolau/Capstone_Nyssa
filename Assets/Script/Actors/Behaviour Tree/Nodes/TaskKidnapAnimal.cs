@@ -37,10 +37,15 @@ public class TaskKidnapAnimal : BTNode
             state = NodeState.FAILURE;
             return state;
         }
+        if (thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped)
+        {
+            state = NodeState.FAILURE;
+            return state;
 
+        }
 
-        //if (thisEnemy.inSmotherRange && thisEnemy.smotherInitiated)
-        if (thisEnemy.inKidnapRange)
+            //if (thisEnemy.inSmotherRange && thisEnemy.smotherInitiated)
+            if (thisEnemy.inKidnapRange)
         {
             thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().kidnapper = thisEnemy;
             thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped = true;

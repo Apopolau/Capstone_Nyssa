@@ -13,6 +13,9 @@ public class EnemySpawner : MonoBehaviour
     private bool startedSpawns;
     private bool spawnsOn;
 
+    //must be equal to a total of 10
+    private int plasticProbability=6;
+
     [SerializeField] private float spawnInterval;
 
     void Start()
@@ -23,6 +26,16 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
+        int index = Random.Range(0, 10);
+        if (index < 6)
+        {
+            currSpawnedEnemy = plasticBagMonsterPrefab;
+
+        }
+        else
+        {
+            currSpawnedEnemy = smogMonsterInvaderPrefab;
+        }
         CheckTimeOfDay();
     }
 
@@ -46,16 +59,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 spawnsOn = true;
 
-                int index = Random.Range(0, 10);
-                if (index < 6)
-                {
-                    currSpawnedEnemy = plasticBagMonsterPrefab;
-                   
-                }
-                else
-                {
-                    currSpawnedEnemy = smogMonsterInvaderPrefab;
-                }
                 StartCoroutine(spawnEnemy(currSpawnedEnemy, spawnInterval));
             }
         }
@@ -66,11 +69,26 @@ public class EnemySpawner : MonoBehaviour
         while (true)
         {
 
+         
             yield return new WaitForSeconds(interval);
-            GameObject newEnemy = Instantiate(enemy, this.transform.position, Quaternion.identity);
+            GameObject newEnemy = Instantiate(currSpawnedEnemy, this.transform.position, Quaternion.identity);
         }
     }
 
+    private void getRandomizedEnemy()
+    {
+        int index = Random.Range(0, 10);
+        if (index < plasticProbability)
+        {
+            currSpawnedEnemy = plasticBagMonsterPrefab;
+
+        }
+        else         
+        {
+            currSpawnedEnemy = smogMonsterInvaderPrefab;
+        }
+        
+    }
 
     //Check the Day 
     //If day is furth alonge e.g. its day 3 

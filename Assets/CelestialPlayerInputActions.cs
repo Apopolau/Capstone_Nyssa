@@ -408,7 +408,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 {
                     ""name"": """",
                     ""id"": ""e4368e63-94d7-42aa-8360-7b9cf3f40a3b"",
-                    ""path"": ""<Keyboard>/p"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
