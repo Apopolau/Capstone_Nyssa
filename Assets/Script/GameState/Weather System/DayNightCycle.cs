@@ -102,28 +102,23 @@ public class DayNightCycle : MonoBehaviour
     {
         //float timeFraction = timeOfDay / 24;
 
-        if (timeOfDay < 5)
+        if (timeOfDay < 1)
         {
-            weatherState.SetTimeOfDay(WeatherState.TimeOfDay.NIGHT);
-            weatherState.SetDayTime(false);
-        }
-        else if (timeOfDay > 5 && timeOfDay < 6)
-        {//////20.83----25
             weatherState.SetTimeOfDay(WeatherState.TimeOfDay.DAYBREAK);
             weatherState.SetDayTime(true);
         }
-        else if (timeOfDay > 6 && timeOfDay < 18)
-        {
+        else if (timeOfDay > 1 && timeOfDay < 14)
+        {//////20.83----25
             weatherState.SetTimeOfDay(WeatherState.TimeOfDay.DAY);
             weatherState.SetDayTime(true);
         }
-        else if (timeOfDay > 18 && timeOfDay < 21)
-        {//83.3 ------ 87.5
+        else if (timeOfDay > 14 && timeOfDay < 16)
+        {
             weatherState.SetTimeOfDay(WeatherState.TimeOfDay.EVENING);
             weatherState.SetDayTime(true);
         }
-        else if (timeOfDay > 21)
-        {
+        else if (timeOfDay > 16)
+        {//83.3 ------ 87.5
             weatherState.SetTimeOfDay(WeatherState.TimeOfDay.NIGHT);
             weatherState.SetDayTime(false);
         }
