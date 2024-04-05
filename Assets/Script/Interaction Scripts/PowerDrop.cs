@@ -8,8 +8,8 @@ public class PowerDrop : Interactable
 {
     public CelestialPlayer.Power powerDrop;
 
-   //public CelestialPlayer.coldSnapFill coldSnapFill;
-    public Image coldSnapFill;
+    //public CelestialPlayer.coldSnapFill coldSnapFill;
+    //[SerializeField] public Image coldSnapFill;
     public PowerBehaviour powerBehaviour;
     [SerializeField] private LevelProgress levelProgress;
     /// <summary>

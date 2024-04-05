@@ -18,11 +18,17 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private float timeScale;
     [SerializeField] private int nightsPassed;
 
-    [Header("World Light Presets")]
+    [Header("Clean World Light Presets")]
     [SerializeField] private Gradient directionalLightColor;
     [SerializeField] private Gradient directionalLightIntensity;
     [SerializeField] private Gradient skyColor;
     [SerializeField] private Gradient equatorColor;
+
+    [Header("Dirty World Light Presets")]
+    [SerializeField] private Gradient dirtyDirectionalLightColor;
+    [SerializeField] private Gradient dirtyDirectionalLightIntensity;
+    [SerializeField] private Gradient dirtySkyColor;
+    [SerializeField] private Gradient dirtyEquatorColor;
 
     //Stores data on the weather state
     [SerializeField] WeatherState weatherState;

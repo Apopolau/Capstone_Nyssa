@@ -307,7 +307,7 @@ public class CelestialPlayer : Player
         Debug.Log("lightning is animated");
 
         VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
-        VisualEffect clone = Instantiate(lightningStrike, new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, enemyTarget.transform.position.z), Quaternion.identity);
+        VisualEffect clone = Instantiate(lightningStrike, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
 
         clone.transform.Rotate(-90.0f, 0.0f, 0.0f, Space.World);
 
@@ -321,6 +321,9 @@ public class CelestialPlayer : Player
 
         if (enemyTarget != null)
         {
+
+           clone.transform.position = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, enemyTarget.transform.position.z);
+
             LightningAttack();
 
         }
@@ -478,6 +481,7 @@ public class CelestialPlayer : Player
     }
 
 
+    
     public int GetPowerHitDamage(Power weakness)
     {
         PowerBehaviour attack;
@@ -673,7 +677,10 @@ public class CelestialPlayer : Player
 
     public IEnumerator CoolDownImageFill(Image fillImage)
     {
-            float cooldownDuration = powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
+        
+     
+
+            float cooldownDuration = CoolDownTime( powerInUse);
             float timer = 0f;
             float startFillAmount = 1f;
             float endFillAmount = 0f;
@@ -698,7 +705,29 @@ public class CelestialPlayer : Player
             Debug.Log("cooling down power");
     }
 
+    public float CoolDownTime(Power powerinuse)
+    {
+        if (powerinuse == Power.MOONTIDE){
+            return powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats);
+          
+        }
+        if (powerinuse == Power.COLDSNAP)
+        {
+            return powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
+           
+        }
+        if (powerinuse == Power.LIGHTNINGSTRIKE)
+        {
+            return powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats);
+         
+        }
+        if (powerinuse == Power.BASIC)
+        {
+            return powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats);
 
+        }
+        return 0f;
+    }
 
 
 
