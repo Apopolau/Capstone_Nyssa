@@ -551,7 +551,10 @@ public class EarthPlayer : Player
         }
     }
 
+    public void PickUpNyssa()
+    {
 
+    }
 
     /// <summary>
     /// HEALING FUNCTIONS

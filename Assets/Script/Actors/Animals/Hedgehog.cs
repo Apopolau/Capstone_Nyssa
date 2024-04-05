@@ -44,6 +44,17 @@ public class Hedgehog : Animal
         CheckLevelState();
         SetWalkingState();
         MoveKidnapIcon();
+        if (earthPlayer.GetIsInteracting() && inRangeOfEscort)
+        {
+            if (isEscorted)
+            {
+                SetEscort(true);
+            }
+            else if (!isEscorted)
+            {
+                SetEscort(false);
+            }
+        }
     }
 
     override protected IEnumerator UpdateAnimalState()
@@ -100,6 +111,30 @@ public class Hedgehog : Animal
             hasShelter = false;
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!weatherState.dayTime)
+        {
+            if (other.GetComponent<EarthPlayer>())
+            {
+                uiTarget.SetActive(true);
+                inRangeOfEscort = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (uiTarget.activeSelf && other.GetComponent<EarthPlayer>())
+        {
+            uiTarget.SetActive(false);
+            inRangeOfEscort = false;
+        }
+    }
+
+    
+
 
     public override bool GetHungryState()
     {
