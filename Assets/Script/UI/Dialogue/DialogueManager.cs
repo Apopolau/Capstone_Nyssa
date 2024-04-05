@@ -456,6 +456,7 @@ public class DialogueManager : MonoBehaviour
     //Handles moving on to the next level/cutscene once the final dialogue of the mission is done
     public void HandleSceneTransition(DialogueMissionEnd nextMission)
     {
+        
         SceneManager.LoadScene(nextMission.GetTargetScene());
     }
 
