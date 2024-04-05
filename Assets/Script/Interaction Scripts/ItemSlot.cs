@@ -91,6 +91,7 @@ public class ItemSlot : MonoBehaviour
         // Update the item name text with the item's name.
         if (_item != null)
         {
+            itemNameText.gameObject.SetActive(true);
             itemNameText.text = _item.stats.ItemName;
         }
     }
@@ -100,6 +101,7 @@ public class ItemSlot : MonoBehaviour
         // Update the quantity text with the item's quantity.
         if (_item != null)
         {
+            quantityText.gameObject.SetActive(true);
             quantityText.text = $"{_item.quantity}";
         }
     }
