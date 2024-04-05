@@ -9,6 +9,7 @@ public abstract class Animal : MonoBehaviour
     public GameObject managerObject;
     public GameObject shelterWaypoint;
     public GameObject waterWaypoint;
+    public GameObject kidnapIcon;
 
     [Header("These variables set themselves")]
     [SerializeField] protected NavMeshAgent navAgent;
@@ -46,6 +47,7 @@ public abstract class Animal : MonoBehaviour
     public bool isEscorted;
     public bool isKidnapped;
     public Enemy kidnapper;
+    private bool kidnapIconOn;
 
     [SerializeField] protected LevelProgress levelProgress;
     public bool hasCleanWater = false;
@@ -152,4 +154,31 @@ public abstract class Animal : MonoBehaviour
     public abstract void IsHealed();
 
     public abstract void ApplyBarrier();
+
+    public void UpdateKidnapIcon()
+    {
+        if (isKidnapped)
+        {
+            kidnapIconOn = true;
+            kidnapIcon.SetActive(true);
+        }
+        else
+        {
+            kidnapIconOn = false;
+            kidnapIcon.SetActive(false);
+        }
+    }
+
+    protected void MoveKidnapIcon()
+    {
+        if (kidnapIconOn)
+        {
+            kidnapIcon.transform.position = uiTarget.transform.position;
+            float xPos = Mathf.Clamp(uiTarget.transform.position.x, 0f, Screen.width);
+            float yPos = Mathf.Clamp(uiTarget.transform.position.x, 0f, Screen.height);
+            kidnapIcon.transform.position = new Vector3(xPos, yPos, 0);
+
+            kidnapIcon.transform.GetChild(0).GetChild(0).RotateAround(this.gameObject.transform.position, kidnapIcon.transform.GetChild(0).GetChild(1).transform.position, 5 * Time.deltaTime);
+        }
+    }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Hedgehog : Animal
+public class Nyssa : Animal
 {
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
 
@@ -38,8 +38,7 @@ public class Hedgehog : Animal
         StartCoroutine(UpdateAnimalState());
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         CheckLevelState();
         SetWalkingState();
@@ -48,9 +47,11 @@ public class Hedgehog : Animal
 
     override protected IEnumerator UpdateAnimalState()
     {
+        
         while (true)
         {
             yield return degredateRate;
+            /*
             hunger.current -= Mathf.Clamp(1, 0, hunger.max);
             thirst.current -= Mathf.Clamp(1, 0, thirst.max);
             entertained.current -= Mathf.Clamp(1, 0, entertained.max);
@@ -67,6 +68,7 @@ public class Hedgehog : Animal
             {
                 entertained.low = true;
             }
+            */
         }
         
     }
@@ -133,4 +135,5 @@ public class Hedgehog : Animal
         yield return barrierLength;
         isShielded = false;
     }
+
 }

@@ -1,5 +1,40 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1688264804800807688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7778916215315900356}
+  m_Layer: 5
+  m_Name: AnimalPointers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7778916215315900356
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688264804800807688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6866906346201443792}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8013613811877034027
 GameObject:
   m_ObjectHideFlags: 0
@@ -702,6 +737,9 @@ PrefabInstance:
     - {fileID: 8975118179083249453, guid: 790776f26879db74b9bee9b64dfc27c6, type: 3}
     - {fileID: 1241794003292202180, guid: 790776f26879db74b9bee9b64dfc27c6, type: 3}
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 614912847855742030, guid: 790776f26879db74b9bee9b64dfc27c6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7778916215315900356}
     - targetCorrespondingSourceObject: {fileID: 1309877143762068300, guid: 790776f26879db74b9bee9b64dfc27c6, type: 3}
       insertIndex: 6
       addedObject: {fileID: 1011237693967053529}
@@ -715,5 +753,10 @@ RectTransform:
 --- !u!1 &5823112938403339678 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 507613009925282816, guid: 790776f26879db74b9bee9b64dfc27c6, type: 3}
+  m_PrefabInstance: {fileID: 6324387628849660318}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &6866906346201443792 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 614912847855742030, guid: 790776f26879db74b9bee9b64dfc27c6, type: 3}
   m_PrefabInstance: {fileID: 6324387628849660318}
   m_PrefabAsset: {fileID: 0}
