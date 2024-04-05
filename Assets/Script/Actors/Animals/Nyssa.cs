@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using TMPro;
 
 public class Nyssa : Animal
 {
-    private bool inRangeOfPickup;
+    private bool inRangeOfPickup = false;
+    private bool beingHeld = false;
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
+    [SerializeField] private GameObject uiText;
 
     private void Awake()
     {
@@ -44,22 +47,23 @@ public class Nyssa : Animal
         CheckLevelState();
         SetWalkingState();
         MoveKidnapIcon();
-        if (earthPlayer.GetIsInteracting() && inRangeOfPickup)
+        if (earthPlayer.interacting && inRangeOfPickup)
         {
-            if (isEscorted)
+            if (!beingHeld)
             {
-                SetEscort(true);
-            }
-            else if (!isEscorted)
-            {
-                SetEscort(false);
+                SetPickup();
             }
         }
+        else if(earthPlayer.interacting && beingHeld)
+        {
+            UnSetPickup();
+        }
+        StaysWithSprout();
     }
 
     override protected IEnumerator UpdateAnimalState()
     {
-        
+
         while (true)
         {
             yield return degredateRate;
@@ -82,12 +86,12 @@ public class Nyssa : Animal
             }
             */
         }
-        
+
     }
 
     protected void CheckLevelState()
     {
-        if(levelProgress.totalPlants > 0)
+        if (levelProgress.totalPlants > 0)
         {
             hasAnyFood = true;
         }
@@ -115,16 +119,17 @@ public class Nyssa : Animal
         }
     }
 
+
+
     private void OnTriggerStay(Collider other)
     {
-        if (!weatherState.dayTime)
+
+        if (other.GetComponent<EarthPlayer>())
         {
-            if (other.GetComponent<EarthPlayer>())
-            {
-                uiTarget.SetActive(true);
-                inRangeOfPickup = true;
-            }
+            uiTarget.SetActive(true);
+            inRangeOfPickup = true;
         }
+
     }
 
     private void OnTriggerExit(Collider other)
@@ -139,6 +144,35 @@ public class Nyssa : Animal
     public void SetPickup()
     {
         earthPlayer.PickUpNyssa();
+        SphereCollider[] colliders = GetComponents<SphereCollider>();
+        foreach(SphereCollider collider in colliders)
+        {
+            collider.enabled = false;
+        }
+        uiText.GetComponent<TextMeshProUGUI>().text = "Put down";
+        
+        beingHeld = true;
+    }
+
+    public void UnSetPickup()
+    {
+        SphereCollider[] colliders = GetComponents<SphereCollider>();
+        foreach (SphereCollider collider in colliders)
+        {
+            collider.enabled = true;
+        }
+        beingHeld = false;
+        uiText.GetComponent<TextMeshProUGUI>().text = "Pick up";
+
+        this.transform.position = earthPlayer.transform.position + earthPlayer.transform.forward * 5;
+    }
+
+    public void StaysWithSprout()
+    {
+        if (beingHeld)
+        {
+            this.transform.position = earthPlayer.GetNyssaTarget().transform.position;
+        }
     }
 
     public override bool GetHungryState()
@@ -159,7 +193,7 @@ public class Nyssa : Animal
     //We can put something here to change their texture and such
     public override void IsHealed()
     {
-        
+
     }
 
     public override void ApplyBarrier()

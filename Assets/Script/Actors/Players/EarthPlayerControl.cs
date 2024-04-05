@@ -107,6 +107,11 @@ public class EarthPlayerControl : MonoBehaviour
         controls.BarrierSelect.CancelBarrier.started += OnBarrierCancelled;
         controls.BarrierSelect.CycleTarget.started += OnTargetCycled;
 
+        controls.HoldingNyssa.Disable();
+        controls.HoldingNyssa.EarthWalk.started += OnEarthMovePerformed;
+        controls.HoldingNyssa.EarthWalk.canceled += OnEarthMoveCancelled;
+        controls.HoldingNyssa.PutNyssaDown.started += OnPutNyssaDown;
+
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
         controls.MenuControls.Disable();
@@ -364,6 +369,17 @@ public class EarthPlayerControl : MonoBehaviour
         if (context.control.device.deviceId == myDeviceID || (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD && Mouse.current.rightButton.wasPressedThisFrame))
         {
             earthPlayer.OnBarrierCancelled();
+        }
+    }
+
+    ///
+    /// MISC
+    ///
+    private void OnPutNyssaDown(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            earthPlayer.PutDownNyssa();
         }
     }
 
