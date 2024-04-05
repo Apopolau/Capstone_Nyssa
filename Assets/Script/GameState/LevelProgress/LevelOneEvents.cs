@@ -85,6 +85,7 @@ public class LevelOneEvents : LevelEventManager
     [Header("Visual Update Assets")]
     
     [SerializeField] private GameObject factory;
+    [SerializeField] private GameObject plasticBagInvaderWaypoint;
     [SerializeField] private List<GameObject> pipes;
     [SerializeField] private GameObject tank;
     [SerializeField] private Material cleanFactoryMaterial;
@@ -511,7 +512,7 @@ public class LevelOneEvents : LevelEventManager
         grassSeedSpawn.GetComponent<PickupObject>().SetInventory(levelOneProgress.GetInventory());
         levelOneProgress.animalHasShelter = true;
         powerDrop = Instantiate( power.ColdSnapStats.powerDropPrefab, enemyPos, Quaternion.identity);
-
+        plasticBagInvaderWaypoint.SetActive(true);
 
 
         //We want to activate the objective menu here probably, or once the trigger dialogue is done.
