@@ -131,6 +131,9 @@ public class CelestialPlayer : Player
 
         StartCoroutine(CoolDownImageFill(lightingStrikeFill));
         StartCoroutine(CoolDownImageFill(CTRLightingStrikeFill));
+
+        rainFill.enabled = false;
+        CTRLRainFill.enabled = false;
         
     }
 
@@ -603,7 +606,7 @@ public class CelestialPlayer : Player
             // RainParticleSystem.SetActive(true);
             weatherState.skyState = WeatherState.SkyState.RAINY;
             isRaining = true;
-            rainFill.enabled = false;
+            rainFill.enabled = true;
             CTRLRainFill.enabled = true;
         }
         else if (isRaining)
@@ -613,7 +616,7 @@ public class CelestialPlayer : Player
             weatherState.skyState = WeatherState.SkyState.CLEAR;
 
             isRaining = false;
-            rainFill.enabled = true;
+            rainFill.enabled = false;
             CTRLRainFill.enabled = false;
 
         }
@@ -657,10 +660,29 @@ public class CelestialPlayer : Player
     public void ResetColdSnap()
     {
         StartCoroutine(ColdSnapCoolDownTime());
-        coldSnapFill.enabled = true;
-        CTRLColdSnapFill.enabled = true;
-        StartCoroutine(CoolDownImageFill(coldSnapFill));
-        StartCoroutine(CoolDownImageFill(CTRLColdSnapFill));
+
+        if (coldSnapFill.gameObject.activeSelf)
+        {   
+            StartCoroutine(CoolDownImageFill(coldSnapFill));
+        }
+
+        else if (!coldSnapFill.gameObject.activeSelf) 
+        {
+            coldSnapFill.enabled = true;
+            coldSnapFill.gameObject.SetActive(true);
+            StartCoroutine(CoolDownImageFill(coldSnapFill));
+        }
+       
+        if (CTRLColdSnapFill.gameObject.activeSelf )
+        { StartCoroutine(CoolDownImageFill(CTRLColdSnapFill));}
+        else {
+            CTRLColdSnapFill.enabled = true;
+           StartCoroutine(CoolDownImageFill(CTRLColdSnapFill));;
+        }
+       
+       
+        
+        
 
     }
 

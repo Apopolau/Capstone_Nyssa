@@ -75,6 +75,7 @@ public class PowerDrop : Interactable
             levelProgress.SetPowers(true);
             celestialPlayer.coldSnapFill.enabled = false;
             StartCoroutine(celestialPlayer.CoolDownImageFill(celestialPlayer.coldSnapFill));
+            celestialPlayer.coldSnapFill.enabled = true;
             return powerBehaviour.ColdSnapStats;
         }
        if(powerDrop == CelestialPlayer.Power.MOONTIDE)
