@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 4160596735847008924}
   - component: {fileID: 9098470629957173438}
   m_Layer: 0
-  m_Name: PlasticBagMonster
+  m_Name: Level2PlasticBagMonster
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -89,10 +89,12 @@ MonoBehaviour:
   enemyAnimator: {fileID: 9098470629957173438}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
+  animalSet: {fileID: 0}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
-  enemyStats: {fileID: 11400000, guid: f215a1e6c5d8dc3439756e651dac692f, type: 2}
-  eventManager: {fileID: 0}
+  enemyStats: {fileID: 11400000, guid: 5f938dfb45135c14ba6e20898a247203, type: 2}
+  invaderEnemyRoutes: {fileID: 0}
+  eventManager: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
   isDying: 0
   isStaggered: 0
   isColliding: 0
@@ -106,9 +108,16 @@ MonoBehaviour:
   playerLocation: {x: 0, y: 0, z: 0}
   smotherRange: 10
   attackRange: 0
+  kidnapRange: 0
   sightRange: 30
+  seesAnimal: 0
+  inKidnapRange: 0
   hasAnimal: 0
   isKidnapping: 0
+  escapeRoute: {fileID: 0}
+  isInvader: 0
+  isPathSelected: 0
+  chosenPath: []
 --- !u!114 &7275686930913408214
 MonoBehaviour:
   m_ObjectHideFlags: 0
