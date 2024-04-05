@@ -15276,6 +15276,72 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2205145726685203972, guid: 85bcd523da048584a84d81691caccb66, type: 3}
   m_PrefabInstance: {fileID: 728945838}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &731368187 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5176770309727731886, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+  m_PrefabInstance: {fileID: 2814006587503948983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &731368188 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2799992382799242653, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+  m_PrefabInstance: {fileID: 2814006587503948983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &731368189 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1117874818257036129, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+  m_PrefabInstance: {fileID: 2814006587503948983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &731368190 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3448607773582372798, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+  m_PrefabInstance: {fileID: 2814006587503948983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &731368191 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8388905760408776057, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+  m_PrefabInstance: {fileID: 2814006587503948983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &731368192 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 198700545858172691, guid: d4f3a64c65a2ab044a0dbfdc5689cfa1, type: 3}
+  m_PrefabInstance: {fileID: 2814006587503948983}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &731594009
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24554,6 +24620,7 @@ MonoBehaviour:
   hasCleanWater: 0
   hasShelter: 0
   hasAnyFood: 0
+  uiText: {fileID: 0}
 --- !u!195 &1299586903
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -25617,9 +25684,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2078002752}
     - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: inventory
+      value: 
+      objectReference: {fileID: 389807315}
+    - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: darkOverlay
       value: 
       objectReference: {fileID: 330094296}
+    - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: keyboardUIObjects.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: controllerUIObjects.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: keyboardUIObjects.Array.data[0]
       value: 
@@ -25637,6 +25716,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2105622737}
     - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: keyboardUIObjects.Array.data[4]
+      value: 
+      objectReference: {fileID: 2105622737}
+    - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: controllerUIObjects.Array.data[0]
       value: 
       objectReference: {fileID: 1636669837}
@@ -25650,6 +25733,10 @@ PrefabInstance:
       objectReference: {fileID: 952387371}
     - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: controllerUIObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 1629492042}
+    - target: {fileID: 1222953851676443687, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: controllerUIObjects.Array.data[4]
       value: 
       objectReference: {fileID: 1629492042}
     - target: {fileID: 2255882322329543974, guid: 553568dfccc23274285fac4a878252df, type: 3}
@@ -25681,9 +25768,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 330094295}
     - target: {fileID: 2536686373789044869, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: CTRLHealOverlay
+      value: 
+      objectReference: {fileID: 731368192}
+    - target: {fileID: 2536686373789044869, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: playerWarningBG
       value: 
       objectReference: {fileID: 330094294}
+    - target: {fileID: 2536686373789044869, guid: 553568dfccc23274285fac4a878252df, type: 3}
+      propertyPath: CTRLThornOverlay
+      value: 
+      objectReference: {fileID: 731368191}
     - target: {fileID: 2536686373789044869, guid: 553568dfccc23274285fac4a878252df, type: 3}
       propertyPath: spellsControlsUI
       value: 
@@ -39403,6 +39498,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 124015435}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: CTRLRainFill
+      value: 
+      objectReference: {fileID: 731368190}
+    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: coldSnapFill
       value: 
       objectReference: {fileID: 330094298}
@@ -39410,6 +39509,14 @@ PrefabInstance:
       propertyPath: moonTideFill
       value: 
       objectReference: {fileID: 1166585971}
+    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: CTRLColdSnapFill
+      value: 
+      objectReference: {fileID: 731368189}
+    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: CTRLMoonTideFill
+      value: 
+      objectReference: {fileID: 731368188}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: celestPlayerDpad
       value: 
@@ -39422,6 +39529,10 @@ PrefabInstance:
       propertyPath: lightingStrikeFill
       value: 
       objectReference: {fileID: 2100226974}
+    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+      propertyPath: CTRLightingStrikeFill
+      value: 
+      objectReference: {fileID: 731368187}
     - target: {fileID: 7159944928166958832, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_Name
       value: CelestialPlayer
