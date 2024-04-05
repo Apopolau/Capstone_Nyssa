@@ -7,18 +7,13 @@ public class isRaining : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
-       // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
-     if(stateMachine.GetComponent<CelestialPlayer>().isRaining)
+        // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
+        if (stateMachine.GetComponent<CelestialPlayer>().buttonRain)
         {
-            //if (stateMachine.GetComponent<CelestialPlayer>().isRaining)
-   
-                //celestialPlayer.isRaining = true;
-                return true;
+     
+            return true;
         }
-        else if (!stateMachine.GetComponent<CelestialPlayer>().isRaining)
-        {
-            return false;
-        }
+     
         return false;
     }
 }

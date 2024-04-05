@@ -30,7 +30,7 @@ public class CelestialPlayer : Player
     [SerializeField] public GameObject RainParticleSystem;
     
     [Header("Button press")]
-
+    [SerializeField] public bool buttonRain = false;
     [SerializeField] public bool buttonBasicAttack = false;
     [SerializeField] public bool buttonColdSnap = false;
     [SerializeField] public bool buttonLightningStrike = false;
@@ -358,7 +358,8 @@ public class CelestialPlayer : Player
     }
 
 
-        public IEnumerator animateMoonTide()
+       
+    public IEnumerator animateMoonTide()
     {
         //MOONTIDE POWER
         //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
@@ -392,7 +393,8 @@ public class CelestialPlayer : Player
         Destroy(coldOrb, 1f);
         ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
-
+    
+    
     }
 
 
@@ -433,8 +435,7 @@ public class CelestialPlayer : Player
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
             
         }
-        powerInUse = Power.NONE;
-
+      
 
     }
 
@@ -454,8 +455,7 @@ public class CelestialPlayer : Player
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
 
         }
-        powerInUse = Power.NONE;
-  
+        
 
 
 
@@ -475,8 +475,7 @@ public class CelestialPlayer : Player
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
 
         }
-        powerInUse = Power.NONE;
-
+     
 
 
     }
@@ -496,7 +495,7 @@ public class CelestialPlayer : Player
             playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
 
         }
-        powerInUse = Power.NONE;
+       
 
 
     }
@@ -608,11 +607,17 @@ public class CelestialPlayer : Player
             rainFill.enabled = true;
 
         }
+        buttonRain = true;
 
 
 
 
     }
+    /// <summary>
+    /// ///////////////////////////////////can be deleted
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator ResetRain()
     {
         if (isRaining)
@@ -644,6 +649,8 @@ public class CelestialPlayer : Player
         StartCoroutine(ColdSnapCoolDownTime());
         coldSnapFill.enabled = true;
         StartCoroutine(CoolDownImageFill(coldSnapFill));
+        powerInUse = Power.NONE;
+
     }
 
     public IEnumerator ColdSnapCoolDownTime()
@@ -661,6 +668,8 @@ public class CelestialPlayer : Player
     {
         StartCoroutine(LightningCoolDownTime());
         StartCoroutine(CoolDownImageFill(lightingStrikeFill));
+        powerInUse = Power.NONE;
+
     }
     public IEnumerator LightningCoolDownTime()
     {
@@ -674,8 +683,9 @@ public class CelestialPlayer : Player
     public void ResetBasic()
     {
         StartCoroutine(BasicCoolDownTime());
+        powerInUse = Power.NONE;
 
-   
+
     }
     public IEnumerator BasicCoolDownTime()
     {
@@ -692,6 +702,8 @@ public class CelestialPlayer : Player
         StartCoroutine(MoonTideCoolDownTime());
         moonTideFill.enabled = true;
         StartCoroutine(CoolDownImageFill(moonTideFill));
+        powerInUse = Power.NONE;
+
     }
 
 

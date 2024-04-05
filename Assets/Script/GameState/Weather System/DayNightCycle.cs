@@ -128,11 +128,11 @@ public class DayNightCycle : MonoBehaviour
             weatherState.SetDayTime(false);
         }
 
-        RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeOfDay);
-        RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeOfDay);
-        directionalLight.color = directionalLightColor.Evaluate(timeOfDay);
+        RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeOfDay/24);
+        RenderSettings.ambientSkyColor = equatorColor.Evaluate(timeOfDay/24);
+        directionalLight.color = directionalLightColor.Evaluate(timeOfDay/24);
         float H, S, V;
-        Color.RGBToHSV(directionalLightIntensity.Evaluate(timeOfDay), out H, out S, out V);
+        Color.RGBToHSV(directionalLightIntensity.Evaluate(timeOfDay/24), out H, out S, out V);
         directionalLight.intensity = V;
         //print(directionalLightColor.Evaluate(timeFraction));
         //print(V);

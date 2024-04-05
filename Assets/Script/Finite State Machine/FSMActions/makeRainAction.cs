@@ -20,24 +20,25 @@ public class MakeRainAction : FSMAction
         //if it isn't raining start rain
         if (stateMachine.GetComponent<CelestialPlayer>().isRaining)
         {
-            //Debug.Log("It is now raining ");
+            Debug.Log("It is now raining ");
 
             player.RainParticleSystem.SetActive(true);
-           // player.StartCoroutine(player.ResetRain());
-            //player.isRaining = true;
-  
+
 
         }
         else if (!stateMachine.GetComponent<CelestialPlayer>().isRaining)
         {
 
             player.RainParticleSystem.SetActive(false);
-            //Debug.Log("raining stopped");
+            Debug.Log("raining stopped");
         }
+        stateMachine.GetComponent<CelestialPlayer>().buttonRain = false;
+
+
     }
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-
+        
     }
 }
