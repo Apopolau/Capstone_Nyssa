@@ -10,6 +10,8 @@ public class smogMonsterTree : BTree
     private Enemy enemy;
     private NavMeshAgent enemyMeshAgent;
     Rigidbody rb;
+
+    public Transform[] waypoints;
     public static float speed = 2f;
 
     //Enemy Health
@@ -70,16 +72,16 @@ public class smogMonsterTree : BTree
             switch to wander behaviour
             */
          
-            new Sequence(new List<BTNode>
+            
+
+                new Sequence(new List<BTNode>
             {
           
                 ////PATROL SEQUENCE
                 new Inverter(new CheckIfDying(enemy)),
-               // new TaskInvasionPatrol( enemy,rb,enemyMeshAgent, transform, waypoints),
-                //take waypoints that are located with the scene and simply go through those
-                //if they are close to an animal kidnapp
-                // if they are close to a person attack
+                new TaskPatrol( enemy,rb,enemyMeshAgent, transform, waypoints),
             }),
+
 
             new Sequence(new List<BTNode>
             {

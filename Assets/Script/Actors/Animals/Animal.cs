@@ -50,6 +50,9 @@ public abstract class Animal : MonoBehaviour
     private bool kidnapIconOn;
     protected bool inRangeOfEscort;
 
+    public float origSpeed;
+    public float kidnappedSpeed;
+
     [SerializeField] protected LevelProgress levelProgress;
     public bool hasCleanWater = false;
     public bool hasShelter = false;
@@ -88,6 +91,16 @@ public abstract class Animal : MonoBehaviour
             GetComponent<AnimalAnimator>().animator.SetBool(GetComponent<AnimalAnimator>().IfWalkingHash, false);
         }
     }
+
+    public void SetCurrSpeed()
+    {
+         origSpeed=GetNavMeshAgent().speed;
+    }
+    public void ResetOrigSpeed()
+    {
+         GetNavMeshAgent().speed=origSpeed;
+    }
+
 
     public void Unstuck()
     {
