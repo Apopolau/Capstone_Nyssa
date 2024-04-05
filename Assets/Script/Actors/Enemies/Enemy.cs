@@ -61,14 +61,17 @@ public class Enemy : MonoBehaviour
     public bool isPathSelected = false;
     public List<Transform> chosenPath;
 
-    private WaitForSeconds attackTime = new WaitForSeconds(1);
-    private WaitForSeconds takeHitTime = new WaitForSeconds(1.5f);
-    private WaitForSeconds deathTime = new WaitForSeconds(2.458f);
+    private WaitForSeconds attackTime;
+    private WaitForSeconds takeHitTime;
+    private WaitForSeconds deathTime;
 
     public event System.Action<int, int> OnHealthChanged;
 
     void Awake()
     {
+        attackTime = new WaitForSeconds(enemyStats.attackAnimTime);
+        takeHitTime = new WaitForSeconds(enemyStats.takeHitAnimTime);
+        deathTime = new WaitForSeconds(enemyStats.deathAnimTime);
         health = new Stat(enemyStats.maxHealth, enemyStats.maxHealth, false);
         enemyAnimator = GetComponent<OilMonsterAnimator>();
         //eventManager = GetComponent<EventManager>();

@@ -26,7 +26,7 @@ public class TaskFollowPlayer : BTNode
         if(distanceToFinal < 20)
         {
             thisAnimator.ToggleSetWalk();
-            thisAgent.GetComponent<Animal>().isEscorted = false;
+            thisAgent.GetComponent<Animal>().SetEscort(false);
             thisAgent.ResetPath();
             state = NodeState.SUCCESS;
             return state;

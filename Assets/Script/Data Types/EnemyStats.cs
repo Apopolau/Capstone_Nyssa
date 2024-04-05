@@ -19,5 +19,8 @@ public class EnemyStats : ScriptableObject
     [SerializeField] public GameObject cost;
     [SerializeField] public bool isSpecial;
     [SerializeField] public EnemyDeathBehaviour deathBehaviour;
+    [SerializeField] public float attackAnimTime;
+    [SerializeField] public float takeHitAnimTime;
+    [SerializeField] public float deathAnimTime;
 
 }

@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class Nyssa : Animal
 {
+    private bool inRangeOfPickup;
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
 
     private void Awake()
@@ -43,6 +44,17 @@ public class Nyssa : Animal
         CheckLevelState();
         SetWalkingState();
         MoveKidnapIcon();
+        if (earthPlayer.GetIsInteracting() && inRangeOfPickup)
+        {
+            if (isEscorted)
+            {
+                SetEscort(true);
+            }
+            else if (!isEscorted)
+            {
+                SetEscort(false);
+            }
+        }
     }
 
     override protected IEnumerator UpdateAnimalState()
@@ -101,6 +113,32 @@ public class Nyssa : Animal
         {
             hasShelter = false;
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!weatherState.dayTime)
+        {
+            if (other.GetComponent<EarthPlayer>())
+            {
+                uiTarget.SetActive(true);
+                inRangeOfPickup = true;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (uiTarget.activeSelf && other.GetComponent<EarthPlayer>())
+        {
+            uiTarget.SetActive(false);
+            inRangeOfPickup = false;
+        }
+    }
+
+    public void SetPickup()
+    {
+        earthPlayer.PickUpNyssa();
     }
 
     public override bool GetHungryState()

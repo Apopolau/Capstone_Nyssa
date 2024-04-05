@@ -48,6 +48,7 @@ public abstract class Animal : MonoBehaviour
     public bool isKidnapped;
     public Enemy kidnapper;
     private bool kidnapIconOn;
+    protected bool inRangeOfEscort;
 
     [SerializeField] protected LevelProgress levelProgress;
     public bool hasCleanWater = false;
@@ -145,6 +146,11 @@ public abstract class Animal : MonoBehaviour
     public void SetClosestPlayer(GameObject newPlayer)
     {
         closestPlayer = newPlayer;
+    }
+
+    public void SetEscort(bool status)
+    {
+        isEscorted = status;
     }
 
     /// <summary>
