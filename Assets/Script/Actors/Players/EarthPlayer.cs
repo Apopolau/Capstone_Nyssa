@@ -29,7 +29,9 @@ public class EarthPlayer : Player
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
     public Image healCooldownOverlay;
+    public Image CTRLHealOverlay;
     public Image thornCooldownOverlay;
+    public Image CTRLThornOverlay;
 
     [Header("State machine elements")]
     private BaseStateMachine stateMachine;
@@ -564,13 +566,14 @@ public class EarthPlayer : Player
         if (!healUsed && CheckIfValidTargets())
         {
             inHealSelection_FSM = true;
-            healCooldownOverlay.enabled = true;
+           
             
         }
         else if (healUsed)
         {
             string healOnCooldown = "That ability is still on cooldown";
             StartCoroutine(ThrowPlayerWarning(healOnCooldown));
+            
            
         }
         else if (!CheckIfValidTargets())
@@ -617,7 +620,9 @@ public class EarthPlayer : Player
         
         StartCoroutine(HandleHealCooldown());
         healCooldownOverlay.gameObject.SetActive(true);
+        CTRLHealOverlay.gameObject.SetActive(true);
         StartCoroutine(CoolDownImageFill(healCooldownOverlay, healCooldown));
+        StartCoroutine(CoolDownImageFill(CTRLHealOverlay, healCooldown));
         
     }
 
@@ -695,9 +700,10 @@ public class EarthPlayer : Player
         
 
         StartCoroutine(HandleShieldCooldown());
-        
+        CTRLThornOverlay.gameObject.SetActive(true);
         thornCooldownOverlay.gameObject.SetActive(true);
         StartCoroutine(CoolDownImageFill(thornCooldownOverlay, barrierCooldown));
+        StartCoroutine(CoolDownImageFill(CTRLThornOverlay, barrierCooldown));
 
         StartCoroutine(HandleShieldExpiry());
     }
