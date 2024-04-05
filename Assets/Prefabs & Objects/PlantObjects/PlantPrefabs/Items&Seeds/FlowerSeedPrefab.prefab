@@ -89,6 +89,8 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 155f26a831cd0f04483ffbe0880fbcb8, type: 2}
   quantity: 1
   isBeingAbsorbed: 0
+  userSettingsManager: {fileID: 0}
+  pickupLetter: {fileID: 0}
 --- !u!135 &3468390753874323561
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -333,8 +335,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6215546142113417691, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
+      propertyPath: m_Name
+      value: Letter
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2938532888584314689, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 31ed8c05c9fab034a891e5e969d60922, type: 3}

@@ -101,8 +101,8 @@ public class EarthCharacterUIController : MonoBehaviour
                     image.enabled = true;
                 }
             }
-            TextMeshPro[] text = inventory.GetComponentsInChildren<TextMeshPro>();
-            foreach(TextMeshPro txt in text)
+            TextMeshProUGUI[] text = inventory.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach(TextMeshProUGUI txt in text)
             {
                 if(txt.text != "")
                 {
@@ -130,8 +130,8 @@ public class EarthCharacterUIController : MonoBehaviour
                     image.enabled = false;
                 }
             }
-            TextMeshPro[] text = inventory.GetComponentsInChildren<TextMeshPro>();
-            foreach (TextMeshPro txt in text)
+            TextMeshProUGUI[] text = inventory.GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (TextMeshProUGUI txt in text)
             {
                 if (txt.text != "")
                 {

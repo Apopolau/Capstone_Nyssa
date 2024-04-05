@@ -15,6 +15,7 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] private PowerBehaviour power;
     [SerializeField] private GameObject spawn1;
     [SerializeField] private GameObject spawn2;
+    //[SerializeField] private List<GameObject> animalKidnapIcons;
 
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
@@ -65,7 +66,7 @@ public class LevelTwoEvents : LevelEventManager
     public DialogueTrigger allMonstersDefeatedDialogue;
     public DialogueTrigger allObjectivesMetDialogue;
 
-    [Header("Hedgehogs")]
+    [Header("Animals")]
     [SerializeField] private GameObject hog1;
     [SerializeField] private GameObject hog2;
     [SerializeField] private GameObject hog3;
@@ -297,7 +298,7 @@ public class LevelTwoEvents : LevelEventManager
     //CHANGE THIS TO ACCOUNT FOR SPAWNS
     private void EvaluateMonsterDefeats()
     {
-        if (keyMonsterDefeatCount == monsterCount)
+        if (keyMonsterDefeatCount >= monsterCount)
         {
             staticMonstersDefeated = true;
             runDefeatDialogue = true;
@@ -589,7 +590,7 @@ public class LevelTwoEvents : LevelEventManager
 
     public void CountDownArea3Monsters()
     {
-        keyMonsterDefeatCount -= 1;
+        keyMonsterDefeatCount += 1;
         area3MonsterCount -= 1;
         if (area3MonsterCount <= 0)
         {
@@ -599,7 +600,7 @@ public class LevelTwoEvents : LevelEventManager
 
     public void CountDownArea4Monsters()
     {
-        keyMonsterDefeatCount -= 1;
+        keyMonsterDefeatCount += 1;
         area4MonsterCount -= 1;
         if (area4MonsterCount <= 0)
         {

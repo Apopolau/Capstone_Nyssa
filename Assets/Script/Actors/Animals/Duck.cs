@@ -53,6 +53,7 @@ public class Duck : Animal
     {
         CheckLevelState();
         SetWalkingState();
+        MoveKidnapIcon();
     }
 
     override protected IEnumerator UpdateAnimalState()

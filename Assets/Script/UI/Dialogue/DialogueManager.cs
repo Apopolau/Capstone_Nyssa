@@ -439,11 +439,11 @@ public class DialogueManager : MonoBehaviour
             if (moveEvent.IsObjectMoveType())
             {
                 objectToMove.transform.position = Vector3.SmoothDamp(objectToMove.transform.position,
-                    moveEvent.GetObjectToMoveTo().transform.position, ref moveVelocity, moveEvent.GetMovementSpeed());
+                    moveEvent.GetObjectToMoveTo().transform.position, ref moveVelocity, moveEvent.GetMovementSpeed(), 100, 1);
             }
             else if (moveEvent.IsLocationMoveType())
             {
-                objectToMove.transform.position = Vector3.SmoothDamp(objectToMove.transform.position, moveEvent.GetPosition(), ref moveVelocity, moveEvent.GetMovementSpeed());
+                objectToMove.transform.position = Vector3.SmoothDamp(objectToMove.transform.position, moveEvent.GetPosition(), ref moveVelocity, moveEvent.GetMovementSpeed(), 100, 1);
             }
         }
         if (moveEvent.HasRotation())
@@ -515,6 +515,7 @@ public class DialogueManager : MonoBehaviour
             earthPlayer.ToggleWaiting(false);
         }
         movingOn = false;
+        HandleNextEvents();
     }
 
     /// <summary>

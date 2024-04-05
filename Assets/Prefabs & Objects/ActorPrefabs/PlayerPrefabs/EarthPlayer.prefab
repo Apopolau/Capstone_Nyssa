@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 9141616497237631393}
   - component: {fileID: 2877102486479101373}
   m_Layer: 0
-  m_Name: Keyboard
+  m_Name: plantingKeyboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -191,15 +191,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1560699179882136348}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9.500003}
-  m_LocalScale: {x: 0.059999995, y: 0.059999995, z: 0.059999995}
+  m_LocalPosition: {x: 0, y: 0, z: -3.9}
+  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2987383809700193410}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10.8, y: -8.2}
+  m_AnchoredPosition: {x: 5.5, y: -12.9}
   m_SizeDelta: {x: 262, y: 352}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9141616497237631393
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 0.89411765}
+  m_Color: {r: 0.67058825, g: 0.67058825, b: 0.67058825, a: 0.6156863}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -456,7 +456,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5144650345854828466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 5733752166048339531}
   - component: {fileID: 7050375176511358371}
   m_Layer: 0
-  m_Name: Keyboard
+  m_Name: movementKeyboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -713,11 +713,13 @@ MonoBehaviour:
   selectTileText: {fileID: 0}
   playerWarningBG: {fileID: 0}
   uiController: {fileID: 1222953851676443687}
-  plantingControlsUI: {fileID: 0}
-  spillsControlsUI: {fileID: 0}
+  plantingControlsUI: {fileID: 8544560998684819284}
+  spellsControlsUI: {fileID: 4895535407208006652}
   darkenInSelectMode: {fileID: 0}
   darkenWhilePlanting: {fileID: 0}
   darkeningAmount: 0.5
+  healCooldownOverlay: {fileID: 0}
+  thornCooldownOverlay: {fileID: 0}
   isPlantSelected: 0
   isRemovalStarted: 0
   isATileSelected: 0
@@ -747,8 +749,8 @@ MonoBehaviour:
   waterGrassPreviewPrefab: {fileID: 8326592455623684711, guid: d6b142561e779ec4eaa392fad207b22d, type: 3}
   landFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 82cd7f247c015654cb325a2356a51c3f, type: 3}
   waterFlowerPreviewPrefab: {fileID: 8326592455623684711, guid: 6c0ae7c3c763d1f48815522aabb11b6d, type: 3}
-  i_grassSeed: {fileID: 21300000, guid: a21d89e5834c2ea44899aa531871441d, type: 3}
-  i_flowerSeed: {fileID: 21300000, guid: e55962e0b42b27144b5c274602447ed5, type: 3}
+  i_grassSeed: {fileID: 21300000, guid: 2e3cc8bec7fd4a145b3f98b3f6380293, type: 3}
+  i_flowerSeed: {fileID: 21300000, guid: 871fa824c6a97554f97da8a7a641e853, type: 3}
   i_treeSeed: {fileID: 21300000, guid: 26a7a5e743792f949babe4c9073a58d5, type: 3}
   i_shovel: {fileID: 21300000, guid: 04ee6cc18436db74588a01e4a749139e, type: 3}
   ThornShieldPrefab: {fileID: 699971024190529053, guid: d4d187bc0a511bd40896d295d703326c, type: 3}
@@ -769,7 +771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46638c6b0724f7340b5d2ad117f6828d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementControlsUI: {fileID: 433965232443783568}
+  movementControlsUI: {fileID: 3122927013880566019}
   orientation: {fileID: 8047777894440074435}
   player: {fileID: 7701263254620628334}
   playerObj: {fileID: 8893157228811693227}
@@ -1148,8 +1150,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2b31f69b4bda048afc09ddb4cc0885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keyboardUIObjects: []
-  controllerUIObjects: []
+  keyboardUIObjects:
+  - {fileID: 3462690462426893458}
+  - {fileID: 1560699179882136348}
+  - {fileID: 8947474752842549371}
+  - {fileID: 0}
+  controllerUIObjects:
+  - {fileID: 8557892789263032690}
+  - {fileID: 6551581616993105937}
+  - {fileID: 7700608565490228565}
+  - {fileID: 0}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!114 &8002460639596102495
 MonoBehaviour:
@@ -1523,12 +1533,12 @@ GameObject:
   - component: {fileID: 366675759135874026}
   - component: {fileID: 2427680933485149534}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: plantingController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2222414128496949426
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1538,14 +1548,14 @@ RectTransform:
   m_GameObject: {fileID: 6551581616993105937}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -2.099994}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.14, y: 0.14, z: 0.14}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2987383809700193410}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -17.1}
+  m_AnchoredPosition: {x: 2.5, y: -15.2}
   m_SizeDelta: {x: 147, y: 147}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &366675759135874026
@@ -1576,7 +1586,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 31971e56f0f01aa4dab4992289564964, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5c906498079c624e990f59bf86d9c7f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1845,7 +1855,7 @@ GameObject:
   - component: {fileID: 2943161154530578306}
   - component: {fileID: 7500044389213143276}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: spellController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1988,7 +1998,7 @@ GameObject:
   - component: {fileID: 5075791783558889969}
   - component: {fileID: 1455581488876222837}
   m_Layer: 0
-  m_Name: Controller
+  m_Name: movementController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2063,7 +2073,7 @@ GameObject:
   - component: {fileID: 6280185841380822576}
   - component: {fileID: 4311433431823089493}
   m_Layer: 0
-  m_Name: Keyboard
+  m_Name: spellKeyboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

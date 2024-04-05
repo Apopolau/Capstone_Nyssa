@@ -6,11 +6,13 @@ public class ShutOffTerminal : Interactable
 {
     [SerializeField] LevelTwoEvents levelTwoEvents;
     [SerializeField] DialogueTrigger waterCleanedDialogue;
+    [SerializeField] GameObject strikeTarget;
     Color scorchColor = new Color(50, 50, 50);
+    
 
     bool hasBeenShutOff;
 
-    private void TerminalShutOff() 
+    public void TerminalShutOff() 
     {
         if (!hasBeenShutOff)
         {
@@ -20,5 +22,10 @@ public class ShutOffTerminal : Interactable
             GetComponent<Material>().color = scorchColor;
         }
         
+    }
+
+    public GameObject GetStrikeTarget()
+    {
+        return strikeTarget;
     }
 }

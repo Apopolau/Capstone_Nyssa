@@ -43,6 +43,7 @@ public class Hedgehog : Animal
     {
         CheckLevelState();
         SetWalkingState();
+        MoveKidnapIcon();
     }
 
     override protected IEnumerator UpdateAnimalState()
