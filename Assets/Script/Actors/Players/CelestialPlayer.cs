@@ -661,6 +661,7 @@ public class CelestialPlayer : Player
     {
         StartCoroutine(ColdSnapCoolDownTime());
 
+        //keyboard UI
         if (coldSnapFill.gameObject.activeSelf)
         {   
             StartCoroutine(CoolDownImageFill(coldSnapFill));
@@ -673,6 +674,7 @@ public class CelestialPlayer : Player
             StartCoroutine(CoolDownImageFill(coldSnapFill));
         }
        
+       // controller UI
         if (CTRLColdSnapFill.gameObject.activeSelf )
         { StartCoroutine(CoolDownImageFill(CTRLColdSnapFill));}
         else {
@@ -821,9 +823,7 @@ public class CelestialPlayer : Player
 
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange)
     {
-        
-        yield return waitTime;
-        
+        yield return waitTime;   
     }
 
     //Darken UI icons
