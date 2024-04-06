@@ -346,9 +346,9 @@ public class LevelOneEvents : LevelEventManager
             if (!areaOneMOneMet)
             {
                 //Main switch to dirt
-                ApplyTextureChangeOverArea(-100, -2, -114, -10, 8, 1, 1);
+                ApplyTextureChangeOverArea(-100, -2, -114, -10, 8, 6, 1);
                 //Switch the path back
-                ApplyTextureChangeOverArea(-47, -43, -88, -21, 4, 4, 0.1f);
+                //ApplyTextureChangeOverArea(-47, -43, -88, -21, 4, 4, 0.1f);
 
                 areaOneMOneMet = true;
             }
@@ -361,7 +361,7 @@ public class LevelOneEvents : LevelEventManager
                 //Main switch to grass
                 ApplyTextureChangeOverArea(-100, -2, -114, -10, 8, 2, 1);
                 //Switch the path back
-                ApplyTextureChangeOverArea(-47, -43, -88, -21, 4, 4, 0.1f);
+                //ApplyTextureChangeOverArea(-47, -43, -88, -21, 4, 4, 0.1f);
 
                 areaOneMTwoMet = true;
             }
@@ -385,7 +385,7 @@ public class LevelOneEvents : LevelEventManager
             if (!areaTwoMOneMet)
             {
                 //Main switch to dirt
-                ApplyTextureChangeOverArea(7, 84, -135, -21, 8, 1, 1);
+                ApplyTextureChangeOverArea(7, 84, -135, -21, 8, 6, 1);
 
                 areaTwoMOneMet = true;
             }
@@ -419,9 +419,9 @@ public class LevelOneEvents : LevelEventManager
             if (!areaThreeMOneMet)
             {
                 //Main switch to dirt texture
-                ApplyTextureChangeOverArea(-100, 0, 0, 100, 8, 1, 1f);
+                ApplyTextureChangeOverArea(-100, 0, 0, 100, 8, 6, 1f);
                 //Switch part of it to a path
-                ApplyTextureChangeOverArea(-45, -41, 2, 74, 4, 4, 0.1f);
+                //ApplyTextureChangeOverArea(-45, -41, 2, 74, 4, 4, 0.1f);
 
                 areaThreeMOneMet = true;
             }
@@ -433,7 +433,7 @@ public class LevelOneEvents : LevelEventManager
                 //Main area grass texture
                 ApplyTextureChangeOverArea(-100, 0, 0, 100, 8, 2, 1);
                 //Maintain the path
-                ApplyTextureChangeOverArea(-45, -41, 2, 74, 4, 4, 0.1f);
+                //ApplyTextureChangeOverArea(-45, -41, 2, 74, 4, 4, 0.1f);
 
                 areaThreeMTwoMet = true;
             }
@@ -459,7 +459,7 @@ public class LevelOneEvents : LevelEventManager
 
                 
                 //Sludge pump area
-                ApplyTextureChangeOverArea(96, 209, -55, 85, 8, 1, 1);
+                ApplyTextureChangeOverArea(96, 209, -55, 85, 8, 6, 1);
                 //Middle platform
                 ApplyTextureChangeOverArea(2, 81, 4, 92, 8, 1, 1);
 

@@ -393,7 +393,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaOneMOneMet)
             {
-                ApplyTextureChangeOverArea(172, 250, 6, 60, 8, 1, 1);
+                ApplyTextureChangeOverArea(172, 250, 6, 60, 8, 6, 1);
                 areaOneMOneMet = true;
             }
         }
@@ -423,7 +423,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaTwoMOneMet)
             {
-                ApplyTextureChangeOverArea(-147, 120, -45, 70, 8, 1, 1);
+                ApplyTextureChangeOverArea(-147, 120, -45, 70, 8, 6, 1);
                 areaTwoMOneMet = true;
             }
         }
@@ -453,7 +453,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaThreeMOneMet)
             {
-                ApplyTextureChangeOverArea(45, 165, -160, -56, 8, 1, 1);
+                ApplyTextureChangeOverArea(45, 165, -160, -56, 8, 6, 1);
                 areaThreeMOneMet = true;
             }
         }
@@ -483,7 +483,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaFourMOneMet)
             {
-                ApplyTextureChangeOverArea(-335, -175, -90, 45, 8, 1, 1);
+                ApplyTextureChangeOverArea(-335, -175, -90, 45, 8, 6, 1);
                 areaFourMOneMet = true;
             }
         }
