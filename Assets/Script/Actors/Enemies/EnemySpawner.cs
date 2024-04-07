@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
    // [SerializeField] private GameObject enemyOilInvaderPrefab;
     [SerializeField] private GameObject smogMonsterInvaderPrefab;
     GameObject currSpawnedEnemy;
+    bool isFromSawMill;
 
     private bool startedSpawns;
     private bool spawnsOn;
