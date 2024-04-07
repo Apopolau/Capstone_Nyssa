@@ -66,12 +66,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973851733484a4045b4e85a158183091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   objectiveList: {fileID: 0}
   ambientSounds: {fileID: 11400000, guid: 493e15032dd884d4e9b7aacc0675a4d4, type: 2}
   dyingEnemy: {fileID: 0}
   terrain: {fileID: 0}
-  terrainData: {fileID: 15600000, guid: 9bb7c47299a36f74f8fd928a45c17bf6, type: 2}
+  terrainData1: {fileID: 0}
+  terrainData2: {fileID: 0}
   levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
+  dialogueManager: {fileID: 0}
   cleanWaterMaterial: {fileID: 2100000, guid: e33eb5d28521d5f4188aec862cee5330, type: 2}
   water: {fileID: 0}
   tileGrid: {fileID: 0}
@@ -79,6 +82,20 @@ MonoBehaviour:
   secondAreaGrid: {fileID: 0}
   thirdAreaGrid: {fileID: 0}
   fourthAreaGrid: {fileID: 0}
+  areaOneMinVals: {x: -100, y: 0, z: -114}
+  areaOneMaxVals: {x: -2, y: 0, z: -10}
+  areaTwoMinVals: {x: 7, y: 0, z: -135}
+  areaTwoMaxVals: {x: 84, y: 0, z: -21}
+  areaThreeMinVals: {x: -100, y: 0, z: 0}
+  areaThreeMaxVals: {x: 0, y: 0, z: 100}
+  areaFour1MinVals: {x: 96, y: 0, z: -55}
+  areaFour1MaxVals: {x: 209, y: 0, z: 85}
+  areaFour2MinVals: {x: 2, y: 0, z: 4}
+  areaFour2MaxVals: {x: 81, y: 0, z: 92}
+  grassLayer: 2
+  dirtLayer: 6
+  grassSteps: 8
+  dirtSteps: 8
   task1: {fileID: 0}
   task2: {fileID: 0}
   task3: {fileID: 0}
@@ -93,9 +110,11 @@ MonoBehaviour:
   fourthMonsterDeadDialouge: {fileID: 7868941164567360802}
   allMonstersDefeatedDialogue: {fileID: 2484009731153438493}
   allObjectivesMetDialogue: {fileID: 4735597307128877273}
+  power: {fileID: 0}
   duck1: {fileID: 0}
   duck2: {fileID: 0}
   factory: {fileID: 0}
+  plasticBagInvaderWaypoint: {fileID: 0}
   pipes:
   - {fileID: 0}
   - {fileID: 0}
@@ -117,6 +136,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directionalLight: {fileID: 0}
   timeOfDay: 10
+  timeRaw: 0
+  scaledTime: 0
+  timeScale: 7.5
+  nightsPassed: 0
   directionalLightColor:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
@@ -237,6 +260,126 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  dirtyDirectionalLightColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  dirtyDirectionalLightIntensity:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  dirtySkyColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  dirtyEquatorColor:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 1, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
 --- !u!114 &8537851400994028921
 MonoBehaviour:
@@ -252,11 +395,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
   monsterSet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
+  RainParticleSystem: {fileID: 0}
+  earthIcon: {fileID: 0}
+  happyLevelImage: {fileID: 21300000, guid: 1a70d4890f5d6e243bf0905b77f06740, type: 3}
+  sadLevelImage: {fileID: 21300000, guid: 8178be71e114a3346a239b15a48ac942, type: 3}
+  desperateLevelImage: {fileID: 21300000, guid: 35b23fe6ccce18c4bb216bc2a25ad926, type: 3}
   pollutionLevelBar: {fileID: 0}
   basePollutionLevel: 50
   maxPollution: 100
   acidRainThreshold: 75
   acidRainHardThreshold: 90
+  c_cleanRain: {r: 0, g: 0, b: 0, a: 0}
+  c_lightAcid: {r: 0, g: 0, b: 0, a: 0}
+  c_heavyAcid: {r: 0, g: 0, b: 0, a: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
 --- !u!114 &4701399666614650149
 MonoBehaviour:

@@ -7,6 +7,8 @@ public class MusicManager : MonoBehaviour
 {
     MusicPlayer musicPlayer;
 
+    public const int MaxLayerCount = 3;
+
     private static MusicManager instance;
     public static MusicManager Instance
     {

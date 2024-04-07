@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class MusicPlayer : SoundPlayer
 {
-    // Start is called before the first frame update
-    void Start()
+    /*
+    List<AudioSource> layerSource = new List<AudioSource>();
+
+    private void Awake()
     {
-        
+        CreateLayerSources();
     }
 
-    // Update is called once per frame
-    void Update()
+    void CreateLayerSources()
     {
-        
+        for(int i = 0; i < layerSource.Count; i++)
+        {
+
+        }
     }
+
+    public void Play(MusicEvent musicEvent, float fadeTime)
+    {
+        Debug.Log("Play music");
+    }
+    */
 }
+
+

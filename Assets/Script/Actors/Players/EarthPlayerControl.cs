@@ -45,6 +45,16 @@ public class EarthPlayerControl : MonoBehaviour
         earthPlayer = GetComponent<EarthPlayer>();
     }
 
+    private void OnEnable()
+    {
+        ResetControls();
+    }
+
+    private void OnDisable()
+    {
+        ShutOffControls();
+    }
+
     void Start()
     {
         // Gamepad.all gives us a list of all connected gamepads.
@@ -124,6 +134,15 @@ public class EarthPlayerControl : MonoBehaviour
         controls.DialogueControls.Continue.started += OnContinuePerformed;
         controls.DialogueControls.Skip.started += OnSkipPerformed;
 
+        ResetControls();
+    }
+
+
+    /// <summary>
+    /// NON-PLAYER BUTTON FUNCTIONS
+    /// </summary>
+    public void ResetControls()
+    {
         //Set our starting controls based on context
         if (mainMenu != null)
         {
@@ -142,8 +161,14 @@ public class EarthPlayerControl : MonoBehaviour
             controls.CutsceneControls.Disable();
             controls.MenuControls.Disable();
             controls.EarthPlayerDefault.Enable();
-            //controls.DialogueControls.Enable();
         }
+    }
+
+    public void ShutOffControls()
+    {
+        controls.CutsceneControls.Disable();
+        controls.MenuControls.Disable();
+        controls.EarthPlayerDefault.Disable();
     }
 
 
@@ -429,4 +454,6 @@ public class EarthPlayerControl : MonoBehaviour
             dialogueManager.EndDialogue();
         }
     }
+
+    
 }

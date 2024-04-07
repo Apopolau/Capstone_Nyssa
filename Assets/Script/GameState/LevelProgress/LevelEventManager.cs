@@ -85,7 +85,12 @@ public abstract class LevelEventManager : EventManager
 
     protected void ResetTerrain()
     {
-        terrain.terrainData = terrainData1;
-        Destroy(terrainData2);
+        
+        if(terrain != null)
+        {
+            terrain.terrainData = terrainData1;
+            Destroy(terrainData2);
+        }
+        
     }
 }

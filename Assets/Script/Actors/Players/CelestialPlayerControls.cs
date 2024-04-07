@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 
 public class CelestialPlayerControls : MonoBehaviour
 {
-
-
     public CelestialPlayerInputActions controls;
     public InputActionReference rainAction;
     public InputAction celestialActions;
@@ -48,7 +46,15 @@ public class CelestialPlayerControls : MonoBehaviour
         controls = new CelestialPlayerInputActions();
     }
 
+    private void OnEnable()
+    {
+        ResetControls();
+    }
 
+    private void OnDisable()
+    {
+        ShutOffControls();
+    }
 
     private void Start()
     {
@@ -98,6 +104,14 @@ public class CelestialPlayerControls : MonoBehaviour
         controls.DialogueControls.Continue.started += OnContinuePerformed;
         controls.DialogueControls.Skip.started += OnSkipPerformed;
 
+        ResetControls();
+    }
+
+    /// <summary>
+    /// NON-PLAYER BUTTON FUNCTIONS
+    /// </summary>
+    public void ResetControls()
+    {
         //Set our starting controls based on context
         if (mainMenu != null)
         {
@@ -116,9 +130,20 @@ public class CelestialPlayerControls : MonoBehaviour
             controls.CutsceneControls.Disable();
             controls.MenuControls.Disable();
             controls.CelestialPlayerDefault.Enable();
-            //controls.DialogueControls.Enable();
         }
     }
+
+    public void ShutOffControls()
+    {
+        controls.CutsceneControls.Disable();
+        controls.MenuControls.Disable();
+        controls.CelestialPlayerDefault.Disable();
+    }
+
+    /// <summary>
+    /// MAIN CELESTE CONTROLS
+    /// </summary>
+    /// <param name="context"></param>
 
     private void OnCelestialMovePerformed(InputAction.CallbackContext context)
     {
