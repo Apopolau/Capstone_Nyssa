@@ -23,9 +23,9 @@ public class SoundLibrary : ScriptableObject
     public SoundLayerType SoundLayerType => layerType;
     public AudioMixerGroup Mixer => mixer;
 
-    public void Play(float fadeTime)
+    public void Play(MusicEvent musicEvent, float fadeTime)
     {
-        MusicManager.Instance.PlayMusic(fadeTime);
+        MusicManager.Instance.PlayMusic(musicEvent, fadeTime);
     }
 
     public void Play()
