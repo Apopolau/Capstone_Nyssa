@@ -106,7 +106,8 @@ public class EarthCharacterUIController : MonoBehaviour
             {
                 if(txt.text != "")
                 {
-                    txt.gameObject.SetActive(true);
+                    txt.enabled = true;
+                    //txt.gameObject.SetActive(true);
                 }
             }
             
@@ -135,7 +136,8 @@ public class EarthCharacterUIController : MonoBehaviour
             {
                 if (txt.text != "")
                 {
-                    txt.gameObject.SetActive(false);
+                    txt.enabled = false;
+                    //txt.gameObject.SetActive(false);
                 }
             }
 

@@ -43,7 +43,7 @@ public class PowerDrop : Interactable
     void Update()
     {
         PowerPickup();
-        
+
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class PowerDrop : Interactable
             Debug.Log("Item is OCCURRING");
             PowerStats currPowerStats = getPowerDropStatRef(powerDrop);
             powerBehaviour.setEnabled(currPowerStats);
-           
+
 
             //////////////////////////////////Will need to create a new UI for this
 
@@ -69,7 +69,7 @@ public class PowerDrop : Interactable
 
     private PowerStats getPowerDropStatRef(CelestialPlayer.Power powerDrop)
     {
-       if (powerDrop==CelestialPlayer.Power.COLDSNAP)
+        if (powerDrop == CelestialPlayer.Power.COLDSNAP)
         {
             Debug.Log("return cold snap stats");
             levelProgress.SetPowers(true);
@@ -80,7 +80,7 @@ public class PowerDrop : Interactable
             celestialPlayer.CTRLColdSnapFill.enabled = true;
             return powerBehaviour.ColdSnapStats;
         }
-       if(powerDrop == CelestialPlayer.Power.MOONTIDE)
+        if (powerDrop == CelestialPlayer.Power.MOONTIDE)
         {
             Debug.Log("return cold snap stats");
             levelProgress.SetPowers(true);
@@ -96,7 +96,7 @@ public class PowerDrop : Interactable
     }
 
     //You may want a UI function here to turn up the button corresponding to this power, here
-    
+
     //Then call it in PowerPickup
 
     //Make sure there's a collider on it for this
