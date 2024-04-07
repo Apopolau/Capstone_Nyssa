@@ -14,62 +14,68 @@ public class PlantingUIIndicator : MonoBehaviour
 
     public Image grassImage;
     public Image treeImage;
-
     public Image flowerImage;
 
     [SerializeField] private GameObject shovelUIOverlay;
 
+    private WaitForSeconds refreshTimer = new WaitForSeconds(0.5f);
+
+    private void Start()
+    {
+        StartCoroutine(UpdateQuantityText());
+    }
+
     private void Update()
     {
-        UpdateQuantityText();
+        //UpdateQuantityText();
 
-        if (buildRuntimeSet.Items.Count == 0)
-        {
-            // Activate the UI if the build set count is 0
-            shovelUIOverlay.SetActive(true);
-        }
-        else
-        {
-            // Deactivate the UI if the build set count is greater than 0
-            shovelUIOverlay.SetActive(false);
-        }
+        
     }
 
-    private void OnEnable()
+    public IEnumerator UpdateQuantityText()
     {
-
-
-
-    }
-
-    public void UpdateQuantityText()
-    {
-        // Update the quantity text with the item's quantity.
-        if (inventory != null && quantityText != null)
+        while (true)
         {
-            int quantity = inventory.GetQuantityByItemType(itemType);
-            quantityText.text = $"{quantity}";
-
-            //Debug.Log($"Item type: {itemType}, Quantity: {quantity}");
-
-            // Check if the quantity is above 0
-            if (quantity > 0)
+            yield return refreshTimer;
+            // Update the quantity text with the item's quantity.
+            if (inventory != null && quantityText != null)
             {
-                // Activate the UI element based on the itemType
-                DeactivateUIByItemType(itemType);
+                int quantity = inventory.GetQuantityByItemType(itemType);
+                quantityText.text = $"{quantity}";
 
+                //Debug.Log($"Item type: {itemType}, Quantity: {quantity}");
+
+                // Check if the quantity is above 0
+                if (quantity > 0)
+                {
+                    // Activate the UI element based on the itemType
+                    DeactivateUIByItemType(itemType);
+
+                }
+                else if (quantity == 0)
+                {
+
+                    ActivateUIByItemType(itemType);
+                }
             }
-            else if (quantity == 0)
+            else
             {
+                quantityText.text = "0";
+                //Debug.LogWarning("Inventory or quantityText is null.");
+            }
 
-                ActivateUIByItemType(itemType);
+            if (buildRuntimeSet.Items.Count == 0)
+            {
+                // Activate the UI if the build set count is 0
+                shovelUIOverlay.SetActive(true);
+            }
+            else
+            {
+                // Deactivate the UI if the build set count is greater than 0
+                shovelUIOverlay.SetActive(false);
             }
         }
-        else
-        {
-            quantityText.text = "0";
-            //Debug.LogWarning("Inventory or quantityText is null.");
-        }
+        
     }
     // Function to activate UI element based on itemType
     private void ActivateUIByItemType(string itemType)
@@ -84,7 +90,9 @@ public class PlantingUIIndicator : MonoBehaviour
             case "Tree Seed":
                 ToggleIconsOverlay(treeImage, true); // Activate tree UI
                 break;
-            // Add more cases for other item types as needed
+            case "Flower Seed":
+                ToggleIconsOverlay(flowerImage, true);
+                break;
             default:
                 break;
         }
@@ -101,7 +109,9 @@ public class PlantingUIIndicator : MonoBehaviour
             case "Tree Seed":
                 ToggleIconsOverlay(treeImage, false); // Deactivate tree UI
                 break;
-            // Add more cases for other item types as needed
+            case "Flower Seed":
+                ToggleIconsOverlay(flowerImage, false);
+                break;
             default:
                 break;
         }
