@@ -35,6 +35,21 @@ public class LevelTwoEvents : LevelEventManager
     List<GameObject> loggingAreaTiles = new List<GameObject>();
     List<GameObject> buildingAreaTiles = new List<GameObject>();
 
+    [Header("Terrain variables")]
+    [SerializeField] private Vector3 areaOneMinVals;
+    [SerializeField] private Vector3 areaOneMaxVals;
+    [SerializeField] private Vector3 areaTwoMinVals;
+    [SerializeField] private Vector3 areaTwoMaxVals;
+    [SerializeField] private Vector3 areaThreeMinVals;
+    [SerializeField] private Vector3 areaThreeMaxVals;
+    [SerializeField] private Vector3 areaFourMinVals;
+    [SerializeField] private Vector3 areaFourMaxVals;
+
+    [SerializeField] private int grassLayer;
+    [SerializeField] private int dirtLayer;
+    [SerializeField] private int grassSteps;
+    [SerializeField] private int dirtSteps;
+
     private bool firstAreaClear = false;
     private bool secondAreaClear = false;
     private bool thirdAreaClear = false;
@@ -164,6 +179,11 @@ public class LevelTwoEvents : LevelEventManager
 
         earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
         celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+    }
+
+    private void OnDisable()
+    {
+        ResetTerrain();
     }
 
     // Update is called once per frame
@@ -423,7 +443,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaTwoMOneMet)
             {
-                ApplyTextureChangeOverArea(-147, 120, -45, 70, 8, 6, 1);
+                ApplyTextureChangeOverArea((int)areaOneMinVals.x, (int)areaOneMaxVals.x, (int)areaOneMinVals.z, (int)areaOneMaxVals.z, dirtSteps, dirtLayer, 1);
                 areaTwoMOneMet = true;
             }
         }
@@ -431,7 +451,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaTwoMTwoMet)
             {
-                ApplyTextureChangeOverArea(-147, 120, -45, 70, 8, 2, 1);
+                ApplyTextureChangeOverArea((int)areaOneMinVals.x, (int)areaOneMaxVals.x, (int)areaOneMinVals.z, (int)areaOneMaxVals.z, grassSteps, grassLayer, 1);
                 areaTwoMTwoMet = true;
             }
         }
@@ -453,7 +473,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaThreeMOneMet)
             {
-                ApplyTextureChangeOverArea(45, 165, -160, -56, 8, 6, 1);
+                ApplyTextureChangeOverArea((int)areaThreeMinVals.x, (int)areaThreeMaxVals.x, (int)areaThreeMinVals.z, (int)areaThreeMaxVals.z, dirtSteps, dirtLayer, 1);
                 areaThreeMOneMet = true;
             }
         }
@@ -461,7 +481,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaThreeMTwoMet)
             {
-                ApplyTextureChangeOverArea(45, 165, -160, -56, 8, 2, 1);
+                ApplyTextureChangeOverArea((int)areaThreeMinVals.x, (int)areaThreeMaxVals.x, (int)areaThreeMinVals.z, (int)areaThreeMaxVals.z, grassSteps, grassLayer, 1);
                 areaThreeMTwoMet = true;
             }
         }
@@ -483,7 +503,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaFourMOneMet)
             {
-                ApplyTextureChangeOverArea(-335, -175, -90, 45, 8, 6, 1);
+                ApplyTextureChangeOverArea((int)areaFourMinVals.x, (int)areaFourMinVals.x, (int)areaFourMinVals.z, (int)areaFourMinVals.z, dirtSteps, dirtLayer, 1);
                 areaFourMOneMet = true;
             }
         }
@@ -491,7 +511,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaFourMTwoMet)
             {
-                ApplyTextureChangeOverArea(-335, -175, -90, 45, 8, 1, 1);
+                ApplyTextureChangeOverArea((int)areaFourMinVals.x, (int)areaFourMinVals.x, (int)areaFourMinVals.z, (int)areaFourMinVals.z, grassSteps, grassLayer, 1);
 
                 areaFourMTwoMet = true;
             }

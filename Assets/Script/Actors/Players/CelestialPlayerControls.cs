@@ -6,8 +6,6 @@ using UnityEngine.InputSystem;
 
 public class CelestialPlayerControls : MonoBehaviour
 {
-
-
     public CelestialPlayerInputActions controls;
     public InputActionReference rainAction;
     public InputAction celestialActions;
@@ -48,7 +46,15 @@ public class CelestialPlayerControls : MonoBehaviour
         controls = new CelestialPlayerInputActions();
     }
 
+    private void OnEnable()
+    {
+        ResetControls();
+    }
 
+    private void OnDisable()
+    {
+        ShutOffControls();
+    }
 
     private void Start()
     {
@@ -89,6 +95,7 @@ public class CelestialPlayerControls : MonoBehaviour
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
         controls.MenuControls.Disable();
+        //controls.MenuControls.Interact.started += OnMenuInteractPerformed;
 
         controls.CutsceneControls.Disable();
         controls.CutsceneControls.NextSlide.started += OnNextSlideSelected;
@@ -98,6 +105,14 @@ public class CelestialPlayerControls : MonoBehaviour
         controls.DialogueControls.Continue.started += OnContinuePerformed;
         controls.DialogueControls.Skip.started += OnSkipPerformed;
 
+        ResetControls();
+    }
+
+    /// <summary>
+    /// NON-PLAYER BUTTON FUNCTIONS
+    /// </summary>
+    public void ResetControls()
+    {
         //Set our starting controls based on context
         if (mainMenu != null)
         {
@@ -116,9 +131,20 @@ public class CelestialPlayerControls : MonoBehaviour
             controls.CutsceneControls.Disable();
             controls.MenuControls.Disable();
             controls.CelestialPlayerDefault.Enable();
-            //controls.DialogueControls.Enable();
         }
     }
+
+    public void ShutOffControls()
+    {
+        controls.CutsceneControls.Disable();
+        controls.MenuControls.Disable();
+        controls.CelestialPlayerDefault.Disable();
+    }
+
+    /// <summary>
+    /// MAIN CELESTE CONTROLS
+    /// </summary>
+    /// <param name="context"></param>
 
     private void OnCelestialMovePerformed(InputAction.CallbackContext context)
     {
@@ -157,6 +183,7 @@ public class CelestialPlayerControls : MonoBehaviour
             this.GetComponent<CelestialPlayerMovement>().EndMovement();
         }
     }
+
     private void OnDodgePerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -186,6 +213,7 @@ public class CelestialPlayerControls : MonoBehaviour
 
 
     }
+
     private void OnBasicAttackPerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -194,7 +222,6 @@ public class CelestialPlayerControls : MonoBehaviour
 
     }
 
-
     private void OnColdSnapPerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -202,6 +229,7 @@ public class CelestialPlayerControls : MonoBehaviour
         this.GetComponent<CelestialPlayer>().OnSnowFlakeSelected();
 
     }
+
     private void OnLightningStrikePerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -225,6 +253,17 @@ public class CelestialPlayerControls : MonoBehaviour
         if (context.control.device.deviceId == myDeviceID)
         {
             this.GetComponent<CelestialPlayer>().OnInteract(context);
+        }
+    }
+
+    private void OnMenuInteractPerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
+            {
+                //if()
+            }
         }
     }
 

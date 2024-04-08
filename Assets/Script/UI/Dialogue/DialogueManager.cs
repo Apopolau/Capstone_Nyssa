@@ -615,6 +615,10 @@ public class DialogueManager : MonoBehaviour
         {
             HaltMove();
         }
+        if(currentMove != null)
+        {
+            HaltMove();
+        }
         eventEnded = true;
     }
 

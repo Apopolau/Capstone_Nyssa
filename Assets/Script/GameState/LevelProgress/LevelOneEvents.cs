@@ -34,6 +34,25 @@ public class LevelOneEvents : LevelEventManager
     private bool thirdAreaClear = false;
     private bool fourthAreaClear = false;
 
+    [Header("Terrain variables")]
+    [SerializeField] private Vector3 areaOneMinVals;
+    [SerializeField] private Vector3 areaOneMaxVals;
+    [SerializeField] private Vector3 areaTwoMinVals;
+    [SerializeField] private Vector3 areaTwoMaxVals;
+    [SerializeField] private Vector3 areaThreeMinVals;
+    [SerializeField] private Vector3 areaThreeMaxVals;
+    
+    [SerializeField] private Vector3 areaFour1MinVals;
+    [SerializeField] private Vector3 areaFour1MaxVals;
+    [SerializeField] private Vector3 areaFour2MinVals;
+    [SerializeField] private Vector3 areaFour2MaxVals;
+
+    [SerializeField] private int grassLayer;
+    [SerializeField] private int dirtLayer;
+    [SerializeField] private int grassSteps;
+    [SerializeField] private int dirtSteps;
+    
+
     [Header("Objective tasks")]
     [SerializeField] TaskListManager task1;
     [SerializeField] TaskListManager task2;
@@ -346,7 +365,7 @@ public class LevelOneEvents : LevelEventManager
             if (!areaOneMOneMet)
             {
                 //Main switch to dirt
-                ApplyTextureChangeOverArea(-100, -2, -114, -10, 8, 6, 1);
+                ApplyTextureChangeOverArea((int)areaOneMinVals.x, (int)areaOneMaxVals.x, (int)areaOneMinVals.z, (int)areaOneMaxVals.z, dirtSteps, dirtLayer, 1);
                 //Switch the path back
                 //ApplyTextureChangeOverArea(-47, -43, -88, -21, 4, 4, 0.1f);
 
@@ -359,7 +378,7 @@ public class LevelOneEvents : LevelEventManager
             if (!areaOneMTwoMet)
             {
                 //Main switch to grass
-                ApplyTextureChangeOverArea(-100, -2, -114, -10, 8, 2, 1);
+                ApplyTextureChangeOverArea((int)areaOneMinVals.x, (int)areaOneMaxVals.x, (int)areaOneMinVals.z, (int)areaOneMaxVals.z, grassSteps, grassLayer, 1);
                 //Switch the path back
                 //ApplyTextureChangeOverArea(-47, -43, -88, -21, 4, 4, 0.1f);
 
@@ -385,7 +404,7 @@ public class LevelOneEvents : LevelEventManager
             if (!areaTwoMOneMet)
             {
                 //Main switch to dirt
-                ApplyTextureChangeOverArea(7, 84, -135, -21, 8, 6, 1);
+                ApplyTextureChangeOverArea((int)areaTwoMinVals.x, (int)areaTwoMaxVals.x, (int)areaTwoMinVals.z, (int)areaTwoMaxVals.z, dirtSteps, dirtLayer, 1);
 
                 areaTwoMOneMet = true;
             }
@@ -395,7 +414,7 @@ public class LevelOneEvents : LevelEventManager
             if (!areaTwoMTwoMet)
             {
                 //Main switch to grass
-                ApplyTextureChangeOverArea(7, 84, -135, -21, 8, 2, 1);
+                ApplyTextureChangeOverArea((int)areaTwoMinVals.x, (int)areaTwoMaxVals.x, (int)areaTwoMinVals.z, (int)areaTwoMaxVals.z, grassSteps, grassLayer, 1);
 
                 areaTwoMTwoMet = true;
             }
@@ -419,7 +438,7 @@ public class LevelOneEvents : LevelEventManager
             if (!areaThreeMOneMet)
             {
                 //Main switch to dirt texture
-                ApplyTextureChangeOverArea(-100, 0, 0, 100, 8, 6, 1f);
+                ApplyTextureChangeOverArea((int)areaThreeMinVals.x, (int)areaThreeMaxVals.x, (int)areaThreeMinVals.z, (int)areaThreeMaxVals.z, dirtSteps, dirtLayer, 1);
                 //Switch part of it to a path
                 //ApplyTextureChangeOverArea(-45, -41, 2, 74, 4, 4, 0.1f);
 
@@ -431,7 +450,7 @@ public class LevelOneEvents : LevelEventManager
             if (!areaThreeMTwoMet)
             {
                 //Main area grass texture
-                ApplyTextureChangeOverArea(-100, 0, 0, 100, 8, 2, 1);
+                ApplyTextureChangeOverArea((int)areaThreeMinVals.x, (int)areaThreeMaxVals.x, (int)areaThreeMinVals.z, (int)areaThreeMaxVals.z, grassSteps, grassLayer, 1);
                 //Maintain the path
                 //ApplyTextureChangeOverArea(-45, -41, 2, 74, 4, 4, 0.1f);
 
@@ -457,11 +476,11 @@ public class LevelOneEvents : LevelEventManager
             if (!areaFourMOneMet)
             {
 
-                
+
                 //Sludge pump area
-                ApplyTextureChangeOverArea(96, 209, -55, 85, 8, 6, 1);
+                ApplyTextureChangeOverArea((int)areaFour1MinVals.x, (int)areaFour1MaxVals.x, (int)areaFour1MinVals.z, (int)areaFour1MaxVals.z, dirtSteps, dirtLayer, 1);
                 //Middle platform
-                ApplyTextureChangeOverArea(2, 81, 4, 92, 8, 1, 1);
+                ApplyTextureChangeOverArea((int)areaFour1MinVals.x, (int)areaFour1MaxVals.x, (int)areaFour1MinVals.z, (int)areaFour1MaxVals.z, grassSteps, grassLayer, 1);
 
                 areaFourMOneMet = true;
             }
@@ -471,9 +490,9 @@ public class LevelOneEvents : LevelEventManager
             if (!areaFourMTwoMet)
             {
                 //Sludge pump area
-                ApplyTextureChangeOverArea(96, 209, -55, 85, 8, 2, 1);
+                ApplyTextureChangeOverArea((int)areaFour2MinVals.x, (int)areaFour2MaxVals.x, (int)areaFour2MinVals.z, (int)areaFour2MaxVals.z, dirtSteps, dirtLayer, 1);
                 //Middle platform
-                ApplyTextureChangeOverArea(2, 81, 4, 92, 8, 2, 1);
+                ApplyTextureChangeOverArea((int)areaFour2MinVals.x, (int)areaFour2MaxVals.x, (int)areaFour2MinVals.z, (int)areaFour2MaxVals.z, grassSteps, grassLayer, 1);
 
                 factory.GetComponent<MeshRenderer>().material = cleanFactoryMaterial;
                 foreach(GameObject go in pipes)

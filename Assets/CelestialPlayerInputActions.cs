@@ -478,9 +478,27 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             ""id"": ""ed706210-954b-498f-9499-82c477473bfd"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Click"",
                     ""type"": ""Button"",
-                    ""id"": ""5fa4e077-2c25-4af5-b10b-32044342f299"",
+                    ""id"": ""a7bd9ae8-966b-41a1-aacd-8a5f5019d88d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scroll"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""ad248968-f08a-456a-a052-3749cfdaf2b1"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""d5bfeb4b-a05d-4de9-96ad-7e5264f0c248"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -490,12 +508,56 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""3e1781bc-7c92-4e79-8012-49dc85979875"",
-                    ""path"": """",
+                    ""id"": ""e2bcb060-c642-4e7f-999f-1508cc24e374"",
+                    ""path"": ""<Mouse>/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""09cf5faf-bca0-49b5-8c9b-0406fe0e4dfc"",
+                    ""path"": ""<VirtualMouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5790cd2f-73dd-4881-ac64-3a1152a050b3"",
+                    ""path"": ""<VirtualMouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86d674ed-adf9-4c63-aab1-c21745d9c7a4"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cbcb3e9-fa5a-4f60-9529-3f55742fefbe"",
+                    ""path"": ""<VirtualMouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -627,7 +689,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         m_CelestialPlayerDefault_MakeInteract = m_CelestialPlayerDefault.FindAction("MakeInteract", throwIfNotFound: true);
         // MenuControls
         m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
-        m_MenuControls_Newaction = m_MenuControls.FindAction("New action", throwIfNotFound: true);
+        m_MenuControls_Click = m_MenuControls.FindAction("Click", throwIfNotFound: true);
+        m_MenuControls_Scroll = m_MenuControls.FindAction("Scroll", throwIfNotFound: true);
+        m_MenuControls_Submit = m_MenuControls.FindAction("Submit", throwIfNotFound: true);
         // DialogueControls
         m_DialogueControls = asset.FindActionMap("DialogueControls", throwIfNotFound: true);
         m_DialogueControls_Continue = m_DialogueControls.FindAction("Continue", throwIfNotFound: true);
@@ -814,12 +878,16 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     // MenuControls
     private readonly InputActionMap m_MenuControls;
     private List<IMenuControlsActions> m_MenuControlsActionsCallbackInterfaces = new List<IMenuControlsActions>();
-    private readonly InputAction m_MenuControls_Newaction;
+    private readonly InputAction m_MenuControls_Click;
+    private readonly InputAction m_MenuControls_Scroll;
+    private readonly InputAction m_MenuControls_Submit;
     public struct MenuControlsActions
     {
         private @CelestialPlayerInputActions m_Wrapper;
         public MenuControlsActions(@CelestialPlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_MenuControls_Newaction;
+        public InputAction @Click => m_Wrapper.m_MenuControls_Click;
+        public InputAction @Scroll => m_Wrapper.m_MenuControls_Scroll;
+        public InputAction @Submit => m_Wrapper.m_MenuControls_Submit;
         public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -829,16 +897,28 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         {
             if (instance == null || m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
+            @Scroll.started += instance.OnScroll;
+            @Scroll.performed += instance.OnScroll;
+            @Scroll.canceled += instance.OnScroll;
+            @Submit.started += instance.OnSubmit;
+            @Submit.performed += instance.OnSubmit;
+            @Submit.canceled += instance.OnSubmit;
         }
 
         private void UnregisterCallbacks(IMenuControlsActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
+            @Scroll.started -= instance.OnScroll;
+            @Scroll.performed -= instance.OnScroll;
+            @Scroll.canceled -= instance.OnScroll;
+            @Submit.started -= instance.OnSubmit;
+            @Submit.performed -= instance.OnSubmit;
+            @Submit.canceled -= instance.OnSubmit;
         }
 
         public void RemoveCallbacks(IMenuControlsActions instance)
@@ -971,7 +1051,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     }
     public interface IMenuControlsActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
+        void OnScroll(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
     }
     public interface IDialogueControlsActions
     {
