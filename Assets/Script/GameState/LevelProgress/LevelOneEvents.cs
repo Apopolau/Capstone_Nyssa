@@ -33,6 +33,7 @@ public class LevelOneEvents : LevelEventManager
     private bool secondAreaClear = false;
     private bool thirdAreaClear = false;
     private bool fourthAreaClear = false;
+    private bool fifthAreaClear = false;
 
     [Header("Terrain variables")]
     [SerializeField] private Vector3 areaOneMinVals;
@@ -83,6 +84,7 @@ public class LevelOneEvents : LevelEventManager
     [SerializeField] private GameObject duck2;
 
     int keyMonsterDefeatCount;
+    int areaFiveMonsterCount = 2;
 
     private bool runDefeatDialogue = false;
     private bool runReadyToLeaveDialogue = false;
@@ -596,6 +598,20 @@ public class LevelOneEvents : LevelEventManager
 
     public void OnFourthMonsterDefeated()
     {
+        duck1.GetComponent<Duck>().SetHalfwayPointOn();
+        duck2.GetComponent<Duck>().SetHalfwayPointOn();
+
+        keyMonsterDefeatCount++;
+        fourthAreaClear = true;
+
+
+        task4.CrossOutTask();
+        SetFriendCompletion();
+        fourthMonsterDeadDialouge.TriggerDialogue();
+    }
+
+    public void OnFifthMonstersDefeated()
+    {
         foreach (GameObject go in fourthAreaTiles)
         {
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
@@ -604,19 +620,20 @@ public class LevelOneEvents : LevelEventManager
             }
         }
 
-        duck1.GetComponent<Duck>().SetHalfwayPointOn();
-        duck2.GetComponent<Duck>().SetHalfwayPointOn();
-
-        keyMonsterDefeatCount++;
-
-        fourthAreaClear = true;
-
-        task4.CrossOutTask();
-        SetFriendCompletion();
-        fourthMonsterDeadDialouge.TriggerDialogue();
+        duck1.GetComponent<Duck>().SetTopAreaOn();
+        duck2.GetComponent<Duck>().SetTopAreaOn();
     }
 
-
+    public void CountDownFinalMonsters()
+    {
+        
+        keyMonsterDefeatCount++;
+        areaFiveMonsterCount -= 1;
+        if (areaFiveMonsterCount <= 0)
+        {
+            OnFifthMonstersDefeated();
+        }
+    }
 
     /// <summary>
     /// OTHER EVENTS
