@@ -268,7 +268,7 @@ public class DialogueManager : MonoBehaviour
             isDialogueActive = false; // Set the dialogue state to inactive
         }
         // Toggle other UI elements visibility
-        uiController.ToggleOtherUIElements(true); // Pass true to reactivate other UI elements
+        uiController.ToggleUIForDialogue(true); // Pass true to reactivate other UI elements
 
         panningOn = false;
 

@@ -18,22 +18,27 @@ public class UserSettingsManager : ScriptableObject
         SetControls();
     }
 
-    private void SetControls()
+    private void OnEnable()
+    {
+        SetControls();
+    }
+
+    public void SetControls()
     {
         if (Gamepad.all.Count == 0)
         {
-            earthControlType = UserSettingsManager.ControlType.KEYBOARD;
-            celestialControlType = UserSettingsManager.ControlType.KEYBOARD;
+            earthControlType = ControlType.KEYBOARD;
+            celestialControlType = ControlType.KEYBOARD;
         }
         else if (Gamepad.all.Count == 1)
         {
-            earthControlType = UserSettingsManager.ControlType.KEYBOARD;
-            celestialControlType = UserSettingsManager.ControlType.CONTROLLER;
+            earthControlType = ControlType.KEYBOARD;
+            celestialControlType = ControlType.CONTROLLER;
         }
         else
         {
-            earthControlType = UserSettingsManager.ControlType.CONTROLLER;
-            celestialControlType = UserSettingsManager.ControlType.CONTROLLER;
+            earthControlType = ControlType.CONTROLLER;
+            celestialControlType = ControlType.CONTROLLER;
         }
     }
 

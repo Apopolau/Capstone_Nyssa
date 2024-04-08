@@ -17,6 +17,8 @@ public class EarthCharacterUIController : MonoBehaviour
     //Earth player icons keyboard, celestial player icons keyboard, heal icon, thorn icon
     public GameObject[] keyboardUIObjects; // UI elements for keyboard control
     public GameObject[] controllerUIObjects; // UI elements for controller control
+    public GameObject[] keyboardCelesteObjects;
+    public GameObject[] controllerCelesteObjects;
     public GameObject inventory;
 
     Color darkenedColour = new Color(0.5f, 0.5f, 0.5f);
@@ -77,6 +79,34 @@ public class EarthCharacterUIController : MonoBehaviour
         GameObject[] uiObjectsToToggle = (currentControlType == UserSettingsManager.ControlType.KEYBOARD) ? keyboardUIObjects : controllerUIObjects;
 
         foreach (GameObject uiObject in uiObjectsToToggle)
+        {
+            Debug.Log("Toggling UI object: " + uiObject.name);
+            // Toggle the visibility of the UI object based on the isActive parameter
+            uiObject.SetActive(isActive);
+        }
+
+    }
+
+    // Method to toggle the visibility of other UI elements
+    public void ToggleUIForDialogue(bool isActive)
+    {
+        ToggleInventory(isActive);
+        // Check the current control type from the UserSettingsManager
+        UserSettingsManager.ControlType earthControlType = userSettingsManager.earthControlType;
+        UserSettingsManager.ControlType celesteControlType = userSettingsManager.celestialControlType;
+
+
+        // Determine which array of UI objects to use based on the current control type
+        GameObject[] uiObjectsToToggle = (earthControlType == UserSettingsManager.ControlType.KEYBOARD) ? keyboardUIObjects : controllerUIObjects;
+        GameObject[] celesteObjectsToToggle = (celesteControlType == UserSettingsManager.ControlType.KEYBOARD) ? keyboardCelesteObjects : controllerCelesteObjects;
+
+        foreach (GameObject uiObject in uiObjectsToToggle)
+        {
+            Debug.Log("Toggling UI object: " + uiObject.name);
+            // Toggle the visibility of the UI object based on the isActive parameter
+            uiObject.SetActive(isActive);
+        }
+        foreach (GameObject uiObject in celesteObjectsToToggle)
         {
             Debug.Log("Toggling UI object: " + uiObject.name);
             // Toggle the visibility of the UI object based on the isActive parameter
