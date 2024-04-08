@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
- 
+
 
 public class EarthCharacterUIController : MonoBehaviour
 {
-   //PlantingOverlay
+    //PlantingOverlay
     public Image darkOverlay;
 
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
@@ -19,16 +19,17 @@ public class EarthCharacterUIController : MonoBehaviour
     public GameObject[] controllerUIObjects; // UI elements for controller control
     public GameObject inventory;
 
+    Color darkenedColour = new Color(0.5f, 0.5f, 0.5f);
+
     // Function to restore UI elements
     public void RestoreUI(GameObject targetGameObject)
     {
         Image[] images = targetGameObject.GetComponentsInChildren<Image>();
-            foreach (Image image in images)
-            {
-                 // Restore the original color
-                 image.material.color = image.color;
-            }
-        
+        foreach (Image image in images)
+        {
+            // Restore the original color
+            image.color = Color.white;
+        }
     }
 
     public void DarkenOverlay(GameObject targetGameObject)
@@ -38,7 +39,9 @@ public class EarthCharacterUIController : MonoBehaviour
             Image[] images = targetGameObject.GetComponentsInChildren<Image>();
             foreach (Image image in images)
             {
+
                 // Create a copy of the current material
+                /*
                 Material darkenedMaterial = new Material(image.material);
 
                 // Darken the material color
@@ -47,6 +50,8 @@ public class EarthCharacterUIController : MonoBehaviour
 
                 // Assign the new material to the image
                 image.material = darkenedMaterial;
+                */
+                image.color = darkenedColour;
             }
 
         }
@@ -62,9 +67,9 @@ public class EarthCharacterUIController : MonoBehaviour
     public void ToggleOtherUIElements(bool isActive)
     {
         ToggleInventory(isActive);
-         // Check the current control type from the UserSettingsManager
+        // Check the current control type from the UserSettingsManager
         UserSettingsManager.ControlType currentControlType = userSettingsManager.earthControlType;
-        
+
         // Log the current control type
         Debug.Log("Current Control Type: " + currentControlType);
 
@@ -86,11 +91,11 @@ public class EarthCharacterUIController : MonoBehaviour
         {
             Image[] inventoryImages = inventory.GetComponentsInChildren<Image>();
 
-            foreach(Image image in inventoryImages)
+            foreach (Image image in inventoryImages)
             {
                 if (image.GetComponent<ItemSlot>())
                 {
-                    if(image.GetComponent<ItemSlot>().Item != null)
+                    if (image.GetComponent<ItemSlot>().Item != null)
                     {
                         image.enabled = true;
 
@@ -102,15 +107,15 @@ public class EarthCharacterUIController : MonoBehaviour
                 }
             }
             TextMeshProUGUI[] text = inventory.GetComponentsInChildren<TextMeshProUGUI>();
-            foreach(TextMeshProUGUI txt in text)
+            foreach (TextMeshProUGUI txt in text)
             {
-                if(txt.text != "")
+                if (txt.text != "")
                 {
                     txt.enabled = true;
                     //txt.gameObject.SetActive(true);
                 }
             }
-            
+
         }
         else if (!isActive)
         {
