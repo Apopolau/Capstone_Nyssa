@@ -95,6 +95,7 @@ public class CelestialPlayerControls : MonoBehaviour
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
         controls.MenuControls.Disable();
+        //controls.MenuControls.Interact.started += OnMenuInteractPerformed;
 
         controls.CutsceneControls.Disable();
         controls.CutsceneControls.NextSlide.started += OnNextSlideSelected;
@@ -182,6 +183,7 @@ public class CelestialPlayerControls : MonoBehaviour
             this.GetComponent<CelestialPlayerMovement>().EndMovement();
         }
     }
+
     private void OnDodgePerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -211,6 +213,7 @@ public class CelestialPlayerControls : MonoBehaviour
 
 
     }
+
     private void OnBasicAttackPerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -219,7 +222,6 @@ public class CelestialPlayerControls : MonoBehaviour
 
     }
 
-
     private void OnColdSnapPerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -227,6 +229,7 @@ public class CelestialPlayerControls : MonoBehaviour
         this.GetComponent<CelestialPlayer>().OnSnowFlakeSelected();
 
     }
+
     private void OnLightningStrikePerformed(InputAction.CallbackContext context)
     {
         // Before doing anything, we check to make sure that the current message came from the correct controller (i.e., that the sender's ID matches our saved ID)
@@ -250,6 +253,17 @@ public class CelestialPlayerControls : MonoBehaviour
         if (context.control.device.deviceId == myDeviceID)
         {
             this.GetComponent<CelestialPlayer>().OnInteract(context);
+        }
+    }
+
+    private void OnMenuInteractPerformed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
+            {
+                //if()
+            }
         }
     }
 

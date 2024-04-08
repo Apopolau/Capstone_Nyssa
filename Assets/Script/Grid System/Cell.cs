@@ -48,7 +48,7 @@ public class Cell : MonoBehaviour
 
     public GameObject placedObject;
 
-    WaitForSeconds waitTime = new WaitForSeconds(0.2f);
+    WaitForSeconds waitTime = new WaitForSeconds(0.3f);
 
     public bool tileValid = true;
     public bool tileIsActivated = false;

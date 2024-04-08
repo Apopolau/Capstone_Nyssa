@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
+
 public class EarthPlayerControl : MonoBehaviour
 {
     private EarthPlayer earthPlayer;
@@ -13,6 +15,8 @@ public class EarthPlayerControl : MonoBehaviour
     public CutsceneManager cutsceneManager;
     public DialogueManager dialogueManager;
     public UserSettingsManager userSettingsManager;
+    public VirtualMouseInput virtualMouseInput;
+    public Vector2 virtualMousePosition;
 
     //public enum DeviceUsed { KEYBOARD, CONTROLLER};
     //public DeviceUsed thisDevice;
@@ -125,6 +129,7 @@ public class EarthPlayerControl : MonoBehaviour
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
         controls.MenuControls.Disable();
+        //controls.MenuControls.Submit.started += OnMenuSubmitPerformed;
 
         controls.CutsceneControls.Disable();
         controls.CutsceneControls.NextSlide.started += OnNextSlideSelected;
@@ -411,6 +416,16 @@ public class EarthPlayerControl : MonoBehaviour
     /// <summary>
     /// MENU CONTROLS
     /// </summary>
+    private void OnMenuSubmitPerformed(InputAction.CallbackContext context)
+    {
+        if(context.control.device.deviceId == myDeviceID)
+        {
+            if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
+            {
+                
+            }
+        }
+    }
 
     ///
     ///

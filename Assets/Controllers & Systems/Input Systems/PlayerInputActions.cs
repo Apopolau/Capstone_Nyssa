@@ -766,24 +766,119 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""id"": ""2dbef1da-ff53-41d8-8c9d-209dd9447025"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
+                    ""name"": ""Click"",
                     ""type"": ""Button"",
                     ""id"": ""d9ca3c15-17b0-4d48-a4bc-a891dc335de8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3b53835-17a7-4295-a1db-0e9ebc2150e8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Point"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""949b9691-91d2-461a-826e-e9cd42f39141"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""227bca91-2c8e-424f-a843-1070a422d190"",
-                    ""path"": """",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af2b5189-7315-41f6-adc9-92f8f2fdb4d5"",
+                    ""path"": ""<VirtualMouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f2734fa-d453-4ce5-8d74-998b262fd441"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea96ed03-cf8f-4dd8-9491-a98eed767a3d"",
+                    ""path"": ""<VirtualMouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""485a56db-e2f4-4463-980e-a5a600d4684b"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""34ccad3a-e41c-479b-bc4b-3ec7c8d6e1d0"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d6a03f89-43a3-4164-af66-8eb0bb06c6e1"",
+                    ""path"": ""<VirtualMouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""56364bd3-fa35-45e0-adee-727ceb9bd053"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1352,7 +1447,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_RemovingPlant_CursorMove = m_RemovingPlant.FindAction("Cursor Move", throwIfNotFound: true);
         // MenuControls
         m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
-        m_MenuControls_Newaction = m_MenuControls.FindAction("New action", throwIfNotFound: true);
+        m_MenuControls_Click = m_MenuControls.FindAction("Click", throwIfNotFound: true);
+        m_MenuControls_Submit = m_MenuControls.FindAction("Submit", throwIfNotFound: true);
+        m_MenuControls_Point = m_MenuControls.FindAction("Point", throwIfNotFound: true);
         // DialogueControls
         m_DialogueControls = asset.FindActionMap("DialogueControls", throwIfNotFound: true);
         m_DialogueControls_Continue = m_DialogueControls.FindAction("Continue", throwIfNotFound: true);
@@ -1685,12 +1782,16 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     // MenuControls
     private readonly InputActionMap m_MenuControls;
     private List<IMenuControlsActions> m_MenuControlsActionsCallbackInterfaces = new List<IMenuControlsActions>();
-    private readonly InputAction m_MenuControls_Newaction;
+    private readonly InputAction m_MenuControls_Click;
+    private readonly InputAction m_MenuControls_Submit;
+    private readonly InputAction m_MenuControls_Point;
     public struct MenuControlsActions
     {
         private @PlayerInputActions m_Wrapper;
         public MenuControlsActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Newaction => m_Wrapper.m_MenuControls_Newaction;
+        public InputAction @Click => m_Wrapper.m_MenuControls_Click;
+        public InputAction @Submit => m_Wrapper.m_MenuControls_Submit;
+        public InputAction @Point => m_Wrapper.m_MenuControls_Point;
         public InputActionMap Get() { return m_Wrapper.m_MenuControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1700,16 +1801,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_MenuControlsActionsCallbackInterfaces.Add(instance);
-            @Newaction.started += instance.OnNewaction;
-            @Newaction.performed += instance.OnNewaction;
-            @Newaction.canceled += instance.OnNewaction;
+            @Click.started += instance.OnClick;
+            @Click.performed += instance.OnClick;
+            @Click.canceled += instance.OnClick;
+            @Submit.started += instance.OnSubmit;
+            @Submit.performed += instance.OnSubmit;
+            @Submit.canceled += instance.OnSubmit;
+            @Point.started += instance.OnPoint;
+            @Point.performed += instance.OnPoint;
+            @Point.canceled += instance.OnPoint;
         }
 
         private void UnregisterCallbacks(IMenuControlsActions instance)
         {
-            @Newaction.started -= instance.OnNewaction;
-            @Newaction.performed -= instance.OnNewaction;
-            @Newaction.canceled -= instance.OnNewaction;
+            @Click.started -= instance.OnClick;
+            @Click.performed -= instance.OnClick;
+            @Click.canceled -= instance.OnClick;
+            @Submit.started -= instance.OnSubmit;
+            @Submit.performed -= instance.OnSubmit;
+            @Submit.canceled -= instance.OnSubmit;
+            @Point.started -= instance.OnPoint;
+            @Point.performed -= instance.OnPoint;
+            @Point.canceled -= instance.OnPoint;
         }
 
         public void RemoveCallbacks(IMenuControlsActions instance)
@@ -2033,7 +2146,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     }
     public interface IMenuControlsActions
     {
-        void OnNewaction(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
+        void OnPoint(InputAction.CallbackContext context);
     }
     public interface IDialogueControlsActions
     {
