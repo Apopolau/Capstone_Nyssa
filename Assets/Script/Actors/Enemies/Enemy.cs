@@ -131,6 +131,15 @@ public class Enemy : MonoBehaviour
             {
                 inAttackRange = true;
             }
+            if (enemyStats.enemyType != EnemyStats.enemyTypes.OilMonster)
+            { if(enemyMeshAgent.hasPath)
+                {
+                    enemyAnimator.animator.SetBool(enemyAnimator.IfWalkingHash, true);
+                }
+            
+            }
+   
+
         }
         
     }
@@ -215,6 +224,13 @@ public class Enemy : MonoBehaviour
         return isDead;
        
     }
+    public void SmotherInitiated()
+    {
+        if (enemyStats.enemyType == EnemyStats.enemyTypes.PlasticBag)
+        {
+            StartCoroutine(SmotherPlant());
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -289,6 +305,16 @@ public class Enemy : MonoBehaviour
         yield return takeHitTime;
         enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, false);
         isStaggered = false;
+    }
+    /// <summary>
+    /// should be if smother or chokinghash
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator SmotherPlant()
+    {
+        enemyAnimator.animator.SetBool(enemyAnimator.IfSmotheringHash, true);
+        yield return takeHitTime;
+        enemyAnimator.animator.SetBool(enemyAnimator.IfSmotheringHash, false);
     }
 
     private IEnumerator Die()

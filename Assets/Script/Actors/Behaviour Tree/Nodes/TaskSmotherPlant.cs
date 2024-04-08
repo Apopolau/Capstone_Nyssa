@@ -19,7 +19,16 @@ public class TaskSmotherPlant : BTNode
     {
         Debug.Log("Enter smothering");
 
-        float distance = Vector3.Distance(thisEnemy.GetClosestPlant().transform.position, thisAgent.transform.position);
+        if (thisEnemy.GetClosestPlant())
+        {
+            float distance = Vector3.Distance(thisEnemy.GetClosestPlant().transform.position, thisAgent.transform.position);
+        }
+        else
+        {
+            thisEnemy.smotherInitiated = false;
+            state = NodeState.FAILURE;
+            return state;
+        }
 
         if (thisEnemy.isStaggered || thisEnemy.isDying)
         {
@@ -47,8 +56,9 @@ public class TaskSmotherPlant : BTNode
 
             if (!thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isDying)
             {
+                thisEnemy.SmotherInitiated();
                 thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().TakeDamage((int)700);
-              
+             
 
             }
             else if (thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isDying)

@@ -7,6 +7,7 @@ public class OilMonsterAnimator : OurAnimator
     public int IfAttackingHash;
     public int IfDyingHash;
     public int IfTakingHitHash;
+    public int IfSmotheringHash;
 
     private void Awake()
     {
@@ -29,10 +30,11 @@ public class OilMonsterAnimator : OurAnimator
     protected override void SetAnimations()
     {
         animator = GetComponentInChildren<Animator>();
-        IfWalkingHash = Animator.StringToHash("IfWalking");
+        IfWalkingHash = Animator.StringToHash("IfMoving");
         IfAttackingHash = Animator.StringToHash("IfAttacking");
         IfDyingHash = Animator.StringToHash("IfDying");
         IfTakingHitHash = Animator.StringToHash("IfTakingHit");
+        IfSmotheringHash = Animator.StringToHash("IfChoking");
     }
 
     

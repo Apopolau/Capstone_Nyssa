@@ -69,15 +69,15 @@ public class TaskInvadePatrol : BTNode
                 /// thisAgent.transform.position
                 //rb.MovePosition(Vector3.MoveTowards(rb.position, wPoint.position, 10f * Time.deltaTime));
                 //for more complex and or bigger scenes
-             /*   elapsed += Time.deltaTime;
-                if (elapsed > 1.0f)
-                {
-                    elapsed -= 1.0f;
-                    NavMesh.CalculatePath(transformPos.position, wPoint.position, NavMesh.AllAreas, path);
-                    
-                }*/
+                /*   elapsed += Time.deltaTime;
+                   if (elapsed > 1.0f)
+                   {
+                       elapsed -= 1.0f;
+                       NavMesh.CalculatePath(transformPos.position, wPoint.position, NavMesh.AllAreas, path);
 
-                thisAgent.SetDestination(wPoint.position);
+                   }*/
+
+               thisAgent.SetDestination(wPoint.position);
 
                 transformPos.LookAt(wPoint.position);
                 //Debug.Log("making rounds");
