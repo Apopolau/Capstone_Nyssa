@@ -15,8 +15,8 @@ public class CelestialPlayer : Player
     [SerializeField] private LayerMask tileMask;
     //[SerializeField] private GameObject celestPlayerDpad;
     [SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
-    
-    
+
+
     [Header("Buttons Overlay")]
     [SerializeField] public Image coldSnapFill;
     [SerializeField] public Image lightingStrikeFill;
@@ -27,20 +27,21 @@ public class CelestialPlayer : Player
     [SerializeField] public Image CTRLightingStrikeFill;
     [SerializeField] public Image CTRLMoonTideFill;
     [SerializeField] public Image CTRLRainFill;
+    private CelestUIManager uiManager;
     private NavMeshAgent celestialAgent;
 
     [Header("Rain System")]
     [SerializeField] WeatherState weatherState;
     [SerializeField] public bool isRaining = false;
     [SerializeField] public GameObject RainParticleSystem;
-    
+
     [Header("Button press")]
     [SerializeField] public bool buttonRain = false;
     [SerializeField] public bool buttonBasicAttack = false;
     [SerializeField] public bool buttonColdSnap = false;
     [SerializeField] public bool buttonLightningStrike = false;
     [SerializeField] public bool buttonMoonTide = false;
-   
+
     [Header("Attack")]
     CelestialPlayerBasicAttackTrigger staff;
     [SerializeField] public bool isAttacking = false;
@@ -112,6 +113,7 @@ public class CelestialPlayer : Player
         celestialControls = GetComponent<CelestialPlayerControls>();
         health = new Stat(100, 100, false);
         energy = new Stat(100, 0, true);
+        uiManager = GetComponent<CelestUIManager>();
         //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
@@ -124,9 +126,9 @@ public class CelestialPlayer : Player
         specialPowerAnimTime = new WaitForSeconds(1.958f);
         //dodgeAnimTime = new WaitForSeconds();
         coldSnapCoolDownTime = powerBehaviour.ColdSnapStats.rechargeTimer;
-        basicCoolDownTime =powerBehaviour. BasicAttackStats.rechargeTimer;
+        basicCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
         lightningCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
-        staff =GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
+        staff = GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
 
 
         StartCoroutine(CoolDownImageFill(lightingStrikeFill));
@@ -134,7 +136,7 @@ public class CelestialPlayer : Player
 
         rainFill.enabled = false;
         CTRLRainFill.enabled = false;
-        
+
     }
 
 
@@ -162,13 +164,8 @@ public class CelestialPlayer : Player
 
     public void OnDodgeSelected(InputAction.CallbackContext context)
     {
-      
+
     }
-
-
-
-
-
 
 
     private void OnTriggerStay(Collider other)
@@ -222,7 +219,7 @@ public class CelestialPlayer : Player
         buttonColdSnap = true;
         powerInUse = Power.COLDSNAP;
         Debug.Log("OnSnowFlakeSelected");
-        //DarkenAllImages(celestPlayerDpad); //darken the dpad
+        //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
 
     }
 
@@ -233,9 +230,7 @@ public class CelestialPlayer : Player
         buttonBasicAttack = true; ;
         powerInUse = Power.BASIC;
         Debug.Log("startbasic");
-        //DarkenAllImages(celestPlayerDpad); //darken the dpad
-
-
+        //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
     }
 
     public void OnLightningStrikeSelected()
@@ -245,8 +240,7 @@ public class CelestialPlayer : Player
         buttonLightningStrike = true;
         powerInUse = Power.LIGHTNINGSTRIKE;
         Debug.Log("startlightning");
-       // DarkenAllImages(celestPlayerDpad); //darken the dpad
-
+        //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
     }
 
 
@@ -257,7 +251,7 @@ public class CelestialPlayer : Player
         buttonMoonTide = true;
         powerInUse = Power.MOONTIDE;
         Debug.Log("Start Moontide");
-        //DarkenAllImages(celestPlayerDpad);//darken the dpad
+        //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
     }
 
     //POWEER ANIMATION
@@ -320,8 +314,6 @@ public class CelestialPlayer : Player
 
     }
 
-
-
     public IEnumerator animateLightningStrike()
     {
 
@@ -345,7 +337,7 @@ public class CelestialPlayer : Player
         if (enemyTarget != null && enemyTarget.GetComponent<Enemy>())
         {
 
-           clone.transform.position = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, enemyTarget.transform.position.z);
+            clone.transform.position = new Vector3(enemyTarget.transform.position.x, enemyTarget.transform.position.y + 20, enemyTarget.transform.position.z);
 
             LightningAttack();
 
@@ -368,15 +360,13 @@ public class CelestialPlayer : Player
 
     }
 
-
-       
     public IEnumerator animateMoonTide()
     {
         //MOONTIDE POWER
         //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
 
         Debug.Log("moontide is animated");
-        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y , gameObject.transform.position.z), Quaternion.identity);
+        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
 
         //Attacking animation of player
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, true);
@@ -393,7 +383,7 @@ public class CelestialPlayer : Player
         StartCoroutine(SuspendActions(specialPowerAnimTime));
         yield return specialPowerAnimTime;
 
-        if(enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())
+        if (enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())
         {
             enemyTarget.GetComponent<ClearDebrisTrigger>().InitiateClear();
         }
@@ -404,124 +394,82 @@ public class CelestialPlayer : Player
         Destroy(coldOrb, 1f);
         //ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
-    
-    
+
+
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /// <summary>
+    /// HANDLES POWER DROPPING
+    /// </summary>
+    /// <param name="power"></param>
+    /// <param name="position"></param>
     public void PowerDrop(PowerStats power, Vector3 position)
     {
-        powerDrop= Instantiate(power.visualDisplay, position, Quaternion.identity);
+        powerDrop = Instantiate(power.visualDisplay, position, Quaternion.identity);
 
     }
 
-   
+    /// <summary>
+    /// HANDLES DEALING DAMAGE WITH EACH POWER
+    /// </summary>
     public void ColdSnapAttack()
     {
-
-
-        bool playerIsDead;
+        bool enemyIsDead;
         if (enemyTarget && powerInUse == Power.COLDSNAP && canColdSnap == false)
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
             Debug.Log("Hitpoints:" + HitPoints);
-            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
-            
+            enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
-      
-
     }
-
-
 
     public void BasicAttack()
     {
-
-
-
-        bool playerIsDead;
+        bool enemyIsDead;
         if (enemyTarget && powerInUse == Power.BASIC && canBasicAttack == false)
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
             Debug.Log("Hitpoints:" + HitPoints);
-            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
-
+            enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
-        
-
-
-
     }
-
 
     public void LightningAttack()
     {
-
-
-        bool playerIsDead;
+        bool enemyIsDead;
         if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE && canLightningStrike == false)
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
             Debug.Log("Hitpoints:" + HitPoints);
-            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
-
+            enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
-     
-
-
     }
-
 
     public void MoonTideAttack()
     {
-
-
-
-        bool playerIsDead;
+        bool enemyIsDead;
         if (enemyTarget && powerInUse == Power.MOONTIDE && canMoonTide == false)
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
             Debug.Log("Hitpoints:" + HitPoints);
-            playerIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
-
+            enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
-       
-
-
     }
 
-
-    
     public int GetPowerHitDamage(Power weakness)
     {
         PowerBehaviour attack;
         attack = GetComponent<PowerBehaviour>();
-        int powerDamage=0;
+        int powerDamage = 0;
         if (powerInUse == Power.BASIC)
         {
             powerDamage = Random.Range(attack.BasicAttackStats.minDamage, attack.BasicAttackStats.maxDamage);
-            
+
             return powerDamage;
         }
 
@@ -530,7 +478,7 @@ public class CelestialPlayer : Player
         {
             if (weakness == Power.COLDSNAP)
             {
-                powerDamage= attack.ColdSnapStats.maxDamage;
+                powerDamage = attack.ColdSnapStats.maxDamage;
             }
             else if (weakness != Power.COLDSNAP)
             {
@@ -567,12 +515,12 @@ public class CelestialPlayer : Player
                 powerDamage = attack.LightningStats.minDamage;
 
             }
-         
+
             return powerDamage;
         }
         return 0;
 
-       
+
     }
 
     public Power GetEnemyWeakness(GameObject enemyTarget)
@@ -590,13 +538,9 @@ public class CelestialPlayer : Player
 
     }
 
-
-
-
-
-
-
-
+    /// <summary>
+    /// POWER SELECTION FUNCTIONALITY
+    /// </summary>
 
     //if player selects raindrop
     public void OnRainDropSelected()
@@ -622,15 +566,14 @@ public class CelestialPlayer : Player
         }
         buttonRain = true;
 
-
-
-
     }
+
     /// <summary>
     /// ///////////////////////////////////can be deleted
     /// 
     /// </summary>
     /// <returns></returns>
+    /*
     public IEnumerator ResetRain()
     {
         if (isRaining)
@@ -644,55 +587,55 @@ public class CelestialPlayer : Player
         }
 
     }
+    */
 
-
+    
     public void ShootTowardsTarget(GameObject Orb)
     {
         var step = 20 * Time.deltaTime; // calculate distance to move
-       Orb.transform.position = Vector3.MoveTowards(Orb.transform.position, enemyTarget.transform.position, step);
+        Orb.transform.position = Vector3.MoveTowards(Orb.transform.position, enemyTarget.transform.position, step);
         Orb.transform.LookAt(enemyTarget.transform.position, Vector3.up);
 
     }
+    
 
 
 
-
+    ///
+    /// RESETS ABILITIES AFTER THEY ARE USED
+    ///
     public void ResetColdSnap()
     {
         StartCoroutine(ColdSnapCoolDownTime());
 
         //keyboard UI
         if (coldSnapFill.gameObject.activeSelf)
-        {   
+        {
             StartCoroutine(CoolDownImageFill(coldSnapFill));
         }
 
-        else if (!coldSnapFill.gameObject.activeSelf) 
+        else if (!coldSnapFill.gameObject.activeSelf)
         {
             coldSnapFill.enabled = true;
             coldSnapFill.gameObject.SetActive(true);
             StartCoroutine(CoolDownImageFill(coldSnapFill));
         }
-       
-       // controller UI
-        if (CTRLColdSnapFill.gameObject.activeSelf )
-        { StartCoroutine(CoolDownImageFill(CTRLColdSnapFill));}
-        else {
-            CTRLColdSnapFill.enabled = true;
-           StartCoroutine(CoolDownImageFill(CTRLColdSnapFill));;
-        }
-       
-       
-        
-        
 
+        // controller UI
+        if (CTRLColdSnapFill.gameObject.activeSelf)
+        { StartCoroutine(CoolDownImageFill(CTRLColdSnapFill)); }
+        else
+        {
+            CTRLColdSnapFill.enabled = true;
+            StartCoroutine(CoolDownImageFill(CTRLColdSnapFill)); ;
+        }
     }
 
     public IEnumerator ColdSnapCoolDownTime()
     {
         Debug.Log("coldsnaptimer reset");
         buttonBasicAttack = false;
-       yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
+        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
         Debug.Log("coldsnaptimer copy");
         canColdSnap = true;
     }
@@ -711,7 +654,7 @@ public class CelestialPlayer : Player
         buttonLightningStrike = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats));
         Debug.Log("Lightning timer copy");
-       canLightningStrike = true;
+        canLightningStrike = true;
     }
 
     public void ResetBasic()
@@ -745,46 +688,47 @@ public class CelestialPlayer : Player
     public IEnumerator CoolDownImageFill(Image fillImage)
     {
 
-            float cooldownDuration = CoolDownTime( powerInUse);
-            float timer = 0f;
-            float startFillAmount = 1f;
-            float endFillAmount = 0f;
-            Debug.Log("entering coroutine");
-               // Check if the fillImage is active, if not, activate it
+        float cooldownDuration = CoolDownTime(powerInUse);
+        float timer = 0f;
+        float startFillAmount = 1f;
+        float endFillAmount = 0f;
+        Debug.Log("entering coroutine");
+        // Check if the fillImage is active, if not, activate it
 
-          
-            // Gradually decrease fill amount over cooldown duration
-            while (timer < cooldownDuration)
-            {
-                //Debug.Log("entering loop of coroutine");
-                float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
-                fillImage.fillAmount = fillAmount;
-                timer += Time.deltaTime;
-                yield return null;
 
-            }
+        // Gradually decrease fill amount over cooldown duration
+        while (timer < cooldownDuration)
+        {
+            //Debug.Log("entering loop of coroutine");
+            float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
+            fillImage.fillAmount = fillAmount;
+            timer += Time.deltaTime;
+            yield return null;
 
-            // Ensure fill amount is exactly 0
-            fillImage.fillAmount = endFillAmount;
+        }
 
-            Debug.Log("cooling down power");
+        // Ensure fill amount is exactly 0
+        fillImage.fillAmount = endFillAmount;
+
+        Debug.Log("cooling down power");
     }
 
     public float CoolDownTime(Power powerinuse)
     {
-        if (powerinuse == Power.MOONTIDE){
+        if (powerinuse == Power.MOONTIDE)
+        {
             return powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats);
-          
+
         }
         if (powerinuse == Power.COLDSNAP)
         {
             return powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
-           
+
         }
         if (powerinuse == Power.LIGHTNINGSTRIKE)
         {
             return powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats);
-         
+
         }
         if (powerinuse == Power.BASIC)
         {
@@ -794,36 +738,28 @@ public class CelestialPlayer : Player
         return 0f;
     }
 
-
-
-
-
-        public IEnumerator MoonTideCoolDownTime()
-        {
-            Debug.Log("MoonTideReset");
+    public IEnumerator MoonTideCoolDownTime()
+    {
+        Debug.Log("MoonTideReset");
         buttonMoonTide = false;
-            yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats));
-            Debug.Log("MoonTidetimer copy");
-            canMoonTide = true;
-        }
-       
-
-
-
+        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats));
+        Debug.Log("MoonTidetimer copy");
+        canMoonTide = true;
+    }
 
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
         celestialControls.controls.CelestialPlayerDefault.Disable();
         //celestialControls.controls.PlantIsSelected.Disable();
-        //DarkenAllImages(celestPlayerDpad); //indicate no movement is allowed while planting
+        DarkenAllImages(uiManager.GetActiveUI()); //indicate no movement is allowed while planting
         yield return waitTime;
         celestialControls.controls.CelestialPlayerDefault.Enable();
-        //ResetImageColor(celestPlayerDpad);
+        ResetImageColor(uiManager.GetActiveUI());
     }
 
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange)
     {
-        yield return waitTime;   
+        yield return waitTime;
     }
 
     //Darken UI icons
@@ -834,6 +770,7 @@ public class CelestialPlayer : Player
             Image[] images = targetGameObject.GetComponentsInChildren<Image>();
             foreach (Image image in images)
             {
+                /*
                 // Create a copy of the current material
                 Material darkenedMaterial = new Material(image.material);
 
@@ -843,6 +780,8 @@ public class CelestialPlayer : Player
 
                 // Assign the new material to the image
                 image.material = darkenedMaterial;
+                */
+                image.color = new Color(0.5f, 0.5f, 0.5f);
             }
         }
         else
@@ -850,16 +789,16 @@ public class CelestialPlayer : Player
             Debug.LogWarning("Target GameObject is not assigned.");
         }
     }
-    
-     // Function to reset color to original
+
+    // Function to reset color to original
     public void ResetImageColor(GameObject targetGameObject)
     {
         Image[] images = targetGameObject.GetComponentsInChildren<Image>();
-            foreach (Image image in images)
-            {
-                 // Restore the original color
-                 image.material.color = image.color;
-            }
+        foreach (Image image in images)
+        {
+            // Restore the original color
+            image.color = Color.white;
+        }
     }
 
 

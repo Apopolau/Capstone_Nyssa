@@ -20,6 +20,11 @@ public class DialogueManager : MonoBehaviour
     private DialogueEvent currentEvent;
     private DialogueEvent activeEvent;
     private DialogueMoveEvent currentMove;
+    private DialogueCameraPan currentPan;
+
+    private Coroutine panRoutine = null;
+    private Coroutine moveRoutine = null;
+    private Coroutine typeRoutine = null;
 
     public bool isDialogueActive = false;
     public GameObject dialogueBox; // Reference to the entire dialogue box
@@ -85,15 +90,7 @@ public class DialogueManager : MonoBehaviour
     {
         if (panningOn)
         {
-            //Handle the two types of panning
-            if (activeEvent is DialogueCameraPan)
-            {
-                HandleCameraPan((DialogueCameraPan)activeEvent);
-            }
-            else if (activeEvent is DialoguePanAndText)
-            {
-                HandleCameraPanDialogue((DialoguePanAndText)activeEvent);
-            }
+            HandleCameraPan(currentPan);
         }
         if (returningToOrigin)
         {
@@ -103,11 +100,6 @@ public class DialogueManager : MonoBehaviour
         {
             HandleMoving(currentMove);
         }
-    }
-
-    private void FixedUpdate()
-    {
-
     }
 
     private void SetReferences()
@@ -191,7 +183,6 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
-        //HaltCoroutines();
         currentEvent = events.Dequeue();
         activeEvent = currentEvent;
 
@@ -200,34 +191,43 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("mid typing");
             HaltTyping();
         }
-        else if(eventEnded || currentEvent.GetIsSkippable())
+        //If we can move ahead with the next event
+        else if (eventEnded || currentEvent.GetIsSkippable())
         {
+            //If they in fact skipped, make sure we set all the stuff that was supposed to happen last event to the end
             if (!eventEnded)
             {
                 HaltCoroutines();
             }
             eventEnded = false;
+
+            //Handle how to start the next event
             if (currentEvent is DialogueLine)
             {
+                ToggleDialogueBox(true);
                 DisplayNextDialogueLine((DialogueLine)currentEvent);
             }
             else if (currentEvent is DialogueCameraPan)
             {
+                ToggleDialogueBox(false);
+                DialogueCameraPan pan = currentEvent as DialogueCameraPan;
                 dialoguePan = false;
                 panningOn = true;
                 earthPlayer.ToggleWaiting(true);
-                StartCoroutine(TurnPanOff((DialogueCameraPan)currentEvent));
-                //HandleCameraPan((DialogueCameraPan)currentEvent);
+                currentPan = pan;
+                panRoutine = StartCoroutine(TurnPanOff(currentPan));
             }
             else if (currentEvent is DialoguePanAndText)
             {
+                ToggleDialogueBox(true);
                 DialoguePanAndText panLineEvent = currentEvent as DialoguePanAndText;
 
                 dialoguePan = true;
                 panningOn = true;
                 earthPlayer.ToggleWaiting(true);
+                currentPan = panLineEvent.dialogueCameraPan;
                 DisplayNextDialogueLine(panLineEvent.dialogueLine);
-                StartCoroutine(TurnPanOff(panLineEvent));
+                panRoutine = StartCoroutine(TurnPanOff(currentPan));
             }
             else if (currentEvent is DialogueAnimation)
             {
@@ -236,22 +236,22 @@ public class DialogueManager : MonoBehaviour
             }
             else if (currentEvent is DialogueMoveEvent)
             {
-                Debug.Log("Next event is movement");
+                Debug.Log("starting move");
                 movingOn = true;
 
-                currentMove = (DialogueMoveEvent)currentEvent;
+                currentMove = currentEvent as DialogueMoveEvent;
                 if (!currentMove.MovePlaysOut())
                 {
                     eventEnded = true;
                     HandleNextEvents();
                 }
-                StartCoroutine(TurnMoveOff(currentMove));
+                moveRoutine = StartCoroutine(TurnMoveOff(currentMove));
             }
             else if (currentEvent is DialogueMissionEnd)
             {
                 HandleSceneTransition((DialogueMissionEnd)currentEvent);
             }
-            
+
         }
     }
 
@@ -290,15 +290,6 @@ public class DialogueManager : MonoBehaviour
     //When displaying a dialogue line, handles the text
     public void DisplayNextDialogueLine(DialogueLine currentLine)
     {
-        if (!dialogueBox.activeSelf)
-        {
-            dialogueBox.SetActive(true);
-        }
-        else
-        {
-            isDialogueActive = true;
-        }
-
         // Clear the dialogue areas
         dialogueArea.text = "";
 
@@ -330,11 +321,11 @@ public class DialogueManager : MonoBehaviour
         {
             case UserSettingsManager.GameLanguage.ENGLISH:
                 // Display English dialogue
-                StartCoroutine(TypeSentence(dialogueArea, currentLine.line));
+                typeRoutine = StartCoroutine(TypeSentence(dialogueArea, currentLine.line));
                 break;
             case UserSettingsManager.GameLanguage.FRENCH:
                 // Display French dialogue
-                StartCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
+                typeRoutine = StartCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
                 break;
         }
         eventEnded = true;
@@ -344,15 +335,6 @@ public class DialogueManager : MonoBehaviour
     //This runs if the dialogue event is a camera pan, handles the movement
     public void HandleCameraPan(DialogueCameraPan pan)
     {
-        //Sets states related to panning and dialogue
-
-        //Time.timeScale = 1f;
-        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
-        {
-            dialogueBox.SetActive(false); // Deactivate the dialogue box
-            isDialogueActive = false; // Set the dialogue state to inactive
-        }
-
         //We want to switch to single screen for dialogue I think
         if (split.Manager == 1)
         {
@@ -383,47 +365,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    public void HandleCameraPanDialogue(DialoguePanAndText pan)
-    {
-        DialogueCameraPan cameraPan = pan.dialogueCameraPan;
-        //DialogueLine currentLine = pan.dialogueLine;
-
-        if (!dialogueBox.activeSelf) // Check if the dialogue box is currently active
-        {
-            dialogueBox.SetActive(true); // Deactivate the dialogue box
-            isDialogueActive = true; // Set the dialogue state to inactive
-        }
-
-        //We want to switch to single screen for dialogue I think
-        if (split.Manager == 1)
-        {
-
-        }
-
-        zoom = mainCam.orthographicSize;
-        //zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
-        mainCam.orthographicSize = Mathf.SmoothDamp(mainCam.orthographicSize, pan.dialogueCameraPan.GetZoomAmount(), ref zoomVelocity, pan.dialogueCameraPan.GetZoomSpeed(), 100, 1);
-
-        if (cameraPan.GetPanType() == DialogueCameraPan.PanType.OBJECT)
-        {
-            //Set location
-            Vector3 targetLocation = new Vector3(cameraPan.GetPanObject().transform.position.x + cameraPan.GetPanOffset().x,
-                cameraPan.GetPanObject().transform.position.y + cameraPan.GetPanOffset().y, cameraPan.GetPanObject().transform.position.z + cameraPan.GetPanOffset().z);
-            //Shift towards it
-            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position,
-                targetLocation, ref panVelocity, cameraPan.GetPanSpeed(), 100, 1);
-        }
-        else if (cameraPan.GetPanType() == DialogueCameraPan.PanType.LOCATION)
-        {
-            //Set location
-            Vector3 targetLocation = new Vector3(cameraPan.GetPanLocation().x + cameraPan.GetPanOffset().x,
-                cameraPan.GetPanLocation().y + cameraPan.GetPanOffset().y, cameraPan.GetPanLocation().z + cameraPan.GetPanOffset().z);
-            //Shift towards it
-            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position,
-                targetLocation, ref panVelocity, cameraPan.GetPanSpeed(), 100, 1);
-        }
-    }
-
     public void HandleAnimation(DialogueAnimation animation)
     {
         StartCoroutine(RunAnimation(animation));
@@ -432,7 +373,7 @@ public class DialogueManager : MonoBehaviour
 
     public void HandleMoving(DialogueMoveEvent moveEvent)
     {
-
+        Debug.Log("Moving");
         GameObject objectToMove = moveEvent.GetObjectToMove();
         if (moveEvent.HasMove())
         {
@@ -456,7 +397,7 @@ public class DialogueManager : MonoBehaviour
     //Handles moving on to the next level/cutscene once the final dialogue of the mission is done
     public void HandleSceneTransition(DialogueMissionEnd nextMission)
     {
-        
+
         SceneManager.LoadScene(nextMission.GetTargetScene());
     }
 
@@ -468,14 +409,14 @@ public class DialogueManager : MonoBehaviour
     /// Finishes up running a character animation
     public IEnumerator RunAnimation(DialogueAnimation animation)
     {
-        
+
         yield return animation.GetAnimationDelay();
         animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), true);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.UnscaledTime;
         yield return animation.GetAnimationTime();
         animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), false);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.Normal;
-        
+
     }
 
     //Handles moving to the next dialogue event once the animation time is up
@@ -484,39 +425,35 @@ public class DialogueManager : MonoBehaviour
         yield return pan.GetAnimationTime();
 
         earthPlayer.ToggleWaiting(false);
+
         panningOn = false;
-        if (!dialoguePan)
+        currentPan = null;
+        if (!(activeEvent is DialoguePanAndText))
         {
             eventEnded = true;
             HandleNextEvents();
         }
     }
 
-    public IEnumerator TurnPanOff(DialoguePanAndText pan)
-    {
-        yield return pan.dialogueCameraPan.GetAnimationTime();
-
-        eventEnded = true;
-        earthPlayer.ToggleWaiting(false);
-        panningOn = false;
-    }
-
     public IEnumerator TurnMoveOff(DialogueMoveEvent moveEvent)
     {
+        Debug.Log("Starting move turn off");
         if (moveEvent.MovePlaysOut())
         {
             earthPlayer.ToggleWaiting(true);
         }
-        
+
         yield return moveEvent.GetAnimationTimer();
 
         if (moveEvent.MovePlaysOut())
         {
             eventEnded = true;
             earthPlayer.ToggleWaiting(false);
+            HandleNextEvents();
         }
+        Debug.Log("Finishing up move");
         movingOn = false;
-        HandleNextEvents();
+        currentMove = null;
     }
 
     /// <summary>
@@ -594,51 +531,63 @@ public class DialogueManager : MonoBehaviour
 
     private void HaltCoroutines()
     {
-        Debug.Log("Halting coroutines");
-        if(activeEvent is DialogueCameraPan)
+        if (panRoutine != null && panningOn)
         {
-            DialogueCameraPan currentpan = (DialogueCameraPan)activeEvent;
-            StopCoroutine(TurnPanOff(currentpan));
+            HaltPanning();
+            StopCoroutine(panRoutine);
+            panRoutine = null;
         }
-        else if(activeEvent is DialoguePanAndText)
-        {
-            DialoguePanAndText currentpan = (DialoguePanAndText)activeEvent;
-            StopCoroutine(TurnPanOff(currentpan));
-            HaltTyping();
-        }
-        else if(activeEvent is DialogueLine)
+        if (typeRoutine != null && midTyping)
         {
             HaltTyping();
+            StopCoroutine(typeRoutine);
+            typeRoutine = null;
+            midTyping = false;
         }
-        
-        else if(activeEvent is DialogueMoveEvent)
+        if (moveRoutine != null && movingOn)
         {
             HaltMove();
-        }
-        if(currentMove != null)
-        {
-            HaltMove();
+            StopCoroutine(moveRoutine);
+            moveRoutine = null;
         }
         eventEnded = true;
     }
 
+    //Instantly finish moving to the target location
+    private void HaltPanning()
+    {
+        zoom = mainCam.orthographicSize;
+        //zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+        mainCam.orthographicSize = currentPan.GetZoomAmount();
+
+        if (currentPan.GetPanType() == DialogueCameraPan.PanType.OBJECT)
+        {
+            mainCam.gameObject.transform.position = currentPan.GetPanObject().transform.position;
+        }
+        else if (currentPan.GetPanType() == DialogueCameraPan.PanType.LOCATION)
+        {
+            mainCam.gameObject.transform.position = currentPan.GetPanLocation();
+        }
+
+        panningOn = false;
+        currentPan = null;
+    }
+
     private void HaltTyping()
     {
-        Debug.Log("Attempting to halt typing");
         if (activeEvent.GetIsSkippable())
         {
-            Debug.Log("Halting typing");
             DialogueLine currentLine = (DialogueLine)activeEvent;
             switch (userSettingsManager.chosenLanguage)
             {
                 case UserSettingsManager.GameLanguage.ENGLISH:
                     // Display English dialogue
-                    StopCoroutine(TypeSentence(dialogueArea, currentLine.line));
+                    StopCoroutine(typeRoutine);
                     dialogueArea.text = currentLine.line;
                     break;
                 case UserSettingsManager.GameLanguage.FRENCH:
                     // Display French dialogue
-                    StopCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
+                    StopCoroutine(typeRoutine);
                     dialogueArea.text = currentLine.lineFR;
                     break;
             }
@@ -648,7 +597,7 @@ public class DialogueManager : MonoBehaviour
 
     private void HaltMove()
     {
-        if(currentMove != null)
+        if (currentMove != null)
         {
             if (currentMove.HasMove())
             {
@@ -666,14 +615,23 @@ public class DialogueManager : MonoBehaviour
             {
                 currentMove.GetObjectToMove().transform.rotation = currentMove.GetRotation();
             }
-            StopCoroutine(TurnMoveOff(currentMove));
         }
-        if(activeEvent is DialogueMoveEvent)
-        {
-            DialogueMoveEvent eventToTurnOff = activeEvent as DialogueMoveEvent;
-            StopCoroutine(TurnMoveOff(eventToTurnOff));
-        }
+        movingOn = false;
+        currentMove = null;
+    }
 
+    private void ToggleDialogueBox(bool shouldBeActive)
+    {
+        if (!dialogueBox.activeSelf && shouldBeActive) // Check if the dialogue box is currently active
+        {
+            dialogueBox.SetActive(true); // Activate the dialogue box
+            isDialogueActive = true; // Set the dialogue state to active
+        }
+        else if (dialogueBox.activeSelf && !shouldBeActive)
+        {
+            dialogueBox.SetActive(false); // Deactivate the dialogue box
+            isDialogueActive = false; // Set the dialogue state to inactive
+        }
     }
 
     //Handles setting the camera back to its previous state when the dialogue is over

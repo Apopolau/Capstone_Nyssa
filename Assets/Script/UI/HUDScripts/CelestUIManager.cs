@@ -8,6 +8,7 @@ public class CelestUIManager : MonoBehaviour
     public GameObject controlsKeyboardUI;
     public GameObject controllerUI;
     public GameObject controlsControllerUI;
+    private GameObject activeUI;
 
     public UserSettingsManager userSettingsManager;
 
@@ -25,6 +26,7 @@ public class CelestUIManager : MonoBehaviour
             controlsKeyboardUI.SetActive(true);
             controllerUI.SetActive(false);
             controlsControllerUI.SetActive(false);
+            activeUI = keyboardUI;
         }
         else if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.CONTROLLER)
         {
@@ -32,6 +34,12 @@ public class CelestUIManager : MonoBehaviour
             controlsKeyboardUI.SetActive(false);
             controllerUI.SetActive(true);
             controlsControllerUI.SetActive(true);
+            activeUI = controllerUI;
         }
+    }
+
+    public GameObject GetActiveUI()
+    {
+        return activeUI;
     }
 }
