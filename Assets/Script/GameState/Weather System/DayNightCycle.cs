@@ -30,6 +30,12 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField] private Gradient dirtySkyColor;
     [SerializeField] private Gradient dirtyEquatorColor;
 
+    //These are what we want to set
+    private Gradient currentDirectionalLightColor;
+    private Gradient currentDirectionalLightIntensity;
+    private Gradient currentSkyColor;
+    private Gradient currentEquatorColor;
+
     //Stores data on the weather state
     [SerializeField] WeatherState weatherState;
 
@@ -122,6 +128,7 @@ public class DayNightCycle : MonoBehaviour
             weatherState.SetTimeOfDay(WeatherState.TimeOfDay.NIGHT);
             weatherState.SetDayTime(false);
         }
+        /*
         if (weatherState.acidRainState == WeatherState.AcidRainState.NONE)
         {
             RenderSettings.ambientEquatorColor = equatorColor.Evaluate(timeOfDay / 24);
@@ -140,6 +147,15 @@ public class DayNightCycle : MonoBehaviour
             Color.RGBToHSV(dirtyDirectionalLightIntensity.Evaluate(timeOfDay / 24), out H, out S, out V);
             directionalLight.intensity = V;
         }
+        */
+
+        RenderSettings.ambientEquatorColor = currentEquatorColor.Evaluate(timeOfDay / 24);
+        RenderSettings.ambientSkyColor = currentEquatorColor.Evaluate(timeOfDay / 24);
+        directionalLight.color = currentDirectionalLightColor.Evaluate(timeOfDay / 24);
+        float H, S, V;
+        Color.RGBToHSV(currentDirectionalLightIntensity.Evaluate(timeOfDay / 24), out H, out S, out V);
+        directionalLight.intensity = V;
+
         //print(directionalLightColor.Evaluate(timeFraction));
         //print(V);
     }
@@ -147,5 +163,23 @@ public class DayNightCycle : MonoBehaviour
     public int NightsPassed()
     {
         return nightsPassed;
+    }
+
+    public void SwapSkyColours(bool isClean)
+    {
+        if (isClean)
+        {
+            currentEquatorColor = equatorColor;
+            currentSkyColor = skyColor;
+            currentDirectionalLightColor = directionalLightColor;
+            currentDirectionalLightIntensity = directionalLightIntensity;
+        }
+        else
+        {
+            currentEquatorColor = dirtyEquatorColor;
+            currentSkyColor = dirtySkyColor;
+            currentDirectionalLightColor = dirtyDirectionalLightColor;
+            currentDirectionalLightIntensity = dirtyDirectionalLightIntensity;
+        }
     }
 }

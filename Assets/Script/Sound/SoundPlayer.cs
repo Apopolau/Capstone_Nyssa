@@ -46,12 +46,12 @@ public class SoundPlayer : MonoBehaviour
 
         cMusicEvent = musicEvent;
         
-        for(int i = 0; (i < layerSources.Count) && (i < musicEvent.MusicLayers.Length); i++)
+        for(int i = 0; (i < layerSources.Count) && (i < musicEvent.SoundLayers.Length); i++)
         {
-            if (musicEvent.MusicLayers[i] != null)
+            if (musicEvent.SoundLayers[i] != null)
             {
                 layerSources[i].volume = 0;
-                layerSources[i].clip = musicEvent.MusicLayers[i];
+                layerSources[i].clip = musicEvent.SoundLayers[i];
                 layerSources[i].outputAudioMixerGroup = musicEvent.Mixer;
                 layerSources[i].Play();
             }

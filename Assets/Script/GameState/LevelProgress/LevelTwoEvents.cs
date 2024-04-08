@@ -116,6 +116,8 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] private GameObject facility;
     [SerializeField] private GameObject loggingBuilding;
 
+    bool setClean = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -380,11 +382,19 @@ public class LevelTwoEvents : LevelEventManager
             //We want to start changing up the ambient sounds as the map gets improved
             if (plantCount > tileCount / 4)
             {
-
+                if (setClean)
+                {
+                    GetComponent<DayNightCycle>().SwapSkyColours(false);
+                    setClean = false;
+                }
             }
             else if (plantCount > tileCount / 2)
             {
-
+                if (!setClean)
+                {
+                    GetComponent<DayNightCycle>().SwapSkyColours(true);
+                    setClean = true;
+                }
             }
             else if (plantCount > tileCount / 4 + tileCount / 2)
             {

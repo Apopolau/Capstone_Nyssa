@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SproutSoundLibrary : EventSoundLibrary
+
+public class EventSoundLibrary : SoundLibrary
 {
     
+
 }
