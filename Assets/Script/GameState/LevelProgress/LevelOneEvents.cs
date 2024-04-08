@@ -113,7 +113,7 @@ public class LevelOneEvents : LevelEventManager
     [SerializeField] private Material cleanPipeMaterial;
     [SerializeField] private Material cleanTankMaterial;
 
-
+    bool setClean = false;
 
 
     // Start is called before the first frame update
@@ -321,7 +321,7 @@ public class LevelOneEvents : LevelEventManager
             {
                 EvaluateAreaThree();
             }
-            if (fourthAreaClear)
+            if (fifthAreaClear)
             {
                 EvaluateAreaFour();
             }
@@ -335,11 +335,19 @@ public class LevelOneEvents : LevelEventManager
             //We want to start changing up the ambient sounds as the map gets improved
             if (plantCount > tileCount / 4)
             {
-
+                if (setClean)
+                {
+                    GetComponent<DayNightCycle>().SwapSkyColours(false);
+                    setClean = false;
+                }
             }
             else if (plantCount > tileCount / 2)
             {
-
+                if (!setClean)
+                {
+                    GetComponent<DayNightCycle>().SwapSkyColours(true);
+                    setClean = true;
+                }
             }
             else if (plantCount > tileCount / 4 + tileCount / 2)
             {
@@ -622,6 +630,8 @@ public class LevelOneEvents : LevelEventManager
 
         duck1.GetComponent<Duck>().SetTopAreaOn();
         duck2.GetComponent<Duck>().SetTopAreaOn();
+
+        fifthAreaClear = true;
     }
 
     public void CountDownFinalMonsters()
