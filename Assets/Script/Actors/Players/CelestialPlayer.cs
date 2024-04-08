@@ -623,10 +623,13 @@ public class CelestialPlayer : Player
 
         // controller UI
         if (CTRLColdSnapFill.gameObject.activeSelf)
-        { StartCoroutine(CoolDownImageFill(CTRLColdSnapFill)); }
+        {
+            StartCoroutine(CoolDownImageFill(CTRLColdSnapFill)); 
+        }
         else
         {
             CTRLColdSnapFill.enabled = true;
+            CTRLColdSnapFill.gameObject.SetActive(true);
             StartCoroutine(CoolDownImageFill(CTRLColdSnapFill)); ;
         }
     }
