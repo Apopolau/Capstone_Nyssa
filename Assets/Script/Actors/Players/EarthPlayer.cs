@@ -122,8 +122,10 @@ public class EarthPlayer : Player
     [SerializeField] public Sprite i_shovel;
 
     [Header("VFX")]
-    
     [SerializeField] private GameObject ThornShieldPrefab;
+
+    [Header("SFX")]
+    private new SproutSoundLibrary soundLibrary;
 
     [Header("Misc")]
     public bool enrouteToPlant = false;
@@ -149,6 +151,7 @@ public class EarthPlayer : Player
         OrigPos = this.transform.position;
         health = new Stat(100, 100, false);
         validTargets = new List<GameObject>();
+        
     }
 
     // Start is called before the first frame update
@@ -344,6 +347,7 @@ public class EarthPlayer : Player
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 inInteraction_FSM = true;
                 StartCoroutine(SuspendActions(plantTime));
+                soundLibrary.PlayPlantClips();
                 //After wait time
                 yield return plantTime;
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, false);
@@ -476,6 +480,7 @@ public class EarthPlayer : Player
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 inInteraction_FSM = true;
                 StartCoroutine(SuspendActions(plantTime));
+                soundLibrary.PlayPlantClips();
                 yield return plantTime;
                 //Set things back
                 inInteraction_FSM = false;
@@ -623,6 +628,7 @@ public class EarthPlayer : Player
         inInteraction_FSM = true;
         CallSuspendActions(healTime);
         earthAnimator.animator.SetBool(earthAnimator.IfHealingHash, true);
+        soundLibrary.PlaySpellClips();
         yield return healTime;
         inInteraction_FSM = false;
         earthAnimator.animator.SetBool(earthAnimator.IfHealingHash, false);
@@ -699,6 +705,7 @@ public class EarthPlayer : Player
         inInteraction_FSM = true;
         CallSuspendActions(barrierTime);
         earthAnimator.animator.SetBool(earthAnimator.IfShieldingHash, true);
+        soundLibrary.PlaySpellClips();
         yield return barrierTime;
         earthAnimator.animator.SetBool(earthAnimator.IfShieldingHash, false);
         inInteraction_FSM = false;

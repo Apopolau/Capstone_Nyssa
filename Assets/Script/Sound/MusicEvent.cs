@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-[CreateAssetMenu(menuName = "SoundSystem/Music Event", fileName = "MUS_")]
+[CreateAssetMenu(menuName = "Audio/Music Event", fileName = "MUS_")]
 public class MusicEvent : SoundEvent
 {
     [SerializeField] AudioClip[] soundLayers;

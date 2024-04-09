@@ -23,6 +23,9 @@ public abstract class Player : MonoBehaviour
 
     public event System.Action<int, int> OnHealthChanged;
 
+    [Header("SFX")]
+    [SerializeField] protected PlayerSoundLibrary soundLibrary;
+
     WaitForSeconds barrierLength = new WaitForSeconds(5);
     WaitForSeconds staggerLength = new WaitForSeconds(0.958f);
     WaitForSeconds deathAnimLength = new WaitForSeconds(1.458f);
@@ -42,10 +45,12 @@ public abstract class Player : MonoBehaviour
             bool isDead = health.current <= 0;
             if (isDead)
             {
+                soundLibrary.PlayDeathClips();
                 StartCoroutine(DeathRoutine());
             }
             if (!isDead && !isStaggered)
             {
+                soundLibrary.PlayTakeHitClips();
                 StartCoroutine(OnStagger());
             }
 

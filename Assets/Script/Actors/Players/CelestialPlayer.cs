@@ -90,6 +90,8 @@ public class CelestialPlayer : Player
     [Header("Animation")]
     private CelestialPlayerAnimator celestialAnimator;
 
+    private new CelesteSoundLibrary soundLibrary;
+
     [SerializeField] public GameObject treeSeedPrefab;
     //private CelestialPlayerInputActions celestialPlayerInput;
     private PlayerInput playerInput;
@@ -279,6 +281,7 @@ public class CelestialPlayer : Player
 
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(specialPowerAnimTime));
+        soundLibrary.PlayFrostClips();
         yield return specialPowerAnimTime;
 
         //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
@@ -307,6 +310,7 @@ public class CelestialPlayer : Player
 
 
         StartCoroutine(SuspendActions(basicPowerAnimTime));
+        soundLibrary.PlayAttackClips();
         yield return basicPowerAnimTime;
         celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
         //ResetImageColor(celestPlayerDpad); //reset dpad colors
@@ -345,6 +349,7 @@ public class CelestialPlayer : Player
 
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(specialPowerAnimTime));
+        soundLibrary.PlayLightningClips();
         yield return specialPowerAnimTime;
 
         if (enemyTarget != null && enemyTarget.GetComponentInParent<ShutOffTerminal>())
@@ -381,6 +386,7 @@ public class CelestialPlayer : Player
 
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(specialPowerAnimTime));
+        soundLibrary.PlayWaveClips();
         yield return specialPowerAnimTime;
 
         if (enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())

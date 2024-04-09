@@ -23,6 +23,8 @@ public class MainMenuManager : MonoBehaviour
     public VirtualMouseInput virtualMouseInputS;
     public Vector2 virtualMousePositionS;
 
+    [SerializeField] private UISoundLibrary soundLibrary;
+
     private void Awake()
     {
         
@@ -30,12 +32,14 @@ public class MainMenuManager : MonoBehaviour
 
     public void PlayGame()
     {
+        soundLibrary.PlaySubmitClips();
         SceneManager.LoadScene("CutSceneIntro");
 
     }
 
     public void TurnOnMainPage()
     {
+        soundLibrary.PlayBackClips();
         Debug.Log("Going back to main menu");
         mainPage.SetActive(true);
         ToggleLanguagePage(false);
@@ -47,6 +51,7 @@ public class MainMenuManager : MonoBehaviour
         Debug.Log("Toggling language page");
         if (turnOn)
         {
+            soundLibrary.PlayClickClips();
             languagePage.SetActive(true);
             mainPage.SetActive(false);
         }
@@ -61,6 +66,7 @@ public class MainMenuManager : MonoBehaviour
         Debug.Log("Toggling instructions");
         if (turnOn)
         {
+            soundLibrary.PlayClickClips();
             instructions.SetActive(true);
             mainPage.SetActive(false);
         }
@@ -72,6 +78,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void SetLanguageToEnglish()
     {
+        soundLibrary.PlayClickClips();
         userSettingsManager.chosenLanguage = UserSettingsManager.GameLanguage.ENGLISH;
         mainMenu.SetInstructionBasedOnControlType();
         languageMenu.SetInstructionBasedOnControlType();
@@ -80,6 +87,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void SetLanguageToFrench()
     {
+        soundLibrary.PlayClickClips();
         userSettingsManager.chosenLanguage = UserSettingsManager.GameLanguage.FRENCH;
         mainMenu.SetInstructionBasedOnControlType();
         languageMenu.SetInstructionBasedOnControlType();
