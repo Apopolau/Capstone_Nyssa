@@ -125,7 +125,7 @@ public class EarthPlayer : Player
     [SerializeField] private GameObject ThornShieldPrefab;
 
     [Header("SFX")]
-    private new SproutSoundLibrary soundLibrary;
+    private SproutSoundLibrary s_soundLibrary;
 
     [Header("Misc")]
     public bool enrouteToPlant = false;
@@ -151,7 +151,7 @@ public class EarthPlayer : Player
         OrigPos = this.transform.position;
         health = new Stat(100, 100, false);
         validTargets = new List<GameObject>();
-        
+        s_soundLibrary = base.soundLibrary as SproutSoundLibrary;
     }
 
     // Start is called before the first frame update
@@ -347,7 +347,7 @@ public class EarthPlayer : Player
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 inInteraction_FSM = true;
                 StartCoroutine(SuspendActions(plantTime));
-                soundLibrary.PlayPlantClips();
+                s_soundLibrary.PlayPlantClips();
                 //After wait time
                 yield return plantTime;
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, false);
@@ -480,7 +480,7 @@ public class EarthPlayer : Player
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 inInteraction_FSM = true;
                 StartCoroutine(SuspendActions(plantTime));
-                soundLibrary.PlayPlantClips();
+                s_soundLibrary.PlayPlantClips();
                 yield return plantTime;
                 //Set things back
                 inInteraction_FSM = false;

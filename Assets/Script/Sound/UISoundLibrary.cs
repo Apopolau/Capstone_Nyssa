@@ -23,71 +23,81 @@ public class UISoundLibrary : EventSoundLibrary
 
     public void PlayClickClips()
     {
-        if (clickClips != null && clickClips.Count > 1)
+        if (clickClips != null)
         {
-            int index = Random.Range(0, clickClips.Count - 1);
-            clickClips[index].Play();
+            if(clickClips.Count > 1)
+            {
+                int index = Random.Range(0, clickClips.Count - 1);
+                clickClips[index].Play();
+            }
+            else if (clickClips.Count == 1)
+            {
+                clickClips[0].Play();
+            }
         }
-        else if (clickClips.Count == 1)
-        {
-            clickClips[0].Play();
-        }
-
     }
 
     public void PlayBackClips()
     {
-        if (backClips != null && backClips.Count > 1)
+        if (backClips != null)
         {
-            int index = Random.Range(0, backClips.Count - 1);
-            backClips[index].Play();
+            if(backClips.Count > 1)
+            {
+                int index = Random.Range(0, backClips.Count - 1);
+                backClips[index].Play();
+            }
+            else if (backClips.Count == 1)
+            {
+                backClips[0].Play();
+            }
         }
-        else if (backClips.Count == 1)
-        {
-            backClips[0].Play();
-        }
-
     }
 
     public void PlaySubmitClips()
     {
-        if (submitClips != null && submitClips.Count > 1)
+        if (submitClips != null)
         {
-            int index = Random.Range(0, submitClips.Count - 1);
-            submitClips[index].Play();
+            if(submitClips.Count > 1)
+            {
+                int index = Random.Range(0, submitClips.Count - 1);
+                submitClips[index].Play();
+            }
+            else if (submitClips.Count == 1)
+            {
+                submitClips[0].Play();
+            }
         }
-        else if (submitClips.Count == 1)
-        {
-            submitClips[0].Play();
-        }
-
     }
 
     public void PlayErrorClips()
     {
-        if (errorClips != null && errorClips.Count > 1)
+        if (errorClips != null)
         {
-            int index = Random.Range(0, errorClips.Count - 1);
-            errorClips[index].Play();
+            if(errorClips.Count > 1)
+            {
+                int index = Random.Range(0, errorClips.Count - 1);
+                errorClips[index].Play();
+            }
+            else if (errorClips.Count == 1)
+            {
+                errorClips[0].Play();
+            }
         }
-        else if (errorClips.Count == 1)
-        {
-            errorClips[0].Play();
-        }
-
     }
 
     public void PlayProgressClips()
     {
-        if (progressClips != null && progressClips.Count > 1)
+        if (progressClips != null)
         {
-            int index = Random.Range(0, progressClips.Count - 1);
-            progressClips[index].Play();
+            if(progressClips.Count > 1)
+            {
+                int index = Random.Range(0, progressClips.Count - 1);
+                progressClips[index].Play();
+            }
+            else if (progressClips.Count == 1)
+            {
+                progressClips[0].Play();
+            }
         }
-        else if (progressClips.Count == 1)
-        {
-            progressClips[0].Play();
-        }
-
     }
 }

@@ -198,6 +198,8 @@ public class DialogueManager : MonoBehaviour
             if (!eventEnded)
             {
                 HaltCoroutines();
+                eventEnded = true;
+                return;
             }
             eventEnded = false;
 
@@ -577,20 +579,34 @@ public class DialogueManager : MonoBehaviour
     {
         if (activeEvent.GetIsSkippable())
         {
-            DialogueLine currentLine = (DialogueLine)activeEvent;
-            switch (userSettingsManager.chosenLanguage)
+            DialogueLine currentLine = null;
+            if (currentEvent is DialogueLine)
             {
-                case UserSettingsManager.GameLanguage.ENGLISH:
-                    // Display English dialogue
-                    StopCoroutine(typeRoutine);
-                    dialogueArea.text = currentLine.line;
-                    break;
-                case UserSettingsManager.GameLanguage.FRENCH:
-                    // Display French dialogue
-                    StopCoroutine(typeRoutine);
-                    dialogueArea.text = currentLine.lineFR;
-                    break;
+                currentLine = (DialogueLine)currentEvent;
             }
+            else if(currentEvent is DialoguePanAndText)
+            {
+                DialoguePanAndText text = currentEvent as DialoguePanAndText;
+                currentLine = text.dialogueLine;
+            }
+            
+            if(currentLine != null)
+            {
+                switch (userSettingsManager.chosenLanguage)
+                {
+                    case UserSettingsManager.GameLanguage.ENGLISH:
+                        // Display English dialogue
+                        StopCoroutine(typeRoutine);
+                        dialogueArea.text = currentLine.line;
+                        break;
+                    case UserSettingsManager.GameLanguage.FRENCH:
+                        // Display French dialogue
+                        StopCoroutine(typeRoutine);
+                        dialogueArea.text = currentLine.lineFR;
+                        break;
+                }
+            }
+            
             midTyping = false;
         }
     }

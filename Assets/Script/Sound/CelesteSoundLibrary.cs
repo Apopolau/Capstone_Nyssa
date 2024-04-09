@@ -20,57 +20,65 @@ public class CelesteSoundLibrary : PlayerSoundLibrary
 
     public void PlayAttackClips()
     {
-        if (attackClips != null && attackClips.Count > 1)
+        if (attackClips != null)
         {
-            int index = Random.Range(0, attackClips.Count - 1);
-            attackClips[index].Play();
+            if(attackClips.Count > 1)
+            {
+                int index = Random.Range(0, attackClips.Count - 1);
+                attackClips[index].Play();
+            }
+            else if (attackClips.Count == 1)
+            {
+                attackClips[0].Play();
+            }
         }
-        else if (attackClips.Count == 1)
-        {
-            attackClips[0].Play();
-        }
-
     }
 
     public void PlayLightningClips()
     {
-        if (lightningClips != null && lightningClips.Count > 1)
+        if (lightningClips != null)
         {
-            int index = Random.Range(0, lightningClips.Count - 1);
-            lightningClips[index].Play();
+            if(lightningClips.Count > 1)
+            {
+                int index = Random.Range(0, lightningClips.Count - 1);
+                lightningClips[index].Play();
+            }
+            else if (lightningClips.Count == 1)
+            {
+                lightningClips[0].Play();
+            }
         }
-        else if (lightningClips.Count == 1)
-        {
-            lightningClips[0].Play();
-        }
-
     }
 
     public void PlayFrostClips()
     {
-        if (frostClips != null && frostClips.Count > 1)
+        if (frostClips != null)
         {
-            int index = Random.Range(0, frostClips.Count - 1);
-            frostClips[index].Play();
+            if(frostClips.Count > 1)
+            {
+                int index = Random.Range(0, frostClips.Count - 1);
+                frostClips[index].Play();
+            }
+            else if (frostClips.Count == 1)
+            {
+                frostClips[0].Play();
+            }
         }
-        else if (frostClips.Count == 1)
-        {
-            frostClips[0].Play();
-        }
-
     }
 
     public void PlayWaveClips()
     {
-        if (waveClips != null && waveClips.Count > 1)
+        if (waveClips != null)
         {
-            int index = Random.Range(0, waveClips.Count - 1);
-            waveClips[index].Play();
+            if(waveClips.Count > 1)
+            {
+                int index = Random.Range(0, waveClips.Count - 1);
+                waveClips[index].Play();
+            }
+            else if (waveClips.Count == 1)
+            {
+                waveClips[0].Play();
+            }
         }
-        else if (waveClips.Count == 1)
-        {
-            waveClips[0].Play();
-        }
-
     }
 }

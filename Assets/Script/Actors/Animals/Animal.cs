@@ -109,6 +109,16 @@ public abstract class Animal : MonoBehaviour
         isStuck = false;
     }
 
+    public void SetKidnapStatus(bool status)
+    {
+        isKidnapped = status;
+        UpdateKidnapIcon();
+        if (status)
+        {
+            soundLibrary.PlayPanicClips();
+        }
+    }
+
     /// <summary>
     /// REFERENCE HELPERS
     /// </summary>
