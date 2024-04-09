@@ -84,6 +84,7 @@ public class LevelOneEvents : LevelEventManager
     [SerializeField] private GameObject duck2;
 
     int keyMonsterDefeatCount;
+    int totalMonsters = 6;
     int areaFiveMonsterCount = 2;
 
     private bool runDefeatDialogue = false;
@@ -283,7 +284,7 @@ public class LevelOneEvents : LevelEventManager
 
     private void EvaluateMonsterDefeats()
     {
-        if (keyMonsterDefeatCount == 4)
+        if (keyMonsterDefeatCount == totalMonsters)
         {
             task6.CrossOutTask();
             SetSafetyCompletion();
