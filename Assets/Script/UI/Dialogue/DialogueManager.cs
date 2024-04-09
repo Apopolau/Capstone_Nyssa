@@ -21,6 +21,7 @@ public class DialogueManager : MonoBehaviour
     private DialogueEvent activeEvent;
     private DialogueMoveEvent currentMove;
     private DialogueCameraPan currentPan;
+    private DialogueLine currentLineEvent;
 
     private Coroutine panRoutine = null;
     private Coroutine moveRoutine = null;
@@ -183,30 +184,29 @@ public class DialogueManager : MonoBehaviour
             return;
         }
 
+        if(currentEvent != null)
+        {
+            if (currentEvent.GetIsSkippable() && !eventEnded)
+            {
+                HaltCoroutines();
+                //eventEnded = true;
+                return;
+            }  
+        }
+
         currentEvent = events.Dequeue();
         activeEvent = currentEvent;
 
-        if (midTyping)
-        {
-            Debug.Log("mid typing");
-            HaltTyping();
-        }
         //If we can move ahead with the next event
-        else if (eventEnded || currentEvent.GetIsSkippable())
+        if (eventEnded)
         {
-            //If they in fact skipped, make sure we set all the stuff that was supposed to happen last event to the end
-            if (!eventEnded)
-            {
-                HaltCoroutines();
-                eventEnded = true;
-                return;
-            }
             eventEnded = false;
 
             //Handle how to start the next event
             if (currentEvent is DialogueLine)
             {
                 ToggleDialogueBox(true);
+                currentLineEvent = currentEvent as DialogueLine;
                 DisplayNextDialogueLine((DialogueLine)currentEvent);
             }
             else if (currentEvent is DialogueCameraPan)
@@ -228,7 +228,8 @@ public class DialogueManager : MonoBehaviour
                 panningOn = true;
                 earthPlayer.ToggleWaiting(true);
                 currentPan = panLineEvent.dialogueCameraPan;
-                DisplayNextDialogueLine(panLineEvent.dialogueLine);
+                currentLineEvent = panLineEvent.dialogueLine;
+                DisplayNextDialogueLine(currentLineEvent);
                 panRoutine = StartCoroutine(TurnPanOff(currentPan));
             }
             else if (currentEvent is DialogueAnimation)
@@ -318,6 +319,11 @@ public class DialogueManager : MonoBehaviour
             characterIconLeft.CrossFadeAlpha(0f, 0f, true);
         }
 
+        if(typeRoutine != null)
+        {
+            typeRoutine = null;
+        }
+
         // Determine which language to display based on the user's language setting
         switch (userSettingsManager.chosenLanguage)
         {
@@ -330,7 +336,13 @@ public class DialogueManager : MonoBehaviour
                 typeRoutine = StartCoroutine(TypeSentence(dialogueArea, currentLine.lineFR));
                 break;
         }
-        eventEnded = true;
+
+        /*
+        if(currentEvent is DialogueLine)
+        {
+            eventEnded = true;
+        }
+        */
     }
 
 
@@ -524,6 +536,7 @@ public class DialogueManager : MonoBehaviour
         dialogueArea.text = ""; // Clear the text initially
         foreach (char letter in line.ToCharArray())
         {
+            Debug.Log("Type routine: " + typeRoutine);
             dialogueArea.text += letter;
             yield return new WaitForSecondsRealtime(typingSpeed); // Wait for typingSpeed seconds before showing the next letter
         }
@@ -533,14 +546,16 @@ public class DialogueManager : MonoBehaviour
 
     private void HaltCoroutines()
     {
+        Debug.Log("Halting coroutines");
         if (panRoutine != null && panningOn)
         {
             HaltPanning();
             StopCoroutine(panRoutine);
             panRoutine = null;
         }
-        if (typeRoutine != null && midTyping)
+        if (typeRoutine != null)
         {
+            Debug.Log("has a type routine, halting this");
             HaltTyping();
             StopCoroutine(typeRoutine);
             typeRoutine = null;
@@ -577,36 +592,39 @@ public class DialogueManager : MonoBehaviour
 
     private void HaltTyping()
     {
+        Debug.Log("Halting typing");
         if (activeEvent.GetIsSkippable())
         {
+            /*
             DialogueLine currentLine = null;
-            if (currentEvent is DialogueLine)
+            if (activeEvent is DialogueLine)
             {
-                currentLine = (DialogueLine)currentEvent;
+                currentLine = (DialogueLine)activeEvent;
             }
-            else if(currentEvent is DialoguePanAndText)
+            else if(activeEvent is DialoguePanAndText)
             {
-                DialoguePanAndText text = currentEvent as DialoguePanAndText;
+                DialoguePanAndText text = activeEvent as DialoguePanAndText;
                 currentLine = text.dialogueLine;
             }
+            */
             
-            if(currentLine != null)
+            if(currentLineEvent != null)
             {
                 switch (userSettingsManager.chosenLanguage)
                 {
                     case UserSettingsManager.GameLanguage.ENGLISH:
                         // Display English dialogue
-                        StopCoroutine(typeRoutine);
-                        dialogueArea.text = currentLine.line;
+                        if (typeRoutine != null) StopCoroutine(typeRoutine);
+                        dialogueArea.text = currentLineEvent.line;
                         break;
                     case UserSettingsManager.GameLanguage.FRENCH:
                         // Display French dialogue
-                        StopCoroutine(typeRoutine);
-                        dialogueArea.text = currentLine.lineFR;
+                        if (typeRoutine != null) StopCoroutine(typeRoutine);
+                        dialogueArea.text = currentLineEvent.lineFR;
                         break;
                 }
             }
-            
+            currentLineEvent = null;
             midTyping = false;
         }
     }
