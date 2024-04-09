@@ -90,7 +90,7 @@ public class CelestialPlayer : Player
     [Header("Animation")]
     private CelestialPlayerAnimator celestialAnimator;
 
-    private new CelesteSoundLibrary soundLibrary;
+    [SerializeField] private CelesteSoundLibrary c_soundLibrary;
 
     [SerializeField] public GameObject treeSeedPrefab;
     //private CelestialPlayerInputActions celestialPlayerInput;
@@ -116,6 +116,7 @@ public class CelestialPlayer : Player
         health = new Stat(100, 100, false);
         energy = new Stat(100, 0, true);
         uiManager = GetComponent<CelestUIManager>();
+        c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
         //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
@@ -281,7 +282,7 @@ public class CelestialPlayer : Player
 
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(specialPowerAnimTime));
-        soundLibrary.PlayFrostClips();
+        c_soundLibrary.PlayFrostClips();
         yield return specialPowerAnimTime;
 
         //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
@@ -310,7 +311,7 @@ public class CelestialPlayer : Player
 
 
         StartCoroutine(SuspendActions(basicPowerAnimTime));
-        soundLibrary.PlayAttackClips();
+        c_soundLibrary.PlayAttackClips();
         yield return basicPowerAnimTime;
         celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
         //ResetImageColor(celestPlayerDpad); //reset dpad colors
@@ -349,7 +350,7 @@ public class CelestialPlayer : Player
 
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(specialPowerAnimTime));
-        soundLibrary.PlayLightningClips();
+        c_soundLibrary.PlayLightningClips();
         yield return specialPowerAnimTime;
 
         if (enemyTarget != null && enemyTarget.GetComponentInParent<ShutOffTerminal>())
@@ -386,7 +387,7 @@ public class CelestialPlayer : Player
 
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(specialPowerAnimTime));
-        soundLibrary.PlayWaveClips();
+        c_soundLibrary.PlayWaveClips();
         yield return specialPowerAnimTime;
 
         if (enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())

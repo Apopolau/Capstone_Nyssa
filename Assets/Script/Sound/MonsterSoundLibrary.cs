@@ -22,68 +22,83 @@ public class MonsterSoundLibrary : EventSoundLibrary
 
     public void PlayMovementClips()
     {
-        if (movementClips != null && movementClips.Count > 1)
+        if (movementClips != null)
         {
-            int index = Random.Range(0, movementClips.Count - 1);
-            movementClips[index].Play();
+            if(movementClips.Count > 1)
+            {
+                int index = Random.Range(0, movementClips.Count - 1);
+                movementClips[index].Play();
+            }
+            else if (movementClips.Count == 1)
+            {
+                movementClips[0].Play();
+            }
         }
-        else if (movementClips.Count == 1)
-        {
-            movementClips[0].Play();
-        }
-
     }
 
     public void PlayIdleClips()
     {
-        if (idleClips != null && idleClips.Count > 1)
+        if (idleClips != null)
         {
-            int index = Random.Range(0, idleClips.Count - 1);
-            idleClips[index].Play();
+            if(idleClips.Count > 1)
+            {
+                int index = Random.Range(0, idleClips.Count - 1);
+                idleClips[index].Play();
+            }
+            else if (idleClips.Count == 1)
+            {
+                idleClips[0].Play();
+            }
         }
-        else if (idleClips.Count == 1)
-        {
-            idleClips[0].Play();
-        }
-
     }
 
     public void PlayAttackClips()
     {
-        if (attackClips != null && attackClips.Count > 1)
+        if (attackClips != null)
         {
-            int index = Random.Range(0, attackClips.Count - 1);
-            attackClips[index].Play();
+            if(attackClips.Count > 1)
+            {
+                int index = Random.Range(0, attackClips.Count - 1);
+                attackClips[index].Play();
+            }
+            else if (attackClips.Count == 1)
+            {
+                attackClips[0].Play();
+            }
         }
-        else if (attackClips.Count == 1)
-        {
-            attackClips[0].Play();
-        }
+        
     }
 
     public void PlayTakeHitClips()
     {
-        if (injuryClips != null && injuryClips.Count > 1)
+        if (injuryClips != null)
         {
-            int index = Random.Range(0, injuryClips.Count - 1);
-            injuryClips[index].Play();
+            if(injuryClips.Count > 1)
+            {
+                int index = Random.Range(0, injuryClips.Count - 1);
+                injuryClips[index].Play();
+            }
+            else if (injuryClips.Count == 1)
+            {
+                injuryClips[0].Play();
+            }
         }
-        else if (injuryClips.Count == 1)
-        {
-            injuryClips[0].Play();
-        }
+        
     }
 
     public void PlayDeathClips()
     {
-        if (deathClips != null && deathClips.Count > 1)
+        if (deathClips != null)
         {
-            int index = Random.Range(0, deathClips.Count - 1);
-            deathClips[index].Play();
-        }
-        else if (deathClips.Count == 1)
-        {
-            deathClips[0].Play();
+            if(deathClips.Count > 1)
+            {
+                int index = Random.Range(0, deathClips.Count - 1);
+                deathClips[index].Play();
+            }
+            else if (deathClips.Count == 1)
+            {
+                deathClips[0].Play();
+            }
         }
     }
 }
