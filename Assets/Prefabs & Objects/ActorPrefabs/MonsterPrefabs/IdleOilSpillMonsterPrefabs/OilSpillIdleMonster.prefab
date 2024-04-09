@@ -163,21 +163,37 @@ MonoBehaviour:
   enemyMeshAgent: {fileID: 1600394031809458323}
   enemyAnimator: {fileID: 0}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  plantSet: {fileID: 0}
+  animalSet: {fileID: 0}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 1f76211bb31335d4780aeb69861ed393, type: 2}
+  invaderEnemyRoutes: {fileID: 0}
   eventManager: {fileID: 0}
+  soundLibrary: {fileID: 11400000, guid: 1f49927d75e930243959e032c3cac11b, type: 2}
   isDying: 0
   isStaggered: 0
   isColliding: 0
+  seesPlant: 0
+  inSmotherRange: 0
+  smotherInitiated: 0
+  plantLocation: {x: 0, y: 0, z: 0}
   seesPlayer: 0
   inAttackRange: 0
   attackInitiated: 0
   playerLocation: {x: 0, y: 0, z: 0}
+  smotherRange: 0
   attackRange: 10
+  kidnapRange: 0
   sightRange: 50
+  seesAnimal: 0
+  inKidnapRange: 0
   hasAnimal: 0
   isKidnapping: 0
+  escapeRoute: {fileID: 0}
+  isInvader: 0
+  isPathSelected: 0
+  chosenPath: []
 --- !u!135 &3683027411586778587
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -239,7 +255,6 @@ MonoBehaviour:
   - {fileID: 0}
   startingHealth: 100
   currHealth: 100
-  playerTransform: {fileID: 0}
 --- !u!114 &6719677676223621316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +272,7 @@ MonoBehaviour:
   IfAttackingHash: 0
   IfDyingHash: 0
   IfTakingHitHash: 0
+  IfSmotheringHash: 0
 --- !u!114 &4840897772112739693
 MonoBehaviour:
   m_ObjectHideFlags: 0

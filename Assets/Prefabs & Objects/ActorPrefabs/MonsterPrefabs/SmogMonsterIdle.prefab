@@ -91,12 +91,13 @@ MonoBehaviour:
   enemyAnimator: {fileID: 4514425187417883027}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
-  animalSet: {fileID: 0}
+  animalSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 391e83e306d24f34583c1242b624d6a6, type: 2}
   invaderEnemyRoutes: {fileID: 0}
   eventManager: {fileID: 0}
+  soundLibrary: {fileID: 11400000, guid: c4a9a84b113095d489ead7c7c7b1d65d, type: 2}
   isDying: 0
   isStaggered: 0
   isColliding: 0
@@ -204,6 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f052c2b43435d584fb39ae66b0b2169a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waypoints: []
   startingHealth: 10
   currHealth: 0
   playerTransform: {fileID: 7875459936262026101}
@@ -224,6 +226,7 @@ MonoBehaviour:
   IfAttackingHash: 0
   IfDyingHash: 0
   IfTakingHitHash: 0
+  IfSmotheringHash: 0
 --- !u!114 &6913918093050167382
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -210,10 +210,13 @@ MonoBehaviour:
   enemyAnimator: {fileID: 0}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
+  animalSet: {fileID: 0}
   celestialPlayer: {fileID: 0}
   earthPlayer: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: cac8e7c2926be4b48b8f35ca1264ab97, type: 2}
+  invaderEnemyRoutes: {fileID: 0}
   eventManager: {fileID: 0}
+  soundLibrary: {fileID: 11400000, guid: 1f49927d75e930243959e032c3cac11b, type: 2}
   isDying: 0
   isStaggered: 0
   isColliding: 0
@@ -227,9 +230,16 @@ MonoBehaviour:
   playerLocation: {x: 0, y: 0, z: 0}
   smotherRange: 0
   attackRange: 0
+  kidnapRange: 0
   sightRange: 0
+  seesAnimal: 0
+  inKidnapRange: 0
   hasAnimal: 0
   isKidnapping: 0
+  escapeRoute: {fileID: 0}
+  isInvader: 0
+  isPathSelected: 0
+  chosenPath: []
 --- !u!135 &3919838605589282462
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -285,6 +295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cee73ab613d174da0ccda7f83d78b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingHealth: 10
+  currHealth: 0
+  playerTransform: {fileID: 0}
 --- !u!114 &354479892945874935
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,6 +315,7 @@ MonoBehaviour:
   IfAttackingHash: 0
   IfDyingHash: 0
   IfTakingHitHash: 0
+  IfSmotheringHash: 0
 --- !u!1 &8344188139315059696
 GameObject:
   m_ObjectHideFlags: 0

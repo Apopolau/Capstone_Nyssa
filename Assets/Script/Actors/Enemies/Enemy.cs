@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour
     
     public Stat health;
     [SerializeField] LevelEventManager eventManager;
+    [SerializeField] public MonsterSoundLibrary soundLibrary;
    //////////////// [SerializeField] LevelOneEvents levelOneEvents;
     [SerializeField] public bool isDying =false;
     public bool isStaggered = false;

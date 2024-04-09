@@ -7,7 +7,7 @@ public class InstanceSoundEvent : SoundEvent
 {
     #region config
 
-    public AudioClip[] clips;
+    public AudioClip clip;
     public Vector2 volume = new Vector2(0.5f, 0.5f);
     public Vector2 pitch = new Vector2(1, 1);
 
@@ -15,7 +15,7 @@ public class InstanceSoundEvent : SoundEvent
 
     public AudioSource Play(AudioSource audioSourceParam = null)
     {
-        if (clips.Length == 0)
+        if (clip == null)
         {
             return null;
         }
@@ -27,9 +27,34 @@ public class InstanceSoundEvent : SoundEvent
             source = go.AddComponent<AudioSource>();
         }
 
-        source.clip = clips[0];
+        source.clip = clip;
         source.volume = Random.Range(volume.x, volume.y);
         source.pitch = Random.Range(pitch.x, pitch.y);
+
+        source.Play();
+
+        Destroy(source.gameObject, t: source.clip.length / source.pitch);
+
+        return source;
+    }
+
+    public AudioSource PlayStable(AudioSource audioSourceParam = null)
+    {
+        if (clip == null)
+        {
+            return null;
+        }
+
+        AudioSource source = audioSourceParam;
+        if (source == null)
+        {
+            GameObject go = new GameObject(name: "Sound", components: typeof(AudioSource));
+            source = go.AddComponent<AudioSource>();
+        }
+
+        source.clip = clip;
+        source.volume = 1;
+        source.pitch = 1;
 
         source.Play();
 
