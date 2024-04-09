@@ -58,6 +58,8 @@ public abstract class Animal : MonoBehaviour
     public bool hasShelter = false;
     public bool hasAnyFood = false;
 
+    [SerializeField] protected AnimalSoundLibrary soundLibrary;
+
     protected WaitForSeconds barrierLength = new WaitForSeconds(5f);
 
     

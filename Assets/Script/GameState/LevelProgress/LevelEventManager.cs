@@ -10,6 +10,7 @@ public abstract class LevelEventManager : EventManager
     protected EarthPlayer earthPlayer;
     [SerializeField] protected GameObject objectiveList;
     [SerializeField] AmbientSoundLibrary ambientSounds;
+    [SerializeField] protected UISoundLibrary uiSoundLibrary;
     public Enemy dyingEnemy;
     [SerializeField] protected Terrain terrain;
     [SerializeField] protected TerrainData terrainData1;

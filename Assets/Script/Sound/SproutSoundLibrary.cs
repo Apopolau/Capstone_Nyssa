@@ -17,10 +17,14 @@ public class SproutSoundLibrary : PlayerSoundLibrary
 
     public void PlayPlantClips()
     {
-        if (plantClips != null)
+        if (plantClips != null && plantClips.Count > 1)
         {
-            int index = Random.Range(0, plantClips.Count);
+            int index = Random.Range(0, plantClips.Count - 1);
             plantClips[index].Play();
+        }
+        else if (plantClips.Count == 1)
+        {
+            plantClips[0].Play();
         }
 
     }
@@ -29,10 +33,14 @@ public class SproutSoundLibrary : PlayerSoundLibrary
 
     public void PlayBuildClips()
     {
-        if (buildClips != null)
+        if (buildClips != null && buildClips.Count > 1)
         {
-            int index = Random.Range(0, buildClips.Count);
+            int index = Random.Range(0, buildClips.Count - 1);
             buildClips[index].Play();
+        }
+        else if (buildClips.Count == 1)
+        {
+            buildClips[0].Play();
         }
 
     }

@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99740619803956081}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
@@ -32,7 +32,7 @@ Transform:
   - {fileID: 3852507015264198756}
   - {fileID: 1161122329330721424}
   m_Father: {fileID: 7701263254620628334}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &433965232443783568
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +58,7 @@ Transform:
   m_GameObject: {fileID: 433965232443783568}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 16.3, z: -0.83999634}
+  m_LocalPosition: {x: 0, y: 16.3, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -536,7 +536,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3462690462426893458}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9.500003}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 3297893822877032068}
   - component: {fileID: 5311896352438793669}
   - component: {fileID: 2221420663386281659}
+  - component: {fileID: 1679771320048200777}
   m_Layer: 0
   m_Name: EarthPlayer
   m_TagString: Player1
@@ -738,6 +739,7 @@ MonoBehaviour:
   isRespawning: 0
   interacting: 0
   OrigPos: {x: 347, y: 0, z: 37}
+  soundLibrary: {fileID: 11400000, guid: a8c92392b680be741ad59d0802ca5207, type: 2}
   plantParent: {fileID: 0}
   virtualMouseInput: {fileID: 0}
   mainCamera: {fileID: 0}
@@ -851,6 +853,8 @@ MonoBehaviour:
   cutsceneManager: {fileID: 0}
   dialogueManager: {fileID: 0}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  virtualMouseInput: {fileID: 0}
+  virtualMousePosition: {x: 0, y: 0}
   myDeviceID: 0
   myDeviceID2: 0
   moveSpeed: 0
@@ -871,10 +875,34 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+        m_TargetAssemblyTypeName: UserSettingsManager, Assembly-CSharp
+        m_MethodName: SetControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+        m_TargetAssemblyTypeName: UserSettingsManager, Assembly-CSharp
+        m_MethodName: SetControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1115,6 +1143,14 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 7921fa13-3bf1-49b0-bbb2-045f0b630d58
     m_ActionName: HoldingNyssa/PutNyssaDown[/Keyboard/p]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a3b53835-17a7-4295-a1db-0e9ebc2150e8
+    m_ActionName: MenuControls/Submit[/Mouse/leftButton,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 949b9691-91d2-461a-826e-e9cd42f39141
+    m_ActionName: MenuControls/Point[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: EarthPlayerDefault
@@ -1141,6 +1177,7 @@ MonoBehaviour:
   IfTurningHash: 0
   IfHealingHash: 0
   IfShieldingHash: 0
+  IfCarryingHash: 0
 --- !u!114 &4394548441176001214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1180,6 +1217,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  keyboardCelesteObjects: []
+  controllerCelesteObjects: []
   inventory: {fileID: 0}
 --- !u!114 &6432642338141535612
 MonoBehaviour:
@@ -1272,6 +1312,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4cc9d5221e1e564c8255f8e70d8e105, type: 2}
   - {fileID: 11400000, guid: 4565de5e6e3d78c4a975e5d524ae1762, type: 2}
   - {fileID: 11400000, guid: f564a2d3b2e7b04498bf1657c840cdd1, type: 2}
+--- !u!114 &1679771320048200777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033276866688796702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38c898db3ddeb44f8c1f078dc6aaf77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationToSet:
+  - {fileID: 11400000, guid: ce6c00112d8744a44ae7a7c4094ba575, type: 2}
 --- !u!1 &4352397716575000703
 GameObject:
   m_ObjectHideFlags: 0
@@ -1431,7 +1485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2964117386031016773
 Transform:
   m_ObjectHideFlags: 0
@@ -2055,7 +2109,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8557892789263032690}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -2.099994}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.08, y: 0.08, z: 0.08}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2333,7 +2387,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4484751887382723294}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: cd468e9c80fef554dac9ed4a3f0af007, type: 3}
   m_Controller: {fileID: 9100000, guid: a84ced9b4100f974d9e500b577ab382d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0

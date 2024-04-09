@@ -675,10 +675,10 @@ public class CelestialPlayer : Player
     }
     public IEnumerator BasicCoolDownTime()
     {
-        Debug.Log("Basic time reset");
+        //Debug.Log("Basic time reset");
         buttonBasicAttack = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats));
-        Debug.Log("Basic timer copy");
+        //Debug.Log("Basic timer copy");
         canBasicAttack = true;
     }
 

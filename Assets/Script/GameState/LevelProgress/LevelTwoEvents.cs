@@ -286,6 +286,7 @@ public class LevelTwoEvents : LevelEventManager
         if (task1.GetTaskCompletion() && task2.GetTaskCompletion() && task3.GetTaskCompletion()
             && task4.GetTaskCompletion() && task5.GetTaskCompletion())
         {
+            uiSoundLibrary.PlayProgressClips();
             levelTwoProgress.animalHasEnoughFood = true;
         }
     }
@@ -295,6 +296,7 @@ public class LevelTwoEvents : LevelEventManager
         task6.CrossOutTask();
         if (task6.GetTaskCompletion())
         {
+            uiSoundLibrary.PlayProgressClips();
             levelTwoProgress.animalHasWater = true;
         }
     }
@@ -304,6 +306,7 @@ public class LevelTwoEvents : LevelEventManager
         task7.CrossOutTask();
         if (task7.GetTaskCompletion())
         {
+            uiSoundLibrary.PlayProgressClips();
             levelTwoProgress.animalIsSafe = true;
         }
     }
@@ -313,6 +316,7 @@ public class LevelTwoEvents : LevelEventManager
         task8.CrossOutTask();
         if (task8.GetTaskCompletion())
         {
+            uiSoundLibrary.PlayProgressClips();
             levelTwoProgress.animalHasFriend = true;
         }
     }

@@ -180,7 +180,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6284380858680601394
 Transform:
   m_ObjectHideFlags: 0
@@ -895,6 +895,7 @@ GameObject:
   - component: {fileID: 5015184762695812656}
   - component: {fileID: 2887321969620239026}
   - component: {fileID: 6099830683338002241}
+  - component: {fileID: 4269377883444005770}
   m_Layer: 0
   m_Name: CelestialPlayer
   m_TagString: Player2
@@ -1035,11 +1036,11 @@ MonoBehaviour:
   isRespawning: 0
   interacting: 0
   OrigPos: {x: 346, y: -0.00002288818, z: 29}
+  soundLibrary: {fileID: 11400000, guid: 4069bc29f019ea14e921266fb25a26ef, type: 2}
   mainCamera: {fileID: 0}
   tileMask:
     serializedVersion: 2
     m_Bits: 128
-  celestPlayerDpad: {fileID: 0}
   darkeningAmount: 0.5
   coldSnapFill: {fileID: 0}
   lightingStrikeFill: {fileID: 0}
@@ -1052,6 +1053,7 @@ MonoBehaviour:
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   isRaining: 0
   RainParticleSystem: {fileID: 0}
+  buttonRain: 0
   buttonBasicAttack: 0
   buttonColdSnap: 0
   buttonLightningStrike: 0
@@ -1147,10 +1149,34 @@ MonoBehaviour:
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+        m_TargetAssemblyTypeName: UserSettingsManager, Assembly-CSharp
+        m_MethodName: SetControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_DeviceRegainedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+        m_TargetAssemblyTypeName: UserSettingsManager, Assembly-CSharp
+        m_MethodName: SetControls
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -1221,10 +1247,6 @@ MonoBehaviour:
     m_ActionName: CelestialPlayerDefault/MakeLighteningStrike[/XInputControllerWindows/buttonWest,/Keyboard/x]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 5fa4e077-2c25-4af5-b10b-32044342f299
-    m_ActionName: MenuControls/New action
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 832fe578-41e0-42e8-ac4e-7e2d5dbafed6
     m_ActionName: DialogueControls/Continue[/Keyboard/enter]
   - m_PersistentCalls:
@@ -1247,6 +1269,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 500ce0fc-19bf-4e6e-867f-dead47e87ecf
     m_ActionName: CelestialPlayerDefault/MakeMoonTide[/Keyboard/4]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a7bd9ae8-966b-41a1-aacd-8a5f5019d88d
+    m_ActionName: MenuControls/Click[/Mouse/press]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ad248968-f08a-456a-a052-3749cfdaf2b1
+    m_ActionName: MenuControls/Scroll
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d5bfeb4b-a05d-4de9-96ad-7e5264f0c248
+    m_ActionName: MenuControls/Submit[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: CelestialPlayerDefault
@@ -1409,6 +1443,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82d126c4103c3864987c268a71d79255, type: 2}
   - {fileID: 11400000, guid: 6df609885cc9bd442abacaa23c2bc949, type: 2}
   - {fileID: 11400000, guid: 0d9f35c367f8ea24db43ad5d509be16d, type: 2}
+--- !u!114 &4269377883444005770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159944928166958832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38c898db3ddeb44f8c1f078dc6aaf77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationToSet:
+  - {fileID: 11400000, guid: 789ca26ffd1b9bc4bad5168f05d25e49, type: 2}
 --- !u!1 &9147218820399847505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1556,11 +1604,11 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3705068691660975426}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 16fa2b81628dd8041a34d99f3201c3fe, type: 3}
   m_Controller: {fileID: 9100000, guid: 810dc37686eac4345bf4747bb799d853, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
