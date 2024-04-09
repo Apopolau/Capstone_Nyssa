@@ -17,6 +17,9 @@ public class MonsterSoundLibrary : EventSoundLibrary
     [Header("Take hit")]
     public List<InstanceSoundEvent> injuryClips;
 
+    [Header("Death")]
+    public List<InstanceSoundEvent> deathClips;
+
     public void PlayMovementClips()
     {
         if(movementClips != null)
@@ -53,6 +56,15 @@ public class MonsterSoundLibrary : EventSoundLibrary
         {
             int index = Random.Range(0, injuryClips.Count);
             injuryClips[index].Play();
+        }
+    }
+
+    public void PlayDeathClips()
+    {
+        if (deathClips != null)
+        {
+            int index = Random.Range(0, deathClips.Count);
+            deathClips[index].Play();
         }
     }
 }

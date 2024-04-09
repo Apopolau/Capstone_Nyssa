@@ -214,11 +214,12 @@ public class Enemy : MonoBehaviour
             OnHealthChanged(health.max, health.current);
 
         if (isDead) {
+            soundLibrary.PlayDeathClips();
             StartCoroutine(Die());
         }
         if (hitPoints > 0)
         {
-            
+            soundLibrary.PlayTakeHitClips();
             StartCoroutine(TakePlayerHit());
         }
 
@@ -229,6 +230,7 @@ public class Enemy : MonoBehaviour
     {
         if (enemyStats.enemyType == EnemyStats.enemyTypes.PlasticBag)
         {
+            soundLibrary.PlayAttackClips();
             StartCoroutine(SmotherPlant());
         }
     }
