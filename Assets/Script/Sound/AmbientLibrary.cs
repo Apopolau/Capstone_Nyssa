@@ -25,6 +25,6 @@ public class AmbientLibrary : SoundLibrary
 
     public void Play(MusicEvent musicEvent, float fadeTime)
     {
-        MusicManager.Instance.PlayMusic(musicEvent, fadeTime);
+        AmbienceManager.Instance.PlayMusic(musicEvent, fadeTime);
     }
 }
