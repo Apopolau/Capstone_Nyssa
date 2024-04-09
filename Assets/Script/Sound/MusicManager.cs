@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class MusicManager : MonoBehaviour
+public class AmbienceManager : MonoBehaviour
 {
     int activeLayerIndex = 0;
     public int ActiveLayerIndex => activeLayerIndex;
 
-    MusicPlayer musicPlayer;
+    SoundPlayer soundPlayer;
     public const int MaxLayerCount = 3;
 
     float volume = 1;
@@ -22,16 +22,16 @@ public class MusicManager : MonoBehaviour
         }
     }
 
-    private static MusicManager instance;
-    public static MusicManager Instance
+    private static AmbienceManager instance;
+    public static AmbienceManager Instance
     {
         get
         {
             if(instance == null){
-                instance = FindObjectOfType<MusicManager>();
+                instance = FindObjectOfType<AmbienceManager>();
                 if(instance == null){
                     GameObject singletonGO = new GameObject("MusicManager_singleton");
-                    instance = singletonGO.AddComponent<MusicManager>();
+                    instance = singletonGO.AddComponent<AmbienceManager>();
 
                     DontDestroyOnLoad(singletonGO);
                 }
@@ -52,26 +52,26 @@ public class MusicManager : MonoBehaviour
             instance = this;
         }
 
-        SetupMusicPlayers();
+        SetupSoundPlayers();
     }
 
-    void SetupMusicPlayers()
+    void SetupSoundPlayers()
     {
-        musicPlayer = gameObject.AddComponent<MusicPlayer>();
+        soundPlayer = gameObject.AddComponent<SoundPlayer>();
     }
 
-    public void PlayMusic(MusicEvent musicEvent, float fadeTime)
+    public void PlayMusic(SoundEvent soundEvent, float fadeTime)
     {
-        if(musicEvent == null)
+        if(soundEvent == null)
         {
             return;
         }
-        musicPlayer.Play(musicEvent, fadeTime);
+        soundPlayer.Play(soundEvent, fadeTime);
     }
 
     public void StopMusic(float fadeTime)
     {
-        musicPlayer.Stop(fadeTime);
+        soundPlayer.Stop(fadeTime);
     }
 
     public void IncreaseLayerIndex(float fadeTime)
@@ -85,7 +85,7 @@ public class MusicManager : MonoBehaviour
         }
 
         activeLayerIndex = newLayerIndex;
-        musicPlayer.FadeVolume(Volume, fadeTime);
+        soundPlayer.FadeVolume(Volume, fadeTime);
     }
 
     public void DecreaseLayerIndex(float fadeTime)
@@ -99,6 +99,6 @@ public class MusicManager : MonoBehaviour
         }
 
         activeLayerIndex = newLayerIndex;
-        musicPlayer.FadeVolume(Volume, fadeTime);
+        soundPlayer.FadeVolume(Volume, fadeTime);
     }
 }

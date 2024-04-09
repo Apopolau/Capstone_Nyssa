@@ -167,6 +167,8 @@ public class LevelOneEvents : LevelEventManager
 
         StartCoroutine(EvaluateFoodLevel());
         StartCoroutine(EvaluateBeautyLevel());
+
+        ambientSoundPlayer.Play(wind, 0.5f);
     }
 
     private void OnDisable()

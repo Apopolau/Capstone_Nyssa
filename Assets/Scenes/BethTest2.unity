@@ -15269,6 +15269,7 @@ Transform:
   - {fileID: 1046486627}
   - {fileID: 1019685214}
   - {fileID: 1623257495}
+  - {fileID: 2015456149}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &781212270
@@ -37728,6 +37729,68 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8557892789263032690, guid: 553568dfccc23274285fac4a878252df, type: 3}
   m_PrefabInstance: {fileID: 1344890359}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2015456148
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 775446696}
+    m_Modifications:
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9169131963194655651, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+      propertyPath: m_Name
+      value: SoundManagerL2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+--- !u!4 &2015456149 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7461475913310251437, guid: 994268ad594ebb94da8e3d67f1e9dd0b, type: 3}
+  m_PrefabInstance: {fileID: 2015456148}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2018833856
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42509,9 +42572,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1455602230}
     - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: ambientSounds
+      value: 
+      objectReference: {fileID: 11400000, guid: f7424e7b8e4e40e488d971a9f6e74774, type: 2}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: objectiveList
       value: 
       objectReference: {fileID: 2814006587503948995}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: uiSoundLibrary
+      value: 
+      objectReference: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
     - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: dialogueManager
       value: 
@@ -42577,9 +42648,721 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.ctime1
+      value: 2726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.ctime2
+      value: 38207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.ctime3
+      value: 43686
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.ctime4
+      value: 63800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key0.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key0.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key0.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key1.b
+      value: 0.92941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key1.g
+      value: 0.99861807
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key2.b
+      value: 0.92941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key3.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key3.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key3.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key4.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key4.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.key4.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: directionalLight
       value: 
       objectReference: {fileID: 218267196}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.ctime1
+      value: 2726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.ctime2
+      value: 38207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.ctime3
+      value: 43686
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.ctime4
+      value: 63800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key0.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key0.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key0.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key1.b
+      value: 0.92941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key1.g
+      value: 0.99861807
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key2.b
+      value: 0.92941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key3.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key3.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key3.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key4.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key4.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.key4.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.ctime1
+      value: 2726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.ctime2
+      value: 38207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.ctime3
+      value: 43686
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.ctime4
+      value: 63800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key0.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key0.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key0.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key1.b
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key1.g
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key1.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key2.b
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key2.g
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key2.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key3.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key3.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key3.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key4.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key4.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.key4.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: skyColor.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.ctime1
+      value: 2726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.ctime2
+      value: 38207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.ctime3
+      value: 43686
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.ctime4
+      value: 63800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key0.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key0.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key0.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key1.b
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key1.g
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key1.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key2.b
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key2.g
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key2.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key3.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key3.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key3.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key4.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key4.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.key4.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: equatorColor.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.ctime1
+      value: 2726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.ctime2
+      value: 38207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.ctime3
+      value: 43686
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.ctime4
+      value: 63800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.ctime5
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key0.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key0.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key0.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key1.b
+      value: 0.92941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key1.g
+      value: 0.99861807
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key2.b
+      value: 0.92941177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key2.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key2.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key3.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key3.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key3.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key4.b
+      value: 0.3019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key4.g
+      value: 0.21176471
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key4.r
+      value: 0.21960784
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key5.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key5.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.key5.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtySkyColor.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.ctime1
+      value: 2726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.ctime2
+      value: 38207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.ctime3
+      value: 43686
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.ctime4
+      value: 63800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.ctime5
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key0.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key1.b
+      value: 0.7647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key1.g
+      value: 0.7647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key1.r
+      value: 0.7647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key2.b
+      value: 0.7647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key2.g
+      value: 0.7647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key2.r
+      value: 0.7647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key3.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key3.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key3.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key4.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key4.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key4.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key5.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key5.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.key5.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyEquatorColor.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.ctime1
+      value: 2726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.ctime2
+      value: 38207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.ctime3
+      value: 43686
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.ctime4
+      value: 63800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.ctime5
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key0.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key0.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key0.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key1.b
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key1.g
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key1.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key2.b
+      value: 0.6039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key2.g
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key2.r
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key3.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key3.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key3.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key4.b
+      value: 0.15294118
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key4.g
+      value: 0.09803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key4.r
+      value: 0.16078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key5.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key5.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.key5.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightColor.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.ctime1
+      value: 2726
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.ctime2
+      value: 38207
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.ctime3
+      value: 43686
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.ctime4
+      value: 63800
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key0.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key0.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key1.b
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key1.g
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key1.r
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key2.b
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key2.g
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key2.r
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key3.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key3.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key3.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key4.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key4.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.key4.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: directionalLightIntensity.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightColor.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5404662143723289352, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: dirtyDirectionalLightIntensity.m_NumColorKeys
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 8746814340790431660, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: earthIcon
       value: 
