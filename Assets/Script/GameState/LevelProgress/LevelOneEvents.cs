@@ -169,6 +169,8 @@ public class LevelOneEvents : LevelEventManager
         StartCoroutine(EvaluateBeautyLevel());
 
         ambientSoundPlayer.Play(wind, 0.5f);
+
+        weatherState.SetEventManager(this);
     }
 
     private void OnDisable()
@@ -339,11 +341,14 @@ public class LevelOneEvents : LevelEventManager
             //Calculate the total amount of plants that have been planted
             plantCount = levelOneProgress.totalPlants;
 
+            //ambientSoundPlayer.SetVolume(plantCount / tileCount);
+
             //We want to start changing up the ambient sounds as the map gets improved
             if (plantCount > tileCount / 4)
             {
                 if (setClean)
                 {
+                    
                     GetComponent<DayNightCycle>().SwapSkyColours(false);
                     setClean = false;
                 }
@@ -352,13 +357,15 @@ public class LevelOneEvents : LevelEventManager
             {
                 if (!setClean)
                 {
+                    ambientSoundPlayer.Play(music, 0.5f);
+                    
                     GetComponent<DayNightCycle>().SwapSkyColours(true);
                     setClean = true;
                 }
             }
             else if (plantCount > tileCount / 4 + tileCount / 2)
             {
-
+                ambientSoundPlayer.Play(nature, 0.5f);
             }
         }
         

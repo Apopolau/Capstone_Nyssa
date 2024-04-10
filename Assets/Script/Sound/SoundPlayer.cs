@@ -86,6 +86,13 @@ public class SoundPlayer : MonoBehaviour
         stopRoutine = StartCoroutine(StopRoutine(fadeTime));
     }
 
+    /*
+    public void StopSingle(SoundEvent soundEvent)
+    {
+        soundEvent.SoundLayers
+    }
+    */
+
     IEnumerator StopRoutine(float fadeTime)
     {
         if(fadeVolumeRoutine != null)
@@ -129,6 +136,23 @@ public class SoundPlayer : MonoBehaviour
         if(cSoundEvent.SoundLayerType == SoundLayerType.ADDITIVE)
         {
             fadeVolumeRoutine = StartCoroutine(LerpSourceAdditiveRoutine(targetVolume, fadeTime));
+        }
+    }
+
+    public void SetVolume(float targetVolume)
+    {
+        targetVolume = Mathf.Clamp(targetVolume, 0f, 1f);
+
+        for (int i = 0; i < layerSources.Count; i++)
+        {
+            if (i == AmbienceManager.Instance.ActiveLayerIndex)
+            {
+                layerSources[i].volume = targetVolume;
+            }
+            else
+            {
+                layerSources[i].volume = 0;
+            }
         }
     }
 

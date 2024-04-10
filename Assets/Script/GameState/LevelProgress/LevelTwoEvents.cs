@@ -181,6 +181,10 @@ public class LevelTwoEvents : LevelEventManager
 
         earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
         celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+
+        ambientSoundPlayer.Play(wind, 0.5f);
+
+        weatherState.SetEventManager(this);
     }
 
     private void OnDisable()
@@ -396,13 +400,14 @@ public class LevelTwoEvents : LevelEventManager
             {
                 if (!setClean)
                 {
+                    ambientSoundPlayer.Play(music, 0.5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(true);
                     setClean = true;
                 }
             }
             else if (plantCount > tileCount / 4 + tileCount / 2)
             {
-
+                ambientSoundPlayer.Play(nature, 0.5f);
             }
         }
 

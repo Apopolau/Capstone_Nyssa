@@ -23,6 +23,7 @@ public abstract class LevelEventManager : EventManager
     public enum E_TerrainLayer { POLLUTED, DIRT, GRASS};
 
     protected bool hasFlipped;
+    [SerializeField] protected WeatherState weatherState;
 
 
     protected void FlipTiles(List<GameObject> tiles)
@@ -97,5 +98,17 @@ public abstract class LevelEventManager : EventManager
             Destroy(terrainData2);
         }
         
+    }
+
+    public void ChangeRainAmbience(bool isRaining)
+    {
+        if (isRaining)
+        {
+            ambientSoundPlayer.Play(rain, 0.5f);
+        }
+        else
+        {
+            ambientSoundPlayer.Stop(0.5f);
+        }
     }
 }

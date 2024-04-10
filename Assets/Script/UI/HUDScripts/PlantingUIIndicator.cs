@@ -49,13 +49,13 @@ public class PlantingUIIndicator : MonoBehaviour
                 if (quantity > 0)
                 {
                     // Activate the UI element based on the itemType
-                    DeactivateUIByItemType(itemType);
+                    ActivateUIByItemType(itemType);
 
                 }
                 else if (quantity == 0)
                 {
 
-                    ActivateUIByItemType(itemType);
+                    DeactivateUIByItemType(itemType);
                 }
             }
             else
@@ -84,14 +84,13 @@ public class PlantingUIIndicator : MonoBehaviour
         switch (itemType)
         {
             case "Grass Seed":
-                ToggleIconsOverlay(grassImage, true); // Activate grass UI
-                                                      //Debug.Log($"Item type: {itemType} overlay deactivated");
+                ToggleIconsOverlay(grassImage, false); // Activate grass UI
                 break;
             case "Tree Seed":
-                ToggleIconsOverlay(treeImage, true); // Activate tree UI
+                ToggleIconsOverlay(treeImage, false); // Activate tree UI
                 break;
             case "Flower Seed":
-                ToggleIconsOverlay(flowerImage, true);
+                ToggleIconsOverlay(flowerImage, false);
                 break;
             default:
                 break;
@@ -104,13 +103,13 @@ public class PlantingUIIndicator : MonoBehaviour
         switch (itemType)
         {
             case "Grass Seed":
-                ToggleIconsOverlay(grassImage, false); // Deactivate grass UI
+                ToggleIconsOverlay(grassImage, true); // Deactivate grass UI
                 break;
             case "Tree Seed":
-                ToggleIconsOverlay(treeImage, false); // Deactivate tree UI
+                ToggleIconsOverlay(treeImage, true); // Deactivate tree UI
                 break;
             case "Flower Seed":
-                ToggleIconsOverlay(flowerImage, false);
+                ToggleIconsOverlay(flowerImage, true);
                 break;
             default:
                 break;
