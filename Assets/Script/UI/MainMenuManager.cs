@@ -10,10 +10,17 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject mainPage;
     [SerializeField] GameObject languagePage;
     [SerializeField] GameObject instructions;
+    [SerializeField] GameObject levelPage;
 
     [SerializeField] MainMenu mainMenu;
     [SerializeField] MainMenu languageMenu;
     [SerializeField] MainMenu instructionsMenu;
+
+    [SerializeField] MainMenu levelMenu;     
+    
+
+    public List<GameObject> englishButtons;
+    public List<GameObject> frenchButtons;
 
     public UserSettingsManager userSettingsManager;
     public EarthPlayerControl earthControls;
@@ -26,29 +33,26 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private UISoundLibrary soundLibrary;
 
     private void Awake()
-    {
-        
+    {   // always reset to english
+        SetLanguageToEnglish();
     }
 
     public void PlayGame()
     {
         soundLibrary.PlaySubmitClips();
-        SceneManager.LoadScene("CutSceneIntro");
-
     }
 
     public void TurnOnMainPage()
     {
         soundLibrary.PlayBackClips();
-        Debug.Log("Going back to main menu");
         mainPage.SetActive(true);
         ToggleLanguagePage(false);
         ToggleInstructions(false);
+        ToggleLevelPage(false);
     }
 
     public void ToggleLanguagePage(bool turnOn)
     {
-        Debug.Log("Toggling language page");
         if (turnOn)
         {
             soundLibrary.PlayClickClips();
@@ -61,9 +65,23 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
+    public void ToggleLevelPage(bool turnOn)
+    {
+        Debug.Log("Toggling level page");
+        if (turnOn)
+        {
+            soundLibrary.PlayClickClips();
+            levelPage.SetActive(true);
+            mainPage.SetActive(false);
+        }
+        else
+        {
+            levelPage.SetActive(false);
+        }
+    }
+
     public void ToggleInstructions(bool turnOn)
     {
-        Debug.Log("Toggling instructions");
         if (turnOn)
         {
             soundLibrary.PlayClickClips();
@@ -83,6 +101,11 @@ public class MainMenuManager : MonoBehaviour
         mainMenu.SetInstructionBasedOnControlType();
         languageMenu.SetInstructionBasedOnControlType();
         instructionsMenu.SetInstructionBasedOnControlType();
+
+        DeactivateAllButtons();
+        ActivateButtonsBasedOnLanguage(englishButtons, frenchButtons);
+
+        
     }
 
     public void SetLanguageToFrench()
@@ -92,6 +115,11 @@ public class MainMenuManager : MonoBehaviour
         mainMenu.SetInstructionBasedOnControlType();
         languageMenu.SetInstructionBasedOnControlType();
         instructionsMenu.SetInstructionBasedOnControlType();
+
+         DeactivateAllButtons();
+        ActivateButtonsBasedOnLanguage(englishButtons, frenchButtons);
+
+       
     }
 
     private void LateUpdate()
@@ -106,5 +134,47 @@ public class MainMenuManager : MonoBehaviour
             virtualMouseInputS.cursorTransform.position = Mouse.current.position.value;
             virtualMousePositionS = Mouse.current.position.value;
         }
+    }
+
+    public void ActivateButtonsBasedOnLanguage(List<GameObject> englishButtons, List<GameObject> frenchButtons)
+    {
+        if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            ActivateButtons(englishButtons);
+        }
+        else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
+        {
+            ActivateButtons(frenchButtons);
+        }
+    }
+
+    private void ActivateButtons(List<GameObject> buttons)
+    {
+        foreach (var button in buttons)
+        {
+            button.SetActive(true);
+        }
+    }
+
+    private void DeactivateAllButtons()
+    {
+        foreach (var button in englishButtons)
+        {
+            button.SetActive(false);
+        }
+        foreach (var button in frenchButtons)
+        {
+            button.SetActive(false);
+        }
+    }
+
+    public void PlayLevelOne()
+    {
+        SceneManager.LoadScene("CutSceneIntro");
+    }
+
+    public void PlayLevelTwo()
+    {
+        SceneManager.LoadScene("CutsceneLevelTwo");
     }
 }

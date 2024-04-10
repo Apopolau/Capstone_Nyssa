@@ -27,8 +27,6 @@ public class TaskPatrol : BTNode
         rb = rbi;
     }
     protected override NodeState OnRun() {
-        //Debug.Log("start patrolling");
-
         //if while player is chilling they are in range of somehing, patroling fails
 
 
@@ -52,7 +50,6 @@ public class TaskPatrol : BTNode
             }
             else
             {
-                //Debug.Log("I'm patrolling");
                 Transform wPoint = waypoints[currWaypointIndex];
                 float distance = Vector3.Distance(transformPos.position, wPoint.position);
 
@@ -66,7 +63,6 @@ public class TaskPatrol : BTNode
                     iswaiting = true;
                     //makes enemy loop back through way points
                     currWaypointIndex = (currWaypointIndex + 1) % waypoints.Length;
-                    //Debug.Log("waiting");
                     state = NodeState.RUNNING;
                 }
                 //if not move towards it
@@ -79,7 +75,6 @@ public class TaskPatrol : BTNode
                    thisAgent.SetDestination(wPoint.position);
                 
                     transformPos.LookAt(wPoint.position);
-                    //Debug.Log("making rounds");
                     state = NodeState.RUNNING;
                 }
             }

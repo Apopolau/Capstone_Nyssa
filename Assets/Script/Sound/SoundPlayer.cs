@@ -7,6 +7,7 @@ public class SoundPlayer : MonoBehaviour
     List<AudioSource> layerSources = new List<AudioSource>();
     List<float> sourceStartVolumes = new List<float>();
     MusicEvent cMusicEvent = null;
+    SoundEvent cSoundEvent = null;
 
     Coroutine fadeVolumeRoutine = null;
     Coroutine stopRoutine = null;
@@ -18,7 +19,7 @@ public class SoundPlayer : MonoBehaviour
 
     void CreateLayerSources()
     {
-        for (int i = 0; i < MusicManager.MaxLayerCount; i++)
+        for (int i = 0; i < AmbienceManager.MaxLayerCount; i++)
         {
             layerSources.Add(gameObject.AddComponent<AudioSource>());
             layerSources[i].playOnAwake = false;
@@ -26,19 +27,33 @@ public class SoundPlayer : MonoBehaviour
         }
     }
 
+    
     public void Play(SoundEvent soundEvent, float fadeTime)
     {
-        Debug.Log("Play music");
-        /*
-        for(int i = 0; (i < layerSources.Count) && (i < soundEvent.SoundLayers.Length); i++)
+        if (soundEvent == null)
         {
-
+            return;
         }
-        */
+
+        cSoundEvent = soundEvent;
+
+        for (int i = 0; (i < layerSources.Count) && (i < soundEvent.SoundLayers.Length); i++)
+        {
+            if (soundEvent.SoundLayers[i] != null)
+            {
+                layerSources[i].volume = 0;
+                layerSources[i].clip = soundEvent.SoundLayers[i];
+                layerSources[i].outputAudioMixerGroup = soundEvent.Mixer;
+                layerSources[i].Play();
+            }
+        }
+
+        FadeVolume(AmbienceManager.Instance.Volume, fadeTime);
     }
+    
+
     public void Play(MusicEvent musicEvent, float fadeTime)
     {
-        Debug.Log("Play music");
         if(musicEvent == null)
         {
             return;
@@ -57,7 +72,7 @@ public class SoundPlayer : MonoBehaviour
             }
         }
 
-        FadeVolume(MusicManager.Instance.Volume, fadeTime);
+        FadeVolume(AmbienceManager.Instance.Volume, fadeTime);
     }
 
     public void Stop(float fadeTime)
@@ -69,6 +84,13 @@ public class SoundPlayer : MonoBehaviour
         stopRoutine = StartCoroutine(StopRoutine(fadeTime));
     }
 
+    /*
+    public void StopSingle(SoundEvent soundEvent)
+    {
+        soundEvent.SoundLayers
+    }
+    */
+
     IEnumerator StopRoutine(float fadeTime)
     {
         if(fadeVolumeRoutine != null)
@@ -77,11 +99,11 @@ public class SoundPlayer : MonoBehaviour
         }
 
         //blend the volume to 0, depending on blend type
-        if(cMusicEvent.SoundLayerType == SoundLayerType.ADDITIVE)
+        if(cSoundEvent.SoundLayerType == SoundLayerType.ADDITIVE)
         {
             fadeVolumeRoutine = StartCoroutine(LerpSourceAdditiveRoutine(0, fadeTime));
         }
-        else if (cMusicEvent.SoundLayerType == SoundLayerType.SINGLE)
+        else if (cSoundEvent.SoundLayerType == SoundLayerType.SINGLE)
         {
             fadeVolumeRoutine = StartCoroutine(LerpSourceSingleRoutine(0, fadeTime));
         }
@@ -105,13 +127,30 @@ public class SoundPlayer : MonoBehaviour
             StopCoroutine(fadeVolumeRoutine);
         }
 
-        if(cMusicEvent.SoundLayerType == SoundLayerType.SINGLE)
+        if(cSoundEvent.SoundLayerType == SoundLayerType.SINGLE)
         {
             fadeVolumeRoutine = StartCoroutine(LerpSourceSingleRoutine(targetVolume, fadeTime));
         }
-        if(cMusicEvent.SoundLayerType == SoundLayerType.ADDITIVE)
+        if(cSoundEvent.SoundLayerType == SoundLayerType.ADDITIVE)
         {
             fadeVolumeRoutine = StartCoroutine(LerpSourceAdditiveRoutine(targetVolume, fadeTime));
+        }
+    }
+
+    public void SetVolume(float targetVolume)
+    {
+        targetVolume = Mathf.Clamp(targetVolume, 0f, 1f);
+
+        for (int i = 0; i < layerSources.Count; i++)
+        {
+            if (i == AmbienceManager.Instance.ActiveLayerIndex)
+            {
+                layerSources[i].volume = targetVolume;
+            }
+            else
+            {
+                layerSources[i].volume = 0;
+            }
         }
     }
 
@@ -126,7 +165,7 @@ public class SoundPlayer : MonoBehaviour
         {
             for (int i = 0; i < layerSources.Count; i++)
             {
-                if(i == MusicManager.Instance.ActiveLayerIndex)
+                if(i == AmbienceManager.Instance.ActiveLayerIndex)
                 {
                     startVolume = sourceStartVolumes[i];
                     newVolume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeTime);
@@ -145,7 +184,7 @@ public class SoundPlayer : MonoBehaviour
 
         for (int i = 0; i < layerSources.Count; i++)
         {
-            if (i == MusicManager.Instance.ActiveLayerIndex)
+            if (i == AmbienceManager.Instance.ActiveLayerIndex)
             {
                 layerSources[i].volume = targetVolume;
             }
@@ -168,7 +207,7 @@ public class SoundPlayer : MonoBehaviour
             for(int i = 0; i < layerSources.Count; i++)
             {
                 //If in an active layer, fade in to target
-                if(i <= MusicManager.Instance.ActiveLayerIndex)
+                if(i <= AmbienceManager.Instance.ActiveLayerIndex)
                 {
                     startVolume = sourceStartVolumes[i];
                     newVolume = Mathf.Lerp(startVolume, targetVolume, elapsedTime / fadeTime);
@@ -188,7 +227,7 @@ public class SoundPlayer : MonoBehaviour
 
         for(int i = 0; i < layerSources.Count; i++)
         {
-            if (i <= MusicManager.Instance.ActiveLayerIndex)
+            if (i <= AmbienceManager.Instance.ActiveLayerIndex)
             {
                 layerSources[i].volume = targetVolume;
             }

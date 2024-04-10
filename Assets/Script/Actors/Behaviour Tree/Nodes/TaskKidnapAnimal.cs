@@ -17,7 +17,6 @@ public class TaskKidnapAnimal : BTNode
 
     protected override NodeState OnRun()
     {
-        Debug.Log("Enter kidnapping");
 
         float distance = Vector3.Distance(thisEnemy.GetClosestAnimal().transform.position, thisAgent.transform.position);
 

@@ -78,7 +78,6 @@ public class PickupObject : Interactable
     {
         if ((p1IsInRange && earthPlayer.interacting) || (p2IsInRange && celestialPlayer.interacting) )
         {
-            //Debug.Log("Picking up");
             if (item != null)
             {
                 if (inventory.AddItem(item, item.quantity))

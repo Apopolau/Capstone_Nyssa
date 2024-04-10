@@ -34,7 +34,6 @@ public class TaskPathToPlant : BTNode
 
             if (thisEnemy.inSmotherRange)
             {
-                Debug.Log("i am in smother range and should be failing");
                 state = NodeState.FAILURE;
                 return state;
             }

@@ -29,7 +29,6 @@ public class TaskInitiateSmother : BTNode
                 thisEnemy.smotherInitiated = true;
                //thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, true);
                 state = NodeState.SUCCESS;
-                Debug.Log("enemy is smothering");
             }
             else
             {

@@ -9,10 +9,8 @@ public class IsPlanting : Decision
     {
         if (stateMachine.GetComponent<EarthPlayer>().GetInPlantSelection())
         {
-            //Debug.Log("Planting");
             return true;
         }
-        //Debug.Log("Not planting");
         return false;
     }
 }

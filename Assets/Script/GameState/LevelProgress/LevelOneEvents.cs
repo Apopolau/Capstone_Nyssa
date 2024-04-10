@@ -84,6 +84,7 @@ public class LevelOneEvents : LevelEventManager
     [SerializeField] private GameObject duck2;
 
     int keyMonsterDefeatCount;
+    int totalMonsters = 6;
     int areaFiveMonsterCount = 2;
 
     private bool runDefeatDialogue = false;
@@ -119,6 +120,8 @@ public class LevelOneEvents : LevelEventManager
     // Start is called before the first frame update
     void Start()
     {
+        soundPlayers = AmbienceManager.Instance.GetComponents<SoundPlayer>();
+
         //levelOneProgress = GetComponent<LevelOneProgress>();
         foreach (Transform childTransform in firstAreaGrid.transform)
         {
@@ -166,6 +169,10 @@ public class LevelOneEvents : LevelEventManager
 
         StartCoroutine(EvaluateFoodLevel());
         StartCoroutine(EvaluateBeautyLevel());
+
+        soundPlayers[1].Play(wind, 0.5f);
+
+        weatherState.SetEventManager(this);
     }
 
     private void OnDisable()
@@ -283,7 +290,7 @@ public class LevelOneEvents : LevelEventManager
 
     private void EvaluateMonsterDefeats()
     {
-        if (keyMonsterDefeatCount == 4)
+        if (keyMonsterDefeatCount == totalMonsters)
         {
             task6.CrossOutTask();
             SetSafetyCompletion();
@@ -336,26 +343,35 @@ public class LevelOneEvents : LevelEventManager
             //Calculate the total amount of plants that have been planted
             plantCount = levelOneProgress.totalPlants;
 
+            //ambientSoundPlayer.SetVolume(plantCount / tileCount);
+
             //We want to start changing up the ambient sounds as the map gets improved
-            if (plantCount > tileCount / 4)
+            if ((plantCount > tileCount / 6) && (plantCount < tileCount / 4))
             {
                 if (setClean)
                 {
+                    soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
+                    soundPlayers[0].Stop(0.5f);
+                    soundPlayers[2].Stop(0.5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(false);
                     setClean = false;
                 }
             }
-            else if (plantCount > tileCount / 2)
+            else if ((plantCount > tileCount / 4) && (plantCount < tileCount / 2))
             {
                 if (!setClean)
                 {
+                    soundPlayers[0].Play(music, 0.5f);
+                    soundPlayers[0].SetVolume(plantCount / tileCount);
+
                     GetComponent<DayNightCycle>().SwapSkyColours(true);
                     setClean = true;
                 }
             }
-            else if (plantCount > tileCount / 4 + tileCount / 2)
+            else if (plantCount > tileCount / 2)
             {
-
+                soundPlayers[2].SetVolume(plantCount / tileCount);
+                soundPlayers[2].Play(nature, 0.5f);
             }
         }
         

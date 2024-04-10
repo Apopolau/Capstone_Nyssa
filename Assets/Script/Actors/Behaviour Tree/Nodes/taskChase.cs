@@ -39,7 +39,6 @@ public class taskChase : BTNode
         if (!thisAgent.GetComponent<Enemy>().inAttackRange && thisAgent.GetComponent<Enemy>().seesPlayer)
        
         {
-            //Debug.Log("I'm chasing baby");
 
 
           thisAgent.SetDestination(thisEnemy.GetClosestPlayer().transform.position);
@@ -53,13 +52,6 @@ public class taskChase : BTNode
             state = NodeState.RUNNING;
         }
       
-      /*  else if (thisAgent.GetComponent<Enemy>().inAttackRange)
-        {
-           // Debug.Log(distance);
-            Debug.Log("im close enough");
-            thisAgent.GetComponent<Enemy>().inAttackRange = true;
-            state = NodeState.SUCCESS;
-        }*/
         else if (thisAgent.GetComponent<Enemy>().inAttackRange || !thisAgent.GetComponent<Enemy>().seesPlayer)
         {
             state = NodeState.FAILURE;

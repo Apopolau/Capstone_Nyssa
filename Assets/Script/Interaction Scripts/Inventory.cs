@@ -78,18 +78,17 @@ public class Inventory : ScriptableObject
         
         if (itemToRemove != null)
         {
-            //Debug.Log($"Removing item {itemToRemove.stats.ItemName} based on key press");
             RemoveItem(itemToRemove, quantity);
 
             // Add a log message to check the current inventory after removal
             foreach (var item in items)
             {
-                //Debug.Log($"Item: {item.stats.ItemName}, Quantity: {item.quantity}");
+                
             }
         }
         else
         {
-            //Debug.LogWarning($"You do not have the required item in the inventory.");
+            
         }
     }
 
@@ -161,7 +160,7 @@ public class Inventory : ScriptableObject
         // Display quantity changes in the console log.
         foreach (Item item in items)
         {
-            //Debug.Log($"Item: {item.stats.ItemName}, Quantity: {item.quantity}");
+            
         }
     }
 
@@ -191,7 +190,6 @@ public class Inventory : ScriptableObject
     //Check how many of a particular item they have
     public int GetQuantityByItemType(string itemType)
     {
-       // Debug.Log($"GetQuantityByItemType() called for itemType: {itemType}");
 
         int currentQuantity = 0;
         foreach (var item in items)
@@ -199,7 +197,6 @@ public class Inventory : ScriptableObject
             if (item.stats.ItemName == itemType)
             {
                 currentQuantity += item.quantity;
-                //Debug.Log($"Item type: {itemType}, Quantity: {quantity}");
             }
         }
         return currentQuantity;

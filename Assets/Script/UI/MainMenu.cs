@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     public UserSettingsManager userSettingsManager; // Reference to your UserSettingsManager object
-    public GameObject keyboardInstructions;
-    public GameObject controllerInstructions;
+      public GameObject ENKeyboardInstructions;
+    public GameObject ENControllerInstructions;
+
+    public GameObject FRKeyboardInstructions;
+    public GameObject FRControllerInstructions;
 
     private void Start()
     {
@@ -15,22 +18,46 @@ public class MainMenu : MonoBehaviour
         SetInstructionBasedOnControlType();
     }
     
-    
+
 
     public void SetInstructionBasedOnControlType()
     {
-        if ((userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD) && (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD))
+        if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
         {
-           Debug.Log("display keyboard instructions");
-           keyboardInstructions.SetActive(true);
-           controllerInstructions.SetActive(false);
+            if ((userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD) && (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD))
+            {
+                ENKeyboardInstructions.SetActive(true);
+                ENControllerInstructions.SetActive(false);
+                FRKeyboardInstructions.SetActive(false);
+                FRControllerInstructions.SetActive(false);
+            }
+            else if ((userSettingsManager.celestialControlType == UserSettingsManager.ControlType.CONTROLLER) && (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER))
+            {
+                ENKeyboardInstructions.SetActive(false);
+                ENControllerInstructions.SetActive(true);
+                FRKeyboardInstructions.SetActive(false);
+                FRControllerInstructions.SetActive(false);
+                
+            }
         }
-        else if ((userSettingsManager.celestialControlType == UserSettingsManager.ControlType.CONTROLLER) && (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER))
+        else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
         {
-            Debug.Log("display controller instructions");
-            keyboardInstructions.SetActive(false);
-            controllerInstructions.SetActive(true);
+            if ((userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD) && (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD))
+            {
+                FRKeyboardInstructions.SetActive(true);
+                FRControllerInstructions.SetActive(false);
+                ENKeyboardInstructions.SetActive(false);
+                ENControllerInstructions.SetActive(false);
+            }
+            else if ((userSettingsManager.celestialControlType == UserSettingsManager.ControlType.CONTROLLER) && (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER))
+            {
+                FRKeyboardInstructions.SetActive(false);
+                FRControllerInstructions.SetActive(true);
+                ENKeyboardInstructions.SetActive(false);
+                ENControllerInstructions.SetActive(false);
+            }
         }
     }
+    
     
 }

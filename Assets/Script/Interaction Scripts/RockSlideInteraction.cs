@@ -41,7 +41,6 @@ public class RockSlideInteraction : Interactable
     {
         if(earthPlayer.interacting && p1IsInRange && !isAnimated)
         {
-            //Debug.Log("starting animation");
             isAnimated = true;
             StartCoroutine(LetTimerRun());
         }
@@ -51,7 +50,6 @@ public class RockSlideInteraction : Interactable
     {
         if (isAnimated)
         {
-            //Debug.Log("moving downward");
             this.gameObject.transform.localPosition = new Vector3(this.gameObject.transform.localPosition.x, this.gameObject.transform.localPosition.y - 0.3f, this.gameObject.transform.localPosition.z);
         }
     }

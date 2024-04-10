@@ -9,7 +9,13 @@ public abstract class LevelEventManager : EventManager
     protected CelestialPlayer celestialPlayer;
     protected EarthPlayer earthPlayer;
     [SerializeField] protected GameObject objectiveList;
-    [SerializeField] AmbientSoundLibrary ambientSounds;
+    [SerializeField] protected SoundEvent music;
+    [SerializeField] protected SoundEvent wind;
+    [SerializeField] protected SoundEvent nature;
+    [SerializeField] protected SoundEvent rain;
+    //Music, wind, nature, rain
+    [SerializeField] protected SoundPlayer[] soundPlayers;
+    
     [SerializeField] protected UISoundLibrary uiSoundLibrary;
     public Enemy dyingEnemy;
     [SerializeField] protected Terrain terrain;
@@ -19,6 +25,7 @@ public abstract class LevelEventManager : EventManager
     public enum E_TerrainLayer { POLLUTED, DIRT, GRASS};
 
     protected bool hasFlipped;
+    [SerializeField] protected WeatherState weatherState;
 
 
     protected void FlipTiles(List<GameObject> tiles)
@@ -93,5 +100,17 @@ public abstract class LevelEventManager : EventManager
             Destroy(terrainData2);
         }
         
+    }
+
+    public void ChangeRainAmbience(bool isRaining)
+    {
+        if (isRaining)
+        {
+            soundPlayers[3].Play(rain, 0.5f);
+        }
+        else
+        {
+            soundPlayers[3].Stop(0.5f);
+        }
     }
 }

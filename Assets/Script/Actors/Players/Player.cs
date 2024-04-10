@@ -42,8 +42,6 @@ public abstract class Player : MonoBehaviour
         {
             health.current -= damageDealt;
 
-            //Debug.Log(health.current);
-
             if (OnHealthChanged != null)
                 OnHealthChanged(health.max, health.current);
 

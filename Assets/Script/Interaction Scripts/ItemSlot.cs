@@ -48,7 +48,6 @@ public class ItemSlot : MonoBehaviour
             quantityText = GetComponentInChildren<TextMeshProUGUI>(); // Use TextMeshProUGUI here
 
         _item = null;
-        //inventory.AddItemSlot(this);
     }
 
     private void OnDisable()
@@ -63,7 +62,6 @@ public class ItemSlot : MonoBehaviour
 
     public void SetItem(Item newItem)
     {
-        //Debug.Log("Item being set: " + newItem.stats.name);
         _item = newItem;
     }
 
@@ -78,7 +76,6 @@ public class ItemSlot : MonoBehaviour
         }
         else
         {
-            //Debug.Log("item is " + _item.stats.name + " and stats are " + _item.stats);
             image.sprite = _item.stats.Icon;
             image.enabled = true;
             UpdateItemNameText();

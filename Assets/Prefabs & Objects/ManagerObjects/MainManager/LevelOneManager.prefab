@@ -68,11 +68,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   objectiveList: {fileID: 0}
-  ambientSounds: {fileID: 11400000, guid: 493e15032dd884d4e9b7aacc0675a4d4, type: 2}
+  music: {fileID: 11400000, guid: a6da14652a76a4944aed856f25e19569, type: 2}
+  wind: {fileID: 11400000, guid: 2aec86a56eabb5c438d3be3ee0766a53, type: 2}
+  nature: {fileID: 11400000, guid: 7d947dc4de6893c428a9141249e45d84, type: 2}
+  rain: {fileID: 11400000, guid: 73917364e62279743894f4bb18a57aed, type: 2}
+  ambientSoundPlayer: {fileID: 0}
+  uiSoundLibrary: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
   dyingEnemy: {fileID: 0}
   terrain: {fileID: 0}
   terrainData1: {fileID: 0}
   terrainData2: {fileID: 0}
+  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
   dialogueManager: {fileID: 0}
   cleanWaterMaterial: {fileID: 2100000, guid: e33eb5d28521d5f4188aec862cee5330, type: 2}
@@ -93,7 +99,7 @@ MonoBehaviour:
   areaFour2MinVals: {x: 2, y: 0, z: 4}
   areaFour2MaxVals: {x: 81, y: 0, z: 92}
   grassLayer: 2
-  dirtLayer: 6
+  dirtLayer: 1
   grassSteps: 8
   dirtSteps: 8
   task1: {fileID: 0}
@@ -405,9 +411,9 @@ MonoBehaviour:
   maxPollution: 100
   acidRainThreshold: 75
   acidRainHardThreshold: 90
-  c_cleanRain: {r: 0, g: 0, b: 0, a: 0}
-  c_lightAcid: {r: 0, g: 0, b: 0, a: 0}
-  c_heavyAcid: {r: 0, g: 0, b: 0, a: 0}
+  c_cleanRain: {r: 1, g: 1, b: 1, a: 0}
+  c_lightAcid: {r: 0.9017476, g: 1, b: 0.8160377, a: 0}
+  c_heavyAcid: {r: 0.54228234, g: 1, b: 0.3820755, a: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
 --- !u!114 &4701399666614650149
 MonoBehaviour:
@@ -447,7 +453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: {fileID: 11400000, guid: 77e8aa24be619604c9e8b7cea265e70d, type: 2}
+  dialogue: {fileID: 11400000, guid: 1587223b99c17f3489e790ca8cb41b55, type: 2}
 --- !u!114 &2484009731153438493
 MonoBehaviour:
   m_ObjectHideFlags: 0

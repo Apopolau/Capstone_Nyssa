@@ -121,6 +121,8 @@ public class LevelTwoEvents : LevelEventManager
     // Start is called before the first frame update
     void Start()
     {
+        soundPlayers = AmbienceManager.Instance.GetComponents<SoundPlayer>();
+
         foreach (Transform childTransform in hedgehogAreaGrid.transform)
         {
             hedgehogAreaTiles.Add(childTransform.gameObject);
@@ -181,6 +183,10 @@ public class LevelTwoEvents : LevelEventManager
 
         earthPlayer.earthControls.controls.EarthPlayerDefault.Enable();
         celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+
+        soundPlayers[1].Play(wind, 0.5f);
+
+        weatherState.SetEventManager(this);
     }
 
     private void OnDisable()
@@ -384,25 +390,32 @@ public class LevelTwoEvents : LevelEventManager
             plantCount = levelTwoProgress.totalPlants;
 
             //We want to start changing up the ambient sounds as the map gets improved
-            if (plantCount > tileCount / 4)
+            if ((plantCount > tileCount / 6) && (plantCount < tileCount / 4))
             {
                 if (setClean)
                 {
+                    soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
+                    soundPlayers[0].Stop(0.5f);
+                    soundPlayers[2].Stop(0.5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(false);
                     setClean = false;
                 }
             }
-            else if (plantCount > tileCount / 2)
+            else if ((plantCount > tileCount / 4) && (plantCount < tileCount / 2))
             {
                 if (!setClean)
                 {
+                    soundPlayers[0].Play(music, 0.5f);
+                    soundPlayers[0].SetVolume(plantCount / tileCount);
+
                     GetComponent<DayNightCycle>().SwapSkyColours(true);
                     setClean = true;
                 }
             }
-            else if (plantCount > tileCount / 4 + tileCount / 2)
+            else if (plantCount > tileCount / 2)
             {
-
+                soundPlayers[2].SetVolume(plantCount / tileCount);
+                soundPlayers[2].Play(nature, 0.5f);
             }
         }
 
@@ -575,7 +588,6 @@ public class LevelTwoEvents : LevelEventManager
     {
         foreach (GameObject go in mainAreaTiles)
         {
-            //Debug.Log(go);
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
@@ -584,7 +596,6 @@ public class LevelTwoEvents : LevelEventManager
 
         foreach (GameObject go in farLeftTiles)
         {
-            //Debug.Log(go);
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
             {
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;

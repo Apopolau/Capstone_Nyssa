@@ -81,7 +81,6 @@ public class TurnOffSludgePump : Interactable
         earthPlayer.ToggleTurning();
 
         sludgePumpIsOff = true;
-        Debug.Log("Turned off the sludge pump");
         levelOneEvents.OnPumpShutOff();
         uiObject.SetActive(false);
         sludgeOffDialouge.TriggerDialogue();
