@@ -14,6 +14,7 @@ public class PowerStats : ScriptableObject
     [SerializeField] public int maxDamage;
     [SerializeField] public int minDamage;
     [SerializeField] public int airPollutionEffect;
+    [SerializeField] public int energyDrain;
     /// <summary>
     /// try without serialized
     /// </summary>

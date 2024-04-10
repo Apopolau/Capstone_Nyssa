@@ -175,7 +175,6 @@ public abstract class Animal : MonoBehaviour
 
     public void SetEscort(bool status)
     {
-        Debug.Log("Animal is being escorted: " + status);
         isEscorted = status;
     }
 

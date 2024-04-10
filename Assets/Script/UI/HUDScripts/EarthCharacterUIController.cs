@@ -59,7 +59,7 @@ public class EarthCharacterUIController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Target GameObject is not assigned.");
+            
         }
     }
 
@@ -72,15 +72,11 @@ public class EarthCharacterUIController : MonoBehaviour
         // Check the current control type from the UserSettingsManager
         UserSettingsManager.ControlType currentControlType = userSettingsManager.earthControlType;
 
-        // Log the current control type
-        Debug.Log("Current Control Type: " + currentControlType);
-
         // Determine which array of UI objects to use based on the current control type
         GameObject[] uiObjectsToToggle = (currentControlType == UserSettingsManager.ControlType.KEYBOARD) ? keyboardUIObjects : controllerUIObjects;
 
         foreach (GameObject uiObject in uiObjectsToToggle)
         {
-            Debug.Log("Toggling UI object: " + uiObject.name);
             // Toggle the visibility of the UI object based on the isActive parameter
             uiObject.SetActive(isActive);
         }
@@ -102,13 +98,11 @@ public class EarthCharacterUIController : MonoBehaviour
 
         foreach (GameObject uiObject in uiObjectsToToggle)
         {
-            Debug.Log("Toggling UI object: " + uiObject.name);
             // Toggle the visibility of the UI object based on the isActive parameter
             uiObject.SetActive(isActive);
         }
         foreach (GameObject uiObject in celesteObjectsToToggle)
         {
-            Debug.Log("Toggling UI object: " + uiObject.name);
             // Toggle the visibility of the UI object based on the isActive parameter
             uiObject.SetActive(isActive);
         }

@@ -54,7 +54,6 @@ public class PowerDrop : Interactable
 
         if ((p1IsInRange && earthPlayer.interacting) || (p2IsInRange && celestialPlayer.interacting))
         {
-            Debug.Log("Item is OCCURRING");
             PowerStats currPowerStats = getPowerDropStatRef(powerDrop);
             powerBehaviour.setEnabled(currPowerStats);
 
@@ -71,7 +70,6 @@ public class PowerDrop : Interactable
     {
         if (powerDrop == CelestialPlayer.Power.COLDSNAP)
         {
-            Debug.Log("return cold snap stats");
             levelProgress.SetPowers(true);
             celestialPlayer.coldSnapFill.enabled = false;
             celestialPlayer.CTRLColdSnapFill.enabled = false;
@@ -82,7 +80,6 @@ public class PowerDrop : Interactable
         }
         if (powerDrop == CelestialPlayer.Power.MOONTIDE)
         {
-            Debug.Log("return cold snap stats");
             levelProgress.SetPowers(true);
             celestialPlayer.moonTideFill.enabled = false;
             celestialPlayer.CTRLMoonTideFill.enabled = false;

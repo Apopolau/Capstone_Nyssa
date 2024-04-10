@@ -32,7 +32,6 @@ public class TaskHeadOut : BTNode
 
     protected override NodeState OnRun()
     {
-        //Debug.Log("start patrolling");
 
         //if while player is chilling they are in range of somehing, patroling fails
         currWayPointList = thisEnemy.chosenPath;
@@ -53,12 +52,7 @@ public class TaskHeadOut : BTNode
             if (distance < stoppingDistance)
             {
 
-                Debug.Log("We have escaped with the animal");
                 state = NodeState.RUNNING;
-
-
-               
-             
 
             }
             else
@@ -68,16 +62,8 @@ public class TaskHeadOut : BTNode
                 thisAgent.SetDestination(wPoint.position);
 
                 transformPos.LookAt(wPoint.position);
-                //Debug.Log("making rounds");
                 state = NodeState.RUNNING;
             }
-
-
-
-
-
-
-
 
             state = NodeState.RUNNING;
         }

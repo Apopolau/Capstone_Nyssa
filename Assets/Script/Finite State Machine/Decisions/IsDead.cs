@@ -10,10 +10,8 @@ public class IsDead : Decision
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
         if (stateMachine.GetComponent<Player>().IsDead())
         {
-            //Debug.Log("Dying");
             return true;
         }
-        //Debug.Log("Not dying");
         return false;
     }
 }

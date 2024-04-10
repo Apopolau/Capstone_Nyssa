@@ -32,7 +32,6 @@ public class TaskInvadePatrol : BTNode
 
     protected override NodeState OnRun()
     {
-        //Debug.Log("start patrolling");
 
         //if while player is chilling they are in range of somehing, patroling fails
         currWayPointList = thisEnemy.chosenPath;
@@ -42,45 +41,26 @@ public class TaskInvadePatrol : BTNode
             state = NodeState.FAILURE;
         }
         else
-        { //Debug.Log("I'm patrolling, the current waypoint list index is" + currWayPointList[0].transform.position);
+        {
             Transform wPoint = currWayPointList[currWaypointIndex].transform;
             float distance = Vector3.Distance(transformPos.position, wPoint.position);
-          /*  Debug.Log("current distance is" + distance);
-            Debug.Log("current position" + transformPos.position);
-            Debug.Log("I'm patrolling, Imgoing to" + wPoint.position);*/
+
             float stoppingDistance = thisAgent.stoppingDistance;
 
             if(distance < stoppingDistance)
             {
-              //  if (currWaypointIndex < currWayPointList.Count)
-                    //Debug.Log("Heading to waypoint #:" + currWaypointIndex);
-               // {
+
                     currWaypointIndex = (currWaypointIndex + 1);
                     state = NodeState.RUNNING;
-
-
-               // }
-                //Debug.Log("waiting");
 
             }
             else
             {
 
-                /// thisAgent.transform.position
-                //rb.MovePosition(Vector3.MoveTowards(rb.position, wPoint.position, 10f * Time.deltaTime));
-                //for more complex and or bigger scenes
-                /*   elapsed += Time.deltaTime;
-                   if (elapsed > 1.0f)
-                   {
-                       elapsed -= 1.0f;
-                       NavMesh.CalculatePath(transformPos.position, wPoint.position, NavMesh.AllAreas, path);
-
-                   }*/
 
                thisAgent.SetDestination(wPoint.position);
 
                 transformPos.LookAt(wPoint.position);
-                //Debug.Log("making rounds");
                 state = NodeState.RUNNING;
             }
 

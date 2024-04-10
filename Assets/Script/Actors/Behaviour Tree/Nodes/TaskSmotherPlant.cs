@@ -17,7 +17,6 @@ public class TaskSmotherPlant : BTNode
 
     protected override NodeState OnRun()
     {
-        Debug.Log("Enter smothering");
 
         if (thisEnemy.GetClosestPlant())
         {
@@ -52,7 +51,6 @@ public class TaskSmotherPlant : BTNode
             //yield return attackTime;
             //smother initiated should be turned off
              thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isSmothered = true;
-            Debug.Log("Am smothering");
 
             if (!thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isDying)
             {

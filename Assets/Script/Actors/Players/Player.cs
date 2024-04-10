@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 //Parent class of EarthPlayer and CelestialPlayer
 public abstract class Player : MonoBehaviour
@@ -10,6 +12,9 @@ public abstract class Player : MonoBehaviour
     [Header("Respawn")]
     [SerializeField] public bool isDying = false;
     [SerializeField] public bool isRespawning = false;
+    [SerializeField] public TextMeshProUGUI displayText;
+    [SerializeField] public Image playerWarningBG;
+    private WaitForSeconds waitTime = new WaitForSeconds(4.542f);
 
     protected bool isShielded;
     protected bool iFramesOn;
@@ -36,8 +41,6 @@ public abstract class Player : MonoBehaviour
         if (!isShielded && !iFramesOn)
         {
             health.current -= damageDealt;
-
-            //Debug.Log(health.current);
 
             if (OnHealthChanged != null)
                 OnHealthChanged(health.max, health.current);
@@ -79,6 +82,23 @@ public abstract class Player : MonoBehaviour
         isDying = false;
         GetComponent<PlayerAnimator>().animator.SetBool(GetComponent<PlayerAnimator>().IfDyingHash, false);
         Respawn();
+    }
+
+    protected IEnumerator ThrowPlayerWarning(string textInfo)
+    {
+        displayText.text = textInfo;
+        // Check if the Image component is disabled
+        if (!playerWarningBG.enabled)
+        {
+            playerWarningBG.enabled = true;
+        }
+
+        playerWarningBG.gameObject.SetActive(true);
+        yield return waitTime;
+        displayText.text = "";
+        playerWarningBG.enabled = false;
+
+
     }
 
     private IEnumerator iFrames()

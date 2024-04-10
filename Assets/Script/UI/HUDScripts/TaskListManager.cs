@@ -12,7 +12,7 @@ public class TaskListManager : MonoBehaviour
         textComponent = GetComponent<TextMeshProUGUI>();
         if (textComponent == null)
         {
-            Debug.LogError("TextMeshProUGUI component not found on the GameObject with TaskListManager script.");
+            
         }
         
     }

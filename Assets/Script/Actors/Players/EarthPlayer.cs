@@ -13,9 +13,8 @@ public class EarthPlayer : Player
     [SerializeField] public GameObject plantParent;
     [SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
-    [SerializeField] public TextMeshProUGUI displayText;
     [SerializeField] public Image selectTileText;
-    [SerializeField] public Image playerWarningBG;
+ 
 
     // Reference to the UI controller script
 
@@ -562,14 +561,12 @@ public class EarthPlayer : Player
 
     public void PickUpNyssa()
     {
-        Debug.Log("Picking up Nyssa");
         inHoldingNyssa_FSM = true;
         earthAnimator.animator.SetBool(earthAnimator.IfCarryingHash, true);
     }
 
     public void PutDownNyssa()
     {
-        Debug.Log("Putting down Nyssa");
         inHoldingNyssa_FSM = false;
         earthAnimator.animator.SetBool(earthAnimator.IfCarryingHash, false);
     }
@@ -915,7 +912,7 @@ public class EarthPlayer : Player
         }
         else
         {
-            Debug.LogWarning("Target GameObject is not assigned.");
+            
         }
     }
 
@@ -1004,8 +1001,6 @@ public class EarthPlayer : Player
 
         // Ensure fill amount is exactly 0
         fillImage.fillAmount = endFillAmount;
-
-        Debug.Log("cooldown finished");
     }
 
     
@@ -1028,22 +1023,7 @@ public class EarthPlayer : Player
         }
     }
 
-    private IEnumerator ThrowPlayerWarning(string textInfo)
-    {
-        displayText.text = textInfo;
-        // Check if the Image component is disabled
-        if (!playerWarningBG.enabled)
-        {
-            playerWarningBG.enabled = true;
-        }
-      
-        playerWarningBG.gameObject.SetActive(true);
-        yield return plantTime;
-        displayText.text = "";
-        playerWarningBG.enabled = false;
-       
 
-    }
 
     public void SetTurnTarget(Vector3 target)
     {

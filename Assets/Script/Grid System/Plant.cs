@@ -198,11 +198,8 @@ public class Plant : Creatable
 
         if (currentPlantStage == PlantStats.PlantStage.SEEDLING && growthPoints >= stats.seedlingGrowTime)
         {
-            //yield return new WaitForSeconds(stats.seedlingGrowTime);
-            //Debug.Log("Plant should be growing");
             currentPlantStage = PlantStats.PlantStage.SPROUT;
             currentPollutionContribution = stats.sproutAirPollutionBonus;
-            //SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer spriteRenderer in plantVisuals)
             {
                 spriteRenderer.sprite = stats.sproutImage;
@@ -218,10 +215,8 @@ public class Plant : Creatable
         }
         else if (currentPlantStage == PlantStats.PlantStage.SPROUT && growthPoints >= stats.sproutGrowTime)
         {
-            //yield return new WaitForSeconds(stats.sproutGrowTime);
             currentPlantStage = PlantStats.PlantStage.JUVENILE;
             currentPollutionContribution = stats.juvenileAirPollutionBonus;
-            //SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer spriteRenderer in plantVisuals)
             {
                 spriteRenderer.sprite = stats.juvenileImage;
@@ -238,10 +233,8 @@ public class Plant : Creatable
         }
         else if (currentPlantStage == PlantStats.PlantStage.JUVENILE && growthPoints >= stats.juvenileGrowTime)
         {
-            //yield return new WaitForSeconds(stats.juvenileGrowTime);
             currentPlantStage = PlantStats.PlantStage.MATURE;
             currentPollutionContribution = stats.matureAirPollutionBonus;
-            //SpriteRenderer[] spriteRenderers = this.GetComponentsInChildren<SpriteRenderer>();
             foreach (SpriteRenderer spriteRenderer in plantVisuals)
             {
                 spriteRenderer.sprite = stats.matureImage;
@@ -334,21 +327,18 @@ public class Plant : Creatable
             // Water is low but sunlight is not, prioritize water UI
             waterUI.SetActive(true);
             sunlightUI.SetActive(false);
-            //Debug.Log("Water is needed");
         }
         else if (!waterLow && sunlightLow && !weatherState.dayTime)
         {
             // Sunlight is low but water is not, prioritize sunlight UI
             waterUI.SetActive(false);
             sunlightUI.SetActive(true);
-            //Debug.Log("Sunlight is needed");
         }
         else if (waterLow && sunlightLow)
         {
             // Both water and sunlight are low, prioritize water UI
             waterUI.SetActive(true);
             sunlightUI.SetActive(false);
-            //Debug.Log("Water is needed");
         }
         else
         {
@@ -356,33 +346,6 @@ public class Plant : Creatable
             waterUI.SetActive(false);
             sunlightUI.SetActive(false);
         }
-        
-        /*
-        // Change water state
-        if (storedWater.current < storedWater.max / 4)
-        {
-            storedWater.low = true;
-            waterUI.SetActive(true); // Activate water UI
-            Debug.Log("Water is needed");
-        }
-        else if (storedWater.current > storedWater.max / 4)
-        {
-            storedWater.low = false;
-            waterUI.SetActive(false); // Deactivate water UI
-            Debug.Log("Water is not needed anymore");
-        }
-
-        // Change sunlight state
-        if (storedSunlight.current < storedSunlight.max / 4)
-        {
-            storedSunlight.low = true;
-            sunlightUI.SetActive(true); // Activate sunlight UI
-        }
-        else
-        {
-            storedSunlight.low = false;
-            sunlightUI.SetActive(false); // Deactivate sunlight UI
-        } */
 
         //Change health state
         if (health.current < health.max / 4)
@@ -416,7 +379,6 @@ public class Plant : Creatable
 
         if (OnHealthChanged != null)
         { OnHealthChanged(health.max, health.current);
-            Debug.Log("current health is" + health.current);
         }
 
         if (health.current <= 0)

@@ -34,8 +34,6 @@ public class TaskGetKidnapped: BTNode
             float stoppingDistance = thisAgent.stoppingDistance;
             if (distance < stoppingDistance)
             {
-
-                Debug.Log("We have escaped with the animal");
                 state = NodeState.RUNNING;
 
             }

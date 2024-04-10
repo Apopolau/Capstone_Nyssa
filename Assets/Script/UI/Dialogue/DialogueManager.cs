@@ -239,7 +239,6 @@ public class DialogueManager : MonoBehaviour
             }
             else if (currentEvent is DialogueMoveEvent)
             {
-                Debug.Log("starting move");
                 movingOn = true;
 
                 currentMove = currentEvent as DialogueMoveEvent;
@@ -387,7 +386,6 @@ public class DialogueManager : MonoBehaviour
 
     public void HandleMoving(DialogueMoveEvent moveEvent)
     {
-        Debug.Log("Moving");
         GameObject objectToMove = moveEvent.GetObjectToMove();
         if (moveEvent.HasMove())
         {
@@ -451,7 +449,6 @@ public class DialogueManager : MonoBehaviour
 
     public IEnumerator TurnMoveOff(DialogueMoveEvent moveEvent)
     {
-        Debug.Log("Starting move turn off");
         if (moveEvent.MovePlaysOut())
         {
             earthPlayer.ToggleWaiting(true);
@@ -465,7 +462,6 @@ public class DialogueManager : MonoBehaviour
             earthPlayer.ToggleWaiting(false);
             HandleNextEvents();
         }
-        Debug.Log("Finishing up move");
         movingOn = false;
         currentMove = null;
     }
@@ -536,7 +532,6 @@ public class DialogueManager : MonoBehaviour
         dialogueArea.text = ""; // Clear the text initially
         foreach (char letter in line.ToCharArray())
         {
-            Debug.Log("Type routine: " + typeRoutine);
             dialogueArea.text += letter;
             yield return new WaitForSecondsRealtime(typingSpeed); // Wait for typingSpeed seconds before showing the next letter
         }
@@ -546,7 +541,6 @@ public class DialogueManager : MonoBehaviour
 
     private void HaltCoroutines()
     {
-        Debug.Log("Halting coroutines");
         if (panRoutine != null && panningOn)
         {
             HaltPanning();
@@ -555,7 +549,6 @@ public class DialogueManager : MonoBehaviour
         }
         if (typeRoutine != null)
         {
-            Debug.Log("has a type routine, halting this");
             HaltTyping();
             StopCoroutine(typeRoutine);
             typeRoutine = null;
@@ -592,7 +585,6 @@ public class DialogueManager : MonoBehaviour
 
     private void HaltTyping()
     {
-        Debug.Log("Halting typing");
         if (activeEvent.GetIsSkippable())
         {
             /*

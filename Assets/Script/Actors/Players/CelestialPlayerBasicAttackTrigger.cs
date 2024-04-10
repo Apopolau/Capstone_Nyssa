@@ -5,8 +5,8 @@ using UnityEngine;
 public class CelestialPlayerBasicAttackTrigger : MonoBehaviour
 {
     public bool enemyHit = false;
-
-
+    GameObject currTarget;
+   
 
 
     // Start is called before the first frame update
@@ -32,6 +32,7 @@ public class CelestialPlayerBasicAttackTrigger : MonoBehaviour
            
 
           enemyHit=true;
+            currTarget = other.gameObject;
         
         }
     }
@@ -50,6 +51,21 @@ public class CelestialPlayerBasicAttackTrigger : MonoBehaviour
 
         }
     }
+
+
+    public void BasicAttack(PowerStats basicStats)
+    {
+        bool enemyIsDead;
+        
+            //Power weakness = GetEnemyWeakness(enemyTarget);
+            int HitPoints =Random.Range(basicStats.minDamage, basicStats.maxDamage);
+            Debug.Log("Hitpoints:" + HitPoints);
+        if (currTarget)
+        { enemyIsDead = currTarget.GetComponent<Enemy>().TakeHit(HitPoints); }
+    
+    }
+
+
 
 
 

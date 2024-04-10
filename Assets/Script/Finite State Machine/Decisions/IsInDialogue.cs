@@ -10,10 +10,8 @@ public class IsInDialogue : Decision
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
         if (stateMachine.GetComponent<EarthPlayer>().GetInDialogue())
         {
-            //Debug.Log("InDialogue");
             return true;
         }
-        //Debug.Log("Not in dialogue");
         return false;
     }
 }
