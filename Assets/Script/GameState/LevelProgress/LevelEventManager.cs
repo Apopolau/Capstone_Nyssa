@@ -13,7 +13,9 @@ public abstract class LevelEventManager : EventManager
     [SerializeField] protected SoundEvent wind;
     [SerializeField] protected SoundEvent nature;
     [SerializeField] protected SoundEvent rain;
-    [SerializeField] protected SoundPlayer ambientSoundPlayer;
+    //Music, wind, nature, rain
+    [SerializeField] protected SoundPlayer[] soundPlayers;
+    
     [SerializeField] protected UISoundLibrary uiSoundLibrary;
     public Enemy dyingEnemy;
     [SerializeField] protected Terrain terrain;
@@ -104,11 +106,11 @@ public abstract class LevelEventManager : EventManager
     {
         if (isRaining)
         {
-            ambientSoundPlayer.Play(rain, 0.5f);
+            soundPlayers[3].Play(rain, 0.5f);
         }
         else
         {
-            ambientSoundPlayer.Stop(0.5f);
+            soundPlayers[3].Stop(0.5f);
         }
     }
 }
