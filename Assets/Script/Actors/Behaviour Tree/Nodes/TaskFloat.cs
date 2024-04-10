@@ -17,7 +17,8 @@ public class TaskFloat : BTNode
     Rigidbody rb;
     bool isSet = false;
     Vector3 newPos = Vector3.zero;
-
+    UnityEngine.AI.NavMeshHit hit;
+    float distanceToEdge = 1;
 
     public float range=20;
 
@@ -69,13 +70,14 @@ public class TaskFloat : BTNode
             float distance = Vector3.Distance(thisAgent.transform.position, newPos);
 
             //check if the enemy has reached the new position if so pause
-            if (distance < 1f)
+            if (distance < 3f)
             {
 
                 waitCounter = 0f;
 
                 isSet = false;
-                state = NodeState.RUNNING;
+               // state = NodeState.RUNNING;
+                state = NodeState.FAILURE;
             }
             else if (thisEnemy.isColliding)
             {
@@ -89,6 +91,34 @@ public class TaskFloat : BTNode
                 {
 
                     thisAgent.SetDestination(newPos);
+
+
+                    if (UnityEngine.AI.NavMesh.FindClosestEdge(thisAgent.transform.position, out hit, UnityEngine.AI.NavMesh.AllAreas))
+                    {
+                        distanceToEdge = hit.distance;
+                    }
+
+                    if (distanceToEdge < 1f)
+                    {
+                        isSet = false;
+                        state = NodeState.FAILURE;
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     state = NodeState.SUCCESS;
                 }
             }
