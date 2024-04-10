@@ -120,6 +120,8 @@ public class LevelOneEvents : LevelEventManager
     // Start is called before the first frame update
     void Start()
     {
+        soundPlayers = AmbienceManager.Instance.GetComponents<SoundPlayer>();
+
         //levelOneProgress = GetComponent<LevelOneProgress>();
         foreach (Transform childTransform in firstAreaGrid.transform)
         {
@@ -168,7 +170,9 @@ public class LevelOneEvents : LevelEventManager
         StartCoroutine(EvaluateFoodLevel());
         StartCoroutine(EvaluateBeautyLevel());
 
-        ambientSoundPlayer.Play(wind, 0.5f);
+        soundPlayers[1].Play(wind, 0.5f);
+
+        weatherState.SetEventManager(this);
     }
 
     private void OnDisable()
@@ -339,11 +343,15 @@ public class LevelOneEvents : LevelEventManager
             //Calculate the total amount of plants that have been planted
             plantCount = levelOneProgress.totalPlants;
 
+            //ambientSoundPlayer.SetVolume(plantCount / tileCount);
+
             //We want to start changing up the ambient sounds as the map gets improved
             if (plantCount > tileCount / 4)
             {
                 if (setClean)
                 {
+                    soundPlayers[0].Stop(0.5f);
+                    soundPlayers[2].Stop(0.5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(false);
                     setClean = false;
                 }
@@ -352,13 +360,15 @@ public class LevelOneEvents : LevelEventManager
             {
                 if (!setClean)
                 {
+                    soundPlayers[0].Play(music, 0.5f);
+
                     GetComponent<DayNightCycle>().SwapSkyColours(true);
                     setClean = true;
                 }
             }
             else if (plantCount > tileCount / 4 + tileCount / 2)
             {
-
+                soundPlayers[2].Play(nature, 0.5f);
             }
         }
         

@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weather State", menuName = "ManagerObject/WeatherManagers/WeatherState")]
 public class WeatherState : ScriptableObject
 {
+    [SerializeField] LevelEventManager levelEventManager;
+
     public enum TimeOfDay { DAYBREAK, DAY, EVENING, NIGHT };
     public TimeOfDay currentTimeOfDay = TimeOfDay.DAY;
 
@@ -29,5 +31,24 @@ public class WeatherState : ScriptableObject
     public void SetTimeOfDay(TimeOfDay timeOfDay)
     {
         currentTimeOfDay = timeOfDay;
+    }
+
+    public void SetRainyState(bool isRaining)
+    {
+        if (isRaining)
+        {
+            skyState = SkyState.RAINY;
+            levelEventManager.ChangeRainAmbience(true);
+        }
+        else
+        {
+            skyState = SkyState.CLEAR;
+            levelEventManager.ChangeRainAmbience(false);
+        }
+    }
+
+    public void SetEventManager(LevelEventManager levelEventManager)
+    {
+        this.levelEventManager = levelEventManager;
     }
 }

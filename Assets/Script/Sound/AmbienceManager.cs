@@ -11,7 +11,7 @@ public class AmbienceManager : MonoBehaviour
     SoundPlayer soundPlayer;
     public const int MaxLayerCount = 3;
 
-    float volume = 1;
+    float volume = 0.8f;
     public float Volume
     {
         get => volume;

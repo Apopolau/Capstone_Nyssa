@@ -555,7 +555,7 @@ public class CelestialPlayer : Player
         if (!isRaining)
         {
             // RainParticleSystem.SetActive(true);
-            weatherState.skyState = WeatherState.SkyState.RAINY;
+            weatherState.SetRainyState(true);
             isRaining = true;
             rainFill.enabled = true;
             CTRLRainFill.enabled = true;
@@ -564,7 +564,7 @@ public class CelestialPlayer : Player
         {
             // yield return new WaitForSeconds(10f);
 
-            weatherState.skyState = WeatherState.SkyState.CLEAR;
+            weatherState.SetRainyState(false);
 
             isRaining = false;
             rainFill.enabled = false;
