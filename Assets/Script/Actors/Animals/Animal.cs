@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public abstract class Animal : MonoBehaviour
 {
@@ -29,12 +30,12 @@ public abstract class Animal : MonoBehaviour
 
     [SerializeField] public Sprite waterImage;
     [SerializeField] public Sprite foodImage;
-    [SerializeField] public Sprite shelterImage;
     [SerializeField] public Sprite friendImage;
     [SerializeField] public Sprite sproutImage;
     [SerializeField] public Sprite celesteImage;
     public WeatherState weatherState;
     public GameObject uiTarget;
+    public GameObject speechTarget;
 
     public bool isStuck;
     public bool midAnimation;
@@ -210,7 +211,7 @@ public abstract class Animal : MonoBehaviour
             float yPos = Mathf.Clamp(uiTarget.transform.position.x, 0f, Screen.height);
             kidnapIcon.transform.position = new Vector3(xPos, yPos, 0);
 
-            //Vector3 pointToRotateTowards = new Vector3(0, 0, kidnapIcon.transform.GetChild(0).GetChild(1).transform.position.z);
+            Vector3 pointToRotateTowards = new Vector3(0, 0, kidnapIcon.transform.GetChild(0).GetChild(1).transform.position.z);
 
             //kidnapIcon.transform.GetChild(0).GetChild(0).RotateAround(this.gameObject.transform.position, pointToRotateTowards, 5 * Time.deltaTime);
         }
@@ -221,14 +222,16 @@ public abstract class Animal : MonoBehaviour
         soundLibrary.PlayVocalizeClips();
     }
 
-    public void TurnOnPopup()
+    public void TurnOnPopup(Sprite sprite)
     {
+        speechTarget.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
+        speechTarget.SetActive(true);
         StartCoroutine(PopupRoutine());
     }
 
     public IEnumerator PopupRoutine()
     {
         yield return popupLength;
-
+        speechTarget.SetActive(false);
     }
 }

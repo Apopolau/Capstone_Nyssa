@@ -153,7 +153,7 @@ public class FoxTree : BTree
                             new CheckIfInRangeAll(thisFox.gameObject, thisFox.playerSet, 15),
                             new CheckIfAnimating(foxAnimator),
                             new CheckForClosestPlayer(thisFox, 15),
-                            new Timer(3f, new TaskVocalize(foxAgent, thisFox, 15))
+                            new Timer(3f, new TaskVocalizePlayer(foxAgent, thisFox, 15))
                         }),
                         /*
                         //Check if hungry first, find food
@@ -201,7 +201,7 @@ public class FoxTree : BTree
                                 {
                                     new Inverter(new CheckIfAnyWater(thisFox)),
                                     new CheckForClosestPlayer(thisFox, 15),
-                                    new Timer(3f, new TaskVocalize(foxAgent, thisFox, 15))
+                                    new Timer(3f, new TaskVocalize(foxAgent, thisFox, 15, thisFox.waterImage))
                                 })
                                 
                             })

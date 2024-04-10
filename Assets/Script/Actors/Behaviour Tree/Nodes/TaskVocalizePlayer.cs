@@ -4,19 +4,18 @@ using UnityEngine;
 using BehaviourTree;
 using UnityEngine.AI;
 
-public class TaskVocalize : BTNode
+public class TaskVocalizePlayer : BTNode
 {
     NavMeshAgent thisAgent;
     float playerRange;
     Animal thisAnimal;
     Sprite thisSprite;
 
-    public TaskVocalize(NavMeshAgent thisAgent, Animal animal, float range, Sprite sprite)
+    public TaskVocalizePlayer(NavMeshAgent thisAgent, Animal animal, float range)
     {
         this.thisAgent = thisAgent;
         playerRange = range;
         thisAnimal = animal;
-        thisSprite = sprite;
     }
 
 
@@ -26,6 +25,14 @@ public class TaskVocalize : BTNode
         if(distance <= playerRange)
         {
             thisAgent.GetComponent<Transform>().LookAt(thisAnimal.GetClosestPlayer().transform);
+            if (thisAnimal.GetClosestPlayer().GetComponent<EarthPlayer>())
+            {
+                thisSprite = thisAnimal.sproutImage;
+            }
+            else if (thisAnimal.GetClosestPlayer().GetComponent<CelestialPlayer>())
+            {
+                thisSprite = thisAnimal.celesteImage;
+            }
             //Do a popup here
             thisAnimal.PlayVocal();
             thisAnimal.TurnOnPopup(thisSprite);
