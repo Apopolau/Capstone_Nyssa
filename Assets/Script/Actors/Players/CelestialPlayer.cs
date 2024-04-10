@@ -114,7 +114,7 @@ public class CelestialPlayer : Player
         celestialAgent.enabled = false;
         celestialControls = GetComponent<CelestialPlayerControls>();
         health = new Stat(100, 100, false);
-        energy = new Stat(100, 0, true);
+        energy = new Stat(100, 50, true);
         uiManager = GetComponent<CelestUIManager>();
         c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
         //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
@@ -130,7 +130,7 @@ public class CelestialPlayer : Player
         //dodgeAnimTime = new WaitForSeconds();
         coldSnapCoolDownTime = powerBehaviour.ColdSnapStats.rechargeTimer;
         basicCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
-        lightningCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
+        lightningCoolDownTime = powerBehaviour.LightningStats.rechargeTimer;
         staff = GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
 
 
@@ -227,7 +227,7 @@ public class CelestialPlayer : Player
     {
         //BASICATTACK POWER
         //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
-        buttonBasicAttack = true; ;
+        buttonBasicAttack = true; 
         powerInUse = Power.BASIC;
         //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
     }
@@ -295,9 +295,11 @@ public class CelestialPlayer : Player
         celestialAnimator.animator.SetBool(celestialAnimator.IfWalkingHash, false);
 
         //If enemy is around call the basic attack
-        if (enemyTarget != null && staff.enemyHit)
+        //if (enemyTarget != null && staff.enemyHit)
+        if (staff.enemyHit)
         {
-            BasicAttack();
+            staff.BasicAttack(powerBehaviour.GetComponent<PowerBehaviour>().BasicAttackStats);
+           //BasicAttack();
 
         }
 
@@ -423,7 +425,8 @@ public class CelestialPlayer : Player
     public void BasicAttack()
     {
         bool enemyIsDead;
-        if (enemyTarget && powerInUse == Power.BASIC && canBasicAttack == false)
+        //if (enemyTarget && powerInUse == Power.BASIC && canBasicAttack == false)
+        if ( powerInUse == Power.BASIC && canBasicAttack == false)
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
@@ -468,6 +471,7 @@ public class CelestialPlayer : Player
 
         if (powerInUse == Power.COLDSNAP)
         {
+            DrainEnergy(attack.ColdSnapStats.energyDrain);
             if (weakness == Power.COLDSNAP)
             {
                 powerDamage = attack.ColdSnapStats.maxDamage;
@@ -482,6 +486,7 @@ public class CelestialPlayer : Player
 
         if (powerInUse == Power.MOONTIDE)
         {
+            DrainEnergy(attack.MoonTideAttackStats.energyDrain);
             if (weakness == Power.MOONTIDE)
             {
                 powerDamage = attack.MoonTideAttackStats.maxDamage;
@@ -498,6 +503,7 @@ public class CelestialPlayer : Player
 
         if (powerInUse == Power.LIGHTNINGSTRIKE)
         {
+            DrainEnergy(attack.LightningStats.energyDrain);
             if (weakness == Power.LIGHTNINGSTRIKE)
             {
                 powerDamage = attack.LightningStats.maxDamage;
@@ -528,6 +534,38 @@ public class CelestialPlayer : Player
         }
         return Power.NONE;
 
+    }
+
+
+public void DrainEnergy(int pointsDrained)
+    {
+       energy.current += pointsDrained;
+        DecreaseEnergy(pointsDrained);
+    }
+
+
+    private void DecreaseEnergy( int pointsDrained)
+    {
+        // Find the energy bar fill Image component dynamically
+        GameObject energyBar = GameObject.Find("EnergyBar"); // Assuming "energyBar" is the name of the GameObject holding the fill Image
+        if (energyBar != null)
+        {
+            Image fillImage = energyBar.transform.Find("Fill").GetComponent<Image>(); // Assuming "fill" is the name of the Image GameObject representing the fill
+            if (fillImage != null)
+            {
+                // Calculate the new fill amount
+                float fillAmount = fillImage.fillAmount + (float)pointsDrained / 100f; // Assuming energy bar's max value is 100
+                fillImage.fillAmount = Mathf.Clamp01(fillAmount); // Clamp fill amount between 0 and 1
+            }
+            else
+            {
+                Debug.LogWarning("Fill Image component not found under energyBar GameObject.");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Energy bar GameObject not found.");
+        }
     }
 
     /// <summary>
@@ -581,7 +619,70 @@ public class CelestialPlayer : Player
     }
     */
 
-    
+
+    public IEnumerator DrainRainEnergy()
+    {
+     
+        
+        float timer = 0f;
+        int rainDrain = 1;
+
+
+        // Gradually decrease fill amount over cooldown duration
+        while (isRaining)
+        {
+            //Debug.Log("entering loop of coroutine");
+            //float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
+            // fillImage.fillAmount = fillAmount;
+
+            if (energy.current >= 0)
+            // Find the energy bar fill Image component dynamically
+            {
+                energy.current -= rainDrain;
+                GameObject energyBar = GameObject.Find("EnergyBar"); // Assuming "energyBar" is the name of the GameObject holding the fill Image
+                if (energyBar != null)
+                {
+                    Image fillImage = energyBar.transform.Find("Fill").GetComponent<Image>(); // Assuming "fill" is the name of the Image GameObject representing the fill
+                    if (fillImage != null)
+                    {
+                        // Calculate the new fill amount
+                        float fillAmount = fillImage.fillAmount - (float)rainDrain / 100f; // Assuming energy bar's max value is 100
+                        fillImage.fillAmount = Mathf.Clamp01(fillAmount); // Clamp fill amount between 0 and 1
+                    
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Fill Image component not found under energyBar GameObject.");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Energy bar GameObject not found.");
+                }
+            }
+            else
+            {
+                isRaining = false;
+                buttonRain = false;
+                RainParticleSystem.SetActive(false);
+
+                NotEnoughEnergy();
+            }
+
+            yield return new WaitForSeconds(1);
+
+        }
+    }
+
+    public void NotEnoughEnergy()
+    {
+        string notEnoughEnergy = "Not enough energy";
+        StartCoroutine(ThrowPlayerWarning(notEnoughEnergy));
+
+
+    }
+
+
     public void ShootTowardsTarget(GameObject Orb)
     {
         var step = 20 * Time.deltaTime; // calculate distance to move
@@ -628,7 +729,8 @@ public class CelestialPlayer : Player
 
     public IEnumerator ColdSnapCoolDownTime()
     {
-        buttonBasicAttack = false;
+
+        buttonColdSnap = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
         canColdSnap = true;
     }

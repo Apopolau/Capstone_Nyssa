@@ -22,7 +22,7 @@ public class AttackAnimationAction : FSMAction
             if (!player.canColdSnap)
             {
                 player.StartCoroutine(player.animateColdSnap());
-             
+               
                 player.ResetColdSnap();
                
             }

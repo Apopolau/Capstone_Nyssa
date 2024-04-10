@@ -17,9 +17,19 @@ public class CanMoonTide : Decision
 
         if (stateMachine.GetComponent<CelestialPlayer>().buttonMoonTide && stateMachine.GetComponent<CelestialPlayer>().canMoonTide && stateMachine.GetComponent<PowerBehaviour>().MoonTideAttackStats.isEnabled && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.MOONTIDE)
         {
-            stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
 
-            return true;
+            if (stateMachine.GetComponent<CelestialPlayer>().energy.current > -(attack.MoonTideAttackStats.energyDrain))
+            {
+                stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
+                return true;
+            }
+            else
+            {
+                stateMachine.GetComponent<CelestialPlayer>().NotEnoughEnergy();
+                stateMachine.GetComponent<CelestialPlayer>().buttonMoonTide = false;
+                return false;
+            }
+
         }
         stateMachine.GetComponent<CelestialPlayer>().buttonMoonTide = false;
 

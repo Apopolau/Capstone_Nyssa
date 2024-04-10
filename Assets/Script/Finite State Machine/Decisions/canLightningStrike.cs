@@ -13,8 +13,20 @@ public class CanLightningStrike: Decision
  
         if (stateMachine.GetComponent<CelestialPlayer>().buttonLightningStrike && stateMachine.GetComponent<CelestialPlayer>().canLightningStrike && stateMachine.GetComponent<PowerBehaviour>().LightningStats.isEnabled && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.LIGHTNINGSTRIKE)
         {
-            stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
-            return true;
+
+            if (stateMachine.GetComponent<CelestialPlayer>().energy.current > -(attack.LightningStats.energyDrain))
+            {
+                stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
+                return true;
+            }
+            else 
+            {
+                stateMachine.GetComponent<CelestialPlayer>().NotEnoughEnergy();
+                stateMachine.GetComponent<CelestialPlayer>().buttonLightningStrike = false;
+                return false;
+            }
+
+
         }
         stateMachine.GetComponent<CelestialPlayer>().buttonLightningStrike = false;
         return false;

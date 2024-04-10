@@ -22,6 +22,7 @@ public class MakeRainAction : FSMAction
         {
 
             player.RainParticleSystem.SetActive(true);
+            player.StartCoroutine(player.DrainRainEnergy());
 
 
         }

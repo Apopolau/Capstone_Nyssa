@@ -23,4 +23,5 @@ public class EnemyStats : ScriptableObject
     [SerializeField] public float takeHitAnimTime;
     [SerializeField] public float deathAnimTime;
 
+
 }
