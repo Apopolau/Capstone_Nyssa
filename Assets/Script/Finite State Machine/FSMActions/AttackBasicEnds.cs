@@ -19,7 +19,6 @@ public class AttackBasicEnds : FSMAction
     public override void Execute(BaseStateMachine stateMachine)
     {
 
-        //Debug.Log("******takeDamage");
         if (player.enemySeen && staff.enemyHit)
         {
            // player.BasicAttack();
@@ -32,8 +31,6 @@ public class AttackBasicEnds : FSMAction
 
 
         player.isAttacking = false;
-        //Debug.Log("******tattack complete");
-
 
     }
 

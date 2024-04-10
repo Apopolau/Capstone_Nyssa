@@ -175,7 +175,6 @@ public class CelestialPlayer : Player
     {
         if (other.gameObject.tag == "Enemy")
         {
-            //Debug.Log(other.transform.gameObject);
             //Player is in range of enemy, in invading monster they can pursue the player
             enemySeen = true;
 
@@ -221,9 +220,7 @@ public class CelestialPlayer : Player
         //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
         buttonColdSnap = true;
         powerInUse = Power.COLDSNAP;
-        Debug.Log("OnSnowFlakeSelected");
         //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
-
     }
 
     public void OnBasicAttackSelected()
@@ -232,7 +229,6 @@ public class CelestialPlayer : Player
         //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
         buttonBasicAttack = true; ;
         powerInUse = Power.BASIC;
-        Debug.Log("startbasic");
         //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
     }
 
@@ -242,7 +238,6 @@ public class CelestialPlayer : Player
         //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
         buttonLightningStrike = true;
         powerInUse = Power.LIGHTNINGSTRIKE;
-        Debug.Log("startlightning");
         //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
     }
 
@@ -253,7 +248,6 @@ public class CelestialPlayer : Player
         //This specfic powers button was seleected, set Celeste current poweer to this specific power and darken the DPAD
         buttonMoonTide = true;
         powerInUse = Power.MOONTIDE;
-        Debug.Log("Start Moontide");
         //DarkenAllImages(uiManager.GetActiveUI()); //darken the controls
     }
 
@@ -265,8 +259,6 @@ public class CelestialPlayer : Player
     {
         //COLDSNAP POWER
         //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
-
-        Debug.Log("coldsnap is animated");
         coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
 
         //Attacking animation of player
@@ -324,7 +316,6 @@ public class CelestialPlayer : Player
 
         //LIGHTNINGSTRIKE POWER
         //TO BE CHANGED!!!!!!!
-        Debug.Log("lightning is animated");
 
         VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
         VisualEffect clone = Instantiate(lightningStrike, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
@@ -370,8 +361,6 @@ public class CelestialPlayer : Player
     {
         //MOONTIDE POWER
         //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
-
-        Debug.Log("moontide is animated");
         coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
 
         //Attacking animation of player
@@ -427,7 +416,6 @@ public class CelestialPlayer : Player
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
-            Debug.Log("Hitpoints:" + HitPoints);
             enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
     }
@@ -439,7 +427,6 @@ public class CelestialPlayer : Player
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
-            Debug.Log("Hitpoints:" + HitPoints);
             enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
     }
@@ -451,7 +438,6 @@ public class CelestialPlayer : Player
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
-            Debug.Log("Hitpoints:" + HitPoints);
             enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
     }
@@ -463,7 +449,6 @@ public class CelestialPlayer : Player
         {
             Power weakness = GetEnemyWeakness(enemyTarget);
             int HitPoints = GetPowerHitDamage(weakness);
-            Debug.Log("Hitpoints:" + HitPoints);
             enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
     }
@@ -643,10 +628,8 @@ public class CelestialPlayer : Player
 
     public IEnumerator ColdSnapCoolDownTime()
     {
-        Debug.Log("coldsnaptimer reset");
         buttonBasicAttack = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
-        Debug.Log("coldsnaptimer copy");
         canColdSnap = true;
     }
 
@@ -660,10 +643,8 @@ public class CelestialPlayer : Player
     }
     public IEnumerator LightningCoolDownTime()
     {
-        Debug.Log("Lightning time reset");
         buttonLightningStrike = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats));
-        Debug.Log("Lightning timer copy");
         canLightningStrike = true;
     }
 
@@ -676,10 +657,8 @@ public class CelestialPlayer : Player
     }
     public IEnumerator BasicCoolDownTime()
     {
-        //Debug.Log("Basic time reset");
         buttonBasicAttack = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats));
-        //Debug.Log("Basic timer copy");
         canBasicAttack = true;
     }
 
@@ -702,14 +681,12 @@ public class CelestialPlayer : Player
         float timer = 0f;
         float startFillAmount = 1f;
         float endFillAmount = 0f;
-        Debug.Log("entering coroutine");
         // Check if the fillImage is active, if not, activate it
 
 
         // Gradually decrease fill amount over cooldown duration
         while (timer < cooldownDuration)
         {
-            //Debug.Log("entering loop of coroutine");
             float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
             fillImage.fillAmount = fillAmount;
             timer += Time.deltaTime;
@@ -719,8 +696,6 @@ public class CelestialPlayer : Player
 
         // Ensure fill amount is exactly 0
         fillImage.fillAmount = endFillAmount;
-
-        Debug.Log("cooling down power");
     }
 
     public float CoolDownTime(Power powerinuse)
@@ -750,10 +725,8 @@ public class CelestialPlayer : Player
 
     public IEnumerator MoonTideCoolDownTime()
     {
-        Debug.Log("MoonTideReset");
         buttonMoonTide = false;
         yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats));
-        Debug.Log("MoonTidetimer copy");
         canMoonTide = true;
     }
 
@@ -796,7 +769,7 @@ public class CelestialPlayer : Player
         }
         else
         {
-            Debug.LogWarning("Target GameObject is not assigned.");
+
         }
     }
 

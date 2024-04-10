@@ -9,7 +9,7 @@ public class AmbienceManager : MonoBehaviour
     public int ActiveLayerIndex => activeLayerIndex;
 
     SoundPlayer soundPlayer;
-    public const int MaxLayerCount = 3;
+    public const int MaxLayerCount = 1;
 
     float volume = 0.8f;
     public float Volume

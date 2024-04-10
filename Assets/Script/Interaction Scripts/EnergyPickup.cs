@@ -29,8 +29,6 @@ public class EnergyPickup : MonoBehaviour
         if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             celestialPlayer.energy.current += energyQuantity;
-            // Debug log the energy quantity
-            //Debug.Log("Energy quantity increased by: " + energyQuantity);
             Destroy(this.gameObject);
             
             IncreaseEnergy();
@@ -61,12 +59,12 @@ public class EnergyPickup : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("Fill Image component not found under energyBar GameObject.");
+                
             }
         }
         else
         {
-            Debug.LogWarning("Energy bar GameObject not found.");
+            
         }
     }
 }

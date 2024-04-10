@@ -40,14 +40,11 @@ public class MainMenuManager : MonoBehaviour
     public void PlayGame()
     {
         soundLibrary.PlaySubmitClips();
-        SceneManager.LoadScene("CutSceneIntro");
-
     }
 
     public void TurnOnMainPage()
     {
         soundLibrary.PlayBackClips();
-        Debug.Log("Going back to main menu");
         mainPage.SetActive(true);
         ToggleLanguagePage(false);
         ToggleInstructions(false);
@@ -56,7 +53,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void ToggleLanguagePage(bool turnOn)
     {
-        Debug.Log("Toggling language page");
         if (turnOn)
         {
             soundLibrary.PlayClickClips();
@@ -86,7 +82,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void ToggleInstructions(bool turnOn)
     {
-        Debug.Log("Toggling instructions");
         if (turnOn)
         {
             soundLibrary.PlayClickClips();

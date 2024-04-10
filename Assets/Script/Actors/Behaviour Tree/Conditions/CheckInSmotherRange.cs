@@ -18,7 +18,6 @@ public class CheckInSmotherRange : BTCondition
         //float distance = Vector3.Distance(thisTarget.position, thisAgent.transform.position);
         if (thisEnemy.inSmotherRange)
         {
-            Debug.Log("Check in smother range");
             //place enemy animation here
             return NodeState.SUCCESS;
         }

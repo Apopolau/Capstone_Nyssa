@@ -30,7 +30,6 @@ public class SoundPlayer : MonoBehaviour
     
     public void Play(SoundEvent soundEvent, float fadeTime)
     {
-        Debug.Log("Play music");
         if (soundEvent == null)
         {
             return;
@@ -55,7 +54,6 @@ public class SoundPlayer : MonoBehaviour
 
     public void Play(MusicEvent musicEvent, float fadeTime)
     {
-        Debug.Log("Play music");
         if(musicEvent == null)
         {
             return;

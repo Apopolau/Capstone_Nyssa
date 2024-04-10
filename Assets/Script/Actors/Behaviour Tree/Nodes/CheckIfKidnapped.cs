@@ -20,7 +20,6 @@ public class CheckIfKidnapped : BTCondition
         if (thisAnimal.isKidnapped)
         {
             //place enemy animation here
-            Debug.Log("hog getting napped");
             return NodeState.SUCCESS;
         }
         else

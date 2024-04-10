@@ -48,7 +48,6 @@ public class CutsceneManager : MonoBehaviour
         //Update the next scene
         if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
         {
-            Debug.Log("Dequeueing in English");
             nextImg = q_sceneListEN.Dequeue();
             if(nextImg != null && q_sceneListEN.Count > 0)
             {
@@ -61,7 +60,6 @@ public class CutsceneManager : MonoBehaviour
         }
         else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
         {
-            Debug.Log("Dequeueing in French");
             nextImg = q_sceneListFR.Dequeue();
             if (nextImg != null && q_sceneListFR.Count > 0)
             {

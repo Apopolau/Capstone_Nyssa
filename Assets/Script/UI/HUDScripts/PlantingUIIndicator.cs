@@ -43,8 +43,6 @@ public class PlantingUIIndicator : MonoBehaviour
                 int quantity = inventory.GetQuantityByItemType(itemType);
                 quantityText.text = $"{quantity}";
 
-                //Debug.Log($"Item type: {itemType}, Quantity: {quantity}");
-
                 // Check if the quantity is above 0
                 if (quantity > 0)
                 {
@@ -61,7 +59,6 @@ public class PlantingUIIndicator : MonoBehaviour
             else
             {
                 quantityText.text = "0";
-                //Debug.LogWarning("Inventory or quantityText is null.");
             }
 
             if (buildRuntimeSet.Items.Count == 0)
@@ -114,7 +111,6 @@ public class PlantingUIIndicator : MonoBehaviour
             default:
                 break;
         }
-        //Debug.Log($"Item type: {itemType} overlay deactivated");
     }
 
     // Function to toggle visibility of UI element

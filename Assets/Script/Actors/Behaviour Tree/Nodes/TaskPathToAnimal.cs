@@ -35,7 +35,6 @@ public class TaskPathToAnimal : BTNode
 
             if (thisEnemy.inKidnapRange)
             {
-                Debug.Log("i am in kidnap range and should be failing");
                 state = NodeState.FAILURE;
                 return state;
             }

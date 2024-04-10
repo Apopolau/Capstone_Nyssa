@@ -562,14 +562,12 @@ public class EarthPlayer : Player
 
     public void PickUpNyssa()
     {
-        Debug.Log("Picking up Nyssa");
         inHoldingNyssa_FSM = true;
         earthAnimator.animator.SetBool(earthAnimator.IfCarryingHash, true);
     }
 
     public void PutDownNyssa()
     {
-        Debug.Log("Putting down Nyssa");
         inHoldingNyssa_FSM = false;
         earthAnimator.animator.SetBool(earthAnimator.IfCarryingHash, false);
     }
@@ -915,7 +913,7 @@ public class EarthPlayer : Player
         }
         else
         {
-            Debug.LogWarning("Target GameObject is not assigned.");
+            
         }
     }
 
@@ -1004,8 +1002,6 @@ public class EarthPlayer : Player
 
         // Ensure fill amount is exactly 0
         fillImage.fillAmount = endFillAmount;
-
-        Debug.Log("cooldown finished");
     }
 
     

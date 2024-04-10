@@ -17,7 +17,6 @@ public class CanBasicAttack: Decision
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
         if (stateMachine.GetComponent<CelestialPlayer>().buttonBasicAttack && stateMachine.GetComponent<PowerBehaviour>().BasicAttackStats.isEnabled && stateMachine.GetComponent<CelestialPlayer>().canBasicAttack && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.BASIC)
         {
-            Debug.Log("Can Basic True");
             stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
             return true;
         }

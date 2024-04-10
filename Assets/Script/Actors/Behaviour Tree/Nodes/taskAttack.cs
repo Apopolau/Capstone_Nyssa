@@ -53,8 +53,6 @@ public class TaskAttack : BTNode
             }
             else
             {
-                //Debug.Log("finishing attack");
-                //attackcounter += Time.deltaTime;
                 state = NodeState.SUCCESS;
             }
             thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);

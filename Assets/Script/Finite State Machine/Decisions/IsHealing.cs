@@ -7,10 +7,8 @@ public class IsHealing : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
-        // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
         if (stateMachine.GetComponent<EarthPlayer>().GetInHealSelection())
         {
-            //Debug.Log("Healing");
             return true;
         }
         return false;

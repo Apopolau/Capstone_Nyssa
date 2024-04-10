@@ -148,7 +148,6 @@ public class Enemy : MonoBehaviour
     {
         while (true)
         {
-            //Debug.Log("its true,calculating distance");
             //arbitrarily using attack time since it's 1s. May need to change in future
             yield return attackTime;
             float distance = sightRange;
@@ -156,7 +155,6 @@ public class Enemy : MonoBehaviour
             inSmotherRange = false;
             foreach (GameObject plant in plantSet.Items)
             {
-                //Debug.Log("Going through the plants");
                 if (Mathf.Abs((plant.GetComponent<Plant>().transform.position - this.transform.position).magnitude) < distance)
                 {
                     distance = Mathf.Abs((plant.GetComponent<Plant>().transform.position - this.transform.position).magnitude);
@@ -164,12 +162,10 @@ public class Enemy : MonoBehaviour
                     //if its already smothered dont gang up
                     if (!plant.GetComponent<Plant>().isSmothered)
                     { seesPlant = true; }
-                    //Debug.Log("Plastic Bag Sees a plant");
                 }
             }
             if (distance < smotherRange)
             {
-                //Debug.Log("in smother range");
 
                 inSmotherRange = true;
             }

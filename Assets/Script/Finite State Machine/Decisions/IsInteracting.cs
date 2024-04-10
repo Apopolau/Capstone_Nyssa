@@ -10,10 +10,8 @@ public class IsInteracting : Decision
         // CelestialPlayer celestialPlayer = stateMachine.GetComponent<CelestialPlayer>(); 
         if (stateMachine.GetComponent<EarthPlayer>().GetIsInteracting())
         {
-            //Debug.Log("Interacting");
             return true;
         }
-        //Debug.Log("Not interacting");
         return false;
     }
 }

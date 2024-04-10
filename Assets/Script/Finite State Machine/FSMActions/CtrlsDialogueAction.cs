@@ -27,7 +27,6 @@ public class CtrlsDialogueAction : FSMAction
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        //Debug.Log("Leaving dialogue");
         earthPlayer.earthControls.controls.DialogueControls.Disable();
     }
 }

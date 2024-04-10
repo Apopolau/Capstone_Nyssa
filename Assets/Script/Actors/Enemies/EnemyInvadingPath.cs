@@ -35,16 +35,12 @@ public class EnemyInvadingPath : MonoBehaviour
     {
 
         int index = Random.Range(0, pathCount - 1);
-        Debug.Log("You have chosen oath number:" + index);
         return pathsList[1];
         // return pathsList[index];
     }
     public void setEnemiesPath(Enemy enemy, List<Transform> selectedPath)
     {
         enemy.chosenPath = selectedPath;
-        Debug.Log("checking paths pos 2:" + selectedPath[0].transform.position);
-     
-     
     }
 
     public Transform getClosestEscapeRoute(Enemy enemy)

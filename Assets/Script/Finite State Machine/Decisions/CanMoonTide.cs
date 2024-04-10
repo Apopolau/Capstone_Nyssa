@@ -8,7 +8,6 @@ public class CanMoonTide : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)
     {
-        //Debug.Log("CanMT Falseeeeeeee");
         PowerBehaviour attack;
         attack = stateMachine.GetComponent<PowerBehaviour>();
         //If you press the button
@@ -20,7 +19,6 @@ public class CanMoonTide : Decision
         {
             stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
 
-            //Debug.Log("Can MY True");
             return true;
         }
         stateMachine.GetComponent<CelestialPlayer>().buttonMoonTide = false;

@@ -17,7 +17,7 @@ public class CanColdSnap : Decision
         if (stateMachine.GetComponent<CelestialPlayer>().buttonColdSnap && stateMachine.GetComponent<PowerBehaviour>().ColdSnapStats.isEnabled && stateMachine.GetComponent<CelestialPlayer>().canColdSnap && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.COLDSNAP)
         {
             stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
-            Debug.Log("Can CS True");
+            
             return true;
         }
 

@@ -80,7 +80,6 @@ public class CelestialPlayerControls : MonoBehaviour
             userSettingsManager.celestialControlType = UserSettingsManager.ControlType.CONTROLLER;
         }
 
-        Debug.Log(myDeviceID);
         controls.CelestialPlayerDefault.Disable();
         controls.CelestialPlayerDefault.CelestialWalk.performed += OnCelestialMovePerformed;
         controls.CelestialPlayerDefault.CelestialWalk.canceled += OnCelestialMoveCancelled;

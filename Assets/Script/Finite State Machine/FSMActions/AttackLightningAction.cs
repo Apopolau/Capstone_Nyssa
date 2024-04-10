@@ -14,21 +14,12 @@ public class AttackLightningAction: FSMAction
 
     public override void Execute(BaseStateMachine stateMachine)
     {
-        Debug.Log("******take Lightning Damage");
         if (player.enemySeen)
         {
-           // player.LightningAttack();
-
 
         }
 
-
-
-
-
         player.isAttacking = false;
-        Debug.Log("******lightning attack complete");
-
 
     }
     public override void ExitState(BaseStateMachine stateMachine)

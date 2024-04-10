@@ -15,20 +15,13 @@ public class AttackColdSnapEnds : FSMAction
 
     public override void Execute(BaseStateMachine stateMachine)
     {
-        //Debug.Log("******takeDamage");
         if(player.enemySeen)
         { 
     
 
         }
- 
-        
 
-
-          
         player.isAttacking = false;
-        //Debug.Log("******tattack complete");
-
 
     }
 
