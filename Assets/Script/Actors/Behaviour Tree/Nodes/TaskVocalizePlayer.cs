@@ -10,6 +10,7 @@ public class TaskVocalizePlayer : BTNode
     float playerRange;
     Animal thisAnimal;
     Sprite thisSprite;
+    bool isPlaying = false;
 
     public TaskVocalizePlayer(NavMeshAgent thisAgent, Animal animal, float range)
     {
@@ -33,14 +34,17 @@ public class TaskVocalizePlayer : BTNode
             {
                 thisSprite = thisAnimal.celesteImage;
             }
-            //Do a popup here
-            thisAnimal.PlayVocal();
-            thisAnimal.TurnOnPopup(thisSprite);
-            state = NodeState.SUCCESS;
+            if (!isPlaying)
+            {
+                thisAnimal.PlayVocal();
+                thisAnimal.TurnOnPopup(thisSprite);
+                isPlaying = true;
+            }
         }
         else
         {
             state = NodeState.FAILURE;
+            isPlaying = false;
         }
         
         return state;

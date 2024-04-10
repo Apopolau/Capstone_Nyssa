@@ -165,11 +165,22 @@ public class DuckTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new CheckIfAnyFood(thisDuck),
-                                    new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.buildSet, 5),
-                                    new CheckForClosestFood(thisDuck, 50),
-                                    new taskInitiatePathToFood(duckAgent, duckAnimator),
-                                    new Timer(2f, new TaskInitiateAnimation(duckAnimator.animator, duckAnimator.IfEatingHash, nonEatingAnimations)),
-                                    new TaskRestoreStat(thisDuck.hunger)
+                                    new Selector(new List<BTNode>
+                                    {
+                                        new Sequence(new List<BTNode>
+                                        {
+                                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.buildSet, 5),
+                                            new CheckForClosestFood(thisDuck, 5),
+                                            new Timer(2f, new TaskInitiateAnimation(duckAnimator.animator, duckAnimator.IfEatingHash, nonEatingAnimations)),
+                                            new TaskRestoreStat(thisDuck.hunger)
+                                        }),
+                                        new Sequence(new List<BTNode>
+                                        {
+                                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.buildSet, 50),
+                                            new CheckForClosestFood(thisDuck, 50),
+                                            new taskInitiatePathToFood(duckAgent, duckAnimator),
+                                        })
+                                    }),
                                 }),
                                 //If no, complain about it
                                 new Sequence(new List<BTNode>
@@ -190,9 +201,20 @@ public class DuckTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new CheckIfAnyWater(thisDuck),
-                                    new taskInitiatePathTo(duckAgent, thisDuck.waterWaypoint.transform, duckAnimator),
-                                    new Timer(2f, new TaskInitiateAnimation(duckAnimator.animator, duckAnimator.IfEatingHash, nonEatingAnimations)),
-                                    new TaskRestoreStat(thisDuck.thirst)
+                                    new Selector(new List<BTNode>
+                                    {
+                                        new Sequence(new List<BTNode>
+                                        {
+                                            new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.waterWaypoint, 5),
+                                            new Timer(2f, new TaskInitiateAnimation(duckAnimator.animator, duckAnimator.IfEatingHash, nonEatingAnimations)),
+                                            new TaskRestoreStat(thisDuck.thirst)
+                                        }),
+                                        new Sequence(new List<BTNode>
+                                        {
+                                            new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.waterWaypoint, 50),
+                                            new taskInitiatePathTo(duckAgent, thisDuck.waterWaypoint.transform, duckAnimator),
+                                        })
+                                    })
                                 }),
                                 //If no, complain about it
                                 new Sequence(new List<BTNode>

@@ -41,13 +41,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7117513122354662221}
+  - component: {fileID: 201027553100823248}
   m_Layer: 0
   m_Name: UiTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7117513122354662221
 Transform:
   m_ObjectHideFlags: 0
@@ -64,6 +65,19 @@ Transform:
   - {fileID: 153751550922977780}
   m_Father: {fileID: 3668103021458720016}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &201027553100823248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645209631482356489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b5359528c703141904a9d0ee6a58d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraSet: {fileID: 11400000, guid: de514a6c00f3c3542b8aece5fa086744, type: 2}
 --- !u!1 &5665216156270961092
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +179,6 @@ MonoBehaviour:
   grassSet: {fileID: 11400000, guid: c50479ae29688984d94f86bfe3821cf3, type: 2}
   waterImage: {fileID: 21300000, guid: 2ba99edd7746cbb41a3cbfde3f95b592, type: 3}
   foodImage: {fileID: 21300000, guid: ea62e19d6b8677644a34fa092fae81ac, type: 3}
-  shelterImage: {fileID: 0}
   friendImage: {fileID: 21300000, guid: 1717634f88fe8c447ad8e69fdda4e18b, type: 3}
   sproutImage: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
   celesteImage: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
@@ -454,7 +467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.55
+      value: 6.48
       objectReference: {fileID: 0}
     - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
       propertyPath: m_LocalPosition.z
