@@ -117,6 +117,7 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] private GameObject loggingBuilding;
 
     bool setClean = false;
+    bool setSuperClean = false;
 
     // Start is called before the first frame update
     void Start()
@@ -394,31 +395,41 @@ public class LevelTwoEvents : LevelEventManager
             {
                 if (setClean)
                 {
-                    soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
                     soundPlayers[0].Stop(0.5f);
                     soundPlayers[2].Stop(0.5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(false);
                     setClean = false;
+                    setSuperClean = false;
                 }
+                soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
             }
             else if ((plantCount > tileCount / 4) && (plantCount < tileCount / 2))
             {
                 if (!setClean)
                 {
-                    soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
                     soundPlayers[0].Play(music, 0.5f);
-                    soundPlayers[0].SetVolume(plantCount / tileCount);
-
                     GetComponent<DayNightCycle>().SwapSkyColours(true);
                     setClean = true;
                 }
+                if (setSuperClean)
+                {
+                    soundPlayers[2].Stop(0.5f);
+                    setSuperClean = false;
+                }
+                soundPlayers[0].SetVolume(plantCount / tileCount);
+                soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
             }
             else if (plantCount > tileCount / 2)
             {
+                if(!setSuperClean)
+                {
+                    soundPlayers[1].Stop(0.5f);
+                    soundPlayers[2].Play(nature, 0.5f);
+                    setSuperClean = true;
+                }
                 soundPlayers[0].SetVolume(plantCount / tileCount);
-                soundPlayers[1].Stop(0.5f);
                 soundPlayers[2].SetVolume(plantCount / tileCount);
-                soundPlayers[2].Play(nature, 0.5f);
+                
             }
         }
 
