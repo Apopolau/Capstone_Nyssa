@@ -23,6 +23,7 @@ public class MakeRainAction : FSMAction
             Debug.Log("It is now raining ");
 
             player.RainParticleSystem.SetActive(true);
+            player.StartCoroutine(player.DrainRainEnergy());
 
 
         }
