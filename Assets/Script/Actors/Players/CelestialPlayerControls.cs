@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class CelestialPlayerControls : MonoBehaviour
 {
@@ -91,6 +92,7 @@ public class CelestialPlayerControls : MonoBehaviour
         controls.CelestialPlayerDefault.MakeMoonTide.performed += OnMoonTidePerformed;
         controls.CelestialPlayerDefault.MakeInteract.started += OnInteract;
         controls.CelestialPlayerDefault.MakeInteract.canceled += OnInteract;
+        controls.CelestialPlayerDefault.OnMenuOpen.started += OnMenuOpen;
 
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
@@ -256,14 +258,11 @@ public class CelestialPlayerControls : MonoBehaviour
         }
     }
 
-    private void OnMenuInteractPerformed(InputAction.CallbackContext context)
+    private void OnMenuOpen(InputAction.CallbackContext context)
     {
         if (context.control.device.deviceId == myDeviceID)
         {
-            if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
-            {
-                //if()
-            }
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

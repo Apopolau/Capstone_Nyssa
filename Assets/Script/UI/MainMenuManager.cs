@@ -10,10 +10,14 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject mainPage;
     [SerializeField] GameObject languagePage;
     [SerializeField] GameObject instructions;
+    [SerializeField] GameObject levelPage;
 
     [SerializeField] MainMenu mainMenu;
     [SerializeField] MainMenu languageMenu;
     [SerializeField] MainMenu instructionsMenu;
+
+    [SerializeField] MainMenu levelMenu;     
+    
 
     public List<GameObject> englishButtons;
     public List<GameObject> frenchButtons;
@@ -47,6 +51,7 @@ public class MainMenuManager : MonoBehaviour
         mainPage.SetActive(true);
         ToggleLanguagePage(false);
         ToggleInstructions(false);
+        ToggleLevelPage(false);
     }
 
     public void ToggleLanguagePage(bool turnOn)
@@ -61,6 +66,21 @@ public class MainMenuManager : MonoBehaviour
         else
         {
             languagePage.SetActive(false);
+        }
+    }
+
+    public void ToggleLevelPage(bool turnOn)
+    {
+        Debug.Log("Toggling level page");
+        if (turnOn)
+        {
+            soundLibrary.PlayClickClips();
+            levelPage.SetActive(true);
+            mainPage.SetActive(false);
+        }
+        else
+        {
+            levelPage.SetActive(false);
         }
     }
 
@@ -151,5 +171,15 @@ public class MainMenuManager : MonoBehaviour
         {
             button.SetActive(false);
         }
+    }
+
+    public void PlayLevelOne()
+    {
+        SceneManager.LoadScene("CutSceneIntro");
+    }
+
+    public void PlayLevelTwo()
+    {
+        SceneManager.LoadScene("CutsceneLevelTwo");
     }
 }

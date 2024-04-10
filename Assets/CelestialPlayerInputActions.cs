@@ -116,6 +116,15 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""OnMenuOpen"",
+                    ""type"": ""Button"",
+                    ""id"": ""699b3b43-4ed9-4600-be5d-3da37db9a1e0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -470,6 +479,28 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                     ""action"": ""MakeMoonTide"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""02d33ec9-1b3c-4cf2-b9e0-80a8f7655509"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnMenuOpen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6a09897-f426-46c7-bedb-aa929c560bde"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""OnMenuOpen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -687,6 +718,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         m_CelestialPlayerDefault_MakeSunBeam = m_CelestialPlayerDefault.FindAction("MakeSunBeam", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeDodge = m_CelestialPlayerDefault.FindAction("MakeDodge", throwIfNotFound: true);
         m_CelestialPlayerDefault_MakeInteract = m_CelestialPlayerDefault.FindAction("MakeInteract", throwIfNotFound: true);
+        m_CelestialPlayerDefault_OnMenuOpen = m_CelestialPlayerDefault.FindAction("OnMenuOpen", throwIfNotFound: true);
         // MenuControls
         m_MenuControls = asset.FindActionMap("MenuControls", throwIfNotFound: true);
         m_MenuControls_Click = m_MenuControls.FindAction("Click", throwIfNotFound: true);
@@ -770,6 +802,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
     private readonly InputAction m_CelestialPlayerDefault_MakeSunBeam;
     private readonly InputAction m_CelestialPlayerDefault_MakeDodge;
     private readonly InputAction m_CelestialPlayerDefault_MakeInteract;
+    private readonly InputAction m_CelestialPlayerDefault_OnMenuOpen;
     public struct CelestialPlayerDefaultActions
     {
         private @CelestialPlayerInputActions m_Wrapper;
@@ -784,6 +817,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         public InputAction @MakeSunBeam => m_Wrapper.m_CelestialPlayerDefault_MakeSunBeam;
         public InputAction @MakeDodge => m_Wrapper.m_CelestialPlayerDefault_MakeDodge;
         public InputAction @MakeInteract => m_Wrapper.m_CelestialPlayerDefault_MakeInteract;
+        public InputAction @OnMenuOpen => m_Wrapper.m_CelestialPlayerDefault_OnMenuOpen;
         public InputActionMap Get() { return m_Wrapper.m_CelestialPlayerDefault; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -823,6 +857,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeInteract.started += instance.OnMakeInteract;
             @MakeInteract.performed += instance.OnMakeInteract;
             @MakeInteract.canceled += instance.OnMakeInteract;
+            @OnMenuOpen.started += instance.OnOnMenuOpen;
+            @OnMenuOpen.performed += instance.OnOnMenuOpen;
+            @OnMenuOpen.canceled += instance.OnOnMenuOpen;
         }
 
         private void UnregisterCallbacks(ICelestialPlayerDefaultActions instance)
@@ -857,6 +894,9 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
             @MakeInteract.started -= instance.OnMakeInteract;
             @MakeInteract.performed -= instance.OnMakeInteract;
             @MakeInteract.canceled -= instance.OnMakeInteract;
+            @OnMenuOpen.started -= instance.OnOnMenuOpen;
+            @OnMenuOpen.performed -= instance.OnOnMenuOpen;
+            @OnMenuOpen.canceled -= instance.OnOnMenuOpen;
         }
 
         public void RemoveCallbacks(ICelestialPlayerDefaultActions instance)
@@ -1048,6 +1088,7 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
         void OnMakeSunBeam(InputAction.CallbackContext context);
         void OnMakeDodge(InputAction.CallbackContext context);
         void OnMakeInteract(InputAction.CallbackContext context);
+        void OnOnMenuOpen(InputAction.CallbackContext context);
     }
     public interface IMenuControlsActions
     {
