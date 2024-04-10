@@ -39,11 +39,11 @@ public class PickupLetterChange : MonoBehaviour
             // Update the text based on the control type from the user settings manager
             if (settingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
             {
-                pickupLetter.text = "F"; // Set text to "K" for keyboard
+                pickupLetter.text = "P"; 
             }
             else if (settingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
             {
-                pickupLetter.text = "A"; // Set text to "C" for controller
+                pickupLetter.text = "A"; 
             }
         }
     }
