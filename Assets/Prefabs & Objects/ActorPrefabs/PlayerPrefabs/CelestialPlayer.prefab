@@ -896,6 +896,8 @@ GameObject:
   - component: {fileID: 2887321969620239026}
   - component: {fileID: 6099830683338002241}
   - component: {fileID: 4269377883444005770}
+  - component: {fileID: 965651675789021278}
+  - component: {fileID: 6663649609590881961}
   m_Layer: 12
   m_Name: CelestialPlayer
   m_TagString: Player2
@@ -1034,6 +1036,8 @@ MonoBehaviour:
   playerObj: {fileID: 2590418954938022080}
   isDying: 0
   isRespawning: 0
+  displayText: {fileID: 0}
+  playerWarningBG: {fileID: 0}
   interacting: 0
   OrigPos: {x: 346, y: -0.00002288818, z: 29}
   soundLibrary: {fileID: 11400000, guid: 4069bc29f019ea14e921266fb25a26ef, type: 2}
@@ -1462,6 +1466,39 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationToSet:
   - {fileID: 11400000, guid: 789ca26ffd1b9bc4bad5168f05d25e49, type: 2}
+--- !u!114 &965651675789021278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159944928166958832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a38c898db3ddeb44f8c1f078dc6aaf77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationToSet:
+  - {fileID: 11400000, guid: 789ca26ffd1b9bc4bad5168f05d25e49, type: 2}
+--- !u!114 &6663649609590881961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7159944928166958832}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5eefe638312cf34db7561947edf75b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  englishUI:
+  - {fileID: 0}
+  - {fileID: 0}
+  frenchUI:
+  - {fileID: 0}
+  - {fileID: 0}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!1 &9147218820399847505
 GameObject:
   m_ObjectHideFlags: 0

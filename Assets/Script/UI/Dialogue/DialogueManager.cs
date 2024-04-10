@@ -260,27 +260,35 @@ public class DialogueManager : MonoBehaviour
     //Wraps up the dialogue when we run out of events
     public void EndDialogue()
     {
-        HaltCoroutines();
-        HaltTyping();
-        ReturnCameraToOrigin();
-
-        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        if(this != null)
         {
-            dialogueBox.SetActive(false); // Deactivate the dialogue box
-            isDialogueActive = false; // Set the dialogue state to inactive
+            if(!(currentEvent is DialogueMissionEnd))
+            {
+                HaltCoroutines();
+                HaltTyping();
+                ReturnCameraToOrigin();
+
+                if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+                {
+                    dialogueBox.SetActive(false); // Deactivate the dialogue box
+                    isDialogueActive = false; // Set the dialogue state to inactive
+                }
+                // Toggle other UI elements visibility
+                uiController.ToggleUIForDialogue(true); // Pass true to reactivate other UI elements
+
+                panningOn = false;
+
+                //Restore both characters' default controls
+                celestialPlayer.celestialControls.controls.DialogueControls.Disable();
+                celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+                earthPlayer.ToggleDialogueState(false);
+
+                split.ExitCutscene();
+                Time.timeScale = 1f;
+            }
+            
         }
-        // Toggle other UI elements visibility
-        uiController.ToggleUIForDialogue(true); // Pass true to reactivate other UI elements
-
-        panningOn = false;
-
-        //Restore both characters' default controls
-        celestialPlayer.celestialControls.controls.DialogueControls.Disable();
-        celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
-        earthPlayer.ToggleDialogueState(false);
-
-        split.ExitCutscene();
-        Time.timeScale = 1f;
+        
     }
 
 
