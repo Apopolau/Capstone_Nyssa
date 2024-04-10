@@ -8,6 +8,7 @@ public class TurnOffSludgePump : Interactable
     //[SerializeField] Item item;
     //[SerializeField] Inventory inventory;
     [SerializeField] LevelOneEvents levelOneEvents;
+    [SerializeField] InstanceSoundEvent soundEvent;
     public DialogueTrigger sludgeOffDialouge;
     public DialogueTrigger sludgeDialougeEarth;
     public DialogueTrigger sludgeDialougeCelest;
@@ -56,6 +57,7 @@ public class TurnOffSludgePump : Interactable
     {
         if (p1IsInRange && earthPlayer.interacting)
         {
+            soundEvent.Play();
             StartCoroutine(SludgePumpTurnsOff());
              //trigger dialouge after sludge is turned off
         }
