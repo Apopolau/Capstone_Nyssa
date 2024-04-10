@@ -61,6 +61,7 @@ public abstract class Animal : MonoBehaviour
     [SerializeField] protected AnimalSoundLibrary soundLibrary;
 
     protected WaitForSeconds barrierLength = new WaitForSeconds(5f);
+    protected WaitForSeconds popupLength = new WaitForSeconds(3);
 
     
 
@@ -213,5 +214,21 @@ public abstract class Animal : MonoBehaviour
 
             //kidnapIcon.transform.GetChild(0).GetChild(0).RotateAround(this.gameObject.transform.position, pointToRotateTowards, 5 * Time.deltaTime);
         }
+    }
+
+    public void PlayVocal()
+    {
+        soundLibrary.PlayVocalizeClips();
+    }
+
+    public void TurnOnPopup()
+    {
+        StartCoroutine(PopupRoutine());
+    }
+
+    public IEnumerator PopupRoutine()
+    {
+        yield return popupLength;
+
     }
 }

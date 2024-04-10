@@ -25,7 +25,7 @@ public class TaskVocalize : BTNode
         {
             thisAgent.GetComponent<Transform>().LookAt(thisAnimal.GetClosestPlayer().transform);
             //Do a popup here
-            //Also do a sound, like a quack
+            thisAnimal.PlayVocal();
             state = NodeState.RUNNING;
         }
         else

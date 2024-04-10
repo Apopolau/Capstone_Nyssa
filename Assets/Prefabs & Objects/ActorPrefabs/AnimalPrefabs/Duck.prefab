@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7117513122354662221
 Transform:
   m_ObjectHideFlags: 0
@@ -178,10 +178,13 @@ MonoBehaviour:
   isEscorted: 0
   isKidnapped: 0
   kidnapper: {fileID: 0}
+  origSpeed: 0
+  kidnappedSpeed: 0
   levelProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
   hasCleanWater: 0
   hasShelter: 0
   hasAnyFood: 0
+  soundLibrary: {fileID: 11400000, guid: da2a266dde0b3e143a0c3692e362f1fe, type: 2}
   duckWayPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -443,6 +446,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: EscortCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3113640933164595635, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 3113640933164595635, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 3693047108951325682, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 3693047108951325682, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 4039693993881468100, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 4039693993881468100, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 8666163771918825830, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
