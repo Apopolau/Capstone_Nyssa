@@ -10,6 +10,7 @@ public class PlasticBagEnemySpawner : MonoBehaviour
     private bool spawnsOn;
     GameObject currSpawnedEnemy;
     [SerializeField] private float spawnInterval;
+    public GameObjectRuntimeSet enemySet;
 
     void Start()
     {
@@ -54,7 +55,9 @@ public class PlasticBagEnemySpawner : MonoBehaviour
 
             //if daynight cycle.nights passed is bigger  that 2 interval decrease
             yield return new WaitForSeconds(interval);
-            GameObject newEnemy = Instantiate(currSpawnedEnemy, this.transform.position, Quaternion.identity);
+
+            if (enemySet.Items.Count < 5)
+            { GameObject newEnemy = Instantiate(currSpawnedEnemy, this.transform.position, Quaternion.identity); }
         }
     }
 

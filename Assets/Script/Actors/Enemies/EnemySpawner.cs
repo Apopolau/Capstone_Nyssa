@@ -6,10 +6,11 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private WeatherState weatherState;
     [SerializeField] private GameObject plasticBagMonsterPrefab;
-   // [SerializeField] private GameObject enemyOilInvaderPrefab;
+    [SerializeField] private GameObject enemyOilInvaderPrefab;
     [SerializeField] private GameObject smogMonsterInvaderPrefab;
+    public GameObjectRuntimeSet enemySet;
     GameObject currSpawnedEnemy;
-    bool isFromSawMill;
+    public bool isFromSawMill;
 
     private bool startedSpawns;
     private bool spawnsOn;
@@ -28,14 +29,33 @@ public class EnemySpawner : MonoBehaviour
     private void Update()
     {
         int index = Random.Range(0, 10);
-        if (index < 6)
+        if (isFromSawMill)
         {
-            currSpawnedEnemy = plasticBagMonsterPrefab;
+            if (index < 6)
+            {
+                currSpawnedEnemy = plasticBagMonsterPrefab;
 
+            }
+            else
+            {
+                currSpawnedEnemy = smogMonsterInvaderPrefab;
+            }
         }
         else
         {
-            currSpawnedEnemy = smogMonsterInvaderPrefab;
+            if (index < 2)
+            {
+                currSpawnedEnemy = plasticBagMonsterPrefab;
+
+            }
+            else if (2 <= index  && index < 6)
+            {
+                currSpawnedEnemy = smogMonsterInvaderPrefab;
+            }
+            else if (6 <= index && index < 10)
+            {
+                currSpawnedEnemy = enemyOilInvaderPrefab;
+            }
         }
         CheckTimeOfDay();
     }
@@ -59,8 +79,10 @@ public class EnemySpawner : MonoBehaviour
            if (!weatherState.dayTime)
             {
                 spawnsOn = true;
-
-                StartCoroutine(spawnEnemy(currSpawnedEnemy, spawnInterval));
+                if (enemySet.Items.Count < 10)
+                {
+                    StartCoroutine(spawnEnemy(currSpawnedEnemy, spawnInterval));
+                }
             }
         }
     }
