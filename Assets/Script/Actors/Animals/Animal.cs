@@ -224,7 +224,7 @@ public abstract class Animal : MonoBehaviour
 
     public void TurnOnPopup(Sprite sprite)
     {
-        speechTarget.transform.GetChild(1).GetComponent<Image>().sprite = sprite;
+        speechTarget.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = sprite;
         speechTarget.SetActive(true);
         StartCoroutine(PopupRoutine());
     }

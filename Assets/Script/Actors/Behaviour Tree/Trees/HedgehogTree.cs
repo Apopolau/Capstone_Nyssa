@@ -174,11 +174,23 @@ public class HedgehogTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new CheckIfAnyFood(thisHog),
-                                    new CheckIfInRangeAll(thisHog.gameObject, thisHog.buildSet, 5),
-                                    new CheckForClosestFood(thisHog, 50),
-                                    new taskInitiatePathToFood(hogAgent, hogAnimator),
-                                    new Timer(2f, new TaskInitiateAnimation(hogAnimator.animator, hogAnimator.IfEatingHash, nonEatingAnimations)),
-                                    new TaskRestoreStat(thisHog.hunger)
+                                    new Selector(new List<BTNode>
+                                    {
+                                        new Sequence(new List<BTNode>
+                                        {
+                                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.buildSet, 5),
+                                            new CheckForClosestFood(thisHog, 5),
+                                            new taskInitiatePathToFood(hogAgent, hogAnimator),
+                                            new Timer(2f, new TaskInitiateAnimation(hogAnimator.animator, hogAnimator.IfEatingHash, nonEatingAnimations)),
+                                            new TaskRestoreStat(thisHog.hunger)
+                                        }),
+                                        new Sequence(new List<BTNode>
+                                        {
+                                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.buildSet, 50),
+                                            new CheckForClosestFood(thisHog, 5),
+                                            new taskInitiatePathToFood(hogAgent, hogAnimator)
+                                        })
+                                    })
                                 }),
                                 //If no, complain about it
                                 new Sequence(new List<BTNode>
@@ -199,9 +211,20 @@ public class HedgehogTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new CheckIfAnyWater(thisHog),
-                                    new taskInitiatePathTo(hogAgent, thisHog.waterWaypoint.transform, hogAnimator),
-                                    new Timer(2f, new TaskInitiateAnimation(hogAnimator.animator, hogAnimator.IfEatingHash, nonEatingAnimations)),
-                                    new TaskRestoreStat(thisHog.thirst)
+                                    new Selector(new List<BTNode>
+                                    {
+                                        new Sequence(new List<BTNode>
+                                        {
+                                            new CheckIfInRangeOne(thisHog.gameObject, thisHog.waterWaypoint, 5),
+                                            new Timer(2f, new TaskInitiateAnimation(hogAnimator.animator, hogAnimator.IfEatingHash, nonEatingAnimations)),
+                                            new TaskRestoreStat(thisHog.thirst)
+                                        }),
+                                        new Sequence(new List<BTNode>
+                                        {
+                                            new CheckIfInRangeOne(thisHog.gameObject, thisHog.waterWaypoint, 50),
+                                            new taskInitiatePathTo(hogAgent, thisHog.waterWaypoint.transform, hogAnimator),
+                                        })
+                                    })
                                 }),
                                 //If no, complain about it
                                 new Sequence(new List<BTNode>
