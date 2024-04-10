@@ -153,7 +153,7 @@ public class DuckTree : BTree
                             new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.playerSet, 15),
                             new CheckIfAnimating(duckAnimator),
                             new CheckForClosestPlayer(thisDuck, 15),
-                            new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15))
+                            new Timer(3f, new TaskVocalizePlayer(duckAgent, thisDuck, 15))
                         }),
                         //Check if hungry first, find food
                         new Sequence(new List<BTNode>
@@ -176,7 +176,7 @@ public class DuckTree : BTree
                                 {
                                     new Inverter(new CheckIfAnyFood(thisDuck)),
                                     new CheckForClosestPlayer(thisDuck, 15),
-                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15))
+                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15, thisDuck.foodImage))
                                 })
                             })
                         }),
@@ -199,7 +199,7 @@ public class DuckTree : BTree
                                 {
                                     new Inverter(new CheckIfAnyWater(thisDuck)),
                                     new CheckForClosestPlayer(thisDuck, 15),
-                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15))
+                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15, thisDuck.waterImage))
                                 })
                                 
                             })
