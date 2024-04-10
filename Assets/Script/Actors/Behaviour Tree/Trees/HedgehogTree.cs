@@ -162,7 +162,7 @@ public class HedgehogTree : BTree
                             new CheckIfInRangeAll(thisHog.gameObject, thisHog.playerSet, 15),
                             new CheckIfAnimating(hogAnimator),
                             new CheckForClosestPlayer(thisHog, 15),
-                            new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15))
+                            new Timer(3f, new TaskVocalizePlayer(hogAgent, thisHog, 15))
                         }),
                         //Check if hungry first, find food
                         new Sequence(new List<BTNode>
@@ -185,7 +185,7 @@ public class HedgehogTree : BTree
                                 {
                                     new Inverter(new CheckIfAnyFood(thisHog)),
                                     new CheckForClosestPlayer(thisHog, 15),
-                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15))
+                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15, thisHog.foodImage))
                                 })
                             })
                         }),
@@ -208,7 +208,7 @@ public class HedgehogTree : BTree
                                 {
                                     new Inverter(new CheckIfAnyWater(thisHog)),
                                     new CheckForClosestPlayer(thisHog, 15),
-                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15))
+                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15, thisHog.waterImage))
                                 })
                                 
                             })

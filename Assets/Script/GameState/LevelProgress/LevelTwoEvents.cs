@@ -405,6 +405,7 @@ public class LevelTwoEvents : LevelEventManager
             {
                 if (!setClean)
                 {
+                    soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
                     soundPlayers[0].Play(music, 0.5f);
                     soundPlayers[0].SetVolume(plantCount / tileCount);
 
@@ -414,6 +415,8 @@ public class LevelTwoEvents : LevelEventManager
             }
             else if (plantCount > tileCount / 2)
             {
+                soundPlayers[0].SetVolume(plantCount / tileCount);
+                soundPlayers[1].Stop(0.5f);
                 soundPlayers[2].SetVolume(plantCount / tileCount);
                 soundPlayers[2].Play(nature, 0.5f);
             }

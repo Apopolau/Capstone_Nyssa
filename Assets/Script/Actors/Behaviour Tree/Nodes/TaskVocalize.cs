@@ -9,12 +9,14 @@ public class TaskVocalize : BTNode
     NavMeshAgent thisAgent;
     float playerRange;
     Animal thisAnimal;
+    Sprite thisSprite;
 
-    public TaskVocalize(NavMeshAgent thisAgent, Animal animal, float range)
+    public TaskVocalize(NavMeshAgent thisAgent, Animal animal, float range, Sprite sprite)
     {
         this.thisAgent = thisAgent;
         playerRange = range;
         thisAnimal = animal;
+        thisSprite = sprite;
     }
 
 
@@ -25,8 +27,9 @@ public class TaskVocalize : BTNode
         {
             thisAgent.GetComponent<Transform>().LookAt(thisAnimal.GetClosestPlayer().transform);
             //Do a popup here
-            //Also do a sound, like a quack
-            state = NodeState.RUNNING;
+            thisAnimal.PlayVocal();
+            thisAnimal.TurnOnPopup(thisSprite);
+            state = NodeState.SUCCESS;
         }
         else
         {

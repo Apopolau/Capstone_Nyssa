@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 7868941164567360802}
   - component: {fileID: 2484009731153438493}
   - component: {fileID: 4735597307128877273}
+  - component: {fileID: 5059497397633083112}
   m_Layer: 0
   m_Name: LevelOneManager
   m_TagString: Untagged
@@ -72,7 +73,7 @@ MonoBehaviour:
   wind: {fileID: 11400000, guid: 2aec86a56eabb5c438d3be3ee0766a53, type: 2}
   nature: {fileID: 11400000, guid: 7d947dc4de6893c428a9141249e45d84, type: 2}
   rain: {fileID: 11400000, guid: 73917364e62279743894f4bb18a57aed, type: 2}
-  ambientSoundPlayer: {fileID: 0}
+  soundPlayers: []
   uiSoundLibrary: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
   dyingEnemy: {fileID: 0}
   terrain: {fileID: 0}
@@ -480,3 +481,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: {fileID: 11400000, guid: f660d15d273036c45b7e40b05cbc01c7, type: 2}
+--- !u!114 &5059497397633083112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213507687717741215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5eefe638312cf34db7561947edf75b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

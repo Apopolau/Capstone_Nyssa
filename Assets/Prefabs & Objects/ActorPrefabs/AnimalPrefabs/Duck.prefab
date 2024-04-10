@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7117513122354662221
 Transform:
   m_ObjectHideFlags: 0
@@ -105,6 +105,7 @@ Transform:
   - {fileID: 3605927682115549236}
   - {fileID: 4171676351237390294}
   - {fileID: 7117513122354662221}
+  - {fileID: 2522794916573313020}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4652905001960518181
@@ -162,14 +163,15 @@ MonoBehaviour:
   buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
   foodSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
   grassSet: {fileID: 11400000, guid: c50479ae29688984d94f86bfe3821cf3, type: 2}
-  waterImage: {fileID: 0}
-  foodImage: {fileID: 0}
+  waterImage: {fileID: 21300000, guid: 2ba99edd7746cbb41a3cbfde3f95b592, type: 3}
+  foodImage: {fileID: 21300000, guid: ea62e19d6b8677644a34fa092fae81ac, type: 3}
   shelterImage: {fileID: 0}
-  friendImage: {fileID: 0}
-  sproutImage: {fileID: 0}
-  celesteImage: {fileID: 0}
+  friendImage: {fileID: 21300000, guid: 1717634f88fe8c447ad8e69fdda4e18b, type: 3}
+  sproutImage: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+  celesteImage: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
-  uiTarget: {fileID: 0}
+  uiTarget: {fileID: 3645209631482356489}
+  speechTarget: {fileID: 3986107689999799328}
   isStuck: 1
   midAnimation: 0
   isScared: 0
@@ -178,10 +180,13 @@ MonoBehaviour:
   isEscorted: 0
   isKidnapped: 0
   kidnapper: {fileID: 0}
+  origSpeed: 0
+  kidnappedSpeed: 0
   levelProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
   hasCleanWater: 0
   hasShelter: 0
   hasAnyFood: 0
+  soundLibrary: {fileID: 11400000, guid: da2a266dde0b3e143a0c3692e362f1fe, type: 2}
   duckWayPoints:
   - {fileID: 0}
   - {fileID: 0}
@@ -431,6 +436,73 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1001 &6520282566426723252
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3668103021458720016}
+    m_Modifications:
+    - target: {fileID: 7867170218109147028, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_Name
+      value: AnimalBubble
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+--- !u!4 &2522794916573313020 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+  m_PrefabInstance: {fileID: 6520282566426723252}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3986107689999799328 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7867170218109147028, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
+  m_PrefabInstance: {fileID: 6520282566426723252}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8819836089284511890
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -443,6 +515,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: EscortCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3113640933164595635, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 3113640933164595635, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 3693047108951325682, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 3693047108951325682, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 4039693993881468100, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 4039693993881468100, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 8666163771918825830, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

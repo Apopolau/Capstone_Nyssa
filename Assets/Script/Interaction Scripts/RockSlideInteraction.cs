@@ -6,6 +6,8 @@ public class RockSlideInteraction : Interactable
 {
     WaitForSeconds slideClearTime = new WaitForSeconds(4.542f);
     bool isAnimated = false;
+    [SerializeField] InstanceSoundEvent soundEvent;
+    
 
     private void Awake()
     {
@@ -42,6 +44,7 @@ public class RockSlideInteraction : Interactable
         if(earthPlayer.interacting && p1IsInRange && !isAnimated)
         {
             isAnimated = true;
+            soundEvent.Play();
             StartCoroutine(LetTimerRun());
         }
     }
