@@ -105,7 +105,7 @@ public class PickupObject : Interactable
         PlantingUIIndicator[] textUpdaters = FindObjectsOfType<PlantingUIIndicator>();
         foreach (PlantingUIIndicator textUpdater in textUpdaters)
         {
-            textUpdater.UpdateQuantityText();
+            textUpdater.UpdateQuantityTextOnce();
         }
     }
 

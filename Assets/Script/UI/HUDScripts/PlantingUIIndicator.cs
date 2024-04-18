@@ -20,7 +20,7 @@ public class PlantingUIIndicator : MonoBehaviour
 
     private WaitForSeconds refreshTimer = new WaitForSeconds(0.5f);
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(UpdateQuantityText());
     }
@@ -28,8 +28,6 @@ public class PlantingUIIndicator : MonoBehaviour
     private void Update()
     {
         //UpdateQuantityText();
-
-        
     }
 
     public IEnumerator UpdateQuantityText()
@@ -37,9 +35,11 @@ public class PlantingUIIndicator : MonoBehaviour
         while (true)
         {
             yield return refreshTimer;
+            Debug.Log("Update text coroutine is running");
             // Update the quantity text with the item's quantity.
             if (inventory != null && quantityText != null)
             {
+                Debug.Log("Update Quantity Text ran");
                 int quantity = inventory.GetQuantityByItemType(itemType);
                 quantityText.text = $"{quantity}";
 
@@ -74,6 +74,45 @@ public class PlantingUIIndicator : MonoBehaviour
         }
         
     }
+
+    public void UpdateQuantityTextOnce()
+    {
+        if (inventory != null && quantityText != null)
+        {
+            Debug.Log("Update Quantity Text ran");
+            int quantity = inventory.GetQuantityByItemType(itemType);
+            quantityText.text = $"{quantity}";
+
+            // Check if the quantity is above 0
+            if (quantity > 0)
+            {
+                // Activate the UI element based on the itemType
+                ActivateUIByItemType(itemType);
+
+            }
+            else if (quantity == 0)
+            {
+
+                DeactivateUIByItemType(itemType);
+            }
+        }
+        else
+        {
+            quantityText.text = "0";
+        }
+
+        if (buildRuntimeSet.Items.Count == 0)
+        {
+            // Activate the UI if the build set count is 0
+            shovelUIOverlay.SetActive(true);
+        }
+        else
+        {
+            // Deactivate the UI if the build set count is greater than 0
+            shovelUIOverlay.SetActive(false);
+        }
+    }
+
     // Function to activate UI element based on itemType
     private void ActivateUIByItemType(string itemType)
     {
@@ -93,6 +132,7 @@ public class PlantingUIIndicator : MonoBehaviour
                 break;
         }
     }
+
     // Function to deactivate UI element based on itemType
     private void DeactivateUIByItemType(string itemType)
     {

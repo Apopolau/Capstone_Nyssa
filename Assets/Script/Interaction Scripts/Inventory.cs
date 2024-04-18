@@ -126,7 +126,7 @@ public class Inventory : ScriptableObject
         if (uiIndicator != null)
         {
             // Call the UpdateQuantityText() method
-            uiIndicator.UpdateQuantityText();
+            uiIndicator.UpdateQuantityTextOnce();
         }
     }
 
