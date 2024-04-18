@@ -99,13 +99,34 @@ public class EarthCharacterUIController : MonoBehaviour
         foreach (GameObject uiObject in uiObjectsToToggle)
         {
             // Toggle the visibility of the UI object based on the isActive parameter
-            uiObject.SetActive(isActive);
+            if (uiObject.GetComponent<SetObjectiveText>())
+            {
+                if (uiObject.GetComponent<TextMeshProUGUI>().text == "Objectives:" && userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+                {
+                    uiObject.SetActive(true);
+                }
+                else if(uiObject.GetComponent<TextMeshProUGUI>().text == "Objectifs:" && userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
+                {
+                    uiObject.SetActive(true);
+                }
+                else
+                {
+                    uiObject.SetActive(false);
+                }
+            }
+            else
+            {
+                uiObject.SetActive(isActive);
+            }
+            
         }
         foreach (GameObject uiObject in celesteObjectsToToggle)
         {
             // Toggle the visibility of the UI object based on the isActive parameter
+            
             uiObject.SetActive(isActive);
         }
+
 
     }
 

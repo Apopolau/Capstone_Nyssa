@@ -84,7 +84,7 @@ public abstract class Player : MonoBehaviour
         Respawn();
     }
 
-    protected IEnumerator ThrowPlayerWarning(string textInfo)
+    public IEnumerator ThrowPlayerWarning(string textInfo)
     {
         displayText.text = textInfo;
         // Check if the Image component is disabled

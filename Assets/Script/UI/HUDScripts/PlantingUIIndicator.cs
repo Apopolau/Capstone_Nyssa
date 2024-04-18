@@ -35,11 +35,9 @@ public class PlantingUIIndicator : MonoBehaviour
         while (true)
         {
             yield return refreshTimer;
-            Debug.Log("Update text coroutine is running");
             // Update the quantity text with the item's quantity.
             if (inventory != null && quantityText != null)
             {
-                Debug.Log("Update Quantity Text ran");
                 int quantity = inventory.GetQuantityByItemType(itemType);
                 quantityText.text = $"{quantity}";
 
@@ -79,7 +77,6 @@ public class PlantingUIIndicator : MonoBehaviour
     {
         if (inventory != null && quantityText != null)
         {
-            Debug.Log("Update Quantity Text ran");
             int quantity = inventory.GetQuantityByItemType(itemType);
             quantityText.text = $"{quantity}";
 

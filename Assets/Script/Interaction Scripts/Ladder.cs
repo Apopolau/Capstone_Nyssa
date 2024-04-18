@@ -175,11 +175,11 @@ public class Ladder : Interactable
         }
         else if(p1IsInRange && earthPlayer.interacting)
         {
-            StartCoroutine(NotEnoughLogs());
+            NotEnoughLogs();
         }
         else if(p2IsInRange && celestialPlayer.interacting)
         {
-            StartCoroutine(WrongCharacter());
+            WrongCharacter();
         }
     }
 
@@ -214,18 +214,16 @@ public class Ladder : Interactable
         //Destroy(this.gameObject.GetComponent<BoxCollider>());
     }
 
-    private IEnumerator NotEnoughLogs()
+    private void NotEnoughLogs()
     {
-        earthPlayer.displayText.text = "Not enough logs";
-        yield return buildTime;
-        earthPlayer.displayText.text = "";
+        string warningText = "Not enough logs";
+        earthPlayer.StartCoroutine(earthPlayer.ThrowPlayerWarning(warningText));
     }
 
-    private IEnumerator WrongCharacter()
+    private void WrongCharacter()
     {
-        earthPlayer.displayText.text = "Only Sprout can build this";
-        yield return buildTime;
-        earthPlayer.displayText.text = "";
+        string warningText = "Only Sprout can build this";
+        earthPlayer.StartCoroutine(earthPlayer.ThrowPlayerWarning(warningText));
     }
 
     private void TriggerLadderClimb()

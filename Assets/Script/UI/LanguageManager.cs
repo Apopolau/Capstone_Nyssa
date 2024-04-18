@@ -10,13 +10,13 @@ public class LanguageManager : MonoBehaviour
     
     void Start()
     {
-        
+        ActivateUIBasedOnLanguage(englishUI, frenchUI);
     }
 
     // Update is called once per frame
     void Update()
     {
-        ActivateUIBasedOnLanguage(englishUI,frenchUI);
+        
     }
 
     public void ActivateUIBasedOnLanguage(List<GameObject> englishUI, List<GameObject> frenchUI)

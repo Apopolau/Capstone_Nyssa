@@ -86,17 +86,16 @@ public class PickupObject : Interactable
                     Destroy(this.GetComponentInParent<Transform>().gameObject);
                 }
                 else {
-                    StartCoroutine(ThrowInventoryWarning());
+                    ThrowInventoryWarning();
                 }
             }
         }
     }
 
-    private IEnumerator ThrowInventoryWarning()
+    private void ThrowInventoryWarning()
     {
-        earthPlayer.displayText.text = "Inventory is full";
-        yield return inventoryDisplay;
-        earthPlayer.displayText.text = "";
+        string warningText = "Inventory is full";
+        earthPlayer.StartCoroutine(earthPlayer.ThrowPlayerWarning(warningText));
     }
 
     private void UpdateUIText()
