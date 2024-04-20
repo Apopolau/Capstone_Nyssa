@@ -54,11 +54,11 @@ public class HealthUI : MonoBehaviour
             enemy = GetComponent<Enemy>();
             GetComponent<Enemy>().OnHealthChanged += OnHealthChanged;
         }
-        else if (GetComponent<Creatable>())
+        else if (GetComponent<Plant>())
         {
             typeObjectAttached = TypeObjectAttached.BUILD;
-            creatable = GetComponent<Creatable>();
-            GetComponent<Creatable>().OnHealthChanged += OnHealthChanged;
+            creatable = GetComponent<Plant>();
+            GetComponent<Plant>().OnHealthChanged += OnHealthChanged;
         }
         ui.gameObject.SetActive(false);
 
@@ -72,7 +72,6 @@ public class HealthUI : MonoBehaviour
             if(ui != null)
             {
                 ui.position = target.position;
-                //ui.forward = -cam.forward;
             }
 
         }
@@ -109,10 +108,12 @@ public class HealthUI : MonoBehaviour
 
                 float healthPercent = (float)currentHealth / maxHealth;
                 healthSlider.fillAmount = healthPercent;
+                /*
                 if (currentHealth <= 0)
                 {
                     Destroy(ui.gameObject);
                 }
+                */
             }
             else if(currentHealth == maxHealth)
             {

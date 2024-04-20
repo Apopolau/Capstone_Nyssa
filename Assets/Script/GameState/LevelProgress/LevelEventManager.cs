@@ -8,7 +8,7 @@ public abstract class LevelEventManager : EventManager
     [SerializeField] protected GameObjectRuntimeSet playerSet;
     protected CelestialPlayer celestialPlayer;
     protected EarthPlayer earthPlayer;
-    [SerializeField] protected GameObject objectiveList;
+    [SerializeField] protected GameObject objectiveContainer;
     [SerializeField] protected SoundEvent music;
     [SerializeField] protected SoundEvent wind;
     [SerializeField] protected SoundEvent nature;
@@ -17,6 +17,9 @@ public abstract class LevelEventManager : EventManager
     [SerializeField] protected SoundPlayer[] soundPlayers;
     
     [SerializeField] protected UISoundLibrary uiSoundLibrary;
+
+    [SerializeField] protected UserSettingsManager userSettingsManager;
+
     public Enemy dyingEnemy;
     [SerializeField] protected Terrain terrain;
     [SerializeField] protected TerrainData terrainData1;
