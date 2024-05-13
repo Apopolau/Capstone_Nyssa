@@ -99,6 +99,7 @@ public class HedgehogTree : BTree
                         {
                             new CheckIfInRangeAll(thisHog.gameObject, thisHog.grassSet, 20),
                             new CheckForClosestGrass(thisHog, thisHog.grassSet, 20),
+                            new TaskLocateClosestGrass(thisHog, hogAgent),
                             new taskInitiatePathToGrass(hogAgent, hogAnimator),
                             new TaskHide(thisHog)
                         }),
@@ -138,6 +139,7 @@ public class HedgehogTree : BTree
                         {
                             new CheckIfInRangeAll(thisHog.gameObject, thisHog.grassSet, 20),
                             new CheckForClosestGrass(thisHog, thisHog.grassSet, 20),
+                            new TaskLocateClosestGrass(thisHog, hogAgent),
                             new taskInitiatePathToGrass(hogAgent, hogAnimator),
                             new TaskHide(thisHog)
                         }),
@@ -233,9 +235,9 @@ public class HedgehogTree : BTree
                                     new CheckForClosestPlayer(thisHog, 15),
                                     new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15, thisHog.waterImage))
                                 })
-                                
+
                             })
-                            
+
                         }),
                         //Check if bored finally, play
                         new Sequence(new List<BTNode>

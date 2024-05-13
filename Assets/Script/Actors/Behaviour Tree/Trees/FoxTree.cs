@@ -90,6 +90,7 @@ public class FoxTree : BTree
                         {
                             new CheckIfInRangeAll(thisFox.gameObject, thisFox.grassSet, 20),
                             new CheckForClosestGrass(thisFox, thisFox.grassSet, 20),
+                            new TaskLocateClosestGrass(thisFox, foxAgent),
                             new taskInitiatePathToGrass(foxAgent, foxAnimator),
                             new TaskHide(thisFox)
                         }),
@@ -129,6 +130,7 @@ public class FoxTree : BTree
                         {
                             new CheckIfInRangeAll(thisFox.gameObject, thisFox.grassSet, 20),
                             new CheckForClosestGrass(thisFox, thisFox.grassSet, 20),
+                            new TaskLocateClosestGrass(thisFox, foxAgent),
                             new taskInitiatePathToGrass(foxAgent, foxAnimator),
                             new TaskHide(thisFox)
                         }),

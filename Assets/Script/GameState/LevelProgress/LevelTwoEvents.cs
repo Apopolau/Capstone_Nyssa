@@ -244,9 +244,7 @@ public class LevelTwoEvents : LevelEventManager
             {
                 task5.CrossOutTask();
             }
-
-
-
+            UpdateObjective();
             SetFoodCompletion();
         }
 

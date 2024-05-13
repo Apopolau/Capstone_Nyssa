@@ -90,6 +90,7 @@ public class DuckTree : BTree
                         {
                             new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.grassSet, 20),
                             new CheckForClosestGrass(thisDuck, thisDuck.grassSet, 20),
+                            new TaskLocateClosestGrass(thisDuck, duckAgent),
                             new taskInitiatePathToGrass(duckAgent, duckAnimator),
                             new TaskHide(thisDuck)
                         }),
@@ -129,6 +130,7 @@ public class DuckTree : BTree
                         {
                             new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.grassSet, 20),
                             new CheckForClosestGrass(thisDuck, thisDuck.grassSet, 20),
+                            new TaskLocateClosestGrass(thisDuck, duckAgent),
                             new taskInitiatePathToGrass(duckAgent, duckAnimator),
                             new TaskHide(thisDuck)
                         }),

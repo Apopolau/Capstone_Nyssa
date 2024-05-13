@@ -100,6 +100,7 @@ public abstract class Animal : MonoBehaviour
     {
          origSpeed=GetNavMeshAgent().speed;
     }
+
     public void ResetOrigSpeed()
     {
          GetNavMeshAgent().speed=origSpeed;
