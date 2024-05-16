@@ -77,6 +77,11 @@ public class DialogueMoveEvent : DialogueEvent
         return animationTime;
     }
 
+    public float GetAnimationSpeed()
+    {
+        return animationTimer;
+    }
+
     public void SetThisObjectToMove(GameObject objectToSet)
     {
         targetMoveObject = objectToSet;
