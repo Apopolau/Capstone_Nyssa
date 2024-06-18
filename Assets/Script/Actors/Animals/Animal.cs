@@ -191,6 +191,7 @@ public abstract class Animal : MonoBehaviour
 
     public void UpdateKidnapIcon()
     {
+        Debug.Log("Updating kidnap icon");
         if (isKidnapped)
         {
             kidnapIconOn = true;

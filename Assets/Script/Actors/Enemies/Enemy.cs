@@ -180,13 +180,13 @@ public class Enemy : MonoBehaviour
             yield return attackTime;
             float distance = sightRange;
             seesAnimal = false;
-            inKidnapRange = false;
+            
             foreach (GameObject animal in animalSet.Items)
             {
                 if (Mathf.Abs((animal.transform.position - this.transform.position).magnitude) < distance)
                 {
                     distance = Mathf.Abs((animal.transform.position - this.transform.position).magnitude);
-                    closestAnimal = animal;
+                    SetClosestAnimal(animal);
                     if (!animal.GetComponent<Animal>().isKidnapped) 
                     { seesAnimal = true; }
                         
@@ -195,6 +195,10 @@ public class Enemy : MonoBehaviour
             if (distance < kidnapRange)
             {
                 inKidnapRange = true;
+            }
+            else
+            {
+                inKidnapRange = false;
             }
         }
 

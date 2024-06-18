@@ -98,8 +98,8 @@ public class LevelTwoEvents : LevelEventManager
 
     private bool runDefeatDialogue = false;
     private bool runReadyToLeaveDialogue = false;
-    private bool hasEncounteredLadder = false;
-    private bool hasFoundNyssa = false;
+    //private bool hasEncounteredLadder = false;
+    //private bool hasFoundNyssa = false;
 
     WaitForSeconds delayTime = new WaitForSeconds(0.1f);
     WaitForSeconds extraDelayTime = new WaitForSeconds(1);

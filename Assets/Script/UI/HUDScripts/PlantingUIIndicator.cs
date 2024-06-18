@@ -6,7 +6,7 @@ using TMPro;
 
 public class PlantingUIIndicator : MonoBehaviour
 {
-    [SerializeField] Inventory inventory;
+    [SerializeField] public Inventory inventory;
     [SerializeField] TextMeshProUGUI quantityText; // text field for quantity
     [SerializeField] string itemType;
 
@@ -98,6 +98,7 @@ public class PlantingUIIndicator : MonoBehaviour
             quantityText.text = "0";
         }
 
+        /*
         if (buildRuntimeSet.Items.Count == 0)
         {
             // Activate the UI if the build set count is 0
@@ -108,6 +109,7 @@ public class PlantingUIIndicator : MonoBehaviour
             // Deactivate the UI if the build set count is greater than 0
             shovelUIOverlay.SetActive(false);
         }
+        */
     }
 
     // Function to activate UI element based on itemType
@@ -123,7 +125,7 @@ public class PlantingUIIndicator : MonoBehaviour
                 ToggleIconsOverlay(treeImage, false); // Activate tree UI
                 break;
             case "Flower Seed":
-                ToggleIconsOverlay(flowerImage, false);
+                ToggleIconsOverlay(flowerImage, false); // Activate flower UI
                 break;
             default:
                 break;
@@ -143,7 +145,7 @@ public class PlantingUIIndicator : MonoBehaviour
                 ToggleIconsOverlay(treeImage, true); // Deactivate tree UI
                 break;
             case "Flower Seed":
-                ToggleIconsOverlay(flowerImage, true);
+                ToggleIconsOverlay(flowerImage, true); //Deactive flower UI
                 break;
             default:
                 break;

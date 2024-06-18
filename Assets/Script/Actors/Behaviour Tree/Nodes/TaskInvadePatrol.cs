@@ -13,11 +13,11 @@ public class TaskInvadePatrol : BTNode
     private int currWaypointIndex = 0;
     //Wait a Sec
     private bool iswaiting = false;
-    private float waitTime = 1f;
-    private float waitCounter = 0;
+    //private float waitTime = 1f;
+    //private float waitCounter = 0;
     Rigidbody rb;
     NavMeshPath path;
-    private float elapsed = 0.0f;
+    //private float elapsed = 0.0f;
 
     public TaskInvadePatrol(Enemy enemy, NavMeshAgent enemyMeshAgent, Transform transform)
     {

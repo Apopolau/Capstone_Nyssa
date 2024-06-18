@@ -81,6 +81,11 @@ public class LevelOneEvents : LevelEventManager
     [SerializeField] private PowerBehaviour power;
     private GameObject powerDrop;
 
+    [Header("UI indicators")]
+    [SerializeField] PlantingUIIndicator treeIndicator;
+    [SerializeField] PlantingUIIndicator flowerIndicator;
+    [SerializeField] PlantingUIIndicator grassIndicator;
+
     [Header("Ducks")]
     [SerializeField] private GameObject duck1;
     [SerializeField] private GameObject duck2;

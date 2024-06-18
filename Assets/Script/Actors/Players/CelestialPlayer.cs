@@ -622,9 +622,6 @@ public void DrainEnergy(int pointsDrained)
 
     public IEnumerator DrainRainEnergy()
     {
-     
-        
-        float timer = 0f;
         int rainDrain = 1;
 
 

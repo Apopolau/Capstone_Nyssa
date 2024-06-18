@@ -22,7 +22,7 @@ public class TaskKidnapAnimal : BTNode
 
         if (thisEnemy.isStaggered || thisEnemy.isDying)
         {
-            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().SetKidnapStatus(false);
+            thisEnemy.GetClosestAnimal().GetComponent<Animal>().SetKidnapStatus(false);
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
             // thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
             state = NodeState.FAILURE;
@@ -30,24 +30,24 @@ public class TaskKidnapAnimal : BTNode
         }
         if (!thisEnemy.inKidnapRange)
         {
-            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().SetKidnapStatus(false);
+            thisEnemy.GetClosestAnimal().GetComponent<Animal>().SetKidnapStatus(false);
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
             // thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
             state = NodeState.FAILURE;
             return state;
         }
-        if (thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped)
+        if (thisEnemy.GetClosestAnimal().GetComponent<Animal>().isKidnapped)
         {
             state = NodeState.FAILURE;
             return state;
 
         }
 
-            //if (thisEnemy.inSmotherRange && thisEnemy.smotherInitiated)
-            if (thisEnemy.inKidnapRange)
+        //if (thisEnemy.inSmotherRange && thisEnemy.smotherInitiated)
+        if (thisEnemy.inKidnapRange)
         {
-            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().kidnapper = thisEnemy;
-            thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().SetKidnapStatus(true);
+            thisEnemy.GetClosestAnimal().GetComponent<Animal>().kidnapper = thisEnemy;
+            thisEnemy.GetClosestAnimal().GetComponent<Animal>().SetKidnapStatus(true);
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
 
 
@@ -56,6 +56,7 @@ public class TaskKidnapAnimal : BTNode
         }
         return state;
     }
+
     protected override void OnReset()
     {
     }
