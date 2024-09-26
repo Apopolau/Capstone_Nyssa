@@ -24,6 +24,7 @@ public class RiverDialogue : MonoBehaviour
         if (other.CompareTag("Player1"))
         {   
             riverDialougeEarth.TriggerDialogue();
+            
             // Destroy the GameObject collider
             Destroy(gameObject);
         }

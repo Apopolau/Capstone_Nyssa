@@ -95,7 +95,7 @@ public class PickupObject : Interactable
     private void ThrowInventoryWarning()
     {
         string warningText = "Inventory is full";
-        earthPlayer.StartCoroutine(earthPlayer.ThrowPlayerWarning(warningText));
+        hudManager.ThrowPlayerWarning(warningText);
     }
 
     private void UpdateUIText()

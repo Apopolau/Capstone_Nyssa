@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Decisions/IsMidAnimation")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Decisions/IsMidAnimation")]
 public class IsMidAnimation : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)

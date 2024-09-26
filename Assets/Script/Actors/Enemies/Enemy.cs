@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
     public EarthPlayer earthPlayer;
     //public GameObject playerObj;
     public EnemyStats enemyStats;
+    public Animal kidnappedAnimal;
 
     public EnemyInvadingPath invaderEnemyRoutes;
     
@@ -285,7 +286,10 @@ public class Enemy : MonoBehaviour
         closestAnimal = nextAnimal;
     }
 
-
+    public Animal GetKidnappedAnimal()
+    {
+        return kidnappedAnimal;
+    }
 
 
 
@@ -322,6 +326,8 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator Die()
     {
+        if (kidnappedAnimal != null)
+            kidnappedAnimal.SetKidnapStatus(false);
         isDying = true;
         isStaggered = true;
         eventManager.dyingEnemy = this;

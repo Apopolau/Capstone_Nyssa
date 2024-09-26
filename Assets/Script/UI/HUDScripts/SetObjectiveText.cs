@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// 
+/// DEPRECATED
+/// 
+/// SEE HUDMANAGER AND HUDMODEL INSTEAD
+/// 
+/// </summary>
 public class SetObjectiveText : MonoBehaviour
 {
     [SerializeField] LevelProgress levelProgress;

@@ -9,6 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
     public UserSettingsManager userSettingsManager;
+    [SerializeField] private HUDManager hudManager;
 
     public Image characterIconLeft;
     public Image characterIconRight;
@@ -29,7 +30,7 @@ public class DialogueManager : MonoBehaviour
     public bool isDialogueActive = false;
     public GameObject dialogueBox; // Reference to the entire dialogue box
 
-    public EarthCharacterUIController uiController;// Reference to the UI controller script
+    //public EarthCharacterUIController uiController;// Reference to the UI controller script
     public SplitScreen split;
     public Camera mainCam;
 
@@ -75,6 +76,7 @@ public class DialogueManager : MonoBehaviour
 
         events = new Queue<DialogueEvent>();
         mainCam = Camera.main;
+        split = mainCam.GetComponentInParent<SplitScreen>();
     }
 
     private void Update()
@@ -106,6 +108,9 @@ public class DialogueManager : MonoBehaviour
                 celestialPlayer = playerSet.Items[i].GetComponent<CelestialPlayer>();
             }
         }
+        mainCam = Camera.main;
+        split = mainCam.GetComponentInParent<SplitScreen>();
+        events = new Queue<DialogueEvent>();
     }
 
     /// <summary>
@@ -115,20 +120,19 @@ public class DialogueManager : MonoBehaviour
     //Initiate the dialogue
     public void StartDialogue(Dialogue dialogue)
     {
-        // Activate the dialogue box if it's currently inactive
+        // If the references aren't set, we need to set them now
+        if(mainCam == null || earthPlayer == null || celestialPlayer == null)
+        {
+            SetReferences();
+        }
+        
 
         Time.timeScale = 0f;
         split.EnterCutscene();
 
         // Toggle other UI elements visibility
-        uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
-
-        //If this somehow runs while the manager doesn't have a reference to the players
-        if (earthPlayer == null || celestialPlayer == null)
-        {
-            //Set them now
-            SetReferences();
-        }
+        //uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
+        hudManager.ToggleUIForDialogue(true);
 
         //Make sure any other controls the earth player is using are turned off
         earthPlayer.ToggleDialogueState(true);
@@ -274,7 +278,8 @@ public class DialogueManager : MonoBehaviour
                     isDialogueActive = false; // Set the dialogue state to inactive
                 }
                 // Toggle other UI elements visibility
-                uiController.ToggleUIForDialogue(true); // Pass true to reactivate other UI elements
+                //uiController.ToggleUIForDialogue(true); // Pass true to reactivate other UI elements
+                
 
                 panningOn = false;
 
@@ -284,6 +289,7 @@ public class DialogueManager : MonoBehaviour
                 earthPlayer.ToggleDialogueState(false);
 
                 split.ExitCutscene();
+                hudManager.ToggleUIForDialogue(false);
                 Time.timeScale = 1f;
 
                 //Somewhere in this function we need to check if the last item in the event list is a mission end
@@ -690,5 +696,10 @@ public class DialogueManager : MonoBehaviour
             mainCam.gameObject.transform.localPosition = Vector3.zero;
             returningToOrigin = false;
         }
+    }
+
+    public void SetHudManager(HUDManager incManager)
+    {
+        hudManager = incManager;
     }
 }

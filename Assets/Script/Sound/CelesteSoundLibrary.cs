@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SoundLibraries/CelesteLibrary", fileName = "Celeste Sounds")]
+[CreateAssetMenu(menuName = "Audio/Sound Libraries/Celeste Library", fileName = "Celeste Sounds")]
 public class CelesteSoundLibrary : PlayerSoundLibrary
 {
     [Header("Attack")]

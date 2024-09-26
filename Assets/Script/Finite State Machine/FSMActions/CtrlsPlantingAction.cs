@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/Controls/Planting")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Controls/Planting")]
 public class CtrlsPlantingAction : FSMAction
 {
     EarthPlayer earthPlayer;
+    HUDManager hudManager;
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
         earthPlayer = stateMachine.GetComponent<EarthPlayer>();
+        hudManager = earthPlayer.GetHudManager();
 
         //Activate and deactivate the appropriate controls
         earthPlayer.earthControls.controls.PlantIsSelected.Enable();
@@ -25,16 +27,21 @@ public class CtrlsPlantingAction : FSMAction
         earthPlayer.isATileSelected = false;
 
         //Set transforms for relevant objects
+        if(earthPlayer.plantSelected == null)
+            earthPlayer.InitializePlantPreview();
         earthPlayer.plantSelected.transform.position = earthPlayer.transform.position;
         earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
 
         //Adjust the UI accordingly
+        /*
         if (earthPlayer.plantingControlsUI != null)
         { earthPlayer.plantingControlsUI.SetActive(true); }
+        */
 
         earthPlayer.TurnOnTileSelect(earthPlayer.transform);
         //earthPlayer.DisplayTileText();
-        earthPlayer.DarkenAllImages(earthPlayer.GetPlantDarkenObject());
+        //earthPlayer.DarkenAllImages(earthPlayer.GetPlantDarkenObject());
+        hudManager.ToggleSproutPanel(true);
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -55,7 +62,10 @@ public class CtrlsPlantingAction : FSMAction
 
         //Update UI components
         earthPlayer.TurnOffTileSelect();
+        /*
         if (earthPlayer.plantingControlsUI != null)
             { earthPlayer.plantingControlsUI.SetActive(false); }
+        */
+        hudManager.ToggleSproutPanel(false);
     }
 }

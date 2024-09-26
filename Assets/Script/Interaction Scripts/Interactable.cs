@@ -8,6 +8,8 @@ public class Interactable : MonoBehaviour
     protected EarthPlayer earthPlayer;
     protected CelestialPlayer celestialPlayer;
 
+    [SerializeField] protected HUDManager hudManager;
+
     [SerializeField] protected bool p1IsInRange = false;
     [SerializeField] protected bool isEarthInteractable = false;
     [SerializeField] protected bool p2IsInRange = false;

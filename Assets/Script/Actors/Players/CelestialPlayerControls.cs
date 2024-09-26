@@ -302,6 +302,9 @@ public class CelestialPlayerControls : MonoBehaviour
             dialogueManager.EndDialogue();
         }
     }
-    // Update is called once per frame
 
+    public void SetDialogueManager(DialogueManager dialogueManager)
+    {
+        this.dialogueManager = dialogueManager;
+    }
 }

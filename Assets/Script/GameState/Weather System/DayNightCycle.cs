@@ -73,8 +73,7 @@ public class DayNightCycle : MonoBehaviour
             timeOfDayChanges = true;
         }
         weatherState.SetDayTime(true);
-        weatherState.currentTimeOfDay = WeatherState.TimeOfDay.DAY;
-        weatherState.skyState = WeatherState.SkyState.CLEAR;
+        weatherState.SetTimeOfDay(WeatherState.TimeOfDay.DAY);
 
         SwapSkyColours(false);
     }
@@ -82,6 +81,11 @@ public class DayNightCycle : MonoBehaviour
     private void OnEnable()
     {
         UpdateLighting();
+    }
+
+    private void Start()
+    {
+        weatherState.SetRainyState(false);
     }
 
     void Update()

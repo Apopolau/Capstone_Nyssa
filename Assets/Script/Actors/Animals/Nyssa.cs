@@ -24,6 +24,11 @@ public class Nyssa : Animal
 
     private void OnEnable()
     {
+        
+    }
+
+    private void Start()
+    {
         foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<CelestialPlayer>())
@@ -35,10 +40,6 @@ public class Nyssa : Animal
                 earthPlayer = player.GetComponent<EarthPlayer>();
             }
         }
-    }
-
-    private void Start()
-    {
         StartCoroutine(UpdateAnimalState());
     }
 
@@ -46,7 +47,7 @@ public class Nyssa : Animal
     {
         CheckLevelState();
         SetWalkingState();
-        MoveKidnapIcon();
+        HandleKidnapIcon();
         if (earthPlayer.interacting && inRangeOfPickup)
         {
             if (!beingHeld)

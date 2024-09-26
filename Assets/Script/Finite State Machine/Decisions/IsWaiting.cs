@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Decisions/IsPanning")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Decisions/IsPanning")]
 public class IsWaiting : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)

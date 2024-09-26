@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Stats/Plant Stats", fileName = "PlantStats")]
+[CreateAssetMenu(menuName = "Data Type/Stats/Plant Stats", fileName = "PlantStats")]
 public class PlantStats : ScriptableObject
 {
     [Header("Basic info")]

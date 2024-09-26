@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LevelTwoIntroDialogueTrigger : MonoBehaviour
 {
-    [SerializeField] GameObject dialogueManager;
     public DialogueTrigger introDialogue;
 
     private void OnTriggerEnter(Collider other)
@@ -12,7 +11,8 @@ public class LevelTwoIntroDialogueTrigger : MonoBehaviour
         // Check if earthPlayer enterted area
         if ((other.CompareTag("Player1") && other is CapsuleCollider) || (other.CompareTag("Player2") && other is CapsuleCollider))
         {
-            dialogueManager.SetActive(true);
+            introDialogue.GetDialogueManager().enabled = true;
+            //DialogueManager.Instance.enabled = true;
             introDialogue.TriggerDialogue();
             // Destroy the GameObject collider
             Destroy(gameObject);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/StopRainAction")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/StopRainAction")]
 public class StopRainAction : FSMAction
 {
     CelestialPlayer player;

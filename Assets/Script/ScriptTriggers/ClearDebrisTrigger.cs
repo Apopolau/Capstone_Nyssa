@@ -57,5 +57,7 @@ public class ClearDebrisTrigger : MonoBehaviour
         isAnimated = true;
         yield return debrisClearTime;
         isAnimated = false;
+        LevelTwoEvents events = (LevelTwoEvents)levelTwoProgress.GetEventManager();
+        events.TurnOnSecondSpawner();
     }
 }

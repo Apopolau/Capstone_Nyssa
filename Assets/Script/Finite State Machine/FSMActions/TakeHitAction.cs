@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/TakeHitAction")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/TakeHitAction")]
 public class TakeHitAction : FSMAction
 {
 

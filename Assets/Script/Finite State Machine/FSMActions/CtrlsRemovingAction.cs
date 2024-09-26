@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/Controls/Removing")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Controls/Removing")]
 public class CtrlsRemovingAction : FSMAction
 {
     EarthPlayer earthPlayer;
+    HUDManager hudManager;
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
         earthPlayer = stateMachine.GetComponent<EarthPlayer>();
+        hudManager = earthPlayer.GetHudManager();
 
         //Enable and disable the correct controls
         earthPlayer.earthControls.controls.RemovingPlant.Enable();
@@ -24,12 +26,17 @@ public class CtrlsRemovingAction : FSMAction
         //earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
 
         //Update the UI
-        earthPlayer.SwitchCursorIcon(earthPlayer.i_shovel);
+        //earthPlayer.SwitchCursorIcon(earthPlayer.i_shovel);
+        hudManager.SetVirtualMouseImage(earthPlayer.i_shovel);
         //TurnOnTileSelect manages enabling most of the functionality of tile selection
         earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
         earthPlayer.TurnOnTileSelect(earthPlayer.transform);
+        /*
          if (earthPlayer.plantingControlsUI != null)
         { earthPlayer.plantingControlsUI.SetActive(true); }
+        */
+        hudManager.TurnOnPopUpText("Select a Tile");
+        hudManager.ToggleSproutPanel(true);
 
         //Set our appropriate bools
         earthPlayer.isRemovalStarted = true;
@@ -51,9 +58,12 @@ public class CtrlsRemovingAction : FSMAction
         //Update UI components
         //TurnOffTileSelect manages disabling most of the functionality of tile selection
         earthPlayer.TurnOffTileSelect();
-        earthPlayer.HideTileText();
+        hudManager.TurnOffPopUpText();
+        /*
          if (earthPlayer.plantingControlsUI != null)
         { earthPlayer.plantingControlsUI.SetActive(false); }
-        earthPlayer.ResetImageColor(earthPlayer.GetPlantDarkenObject());
+        */
+        //earthPlayer.ResetImageColor(earthPlayer.GetPlantDarkenObject());
+        hudManager.ToggleSproutPanel(false);
     }
 }

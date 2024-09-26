@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "New Inventory", menuName = "ManagerObject/Inventory")]
+[CreateAssetMenu(fileName = "New Inventory", menuName = "Manager Object/Inventory")]
 public class Inventory : ScriptableObject
 {
     int inventorySize = 4;
@@ -11,6 +11,8 @@ public class Inventory : ScriptableObject
     [SerializeField] public List<ItemSlot> itemSlots;
 
     public PlantingUIIndicator plantingUI;
+
+    public event System.Action OnItemChange;
 
     private void OnEnable()
     {
@@ -37,6 +39,8 @@ public class Inventory : ScriptableObject
             if (existingItem.stats.ItemName == item.stats.ItemName)
             {
                 existingItem.quantity += quantity; // Increase the quantity.
+                if (OnItemChange != null)
+                    OnItemChange();
                 RefreshUI();
                 return true;
             }
@@ -50,6 +54,8 @@ public class Inventory : ScriptableObject
         // If the item is not in the inventory, add a new one.
         Item itemToAdd = new Item(item);
         items.Add(itemToAdd);
+        if (OnItemChange != null)
+            OnItemChange();
 
         //item.stats.Icon = item.stats.Icon;
         RefreshUI();
@@ -79,12 +85,14 @@ public class Inventory : ScriptableObject
         if (itemToRemove != null)
         {
             RemoveItem(itemToRemove, quantity);
+            
 
             // Add a log message to check the current inventory after removal
-            foreach (var item in items)
+            /*foreach (var item in items)
             {
                 
             }
+            */
         }
         else
         {
@@ -110,7 +118,9 @@ public class Inventory : ScriptableObject
                 }
                 UpdateUIText(); // Call UpdateUIText() after item removal
                 RefreshUI();
-               
+                if (OnItemChange != null)
+                    OnItemChange();
+
                 return true;
             }
             i++;

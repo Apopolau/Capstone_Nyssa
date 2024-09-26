@@ -4,30 +4,46 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
+    [SerializeField] private LevelManagerObject levelManager;
     [SerializeField] private WeatherState weatherState;
     [SerializeField] private GameObject plasticBagMonsterPrefab;
     [SerializeField] private GameObject enemyOilInvaderPrefab;
     [SerializeField] private GameObject smogMonsterInvaderPrefab;
     public GameObjectRuntimeSet enemySet;
     GameObject currSpawnedEnemy;
+
+    int level = 0;
+
     public bool isFromSawMill;
 
     private bool startedSpawns;
-    private bool spawnsOn;
+    private bool spawnsOn = true;
+    private bool dayTime = true;
 
     //must be equal to a total of 10
     private int plasticProbability=6;
 
-    [SerializeField] private float spawnInterval;
+    //Range is minimum or maximum time between waves/spawns
+    [SerializeField, Range(15, 60)] private float spawnInterval;
 
     void Start()
     {
         //StartCoroutine(spawnEnemy(currSpawnedEnemy, spawnInterval));
-        
+        level = levelManager.currentLevel;
+        if(!isFromSawMill)
+            spawnsOn = false;
+
+        if (spawnsOn)
+        {
+            SetSpawns();
+            StartCoroutine(spawnEnemy());
+        }
+            
     }
 
     private void Update()
     {
+        /*
         int index = Random.Range(0, 10);
         if (isFromSawMill)
         {
@@ -57,45 +73,75 @@ public class EnemySpawner : MonoBehaviour
                 currSpawnedEnemy = enemyOilInvaderPrefab;
             }
         }
+        */
         CheckTimeOfDay();
+        SetSpawns();
     }
 
     //Make sure the inside if statements don't somehow get called repeatedly
     private void CheckTimeOfDay()
     {
-
-      
-
         if (spawnsOn)
         {
             if (weatherState.dayTime)
             {
-                spawnsOn = false;
-                StopAllCoroutines();
+                //spawnsOn = false;
+                //StopAllCoroutines();
+                dayTime = true;
             }
-        }
-        else if(!spawnsOn)
-        {
-           if (!weatherState.dayTime)
+            else
             {
-                spawnsOn = true;
-                if (enemySet.Items.Count < 10)
-                {
-                    StartCoroutine(spawnEnemy(currSpawnedEnemy, spawnInterval));
-                }
+                dayTime = false;
             }
         }
     }
 
-    private IEnumerator spawnEnemy(GameObject enemy, float interval) 
+    private void SetSpawns()
+    {
+        if (spawnsOn)
+        {
+            if (dayTime)
+            {
+                currSpawnedEnemy = plasticBagMonsterPrefab;
+            }
+            if (!dayTime)
+            {
+                if( level == 2)
+                {
+                    if (isFromSawMill)
+                    {
+                        currSpawnedEnemy = enemyOilInvaderPrefab;
+                    }
+                    else
+                    {
+                        int index = Random.Range(0, 10);
+                        if (index < 7)
+                        {
+                            currSpawnedEnemy = enemyOilInvaderPrefab;
+                        }
+                        else if (index > 10)
+                        {
+                            currSpawnedEnemy = smogMonsterInvaderPrefab;
+                        }
+                    }
+                }
+                
+
+            }
+        }
+    }
+
+    private IEnumerator spawnEnemy() 
     {
         while (true)
         {
-
-         
             //if daynight cycle.nights passed is bigger  that 2 interval decrease
-            yield return new WaitForSeconds(interval);
-            GameObject newEnemy = Instantiate(currSpawnedEnemy, this.transform.position, Quaternion.identity);
+            //yield return new WaitForSeconds(interval);
+            //GameObject newEnemy = Instantiate(currSpawnedEnemy, this.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(spawnInterval);
+
+            if(enemySet.Items.Count < 10)
+                Instantiate(currSpawnedEnemy, this.transform);
         }
     }
 
@@ -112,6 +158,20 @@ public class EnemySpawner : MonoBehaviour
             currSpawnedEnemy = smogMonsterInvaderPrefab;
         }
         
+    }
+
+    public void ToggleSpawns(bool on)
+    {
+        if (on)
+        {
+            spawnsOn = true;
+            StartCoroutine(spawnEnemy());
+        }
+        if (!on)
+        {
+            spawnsOn = false;
+            StopCoroutine(spawnEnemy());
+        }
     }
 
     //Check the Day 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Line", menuName = "Dialogue/SpriteLibrary")]
+[CreateAssetMenu(fileName = "New Line", menuName = "UI/Dialogue/SpriteLibrary")]
 public class SpriteLibrary : ScriptableObject
 {
     // List of sprites that can be used

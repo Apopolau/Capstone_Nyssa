@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 
-[CreateAssetMenu(menuName = "Stats/Power Stats", fileName = "PowerStats")]
+[CreateAssetMenu(menuName = "Data Type/Stats/Power Stats", fileName = "PowerStats")]
 
 
 public class PowerStats : ScriptableObject
@@ -22,6 +22,7 @@ public class PowerStats : ScriptableObject
     [SerializeField] public bool isWeakness;
     [SerializeField] public bool effectsTiles;
     [SerializeField] public bool isEnabled;
+    [SerializeField] public bool isOnCooldown;
     public float speed;
     public float rechargeFloatTimer;
     public WaitForSeconds rechargeTimer;

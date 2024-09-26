@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/Controls/Default")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Controls/Default")]
 public class CtrlsDefaultAction : FSMAction
 {
     EarthPlayer earthPlayer;

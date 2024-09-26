@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Decisions/isRespawning")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Decisions/isRespawning")]
 public class isRespawning : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)

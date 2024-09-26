@@ -12,6 +12,7 @@ public class PowerDrop : Interactable
     //[SerializeField] public Image coldSnapFill;
     public PowerBehaviour powerBehaviour;
     [SerializeField] private LevelProgress levelProgress;
+    [SerializeField] private HUDModel hudModel;
     /// <summary>
     /// start a dialogue
     /// Tell Celest ow to use it
@@ -20,6 +21,7 @@ public class PowerDrop : Interactable
     // Start is called before the first frame update
     private void Awake()
     {
+        hudManager = hudModel.GetManager();
         foreach (GameObject player in playerSet.Items)
         {
             if (player.GetComponent<EarthPlayer>())
@@ -71,22 +73,28 @@ public class PowerDrop : Interactable
         if (powerDrop == CelestialPlayer.Power.COLDSNAP)
         {
             levelProgress.SetPowers(true);
+            /*
             celestialPlayer.coldSnapFill.enabled = false;
             celestialPlayer.CTRLColdSnapFill.enabled = false;
             StartCoroutine(celestialPlayer.CoolDownImageFill(celestialPlayer.coldSnapFill));
             celestialPlayer.coldSnapFill.enabled = true;
             celestialPlayer.CTRLColdSnapFill.enabled = true;
+            */
+            hudManager.TurnOffPowerOverlay("CastCold");
             return powerBehaviour.ColdSnapStats;
         }
         if (powerDrop == CelestialPlayer.Power.MOONTIDE)
         {
             levelProgress.SetPowers(true);
+            /*
             celestialPlayer.moonTideFill.enabled = false;
             celestialPlayer.CTRLMoonTideFill.enabled = false;
             StartCoroutine(celestialPlayer.CoolDownImageFill(celestialPlayer.moonTideFill));
             celestialPlayer.moonTideFill.enabled = true;
             celestialPlayer.moonTideFill.enabled = true;
             celestialPlayer.CTRLMoonTideFill.enabled = true;
+            */
+            hudManager.TurnOffPowerOverlay("CastMoontide");
             return powerBehaviour.MoonTideAttackStats;
         }
         return null;

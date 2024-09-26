@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Camera Pan", menuName = "Dialogue/CameraPan")]
+[CreateAssetMenu(fileName = "New Camera Pan", menuName = "UI/Dialogue/Camera Pan")]
 public class DialogueCameraPan : DialogueEvent
 {
     //Use this to determine if we're panning to a particular entity, or location

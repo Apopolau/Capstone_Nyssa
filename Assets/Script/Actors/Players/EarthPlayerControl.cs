@@ -470,5 +470,8 @@ public class EarthPlayerControl : MonoBehaviour
         }
     }
 
-    
+    public void SetDialogueManager(DialogueManager dialogueManager)
+    {
+        this.dialogueManager = dialogueManager;
+    }
 }

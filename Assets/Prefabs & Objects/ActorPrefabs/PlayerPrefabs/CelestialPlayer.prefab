@@ -890,14 +890,11 @@ GameObject:
   - component: {fileID: 2343692040003905913}
   - component: {fileID: 1028325472782930115}
   - component: {fileID: 8053673037830725848}
-  - component: {fileID: 5752642823608885967}
   - component: {fileID: 832134979749964034}
   - component: {fileID: 5015184762695812656}
-  - component: {fileID: 2887321969620239026}
   - component: {fileID: 6099830683338002241}
   - component: {fileID: 4269377883444005770}
   - component: {fileID: 965651675789021278}
-  - component: {fileID: 6663649609590881961}
   m_Layer: 12
   m_Name: CelestialPlayer
   m_TagString: Player2
@@ -1033,11 +1030,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e822071274fa4b42ae1ad708c2a7c5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudManager: {fileID: 0}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  keyboardControls: {fileID: 3335018865272805905}
+  controllerControls: {fileID: 7098490275979654792}
   playerObj: {fileID: 2590418954938022080}
   isDying: 0
   isRespawning: 0
-  displayText: {fileID: 0}
-  playerWarningBG: {fileID: 0}
   interacting: 0
   OrigPos: {x: 346, y: -0.00002288818, z: 29}
   soundLibrary: {fileID: 11400000, guid: 4069bc29f019ea14e921266fb25a26ef, type: 2}
@@ -1045,15 +1044,6 @@ MonoBehaviour:
   tileMask:
     serializedVersion: 2
     m_Bits: 128
-  darkeningAmount: 0.5
-  coldSnapFill: {fileID: 0}
-  lightingStrikeFill: {fileID: 0}
-  moonTideFill: {fileID: 0}
-  rainFill: {fileID: 0}
-  CTRLColdSnapFill: {fileID: 0}
-  CTRLightingStrikeFill: {fileID: 0}
-  CTRLMoonTideFill: {fileID: 0}
-  CTRLRainFill: {fileID: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   isRaining: 0
   RainParticleSystem: {fileID: 0}
@@ -1365,23 +1355,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
   target: {fileID: 3756737779463009657}
---- !u!114 &5752642823608885967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7159944928166958832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca2142b06a007047b8b498be2f0ad79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyboardUI: {fileID: 0}
-  controlsKeyboardUI: {fileID: 3335018865272805905}
-  controllerUI: {fileID: 0}
-  controlsControllerUI: {fileID: 7098490275979654792}
-  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!114 &832134979749964034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1419,20 +1392,6 @@ MonoBehaviour:
   targetPositionOffset: {x: 0, y: 1, z: 0}
   fadeSpeed: 1
   objectsBlockingView: []
---- !u!114 &2887321969620239026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7159944928166958832}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46648af44cb0b744dadb0075069e8c43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  celestialPlayer: {fileID: 7093202383440998290}
-  radialFillImage: {fileID: 0}
 --- !u!114 &6099830683338002241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1480,25 +1439,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationToSet:
   - {fileID: 11400000, guid: 789ca26ffd1b9bc4bad5168f05d25e49, type: 2}
---- !u!114 &6663649609590881961
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7159944928166958832}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5eefe638312cf34db7561947edf75b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  englishUI:
-  - {fileID: 0}
-  - {fileID: 0}
-  frenchUI:
-  - {fileID: 0}
-  - {fileID: 0}
-  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!1 &9147218820399847505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,10 +1835,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.09694535
-  m_Height: 0.89
+  m_Radius: 0.1
+  m_Height: 1.8631138
   m_Direction: 1
-  m_Center: {x: 0.0007843182, y: 0.38, z: 0.0008001806}
+  m_Center: {x: 0.0007843256, y: 0.072608955, z: 0.00080018025}
 --- !u!114 &8362785816475101772
 MonoBehaviour:
   m_ObjectHideFlags: 0

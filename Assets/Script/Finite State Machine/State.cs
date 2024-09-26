@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/State")]
+[CreateAssetMenu(menuName = "Architecture/FSM/State")]
 public sealed class State : BaseState
 {
     public List<FSMAction> Action = new List<FSMAction>();

@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "FSM/Actions/MakeRainAction")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/MakeRainAction")]
 public class MakeRainAction : FSMAction
 {
     CelestialPlayer player;
+    HUDManager hudManager;
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
         player = stateMachine.GetComponent<CelestialPlayer>();
+        hudManager = player.GetHudManager();
     }
 
 

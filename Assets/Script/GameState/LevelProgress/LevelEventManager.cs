@@ -5,31 +5,40 @@ using TMPro;
 
 public abstract class LevelEventManager : EventManager
 {
+    [Header("All level event managers have these")]
+    [Header("These need to be set in the scene")]
+    [SerializeField] protected HUDManager hudManager;
+    [SerializeField] protected Terrain terrain;
+
+    [Header("These are set on the prefab")]
     [SerializeField] protected GameObjectRuntimeSet playerSet;
-    protected CelestialPlayer celestialPlayer;
-    protected EarthPlayer earthPlayer;
-    [SerializeField] protected GameObject objectiveContainer;
+    [SerializeField] protected UserSettingsManager userSettingsManager;
+    [SerializeField] protected WeatherState weatherState;
+    [SerializeField] protected UISoundLibrary uiSoundLibrary;
+    //List of specific ambient sounds used in every level
     [SerializeField] protected SoundEvent music;
     [SerializeField] protected SoundEvent wind;
     [SerializeField] protected SoundEvent nature;
     [SerializeField] protected SoundEvent rain;
+    
+    [Header("These are set by the object")]
+    protected CelestialPlayer celestialPlayer;
+    protected EarthPlayer earthPlayer;
+    [SerializeField] protected GameObject inventorySlotManager;
+    [SerializeField] protected GameObject dialogueManager;
+    [SerializeField] protected GameObject objectiveContainer;
     //Music, wind, nature, rain
     [SerializeField] protected SoundPlayer[] soundPlayers;
-    
-    [SerializeField] protected UISoundLibrary uiSoundLibrary;
 
-    [SerializeField] protected UserSettingsManager userSettingsManager;
-
-    public Enemy dyingEnemy;
-    [SerializeField] protected Terrain terrain;
     [SerializeField] protected TerrainData terrainData1;
     [SerializeField] protected TerrainData terrainData2;
     protected TerrainLayer[] layers;
-    public enum E_TerrainLayer { POLLUTED, DIRT, GRASS};
+    public enum E_TerrainLayer { POLLUTED, DIRT, GRASS };
+
+    public Enemy dyingEnemy;
 
     protected bool hasFlipped;
-    [SerializeField] protected WeatherState weatherState;
-
+    
 
     protected void FlipTiles(List<GameObject> tiles)
     {
@@ -115,5 +124,29 @@ public abstract class LevelEventManager : EventManager
         {
             soundPlayers[3].Stop(0.5f);
         }
+    }
+
+    public abstract LevelProgress GetProgress();
+
+    public void SetObjectives(GameObject incObjectives)
+    {
+        objectiveContainer = incObjectives;
+    }
+
+    public void SetInventorySlotManager(GameObject incSlotManager)
+    {
+        inventorySlotManager = incSlotManager;
+    }
+
+    public void SetDialogueManager(GameObject incDialogueManager)
+    {
+        dialogueManager = incDialogueManager;
+    }
+
+    public abstract void PopulateInventory();
+
+    public void ActivateTask(int index, bool active)
+    {
+        hudManager.ToggleTask(index, active);
     }
 }

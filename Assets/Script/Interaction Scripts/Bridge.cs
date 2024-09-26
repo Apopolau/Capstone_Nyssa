@@ -180,7 +180,7 @@ public class Bridge : Interactable
     private void NotEnoughLogs()
     {
         string warningText = "Not enough logs";
-        earthPlayer.StartCoroutine(earthPlayer.ThrowPlayerWarning(warningText));
+        hudManager.ThrowPlayerWarning(warningText);
         //yield return buildTime;
         //earthPlayer.displayText.text = "";
     }
@@ -188,6 +188,6 @@ public class Bridge : Interactable
     private void WrongCharacter()
     {
         string warningText = "Only Sprout can build this";
-        earthPlayer.StartCoroutine(earthPlayer.ThrowPlayerWarning(warningText));
+        hudManager.ThrowPlayerWarning(warningText);
     }
 }

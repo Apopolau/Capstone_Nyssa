@@ -49,7 +49,7 @@ public class Fox : Animal
     {
         CheckLevelState();
         SetWalkingState();
-        MoveKidnapIcon();
+        HandleKidnapIcon();
         if (earthPlayer.interacting && inRangeOfEscort)
         {
             if (!isEscorted)
@@ -63,7 +63,8 @@ public class Fox : Animal
         }
         if (isEscorted && uiTarget.activeSelf)
         {
-            uiTarget.SetActive(false);
+            //uiTarget.SetActive(false);
+            ToggleEscortPopup(false);
         }
     }
 
@@ -128,7 +129,8 @@ public class Fox : Animal
         {
             if (other.GetComponent<EarthPlayer>() && !isEscorted)
             {
-                uiTarget.SetActive(true);
+                //uiTarget.SetActive(true);
+                ToggleEscortPopup(true);
                 inRangeOfEscort = true;
             }
         }
@@ -138,7 +140,8 @@ public class Fox : Animal
     {
         if (uiTarget.activeSelf && other.GetComponent<EarthPlayer>())
         {
-            uiTarget.SetActive(false);
+            //uiTarget.SetActive(false);
+            ToggleEscortPopup(false);
             inRangeOfEscort = false;
         }
     }

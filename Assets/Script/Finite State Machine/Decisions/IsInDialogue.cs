@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Decisions/IsInDialogue")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Decisions/IsInDialogue")]
 public class IsInDialogue : Decision
 {
     public override bool Decide(BaseStateMachine stateMachine)

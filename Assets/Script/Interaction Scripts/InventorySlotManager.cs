@@ -9,6 +9,12 @@ public class InventorySlotManager : MonoBehaviour
 
     private void Awake()
     {
+        //inventory.AddItemSlots(itemSlots);
+    }
+
+    public void SetInventory(Inventory incInventory)
+    {
+        inventory = incInventory;
         inventory.AddItemSlots(itemSlots);
     }
 }

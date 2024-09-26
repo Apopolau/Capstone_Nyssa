@@ -9,6 +9,7 @@ public abstract class LevelProgress : ScriptableObject
     [SerializeField] protected GameObjectRuntimeSet plantSet;
     [SerializeField] protected TextMeshProUGUI objectiveText;
     [SerializeField] protected Inventory inventory;
+    [SerializeField] protected TaskListManager[] task;
 
     protected int currentPlayerLevel;
 
@@ -23,6 +24,11 @@ public abstract class LevelProgress : ScriptableObject
     [SerializeField] protected int cattailCount;
     [SerializeField] protected int flowerCount;
     [SerializeField] protected int lilyCount;
+
+    public bool hasRain;
+    public bool hasLightning;
+    public bool hasColdSnap;
+    public bool hasMoonTide;
 
     public int totalPlants;
     public bool animalHasEnoughFood = false;
@@ -249,5 +255,26 @@ public abstract class LevelProgress : ScriptableObject
     protected abstract void OnPlayerWin();
 
     protected abstract void OnPlayerLoss();
+
+    public TaskListManager GetTask(int index)
+    {
+        return task[index];
+    }
+
+    /*
+    public void InitializeTasks(int size)
+    {
+        task = new TaskListManager[size];
+    }
+    */
+
+    public void SetTask(int index, GameObject taskObject)
+    {
+        task[index] = taskObject.GetComponent<TaskListManager>();
+    }
+
+    public abstract void SetEventManager(LevelEventManager eventManager);
+
+    public abstract LevelEventManager GetEventManager();
 
 }

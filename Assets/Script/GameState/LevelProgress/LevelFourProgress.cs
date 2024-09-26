@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Level Four Progress", menuName = "ManagerObject/LevelProgress/LevelFour")]
+[CreateAssetMenu(fileName = "New Level Four Progress", menuName = "Data Type/Level Progress/Level Four")]
 public class LevelFourProgress : LevelProgress
 {
+    LevelEventManager levelFourEvents;
     bool hasFoundRabbit;
 
     /*
@@ -47,5 +48,15 @@ public class LevelFourProgress : LevelProgress
     protected override void OnPlayerLoss()
     {
 
+    }
+
+    public override void SetEventManager(LevelEventManager eventManager)
+    {
+        levelFourEvents = eventManager;
+    }
+
+    public override LevelEventManager GetEventManager()
+    {
+        return levelFourEvents;
     }
 }

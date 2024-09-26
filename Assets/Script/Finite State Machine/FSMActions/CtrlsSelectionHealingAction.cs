@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/Controls/SelectionHeal")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Controls/SelectionHeal")]
 public class CtrlsSelectionHealingBarrierAction : FSMAction
 {
     EarthPlayer earthPlayer;
+    HUDManager hudManager;
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
         earthPlayer = stateMachine.GetComponent<EarthPlayer>();
+        hudManager = earthPlayer.GetHudManager();
 
         //Set all the appropriate controls
         earthPlayer.earthControls.controls.HealSelect.Enable();
@@ -31,10 +33,14 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
         earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
 
         //Update the UI
-        earthPlayer.displayText.text = "Select a target to heal";
-        earthPlayer.uiController.DarkenOverlay(earthPlayer.GetPlantDarkenObject());
+        //earthPlayer.displayText.text = "Select a target to heal";
+        hudManager.TurnOnPopUpText("Select a target to heal");
+        //earthPlayer.uiController.DarkenOverlay(earthPlayer.GetPlantDarkenObject());
+        hudManager.ToggleSproutPanel(true);
+        /*
         if (earthPlayer.spellsControlsUI != null)
         { earthPlayer.spellsControlsUI.SetActive(true); }
+        */
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -50,10 +56,14 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
         earthPlayer.ToggleTurning();
 
         //Restore the UI
-        earthPlayer.displayText.text = "";
+        //earthPlayer.displayText.text = "";
+        hudManager.TurnOffPopUpText();
         Destroy(earthPlayer.tileOutline);
-        earthPlayer.uiController.RestoreUI(earthPlayer.GetPlantDarkenObject());
+        //earthPlayer.uiController.RestoreUI(earthPlayer.GetPlantDarkenObject());
+        hudManager.ToggleSproutPanel(false);
+        /*
         if (earthPlayer.spellsControlsUI != null)
         { earthPlayer.spellsControlsUI.SetActive(false); }
+        */
     }
 }

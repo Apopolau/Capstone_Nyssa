@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// 
+/// DEPRECATED
+/// 
+/// SEE HUDMANAGER AND HUDMODEL INSTEAD
+/// 
+/// </summary>
 public class CelestUIManager : MonoBehaviour
 {
     public GameObject keyboardUI;

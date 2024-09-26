@@ -22,7 +22,8 @@ public class TaskKidnapAnimal : BTNode
 
         if (thisEnemy.isStaggered || thisEnemy.isDying)
         {
-            thisEnemy.GetClosestAnimal().GetComponent<Animal>().SetKidnapStatus(false);
+            if(thisEnemy.GetKidnappedAnimal() != null)
+                thisEnemy.GetKidnappedAnimal().SetKidnapStatus(false);
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
             // thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
             state = NodeState.FAILURE;
@@ -30,7 +31,8 @@ public class TaskKidnapAnimal : BTNode
         }
         if (!thisEnemy.inKidnapRange)
         {
-            thisEnemy.GetClosestAnimal().GetComponent<Animal>().SetKidnapStatus(false);
+            if (thisEnemy.GetKidnappedAnimal() != null)
+                thisEnemy.GetKidnappedAnimal().SetKidnapStatus(false);
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
             // thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
             state = NodeState.FAILURE;
@@ -48,6 +50,7 @@ public class TaskKidnapAnimal : BTNode
         {
             thisEnemy.GetClosestAnimal().GetComponent<Animal>().kidnapper = thisEnemy;
             thisEnemy.GetClosestAnimal().GetComponent<Animal>().SetKidnapStatus(true);
+            thisEnemy.kidnappedAnimal = thisEnemy.GetClosestAnimal().GetComponent<Animal>();
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
 
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SoundLibraries/UILibrary", fileName = "UI Sounds")]
+[CreateAssetMenu(menuName = "Audio/Sound Libraries/UI Library", fileName = "UI Sounds")]
 public class UISoundLibrary : EventSoundLibrary
 {
     [Header("Click")]

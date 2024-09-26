@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SoundLibraries/AnimalLibrary", fileName = "Animal Sounds")]
+[CreateAssetMenu(menuName = "Audio/Sound Libraries/Animal Library", fileName = "Animal Sounds")]
 public class AnimalSoundLibrary : EventSoundLibrary
 {
     [Header("Movement")]

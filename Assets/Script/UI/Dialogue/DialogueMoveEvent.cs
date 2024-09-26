@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Movement", menuName = "Dialogue/Move")]
+[CreateAssetMenu(fileName = "New Movement", menuName = "UI/Dialogue/Move")]
 public class DialogueMoveEvent : DialogueEvent
 {
     [SerializeField] private bool playsOut;

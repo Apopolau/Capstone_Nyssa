@@ -217,13 +217,13 @@ public class Ladder : Interactable
     private void NotEnoughLogs()
     {
         string warningText = "Not enough logs";
-        earthPlayer.StartCoroutine(earthPlayer.ThrowPlayerWarning(warningText));
+        hudManager.ThrowPlayerWarning(warningText);
     }
 
     private void WrongCharacter()
     {
         string warningText = "Only Sprout can build this";
-        earthPlayer.StartCoroutine(earthPlayer.ThrowPlayerWarning(warningText));
+        hudManager.ThrowPlayerWarning(warningText);
     }
 
     private void TriggerLadderClimb()

@@ -6,7 +6,8 @@ using TMPro;
 public class EndLevelOneDialogueTrigger : MonoBehaviour
 {
     public DialogueTrigger endMissionDialogue;
-    [SerializeField] public TextMeshProUGUI displayText;
+    [SerializeField] private HUDModel hudModel;
+    //[SerializeField] public TextMeshProUGUI displayText;
     bool playerOnePresent;
     bool playerTwoPresent;
     bool hasRunDialogue;
@@ -51,12 +52,16 @@ public class EndLevelOneDialogueTrigger : MonoBehaviour
     {
         if((playerOnePresent && !playerTwoPresent) || (!playerOnePresent && playerTwoPresent))
         {
-            displayText.text = "Both players must be present to leave";
+            hudModel.GetManager().ThrowPlayerWarning("Both players must be present to leave");
+            //displayText.text = "Both players must be present to leave";
         }
+        /*
         else if(!playerOnePresent && !playerTwoPresent)
         {
-            displayText.text = "";
+            //hudModel.GetManager().TurnOffPopUpText();
+            //displayText.text = "";
         }
+        */
         
     }
 

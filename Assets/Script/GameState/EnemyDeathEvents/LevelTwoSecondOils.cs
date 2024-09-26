@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Events/L2SecondOils", fileName = "L2OilPairDeath")]
+[CreateAssetMenu(menuName = "Events/Level 2 Second Oils", fileName = "L2OilPairDeath")]
 public class LevelTwoSecondOils : EnemyDeathBehaviour
 {
     //Get your Level Manager object's levelEvents script

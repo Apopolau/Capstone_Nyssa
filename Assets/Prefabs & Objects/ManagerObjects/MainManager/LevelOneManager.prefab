@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4414962910615566018}
   - component: {fileID: 3066439530218443091}
+  - component: {fileID: 1622098183511203309}
   - component: {fileID: 3328214192355188500}
   - component: {fileID: 4908730373353662941}
   - component: {fileID: 8537851400994028921}
-  - component: {fileID: 2294490788083436385}
   - component: {fileID: 4701399666614650149}
   - component: {fileID: 3221996817422935917}
   - component: {fileID: 7868941164567360802}
@@ -55,6 +55,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelManager: {fileID: 11400000, guid: 84a591d714bdf7e4387770b536fd3615, type: 2}
   eventManager: {fileID: 3328214192355188500}
+--- !u!114 &1622098183511203309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 213507687717741215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827a32e5684bc58468ba6c4931fda0d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 11400000, guid: 52e0bb50aeb62a342a3139323585b2d9, type: 2}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  hudCanvas: {fileID: 0}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  animalSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
+  buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
+  coldSnapStats: {fileID: 11400000, guid: 3bd7790368af2774c9b62e31de890b84, type: 2}
+  lightningStats: {fileID: 11400000, guid: 3176fd3664b0e6b4dad3222b2235d1c1, type: 2}
+  basicAttackStats: {fileID: 11400000, guid: 5b0d61759c7575e4bbb50a5cac0e21c4, type: 2}
+  moonTideAttackStats: {fileID: 11400000, guid: ce649687368c4da40ac7693298b47daa, type: 2}
 --- !u!114 &3328214192355188500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,20 +91,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
-  objectiveList: {fileID: 0}
+  inventorySlotManager: {fileID: 0}
+  hudManager: {fileID: 1622098183511203309}
+  dialogueManager: {fileID: 0}
+  objectiveContainer: {fileID: 0}
   music: {fileID: 11400000, guid: a6da14652a76a4944aed856f25e19569, type: 2}
   wind: {fileID: 11400000, guid: 2aec86a56eabb5c438d3be3ee0766a53, type: 2}
   nature: {fileID: 11400000, guid: 7d947dc4de6893c428a9141249e45d84, type: 2}
   rain: {fileID: 11400000, guid: 73917364e62279743894f4bb18a57aed, type: 2}
   soundPlayers: []
   uiSoundLibrary: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
   dyingEnemy: {fileID: 0}
   terrain: {fileID: 0}
   terrainData1: {fileID: 0}
   terrainData2: {fileID: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
-  dialogueManager: {fileID: 0}
   cleanWaterMaterial: {fileID: 2100000, guid: e33eb5d28521d5f4188aec862cee5330, type: 2}
   water: {fileID: 0}
   tileGrid: {fileID: 0}
@@ -103,13 +129,6 @@ MonoBehaviour:
   dirtLayer: 1
   grassSteps: 8
   dirtSteps: 8
-  task1: {fileID: 0}
-  task2: {fileID: 0}
-  task3: {fileID: 0}
-  task4: {fileID: 0}
-  task5: {fileID: 0}
-  task6: {fileID: 0}
-  task7: {fileID: 0}
   leaveTriggerObj: {fileID: 0}
   firstMonsterDeadDialouge: {fileID: 4701399666614650149}
   secondMonsterDeadDialouge: {fileID: 3221996817422935917}
@@ -118,6 +137,9 @@ MonoBehaviour:
   allMonstersDefeatedDialogue: {fileID: 2484009731153438493}
   allObjectivesMetDialogue: {fileID: 4735597307128877273}
   power: {fileID: 0}
+  treeIndicator: {fileID: 0}
+  flowerIndicator: {fileID: 0}
+  grassIndicator: {fileID: 0}
   duck1: {fileID: 0}
   duck2: {fileID: 0}
   factory: {fileID: 0}
@@ -416,25 +438,6 @@ MonoBehaviour:
   c_lightAcid: {r: 0.9017476, g: 1, b: 0.8160377, a: 0}
   c_heavyAcid: {r: 0.54228234, g: 1, b: 0.3820755, a: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
---- !u!114 &2294490788083436385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 213507687717741215}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5eefe638312cf34db7561947edf75b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  englishUI:
-  - {fileID: 0}
-  - {fileID: 0}
-  frenchUI:
-  - {fileID: 0}
-  - {fileID: 0}
-  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!114 &4701399666614650149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,6 +450,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: 52e0bb50aeb62a342a3139323585b2d9, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: 241d14dc1e5de8f4abb87eeb3fed333a, type: 2}
 --- !u!114 &3221996817422935917
 MonoBehaviour:
@@ -460,6 +465,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: 52e0bb50aeb62a342a3139323585b2d9, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: 52547c8b7dad87c41a4244d2753a9b64, type: 2}
 --- !u!114 &7868941164567360802
 MonoBehaviour:
@@ -473,6 +480,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: 52e0bb50aeb62a342a3139323585b2d9, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: 1587223b99c17f3489e790ca8cb41b55, type: 2}
 --- !u!114 &2484009731153438493
 MonoBehaviour:
@@ -486,6 +495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: 52e0bb50aeb62a342a3139323585b2d9, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: 4709dcaa34ea55f4bb4ef09fff1b4ef3, type: 2}
 --- !u!114 &4735597307128877273
 MonoBehaviour:
@@ -499,4 +510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: 52e0bb50aeb62a342a3139323585b2d9, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: f660d15d273036c45b7e40b05cbc01c7, type: 2}

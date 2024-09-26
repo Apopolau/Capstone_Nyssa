@@ -604,8 +604,6 @@ GameObject:
   - component: {fileID: 5061027297478944643}
   - component: {fileID: 2449388460271823589}
   - component: {fileID: 4394548441176001214}
-  - component: {fileID: 1222953851676443687}
-  - component: {fileID: 6432642338141535612}
   - component: {fileID: 8002460639596102495}
   - component: {fileID: 3297893822877032068}
   - component: {fileID: 5311896352438793669}
@@ -734,28 +732,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudManager: {fileID: 0}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  keyboardControls: {fileID: 3462690462426893458}
+  controllerControls: {fileID: 8557892789263032690}
   playerObj: {fileID: 99740619803956081}
   isDying: 0
   isRespawning: 0
-  displayText: {fileID: 0}
-  playerWarningBG: {fileID: 0}
   interacting: 0
   OrigPos: {x: 347, y: 0, z: 37}
   soundLibrary: {fileID: 11400000, guid: a8c92392b680be741ad59d0802ca5207, type: 2}
   plantParent: {fileID: 0}
-  virtualMouseInput: {fileID: 0}
   mainCamera: {fileID: 0}
-  selectTileText: {fileID: 0}
-  uiController: {fileID: 1222953851676443687}
-  plantingControlsUI: {fileID: 8544560998684819284}
-  spellsControlsUI: {fileID: 4895535407208006652}
-  darkenInSelectMode: {fileID: 0}
-  darkenWhilePlanting: {fileID: 0}
-  darkeningAmount: 0.5
-  healCooldownOverlay: {fileID: 0}
-  CTRLHealOverlay: {fileID: 0}
-  thornCooldownOverlay: {fileID: 0}
-  CTRLThornOverlay: {fileID: 0}
+  virtualMouseUI: {fileID: 6752313701160067739}
   isPlantSelected: 0
   isRemovalStarted: 0
   isATileSelected: 0
@@ -771,9 +760,12 @@ MonoBehaviour:
   tileMask:
     serializedVersion: 2
     m_Bits: 128
-  virtualMousePosition: {x: 0, y: 0}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   playerList: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   animalList: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
+  buildList: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
   spellRange: 50
   treePrefab: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
   landGrassPrefab: {fileID: 8326592455623684711, guid: 2938a7a0c54ca5f448e41f884a596426, type: 3}
@@ -1192,58 +1184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiPrefab: {fileID: 7098512397597313366, guid: 1a5f817bf4808d0459ac2dffe0be74fe, type: 3}
   target: {fileID: 8592997139013804314}
---- !u!114 &1222953851676443687
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4033276866688796702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 823d4af481012394fbe4dc360484a85b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  darkOverlay: {fileID: 0}
-  darkeningAmount: 0.5
-  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
-  keyboardUIObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  controllerUIObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 8557892789263032690}
-  keyboardCelesteObjects: []
-  controllerCelesteObjects: []
-  inventory: {fileID: 0}
---- !u!114 &6432642338141535612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4033276866688796702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce2b31f69b4bda048afc09ddb4cc0885, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  keyboardUIObjects:
-  - {fileID: 3462690462426893458}
-  - {fileID: 1560699179882136348}
-  - {fileID: 8947474752842549371}
-  - {fileID: 0}
-  controllerUIObjects:
-  - {fileID: 8557892789263032690}
-  - {fileID: 6551581616993105937}
-  - {fileID: 7700608565490228565}
-  - {fileID: 0}
-  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
 --- !u!114 &8002460639596102495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1312,6 +1252,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4cc9d5221e1e564c8255f8e70d8e105, type: 2}
   - {fileID: 11400000, guid: 4565de5e6e3d78c4a975e5d524ae1762, type: 2}
   - {fileID: 11400000, guid: f564a2d3b2e7b04498bf1657c840cdd1, type: 2}
+  - {fileID: 11400000, guid: ae2ec31961ee4a7488acf70243389c4e, type: 2}
 --- !u!114 &1679771320048200777
 MonoBehaviour:
   m_ObjectHideFlags: 0

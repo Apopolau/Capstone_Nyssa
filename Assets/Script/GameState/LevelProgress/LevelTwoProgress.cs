@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Level Two Progress", menuName = "ManagerObject/LevelProgress/LevelTwo")]
+[CreateAssetMenu(fileName = "New Level Two Progress", menuName = "Data Type/Level Progress/Level Two")]
 public class LevelTwoProgress : LevelProgress
 {
+    LevelEventManager levelTwoEvents;
     [SerializeField] public GameObject flowerSeedPrefab;
 
     //Start of game condition, saved hedgehog, destroyed monster
     bool hasSavedHedgehog;
     //Defeated the monster on the short path
     bool hasFlowerSeeds;
-    bool hasMoonTide = false;
     //Cleared the rock slide
 
     //Defeated the monster up the path
@@ -44,5 +44,15 @@ public class LevelTwoProgress : LevelProgress
     public bool GetMoonTideStatus()
     {
         return hasMoonTide;
+    }
+
+    public override void SetEventManager(LevelEventManager eventManager)
+    {
+        levelTwoEvents = eventManager;
+    }
+
+    public override LevelEventManager GetEventManager()
+    {
+        return levelTwoEvents;
     }
 }

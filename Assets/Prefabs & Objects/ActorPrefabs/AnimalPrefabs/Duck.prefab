@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7117513122354662221
 Transform:
   m_ObjectHideFlags: 0
@@ -63,6 +63,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 153751550922977780}
+  - {fileID: 2522794916573313020}
   m_Father: {fileID: 3668103021458720016}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &201027553100823248
@@ -119,7 +120,6 @@ Transform:
   - {fileID: 3605927682115549236}
   - {fileID: 4171676351237390294}
   - {fileID: 7117513122354662221}
-  - {fileID: 2522794916573313020}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4652905001960518181
@@ -184,7 +184,9 @@ MonoBehaviour:
   celesteImage: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   uiTarget: {fileID: 3645209631482356489}
+  escortPopup: {fileID: 9058856541875424375}
   speechTarget: {fileID: 3986107689999799328}
+  kidnapIconSprite: {fileID: 0}
   isStuck: 1
   midAnimation: 0
   isScared: 0
@@ -455,7 +457,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 3668103021458720016}
+    m_TransformParent: {fileID: 7117513122354662221}
     m_Modifications:
     - target: {fileID: 7867170218109147028, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
       propertyPath: m_Name
@@ -463,15 +465,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 8.9
       objectReference: {fileID: 0}
     - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.48
+      value: -1.8799996
       objectReference: {fileID: 0}
     - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1.6
       objectReference: {fileID: 0}
     - target: {fileID: 8754565492452815944, guid: 3364f442dbbeb3447a15c1824ffa42f5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -527,6 +529,10 @@ PrefabInstance:
     - target: {fileID: 563473557167539429, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
       propertyPath: m_Name
       value: EscortCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 563473557167539429, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3113640933164595635, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
       propertyPath: m_fontAsset
@@ -640,5 +646,10 @@ PrefabInstance:
 --- !u!224 &153751550922977780 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8666163771918825830, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
+  m_PrefabInstance: {fileID: 8819836089284511890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9058856541875424375 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 563473557167539429, guid: 922288e677a52e04fb5b13a81e0d11d6, type: 3}
   m_PrefabInstance: {fileID: 8819836089284511890}
   m_PrefabAsset: {fileID: 0}

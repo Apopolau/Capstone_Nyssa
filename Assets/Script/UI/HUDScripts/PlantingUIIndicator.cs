@@ -4,6 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// 
+/// DEPRECATED
+/// 
+/// SEE HUDMANAGER AND HUDMODEL INSTEAD
+/// 
+/// </summary>
 public class PlantingUIIndicator : MonoBehaviour
 {
     [SerializeField] public Inventory inventory;

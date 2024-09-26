@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Animation", menuName = "Dialogue/Animation")]
+[CreateAssetMenu(fileName = "New Animation", menuName = "UI/Dialogue/Animation")]
 public class DialogueAnimation : DialogueEvent
 {
     [SerializeField] string animationName;

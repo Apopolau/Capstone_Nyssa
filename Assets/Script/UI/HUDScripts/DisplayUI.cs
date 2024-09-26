@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Used for showing UI elements over characters' heads
 public class DisplayUI : MonoBehaviour
 {
   public GameObject uiObject;

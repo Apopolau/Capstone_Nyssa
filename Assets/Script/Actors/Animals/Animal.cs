@@ -35,7 +35,9 @@ public abstract class Animal : MonoBehaviour
     [SerializeField] public Sprite celesteImage;
     public WeatherState weatherState;
     public GameObject uiTarget;
+    public GameObject escortPopup;
     public GameObject speechTarget;
+    [SerializeField] protected Sprite kidnapIconSprite;
 
     public bool isStuck;
     public bool midAnimation;
@@ -204,10 +206,11 @@ public abstract class Animal : MonoBehaviour
         }
     }
 
-    protected void MoveKidnapIcon()
+    protected void HandleKidnapIcon()
     {
         if (kidnapIconOn)
         {
+            /*
             kidnapIcon.transform.position = uiTarget.transform.position;
             float xPos = Mathf.Clamp(uiTarget.transform.position.x, 0f, Screen.width);
             float yPos = Mathf.Clamp(uiTarget.transform.position.x, 0f, Screen.height);
@@ -216,6 +219,8 @@ public abstract class Animal : MonoBehaviour
             Vector3 pointToRotateTowards = new Vector3(0, 0, kidnapIcon.transform.GetChild(0).GetChild(1).transform.position.z);
 
             kidnapIcon.transform.GetChild(0).GetChild(0).LookAt(this.gameObject.transform);
+            */
+            managerObject.GetComponent<HUDManager>().MoveKidnapIcon(kidnapIcon, uiTarget, this.gameObject);
         }
     }
 
@@ -224,7 +229,7 @@ public abstract class Animal : MonoBehaviour
         soundLibrary.PlayVocalizeClips();
     }
 
-    public void TurnOnPopup(Sprite sprite)
+    public void TurnOnSpeechPopup(Sprite sprite)
     {
         speechTarget.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = sprite;
         speechTarget.SetActive(true);
@@ -235,5 +240,25 @@ public abstract class Animal : MonoBehaviour
     {
         yield return popupLength;
         speechTarget.SetActive(false);
+    }
+
+    public void ToggleEscortPopup(bool on)
+    {
+        escortPopup.SetActive(on);
+    }
+
+    public void SetKidnapIconObject(GameObject kidnapIconObject)
+    {
+        kidnapIcon = kidnapIconObject;
+    }
+
+    public void SetKidnapIconImage(Sprite kidnapIconImage)
+    {
+        kidnapIconSprite = kidnapIconImage;
+    }
+
+    public Sprite GetKidnapIcon()
+    {
+        return kidnapIconSprite;
     }
 }

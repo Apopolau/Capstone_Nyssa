@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(menuName = "FSM/Actions/AttackAnimationAction")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Attack Animation Action")]
 public class AttackAnimationAction : FSMAction
 {
     CelestialPlayer player;
@@ -21,6 +21,7 @@ public class AttackAnimationAction : FSMAction
            stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;
             if (!player.canColdSnap)
             {
+                
                 player.StartCoroutine(player.animateColdSnap());
                
                 player.ResetColdSnap();

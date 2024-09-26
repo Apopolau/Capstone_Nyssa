@@ -189,4 +189,14 @@ public class LevelThreeEvents : LevelEventManager
     {
 
     }
+
+    public override LevelProgress GetProgress()
+    {
+        return levelThreeProgress;
+    }
+
+    public override void PopulateInventory()
+    {
+
+    }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/AttackLightningAction")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Attack Lightning Action")]
 public class AttackLightningAction: FSMAction
 {
     CelestialPlayer player;

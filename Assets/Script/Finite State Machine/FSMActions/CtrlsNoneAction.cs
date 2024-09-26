@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/Controls/None")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Controls/None")]
 public class CtrlsNoneAction : FSMAction
 {
     EarthPlayer earthPlayer;

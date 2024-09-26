@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SoundLibraries/AmbientSounds", fileName = "Ambient Sounds")]
+[CreateAssetMenu(menuName = "Audio/Sound Libraries/Ambient Sounds", fileName = "Ambient Sounds")]
 public class AmbientSoundLibrary : SoundLibrary
 {
     [Header("Music")]

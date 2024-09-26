@@ -167,4 +167,14 @@ public class LevelFourEvents : LevelEventManager
     {
 
     }
+
+    public override LevelProgress GetProgress()
+    {
+        return levelFourProgress;
+    }
+
+    public override void PopulateInventory()
+    {
+
+    }
 }

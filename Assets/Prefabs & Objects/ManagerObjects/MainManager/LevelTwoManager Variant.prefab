@@ -732,6 +732,9 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       insertIndex: 2
+      addedObject: {fileID: 8337965970362240940}
+    - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+      insertIndex: 3
       addedObject: {fileID: 3426407758838150730}
     - targetCorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
       insertIndex: -1
@@ -754,6 +757,29 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 213507687717741215, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
   m_PrefabInstance: {fileID: 1089422311482381013}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8337965970362240940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002314583612977226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 827a32e5684bc58468ba6c4931fda0d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  model: {fileID: 11400000, guid: c1b6a84b15b419b4eabb139c89e802cd, type: 2}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  hudCanvas: {fileID: 0}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  animalSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
+  buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
+  coldSnapStats: {fileID: 11400000, guid: 3bd7790368af2774c9b62e31de890b84, type: 2}
+  lightningStats: {fileID: 11400000, guid: 3176fd3664b0e6b4dad3222b2235d1c1, type: 2}
+  basicAttackStats: {fileID: 11400000, guid: 5b0d61759c7575e4bbb50a5cac0e21c4, type: 2}
+  moonTideAttackStats: {fileID: 11400000, guid: ce649687368c4da40ac7693298b47daa, type: 2}
 --- !u!114 &3426407758838150730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -767,16 +793,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
-  objectiveList: {fileID: 0}
-  ambientSounds: {fileID: 11400000, guid: f7424e7b8e4e40e488d971a9f6e74774, type: 2}
+  inventorySlotManager: {fileID: 0}
+  hudManager: {fileID: 8337965970362240940}
+  dialogueManager: {fileID: 0}
+  objectiveContainer: {fileID: 0}
+  music: {fileID: 11400000, guid: a6da14652a76a4944aed856f25e19569, type: 2}
+  wind: {fileID: 11400000, guid: 2aec86a56eabb5c438d3be3ee0766a53, type: 2}
+  nature: {fileID: 11400000, guid: 7d947dc4de6893c428a9141249e45d84, type: 2}
+  rain: {fileID: 11400000, guid: 73917364e62279743894f4bb18a57aed, type: 2}
+  soundPlayers: []
   uiSoundLibrary: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
   dyingEnemy: {fileID: 0}
   terrain: {fileID: 0}
   terrainData1: {fileID: 0}
   terrainData2: {fileID: 0}
+  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   levelTwoProgress: {fileID: 11400000, guid: d72188606e7e6e9409fddb57f1bcf001, type: 2}
-  dialogueManager: {fileID: 0}
-  inventorySlotManager: {fileID: 0}
   grassSeed:
     stats: {fileID: 11400000, guid: b626233bd45df314f868bb4f2e624c53, type: 2}
     quantity: 10
@@ -806,14 +839,6 @@ MonoBehaviour:
   dirtLayer: 1
   grassSteps: 8
   dirtSteps: 8
-  task1: {fileID: 0}
-  task2: {fileID: 0}
-  task3: {fileID: 0}
-  task4: {fileID: 0}
-  task5: {fileID: 0}
-  task6: {fileID: 0}
-  task7: {fileID: 0}
-  task8: {fileID: 0}
   leaveTriggerObj: {fileID: 0}
   firstMonsterDeadDialouge: {fileID: 560810236520194074}
   secondMonsterDeadDialouge: {fileID: 8166555296727488535}
@@ -840,6 +865,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: c1b6a84b15b419b4eabb139c89e802cd, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: 54897584b03a5c246870962483a0be06, type: 2}
 --- !u!114 &8166555296727488535
 MonoBehaviour:
@@ -853,6 +880,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: c1b6a84b15b419b4eabb139c89e802cd, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: aeba91c8177622641b177243ed5fada9, type: 2}
 --- !u!114 &7474066682892620428
 MonoBehaviour:
@@ -866,6 +895,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: c1b6a84b15b419b4eabb139c89e802cd, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: 4e7a667cd12c1cc438d1b74bcad6a8cb, type: 2}
 --- !u!114 &4285750560391720844
 MonoBehaviour:
@@ -879,6 +910,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: c1b6a84b15b419b4eabb139c89e802cd, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: a4214e1be4b3a1f499f363a9b4209fb9, type: 2}
 --- !u!114 &3081410312761727100
 MonoBehaviour:
@@ -892,4 +925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c4d3e78b0e60a74b9222d188fb595df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hudModel: {fileID: 11400000, guid: c1b6a84b15b419b4eabb139c89e802cd, type: 2}
+  dialogueManager: {fileID: 0}
   dialogue: {fileID: 11400000, guid: 98aa6ecd5c1df0b41ada56f8fbe09f87, type: 2}

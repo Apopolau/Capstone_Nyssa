@@ -13,6 +13,7 @@ public class SplitScreen : MonoBehaviour
 
     [SerializeField] public GameObject earthPlayer;
     [SerializeField] public GameObject celestialPlayer;
+    [SerializeField] public HUDManager hudManager;
     [SerializeField] public Camera earthCam;
     [SerializeField] public Camera celestialCam;
     [SerializeField] public Camera mainCam;
@@ -31,6 +32,7 @@ public class SplitScreen : MonoBehaviour
     private void Start()
     {
         SetOneCam();
+        virtualMouseInput = hudManager.GetVirtualMouseInput();
     }
 
     // Update is called once per frame
@@ -135,15 +137,37 @@ public class SplitScreen : MonoBehaviour
         earthCam.enabled = false;
         //go into the the plant systems main camera and make sure it is properly set
         earthPlayer.GetComponent<EarthPlayer>().SetCamera(mainCam);
-        virtualMouseInput.cursorTransform.position = earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
+        //virtualMouseInput.cursorTransform.position = earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
 
-        if(earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        if (virtualMouseInput != null)
         {
-            earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
-            earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = virtualMouseInput;
-            earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
-            earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
+            
+            //virtualMouseInput.cursorTransform.position = hudManager.GetVirtualMousePosition();
+
+            if (earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+            {
+                /*
+                hudManager.ToggleVirtualMouseSprite(false);
+                hudManager.SwitchVirtualMouseInputs(virtualMouseInput);
+                hudManager.SetVirtualMouseImage(virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
+                //earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
+                //earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = virtualMouseInput;
+                //earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon();
+                //earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
+                hudManager.ToggleVirtualMouseSprite(true);
+                */
+                hudManager.SwitchCursorCanvas(HUDManager.MouseCanvasType.MAIN, true);
+            }
+            else
+            {
+                hudManager.SwitchCursorCanvas(HUDManager.MouseCanvasType.MAIN, false);
+            }
+            
         }
+        else{
+            virtualMouseInput = hudManager.GetVirtualMouseInput();
+        }
+        
     }
 
 
@@ -156,4 +180,8 @@ public class SplitScreen : MonoBehaviour
         distance = 1300;
     }
 
+    public HUDManager GetHudManager()
+    {
+        return hudManager;
+    }
 }

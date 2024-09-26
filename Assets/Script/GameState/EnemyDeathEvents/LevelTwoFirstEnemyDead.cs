@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Events/L2FirstEnemy", fileName = "L2FirstEnemyDeath")]
+[CreateAssetMenu(menuName = "Events/Level 2 First Enemy", fileName = "L2FirstEnemyDeath")]
 public class LevelTwoFirstEnemyDead : EnemyDeathBehaviour
 {
 

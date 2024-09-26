@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "SoundLibraries/SproutLibrary", fileName = "Sprout Sounds")]
+[CreateAssetMenu(menuName = "Audio/Sound Libraries/Sprout Library", fileName = "Sprout Sounds")]
 public class SproutSoundLibrary : PlayerSoundLibrary
 {
     

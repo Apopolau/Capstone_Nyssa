@@ -37,7 +37,7 @@ public class TaskVocalizePlayer : BTNode
             if (!isPlaying)
             {
                 thisAnimal.PlayVocal();
-                thisAnimal.TurnOnPopup(thisSprite);
+                thisAnimal.TurnOnSpeechPopup(thisSprite);
                 isPlaying = true;
             }
         }

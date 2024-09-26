@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Line", menuName = "Dialogue/Line")]
+[CreateAssetMenu(fileName = "New Line", menuName = "UI/Dialogue/Line")]
 public class DialogueLine : DialogueEvent
 {
     public enum Character { CELESTE, SPROUT, DUCK, HEDGEHOG, FOX, NYSSA };

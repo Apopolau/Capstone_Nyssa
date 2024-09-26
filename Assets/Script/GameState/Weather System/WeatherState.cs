@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weather State", menuName = "ManagerObject/WeatherManagers/WeatherState")]
+[CreateAssetMenu(fileName = "Weather State", menuName = "Manager Object/Weather Managers/Weather State")]
 public class WeatherState : ScriptableObject
 {
     [SerializeField] LevelEventManager levelEventManager;
 
     public enum TimeOfDay { DAYBREAK, DAY, EVENING, NIGHT };
-    public TimeOfDay currentTimeOfDay = TimeOfDay.DAY;
+    private TimeOfDay currentTimeOfDay = TimeOfDay.DAY;
 
     public enum AcidRainState { NONE, LIGHT, HEAVY};
-    public AcidRainState acidRainState = AcidRainState.NONE;
+    private AcidRainState acidRainState = AcidRainState.NONE;
 
     public enum SkyState { CLEAR, RAINY};
-    public SkyState skyState = SkyState.CLEAR;
+    private SkyState skyState = SkyState.CLEAR;
 
     public bool dayTime;
 
@@ -33,6 +33,11 @@ public class WeatherState : ScriptableObject
         currentTimeOfDay = timeOfDay;
     }
 
+    public SkyState GetSkyState()
+    {
+        return skyState;
+    }
+
     public void SetRainyState(bool isRaining)
     {
         if (isRaining)
@@ -45,6 +50,16 @@ public class WeatherState : ScriptableObject
             skyState = SkyState.CLEAR;
             levelEventManager.ChangeRainAmbience(false);
         }
+    }
+
+    public AcidRainState GetAcidRainState()
+    {
+        return acidRainState;
+    }
+
+    public void SetAcidState(AcidRainState incAcidRainState)
+    {
+        acidRainState = incAcidRainState;
     }
 
     public void SetEventManager(LevelEventManager levelEventManager)

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/Controls/Dialogue")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Controls/Dialogue")]
 public class CtrlsDialogueAction : FSMAction
 {
     EarthPlayer earthPlayer;

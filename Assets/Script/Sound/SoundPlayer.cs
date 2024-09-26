@@ -81,7 +81,11 @@ public class SoundPlayer : MonoBehaviour
         {
             StopCoroutine(stopRoutine);
         }
-        stopRoutine = StartCoroutine(StopRoutine(fadeTime));
+        if(cSoundEvent != null)
+        {
+            stopRoutine = StartCoroutine(StopRoutine(fadeTime));
+        }
+        
     }
 
     /*

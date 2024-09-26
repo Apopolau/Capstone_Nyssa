@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/IdleAction")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/IdleAction")]
 public class IdleAction : FSMAction
 {
     CelestialPlayer player;

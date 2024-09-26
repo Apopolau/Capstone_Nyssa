@@ -12,6 +12,7 @@ public class VirtualMouseUI : MonoBehaviour
     private void Awake()
     {
         virtualMouseInput = GetComponent<VirtualMouseInput>();
+        canvasRectTransform = GetComponentInParent<RectTransform>();
     }
 
     private void Update()
@@ -26,5 +27,10 @@ public class VirtualMouseUI : MonoBehaviour
         virtualMousePosition.x = Mathf.Clamp(virtualMousePosition.x, 0f, Screen.width);
         virtualMousePosition.y = Mathf.Clamp(virtualMousePosition.y, 0f, Screen.height);
         InputState.Change(virtualMouseInput.virtualMouse.position, virtualMousePosition);
+    }
+
+    public void SetRectTransform(RectTransform incTransform)
+    {
+        canvasRectTransform = incTransform;
     }
 }

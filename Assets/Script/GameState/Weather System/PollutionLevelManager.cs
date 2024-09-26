@@ -57,6 +57,10 @@ public class PollutionLevelManager : MonoBehaviour
         float monsterPollution = CalculateMonsterContribution();
         float pollutionLevel = basePollutionLevel + monsterPollution - pollutionCounteractment;
         float pollutionPercent = (float)pollutionLevel / maxPollution;
+
+        GetComponent<HUDManager>().UpdatePollutionDisplay(pollutionPercent);
+
+        /*
         pollutionLevelBar.fillAmount = pollutionPercent;
         
         if (pollutionPercent >= acidRainThreshold && pollutionPercent < acidRainHardThreshold)
@@ -74,6 +78,7 @@ public class PollutionLevelManager : MonoBehaviour
             weatherState.acidRainState = WeatherState.AcidRainState.NONE;
             earthIcon.sprite = happyLevelImage;
         }
+        */
 
     }
 

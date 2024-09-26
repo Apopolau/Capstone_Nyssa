@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[CreateAssetMenu(fileName = "New User Settings Manager", menuName = "ManagerObject/UserSettingsManager")]
+[CreateAssetMenu(fileName = "New User Settings Manager", menuName = "Manager Object/User Settings Manager")]
 public class UserSettingsManager : ScriptableObject
 {
     public enum GameLanguage { ENGLISH, FRENCH};

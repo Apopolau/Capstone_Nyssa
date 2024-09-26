@@ -15,7 +15,7 @@ public class CheckIfNight : BTCondition
     //Returns true if it's night time
     protected override NodeState OnRun()
     {
-        if (weatherState.currentTimeOfDay == WeatherState.TimeOfDay.NIGHT)
+        if (weatherState.GetTimeOfDay() == WeatherState.TimeOfDay.NIGHT)
         {
             return NodeState.SUCCESS;
         }

@@ -28,11 +28,9 @@ public class EnergyPickup : MonoBehaviour
     {
         if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
-            celestialPlayer.energy.current += energyQuantity;
-            Destroy(this.gameObject);
-            
+            //celestialPlayer.energy.current += energyQuantity;
             IncreaseEnergy();
-           
+            Destroy(this.gameObject);
         }
     }
 
@@ -46,6 +44,8 @@ public class EnergyPickup : MonoBehaviour
 
     private void IncreaseEnergy()
     {
+        celestialPlayer.IncreaseEnergy(energyQuantity);
+        /*
         // Find the energy bar fill Image component dynamically
         GameObject energyBar = GameObject.Find("EnergyBar"); // Assuming "energyBar" is the name of the GameObject holding the fill Image
         if (energyBar != null)
@@ -66,5 +66,6 @@ public class EnergyPickup : MonoBehaviour
         {
             
         }
+        */
     }
 }

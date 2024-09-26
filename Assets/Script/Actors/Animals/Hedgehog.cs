@@ -43,7 +43,7 @@ public class Hedgehog : Animal
     {
         CheckLevelState();
         SetWalkingState();
-        MoveKidnapIcon();
+        HandleKidnapIcon();
         if (earthPlayer.interacting && inRangeOfEscort)
         {
             if (!isEscorted)

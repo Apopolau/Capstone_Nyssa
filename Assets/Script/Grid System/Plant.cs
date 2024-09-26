@@ -122,7 +122,7 @@ public class Plant : Creatable
             }
             else
             {
-                if (weatherState.dayTime && weatherState.skyState == WeatherState.SkyState.RAINY)
+                if (weatherState.dayTime && weatherState.GetSkyState() == WeatherState.SkyState.RAINY)
                 {
                     growthPoints++;
                 }
@@ -160,7 +160,7 @@ public class Plant : Creatable
                 {
                     storedSunlight.current -= Mathf.Clamp(1, 0, storedSunlight.max);
                 }
-                if (weatherState.skyState == WeatherState.SkyState.CLEAR)
+                if (weatherState.GetSkyState() == WeatherState.SkyState.CLEAR)
                 {
                     storedWater.current -= Mathf.Clamp(1, 0, storedWater.max);
                 }
@@ -185,7 +185,7 @@ public class Plant : Creatable
                 storedSunlight.current += Mathf.Clamp(1, 0, storedSunlight.max);
             }
 
-            if (weatherState.skyState == WeatherState.SkyState.RAINY && !waterPlant && !isSmothered)
+            if (weatherState.GetSkyState() == WeatherState.SkyState.RAINY && !waterPlant && !isSmothered)
             {
                 storedWater.current += Mathf.Clamp(3, 0, storedWater.max);
             }
@@ -360,13 +360,13 @@ public class Plant : Creatable
 
     private void HandleAcidRain()
     {
-        if(weatherState.skyState == WeatherState.SkyState.RAINY)
+        if(weatherState.GetSkyState() == WeatherState.SkyState.RAINY)
         {
-            if (weatherState.acidRainState == WeatherState.AcidRainState.LIGHT)
+            if (weatherState.GetAcidRainState() == WeatherState.AcidRainState.LIGHT)
             {
                 TakeDamage(1);
             }
-            else if(weatherState.acidRainState == WeatherState.AcidRainState.HEAVY)
+            else if(weatherState.GetAcidRainState() == WeatherState.AcidRainState.HEAVY)
             {
                 TakeDamage(2);
             }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Transition")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Transition")]
 public sealed class Transition : ScriptableObject
 {
     public Decision Decision;

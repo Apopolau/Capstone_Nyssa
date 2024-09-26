@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "FSM/Actions/AttackBasicEnds")]
+[CreateAssetMenu(menuName = "Architecture/FSM/Actions/Attack Basic Ends")]
 public class AttackBasicEnds : FSMAction
 {
     CelestialPlayer player;
