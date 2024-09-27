@@ -9,7 +9,7 @@ public class EnergyPickup : MonoBehaviour
     CelestialPlayer celestialPlayer;
     [SerializeField] public int energyQuantity;
     // [SerializeField] private Image energyBarFill; // Reference energy bar fill
-    bool isBeingAbsorbed = false;
+    //bool isBeingAbsorbed = false;
 
     WaitForSeconds absorbDelay = new WaitForSeconds(0.1f);
 

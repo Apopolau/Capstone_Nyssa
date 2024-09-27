@@ -10,11 +10,17 @@ public class Interactable : MonoBehaviour
 
     [SerializeField] protected HUDManager hudManager;
 
-    [SerializeField] protected bool p1IsInRange = false;
+    [Tooltip("Whether or not Sprout should be able to interact with this object")]
     [SerializeField] protected bool isEarthInteractable = false;
-    [SerializeField] protected bool p2IsInRange = false;
+    [Tooltip("Don't manually set this")]
+    [SerializeField] protected bool p1IsInRange = false;
+    [Tooltip("Whether or not Celeste should be able to interact with this object")]
     [SerializeField] protected bool isCelestialInteractable = false;
-    public GameObject uiObject;
+    [Tooltip("Don't manually set this")]
+    [SerializeField] protected bool p2IsInRange = false;
+
+    [Tooltip("The object attached to this one that holds the root for the ui popup")]
+    [SerializeField] protected GameObject uiObject;
 
     private void Start()
     {

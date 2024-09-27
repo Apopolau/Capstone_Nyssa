@@ -170,8 +170,14 @@ public class EnemySpawner : MonoBehaviour
         if (!on)
         {
             spawnsOn = false;
-            StopCoroutine(spawnEnemy());
+            //StopCoroutine(spawnEnemy());
+            StopAllCoroutines();
         }
+    }
+
+    public bool GetSpawnsOn()
+    {
+        return spawnsOn;
     }
 
     //Check the Day 

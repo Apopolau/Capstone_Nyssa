@@ -247,33 +247,17 @@ public class LevelOneEvents : LevelEventManager
 
     }
 
+    //Evaluate tasks 1-3: food
     private void SetFoodCompletion()
     {
-        if (levelOneProgress.GetTask(0).GetTaskCompletion() && levelOneProgress.GetTask(1).GetTaskCompletion() && levelOneProgress.GetTask(3).GetTaskCompletion())
+        if (levelOneProgress.GetTask(0).GetTaskCompletion() && levelOneProgress.GetTask(1).GetTaskCompletion() && levelOneProgress.GetTask(2).GetTaskCompletion())
         {
             uiSoundLibrary.PlayProgressClips();
             levelOneProgress.animalHasEnoughFood = true;
         }
     }
 
-    private void SetWaterCompletion()
-    {
-        if (levelOneProgress.GetTask(4).GetTaskCompletion())
-        {
-            uiSoundLibrary.PlayProgressClips();
-            levelOneProgress.animalHasWater = true;
-        }
-    }
-
-    private void SetSafetyCompletion()
-    {
-        if (levelOneProgress.GetTask(5).GetTaskCompletion())
-        {
-            uiSoundLibrary.PlayProgressClips();
-            levelOneProgress.animalIsSafe = true;
-        }
-    }
-
+    //Evaluate task 4: find a friend for the duck
     private void SetFriendCompletion()
     {
         if (levelOneProgress.GetTask(3).GetTaskCompletion())
@@ -283,6 +267,17 @@ public class LevelOneEvents : LevelEventManager
         }
     }
 
+    //Evaluate task 5: secure clean water
+    private void SetWaterCompletion()
+    {
+        if (levelOneProgress.GetTask(4).GetTaskCompletion())
+        {
+            uiSoundLibrary.PlayProgressClips();
+            levelOneProgress.animalHasWater = true;
+        }
+    }
+
+    //Evaluate task 6: clear out the monsters
     private void EvaluateMonsterDefeats()
     {
         if (keyMonsterDefeatCount == totalMonsters)
@@ -293,6 +288,17 @@ public class LevelOneEvents : LevelEventManager
             allMonstersDefeatedDialogue.TriggerDialogue();
         }
     }
+
+    //Cross the safety task out
+    private void SetSafetyCompletion()
+    {
+        if (levelOneProgress.GetTask(5).GetTaskCompletion())
+        {
+            uiSoundLibrary.PlayProgressClips();
+            levelOneProgress.animalIsSafe = true;
+        }
+    }
+
 
     //Final level evaluation
     private bool EvaluateLevelCompletion()

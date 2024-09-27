@@ -42,7 +42,7 @@ public class Plant : Creatable
     private GameObject energyDrop;
     private GameObject logs;
 
-    public new event System.Action<int, int> OnHealthChanged;
+    public event System.Action<int, int> OnHealthChanged;
 
     // Start is called before the first frame update
     void Awake()

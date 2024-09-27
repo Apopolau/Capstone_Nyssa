@@ -7,62 +7,67 @@ using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
-    public static DialogueManager Instance;
-    public UserSettingsManager userSettingsManager;
+    //Main manager references
+    [SerializeField] private UserSettingsManager userSettingsManager;
     [SerializeField] private HUDManager hudManager;
+    [SerializeField] private GameObjectRuntimeSet playerSet;
+    private EarthPlayer earthPlayer;
+    private CelestialPlayer celestialPlayer;
+    [SerializeField] private Camera mainCam;
+    [SerializeField] private SplitScreen split;
 
-    public Image characterIconLeft;
-    public Image characterIconRight;
-    public TextMeshProUGUI dialogueArea;
-    //public TextMeshProUGUI dialogueAreaFR;
+    //Box components
+    [SerializeField] private GameObject dialogueBox; // Reference to the entire dialogue box
+    [SerializeField] private Image characterIconLeft;
+    [SerializeField] private Image characterIconRight;
+    [SerializeField] private TextMeshProUGUI dialogueArea;
+    private DialogueCharacter currentCharacter;
+    private Sprite currentSprite;
 
-    private Queue<DialogueEvent> events;
+    //Box display reference libraries
+    [SerializeField] private List<SpriteLibrary> spriteLibraries;
+    [SerializeField] private List<DialogueCharacter> dialogueCharacters;
+
+    //The queue of dialogue events that are currently active
+    private Queue<Dialogue> activeDialogueEvents;
+
+    //Any currently being used dialogue events
+    private Queue<DialogueEvent> currentDialogueEvent;
     private DialogueEvent currentEvent;
     private DialogueEvent activeEvent;
     private DialogueMoveEvent currentMove;
     private DialogueCameraPan currentPan;
     private DialogueLine currentLineEvent;
 
+    //Coroutines to complete an action
     private Coroutine panRoutine = null;
     private Coroutine moveRoutine = null;
     private Coroutine typeRoutine = null;
 
-    public bool isDialogueActive = false;
-    public GameObject dialogueBox; // Reference to the entire dialogue box
+    //Flags for managing box state
+    private bool isDialogueStarted = false;
+    private bool multipleDialogueEnqueued = false;
+    private bool eventEnded = true;
+    private bool movingOn = false;
+    //The serialize field section can be removed after dialogue is fixed
+    [SerializeField] private bool panningOn = false;
+    [SerializeField] private bool returningToOrigin = false;
 
-    //public EarthCharacterUIController uiController;// Reference to the UI controller script
-    public SplitScreen split;
-    public Camera mainCam;
-
-    [SerializeField] private GameObjectRuntimeSet playerSet;
-    private EarthPlayer earthPlayer;
-    private CelestialPlayer celestialPlayer;
-
-    [SerializeField] private List<SpriteLibrary> spriteLibraries;
-    [SerializeField] private List<DialogueCharacter> dialogueCharacters;
-    private DialogueCharacter currentCharacter;
-    private Sprite currentSprite;
-    [SerializeField] private DialogueCameraPan panToOrigin;
-
-    public float typingSpeed = 0.25f;
-    bool eventEnded = true;
+    //The speed at which each letter is typed on screen while a line is being delivered
+    [SerializeField] private float typingSpeed;
 
     //Camera speed variables
-    //Zoom variables, zooming in and out
+    //Temporarily store zoom speed value here while moving the camera
     private float zoomVelocity = 0f;
-
     //Pan variables, moving around the map
     private Vector3 panVelocity = new Vector3(0, 0, 0);
 
-    //private float smoothTime = 0.25f;
-
-    [SerializeField] private bool panningOn = false;
-    [SerializeField] private bool returningToOrigin = false;
+    //Used to temporarily store movement value for move events, for handling acceleration
     private Vector3 moveVelocity;
 
-    private bool movingOn = false;
+    //Stores the pan that returns to the previous camera position. Not sure if we actually need this anymore?
+    [SerializeField] private DialogueCameraPan panToOrigin;
 
-    //WaitForSecondsRealtime panTime = new WaitForSecondsRealtime(3f);
 
     private void OnEnable()
     {
@@ -71,10 +76,8 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-
-        events = new Queue<DialogueEvent>();
+        activeDialogueEvents = new Queue<Dialogue>();
+        currentDialogueEvent = new Queue<DialogueEvent>();
         mainCam = Camera.main;
         split = mainCam.GetComponentInParent<SplitScreen>();
     }
@@ -110,55 +113,84 @@ public class DialogueManager : MonoBehaviour
         }
         mainCam = Camera.main;
         split = mainCam.GetComponentInParent<SplitScreen>();
-        events = new Queue<DialogueEvent>();
+        currentDialogueEvent = new Queue<DialogueEvent>();
     }
+
+
 
     /// <summary>
     /// MAIN DIALOGUE PROGRESS FUNCTIONS
     /// </summary>
     /// <param name="dialogue"></param>
-    //Initiate the dialogue
+
+    //Start a new instance of dialogue
     public void StartDialogue(Dialogue dialogue)
     {
-        // If the references aren't set, we need to set them now
-        if(mainCam == null || earthPlayer == null || celestialPlayer == null)
+        Debug.Log(Time.time + ": Starting a new dialogue event");
+        if (isDialogueStarted)
         {
-            SetReferences();
-        }
-        
-
-        Time.timeScale = 0f;
-        split.EnterCutscene();
-
-        // Toggle other UI elements visibility
-        //uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
-        hudManager.ToggleUIForDialogue(true);
-
-        //Make sure any other controls the earth player is using are turned off
-        earthPlayer.ToggleDialogueState(true);
-
-        if (!celestialPlayer.celestialControls.controls.DialogueControls.enabled)
-        {
-            celestialPlayer.celestialControls.controls.DialogueControls.Enable();
-            celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
+            HandleMultipleDialogues(dialogue);
         }
 
-        events.Clear();
-
-        if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+        if (!isDialogueStarted)
         {
-            dialogueBox.SetActive(false); // Deactivate the dialogue box
-            isDialogueActive = false; // Set the dialogue state to inactive
-        }
+            isDialogueStarted = true;
+            
 
+            // If the references aren't set, we need to set them now
+            if (mainCam == null || earthPlayer == null || celestialPlayer == null)
+            {
+                SetReferences();
+            }
+
+            Time.timeScale = 0f;
+            split.EnterCutscene();
+
+            // Toggle other UI elements visibility
+            //uiController.ToggleOtherUIElements(false); // Pass false to deactivate other UI elements
+            hudManager.ToggleUIForDialogue(true);
+
+            //Make sure any other controls the earth player is using are turned off
+            earthPlayer.ToggleDialogueState(true);
+
+            if (!celestialPlayer.celestialControls.controls.DialogueControls.enabled)
+            {
+                celestialPlayer.celestialControls.controls.DialogueControls.Enable();
+                celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Disable();
+            }
+
+            if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
+            {
+                dialogueBox.SetActive(false); // Deactivate the dialogue box
+                                              //isDialogueBoxActive = false; // Set the dialogue state to inactive
+            }
+
+            currentDialogueEvent.Clear();
+            Debug.Log(Time.time + ": Queueing up the first dialogue, " + dialogue + ". ActiveDialogueEvents has " + activeDialogueEvents.Count + " events queued.");
+            foreach (DialogueEvent dialogueEvent in dialogue.dialogueEvents)
+            {
+                currentDialogueEvent.Enqueue(dialogueEvent);
+            }
+            
+            multipleDialogueEnqueued = false;
+
+            eventEnded = true;
+            HandleNextEvents();
+        }
+    }
+
+    //Used when starting dialogue over again from a second or third dialogue trigger at the same time
+    private void StartFollowupDialogue(Dialogue dialogue)
+    {
+        Debug.Log(Time.time + ": Starting followup dialogue using " + dialogue + " dialogue.");
+        currentDialogueEvent.Clear();
         foreach (DialogueEvent dialogueEvent in dialogue.dialogueEvents)
         {
-            events.Enqueue(dialogueEvent);
+            currentDialogueEvent.Enqueue(dialogueEvent);
         }
 
         eventEnded = true;
         HandleNextEvents();
-
     }
 
     //The function called by player input to continue dialogue
@@ -176,7 +208,7 @@ public class DialogueManager : MonoBehaviour
     public void HandleNextEvents()
     {
         //If there aren't actually any events, eject immediately
-        if (events.Count == 0)
+        if (currentDialogueEvent.Count == 0)
         {
             EndDialogue();
 
@@ -198,7 +230,7 @@ public class DialogueManager : MonoBehaviour
         //If we can move ahead with the next event
         if (eventEnded)
         {
-            currentEvent = events.Dequeue();
+            currentEvent = currentDialogueEvent.Dequeue();
             activeEvent = currentEvent;
             eventEnded = false;
 
@@ -212,12 +244,14 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentEvent is DialogueLine)
         {
+            Debug.Log(Time.time + ": Activating DialogueLine event");
             ToggleDialogueBox(true);
             currentLineEvent = currentEvent as DialogueLine;
             DisplayNextDialogueLine((DialogueLine)currentEvent);
         }
         else if (currentEvent is DialogueCameraPan)
         {
+            Debug.Log(Time.time + ": Activating DialogueCameraPan event");
             ToggleDialogueBox(false);
             DialogueCameraPan pan = currentEvent as DialogueCameraPan;
             panningOn = true;
@@ -227,6 +261,7 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialoguePanAndText)
         {
+            Debug.Log(Time.time + ": Activating DialoguePanAndText event");
             ToggleDialogueBox(true);
             DialoguePanAndText panLineEvent = currentEvent as DialoguePanAndText;
 
@@ -239,11 +274,13 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialogueAnimation)
         {
+            Debug.Log(Time.time + ": Activating DialogueAnimation event");
             eventEnded = true;
             HandleAnimation((DialogueAnimation)currentEvent);
         }
         else if (currentEvent is DialogueMoveEvent)
         {
+            Debug.Log(Time.time + ": Activating DialogueMove event");
             movingOn = true;
 
             currentMove = currentEvent as DialogueMoveEvent;
@@ -257,6 +294,7 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialogueMissionEnd)
         {
+            Debug.Log(Time.time + ": Activating DialogueMissionEnd event");
             HandleSceneTransition((DialogueMissionEnd)currentEvent);
         }
     }
@@ -268,35 +306,43 @@ public class DialogueManager : MonoBehaviour
         {
             if(!(currentEvent is DialogueMissionEnd))
             {
+                //We want to stop the current coroutines regardless of whether dialogue is restarting or not
                 HaltCoroutines();
                 HaltTyping();
-                ReturnCameraToOrigin();
 
                 if (dialogueBox.activeSelf) // Check if the dialogue box is currently active
                 {
                     dialogueBox.SetActive(false); // Deactivate the dialogue box
-                    isDialogueActive = false; // Set the dialogue state to inactive
+                    //isDialogueBoxActive = false; // Set the dialogue state to inactive
                 }
-                // Toggle other UI elements visibility
-                //uiController.ToggleUIForDialogue(true); // Pass true to reactivate other UI elements
-                
 
+                //If there's multiple dialogues in the queue, we want to start the next one
+                if (activeDialogueEvents.Count > 0)
+                {
+                    Debug.Log(Time.time + ": Proceeding to next Dialogue event");
+                    StartFollowupDialogue(activeDialogueEvents.Dequeue());
+                    Debug.Log("There are " + activeDialogueEvents.Count + " active dialogue events left.");
+                    if (activeDialogueEvents.Count <= 0)
+                        multipleDialogueEnqueued = false;
+                }
+                //If there aren't, return everything to normal
+                else
+                {
+                    Debug.Log(Time.time + ": Ending entire Dialogue sequence.");
+                    ReturnCameraToOrigin();
+                    //Restore both characters' default controls
+                    celestialPlayer.celestialControls.controls.DialogueControls.Disable();
+                    celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+                    earthPlayer.ToggleDialogueState(false);
+
+                    split.ExitCutscene();
+                    hudManager.ToggleUIForDialogue(false);
+                    isDialogueStarted = false;
+                    Time.timeScale = 1f;
+                }
                 panningOn = false;
-
-                //Restore both characters' default controls
-                celestialPlayer.celestialControls.controls.DialogueControls.Disable();
-                celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
-                earthPlayer.ToggleDialogueState(false);
-
-                split.ExitCutscene();
-                hudManager.ToggleUIForDialogue(false);
-                Time.timeScale = 1f;
-
-                //Somewhere in this function we need to check if the last item in the event list is a mission end
             }
-            
         }
-        
     }
 
 
@@ -307,6 +353,7 @@ public class DialogueManager : MonoBehaviour
     //When displaying a dialogue line, handles the text
     public void DisplayNextDialogueLine(DialogueLine currentLine)
     {
+        Debug.Log(Time.time + ": displaying dialogue line: " + currentLine);
         // Clear the dialogue areas
         dialogueArea.text = "";
 
@@ -359,6 +406,7 @@ public class DialogueManager : MonoBehaviour
         */
     }
 
+    //Called to start an animation
     public void HandleAnimation(DialogueAnimation animation)
     {
         StartCoroutine(StartAnimation(animation));
@@ -432,6 +480,7 @@ public class DialogueManager : MonoBehaviour
     //Sets the animation in motion based on any specified delay
     public IEnumerator StartAnimation(DialogueAnimation animation)
     {
+        Debug.Log(Time.time + ": Now playing animation " + animation.GetAnimation());
         yield return animation.GetAnimationDelay();
         animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), true);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.UnscaledTime;
@@ -449,18 +498,20 @@ public class DialogueManager : MonoBehaviour
         yield return animation.GetAnimationTime();
         animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), false);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.Normal;
-
+        Debug.Log(Time.time + ": Finished playing animation " + animation.GetAnimation());
     }
 
     //Handles moving to the next dialogue event once the animation time is up
     public IEnumerator TurnPanOff(DialogueCameraPan pan)
     {
+        Debug.Log(Time.time + ": Starting camera pan " + pan);
         yield return pan.GetAnimationTime();
 
         earthPlayer.ToggleWaiting(false);
 
         panningOn = false;
         currentPan = null;
+        Debug.Log(Time.time + ": Finishing camera pan " + pan);
         if (!(activeEvent is DialoguePanAndText))
         {
             eventEnded = true;
@@ -470,6 +521,7 @@ public class DialogueManager : MonoBehaviour
 
     public IEnumerator TurnMoveOff(DialogueMoveEvent moveEvent)
     {
+        Debug.Log(Time.time + ": Starting move event " + moveEvent);
         if (moveEvent.MovePlaysOut())
         {
             earthPlayer.ToggleWaiting(true);
@@ -477,14 +529,17 @@ public class DialogueManager : MonoBehaviour
 
         yield return moveEvent.GetAnimationTimer();
 
+        Debug.Log(Time.time + ": Ending move event " + moveEvent);
+
+        movingOn = false;
+        currentMove = null;
+
         if (moveEvent.MovePlaysOut())
         {
             eventEnded = true;
             earthPlayer.ToggleWaiting(false);
             HandleNextEvents();
         }
-        movingOn = false;
-        currentMove = null;
     }
 
 
@@ -590,7 +645,20 @@ public class DialogueManager : MonoBehaviour
     /// <summary>
     /// HELPER FUNCTIONS
     /// </summary>
-    /// <param name="currentLine"></param>
+    /// <param></param>
+
+    //Handles queuing up multiple dialogue events that might have been triggered at the same time
+    private void HandleMultipleDialogues(Dialogue dialogue)
+    {
+        Debug.Log(Time.time + ": Adding " + dialogue + " to the dialogue queue.");
+        if (isDialogueStarted)
+        {
+            activeDialogueEvents.Enqueue(dialogue);
+            Debug.Log(Time.time + ": There are now " + activeDialogueEvents.Count + " dialogue events queued.");
+            multipleDialogueEnqueued = true;
+        }
+        
+    }
 
     //When displaying a dialogue line, handles the sprites
     private void AssignCharacter(DialogueLine currentLine)
@@ -658,19 +726,18 @@ public class DialogueManager : MonoBehaviour
         eventEnded = true;
     }
 
-    
-
+    //Turns the dialogue box on and off
     private void ToggleDialogueBox(bool shouldBeActive)
     {
         if (!dialogueBox.activeSelf && shouldBeActive) // Check if the dialogue box is currently active
         {
             dialogueBox.SetActive(true); // Activate the dialogue box
-            isDialogueActive = true; // Set the dialogue state to active
+            //isDialogueBoxActive = true; // Set the dialogue state to active
         }
         else if (dialogueBox.activeSelf && !shouldBeActive)
         {
             dialogueBox.SetActive(false); // Deactivate the dialogue box
-            isDialogueActive = false; // Set the dialogue state to inactive
+            //isDialogueBoxActive = false; // Set the dialogue state to inactive
         }
     }
 
@@ -698,6 +765,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    //Sets the HudManager reference on the dialogue manager
     public void SetHudManager(HUDManager incManager)
     {
         hudManager = incManager;

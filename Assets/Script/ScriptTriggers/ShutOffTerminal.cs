@@ -7,10 +7,20 @@ public class ShutOffTerminal : Interactable
     [SerializeField] LevelTwoEvents levelTwoEvents;
     [SerializeField] DialogueTrigger waterCleanedDialogue;
     [SerializeField] GameObject strikeTarget;
-    Color scorchColor = new Color(50, 50, 50);
+    GameObject[] terminalComponents;
+    Color scorchColor = new Color(0.3f, 0.3f, 0.3f);
     
 
     bool hasBeenShutOff;
+
+    private void Awake()
+    {
+        terminalComponents = new GameObject[4];
+        for(int i = 0; i < 4; i++)
+        {
+            terminalComponents[i] = this.gameObject.transform.GetChild(i).gameObject;
+        }
+    }
 
     public void TerminalShutOff() 
     {
@@ -19,7 +29,14 @@ public class ShutOffTerminal : Interactable
             levelTwoEvents.OnFacilityShutOff();
             waterCleanedDialogue.TriggerDialogue();
             hasBeenShutOff = true;
-            GetComponent<Material>().color = scorchColor;
+            foreach(GameObject go in terminalComponents)
+            {
+                foreach(Material mat in go.GetComponent<MeshRenderer>().materials)
+                {
+                    mat.color = scorchColor;
+                }
+                
+            }
         }
         
     }

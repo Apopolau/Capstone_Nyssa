@@ -96,7 +96,7 @@ public class EarthPlayer : Player
 
     private WaitForSeconds suspensionTime;
 
-    public event System.Action<string, int> OnSeedCountChange;
+    //public event System.Action<string, int> OnSeedCountChange;
     public event System.Action OnPowerStateChange;
 
     private bool healOnCooldown;

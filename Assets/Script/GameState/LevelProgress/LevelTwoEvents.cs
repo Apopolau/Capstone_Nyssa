@@ -28,12 +28,14 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] GameObject farLeftGrid;
     [SerializeField] GameObject loggingAreaGrid;
     [SerializeField] GameObject buildingAreaGrid;
+    [SerializeField] GameObject waterGrid;
 
     List<GameObject> mainAreaTiles = new List<GameObject>();
     List<GameObject> hedgehogAreaTiles = new List<GameObject>();
     List<GameObject> farLeftTiles = new List<GameObject>();
     List<GameObject> loggingAreaTiles = new List<GameObject>();
     List<GameObject> buildingAreaTiles = new List<GameObject>();
+    List<GameObject> waterTiles = new List<GameObject>();
 
     [Header("Terrain variables")]
     [SerializeField] private Vector3 areaOneMinVals;
@@ -133,8 +135,6 @@ public class LevelTwoEvents : LevelEventManager
     // Start is called before the first frame update
     void Start()
     {
-        
-
         foreach (Transform childTransform in hedgehogAreaGrid.transform)
         {
             hedgehogAreaTiles.Add(childTransform.gameObject);
@@ -158,6 +158,11 @@ public class LevelTwoEvents : LevelEventManager
         foreach (Transform childTransform in buildingAreaGrid.transform)
         {
             buildingAreaTiles.Add(childTransform.gameObject);
+        }
+
+        foreach(Transform childTransform in waterGrid.transform)
+        {
+            waterTiles.Add(childTransform.gameObject);
         }
 
         foreach (GameObject player in playerSet.Items)
@@ -252,6 +257,7 @@ public class LevelTwoEvents : LevelEventManager
 
     }
 
+    //Evaluate tasks 1-5: food (trees, grass, cattails, flowers, lilies)
     private void SetFoodCompletion()
     {
         if (levelTwoProgress.GetTask(0).GetTaskCompletion() && levelTwoProgress.GetTask(1).GetTaskCompletion() && levelTwoProgress.GetTask(2).GetTaskCompletion()
@@ -262,6 +268,7 @@ public class LevelTwoEvents : LevelEventManager
         }
     }
 
+    //Set the water to clean, complete evaluation of task 6
     private void SetWaterCompletion()
     {
         levelTwoProgress.GetTask(5).CrossOutTask();
@@ -272,6 +279,7 @@ public class LevelTwoEvents : LevelEventManager
         }
     }
 
+    //Set the level to safe, complete evaluation of task 7
     private void SetSafetyCompletion()
     {
         levelTwoProgress.GetTask(6).CrossOutTask();
@@ -282,6 +290,7 @@ public class LevelTwoEvents : LevelEventManager
         }
     }
 
+    //Set the hedgehog to have some friends, complete evaluation of task 8
     private void SetFriendCompletion()
     {
         levelTwoProgress.GetTask(7).CrossOutTask();
@@ -302,7 +311,7 @@ public class LevelTwoEvents : LevelEventManager
             allMonstersDefeatedDialogue.TriggerDialogue();
         }
         //Set an evaluation for spawns here
-        if (!spawn1.activeSelf && !spawn2.activeSelf)
+        if (!spawn1.GetComponent<EnemySpawner>().GetSpawnsOn() && !spawn2.GetComponent<EnemySpawner>().GetSpawnsOn())
         {
             spawnsDestroyed = true;
         }
@@ -523,6 +532,7 @@ public class LevelTwoEvents : LevelEventManager
         }
     }
 
+    //When the player defeats the first oil spill monster that is threatening the hedgehog
     public void OnFirstMonsterDefeated()
     {
 
@@ -544,6 +554,7 @@ public class LevelTwoEvents : LevelEventManager
         hog1.GetComponent<Hedgehog>().Unstuck();
     }
 
+    //When the player defeats the static smog monster in the lumber yard area
     public void OnSecondMonsterDefeated()
     {
 
@@ -563,6 +574,7 @@ public class LevelTwoEvents : LevelEventManager
         //Cause Celeste's tidal wave to drop here
     }
 
+    //When the player defeats the 2 oil monsters hanging out on the west side of the main area
     public void OnThirdMonsterDefeated()
     {
         foreach (GameObject go in mainAreaTiles)
@@ -593,6 +605,7 @@ public class LevelTwoEvents : LevelEventManager
         fourthAreaClear = true;
     }
 
+    //When the player defeats the last 3 oil monsters, over by the terminal, that are surrounding the hedgehog friends
     public void OnFourthMonsterDefeated()
     {
 
@@ -612,6 +625,7 @@ public class LevelTwoEvents : LevelEventManager
         hog3.GetComponent<Hedgehog>().Unstuck();
     }
 
+    //Run this for each defeated monster assigned to this spot
     public void CountDownArea3Monsters()
     {
         keyMonsterDefeatCount += 1;
@@ -622,6 +636,7 @@ public class LevelTwoEvents : LevelEventManager
         }
     }
 
+    //Run this for each defeated monster assigned to this spot
     public void CountDownArea4Monsters()
     {
         keyMonsterDefeatCount += 1;
@@ -637,6 +652,7 @@ public class LevelTwoEvents : LevelEventManager
     {
         //river.GetComponent<Renderer>().material = cleanWaterMaterial;
         lake.GetComponent<Renderer>().material = cleanWaterMaterial;
+        /*
         foreach (GameObject go in mainAreaTiles)
         {
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
@@ -645,6 +661,14 @@ public class LevelTwoEvents : LevelEventManager
             }
         }
         foreach (GameObject go in buildingAreaTiles)
+        {
+            if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
+            {
+                go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
+            }
+        }
+        */
+        foreach(GameObject go in waterTiles)
         {
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.WATER)
             {
@@ -736,9 +760,10 @@ public class LevelTwoEvents : LevelEventManager
     protected void UpdateObjective()
     {
         //Display each task as either strikethrough or not
+        //English
         if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
         {
-            //Display each task as either strikethrough or not
+            //Task 1
             if (levelTwoProgress.GetTask(0).GetTaskCompletion())
             {
                 levelTwoProgress.GetTask(0).GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelTwoProgress.GetTreeGoal()} trees ({levelTwoProgress.GetTreeCount()}/{levelTwoProgress.GetTreeGoal()})</s>";
@@ -747,6 +772,7 @@ public class LevelTwoEvents : LevelEventManager
             {
                 levelTwoProgress.GetTask(0).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetTreeGoal()} trees ({levelTwoProgress.GetTreeCount()}/{levelTwoProgress.GetTreeGoal()})";
             }
+            //Task 2
             if (levelTwoProgress.GetTask(1).GetTaskCompletion())
             {
                 levelTwoProgress.GetTask(1).GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelTwoProgress.GetGrassGoal()} grass ({levelTwoProgress.GetGrassCount()}/{levelTwoProgress.GetGrassGoal()})</s>";
@@ -755,6 +781,7 @@ public class LevelTwoEvents : LevelEventManager
             {
                 levelTwoProgress.GetTask(1).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetGrassGoal()} grass ({levelTwoProgress.GetGrassCount()}/{levelTwoProgress.GetGrassGoal()})";
             }
+            //Task 3
             if (levelTwoProgress.GetTask(2).GetTaskCompletion())
             {
                 levelTwoProgress.GetTask(2).GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelTwoProgress.GetCattailGoal()} cattails ({levelTwoProgress.GetCattailCount()}/{levelTwoProgress.GetCattailGoal()})</s>";
@@ -763,6 +790,7 @@ public class LevelTwoEvents : LevelEventManager
             {
                 levelTwoProgress.GetTask(2).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetCattailGoal()} cattails ({levelTwoProgress.GetCattailCount()}/{levelTwoProgress.GetCattailGoal()})";
             }
+            //Task 4
             if (levelTwoProgress.GetTask(3).GetTaskCompletion())
             {
                 levelTwoProgress.GetTask(3).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetFlowerGoal()} flowers ({levelTwoProgress.GetFlowerCount()}/{levelTwoProgress.GetFlowerGoal()})";
@@ -771,6 +799,7 @@ public class LevelTwoEvents : LevelEventManager
             {
                 levelTwoProgress.GetTask(3).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetFlowerGoal()} flowers ({levelTwoProgress.GetFlowerCount()}/{levelTwoProgress.GetFlowerGoal()})";
             }
+            //Task 5
             if (levelTwoProgress.GetTask(4).GetTaskCompletion())
             {
                 levelTwoProgress.GetTask(4).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetLilyGoal()} lilies ({levelTwoProgress.GetLilyCount()}/{levelTwoProgress.GetLilyGoal()})";
@@ -780,9 +809,10 @@ public class LevelTwoEvents : LevelEventManager
                 levelTwoProgress.GetTask(4).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetLilyGoal()} lilies ({levelTwoProgress.GetLilyCount()}/{levelTwoProgress.GetLilyGoal()})";
             }
         }
+        //French
         else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
         {
-            //Display each task as either strikethrough or not
+            //Task 1
             if (levelTwoProgress.GetTask(0).GetTaskCompletion())
             {
                 levelTwoProgress.GetTask(0).GetComponent<TextMeshProUGUI>().text = $"<s>- Planter {levelTwoProgress.GetTreeGoal()} arbres ({levelTwoProgress.GetTreeCount()}/{levelTwoProgress.GetTreeGoal()})</s>";
@@ -791,6 +821,7 @@ public class LevelTwoEvents : LevelEventManager
             {
                 levelTwoProgress.GetTask(0).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetTreeGoal()} arbres ({levelTwoProgress.GetTreeCount()}/{levelTwoProgress.GetTreeGoal()})";
             }
+            //Task 2
             if (levelTwoProgress.GetTask(1).GetTaskCompletion())
             {
                 levelTwoProgress.GetTask(1).GetComponent<TextMeshProUGUI>().text = $"<s>- Planter {levelTwoProgress.GetGrassGoal()} herbes ({levelTwoProgress.GetGrassCount()}/{levelTwoProgress.GetGrassGoal()})</s>";
@@ -799,6 +830,7 @@ public class LevelTwoEvents : LevelEventManager
             {
                 levelTwoProgress.GetTask(1).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetGrassGoal()} herbes ({levelTwoProgress.GetGrassCount()}/{levelTwoProgress.GetGrassGoal()})";
             }
+            //Task 3
             if (levelTwoProgress.GetTask(2).GetTaskCompletion())
             {
                 levelTwoProgress.GetTask(2).GetComponent<TextMeshProUGUI>().text = $"<s>- Planter {levelTwoProgress.GetCattailGoal()} quenouilles ({levelTwoProgress.GetCattailCount()}/{levelTwoProgress.GetCattailGoal()})</s>";
@@ -807,21 +839,23 @@ public class LevelTwoEvents : LevelEventManager
             {
                 levelTwoProgress.GetTask(2).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetCattailGoal()} quenouilles ({levelTwoProgress.GetCattailCount()}/{levelTwoProgress.GetCattailGoal()})";
             }
+            //Task 4
             if (levelTwoProgress.GetTask(3).GetTaskCompletion())
             {
-                levelTwoProgress.GetTask(3).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetFlowerGoal()} flowers ({levelTwoProgress.GetFlowerCount()}/{levelTwoProgress.GetFlowerGoal()})";
+                levelTwoProgress.GetTask(3).GetComponent<TextMeshProUGUI>().text = $"<s>- Planter {levelTwoProgress.GetFlowerGoal()} fleurs ({levelTwoProgress.GetFlowerCount()}/{levelTwoProgress.GetFlowerGoal()})</s>";
             }
             else
             {
-                levelTwoProgress.GetTask(3).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetFlowerGoal()} flowers ({levelTwoProgress.GetFlowerCount()}/{levelTwoProgress.GetFlowerGoal()})";
+                levelTwoProgress.GetTask(3).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetFlowerGoal()} fleurs ({levelTwoProgress.GetFlowerCount()}/{levelTwoProgress.GetFlowerGoal()})";
             }
+            //Task 5
             if (levelTwoProgress.GetTask(4).GetTaskCompletion())
             {
-                levelTwoProgress.GetTask(4).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetLilyGoal()} lilies ({levelTwoProgress.GetLilyCount()}/{levelTwoProgress.GetLilyGoal()})";
+                levelTwoProgress.GetTask(4).GetComponent<TextMeshProUGUI>().text = $"<s>- Planter {levelTwoProgress.GetLilyGoal()} lys ({levelTwoProgress.GetLilyCount()}/{levelTwoProgress.GetLilyGoal()})</s>";
             }
             else
             {
-                levelTwoProgress.GetTask(4).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetLilyGoal()} lilies ({levelTwoProgress.GetLilyCount()}/{levelTwoProgress.GetLilyGoal()})";
+                levelTwoProgress.GetTask(4).GetComponent<TextMeshProUGUI>().text = $"- Planter {levelTwoProgress.GetLilyGoal()} lys ({levelTwoProgress.GetLilyCount()}/{levelTwoProgress.GetLilyGoal()})";
             }
         }
     }

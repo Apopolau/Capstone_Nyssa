@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Creatable : MonoBehaviour
 {
-    public event System.Action<int, int> OnHealthChanged;
+    //public event System.Action<int, int> OnHealthChanged;
 
     public Stat health;
 

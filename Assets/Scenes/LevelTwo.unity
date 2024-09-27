@@ -2336,10 +2336,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   hudManager: {fileID: 1046486637}
-  p1IsInRange: 0
   isEarthInteractable: 0
-  p2IsInRange: 0
+  p1IsInRange: 0
   isCelestialInteractable: 0
+  p2IsInRange: 0
   uiObject: {fileID: 134197928}
   levelTwoEvents: {fileID: 1046486629}
   waterCleanedDialogue: {fileID: 108818257}
@@ -3254,11 +3254,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
-  hudManager: {fileID: 0}
-  p1IsInRange: 0
+  hudManager: {fileID: 1046486637}
   isEarthInteractable: 1
+  p1IsInRange: 0
+  isCelestialInteractable: 1
   p2IsInRange: 0
-  isCelestialInteractable: 0
   uiObject: {fileID: 1368265718}
   levelTwoEvents: {fileID: 1046486629}
   pickupTarget: {fileID: 1283458783}
@@ -19695,6 +19695,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6275352046092819799, guid: 9a4dc6e21611f8442b9b9049eee13f88, type: 3}
   m_PrefabInstance: {fileID: 1101376823}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1102684085 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5673879563930125484, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+  m_PrefabInstance: {fileID: 1455602225}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1102990712
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26878,6 +26883,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 524139041}
     m_Modifications:
+    - target: {fileID: 1908876748178255257, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2922939716682436117, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3113849391005020964, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -26918,9 +26931,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3170464339028447990, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3317449613630883165, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3990711382599026722, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4360615633056851676, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4727579728532831925, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983794206454786564, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5328588671325824697, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
       propertyPath: m_Name
       value: LevelTwoGrid (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5771232852806997641, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6219385449246211729, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7250532706546450919, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8627765050663322005, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8997042878838684667, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 52e086e7a9386ab40b433447386ebc99, type: 2}
+    - target: {fileID: 9094609083277625847, guid: ce15bcf32c0a4f444bb1322daddab2be, type: 3}
+      propertyPath: enviroState
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -41433,6 +41494,10 @@ PrefabInstance:
       propertyPath: tileGrid
       value: 
       objectReference: {fileID: 1455602232}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: waterGrid
+      value: 
+      objectReference: {fileID: 1102684085}
     - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: farLeftGrid
       value: 
