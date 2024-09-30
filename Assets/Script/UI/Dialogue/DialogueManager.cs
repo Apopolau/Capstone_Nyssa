@@ -32,6 +32,7 @@ public class DialogueManager : MonoBehaviour
     private Queue<Dialogue> activeDialogueEvents;
 
     //Any currently being used dialogue events
+    private Dialogue currentDialogue;
     private Queue<DialogueEvent> currentDialogueEvent;
     private DialogueEvent currentEvent;
     private DialogueEvent activeEvent;
@@ -45,13 +46,14 @@ public class DialogueManager : MonoBehaviour
     private Coroutine typeRoutine = null;
 
     //Flags for managing box state
+    private bool isEndDialogueRunning = false;
     private bool isDialogueStarted = false;
     private bool multipleDialogueEnqueued = false;
     private bool eventEnded = true;
+
     private bool movingOn = false;
-    //The serialize field section can be removed after dialogue is fixed
-    [SerializeField] private bool panningOn = false;
-    [SerializeField] private bool returningToOrigin = false;
+    private bool panningOn = false;
+    private bool returningToOrigin = false;
 
     //The speed at which each letter is typed on screen while a line is being delivered
     [SerializeField] private float typingSpeed;
@@ -126,7 +128,7 @@ public class DialogueManager : MonoBehaviour
     //Start a new instance of dialogue
     public void StartDialogue(Dialogue dialogue)
     {
-        Debug.Log(Time.time + ": Starting a new dialogue event");
+        //Debug.Log(Time.time + ": Starting a new dialogue event");
         if (isDialogueStarted)
         {
             HandleMultipleDialogues(dialogue);
@@ -135,7 +137,7 @@ public class DialogueManager : MonoBehaviour
         if (!isDialogueStarted)
         {
             isDialogueStarted = true;
-            
+            currentDialogue = dialogue;
 
             // If the references aren't set, we need to set them now
             if (mainCam == null || earthPlayer == null || celestialPlayer == null)
@@ -166,7 +168,7 @@ public class DialogueManager : MonoBehaviour
             }
 
             currentDialogueEvent.Clear();
-            Debug.Log(Time.time + ": Queueing up the first dialogue, " + dialogue + ". ActiveDialogueEvents has " + activeDialogueEvents.Count + " events queued.");
+            //Debug.Log(Time.time + ": Queueing up the first dialogue, " + dialogue + ". ActiveDialogueEvents has " + activeDialogueEvents.Count + " events queued.");
             foreach (DialogueEvent dialogueEvent in dialogue.dialogueEvents)
             {
                 currentDialogueEvent.Enqueue(dialogueEvent);
@@ -175,6 +177,9 @@ public class DialogueManager : MonoBehaviour
             multipleDialogueEnqueued = false;
 
             eventEnded = true;
+
+            if(dialogue.levelEndDialogue)
+                isEndDialogueRunning = true;
             HandleNextEvents();
         }
     }
@@ -182,12 +187,16 @@ public class DialogueManager : MonoBehaviour
     //Used when starting dialogue over again from a second or third dialogue trigger at the same time
     private void StartFollowupDialogue(Dialogue dialogue)
     {
-        Debug.Log(Time.time + ": Starting followup dialogue using " + dialogue + " dialogue.");
+        currentDialogue = dialogue;
+        //Debug.Log(Time.time + ": Starting followup dialogue using " + dialogue + " dialogue.");
         currentDialogueEvent.Clear();
         foreach (DialogueEvent dialogueEvent in dialogue.dialogueEvents)
         {
             currentDialogueEvent.Enqueue(dialogueEvent);
         }
+
+        if (dialogue.levelEndDialogue)
+            isEndDialogueRunning = true;
 
         eventEnded = true;
         HandleNextEvents();
@@ -244,14 +253,14 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentEvent is DialogueLine)
         {
-            Debug.Log(Time.time + ": Activating DialogueLine event");
+            //Debug.Log(Time.time + ": Activating DialogueLine event");
             ToggleDialogueBox(true);
             currentLineEvent = currentEvent as DialogueLine;
             DisplayNextDialogueLine((DialogueLine)currentEvent);
         }
         else if (currentEvent is DialogueCameraPan)
         {
-            Debug.Log(Time.time + ": Activating DialogueCameraPan event");
+            //Debug.Log(Time.time + ": Activating DialogueCameraPan event");
             ToggleDialogueBox(false);
             DialogueCameraPan pan = currentEvent as DialogueCameraPan;
             panningOn = true;
@@ -261,7 +270,7 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialoguePanAndText)
         {
-            Debug.Log(Time.time + ": Activating DialoguePanAndText event");
+            //Debug.Log(Time.time + ": Activating DialoguePanAndText event");
             ToggleDialogueBox(true);
             DialoguePanAndText panLineEvent = currentEvent as DialoguePanAndText;
 
@@ -274,13 +283,13 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialogueAnimation)
         {
-            Debug.Log(Time.time + ": Activating DialogueAnimation event");
+            //Debug.Log(Time.time + ": Activating DialogueAnimation event");
             eventEnded = true;
             HandleAnimation((DialogueAnimation)currentEvent);
         }
         else if (currentEvent is DialogueMoveEvent)
         {
-            Debug.Log(Time.time + ": Activating DialogueMove event");
+            //Debug.Log(Time.time + ": Activating DialogueMove event");
             movingOn = true;
 
             currentMove = currentEvent as DialogueMoveEvent;
@@ -294,7 +303,7 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialogueMissionEnd)
         {
-            Debug.Log(Time.time + ": Activating DialogueMissionEnd event");
+            //Debug.Log(Time.time + ": Activating DialogueMissionEnd event");
             HandleSceneTransition((DialogueMissionEnd)currentEvent);
         }
     }
@@ -304,6 +313,13 @@ public class DialogueManager : MonoBehaviour
     {
         if(this != null)
         {
+            if (isEndDialogueRunning)
+            {
+                //currentDialogue.dialogueEvents.LastIndexOf
+                HandleSceneTransition((DialogueMissionEnd)currentDialogue.dialogueEvents[currentDialogue.dialogueEvents.Count - 1]);
+                
+            }
+
             if(!(currentEvent is DialogueMissionEnd))
             {
                 //We want to stop the current coroutines regardless of whether dialogue is restarting or not
@@ -319,16 +335,16 @@ public class DialogueManager : MonoBehaviour
                 //If there's multiple dialogues in the queue, we want to start the next one
                 if (activeDialogueEvents.Count > 0)
                 {
-                    Debug.Log(Time.time + ": Proceeding to next Dialogue event");
+                    //Debug.Log(Time.time + ": Proceeding to next Dialogue event");
                     StartFollowupDialogue(activeDialogueEvents.Dequeue());
-                    Debug.Log("There are " + activeDialogueEvents.Count + " active dialogue events left.");
+                    //Debug.Log("There are " + activeDialogueEvents.Count + " active dialogue events left.");
                     if (activeDialogueEvents.Count <= 0)
                         multipleDialogueEnqueued = false;
                 }
                 //If there aren't, return everything to normal
                 else
                 {
-                    Debug.Log(Time.time + ": Ending entire Dialogue sequence.");
+                    //Debug.Log(Time.time + ": Ending entire Dialogue sequence.");
                     ReturnCameraToOrigin();
                     //Restore both characters' default controls
                     celestialPlayer.celestialControls.controls.DialogueControls.Disable();
@@ -353,7 +369,7 @@ public class DialogueManager : MonoBehaviour
     //When displaying a dialogue line, handles the text
     public void DisplayNextDialogueLine(DialogueLine currentLine)
     {
-        Debug.Log(Time.time + ": displaying dialogue line: " + currentLine);
+        //Debug.Log(Time.time + ": displaying dialogue line: " + currentLine);
         // Clear the dialogue areas
         dialogueArea.text = "";
 
@@ -480,7 +496,7 @@ public class DialogueManager : MonoBehaviour
     //Sets the animation in motion based on any specified delay
     public IEnumerator StartAnimation(DialogueAnimation animation)
     {
-        Debug.Log(Time.time + ": Now playing animation " + animation.GetAnimation());
+        //Debug.Log(Time.time + ": Now playing animation " + animation.GetAnimation());
         yield return animation.GetAnimationDelay();
         animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), true);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.UnscaledTime;
@@ -498,20 +514,20 @@ public class DialogueManager : MonoBehaviour
         yield return animation.GetAnimationTime();
         animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), false);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.Normal;
-        Debug.Log(Time.time + ": Finished playing animation " + animation.GetAnimation());
+        //Debug.Log(Time.time + ": Finished playing animation " + animation.GetAnimation());
     }
 
     //Handles moving to the next dialogue event once the animation time is up
     public IEnumerator TurnPanOff(DialogueCameraPan pan)
     {
-        Debug.Log(Time.time + ": Starting camera pan " + pan);
+        //Debug.Log(Time.time + ": Starting camera pan " + pan);
         yield return pan.GetAnimationTime();
 
         earthPlayer.ToggleWaiting(false);
 
         panningOn = false;
         currentPan = null;
-        Debug.Log(Time.time + ": Finishing camera pan " + pan);
+        //Debug.Log(Time.time + ": Finishing camera pan " + pan);
         if (!(activeEvent is DialoguePanAndText))
         {
             eventEnded = true;
@@ -521,7 +537,7 @@ public class DialogueManager : MonoBehaviour
 
     public IEnumerator TurnMoveOff(DialogueMoveEvent moveEvent)
     {
-        Debug.Log(Time.time + ": Starting move event " + moveEvent);
+        //Debug.Log(Time.time + ": Starting move event " + moveEvent);
         if (moveEvent.MovePlaysOut())
         {
             earthPlayer.ToggleWaiting(true);
@@ -529,7 +545,7 @@ public class DialogueManager : MonoBehaviour
 
         yield return moveEvent.GetAnimationTimer();
 
-        Debug.Log(Time.time + ": Ending move event " + moveEvent);
+        //Debug.Log(Time.time + ": Ending move event " + moveEvent);
 
         movingOn = false;
         currentMove = null;
@@ -650,11 +666,11 @@ public class DialogueManager : MonoBehaviour
     //Handles queuing up multiple dialogue events that might have been triggered at the same time
     private void HandleMultipleDialogues(Dialogue dialogue)
     {
-        Debug.Log(Time.time + ": Adding " + dialogue + " to the dialogue queue.");
+        //Debug.Log(Time.time + ": Adding " + dialogue + " to the dialogue queue.");
         if (isDialogueStarted)
         {
             activeDialogueEvents.Enqueue(dialogue);
-            Debug.Log(Time.time + ": There are now " + activeDialogueEvents.Count + " dialogue events queued.");
+            //Debug.Log(Time.time + ": There are now " + activeDialogueEvents.Count + " dialogue events queued.");
             multipleDialogueEnqueued = true;
         }
         

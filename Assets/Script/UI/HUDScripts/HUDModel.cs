@@ -125,6 +125,7 @@ public class HUDModel : ScriptableObject
 
     public void OnEnable()
     {
+        dialogueTriggers = new List<DialogueTrigger>();
         if(overlayComponents != null)
         {
             overlayComponents.Clear();

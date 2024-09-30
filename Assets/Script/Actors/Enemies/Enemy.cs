@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] public bool isDying =false;
     public bool isStaggered = false;
     public bool isColliding = false;
+    public bool beingHit = false;
 
  
     private GameObject closestPlayer;

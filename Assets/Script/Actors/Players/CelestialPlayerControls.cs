@@ -140,6 +140,23 @@ public class CelestialPlayerControls : MonoBehaviour
         controls.CutsceneControls.Disable();
         controls.MenuControls.Disable();
         controls.CelestialPlayerDefault.Disable();
+
+        controls.CelestialPlayerDefault.CelestialWalk.performed -= OnCelestialMovePerformed;
+        controls.CelestialPlayerDefault.CelestialWalk.canceled -= OnCelestialMoveCancelled;
+        controls.CelestialPlayerDefault.MakeDodge.performed -= OnDodgePerformed;
+        controls.CelestialPlayerDefault.MakeRain.performed -= OnMakeRain; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.CelestialPlayerDefault.MakeBasic.performed -= OnBasicAttackPerformed;
+        controls.CelestialPlayerDefault.MakeColdSnap.performed -= OnColdSnapPerformed; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.CelestialPlayerDefault.MakeLighteningStrike.performed -= OnLightningStrikePerformed;
+        controls.CelestialPlayerDefault.MakeMoonTide.performed -= OnMoonTidePerformed;
+        controls.CelestialPlayerDefault.MakeInteract.started -= OnInteract;
+        controls.CelestialPlayerDefault.MakeInteract.canceled -= OnInteract;
+        controls.CelestialPlayerDefault.OnMenuOpen.started -= OnMenuOpen;
+
+        controls.CutsceneControls.NextSlide.started -= OnNextSlideSelected;
+
+        controls.DialogueControls.Continue.started -= OnContinuePerformed;
+        controls.DialogueControls.Skip.started -= OnSkipPerformed;
     }
 
     /// <summary>

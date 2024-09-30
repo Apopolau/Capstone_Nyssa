@@ -174,6 +174,54 @@ public class EarthPlayerControl : MonoBehaviour
         controls.CutsceneControls.Disable();
         controls.MenuControls.Disable();
         controls.EarthPlayerDefault.Disable();
+
+        controls.EarthPlayerDefault.EarthWalk.performed -= OnEarthMovePerformed;
+        controls.EarthPlayerDefault.EarthWalk.canceled -= OnEarthMoveCancelled;
+        controls.EarthPlayerDefault.PickTree.performed -= OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.EarthPlayerDefault.PickFlower.performed -= OnPickFlower; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.EarthPlayerDefault.PickGrass.performed -= OnPickGrass; // <- we can talk about Attack here because P1Controls has an Attack action
+        controls.EarthPlayerDefault.RemoveBuilding.performed -= OnRemovePlant;
+        controls.EarthPlayerDefault.Interact.started -= OnInteract;
+        controls.EarthPlayerDefault.Interact.canceled -= OnInteract;
+        controls.EarthPlayerDefault.Heal.started -= OnHealPerformed;
+        controls.EarthPlayerDefault.ThornShield.started -= OnThornShieldPerformed;
+
+        //When planting
+        controls.PlantIsSelected.Plantplant.performed -= OnPlantPlantedPerformed;
+        controls.PlantIsSelected.Cancelplanting.performed -= OnPlantingCancelledPerformed;
+        controls.PlantIsSelected.EarthWalk.performed -= OnEarthMovePerformed;
+        controls.PlantIsSelected.EarthWalk.canceled -= OnEarthMoveCancelled;
+
+        //When removing plant
+        controls.RemovingPlant.RemovePlant.performed -= OnPlantRemoved;
+        controls.RemovingPlant.CancelRemoval.performed -= OnRemovingPlantCancelled;
+        controls.RemovingPlant.EarthWalk.performed -= OnEarthMovePerformed;
+        controls.RemovingPlant.EarthWalk.canceled -= OnEarthMoveCancelled;
+
+        controls.HealSelect.SelectTarget.started -= OnTargetSelected;
+        controls.HealSelect.CancelHeal.started -= OnHealCancelled;
+        controls.HealSelect.CycleTarget.started -= OnTargetCycled;
+
+        controls.BarrierSelect.SelectTarget.started -= OnTargetSelected;
+        controls.BarrierSelect.CancelBarrier.started -= OnBarrierCancelled;
+        controls.BarrierSelect.CycleTarget.started -= OnTargetCycled;
+
+        controls.HoldingNyssa.EarthWalk.started -= OnEarthMovePerformed;
+        controls.HoldingNyssa.EarthWalk.canceled -= OnEarthMoveCancelled;
+        controls.HoldingNyssa.PutNyssaDown.started -= OnPutNyssaDown;
+
+        //When in the menus
+        //We may want to switch this one to be active when we start up the game instead of the default
+        controls.MenuControls.Disable();
+        //controls.MenuControls.Submit.started += OnMenuSubmitPerformed;
+
+        controls.CutsceneControls.Disable();
+        controls.CutsceneControls.NextSlide.started += OnNextSlideSelected;
+
+        //When in dialogue
+        controls.DialogueControls.Disable();
+        controls.DialogueControls.Continue.started += OnContinuePerformed;
+        controls.DialogueControls.Skip.started += OnSkipPerformed;
     }
 
 

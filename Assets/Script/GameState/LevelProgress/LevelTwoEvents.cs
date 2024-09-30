@@ -793,7 +793,7 @@ public class LevelTwoEvents : LevelEventManager
             //Task 4
             if (levelTwoProgress.GetTask(3).GetTaskCompletion())
             {
-                levelTwoProgress.GetTask(3).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetFlowerGoal()} flowers ({levelTwoProgress.GetFlowerCount()}/{levelTwoProgress.GetFlowerGoal()})";
+                levelTwoProgress.GetTask(3).GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelTwoProgress.GetFlowerGoal()} flowers ({levelTwoProgress.GetFlowerCount()}/{levelTwoProgress.GetFlowerGoal()}</s>)";
             }
             else
             {
@@ -802,7 +802,7 @@ public class LevelTwoEvents : LevelEventManager
             //Task 5
             if (levelTwoProgress.GetTask(4).GetTaskCompletion())
             {
-                levelTwoProgress.GetTask(4).GetComponent<TextMeshProUGUI>().text = $"- Plant {levelTwoProgress.GetLilyGoal()} lilies ({levelTwoProgress.GetLilyCount()}/{levelTwoProgress.GetLilyGoal()})";
+                levelTwoProgress.GetTask(4).GetComponent<TextMeshProUGUI>().text = $"<s>- Plant {levelTwoProgress.GetLilyGoal()} lilies ({levelTwoProgress.GetLilyCount()}/{levelTwoProgress.GetLilyGoal()}</s>)";
             }
             else
             {

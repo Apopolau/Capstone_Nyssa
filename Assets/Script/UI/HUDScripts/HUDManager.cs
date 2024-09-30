@@ -387,7 +387,7 @@ public class HUDManager : MonoBehaviour
         VirtualMouseInput inputToUse;
         GameObject uiToUse;
         ToggleVirtualMouseSprite(false);
-        if (mouseCanvasType == MouseCanvasType.SPROUT && currentCanvas == MouseCanvasType.MAIN)
+        if (mouseCanvasType == MouseCanvasType.SPROUT)
         {
             inputToUse = model.GetSproutVirtualMouseInput();
             uiToUse = model.GetSproutVirtualMouseUI();

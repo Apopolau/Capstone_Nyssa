@@ -9,24 +9,9 @@ using UnityEngine.AI;
 using UnityEngine.VFX;
 public class CelestialPlayer : Player
 {
-
-    //[SerializeField] private VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
-    //[SerializeField] private GameObject celestPlayerDpad;
-    //[SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
 
-    //[Header("Buttons Overlay")]
-    //[SerializeField] public Image coldSnapFill;
-    //[SerializeField] public Image lightingStrikeFill;
-    //[SerializeField] public Image moonTideFill;
-    //[SerializeField] public Image rainFill;
-
-    //[SerializeField] public Image CTRLColdSnapFill;
-    //[SerializeField] public Image CTRLightingStrikeFill;
-    //[SerializeField] public Image CTRLMoonTideFill;
-    //[SerializeField] public Image CTRLRainFill;
-    //private CelestUIManager uiManager;
     private NavMeshAgent celestialAgent;
 
     [Header("Rain System")]
@@ -120,6 +105,7 @@ public class CelestialPlayer : Player
         energy = new Stat(100, 50, true);
         //uiManager = GetComponent<CelestUIManager>();
         c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
+        
         //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
     }
 
@@ -135,6 +121,7 @@ public class CelestialPlayer : Player
         basicCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
         lightningCoolDownTime = powerBehaviour.LightningStats.rechargeTimer;
         staff = GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
+        staff.SetPlayer(this);
 
 
         //StartCoroutine(CoolDownImageFill(lightingStrikeFill));
@@ -351,17 +338,21 @@ public class CelestialPlayer : Player
 
         //If enemy is around call the basic attack
         //if (enemyTarget != null && staff.enemyHit)
+        /*
         if (staff.enemyHit)
         {
             staff.BasicAttack(powerBehaviour.GetComponent<PowerBehaviour>().BasicAttackStats);
            //BasicAttack();
 
         }
-
+        */
+        //Debug.Log("Animating basic attack");
+        staff.ToggleAttacking(true);
 
         StartCoroutine(SuspendActions(basicPowerAnimTime));
         c_soundLibrary.PlayAttackClips();
         yield return basicPowerAnimTime;
+        staff.ToggleAttacking(false);
         celestialAnimator.animator.SetBool(celestialAnimator.IfAttackingHash, false);
         //ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
