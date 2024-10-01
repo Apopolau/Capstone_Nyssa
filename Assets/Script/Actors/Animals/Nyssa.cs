@@ -48,7 +48,7 @@ public class Nyssa : Animal
         CheckLevelState();
         SetWalkingState();
         HandleKidnapIcon();
-        if (earthPlayer.interacting && inRangeOfPickup)
+        if (earthPlayer.GetIsInteracting() && inRangeOfPickup)
         {
             if (!beingHeld)
             {

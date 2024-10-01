@@ -132,17 +132,17 @@ public class Bridge : Interactable
 
     private void StartBridgeBuild()
     {
-        if(p1IsInRange && earthPlayer.interacting && earthPlayer.inventory.HasEnoughItems("Tree Log", 3))
+        if(p1IsInRange && earthPlayer.GetIsInteracting() && earthPlayer.inventory.HasEnoughItems("Tree Log", 3))
         {
             bridgeIsBuilt = true;
             pickupTarget.SetActive(false);
             StartCoroutine(BuildBridge());
         }
-        else if(p1IsInRange && earthPlayer.interacting)
+        else if(p1IsInRange && earthPlayer.GetIsInteracting())
         {
             NotEnoughLogs();
         }
-        else if(p2IsInRange && celestialPlayer.interacting)
+        else if(p2IsInRange && celestialPlayer.GetIsInteracting())
         {
             WrongCharacter();
         }

@@ -27,9 +27,9 @@ public abstract class Player : MonoBehaviour
     protected bool isStaggered;
     protected bool isDead;
 
-    public bool interacting = false;
+    protected bool interacting = false;
 
-    public Vector3 OrigPos;
+    protected Vector3 OrigPos;
     public Stat health;
 
     public event System.Action<int, int> OnHealthChanged;
@@ -38,16 +38,25 @@ public abstract class Player : MonoBehaviour
     [Header("SFX")]
     [SerializeField] protected PlayerSoundLibrary soundLibrary;
 
+    [Header("Player Animation Stats")]
+    [SerializeField] protected AnimationClip takeHitAnimation;
+    [SerializeField] protected AnimationClip deathAnimation;
+
+    protected float takeHitTime;
+    protected float deathTime;
+
+    protected WaitForSeconds staggerLength;
+    protected WaitForSeconds deathAnimLength;
+
+
     WaitForSeconds barrierLength = new WaitForSeconds(5);
-    WaitForSeconds staggerLength = new WaitForSeconds(0.958f);
-    WaitForSeconds deathAnimLength = new WaitForSeconds(1.458f);
     WaitForSeconds iFramesLength = new WaitForSeconds(0.5f);
 
     public bool TakeHit(int damageDealt)
     {
         if(damageDealt > 0)
         {
-            if (!isShielded && !iFramesOn)
+            if (!isShielded && !iFramesOn && !isDying && !isDead)
             {
                 health.current -= damageDealt;
 
@@ -66,6 +75,10 @@ public abstract class Player : MonoBehaviour
                     StartCoroutine(OnStagger());
                 }
 
+                return isDead;
+            }
+            else if (isDying || isDead)
+            {
                 return isDead;
             }
         }
@@ -96,33 +109,18 @@ public abstract class Player : MonoBehaviour
 
     private IEnumerator DeathRoutine()
     {
+        //Set our bools to dying, stop players from doing anything while the animation plays out
         isDying = true;
         GetComponent<PlayerAnimator>().animator.SetBool(GetComponent<PlayerAnimator>().IfDyingHash, true);
         CallSuspendActions(deathAnimLength);
+
         yield return deathAnimLength;
+
+        //Reset our bools, stop animation
         isDying = false;
         GetComponent<PlayerAnimator>().animator.SetBool(GetComponent<PlayerAnimator>().IfDyingHash, false);
         Respawn();
     }
-
-    /*
-    public IEnumerator ThrowPlayerWarning(string textInfo)
-    {
-        displayText.text = textInfo;
-        // Check if the Image component is disabled
-        if (!playerWarningBG.enabled)
-        {
-            playerWarningBG.enabled = true;
-        }
-
-        playerWarningBG.gameObject.SetActive(true);
-        yield return waitTime;
-        displayText.text = "";
-        playerWarningBG.enabled = false;
-
-
-    }
-    */
 
     //Turns on and then off the player's invulnerability frames after a time
     private IEnumerator iFrames()
@@ -147,13 +145,42 @@ public abstract class Player : MonoBehaviour
     }
 
     //Restores the player to life at their spawn point
-    private void Respawn()
+    protected void Respawn()
     {
-
-        health.current = 100;
+        health.current = health.max;
+        Debug.Log("Original position: " + OrigPos);
         gameObject.transform.position = OrigPos;
         isDead = false;
+
+        //Update the health bar
+        if (OnHealthChanged != null)
+            OnHealthChanged(health.max, health.current);
     }
+
+    
+
+    //Start the process for turning off all player controls for a set amount of time
+    public void CallSuspendActions(WaitForSeconds waitTime)
+    {
+        StartCoroutine(SuspendActions(waitTime));
+    }
+
+    //Suspend player actions for the specified time
+    protected abstract IEnumerator SuspendActions(WaitForSeconds waitTime);
+
+    //Suspend player actions for the specified time
+    protected abstract IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange);
+    
+    protected void StartCooldownUI(string powerName, float timer)
+    {
+        if (OnCooldownStarted != null)
+            OnCooldownStarted(powerName, timer);
+        //yield return new WaitForSeconds(timer);
+    }
+
+    /// <summary>
+    /// GETTERS AND SETTERS
+    /// </summary>
 
     //Returns the player's current health
     public int GetHealth()
@@ -186,18 +213,6 @@ public abstract class Player : MonoBehaviour
         gameObject.transform.position = newPosition;
     }
 
-    //Start the process for turning off all player controls for a set amount of time
-    public void CallSuspendActions(WaitForSeconds waitTime)
-    {
-        StartCoroutine(SuspendActions(waitTime));
-    }
-
-    //Suspend player actions for the specified time
-    protected abstract IEnumerator SuspendActions(WaitForSeconds waitTime);
-
-    //Suspend player actions for the specified time
-    protected abstract IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange);
-
     //Returns whether or not the player is dead
     public bool IsDead()
     {
@@ -228,10 +243,8 @@ public abstract class Player : MonoBehaviour
         return controllerControls;
     }
 
-    protected void StartCooldownUI(string powerName, float timer)
+    public bool GetIsInteracting()
     {
-        if (OnCooldownStarted != null)
-            OnCooldownStarted(powerName, timer);
-        //yield return new WaitForSeconds(timer);
+        return interacting;
     }
 }

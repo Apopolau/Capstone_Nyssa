@@ -41,7 +41,7 @@ public class RockSlideInteraction : Interactable
 
     private void OnEarthPlayerInteracts()
     {
-        if(earthPlayer.interacting && p1IsInRange && !isAnimated)
+        if(earthPlayer.GetIsInteracting() && p1IsInRange && !isAnimated)
         {
             isAnimated = true;
             soundEvent.Play();

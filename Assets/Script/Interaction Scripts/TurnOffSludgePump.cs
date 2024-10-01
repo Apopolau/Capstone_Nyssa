@@ -55,7 +55,7 @@ public class TurnOffSludgePump : Interactable
 
     public void TurnOff()
     {
-        if (p1IsInRange && earthPlayer.interacting)
+        if (p1IsInRange && earthPlayer.GetIsInteracting())
         {
             soundEvent.Play();
             StartCoroutine(SludgePumpTurnsOff());

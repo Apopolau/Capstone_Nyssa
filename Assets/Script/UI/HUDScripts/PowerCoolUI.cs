@@ -36,7 +36,7 @@ public class PowerCoolUI : MonoBehaviour
             {
                 radialFillImage.fillAmount = 0f; // Ensure fill amount is exactly 0
                 isCoolingDown = false;
-                celestialPlayer.canColdSnap = true; // Allow ColdSnap power to be used again
+                celestialPlayer.SetCanColdSnap(true); // Allow ColdSnap power to be used again
             }
         }
     }

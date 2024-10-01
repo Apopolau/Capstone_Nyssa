@@ -11,27 +11,10 @@ public class EarthPlayer : Player
 {
     [Header("These need to be set up in each scene")]
     [SerializeField] public GameObject plantParent;
-    //[SerializeField] public VirtualMouseInput virtualMouseInput;
     [SerializeField] public Camera mainCamera;
-    //[SerializeField] public Image selectTileText;
-
-
-    // Reference to the UI controller script
 
     [Header("UI elements")]
     [SerializeField] private GameObject virtualMouseUI;
-    //public EarthCharacterUIController uiController;
-
-    //public GameObject plantingControlsUI; 
-    //public GameObject spellsControlsUI; //assign controlsUI
-    //[SerializeField] private GameObject darkenInSelectMode;
-    //[SerializeField] private GameObject darkenWhilePlanting;
-    //[SerializeField] private float darkeningAmount = 0.5f; // how much to darken the images
-
-    //public Image healCooldownOverlay;
-    //public Image CTRLHealOverlay;
-    //public Image thornCooldownOverlay;
-    //public Image CTRLThornOverlay;
 
     [Header("State machine elements")]
     private BaseStateMachine stateMachine;
@@ -84,15 +67,25 @@ public class EarthPlayer : Player
     List<GameObject> validTargets;
     private int validTargetIndex = 0;
 
-    private WaitForSeconds plantTime;
-    private WaitForSeconds healTime;
+    [Header("Animation Variables")]
+    [SerializeField] AnimationClip plantAnimation;
+    [SerializeField] AnimationClip healCastAnimation;
+    [SerializeField] AnimationClip barrierCastAnimation;
+
+    private float plantTime;
+    private float healCastTime;
+    private float barrierCastTime;
+
+    private WaitForSeconds plantAnimTime;
+    private WaitForSeconds healAnimTime;
+    private WaitForSeconds barrierAnimTime;
+
     private float healCooldown = 10f;
-    private WaitForSeconds barrierTime;
     private float barrierCooldown = 10f;
     private WaitForSeconds barrierActiveTime;
     private WaitForSeconds iFramesLength;
-    private WaitForSeconds deathAnimLength;
-    private WaitForSeconds staggerLength;
+    //private WaitForSeconds deathAnimLength;
+    //private WaitForSeconds staggerLength;
 
     private WaitForSeconds suspensionTime;
 
@@ -146,18 +139,23 @@ public class EarthPlayer : Player
 
     private void Awake()
     {
+        //Grab component scripts
         stateMachine = GetComponent<BaseStateMachine>();
         earthAnimator = GetComponent<EarthPlayerAnimator>();
         earthControls = GetComponent<EarthPlayerControl>();
         earthAgent = GetComponent<NavMeshAgent>();
-        earthAgent.enabled = false;
         pMovement = GetComponent<playerMovement>();
-        //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
-        //virtualMousePosition = new Vector3();
-        OrigPos = this.transform.position;
-        health = new Stat(100, 100, false);
-        validTargets = new List<GameObject>();
         s_soundLibrary = base.soundLibrary as SproutSoundLibrary;
+
+        OrigPos = this.gameObject.transform.position;
+
+        //Initialize stats
+        health = new Stat(100, 100, false);
+
+        validTargets = new List<GameObject>();
+        
+        earthAgent.enabled = false;
+
     }
 
     // Start is called before the first frame update
@@ -170,15 +168,24 @@ public class EarthPlayer : Player
                 celestialPlayer = player.GetComponent<CelestialPlayer>();
             }
         }
-        plantTime = new WaitForSeconds(4.542f);
-        healTime = new WaitForSeconds(0.7f);
-        barrierTime = new WaitForSeconds(1.458f);
-        //healCooldown = new WaitForSeconds(10);
-        //barrierCooldown = new WaitForSeconds(10);
+
+        //Initialize animation timers
+        takeHitTime = takeHitAnimation.length;
+        deathTime = deathAnimation.length;
+        plantTime = plantAnimation.length;
+        healCastTime = healCastAnimation.length;
+        barrierCastTime = barrierCastAnimation.length;
+
+        plantAnimTime = new WaitForSeconds(plantTime);
+        healAnimTime = new WaitForSeconds(healCastTime);
+        barrierAnimTime = new WaitForSeconds(barrierCastTime);
+        staggerLength = new WaitForSeconds(takeHitTime);
+        deathAnimLength = new WaitForSeconds(deathTime);
+
+        //Initialize other coroutine timers
         barrierActiveTime = new WaitForSeconds(5);
         iFramesLength = new WaitForSeconds(0.5f);
-        staggerLength = new WaitForSeconds(0.958f);
-        deathAnimLength = new WaitForSeconds(1.458f);
+        
         hudManager.SetSproutVirtualMouseUI(virtualMouseUI);
     }
 
@@ -356,7 +363,7 @@ public class EarthPlayer : Player
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 inInteraction_FSM = true;
-                StartCoroutine(SuspendActions(plantTime));
+                StartCoroutine(SuspendActions(plantAnimTime));
                 s_soundLibrary.PlayPlantClips();
                 //After wait time
                 yield return plantTime;
@@ -505,7 +512,7 @@ public class EarthPlayer : Player
                 earthAnimator.animator.SetBool(earthAnimator.IfPlantingHash, true);
                 earthAnimator.animator.SetBool(earthAnimator.IfWalkingHash, false);
                 inInteraction_FSM = true;
-                StartCoroutine(SuspendActions(plantTime));
+                StartCoroutine(SuspendActions(plantAnimTime));
                 s_soundLibrary.PlayPlantClips();
                 yield return plantTime;
                 //Set things back
@@ -652,10 +659,10 @@ public class EarthPlayer : Player
         */
         inHealSelection_FSM = false;
         inInteraction_FSM = true;
-        CallSuspendActions(healTime);
+        CallSuspendActions(healAnimTime);
         earthAnimator.animator.SetBool(earthAnimator.IfHealingHash, true);
         soundLibrary.PlaySpellClips();
-        yield return healTime;
+        yield return healAnimTime;
         inInteraction_FSM = false;
         earthAnimator.animator.SetBool(earthAnimator.IfHealingHash, false);
         
@@ -735,10 +742,10 @@ public class EarthPlayer : Player
         inBarrierSelection_FSM = false;
 
         inInteraction_FSM = true;
-        CallSuspendActions(barrierTime);
+        CallSuspendActions(barrierAnimTime);
         earthAnimator.animator.SetBool(earthAnimator.IfShieldingHash, true);
         soundLibrary.PlaySpellClips();
-        yield return barrierTime;
+        yield return barrierAnimTime;
         earthAnimator.animator.SetBool(earthAnimator.IfShieldingHash, false);
         inInteraction_FSM = false;
 
@@ -974,36 +981,6 @@ public class EarthPlayer : Player
         return tileOutlinePrefab;
     }
 
-    /*
-    public GameObject GetPlantDarkenObject()
-    {
-        return darkenInSelectMode;
-    }
-    */
-
-    // handle cool down for thorn and heal powers
-    /*
-    public IEnumerator CoolDownImageFill(Image fillImage, float cooldown)
-    {
-        float timer = 0f;
-        float startFillAmount = 1f;
-        float endFillAmount = 0f;
-
-        // Gradually decrease fill amount over cooldown duration
-        while (timer < cooldown)
-        {
-            float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldown);
-            fillImage.fillAmount = fillAmount;
-            timer += Time.deltaTime;
-            yield return null;
-        }
-
-        // Ensure fill amount is exactly 0
-        fillImage.fillAmount = endFillAmount;
-    }
-    */
-
-    
 
     /// <summary>
     /// HELPER FUNCTIONS
@@ -1119,7 +1096,7 @@ public class EarthPlayer : Player
 
 
     //Return if the player is in the middle of interacting
-    public bool GetIsInteracting()
+    public bool GetInInteraction()
     {
         return inInteraction_FSM;
     }

@@ -19,7 +19,7 @@ public class AttackLightningAction: FSMAction
 
         }
 
-        player.isAttacking = false;
+        player.SetIsAttacking(false);
 
     }
     public override void ExitState(BaseStateMachine stateMachine)

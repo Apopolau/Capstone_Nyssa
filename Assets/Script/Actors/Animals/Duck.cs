@@ -54,7 +54,7 @@ public class Duck : Animal
         CheckLevelState();
         SetWalkingState();
         HandleKidnapIcon();
-        if (earthPlayer.interacting && inRangeOfEscort)
+        if (earthPlayer.GetIsInteracting() && inRangeOfEscort)
         {
             if (!isEscorted)
             {

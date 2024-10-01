@@ -168,16 +168,16 @@ public class Ladder : Interactable
 
     private void StartLadderBuild()
     {
-        if(p1IsInRange && earthPlayer.interacting && earthPlayer.inventory.HasEnoughItems("Tree Log", 3))
+        if(p1IsInRange && earthPlayer.GetIsInteracting() && earthPlayer.inventory.HasEnoughItems("Tree Log", 3))
         {
             pickupTarget.SetActive(false);
             StartCoroutine(BuildLadder());
         }
-        else if(p1IsInRange && earthPlayer.interacting)
+        else if(p1IsInRange && earthPlayer.GetIsInteracting())
         {
             NotEnoughLogs();
         }
-        else if(p2IsInRange && celestialPlayer.interacting)
+        else if(p2IsInRange && celestialPlayer.GetIsInteracting())
         {
             WrongCharacter();
         }
@@ -228,7 +228,7 @@ public class Ladder : Interactable
 
     private void TriggerLadderClimb()
     {
-        if (ladderIsBuilt && (p1IsInRange && earthPlayer.interacting))
+        if (ladderIsBuilt && (p1IsInRange && earthPlayer.GetIsInteracting()))
         {
             if(earthPlayer.transform.position.y > 5)
             {
@@ -239,7 +239,7 @@ public class Ladder : Interactable
                 earthClimbUp.TriggerDialogue();
             }
         }
-        else if(ladderIsBuilt && (p2IsInRange && celestialPlayer.interacting))
+        else if(ladderIsBuilt && (p2IsInRange && celestialPlayer.GetIsInteracting()))
         {
             if (celestialPlayer.transform.position.y > 5)
             {

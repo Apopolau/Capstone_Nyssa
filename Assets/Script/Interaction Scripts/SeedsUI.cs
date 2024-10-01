@@ -32,7 +32,7 @@ public class SeedsUI : Interactable
 
     public void TurnOff()
     {
-        if (p1IsInRange && earthPlayer.interacting)
+        if (p1IsInRange && earthPlayer.GetIsInteracting())
         {
     
             uiObject.SetActive(false);

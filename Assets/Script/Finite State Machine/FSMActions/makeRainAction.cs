@@ -13,6 +13,7 @@ public class MakeRainAction : FSMAction
     {
         player = stateMachine.GetComponent<CelestialPlayer>();
         hudManager = player.GetHudManager();
+        player.SetRainTriggered(false);
     }
 
 
@@ -20,7 +21,7 @@ public class MakeRainAction : FSMAction
     {
 
         //if it isn't raining start rain
-        if (stateMachine.GetComponent<CelestialPlayer>().isRaining)
+        if (stateMachine.GetComponent<CelestialPlayer>().GetIsRaining())
         {
 
             player.RainParticleSystem.SetActive(true);
@@ -28,12 +29,12 @@ public class MakeRainAction : FSMAction
 
 
         }
-        else if (!stateMachine.GetComponent<CelestialPlayer>().isRaining)
+        else if (!stateMachine.GetComponent<CelestialPlayer>().GetIsRaining())
         {
 
             player.RainParticleSystem.SetActive(false);
         }
-        stateMachine.GetComponent<CelestialPlayer>().buttonRain = false;
+        //stateMachine.GetComponent<CelestialPlayer>().buttonRain = false;
 
 
     }

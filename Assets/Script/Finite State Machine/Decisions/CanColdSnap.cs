@@ -33,12 +33,12 @@ public class CanColdSnap : Decision
                 return false;
             }
             */
-            stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
+            stateMachine.GetComponent<CelestialPlayer>().SetIsAttacking(true);
             return true;
 
         }
 
-        stateMachine.GetComponent<CelestialPlayer>().buttonColdSnap = false;
+        //stateMachine.GetComponent<CelestialPlayer>().buttonColdSnap = false;
         return false;
     }
 }

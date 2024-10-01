@@ -21,7 +21,7 @@ public class AttackColdSnapEnds : FSMAction
 
         }
 
-        player.isAttacking = false;
+        player.SetIsAttacking(false);
 
     }
 

@@ -29,11 +29,11 @@ public class CanLightningStrike: Decision
                 return false;
             }
             */
-            stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
+            stateMachine.GetComponent<CelestialPlayer>().SetIsAttacking(true);
             return true;
 
         }
-        stateMachine.GetComponent<CelestialPlayer>().buttonLightningStrike = false;
+        //stateMachine.GetComponent<CelestialPlayer>().buttonLightningStrike = false;
         return false;
     }
 }

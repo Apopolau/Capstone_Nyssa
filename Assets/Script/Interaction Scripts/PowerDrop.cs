@@ -54,7 +54,7 @@ public class PowerDrop : Interactable
     public void PowerPickup()
     {
 
-        if ((p1IsInRange && earthPlayer.interacting) || (p2IsInRange && celestialPlayer.interacting))
+        if ((p1IsInRange && earthPlayer.GetIsInteracting()) || (p2IsInRange && celestialPlayer.GetIsInteracting()))
         {
             PowerStats currPowerStats = getPowerDropStatRef(powerDrop);
             powerBehaviour.setEnabled(currPowerStats);

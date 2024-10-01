@@ -30,7 +30,7 @@ public class AttackBasicEnds : FSMAction
 
 
 
-        player.isAttacking = false;
+        player.SetIsAttacking(false);
 
     }
 

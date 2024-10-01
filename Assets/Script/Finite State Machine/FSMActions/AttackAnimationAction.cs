@@ -16,10 +16,10 @@ public class AttackAnimationAction : FSMAction
     {
 
 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.COLDSNAP && stateMachine.GetComponent<CelestialPlayer>().canColdSnap ==true)
+        if (stateMachine.GetComponent<CelestialPlayer>().GetIsAttacking() && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.COLDSNAP && stateMachine.GetComponent<CelestialPlayer>().GetCanColdSnap())
         {
-           stateMachine.GetComponent<CelestialPlayer>().canColdSnap = false;
-            if (!player.canColdSnap)
+           stateMachine.GetComponent<CelestialPlayer>().SetCanColdSnap(false);
+            if (!player.GetCanColdSnap())
             {
                 
                 player.StartCoroutine(player.animateColdSnap());
@@ -29,23 +29,23 @@ public class AttackAnimationAction : FSMAction
             }
         }
 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.LIGHTNINGSTRIKE && stateMachine.GetComponent<CelestialPlayer>().canLightningStrike == true)
+        if (stateMachine.GetComponent<CelestialPlayer>().GetIsAttacking() && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.LIGHTNINGSTRIKE && stateMachine.GetComponent<CelestialPlayer>().GetCanLightningStrike())
         {
-            stateMachine.GetComponent<CelestialPlayer>().canLightningStrike = false;
+            stateMachine.GetComponent<CelestialPlayer>().SetCanLightningStrike(false);
 
 
-            if (!player.canLightningStrike)
+            if (!player.GetCanLightningStrike())
             {
                 player.StartCoroutine(player.animateLightningStrike());
                 player.ResetLightningStrike();
             }
         }
 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.BASIC && stateMachine.GetComponent<CelestialPlayer>().canBasicAttack == true)
+        if (stateMachine.GetComponent<CelestialPlayer>().GetIsAttacking() && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.BASIC && stateMachine.GetComponent<CelestialPlayer>().GetCanBasicAttack())
         {
-            stateMachine.GetComponent<CelestialPlayer>().canBasicAttack = false;
+            stateMachine.GetComponent<CelestialPlayer>().SetCanBasicAttack(false);
 
-            if (!player.canBasicAttack)
+            if (!player.GetCanBasicAttack())
             {
                 player.StartCoroutine(player.animateBasicAttack());
                 player.ResetBasic();
@@ -54,11 +54,11 @@ public class AttackAnimationAction : FSMAction
 
         }
 
-        if (stateMachine.GetComponent<CelestialPlayer>().isAttacking && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.MOONTIDE &&  stateMachine.GetComponent<CelestialPlayer>().canMoonTide)
+        if (stateMachine.GetComponent<CelestialPlayer>().GetIsAttacking() && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.MOONTIDE &&  stateMachine.GetComponent<CelestialPlayer>().GetCanMoonTide())
         {
-            stateMachine.GetComponent<CelestialPlayer>().canMoonTide = false;
+            stateMachine.GetComponent<CelestialPlayer>().SetCanMoonTide(false);
 
-            if (!player.canMoonTide)
+            if (!player.GetCanMoonTide())
             {
                 player.StartCoroutine(player.animateMoonTide());
                 player.ResetMoonTide();

@@ -16,27 +16,28 @@ public class CelestialPlayer : Player
 
     [Header("Rain System")]
     [SerializeField] WeatherState weatherState;
-    [SerializeField] public bool isRaining = false;
+    private bool isRaining = false;
+    private bool triggeredRain = false;
     private bool isDodging = false;
     [SerializeField] public GameObject RainParticleSystem;
 
-    [Header("Button press")]
-    [SerializeField] public bool buttonRain = false;
-    [SerializeField] public bool buttonBasicAttack = false;
-    [SerializeField] public bool buttonColdSnap = false;
-    [SerializeField] public bool buttonLightningStrike = false;
-    [SerializeField] public bool buttonMoonTide = false;
+    //[Header("Button press")]
+    private bool buttonRain = false;
+    private bool buttonBasicAttack = false;
+    private bool buttonColdSnap = false;
+    private bool buttonLightningStrike = false;
+    private bool buttonMoonTide = false;
 
     [Header("Attack")]
     CelestialPlayerBasicAttackTrigger staff;
-    [SerializeField] public bool isAttacking = false;
-    [SerializeField] public bool canBasicAttack = true;
-    [SerializeField] public bool canColdSnap = true;
-    [SerializeField] public bool canLightningStrike = true;
-    [SerializeField] public bool canMoonTide = true;
-    [SerializeField] public bool canSetFogTrap = true;
-    [SerializeField] public bool canSetFrostTrap = true;
-    [SerializeField] public bool canSunBeam = true;
+    private bool isAttacking = false;
+    private bool canBasicAttack = true;
+    private bool canColdSnap = true;
+    private bool canLightningStrike = true;
+    private bool canMoonTide = true;
+    private bool canSetFogTrap = true;
+    private bool canSetFrostTrap = true;
+    private bool canSunBeam = true;
 
     private bool isTargeted = false;
 
@@ -68,14 +69,25 @@ public class CelestialPlayer : Player
     GameObject coldOrb;
     GameObject moonTide;
 
+    [Header("Celeste Animation Stats")]
     //Lengths of animations and abilities
+    [SerializeField] AnimationClip dodgeAnimation;
+    [SerializeField] AnimationClip basicAttackAnimation;
+    [SerializeField] AnimationClip spellCastAnimation;
+
+    private float dodgeTime;
+    private float basicAttackTime;
+    private float spellCastTime;
+
     private WaitForSeconds dodgeAnimTime;
     private WaitForSeconds dodgeMoveStopTime;
-    private WaitForSeconds specialPowerAnimTime;
+    private WaitForSeconds spellCastAnimTime;
     private WaitForSeconds basicPowerAnimTime;
     private WaitForSeconds basicCoolDownTime;
     private WaitForSeconds coldSnapCoolDownTime;
     private WaitForSeconds lightningCoolDownTime;
+
+
 
     [Header("Animation")]
     private CelestialPlayerAnimator celestialAnimator;
@@ -98,7 +110,7 @@ public class CelestialPlayer : Player
 
     private void Awake()
     {
-        OrigPos = this.transform.position;
+        OrigPos = this.gameObject.transform.position;
         celestialAnimator = GetComponent<CelestialPlayerAnimator>();
         celestialAgent = GetComponent<NavMeshAgent>();
         celestialAgent.enabled = false;
@@ -114,11 +126,23 @@ public class CelestialPlayer : Player
 
     void Start()
     {
-        dodgeAnimTime = new WaitForSeconds(1.290f);
+        //Get our animation times straight from the source
+        takeHitTime = takeHitAnimation.length;
+        deathTime = deathAnimation.length;
+        dodgeTime = dodgeAnimation.length;
+        basicAttackTime = basicAttackAnimation.length;
+        spellCastTime = spellCastAnimation.length;
+
+        //Set up our animation times based on these numbers
+        staggerLength = new WaitForSeconds(takeHitTime);
+        deathAnimLength = new WaitForSeconds(deathTime);
+        dodgeAnimTime = new WaitForSeconds(dodgeTime);
+        basicPowerAnimTime = new WaitForSeconds(basicAttackTime);
+        spellCastAnimTime = new WaitForSeconds(spellCastTime);
+
         dodgeMoveStopTime = new WaitForSeconds(0.7f);
         powerBehaviour = GetComponent<PowerBehaviour>();
-        basicPowerAnimTime = new WaitForSeconds(1.208f);
-        specialPowerAnimTime = new WaitForSeconds(1.958f);
+        
         //dodgeAnimTime = new WaitForSeconds();
         coldSnapCoolDownTime = powerBehaviour.ColdSnapStats.rechargeTimer;
         basicCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
@@ -284,6 +308,7 @@ public class CelestialPlayer : Player
             {
                 weatherState.SetRainyState(true);
                 isRaining = true;
+                triggeredRain = true;
             }
             //We could replace this with some other effect to show this is turned on?
             //rainFill.enabled = true;
@@ -294,13 +319,14 @@ public class CelestialPlayer : Player
             // yield return new WaitForSeconds(10f);
 
             weatherState.SetRainyState(false);
+            RainParticleSystem.SetActive(false);
 
             isRaining = false;
             //rainFill.enabled = false;
             //CTRLRainFill.enabled = false;
 
         }
-        buttonRain = true;
+        //buttonRain = true;
 
     }
 
@@ -328,9 +354,9 @@ public class CelestialPlayer : Player
         }
 
         //Stop action during the course of animation and yield time
-        StartCoroutine(SuspendActions(specialPowerAnimTime));
+        StartCoroutine(SuspendActions(spellCastAnimTime));
         c_soundLibrary.PlayFrostClips();
-        yield return specialPowerAnimTime;
+        yield return spellCastAnimTime;
 
         //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
         celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
@@ -401,9 +427,9 @@ public class CelestialPlayer : Player
         }
 
         //Stop action during the course of animation and yield time
-        StartCoroutine(SuspendActions(specialPowerAnimTime));
+        StartCoroutine(SuspendActions(spellCastAnimTime));
         c_soundLibrary.PlayLightningClips();
-        yield return specialPowerAnimTime;
+        yield return spellCastAnimTime;
 
         if (enemyTarget != null && enemyTarget.GetComponentInParent<ShutOffTerminal>())
         {
@@ -436,9 +462,9 @@ public class CelestialPlayer : Player
         }
 
         //Stop action during the course of animation and yield time
-        StartCoroutine(SuspendActions(specialPowerAnimTime));
+        StartCoroutine(SuspendActions(spellCastAnimTime));
         c_soundLibrary.PlayWaveClips();
-        yield return specialPowerAnimTime;
+        yield return spellCastAnimTime;
 
         if (enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())
         {
@@ -1041,49 +1067,7 @@ public class CelestialPlayer : Player
         yield return waitTime;
     }
 
-    //Darken UI icons
-    /*
-    void DarkenAllImages(GameObject targetGameObject)
-    {
-        if (targetGameObject != null)
-        {
-            Image[] images = targetGameObject.GetComponentsInChildren<Image>();
-            foreach (Image image in images)
-            {
-                
-                // Create a copy of the current material
-                Material darkenedMaterial = new Material(image.material);
-
-                // Darken the material color
-                Color darkenedColor = darkenedMaterial.color * darkeningAmount;
-                darkenedMaterial.color = darkenedColor;
-
-                // Assign the new material to the image
-                image.material = darkenedMaterial;
-                
-                image.color = new Color(0.5f, 0.5f, 0.5f);
-            }
-        }
-        else
-        {
-
-        }
-    }
-        */
-
-
-    // Function to reset color to original
-    /*
-    public void ResetImageColor(GameObject targetGameObject)
-    {
-        Image[] images = targetGameObject.GetComponentsInChildren<Image>();
-        foreach (Image image in images)
-        {
-            // Restore the original color
-            image.color = Color.white;
-        }
-    }
-    */
+    
 
     /// <summary>
     /// Checks all parameters required for Celeste to be able to cast a given spell
@@ -1159,8 +1143,83 @@ public class CelestialPlayer : Player
         return false;
     }
 
+    /// <summary>
+    /// GETTERS AND SETTERS
+    /// </summary>
+    /// <returns></returns>
+
     public float GetEnergy()
     {
         return energy.current;
+    }
+
+    public bool GetIsAttacking()
+    {
+        return isAttacking;
+    }
+
+    public void SetIsAttacking(bool attacking)
+    {
+        isAttacking = attacking;
+    }
+
+    public bool GetCanBasicAttack()
+    {
+        return canBasicAttack;
+    }
+
+    public void SetCanBasicAttack(bool canDo)
+    {
+        canBasicAttack = canDo;
+    }
+
+    public bool GetCanColdSnap()
+    {
+        return canColdSnap;
+    }
+
+    public void SetCanColdSnap(bool canDo)
+    {
+        canColdSnap = canDo;
+    }
+
+    public bool GetCanLightningStrike()
+    {
+        return canLightningStrike;
+    }
+
+    public void SetCanLightningStrike(bool canDo)
+    {
+        canLightningStrike = canDo;
+    }
+
+    public bool GetCanMoonTide()
+    {
+        return canMoonTide;
+    }
+
+    public void SetCanMoonTide(bool canDo)
+    {
+        canMoonTide = canDo;
+    }
+
+    public bool GetIsRaining()
+    {
+        return isRaining;
+    }
+
+    public void SetIsRaining(bool raining)
+    {
+        isRaining = raining;
+    }
+
+    public bool GetTriggeredRain()
+    {
+        return triggeredRain;
+    }
+
+    public void SetRainTriggered(bool triggered)
+    {
+        triggeredRain = triggered;
     }
 }

@@ -29,6 +29,6 @@ public class AttackLightningStrikeEnds : FSMAction
 
         }
 
-        player.isAttacking = false;
+        player.SetIsAttacking(false);
     }
 }

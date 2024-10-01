@@ -33,10 +33,10 @@ public class CanMoonTide : Decision
                 return false;
             }
             */
-            stateMachine.GetComponent<CelestialPlayer>().isAttacking = true;
+            stateMachine.GetComponent<CelestialPlayer>().SetIsAttacking(true);
             return true;
         }
-        stateMachine.GetComponent<CelestialPlayer>().buttonMoonTide = false;
+        //stateMachine.GetComponent<CelestialPlayer>().buttonMoonTide = false;
 
 
         return false;
