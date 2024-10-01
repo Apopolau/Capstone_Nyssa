@@ -17,6 +17,7 @@ public class CelestialPlayer : Player
     [Header("Rain System")]
     [SerializeField] WeatherState weatherState;
     [SerializeField] public bool isRaining = false;
+    private bool isDodging = false;
     [SerializeField] public GameObject RainParticleSystem;
 
     [Header("Button press")]
@@ -69,6 +70,7 @@ public class CelestialPlayer : Player
 
     //Lengths of animations and abilities
     private WaitForSeconds dodgeAnimTime;
+    private WaitForSeconds dodgeMoveStopTime;
     private WaitForSeconds specialPowerAnimTime;
     private WaitForSeconds basicPowerAnimTime;
     private WaitForSeconds basicCoolDownTime;
@@ -112,7 +114,8 @@ public class CelestialPlayer : Player
 
     void Start()
     {
-
+        dodgeAnimTime = new WaitForSeconds(1.290f);
+        dodgeMoveStopTime = new WaitForSeconds(0.7f);
         powerBehaviour = GetComponent<PowerBehaviour>();
         basicPowerAnimTime = new WaitForSeconds(1.208f);
         specialPowerAnimTime = new WaitForSeconds(1.958f);
@@ -140,6 +143,12 @@ public class CelestialPlayer : Player
         {
             ShootTowardsTarget(coldOrb);
         }
+        /*
+        if (isDodging)
+        {
+            //HandlePlayerDodge();
+        }
+        */
 
     }
 
@@ -155,9 +164,13 @@ public class CelestialPlayer : Player
         }
     }
 
+    //When the player presses the dodge button
     public void OnDodgeSelected(InputAction.CallbackContext context)
     {
-
+        //this.GetComponent<CelestialPlayerMovement>().Dodge();
+        StartCoroutine(StopDodgeMovement());
+        StartCoroutine(AnimateDodge());
+        StartCoroutine(SuspendActions(dodgeAnimTime));
     }
 
 
@@ -440,6 +453,30 @@ public class CelestialPlayer : Player
         isAttacking = false;
 
 
+    }
+
+    //Runs the animation flags for dodging
+    private IEnumerator AnimateDodge()
+    {
+        celestialAnimator.animator.SetBool(celestialAnimator.IfDodgingHash, true);
+
+        yield return dodgeAnimTime;
+        
+        celestialAnimator.animator.SetBool(celestialAnimator.IfDodgingHash, false);
+
+    }
+
+    //Handles the nuances of the physical movement as well as iframes (to be changed)
+    private IEnumerator StopDodgeMovement()
+    {
+        StartIFrames();
+        isDodging = true;
+        this.GetComponent<CelestialPlayerMovement>().ToggleDodging(true);
+        yield return dodgeMoveStopTime;
+        EndIFrames();
+        isDodging = false;
+        this.GetComponent<CelestialPlayerMovement>().ToggleDodging(false);
+        
     }
 
 
@@ -736,12 +773,6 @@ public class CelestialPlayer : Player
     */
 
 
-
-
-
-    
-
-
     public void ShootTowardsTarget(GameObject Orb)
     {
         var step = 20 * Time.deltaTime; // calculate distance to move
@@ -749,9 +780,23 @@ public class CelestialPlayer : Player
         Orb.transform.LookAt(enemyTarget.transform.position, Vector3.up);
 
     }
-    
 
+    /*
+    private void HandlePlayerDodge()
+    {
 
+    }
+    */
+
+    public void StartIFrames()
+    {
+        iFramesOn = true;
+    }
+
+    public void EndIFrames()
+    {
+        iFramesOn = false;
+    }
 
     ///
     /// RESETS ABILITIES AFTER THEY ARE USED
@@ -810,7 +855,6 @@ public class CelestialPlayer : Player
         canColdSnap = true;
     }
     */
-
 
 
     public void ResetLightningStrike()
@@ -913,11 +957,10 @@ public class CelestialPlayer : Player
         //powerOnCooldown = false;
     }
 
-    /// <summary>
+
     /// GETTING MOVED TO HUDMANAGER
-    /// </summary>
-    /// <param name="fillImage"></param>
-    /// <returns></returns>
+
+
     /*
     public IEnumerator CoolDownImageFill(Image fillImage)
     {
@@ -971,6 +1014,10 @@ public class CelestialPlayer : Player
     }
     */
 
+    /// <summary>
+    /// HUD HELPER FUNCTIONS
+    /// </summary>
+    /// <returns></returns>
 
 
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime)

@@ -24,6 +24,7 @@ public class CelestialPlayerMovement : MonoBehaviour
 
     //Movement of the player
     public float moveSpeed;
+    [SerializeField] private float dodgeSpeed;
     //if the player is on the ground don't let them slip and slide let them have drag
     public float groundDrag;
 
@@ -43,6 +44,7 @@ public class CelestialPlayerMovement : MonoBehaviour
     public float playerHeight;
     public LayerMask groundMask;
     bool grounded;
+    bool dodging;
 
     float horInput;
     float vertInput;
@@ -53,6 +55,7 @@ public class CelestialPlayerMovement : MonoBehaviour
     Matrix4x4 isometricRotIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
     Vector3 isometricInput;
     Vector3 isometricRotInput;
+    Vector3 dodgeInput;
     int CelestialDeviceID;
     private PlayerInput playerInput;
     private CelestialPlayerInputActions celestialPlayerInputActions;
@@ -115,9 +118,15 @@ public class CelestialPlayerMovement : MonoBehaviour
 
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
+        
         if (!grounded)
         {
             rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
+        }
+
+        if (dodging)
+        {
+            Dodge();
         }
     }
 
@@ -164,6 +173,7 @@ public class CelestialPlayerMovement : MonoBehaviour
             ResetNavAgent();
         }
 
+        //Apply force in the calculated direction
         rb.AddForce(new Vector3(isometricInput.z, 0, isometricInput.x).normalized * moveSpeed * 10f, ForceMode.Force);
 
         // if player moved disable the UI
@@ -275,6 +285,32 @@ public class CelestialPlayerMovement : MonoBehaviour
         this.GetComponent<NavMeshAgent>().enabled = false;
         orientation.localRotation = new Quaternion(0, 0, 0, 1);
         this.gameObject.transform.rotation.Set(0, 0, 0, 1);
+    }
+
+    //Run this while we are dodging
+    public void Dodge()
+    {
+        //dodging = true;
+        rb.drag = 0;
+        //If the player had any inputs on when they selected dodge
+        if(dodgeInput.z != 0 || dodgeInput.y != 0)
+        {
+            //We want them to move steadily in the direction of their input
+            rb.AddForce(dodgeInput * dodgeSpeed * 10f, ForceMode.Force);
+        }
+        //If they didn't have any inputs on when they selected dodge
+        else
+        {
+            //We want them to move backwards from whatever direction they were facing
+            rb.AddForce(-playerObj.transform.forward * dodgeSpeed * 10f, ForceMode.Force);
+        }
+    }
+
+    public void ToggleDodging(bool dodging)
+    {
+        this.dodging = dodging;
+        if (dodging)
+            dodgeInput = new Vector3(isometricInput.z, 0, isometricInput.x);
     }
 
     private void Jump()
