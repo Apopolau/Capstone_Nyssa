@@ -2248,6 +2248,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6275352046092819799, guid: 9a4dc6e21611f8442b9b9049eee13f88, type: 3}
   m_PrefabInstance: {fileID: 107934805}
   m_PrefabAsset: {fileID: 0}
+--- !u!136 &109356288 stripped
+CapsuleCollider:
+  m_CorrespondingSourceObject: {fileID: 755252500469404723, guid: f152c6031e4b2944cae7423592e76233, type: 3}
+  m_PrefabInstance: {fileID: 4809181396229127117}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &110167382
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15556,14 +15561,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 895418423}
     m_Modifications:
-    - target: {fileID: 616051488619230335, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: dialogueManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1028325472782930115, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 1601658446}
     - target: {fileID: 4687744544096372904, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -64.5517
@@ -15608,120 +15605,19 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 921268330}
-    - target: {fileID: 5203004283134060588, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: dodgeSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 5203004283134060588, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: celestialAnimator
-      value: 
-      objectReference: {fileID: 1308052685}
-    - target: {fileID: 5752642823608885967, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: keyboardUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5752642823608885967, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: controllerUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: frenchUI.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: frenchUI.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: englishUI.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: englishUI.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: agent
-      value: 
-      objectReference: {fileID: 1308052701}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 1308052685}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: rainFill
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: hudManager
       value: 
       objectReference: {fileID: 1304372723}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: displayText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: CTRLRainFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: coldSnapFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: moonTideFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: deathAnimation
-      value: 
-      objectReference: {fileID: 4348485665485846014, guid: f8b702001ff901f438c67b69af1a8570, type: 3}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: dodgeAnimation
-      value: 
-      objectReference: {fileID: -7523799387860143440, guid: 9d776e203c12cb34aa2331b56c1d4974, type: 3}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: playerWarningBG
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: CTRLColdSnapFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: CTRLMoonTideFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: takeHitAnimation
-      value: 
-      objectReference: {fileID: -1304387373167265313, guid: f87dd132ddb22b14a9701501ee46967f, type: 3}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: RainParticleSystem
       value: 
       objectReference: {fileID: 540814069}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: lightingStrikeFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: spellCastAnimation
-      value: 
-      objectReference: {fileID: -5933145149827510548, guid: 06ded30deaa2cf24396e0e1812f70f42, type: 3}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: basicAttackAnimation
-      value: 
-      objectReference: {fileID: -6740162534946711965, guid: b3277948b65d2014e89eb44e4db791f7, type: 3}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: CTRLightingStrikeFill
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7159944928166958832, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_Name
       value: CelestialPlayer
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -23463,22 +23359,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148462aabad96c44bb98802b853e59a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1308052685 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1028325472782930115, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-  m_PrefabInstance: {fileID: 864819263}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 864819264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b489223f0ad5a13448c8fbb53eae0f18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!195 &1308052701 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 2551764230926651092, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-  m_PrefabInstance: {fileID: 864819263}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1320442170
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30237,11 +30117,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 982d8739fe5f8c541abc09db726259e8, type: 3}
   m_PrefabInstance: {fileID: 1593337786}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1601658446 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 576346163583008015, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-  m_PrefabInstance: {fileID: 864819263}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1608711255
 PrefabInstance:
@@ -38415,6 +38290,10 @@ PrefabInstance:
       propertyPath: m_ExcludeLayers.m_Bits
       value: 2176
       objectReference: {fileID: 0}
+    - target: {fileID: 6897892068200031787, guid: f152c6031e4b2944cae7423592e76233, type: 3}
+      propertyPath: attackCollider
+      value: 
+      objectReference: {fileID: 109356288}
     - target: {fileID: 7476623895178863548, guid: f152c6031e4b2944cae7423592e76233, type: 3}
       propertyPath: m_Avatar
       value: 

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 using UnityEngine.AI;
-public class TaskAttack : BTNode
+public class TaskEndAttack : BTNode
 {
     NavMeshAgent thisAgent;
     KidnappingEnemy thisEnemy;
 
 
-    public TaskAttack(KidnappingEnemy enemy)
+    public TaskEndAttack(KidnappingEnemy enemy)
     {
         thisEnemy = enemy;
         thisAgent = enemy.GetComponent<NavMeshAgent>();
@@ -31,12 +31,12 @@ public class TaskAttack : BTNode
         if (!thisEnemy.GetInAttackRange())
         {
             //thisEnemy.GetEnemyAnimator().animator.SetBool(thisEnemy.GetEnemyAnimator().IfAttackingHash, false);
-            thisEnemy.GetAnimator().SetAnimationFlag("attack", true);
+            thisEnemy.GetAnimator().SetAnimationFlag("attack", false);
         }
 
         if (thisEnemy.GetInAttackRange() && thisEnemy.GetAttackInitiated())
         {
-            //yield return attackTime;
+            /*
             bool playerIsDead = false;
             //I refactored this a little, you may want to set the damage they can deal in their stats and pass it in here
             if (!thisEnemy.GetClosestPlayer().GetComponentInParent<Player>().GetShielded())
@@ -47,8 +47,10 @@ public class TaskAttack : BTNode
             {
                 thisEnemy.TakeHit(25);
             }
+            */
             
             thisEnemy.transform.LookAt(thisEnemy.GetClosestPlayer().transform.position);
+            /*
             if (playerIsDead)
             {
                 state = NodeState.FAILURE;
@@ -57,6 +59,8 @@ public class TaskAttack : BTNode
             {
                 state = NodeState.SUCCESS;
             }
+            */
+            state = NodeState.SUCCESS;
             thisEnemy.GetAnimator().SetAnimationFlag("attack", false);
             //thisEnemy.GetEnemyAnimator().animator.SetBool(thisEnemy.GetEnemyAnimator().IfAttackingHash, false);
         }

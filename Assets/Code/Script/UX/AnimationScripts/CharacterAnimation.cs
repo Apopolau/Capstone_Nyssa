@@ -29,6 +29,8 @@ public class CharacterAnimation : ScriptableObject
 
     public float GetAnimationLength()
     {
+        if(animationLength == 0)
+            animationLength = animationClip.length;
         return animationLength;
     }
 

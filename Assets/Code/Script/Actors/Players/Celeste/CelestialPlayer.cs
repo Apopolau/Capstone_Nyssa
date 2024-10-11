@@ -107,7 +107,6 @@ public class CelestialPlayer : Player
         c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
     }
 
-
     void Start()
     {
         dodgeMoveStopTime = new WaitForSeconds(0.7f);
@@ -121,7 +120,6 @@ public class CelestialPlayer : Player
         staff.SetPlayer(this);
     }
 
-
     // Update is called once per frame
     void Update()
     {
@@ -130,29 +128,6 @@ public class CelestialPlayer : Player
             ShootTowardsTarget(coldOrb);
         }
     }
-
-    public void OnInteract(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Started)
-        {
-            Debug.Log("Interacting");
-            interacting = true;
-        }
-        else if (context.phase == InputActionPhase.Canceled)
-        {
-            Debug.Log("Not interacting");
-            interacting = false;
-        }
-    }
-
-    //When the player presses the dodge button
-    public void OnDodgeSelected(InputAction.CallbackContext context)
-    {
-        StartCoroutine(StopDodgeMovement());
-        StartCoroutine(AnimateDodge());
-        StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("dodge")));
-    }
-
 
     private void OnTriggerStay(Collider other)
     {
@@ -194,10 +169,10 @@ public class CelestialPlayer : Player
         }
     }
 
-    //POWER BUTTONS
+    //POWER BUTTONS (HANDLES BUTTON PRESSES)
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
     /// Celestial Player Control >> Power buttons are selected >> Heads int FSM CAN_____powersname____
-    /// 
+    /// ATTACKS
     public void OnSnowFlakeSelected()
     {
         //COLDSNAP POWER
@@ -286,15 +261,54 @@ public class CelestialPlayer : Player
 
     }
 
+    /// OTHER BUTTONS
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            //Debug.Log("Interacting");
+            interacting = true;
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            //Debug.Log("Not interacting");
+            interacting = false;
+        }
+    }
+
+    //When the player presses the dodge button
+    public void OnDodgeSelected(InputAction.CallbackContext context)
+    {
+        StartCoroutine(AnimateDodge());
+    }
 
 
-    //POWEER ANIMATION
+    //POWER ANIMATION
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
     /// Celestial Player Control >> Powers are animated>> Heads into Reseting the Power 
     /// 
+
+    //Runs the basic attack after the button has been pressed
+    public IEnumerator animateBasicAttack()
+    {
+        //Set flags
+        animator.SetAnimationFlag("attack", true);
+
+        StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("attack")));
+        c_soundLibrary.PlayAttackClips();
+
+        //Wait for the animation to finish
+        yield return animator.GetAnimationWaitTime("attack");
+
+        //Reset flags
+        animator.SetAnimationFlag("attack", false);
+        isAttacking = false;
+    }
+
+    //COLDSNAP POWER
     public IEnumerator animateColdSnap()
     {
-        //COLDSNAP POWER
+        
         //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
         coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
 
@@ -323,31 +337,10 @@ public class CelestialPlayer : Player
 
     }
 
-    //Runs the basic attack after the button has been pressed
-    public IEnumerator animateBasicAttack()
-    {
-        //Set flags
-        animator.SetAnimationFlag("attack", true);
-        staff.ToggleAttacking(true);
-
-        StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("attack")));
-        c_soundLibrary.PlayAttackClips();
-
-        //Wait for the animation to finish
-        yield return animator.GetAnimationWaitTime("attack");
-
-        //Reset flags
-        staff.ToggleAttacking(false);
-        animator.SetAnimationFlag("attack", false);
-        isAttacking = false;
-    }
-
+    //LIGHTNINGSTRIKE POWER
+    //TO BE CHANGED!!!!!!!
     public IEnumerator animateLightningStrike()
     {
-
-        //LIGHTNINGSTRIKE POWER
-        //TO BE CHANGED!!!!!!!
-
         VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
         VisualEffect clone = Instantiate(lightningStrike, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
 
@@ -355,7 +348,6 @@ public class CelestialPlayer : Player
 
         //Attacking animation of player
         animator.SetAnimationFlag("cast", true);
-
 
         // Move our position a step closer to the target.
         var step = 5 * Time.deltaTime; // calculate distance to move
@@ -368,28 +360,26 @@ public class CelestialPlayer : Player
             LightningAttack();
 
         }
+        if (enemyTarget != null && enemyTarget.GetComponentInParent<ShutOffTerminal>())
+        {
+            enemyTarget.GetComponentInParent<ShutOffTerminal>().TerminalShutOff();
+        }
 
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("cast")));
         c_soundLibrary.PlayLightningClips();
         yield return animator.GetAnimationWaitTime("cast");
 
-        if (enemyTarget != null && enemyTarget.GetComponentInParent<ShutOffTerminal>())
-        {
-            enemyTarget.GetComponentInParent<ShutOffTerminal>().TerminalShutOff();
-        }
-
         //reset animation, reset isattacking, detroy visual asset and reset DPAD
         animator.SetAnimationFlag("cast", false);
         Destroy(clone, 1f);
-        //ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
-
     }
 
+    //MOONTIDE POWER
     public IEnumerator animateMoonTide()
     {
-        //MOONTIDE POWER
+        
         //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
         coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
 
@@ -402,68 +392,23 @@ public class CelestialPlayer : Player
             isTargeted = true;
             MoonTideAttack();
         }
+        if (enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())
+        {
+            enemyTarget.GetComponent<ClearDebrisTrigger>().InitiateClear();
+        }
 
         //Stop action during the course of animation and yield time
         StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("cast")));
         c_soundLibrary.PlayWaveClips();
         yield return animator.GetAnimationWaitTime("cast");
 
-        if (enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())
-        {
-            enemyTarget.GetComponent<ClearDebrisTrigger>().InitiateClear();
-        }
-
         //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
-        //celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
         animator.SetAnimationFlag("cast", false);
         isTargeted = false;
         Destroy(coldOrb, 1f);
-        //ResetImageColor(celestPlayerDpad); //reset dpad colors
         isAttacking = false;
-
-
     }
 
-    //Runs the animation flags for dodging
-    private IEnumerator AnimateDodge()
-    {
-        animator.SetAnimationFlag("dodge", true);
-
-        yield return animator.GetAnimationWaitTime("dodge");
-
-        animator.SetAnimationFlag("dodge", false);
-
-    }
-
-    //Handles the nuances of the physical movement as well as iframes (to be changed)
-    private IEnumerator StopDodgeMovement()
-    {
-        //StartIFrames();
-        isDodging = true;
-        this.GetComponent<CelestialPlayerMovement>().ToggleDodging(true);
-        yield return dodgeMoveStopTime;
-        //EndIFrames();
-        isDodging = false;
-        //this.GetComponent<CelestialPlayerMovement>().ToggleDodging(false);
-        
-    }
-
-    public void ToggleDodgeMoving()
-    {
-        this.GetComponent<CelestialPlayerMovement>().ToggleDodging(false);
-    }
-
-
-    /// <summary>
-    /// HANDLES POWER DROPPING
-    /// </summary>
-    /// <param name="power"></param>
-    /// <param name="position"></param>
-    public void PowerDrop(PowerStats power, Vector3 position)
-    {
-        powerDrop = Instantiate(power.visualDisplay, position, Quaternion.identity);
-
-    }
 
     /// <summary>
     /// HANDLES DEALING DAMAGE WITH EACH POWER
@@ -479,6 +424,7 @@ public class CelestialPlayer : Player
         }
     }
 
+    /*
     public void BasicAttack()
     {
         bool enemyIsDead;
@@ -490,6 +436,7 @@ public class CelestialPlayer : Player
             enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
         }
     }
+    */
 
     public void LightningAttack()
     {
@@ -513,6 +460,60 @@ public class CelestialPlayer : Player
         }
     }
 
+    
+
+    ///
+    /// RESETS ABILITIES AFTER THEY ARE USED, STARTS COOLDOWNS
+    ///
+    public void ResetColdSnap()
+    {
+        powerInUse = Power.NONE;
+        float coldSnapTimer = powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
+
+        //Start our cooldowns
+        StartCoroutine(ResetCooldownTime(coldSnapTimer, powerBehaviour.ColdSnapStats));
+        StartCooldownUI("CastCold", coldSnapTimer);
+    }
+
+
+    public void ResetLightningStrike()
+    {
+        powerInUse = Power.NONE;
+        float lightningStrikeTimer = powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats);
+
+        //Start our cooldowns
+        StartCoroutine(ResetCooldownTime(lightningStrikeTimer, powerBehaviour.LightningStats));
+        StartCooldownUI("CastThunder", lightningStrikeTimer);
+    }
+
+
+    public void ResetBasic()
+    {
+        powerInUse = Power.NONE;
+        float basicAttackTimer = powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats);
+
+        //Start our cooldowns
+        StartCoroutine(ResetCooldownTime(basicAttackTimer, powerBehaviour.BasicAttackStats));
+        StartCooldownUI("BasicAttack", basicAttackTimer);
+    }
+
+    public void ResetMoonTide()
+    {
+        powerInUse = Power.NONE;
+        float moonTideTimer = powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats);
+
+        //Start our cooldowns
+        StartCoroutine(ResetCooldownTime(moonTideTimer, powerBehaviour.MoonTideAttackStats));
+        StartCooldownUI("CastMoontide", moonTideTimer);
+    }
+
+
+
+    /// <summary>
+    /// ATTACK HELPERS
+    /// </summary>
+    
+    //Handles calculating the final damage dealt by a particular power
     public int GetPowerHitDamage(Power weakness)
     {
         PowerBehaviour attack;
@@ -528,7 +529,7 @@ public class CelestialPlayer : Player
 
         if (powerInUse == Power.COLDSNAP)
         {
-            
+
             if (weakness == Power.COLDSNAP)
             {
                 powerDamage = attack.ColdSnapStats.maxDamage;
@@ -578,6 +579,7 @@ public class CelestialPlayer : Player
 
     }
 
+    //Returns which power an enemy is weak to
     public Power GetEnemyWeakness(GameObject enemyTarget)
     {
         if (enemyTarget.GetComponent<Enemy>().GetEnemyStats().enemyType == EnemyStats.enemyTypes.OilMonster)
@@ -593,160 +595,7 @@ public class CelestialPlayer : Player
 
     }
 
-
-    /// <summary>
-    /// HANDLES SENDING ENERGY CHANGES TO THE HUD
-    /// </summary>
-    /// <param name="pointsAdded"></param>
-    public void IncreaseEnergy(int pointsAdded)
-    {
-        //if (CheckIfEnergyDrop(energy.current, -pointsAdded))
-        energy.current += pointsAdded;
-        OnPowerStateChange();
-        //hudManager.IncreaseEnergy(pointsAdded);
-        if (OnEnergyChanged != null)
-            OnEnergyChanged(energy.current, energy.max);
-    }
-
-    public void DrainEnergy(int pointsDrained)
-    {
-        energy.current -= Mathf.Clamp(pointsDrained, 0, energy.max);
-        if (CheckIfEnergyDrop(energy.current + pointsDrained, pointsDrained))
-            OnPowerStateChange();
-        if (OnEnergyChanged != null)
-            OnEnergyChanged(energy.current, energy.max);
-        //DecreaseEnergy(pointsDrained);
-        //hudManager.DecreaseEnergy(pointsDrained);
-    }
-
-    public IEnumerator DrainRainEnergy()
-    {
-        int rainDrain = 1;
-
-
-        // Gradually decrease fill amount over cooldown duration
-        while (isRaining)
-        {
-            //Debug.Log("entering loop of coroutine");
-            //float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
-            // fillImage.fillAmount = fillAmount;
-
-            if (energy.current > 0)
-            // Find the energy bar fill Image component dynamically
-            {
-                /*
-                energy.current -= rainDrain;
-                GameObject energyBar = GameObject.Find("EnergyBar"); // Assuming "energyBar" is the name of the GameObject holding the fill Image
-                if (energyBar != null)
-                {
-                    Image fillImage = energyBar.transform.Find("Fill").GetComponent<Image>(); // Assuming "fill" is the name of the Image GameObject representing the fill
-                    if (fillImage != null)
-                    {
-                        // Calculate the new fill amount
-                        float fillAmount = fillImage.fillAmount - (float)rainDrain / 100f; // Assuming energy bar's max value is 100
-                        fillImage.fillAmount = Mathf.Clamp01(fillAmount); // Clamp fill amount between 0 and 1
-                    
-                    }
-                    else
-                    {
-                        Debug.LogWarning("Fill Image component not found under energyBar GameObject.");
-                    }
-                
-
-                }
-                else
-                {
-                    Debug.LogWarning("Energy bar GameObject not found.");
-                }
-                */
-                //hudManager.DecreaseEnergy(rainDrain);
-                DrainEnergy(rainDrain);
-            }
-            else
-            {
-                isRaining = false;
-                //buttonRain = false;
-                RainParticleSystem.SetActive(false);
-
-                NotEnoughEnergy(rainDrain, false);
-            }
-
-            yield return new WaitForSeconds(1);
-
-        }
-    }
-
-    //Returns true if the current energy drain would make a power unusable
-    private bool CheckIfEnergyDrop(int currentEnergy, int energyDrain)
-    {
-        if((currentEnergy - energyDrain < 1) && currentEnergy >= 1)
-        {
-            return true;
-        }
-        if((currentEnergy - energyDrain < powerBehaviour.ColdSnapStats.energyDrain) && currentEnergy >= powerBehaviour.ColdSnapStats.energyDrain)
-        {
-            return true;
-        }
-        if ((currentEnergy - energyDrain < powerBehaviour.LightningStats.energyDrain) && currentEnergy >= powerBehaviour.LightningStats.energyDrain)
-        {
-            return true;
-        }
-        if ((currentEnergy - energyDrain < powerBehaviour.MoonTideAttackStats.energyDrain) && currentEnergy >= powerBehaviour.MoonTideAttackStats.energyDrain)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    /*
-    private void DecreaseEnergy( int pointsDrained)
-    {
-        // Find the energy bar fill Image component dynamically
-        GameObject energyBar = GameObject.Find("EnergyBar"); // Assuming "energyBar" is the name of the GameObject holding the fill Image
-        if (energyBar != null)
-        {
-            Image fillImage = energyBar.transform.Find("Fill").GetComponent<Image>(); // Assuming "fill" is the name of the Image GameObject representing the fill
-            if (fillImage != null)
-            {
-                // Calculate the new fill amount
-                float fillAmount = fillImage.fillAmount + (float)pointsDrained / 100f; // Assuming energy bar's max value is 100
-                fillImage.fillAmount = Mathf.Clamp01(fillAmount); // Clamp fill amount between 0 and 1
-            }
-            else
-            {
-                Debug.LogWarning("Fill Image component not found under energyBar GameObject.");
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Energy bar GameObject not found.");
-        }
-    }
-    */
-
-
-    /// <summary>
-    /// ///////////////////////////////////can be deleted
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    /*
-    public IEnumerator ResetRain()
-    {
-        if (isRaining)
-        {
-            yield return new WaitForSeconds(10f);
-
-            weatherState.skyState = WeatherState.SkyState.CLEAR;
-            RainParticleSystem.SetActive(false);
-            isRaining = false;
-
-        }
-
-    }
-    */
-
-
+    //Handles moving the ColdSnap orb forward from Celeste
     public void ShootTowardsTarget(GameObject Orb)
     {
         var step = 20 * Time.deltaTime; // calculate distance to move
@@ -755,167 +604,17 @@ public class CelestialPlayer : Player
 
     }
 
-    /*
-    private void HandlePlayerDodge()
+    //Use this to handle moving the moontide attack after it's been summoned
+    public void HandleWaveMove()
     {
 
     }
-    */
 
-    public void StartIFrames()
-    {
-        iFramesOn = true;
-    }
-
-    public void EndIFrames()
-    {
-        iFramesOn = false;
-    }
-
-    ///
-    /// RESETS ABILITIES AFTER THEY ARE USED
-    ///
-    public void ResetColdSnap()
-    {
-        //StartCoroutine(ColdSnapCoolDownTime());
-        powerInUse = Power.NONE;
-        powerBehaviour.ColdSnapStats.isOnCooldown = true;
-        float coldSnapTimer = powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
-
-        StartCooldownUI("CastCold", coldSnapTimer);
-
-        StartCoroutine(ResetCooldownTime(coldSnapTimer, powerBehaviour.ColdSnapStats));
-
-        //keyboard UI
-        /*
-        if (coldSnapFill.gameObject.activeSelf)
-        {
-            StartCoroutine(CoolDownImageFill(coldSnapFill));
-        }
-
-        else if (!coldSnapFill.gameObject.activeSelf)
-        {
-            coldSnapFill.enabled = true;
-            coldSnapFill.gameObject.SetActive(true);
-            StartCoroutine(CoolDownImageFill(coldSnapFill));
-        }
-
-        // controller UI
-        if (CTRLColdSnapFill.gameObject.activeSelf)
-        {
-            StartCoroutine(CoolDownImageFill(CTRLColdSnapFill)); 
-        }
-        else
-        {
-            CTRLColdSnapFill.enabled = true;
-            CTRLColdSnapFill.gameObject.SetActive(true);
-            StartCoroutine(CoolDownImageFill(CTRLColdSnapFill)); ;
-        }
-        */
-        //hudManager.InitiateCooldownIndicator("CastCold", powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
-    }
-
-    /*
-    public IEnumerator ColdSnapCoolDownTime()
-    {
-        //hudManager.InitiateCooldownIndicator("CastCold", powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
-        if (OnCooldownStarted != null)
-            OnCooldownStarted("CastCold", powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
-        powerBehaviour.ColdSnapStats.isOnCooldown = true;
-        powerInUse = Power.NONE;
-        //buttonColdSnap = false;
-        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats));
-        powerBehaviour.ColdSnapStats.isOnCooldown = false;
-        canColdSnap = true;
-    }
-    */
-
-
-    public void ResetLightningStrike()
-    {
-        //StartCoroutine(LightningCoolDownTime());
-        //StartCoroutine(CoolDownImageFill(lightingStrikeFill));
-        //StartCoroutine(CoolDownImageFill(CTRLightingStrikeFill));
-        powerInUse = Power.NONE;
-        powerBehaviour.LightningStats.isOnCooldown = true;
-        float lightningStrikeTimer = powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats);
-
-        StartCooldownUI("CastThunder", lightningStrikeTimer);
-
-        StartCoroutine(ResetCooldownTime(lightningStrikeTimer, powerBehaviour.LightningStats));
-    }
-
-    /*
-    public IEnumerator LightningCoolDownTime()
-    {
-        //buttonLightningStrike = false;
-        hudManager.InitiateCooldownIndicator("CastThunder", powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats));
-        powerBehaviour.LightningStats.isOnCooldown = true;
-        powerInUse = Power.NONE;
-        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats));
-        powerBehaviour.LightningStats.isOnCooldown = false;
-        canLightningStrike = true;
-    }
-    */
-
-    public void ResetBasic()
-    {
-        //StartCoroutine(BasicCoolDownTime());
-        powerInUse = Power.NONE;
-        powerBehaviour.BasicAttackStats.isOnCooldown = true;
-        float basicAttackTimer = powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats);
-
-        StartCooldownUI("BasicAttack", basicAttackTimer);
-
-        StartCoroutine(ResetCooldownTime(basicAttackTimer, powerBehaviour.BasicAttackStats));
-    }
-
-    /*
-    public IEnumerator BasicCoolDownTime()
-    {
-        buttonBasicAttack = false;
-        hudManager.InitiateCooldownIndicator("BasicAttack", powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats));
-        powerBehaviour.BasicAttackStats.isOnCooldown = true;
-        powerInUse = Power.NONE;
-        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats));
-        powerBehaviour.BasicAttackStats.isOnCooldown = false;
-        canBasicAttack = true;
-    }
-    */
-
-    public void ResetMoonTide()
-    {
-        powerInUse = Power.NONE;
-        powerBehaviour.MoonTideAttackStats.isOnCooldown = true;
-        float moonTideTimer = powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats);
-
-        StartCooldownUI("CastMoontide", moonTideTimer);
-
-        StartCoroutine(ResetCooldownTime(moonTideTimer, powerBehaviour.MoonTideAttackStats));
-        //StartCoroutine(MoonTideCoolDownTime());
-        //moonTideFill.enabled = true;
-        //CTRLMoonTideFill.enabled = true;
-        //StartCoroutine(CoolDownImageFill(moonTideFill));
-        //StartCoroutine(CoolDownImageFill(CTRLMoonTideFill));
-        
-    }
-
-    /*
-    public IEnumerator MoonTideCoolDownTime()
-    {
-        //buttonMoonTide = false;
-        hudManager.InitiateCooldownIndicator("CastMoontide", powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats));
-        
-        
-        yield return new WaitForSeconds(powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats));
-        powerBehaviour.MoonTideAttackStats.isOnCooldown = false;
-        canMoonTide = true;
-    }
-    */
-
-
+    //Turns a cooldown on and then off again after it is used
     public IEnumerator ResetCooldownTime(float timer, PowerStats powerStats)
     {
+        powerStats.isOnCooldown = true;
+
         yield return new WaitForSeconds(timer);
 
         powerStats.isOnCooldown = false;
@@ -928,86 +627,44 @@ public class CelestialPlayer : Player
         if (powerStats.powerType == "MoonTidePowerStats")
             canMoonTide = true;
         OnPowerStateChange();
-        //powerOnCooldown = false;
     }
 
 
-    /// GETTING MOVED TO HUDMANAGER
+    /// <summary>
+    /// OTHER ABILITY MAIN FUNCTIONS
+    /// </summary>
+    /// <returns></returns>
 
-
-    /*
-    public IEnumerator CoolDownImageFill(Image fillImage)
+    //Runs the animation flags for dodging, tells movement script to move the character
+    private IEnumerator AnimateDodge()
     {
+        animator.SetAnimationFlag("dodge", true);
+        StartDodgeMovement();
+        StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("dodge")));
 
-        float cooldownDuration = CoolDownTime(powerInUse);
-        float timer = 0f;
-        float startFillAmount = 1f;
-        float endFillAmount = 0f;
-        // Check if the fillImage is active, if not, activate it
+        yield return animator.GetAnimationWaitTime("dodge");
 
-
-        // Gradually decrease fill amount over cooldown duration
-        while (timer < cooldownDuration)
-        {
-            float fillAmount = Mathf.Lerp(startFillAmount, endFillAmount, timer / cooldownDuration);
-            fillImage.fillAmount = fillAmount;
-            timer += Time.deltaTime;
-            yield return null;
-
-        }
-
-        // Ensure fill amount is exactly 0
-        fillImage.fillAmount = endFillAmount;
+        animator.SetAnimationFlag("dodge", false);
     }
-    */
 
-    /*
-    public float CoolDownTime(Power powerinuse)
-    {
-        if (powerinuse == Power.MOONTIDE)
-        {
-            return powerBehaviour.getRechargeTimerFloat(powerBehaviour.MoonTideAttackStats);
-
-        }
-        if (powerinuse == Power.COLDSNAP)
-        {
-            return powerBehaviour.getRechargeTimerFloat(powerBehaviour.ColdSnapStats);
-
-        }
-        if (powerinuse == Power.LIGHTNINGSTRIKE)
-        {
-            return powerBehaviour.getRechargeTimerFloat(powerBehaviour.LightningStats);
-
-        }
-        if (powerinuse == Power.BASIC)
-        {
-            return powerBehaviour.getRechargeTimerFloat(powerBehaviour.BasicAttackStats);
-
-        }
-        return 0f;
-    }
-    */
+    
 
     /// <summary>
     /// HUD HELPER FUNCTIONS
     /// </summary>
     /// <returns></returns>
-
-
+    //Turns off Celeste's controls and updates her UI to match
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
         celestialControls.controls.CelestialPlayerDefault.Disable();
         hudManager.SetCelesteOccupied(true);
         OnPowerStateChange();
-        //celestialControls.controls.PlantIsSelected.Disable();
-        //DarkenAllImages(uiManager.GetActiveUI()); //indicate no movement is allowed while planting
-        //hudManager.ToggleCelestePanel(true);
+
         yield return waitTime;
+
         celestialControls.controls.CelestialPlayerDefault.Enable();
-        //ResetImageColor(uiManager.GetActiveUI());
         hudManager.SetCelesteOccupied(false);
         OnPowerStateChange();
-        //hudManager.ToggleCelestePanel(false);
     }
 
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange)
@@ -1090,6 +747,123 @@ public class CelestialPlayer : Player
         }
         return false;
     }
+
+
+
+    /// <summary>
+    /// ANIMATION EVENT HANDLERS
+    /// </summary>
+    /// <returns></returns>
+
+    //Turns on the Celestial player's physical movement while dodging
+    public void StartDodgeMovement()
+    {
+        //This will be turned off by the animator FSM or animation event
+        isDodging = true;
+        this.GetComponent<CelestialPlayerMovement>().ToggleDodging(true);
+    }
+
+    //Turns off the Celestial player's physical movement while dodging
+    public void StopDodgeMovement()
+    {
+        isDodging = false;
+        this.GetComponent<CelestialPlayerMovement>().ToggleDodging(false);
+    }
+
+    //This makes Celeste unable to take hits from enemies
+    public void StartIFrames()
+    {
+        iFramesOn = true;
+    }
+
+    //This makes Celeste vulnerable to enemy attacks again
+    public void EndIFrames()
+    {
+        iFramesOn = false;
+    }
+
+    public void AttackCollisionOn()
+    {
+        staff.ToggleAttacking(true);
+    }
+
+    public void AttackCollisionOff()
+    {
+        staff.ToggleAttacking(false);
+    }
+
+    /// <summary>
+    /// ENERGY FUNCTIONS
+    /// </summary>
+
+    //Handles increases in energy as from energy drops
+    public void IncreaseEnergy(int pointsAdded)
+    {
+        energy.current += pointsAdded;
+        OnPowerStateChange();
+        if (OnEnergyChanged != null)
+            OnEnergyChanged(energy.current, energy.max);
+    }
+
+    //Handles draining energy 1 time for spells
+    public void DrainEnergy(int pointsDrained)
+    {
+        energy.current -= Mathf.Clamp(pointsDrained, 0, energy.max);
+        if (CheckIfEnergyDrop(energy.current + pointsDrained, pointsDrained))
+            OnPowerStateChange();
+        if (OnEnergyChanged != null)
+            OnEnergyChanged(energy.current, energy.max);
+    }
+
+    //Handles draining energy for rain
+    public IEnumerator DrainRainEnergy()
+    {
+        int rainDrain = 1;
+
+        // Gradually decrease fill amount over cooldown duration
+        while (isRaining)
+        {
+            if (energy.current > 0)
+            // Find the energy bar fill Image component dynamically
+            {
+                DrainEnergy(rainDrain);
+            }
+            else
+            {
+                isRaining = false;
+                RainParticleSystem.SetActive(false);
+
+                NotEnoughEnergy(rainDrain, false);
+            }
+
+            yield return new WaitForSeconds(1);
+
+        }
+    }
+
+    //Returns true if the current energy drain would make a power unusable
+    private bool CheckIfEnergyDrop(int currentEnergy, int energyDrain)
+    {
+        if ((currentEnergy - energyDrain < 1) && currentEnergy >= 1)
+        {
+            return true;
+        }
+        if ((currentEnergy - energyDrain < powerBehaviour.ColdSnapStats.energyDrain) && currentEnergy >= powerBehaviour.ColdSnapStats.energyDrain)
+        {
+            return true;
+        }
+        if ((currentEnergy - energyDrain < powerBehaviour.LightningStats.energyDrain) && currentEnergy >= powerBehaviour.LightningStats.energyDrain)
+        {
+            return true;
+        }
+        if ((currentEnergy - energyDrain < powerBehaviour.MoonTideAttackStats.energyDrain) && currentEnergy >= powerBehaviour.MoonTideAttackStats.energyDrain)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
 
     /// <summary>
     /// GETTERS AND SETTERS

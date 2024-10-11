@@ -6,7 +6,12 @@ public class SmogMonster : KidnappingEnemy
 {
     protected override void Awake()
     {
-        animator = GetComponent<SmogMonsterAnimator>();
+        InitializeAnimator();
         base.Awake();
+    }
+
+    protected override void InitializeAnimator()
+    {
+        animator = this.GetComponent<SmogMonsterAnimator>();
     }
 }

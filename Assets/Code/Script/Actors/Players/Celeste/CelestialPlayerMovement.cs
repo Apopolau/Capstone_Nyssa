@@ -279,9 +279,6 @@ public class CelestialPlayerMovement : MonoBehaviour
 
     public void ResetNavAgent()
     {
-
-        //this.GetComponent<EarthPlayer>().enrouteToPlant = false;
-        //this.GetComponent<NavMeshAgent>().ResetPath();
         this.GetComponent<CelestialPlayer>().ResetAgentPath();
         this.GetComponent<NavMeshAgent>().enabled = false;
         orientation.localRotation = new Quaternion(0, 0, 0, 1);
@@ -291,7 +288,6 @@ public class CelestialPlayerMovement : MonoBehaviour
     //Run this while we are dodging
     public void Dodge()
     {
-        //dodging = true;
         rb.drag = 0;
         //If the player had any inputs on when they selected dodge
         if(dodgeInput.z != 0 || dodgeInput.y != 0)

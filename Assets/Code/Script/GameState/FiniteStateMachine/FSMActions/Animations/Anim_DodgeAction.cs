@@ -5,12 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Architecture/FSM/Actions/Animation/Dodge")]
 public class Anim_DodgeAction : FSMAction
 {
-    OurAnimator animatorScript;
+    CelestialPlayerAnimator animatorScript;
     public override void EnterState(BaseStateMachine stateMachine)
     {
         if (animatorScript == null)
         {
-            animatorScript = stateMachine.GetComponent<OurAnimator>();
+            animatorScript = stateMachine.GetComponent<CelestialPlayerAnimator>();
         }
         
         animatorScript.PlayAnimation("dodge", 0.1f);
@@ -23,6 +23,8 @@ public class Anim_DodgeAction : FSMAction
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        
+        animatorScript.GetComponent<CelestialPlayer>().StopDodgeMovement();
+        animatorScript.GetComponent<CelestialPlayer>().EndIFrames();
+        animatorScript.SetAnimationFlag("dodge", false);
     }
 }

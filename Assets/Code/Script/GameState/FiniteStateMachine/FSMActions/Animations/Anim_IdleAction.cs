@@ -8,11 +8,8 @@ public class Anim_IdleAction : FSMAction
     OurAnimator animatorScript;
     public override void EnterState(BaseStateMachine stateMachine)
     {
-        if (animatorScript == null)
-        {
-            animatorScript = stateMachine.GetComponent<OurAnimator>();
-        }
-        
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
+
         animatorScript.PlayAnimation("idle", 0.2f);
     }
 

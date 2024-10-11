@@ -41,4 +41,9 @@ public abstract class Actor : MonoBehaviour
     {
         return animator;
     }
+
+    public void SetInSoftLock(bool softLock)
+    {
+        animator.SetInSoftLock(softLock);
+    }
 }

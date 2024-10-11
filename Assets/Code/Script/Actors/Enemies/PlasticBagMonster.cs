@@ -19,7 +19,7 @@ public class PlasticBagMonster : Enemy
 
     protected override void Awake()
     {
-        animator = GetComponent<PlasticBagMonsterAnimator>();
+        InitializeAnimator();
         base.Awake();
     }
 
@@ -73,7 +73,10 @@ public class PlasticBagMonster : Enemy
         Destroy(gameObject);
     }
 
-
+    protected override void InitializeAnimator()
+    {
+        animator = this.GetComponent<PlasticBagMonsterAnimator>();
+    }
 
     /// <summary>
     /// GETTERS AND SETTERS

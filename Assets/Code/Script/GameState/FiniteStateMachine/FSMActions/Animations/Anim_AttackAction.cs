@@ -9,10 +9,8 @@ public class Anim_AttackAction : FSMAction
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
-        if (animatorScript == null)
-        {
-            animatorScript = stateMachine.GetComponent<OurAnimator>();
-        }
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
+        
         animatorScript.PlayAnimation(("attack"), 0.1f);
     }
 
@@ -21,8 +19,18 @@ public class Anim_AttackAction : FSMAction
 
     }
 
+    //Shut off any animation events that may not have played by the time this animation gets stopped
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        
+        if(animatorScript.GetComponent<CelestialPlayer>() != null)
+        {
+            animatorScript.GetComponent<CelestialPlayer>().AttackCollisionOff();
+            animatorScript.SetAnimationFlag("attack", false);
+        }
+        if(animatorScript.GetComponent<KidnappingEnemy>() != null)
+        {
+            animatorScript.GetComponent<KidnappingEnemy>().AttackCollisionOff();
+            animatorScript.SetAnimationFlag("attack", false);
+        }
     }
 }

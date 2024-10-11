@@ -9,10 +9,7 @@ public class Anim_MoveAction : FSMAction
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
-        if (animatorScript == null)
-        {
-            animatorScript = stateMachine.GetComponent<OurAnimator>();
-        }
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
         
         animatorScript.PlayAnimation("move", 0.2f);
     }

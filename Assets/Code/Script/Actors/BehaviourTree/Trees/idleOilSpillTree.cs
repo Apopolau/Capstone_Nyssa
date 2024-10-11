@@ -38,8 +38,8 @@ public class idleOilSpillTree : BTree
                 new Inverter(new CheckIfStaggered(enemy)),
                 new CheckInAttackRange(enemy),
                 new Inverter(new CheckIfPlayerDead(enemy)),
-                new Timer(2f, new taskInitiateAttack(enemy)),
-                new TaskAttack(enemy)
+                new Timer(enemy.GetEnemyAnimator().GetAnimationLength("attack"), new taskInitiateAttack(enemy)),
+                new TaskEndAttack(enemy)
             }),
 
             new Sequence(new List<BTNode>

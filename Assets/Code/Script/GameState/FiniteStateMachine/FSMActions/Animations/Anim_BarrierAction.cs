@@ -9,10 +9,8 @@ public class Anim_BarrierAction : FSMAction
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
-        if (animatorScript == null)
-        {
-            animatorScript = stateMachine.GetComponent<OurAnimator>();
-        }
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
+        
         animatorScript.PlayAnimation("castBarrier", 0.2f);
     }
 

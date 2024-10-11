@@ -44,7 +44,7 @@ public abstract class Player : Actor
 
     public bool TakeHit(int damageDealt)
     {
-        if(damageDealt > 0)
+        if (damageDealt > 0)
         {
             if (!isShielded && !iFramesOn && !isDying && !isDead)
             {

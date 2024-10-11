@@ -6,6 +6,8 @@ public abstract class OurAnimator : MonoBehaviour
 {
     public Animator animator;
 
+    private CharacterAnimation currentAnimation;
+
     //Dictionaries
     protected Dictionary<string, bool> animationFlags;
     protected Dictionary<string, CharacterAnimation> animations;
@@ -18,11 +20,13 @@ public abstract class OurAnimator : MonoBehaviour
 
     public void PlayAnimation(string stateName, float timer)
     {
+        currentAnimation = animations[stateName];
         animator.CrossFadeInFixedTime(GetAnimationName(stateName), timer);
     }
 
     public void PlayAnimationWithSoftlock(string stateName, float timer)
     {
+        currentAnimation = animations[stateName];
         animator.CrossFade(GetAnimationName(stateName), timer);
     }
 
@@ -66,6 +70,16 @@ public abstract class OurAnimator : MonoBehaviour
     public WaitForSeconds GetAnimationWaitTime(string name)
     {
         return animations[name].GetAnimationWaitTime();
+    }
+
+    public CharacterAnimation GetCurrentAnimation()
+    {
+        return currentAnimation;
+    }
+
+    public void SetInSoftLock(bool softLock)
+    {
+        inSoftLock = softLock;
     }
 
     //Gets whether or not the actor is optionally letting an animation play out

@@ -18,8 +18,6 @@ public abstract class Enemy : Actor
     [SerializeField] protected LevelEventManager eventManager;
 
     [Header("References to components")]
-    //[SerializeField] protected NavMeshAgent enemyMeshAgent;
-    [SerializeField] protected EnemyAnimator enemyAnimator;
     [SerializeField] protected MonsterSoundLibrary soundLibrary;
     protected Rigidbody rb;
 
@@ -43,8 +41,6 @@ public abstract class Enemy : Actor
         agent = GetComponent<NavMeshAgent>();
         
         health = new Stat(enemyStats.maxHealth, enemyStats.maxHealth, false);
-        
-        //eventManager = GetComponent<EventManager>();
     }
 
 
@@ -105,6 +101,8 @@ public abstract class Enemy : Actor
 
 
     protected abstract void OnDeath();
+
+    protected abstract void InitializeAnimator();
 
 
     /// <summary>
@@ -167,9 +165,13 @@ public abstract class Enemy : Actor
     }
 
     //Returns the animator. May need refactored
-    public EnemyAnimator GetEnemyAnimator()
+    public OurAnimator GetEnemyAnimator()
     {
-        return enemyAnimator;
+        if(animator == null)
+        {
+            InitializeAnimator();
+        }
+        return animator;
     }
 
     public MonsterSoundLibrary GetMonsterSoundLibrary()

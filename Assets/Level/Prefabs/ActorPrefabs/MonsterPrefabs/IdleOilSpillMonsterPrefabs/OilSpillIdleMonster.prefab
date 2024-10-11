@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb9cc240f2f9f504a85f48ff7e74abc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  agent: {fileID: 0}
+  agent: {fileID: 1600394031809458323}
   animator: {fileID: 7726845946851292882}
   enemyStats: {fileID: 11400000, guid: 9d81f295e0a360644ad82e0c988d8f46, type: 2}
   isSpecial: 1
@@ -213,11 +213,11 @@ MonoBehaviour:
   isInvader: 0
   invaderEnemyRoutes: {fileID: 0}
   eventManager: {fileID: 0}
-  enemyAnimator: {fileID: 0}
   soundLibrary: {fileID: 11400000, guid: 1f49927d75e930243959e032c3cac11b, type: 2}
   chosenPath: []
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   animalSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
+  attackTrigger: {fileID: 6897892068200031787}
   escapeRoute: {fileID: 0}
   attackRange: 10
   kidnapRange: 10
@@ -515,6 +515,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7476623895178863548}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9013742617750623533}
+    - targetCorrespondingSourceObject: {fileID: 97504656474428628, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6897892068200031787}
+    - targetCorrespondingSourceObject: {fileID: 97504656474428628, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 755252500469404723}
   m_SourcePrefab: {fileID: 100100000, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
 --- !u!1 &7067849370490515554 stripped
 GameObject:
@@ -530,7 +539,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7067849370490515554}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: f07f240af214c7c48ae177c89fe01f48, type: 3}
   m_Controller: {fileID: 9100000, guid: 00e75cf353795ae4dbded31624db1c81, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -542,8 +551,62 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &9013742617750623533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7067849370490515554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 241189c919ca2cf42999f595544c42e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7592465488924273368 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
   m_PrefabInstance: {fileID: 7986960627715476787}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8038087129694853607 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 97504656474428628, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}
+  m_PrefabInstance: {fileID: 7986960627715476787}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6897892068200031787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038087129694853607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabd4b54e834115449145f7d16e2a2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCollider: {fileID: 755252500469404723}
+  playerHit: 0
+--- !u!136 &755252500469404723
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8038087129694853607}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Radius: 0.01
+  m_Height: 0.1
+  m_Direction: 0
+  m_Center: {x: 0.05, y: -0.005, z: 0}

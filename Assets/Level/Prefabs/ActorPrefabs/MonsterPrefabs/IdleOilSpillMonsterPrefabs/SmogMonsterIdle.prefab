@@ -160,18 +160,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c766523ec526ba240a5b50156bd063b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  animator: {fileID: 0}
   enemyStats: {fileID: 11400000, guid: 5ab4aaee5b3805d4eaf3fd9625f9ae5c, type: 2}
   isSpecial: 1
   deathBehaviour: {fileID: 11400000, guid: 9a265cdb66b53e144b7c64c7f678475a, type: 2}
   isInvader: 0
   invaderEnemyRoutes: {fileID: 0}
   eventManager: {fileID: 0}
-  enemyMeshAgent: {fileID: 8484278331407762736}
   enemyAnimator: {fileID: 4514425187417883027}
   soundLibrary: {fileID: 11400000, guid: c4a9a84b113095d489ead7c7c7b1d65d, type: 2}
   chosenPath: []
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   animalSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
+  attackTrigger: {fileID: 9079076955039060022}
   escapeRoute: {fileID: 0}
   attackRange: 0
   kidnapRange: 0
@@ -188,7 +190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
-  startingHealth: 10
   currHealth: 0
   playerTransform: {fileID: 7875459936262026101}
 --- !u!114 &4514425187417883027
@@ -204,6 +205,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7993782789147946141}
+  idleAnimation: {fileID: 11400000, guid: 38dc062c0ce5e0840a7e26d338f4f6b5, type: 2}
+  moveAnimation: {fileID: 11400000, guid: 815386bf4ae7b854c9b58b86f75edb55, type: 2}
+  hurtAnimation: {fileID: 11400000, guid: aa7f2f5a0ed042e4c8368fd28afddfbb, type: 2}
+  deathAnimation: {fileID: 11400000, guid: 9ee1a1a501fc5fa40b640886a4b82bf8, type: 2}
+  attackAnimation: {fileID: 11400000, guid: 5089a397da1e5fb47885a6937890e0d8, type: 2}
 --- !u!114 &4944399988490808854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -490,6 +496,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7993782789147946141}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7528983879262350591}
+    - targetCorrespondingSourceObject: {fileID: -7100653853569186473, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9079076955039060022}
+    - targetCorrespondingSourceObject: {fileID: -7100653853569186473, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2472157112858597520}
   m_SourcePrefab: {fileID: 100100000, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
 --- !u!1 &4897132708880560228 stripped
 GameObject:
@@ -517,8 +532,60 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7528983879262350591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4897132708880560228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3ce1ae52a0afb45a30fbd1ab7a6560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5241570856126507742 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
   m_PrefabInstance: {fileID: 5708160319667866933}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5927332364836964450 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7100653853569186473, guid: 71814c5be2dc9374a8f81cc20fe9b9da, type: 3}
+  m_PrefabInstance: {fileID: 5708160319667866933}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &9079076955039060022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927332364836964450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fabd4b54e834115449145f7d16e2a2ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackCollider: {fileID: 2472157112858597520}
+  playerHit: 0
+--- !u!135 &2472157112858597520
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5927332364836964450}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.2
+  m_Center: {x: 0.1, y: 0, z: 0}

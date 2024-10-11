@@ -8,10 +8,7 @@ public class Anim_CarryAction : FSMAction
     OurAnimator animatorScript;
     public override void EnterState(BaseStateMachine stateMachine)
     {
-        if (animatorScript == null)
-        {
-            animatorScript = stateMachine.GetComponent<OurAnimator>();
-        }
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
         
         animatorScript.PlayAnimation("carry", 0.1f);
     }

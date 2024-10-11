@@ -6,9 +6,12 @@ public class OilMonster : KidnappingEnemy
 {
     protected override void Awake()
     {
-        animator = GetComponent<OilMonsterAnimator>();
+        InitializeAnimator();
         base.Awake();
     }
 
-    
+    protected override void InitializeAnimator()
+    {
+        animator = this.GetComponent<OilMonsterAnimator>();
+    }
 }

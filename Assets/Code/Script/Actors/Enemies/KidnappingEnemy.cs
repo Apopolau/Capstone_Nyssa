@@ -9,6 +9,8 @@ public abstract class KidnappingEnemy : Enemy
     [SerializeField] protected GameObjectRuntimeSet playerSet;
     [SerializeField] protected GameObjectRuntimeSet animalSet;
 
+    [SerializeField] protected EnemyAttackTrigger attackTrigger;
+
     protected CelestialPlayer celestialPlayer;
     protected EarthPlayer earthPlayer;
 
@@ -30,8 +32,6 @@ public abstract class KidnappingEnemy : Enemy
     protected bool isKidnapping = false;
     [SerializeField] protected Transform escapeRoute = null;
 
-    
-
     [SerializeField] protected float attackRange;
     [SerializeField] protected float kidnapRange;
 
@@ -42,6 +42,7 @@ public abstract class KidnappingEnemy : Enemy
     {
         base.Awake();
         attackTime = new WaitForSeconds(enemyStats.attackAnimTime);
+        attackTrigger.SetEnemy(this);
     }
 
     private void Start()
@@ -170,6 +171,18 @@ public abstract class KidnappingEnemy : Enemy
     public void SetAttackInitiated(bool initiated)
     {
         attackInitiated = initiated;
+    }
+
+    public void AttackCollisionOn()
+    {
+        Debug.Log("turning attack collision on");
+        attackTrigger.ToggleAttacking(true);
+    }
+
+    public void AttackCollisionOff()
+    {
+        Debug.Log("turning attack collision off");
+        attackTrigger.ToggleAttacking(false);
     }
 
     //Returns the animal marked as closest

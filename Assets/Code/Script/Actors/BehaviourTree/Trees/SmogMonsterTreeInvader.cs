@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class smogMonsterTreeInvader: BTree
 {
     private CelestialPlayer player;
-    private SmogMonster smogMonster;
+    private SmogMonster enemy;
     private NavMeshAgent enemyMeshAgent;
     Rigidbody rb;
     public static float speed = 2f;
@@ -24,7 +24,7 @@ public class smogMonsterTreeInvader: BTree
     {
         enemyMeshAgent = transform.GetComponent<NavMeshAgent>();
         //player = transform.GetComponent<SmogMonster>().celestialPlayer;
-        smogMonster = transform.GetComponent<SmogMonster>();
+        enemy = transform.GetComponent<SmogMonster>();
         rb = GetComponent<Rigidbody>();
         //waypointPath = GetComponent<EnemyInvadingPath>();
 
@@ -34,12 +34,12 @@ public class smogMonsterTreeInvader: BTree
             //ATTACK PLAYER SEQUENCE
             new Sequence(new List<BTNode>
             {
-                new Inverter(new CheckIfDying(smogMonster)),
-                new Inverter(new CheckIfStaggered(smogMonster)),
-                new CheckInAttackRange(smogMonster),
-                new Inverter(new CheckIfPlayerDead(smogMonster)),
-                new Timer(2f, new taskInitiateAttack(smogMonster)),
-                new TaskAttack(smogMonster)
+                new Inverter(new CheckIfDying(enemy)),
+                new Inverter(new CheckIfStaggered(enemy)),
+                new CheckInAttackRange(enemy),
+                new Inverter(new CheckIfPlayerDead(enemy)),
+                new Timer(enemy.GetEnemyAnimator().GetAnimationLength("attack"), new taskInitiateAttack(enemy)),
+                new TaskEndAttack(enemy)
             }),
 
               //ESCAPE SEQUENCE
@@ -63,13 +63,13 @@ public class smogMonsterTreeInvader: BTree
             //KIDNAP ANIMAL SEQUENCE
                 new Sequence(new List<BTNode>
         {
-              new Inverter(new CheckIfDying(smogMonster)),
-              new Inverter(new CheckIfStaggered(smogMonster)),
-              new CheckInKidnapRange(smogMonster),
+              new Inverter(new CheckIfDying(enemy)),
+              new Inverter(new CheckIfStaggered(enemy)),
+              new CheckInKidnapRange(enemy),
              // new Timer(2f, new TaskInitiateSmother(enemy)),
-              new TaskKidnapAnimal(smogMonster),
-             new TaskFindEscapeRoute(smogMonster),
-              new TaskHeadOut(smogMonster,enemyMeshAgent,transform),
+              new TaskKidnapAnimal(enemy),
+             new TaskFindEscapeRoute(enemy),
+              new TaskHeadOut(enemy,enemyMeshAgent,transform),
               //if animal is kidnapped 
               //get closests waypoint 
               //bring animal with you 
@@ -82,10 +82,10 @@ public class smogMonsterTreeInvader: BTree
                //PATHTOAnimal
             new Sequence(new List<BTNode>
            {
-                new Inverter(new CheckIfDying(smogMonster)),
-              new Inverter(new CheckIfStaggered(smogMonster)),
-              new CheckIfAnimalSpotted(smogMonster),
-              new TaskPathToAnimal(smogMonster),
+                new Inverter(new CheckIfDying(enemy)),
+              new Inverter(new CheckIfStaggered(enemy)),
+              new CheckIfAnimalSpotted(enemy),
+              new TaskPathToAnimal(enemy),
 
 
 
@@ -101,13 +101,13 @@ public class smogMonsterTreeInvader: BTree
             
                 //check if player is in the enemy range
                 // new CheckIfPlayerIsVisible(enemyMeshAgent),
-                new Inverter(new CheckIfDying(smogMonster)),
-                new Inverter(new CheckIfStaggered(smogMonster)),
-                new CheckInRange(smogMonster),
-                new Inverter(new CheckIfPlayerDead(smogMonster)),
+                new Inverter(new CheckIfDying(enemy)),
+                new Inverter(new CheckIfStaggered(enemy)),
+                new CheckInRange(enemy),
+                new Inverter(new CheckIfPlayerDead(enemy)),
                 //new TaskAttackPlayer(enemyMeshAgent,player)
                 //CHASE THE PLAYER
-                new taskChase(smogMonster)
+                new taskChase(enemy)
              }),
            
 
@@ -128,10 +128,10 @@ public class smogMonsterTreeInvader: BTree
             {
           
                 ////PATROL SEQUENCE
-                new Inverter(new CheckIfDying(smogMonster)),
-                new Inverter(new CheckIfPathSelected(smogMonster)),
-                new TaskInvadeChoosePath(smogMonster),
-                new TaskInvadePatrol(smogMonster,enemyMeshAgent,transform),
+                new Inverter(new CheckIfDying(enemy)),
+                new Inverter(new CheckIfPathSelected(enemy)),
+                new TaskInvadeChoosePath(enemy),
+                new TaskInvadePatrol(enemy,enemyMeshAgent,transform),
           
          
 
