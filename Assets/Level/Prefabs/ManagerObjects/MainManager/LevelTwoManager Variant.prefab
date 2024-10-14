@@ -727,6 +727,7 @@ PrefabInstance:
     - {fileID: 7868941164567360802, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
     - {fileID: 2484009731153438493, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
     - {fileID: 4735597307128877273, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
+    - {fileID: 1622098183511203309, guid: 27dee8ca502a27b4a94d0d0913211892, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -792,23 +793,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382116edf4527b849b710b1b24274f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
-  inventorySlotManager: {fileID: 0}
   hudManager: {fileID: 8337965970362240940}
-  dialogueManager: {fileID: 0}
-  objectiveContainer: {fileID: 0}
+  terrain: {fileID: 0}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  uiSoundLibrary: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
   music: {fileID: 11400000, guid: a6da14652a76a4944aed856f25e19569, type: 2}
   wind: {fileID: 11400000, guid: 2aec86a56eabb5c438d3be3ee0766a53, type: 2}
   nature: {fileID: 11400000, guid: 7d947dc4de6893c428a9141249e45d84, type: 2}
   rain: {fileID: 11400000, guid: 73917364e62279743894f4bb18a57aed, type: 2}
+  inventorySlotManager: {fileID: 0}
+  dialogueManager: {fileID: 0}
+  objectiveContainer: {fileID: 0}
   soundPlayers: []
-  uiSoundLibrary: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
-  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
-  dyingEnemy: {fileID: 0}
-  terrain: {fileID: 0}
   terrainData1: {fileID: 0}
   terrainData2: {fileID: 0}
-  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  dyingEnemy: {fileID: 0}
   levelTwoProgress: {fileID: 11400000, guid: d72188606e7e6e9409fddb57f1bcf001, type: 2}
   grassSeed:
     stats: {fileID: 11400000, guid: b626233bd45df314f868bb4f2e624c53, type: 2}
@@ -827,6 +828,7 @@ MonoBehaviour:
   farLeftGrid: {fileID: 0}
   loggingAreaGrid: {fileID: 0}
   buildingAreaGrid: {fileID: 0}
+  waterGrid: {fileID: 0}
   areaOneMinVals: {x: 172, y: 0, z: 6}
   areaOneMaxVals: {x: 250, y: 0, z: 60}
   areaTwoMinVals: {x: -147, y: 0, z: -45}

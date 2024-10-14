@@ -11,7 +11,11 @@ public class Anim_AttackAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation(("attack"), 0.1f);
+        animatorScript.PlayAnimation("attack");
+        if (animatorScript.GetComponent<CelestialPlayer>() != null)
+        {
+            animatorScript.GetComponent<CelestialPlayer>().SuspendActions(true);
+        }
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -22,10 +26,14 @@ public class Anim_AttackAction : FSMAction
     //Shut off any animation events that may not have played by the time this animation gets stopped
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        if(animatorScript.GetComponent<CelestialPlayer>() != null)
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
+
+        if (animatorScript.GetComponent<CelestialPlayer>() != null)
         {
             animatorScript.GetComponent<CelestialPlayer>().AttackCollisionOff();
             animatorScript.SetAnimationFlag("attack", false);
+            animatorScript.GetComponent<CelestialPlayer>().SuspendActions(false);
+            animatorScript.GetComponent<CelestialPlayer>().SetIsAttacking(false);
         }
         if(animatorScript.GetComponent<KidnappingEnemy>() != null)
         {

@@ -11,7 +11,7 @@ public class Anim_SwimAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
 
-        animatorScript.PlayAnimation("swim", 0.1f);
+        animatorScript.PlayAnimation("swim");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

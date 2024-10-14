@@ -23,11 +23,9 @@ public class EnemyAttackTrigger : MonoBehaviour
     {
         if (other.gameObject.layer == 12)
         {
-            //Debug.Log("Collider touched a player");
             Player playerBeingHit = other.gameObject.GetComponent<Player>();
             if (midAttack)
             {
-                //Debug.Log("mid attack collision");
                 int characterIndex;
                 if (other.GetComponent<CelestialPlayer>())
                 {
@@ -39,12 +37,10 @@ public class EnemyAttackTrigger : MonoBehaviour
                 }
                 if (!playersBeingHit[characterIndex])
                 {
-                    //Debug.Log("Staff struck enemy!");
                     EnemyStats myStats = enemy.GetEnemyStats();
                     bool playerIsDead;
                     playersBeingHit[characterIndex] = true;
                     int HitPoints = myStats.maxDamage;
-                    //Debug.Log("Should be dealing damage now");
                     if (!playerBeingHit.GetShielded())
                     {
                         playerIsDead = playerBeingHit.TakeHit(HitPoints);

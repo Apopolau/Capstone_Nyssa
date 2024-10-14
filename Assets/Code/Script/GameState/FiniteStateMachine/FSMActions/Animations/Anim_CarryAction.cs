@@ -10,7 +10,7 @@ public class Anim_CarryAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation("carry", 0.1f);
+        animatorScript.PlayAnimation("carry");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

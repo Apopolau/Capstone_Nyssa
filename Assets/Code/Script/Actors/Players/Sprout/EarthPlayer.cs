@@ -36,7 +36,9 @@ public class EarthPlayer : Player
 
     [Header("Info for selecting plants")]
     public bool isPlantSelected = false;
+    private bool isPlanting = false;
     public bool isRemovalStarted = false;
+    private bool isRemoving = false;
     public bool isATileSelected = false;
     public GameObject plantSelected;
     public List<GameObject> plantsPlanted;
@@ -170,7 +172,6 @@ public class EarthPlayer : Player
         MovePlantPreview();
         if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < agent.stoppingDistance + 2)
         {
-            //this.GetComponent<playerMovement>().ResetNavAgent();
             ResetAgentPath();
             if (isPlantSelected)
             {
@@ -290,7 +291,8 @@ public class EarthPlayer : Player
     /// </summary>
     public void PlantPlantingHandler()
     {
-        StartCoroutine(OnPlantPlanted());
+        //StartCoroutine(OnPlantPlanted());
+        SetPlant();
     }
 
     //Handles if they're in a position to start planting a plant
@@ -355,6 +357,82 @@ public class EarthPlayer : Player
         {
             yield break;
         }
+    }
+
+    public void SetPlant()
+    {
+        //Have to add checks to make sure they are on a tile at all
+        if (selectedTile == null)
+        {
+            //Display error message
+            string invalidTile = "Invalid plant placement";
+            hudManager.ThrowPlayerWarning(invalidTile);
+        }
+        //If the tile selected checks out
+        else if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
+        {
+            inPlantSelection_FSM = false;
+
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < agent.stoppingDistance + 2)
+            {
+                //Set all our flags
+                isPlantSelected = false;
+                enrouteToPlant = false;
+                isPlanting = true;
+                ResetAgentPath();
+                animator.SetAnimationFlag("plant", true);
+
+                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+
+                //Pause other controls, initiate animation
+                inInteraction_FSM = true;
+                SuspendActions(true);
+                s_soundLibrary.PlayPlantClips();
+            }
+            //If we're not close enough, we need to start heading towards the tile selected
+            else
+            {
+                ApproachTile();
+            }
+        }
+        //If they're trying to select an invalid tile
+        else if (isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
+        {
+            //Display error message
+            string invalidTile = "Invalid plant placement";
+            hudManager.ThrowPlayerWarning(invalidTile);
+        }
+    }
+
+    public void HandlePlantAnimation()
+    {
+        if (isPlanting)
+        {
+            CreatePlant();
+            PlantWrapUp();
+        }
+        else if (isRemoving)
+        {
+            Cell activeTileCell = selectedTile.GetComponent<Cell>();
+            RemovePlant(activeTileCell);
+            PlantRemoveWrapUp();
+        }
+    }
+
+    //Create the plant
+    public void CreatePlant()
+    {
+        Cell activeTileCell = selectedTile.GetComponent<Cell>();
+        PlantPlant(activeTileCell);
+    }
+
+    public void PlantWrapUp()
+    {
+        inInteraction_FSM = false;
+        animator.SetAnimationFlag("plant", false);
+        animator.SetInSoftLock(true);
+        plantSelectedType = PlantSelectedType.NONE;
+        isPlanting = false;
     }
 
     //Call if the player is too far from a tile they selected to plant
@@ -448,7 +526,8 @@ public class EarthPlayer : Player
     //Called when the player selects a tile to remove a plant from
     public void PlantRemovingHandler()
     {
-        StartCoroutine(OnPlantRemoved());
+        //StartCoroutine(OnPlantRemoved());
+        SetPlantRemoval();
     }
 
     private IEnumerator OnPlantRemoved()
@@ -507,6 +586,60 @@ public class EarthPlayer : Player
         {
             yield break;
         }
+    }
+
+    private void SetPlantRemoval()
+    {
+        //Have to add checks to make sure they are on a tile
+        if (selectedTile == null)
+        {
+            //Display error message
+            string invalidTile = "No tile selected";
+            hudManager.ThrowPlayerWarning(invalidTile);
+        }
+        //Check if the tile they highlighted has a plant on it
+        if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
+        {
+            inRemovalSelection_FSM = false;
+
+            //If we're close enough to the plant, we can go ahead and remove it
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < agent.stoppingDistance + 2)
+            {
+                //Set all our flags
+                isRemovalStarted = false;
+                enrouteToPlant = false;
+                inInteraction_FSM = true;
+                isRemoving = true;
+                ResetAgentPath();
+
+                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+
+                //Pause other controls and start animations
+                SuspendActions(true);
+                s_soundLibrary.PlayPlantClips();
+                animator.SetAnimationFlag("plant", true);
+            }
+            //If we're not close enough, we'll have to get close enough
+            else
+            {
+                ApproachTile();
+            }
+        }
+        //If the tile has no build
+        else if (selectedTile.GetComponent<Cell>().tileIsActivated && !selectedTile.GetComponent<Cell>().tileHasBuild)
+        {
+            string invalidTile = "No valid objects to remove";
+            hudManager.ThrowPlayerWarning(invalidTile);
+        }
+    }
+
+    public void PlantRemoveWrapUp()
+    {
+        //Return our flags off
+        inInteraction_FSM = false;
+        animator.SetAnimationFlag("plant", false);
+        animator.SetInSoftLock(true);
+        isRemoving = false;
     }
 
     //Complete the action of removing the plant
@@ -697,31 +830,36 @@ public class EarthPlayer : Player
 
     public void InitiateBarrier()
     {
-        StartCoroutine(BarrierStarted());
+        //StartCoroutine(BarrierStarted());
+        SetBarrier();
     }
 
-    private IEnumerator BarrierStarted()
+    public void SetBarrier()
     {
         //Set our flags
         inBarrierSelection_FSM = false;
         inInteraction_FSM = true;
         animator.SetAnimationFlag("castBarrier", true);
 
-        CallSuspendActions(animator.GetAnimationWaitTime("castBarrier"));
+        SuspendActions(true);
         soundLibrary.PlaySpellClips();
+    }
 
+    private IEnumerator BarrierStarted()
+    {
         //Wait for the action to finish
         yield return animator.GetAnimationWaitTime("castBarrier");
 
-        //Reset our flags
-        inInteraction_FSM = false;
         animator.SetAnimationFlag("castBarrier", false);
+    }
 
+    public void TurnShieldOn()
+    {
         //Apply the shield and the effect
         thornShield = Instantiate(ThornShieldPrefab, powerTarget.transform);
         if (powerTarget.GetComponent<Player>())
         {
-            thornShield.transform.position = new Vector3(powerTarget.transform.position.x, 
+            thornShield.transform.position = new Vector3(powerTarget.transform.position.x,
                 powerTarget.transform.position.y + powerTarget.GetComponent<CapsuleCollider>().height / 2, powerTarget.transform.position.z);
             powerTarget.GetComponent<Player>().ApplyBarrier();
         }
@@ -730,15 +868,23 @@ public class EarthPlayer : Player
             powerTarget.GetComponent<Animal>().ApplyBarrier();
         }
 
-        //Re-enable the overlay
-        earthControls.controls.EarthPlayerDefault.Enable();
-        hudManager.ToggleSproutPanel(true);
-
         //Handle the cooldowns
         barrierOnCooldown = true;
         StartCoroutine(HandleShieldCooldown());
         StartCooldownUI("CastBarrier", barrierCooldown);
         StartCoroutine(HandleShieldExpiry());
+    }
+
+    public void BarrierWrapUp()
+    {
+        //Reset our flags
+        inInteraction_FSM = false;
+
+        SuspendActions(false);
+
+        //Re-enable the overlay
+        earthControls.controls.EarthPlayerDefault.Enable();
+        hudManager.ToggleSproutPanel(true);
     }
 
     private IEnumerator HandleShieldCooldown()
@@ -760,6 +906,7 @@ public class EarthPlayer : Player
         inBarrierSelection_FSM = false;
         OnPowerStateChange();
     }
+
 
 
 
@@ -860,6 +1007,15 @@ public class EarthPlayer : Player
     public GameObject GetPowerTarget()
     {
         return powerTarget;
+    }
+
+
+    /// <summary>
+    /// OTHER ANIMATION STUFF
+    /// </summary>
+    public void BuildWrapUp()
+    {
+        animator.SetAnimationFlag("build", false);
     }
 
 
@@ -1015,30 +1171,26 @@ public class EarthPlayer : Player
     /// </summary>
     /// <returns></returns>
     //Call this if you want to have all player controls turned off for a certain amount of time
-    protected override IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange)
-    {
-        //earthControls.controls.EarthPlayerDefault.Disable();
-        //earthControls.controls.PlantIsSelected.Disable();
-        //uiController.DarkenOverlay(darkenWhilePlanting); //indicate no movement is allowed while planting
-        //hudManager.ToggleSproutPanel(false);
-        hudManager.SetSproutOccupied(true);
-        OnPowerStateChange();
-        yield return waitTime;
-        //earthControls.controls.EarthPlayerDefault.Enable();
-        //Use this to switch off of whatever action is happening
-        boolToChange = false;
-        //uiController.RestoreUI(darkenWhilePlanting);
-        //hudManager.ToggleSproutPanel(true);
-        hudManager.SetSproutOccupied(false);
-        OnPowerStateChange();
-    }
-
     protected override IEnumerator SuspendActions(WaitForSeconds waitTime)
     {
         hudManager.SetSproutOccupied(true);
         OnPowerStateChange();
         yield return waitTime;
         hudManager.SetSproutOccupied(false);
+        OnPowerStateChange();
+    }
+
+    //Toggles whether actions are suspended or not for no defined time
+    public override void SuspendActions(bool suspend)
+    {
+        if (suspend)
+        {
+            hudManager.SetSproutOccupied(true);
+        }
+        else
+        {
+            hudManager.SetSproutOccupied(false);
+        }
         OnPowerStateChange();
     }
 

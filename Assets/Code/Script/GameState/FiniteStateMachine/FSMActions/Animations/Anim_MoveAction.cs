@@ -11,7 +11,7 @@ public class Anim_MoveAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation("move", 0.2f);
+        animatorScript.PlayAnimation("move");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

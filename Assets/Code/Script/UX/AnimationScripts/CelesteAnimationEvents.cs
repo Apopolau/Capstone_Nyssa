@@ -31,13 +31,11 @@ public class CelesteAnimationEvents : MonoBehaviour
 
     public void TurnOnCollisionFrames()
     {
-        //Debug.Log("Turning on attack collision frames");
         celestialPlayer.AttackCollisionOn();
     }
 
     public void TurnOffCollisionFrames()
     {
-        //Debug.Log("Turning off attack collision frames");
         celestialPlayer.AttackCollisionOff();
     }
 

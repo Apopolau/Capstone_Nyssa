@@ -10,7 +10,7 @@ public class Anim_HurtAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
 
-        animatorScript.PlayAnimation("hurt", 0.1f);
+        animatorScript.PlayAnimation("hurt");
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -20,6 +20,12 @@ public class Anim_HurtAction : FSMAction
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
+        animatorScript.SetAnimationFlag("hurt", false);
+
+        if (animatorScript.GetComponent<Player>() != null)
+        {
+            animatorScript.GetComponent<Player>().SuspendActions(false);
+        }
     }
 }

@@ -577,6 +577,14 @@ public class LevelTwoEvents : LevelEventManager
     //When the player defeats the 2 oil monsters hanging out on the west side of the main area
     public void OnThirdMonsterDefeated()
     {
+        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
+        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, enemyPos, Quaternion.identity);
+        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
+        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
+        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
+        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
+        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
+
         foreach (GameObject go in mainAreaTiles)
         {
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
@@ -592,14 +600,6 @@ public class LevelTwoEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-
-        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
-        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, enemyPos, Quaternion.identity);
-        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
-        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
-        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
-        flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
-        flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
 
         thirdAreaClear = true;
         fourthAreaClear = true;

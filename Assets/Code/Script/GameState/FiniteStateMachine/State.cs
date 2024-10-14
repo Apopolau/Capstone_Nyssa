@@ -26,7 +26,8 @@ public sealed class State : BaseState
 
         foreach (var transition in Transitions)
         {
-            transition.Execute(machine);
+            if (transition.Execute(machine))
+                break;
         }
             
     }

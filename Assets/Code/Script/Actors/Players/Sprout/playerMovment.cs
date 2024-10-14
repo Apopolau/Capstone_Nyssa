@@ -87,8 +87,6 @@ public class playerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //takes input of the keys for movement
-        //MyInput();
         SpeedControl();
         OrientPlayer();
 
@@ -114,7 +112,8 @@ public class playerMovement : MonoBehaviour
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
         if (rb.velocity.magnitude > new Vector3(0.1f, 0.1f, 0.1f).magnitude)
         {
-            GetComponent<EarthPlayerAnimator>().SetAnimationFlag("move", true);
+            if(!GetComponent<EarthPlayerAnimator>().GetAnimationFlag("move"))
+                GetComponent<EarthPlayerAnimator>().SetAnimationFlag("move", true);
         }
         else if(GetComponent<NavMeshAgent>().enabled && GetComponent<NavMeshAgent>().hasPath)
         {
@@ -122,29 +121,13 @@ public class playerMovement : MonoBehaviour
         }
         else
         {
-            GetComponent<EarthPlayerAnimator>().SetAnimationFlag("move", false);
+            if(GetComponent<EarthPlayerAnimator>().GetAnimationFlag("move"))
+                GetComponent<EarthPlayerAnimator>().SetAnimationFlag("move", false);
         }
         if (!grounded)
         {
             rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
         }
-    }
-
-    private void MyInput()
-    {
-
-        if (player.gameObject.tag == "Player1")
-        {
-            if (Input.GetKey(jumpKeyP1) && readyToJump && grounded)
-            {
-                readyToJump = false;
-                Jump();
-                // makes sure you can't double jump, but allow you to continuously jump iff you hodl down on the ke
-                Invoke(nameof(ResetJump), jumpCoolDown);
-            }
-        }
-
-
     }
 
     //This is the function that handles actually moving the player
@@ -179,12 +162,9 @@ public class playerMovement : MonoBehaviour
             // Disable the UI element
             if (movementControlsUI != null)
             {
-
                 movementControlsUI.SetActive(false);
             }
         }
-
-        //isMoveKeyHeld = false;
     }
 
     //This is called when the player stops inputting on their movement controls
@@ -258,13 +238,10 @@ public class playerMovement : MonoBehaviour
     //Handles setting all variables related to nav agent back to default
     public void ResetNavAgent()
     {
-
         this.GetComponent<EarthPlayer>().enrouteToPlant = false;
-        //this.GetComponent<NavMeshAgent>().ResetPath();
         this.GetComponent<EarthPlayer>().ResetAgentPath();
         this.GetComponent<NavMeshAgent>().enabled = false;
         orientation.localRotation = new Quaternion(0, 0, 0, 1);
-        //this.gameObject.transform.rotation.Set(0, 0, 0, 1);
     }
 
     private void Jump()

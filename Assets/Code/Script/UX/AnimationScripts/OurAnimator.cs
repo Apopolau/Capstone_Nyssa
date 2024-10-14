@@ -6,10 +6,12 @@ public abstract class OurAnimator : MonoBehaviour
 {
     public Animator animator;
 
-    private CharacterAnimation currentAnimation;
+    [Tooltip("Setting this to visible for playtesting")]
+    [SerializeField] private CharacterAnimation currentAnimation;
 
     //Dictionaries
-    protected Dictionary<string, bool> animationFlags;
+    [Tooltip("Setting this to visible for playtesting")]
+    [SerializeField] protected Dictionary<string, bool> animationFlags;
     protected Dictionary<string, CharacterAnimation> animations;
 
     protected bool inMovingAnimation = false;
@@ -18,10 +20,10 @@ public abstract class OurAnimator : MonoBehaviour
     [SerializeField] protected CharacterAnimation idleAnimation;
     [SerializeField] protected CharacterAnimation moveAnimation;
 
-    public void PlayAnimation(string stateName, float timer)
+    public void PlayAnimation(string stateName)
     {
         currentAnimation = animations[stateName];
-        animator.CrossFadeInFixedTime(GetAnimationName(stateName), timer);
+        animator.CrossFadeInFixedTime(GetAnimationName(stateName), animations[stateName].GetAnimationBlendTime());
     }
 
     public void PlayAnimationWithSoftlock(string stateName, float timer)
@@ -79,6 +81,8 @@ public abstract class OurAnimator : MonoBehaviour
 
     public void SetInSoftLock(bool softLock)
     {
+        if(softLock)
+            animationFlags[currentAnimation.GetAnimationFlag()] = false;
         inSoftLock = softLock;
     }
 

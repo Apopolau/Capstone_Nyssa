@@ -79,8 +79,6 @@ public abstract class KidnappingEnemy : Enemy
         isDying = true;
         isStaggered = true;
         eventManager.dyingEnemy = this;
-        //enemyAnimator.animator.SetBool(enemyAnimator.IfTakingHitHash, false);
-        //enemyAnimator.animator.SetBool(enemyAnimator.IfDyingHash, true);
         animator.SetAnimationFlag("die", true);
         yield return animator.GetAnimationWaitTime("die"); ;
         if (isSpecial)
@@ -175,13 +173,11 @@ public abstract class KidnappingEnemy : Enemy
 
     public void AttackCollisionOn()
     {
-        Debug.Log("turning attack collision on");
         attackTrigger.ToggleAttacking(true);
     }
 
     public void AttackCollisionOff()
     {
-        Debug.Log("turning attack collision off");
         attackTrigger.ToggleAttacking(false);
     }
 

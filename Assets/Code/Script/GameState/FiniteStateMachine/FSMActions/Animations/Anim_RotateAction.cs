@@ -13,7 +13,7 @@ public class Anim_RotateAction : FSMAction
             animatorScript = stateMachine.GetComponent<OurAnimator>();
         }
         
-        animatorScript.PlayAnimation("rotate", 0.1f);
+        animatorScript.PlayAnimation("rotate");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

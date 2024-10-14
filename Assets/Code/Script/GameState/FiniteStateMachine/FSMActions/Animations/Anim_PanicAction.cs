@@ -10,7 +10,7 @@ public class Anim_PanicAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
 
-        animatorScript.PlayAnimation("panic", 0.1f);
+        animatorScript.PlayAnimation("panic");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

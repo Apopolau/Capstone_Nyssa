@@ -10,7 +10,7 @@ public class Anim_HealAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation("castHeal", 0.2f);
+        animatorScript.PlayAnimation("castHeal");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

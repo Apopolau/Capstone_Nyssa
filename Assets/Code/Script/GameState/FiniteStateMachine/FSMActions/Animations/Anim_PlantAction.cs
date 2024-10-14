@@ -13,7 +13,7 @@ public class Anim_PlantAction : FSMAction
             animatorScript = stateMachine.GetComponent<OurAnimator>();
         }
         
-        animatorScript.PlayAnimation("plant", 0.1f);
+        animatorScript.PlayAnimation("plant");
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -23,6 +23,8 @@ public class Anim_PlantAction : FSMAction
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
+
+        animatorScript.GetComponent<EarthPlayer>().PlantWrapUp();
     }
 }

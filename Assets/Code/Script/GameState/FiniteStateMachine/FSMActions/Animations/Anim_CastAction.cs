@@ -10,7 +10,7 @@ public class Anim_CastAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation("cast", 0.1f);
+        animatorScript.PlayAnimation("cast");
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -20,6 +20,8 @@ public class Anim_CastAction : FSMAction
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        
+        animatorScript.SetAnimationFlag("cast", false);
+        animatorScript.GetComponent<CelestialPlayer>().SuspendActions(false);
+        animatorScript.GetComponent<CelestialPlayer>().SetIsAttacking(false);
     }
 }

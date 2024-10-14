@@ -11,7 +11,7 @@ public class Anim_BarrierAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation("castBarrier", 0.2f);
+        animatorScript.PlayAnimation("castBarrier");
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -21,6 +21,9 @@ public class Anim_BarrierAction : FSMAction
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
 
+        animatorScript.SetAnimationFlag("castBarrier", false);
+        animatorScript.GetComponent<EarthPlayer>().BarrierWrapUp();
     }
 }

@@ -10,7 +10,7 @@ public class Anim_EatAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation("eat", 0.1f);
+        animatorScript.PlayAnimation("eat");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

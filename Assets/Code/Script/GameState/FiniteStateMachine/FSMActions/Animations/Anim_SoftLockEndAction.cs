@@ -8,7 +8,7 @@ public class Anim_SoftLockEndAction : FSMAction
     OurAnimator animatorScript;
     public override void EnterState(BaseStateMachine stateMachine)
     {
-            animatorScript = stateMachine.GetComponent<OurAnimator>();
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -18,6 +18,6 @@ public class Anim_SoftLockEndAction : FSMAction
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        
+        animatorScript.SetInSoftLock(false);
     }
 }

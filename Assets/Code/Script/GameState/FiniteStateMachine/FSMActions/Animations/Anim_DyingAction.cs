@@ -10,7 +10,7 @@ public class Anim_DyingAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation("die", 0.1f);
+        animatorScript.PlayAnimation("die");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

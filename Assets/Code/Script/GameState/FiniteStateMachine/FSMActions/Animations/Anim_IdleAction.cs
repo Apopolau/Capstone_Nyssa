@@ -10,7 +10,7 @@ public class Anim_IdleAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
 
-        animatorScript.PlayAnimation("idle", 0.2f);
+        animatorScript.PlayAnimation("idle");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

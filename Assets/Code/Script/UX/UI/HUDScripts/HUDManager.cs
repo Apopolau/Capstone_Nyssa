@@ -471,7 +471,6 @@ public class HUDManager : MonoBehaviour
     //Initiates the cooldown un-fill for a particular power using its hash code
     public void OnCooldownStarted(string hashCode, float length)
     {
-        Debug.Log("Started cooldown for " + hashCode + "power for " + length + " seconds.");
         StartCoroutine(RunCooldown(hashCode, length));
     }
 

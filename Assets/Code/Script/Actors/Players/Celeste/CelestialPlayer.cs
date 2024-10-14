@@ -48,6 +48,10 @@ public class CelestialPlayer : Player
 
     private WaitForSeconds dodgeMoveStopTime;
 
+    private WaitForSeconds coldOrbDuration;
+    private WaitForSeconds waveDuration;
+    private WaitForSeconds lightningDuration;
+
     private bool isTargeted = false;
 
     public enum Power
@@ -105,6 +109,11 @@ public class CelestialPlayer : Player
         energy = new Stat(100, 50, true);
         //uiManager = GetComponent<CelestUIManager>();
         c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
+
+        //Change these to modify how long her spells appear on screen and can hit things
+        coldOrbDuration = new WaitForSeconds(2f);
+        waveDuration = new WaitForSeconds(2f);
+        lightningDuration = new WaitForSeconds(0.5f);
     }
 
     void Start()
@@ -279,7 +288,8 @@ public class CelestialPlayer : Player
     //When the player presses the dodge button
     public void OnDodgeSelected(InputAction.CallbackContext context)
     {
-        StartCoroutine(AnimateDodge());
+        //StartCoroutine(AnimateDodge());
+        SetDodge();
     }
 
 
@@ -305,6 +315,16 @@ public class CelestialPlayer : Player
         isAttacking = false;
     }
 
+    public void SetBasicAttackAnimation()
+    {
+        c_soundLibrary.PlayAttackClips();
+        animator.SetAnimationFlag("attack", true);
+        SuspendActions(true);
+    }
+
+    ////////////////////////////////////////////////
+    /// THIS SECTION IS DEPRECATED
+
     //COLDSNAP POWER
     public IEnumerator animateColdSnap()
     {
@@ -313,7 +333,7 @@ public class CelestialPlayer : Player
         coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
 
         //Attacking animation of player
-        animator.SetAnimationFlag("cast", true);
+        SetCastAnimation();
 
         //If enemy is around make the cold orb target said enemy >> update 
         if (enemyTarget != null)
@@ -321,19 +341,13 @@ public class CelestialPlayer : Player
             isTargeted = true;
             ColdSnapAttack();
         }
-
-        //Stop action during the course of animation and yield time
-        StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("cast")));
         c_soundLibrary.PlayFrostClips();
-        yield return animator.GetAnimationWaitTime("cast");
 
-        //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
-        //celestialAnimator.animator.SetBool(celestialAnimator.IfCastingSpellHash, false);
-        animator.SetAnimationFlag("cast", false);
+        yield return coldOrbDuration;
+
         isTargeted = false;
         Destroy(coldOrb, 1f);
-        //ResetImageColor(celestPlayerDpad); //reset dpad colors
-        isAttacking = false;
+        //isAttacking = false;
 
     }
 
@@ -347,7 +361,7 @@ public class CelestialPlayer : Player
         clone.transform.Rotate(-90.0f, 0.0f, 0.0f, Space.World);
 
         //Attacking animation of player
-        animator.SetAnimationFlag("cast", true);
+        SetCastAnimation();
 
         // Move our position a step closer to the target.
         var step = 5 * Time.deltaTime; // calculate distance to move
@@ -366,14 +380,12 @@ public class CelestialPlayer : Player
         }
 
         //Stop action during the course of animation and yield time
-        StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("cast")));
         c_soundLibrary.PlayLightningClips();
-        yield return animator.GetAnimationWaitTime("cast");
 
-        //reset animation, reset isattacking, detroy visual asset and reset DPAD
-        animator.SetAnimationFlag("cast", false);
+        yield return lightningDuration;
+
         Destroy(clone, 1f);
-        isAttacking = false;
+        //isAttacking = false;
     }
 
     //MOONTIDE POWER
@@ -384,7 +396,7 @@ public class CelestialPlayer : Player
         coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
 
         //Attacking animation of player
-        animator.SetAnimationFlag("cast", true);
+        SetCastAnimation();
 
         //If enemy is around make the cold orb target said enemy >> update 
         if (enemyTarget != null && enemyTarget.GetComponent<Enemy>())
@@ -397,16 +409,20 @@ public class CelestialPlayer : Player
             enemyTarget.GetComponent<ClearDebrisTrigger>().InitiateClear();
         }
 
-        //Stop action during the course of animation and yield time
-        StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("cast")));
         c_soundLibrary.PlayWaveClips();
-        yield return animator.GetAnimationWaitTime("cast");
+        yield return waveDuration;
 
         //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
-        animator.SetAnimationFlag("cast", false);
         isTargeted = false;
         Destroy(coldOrb, 1f);
-        isAttacking = false;
+        //isAttacking = false;
+    }
+
+    public void SetCastAnimation()
+    {
+        //Attacking animation of player
+        animator.SetAnimationFlag("cast", true);
+        SuspendActions(true);
     }
 
 
@@ -647,7 +663,13 @@ public class CelestialPlayer : Player
         animator.SetAnimationFlag("dodge", false);
     }
 
-    
+    //Removed the coroutine to have the animation events handle this instead
+    private void SetDodge()
+    {
+        animator.SetAnimationFlag("dodge", true);
+        StartDodgeMovement();
+        SuspendActions(true);
+    }
 
     /// <summary>
     /// HUD HELPER FUNCTIONS
@@ -667,12 +689,23 @@ public class CelestialPlayer : Player
         OnPowerStateChange();
     }
 
-    protected override IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange)
+    //Toggles whether actions are suspended or not for no defined time
+    public override void SuspendActions(bool suspend)
     {
-        yield return waitTime;
+        if (suspend)
+        {
+            celestialControls.controls.CelestialPlayerDefault.Disable();
+            hudManager.SetCelesteOccupied(true);
+        }
+        else
+        {
+            celestialControls.controls.CelestialPlayerDefault.Enable();
+            hudManager.SetCelesteOccupied(false);
+        }
+        
+        OnPowerStateChange();
     }
 
-    
 
     /// <summary>
     /// Checks all parameters required for Celeste to be able to cast a given spell

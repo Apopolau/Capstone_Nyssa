@@ -86,20 +86,22 @@ public abstract class Player : Actor
         return false;
     }
 
-    private IEnumerator OnStagger()
+    protected IEnumerator OnStagger()
     {
         isStaggered = true;
-        //GetComponent<PlayerAnimator>().animator.SetBool(GetComponent<PlayerAnimator>().IfTakingHitHash, true);
-        animator.SetAnimationFlag("hurt", true);
-        CallSuspendActions(animator.GetAnimationWaitTime("hurt"));
+        SetStagger();
         yield return animator.GetAnimationWaitTime("hurt");
-        animator.SetAnimationFlag("hurt", false);
-        //GetComponent<PlayerAnimator>().animator.SetBool(GetComponent<PlayerAnimator>().IfTakingHitHash, false);
         isStaggered = false;
         StartCoroutine(iFrames());
     }
 
-    private IEnumerator DeathRoutine()
+    protected void SetStagger()
+    {
+        animator.SetAnimationFlag("hurt", true);
+        SuspendActions(true);
+    }
+
+    protected IEnumerator DeathRoutine()
     {
         //Set our bools to dying, stop players from doing anything while the animation plays out
         isDying = true;
@@ -117,7 +119,7 @@ public abstract class Player : Actor
     }
 
     //Turns on and then off the player's invulnerability frames after a time
-    private IEnumerator iFrames()
+    protected IEnumerator iFrames()
     {
         iFramesOn = true;
         yield return iFramesLength;
@@ -162,8 +164,7 @@ public abstract class Player : Actor
     //Suspend player actions for the specified time
     protected abstract IEnumerator SuspendActions(WaitForSeconds waitTime);
 
-    //Suspend player actions for the specified time
-    protected abstract IEnumerator SuspendActions(WaitForSeconds waitTime, bool boolToChange);
+    public abstract void SuspendActions(bool suspend);
     
     protected void StartCooldownUI(string powerName, float timer)
     {
@@ -240,5 +241,12 @@ public abstract class Player : Actor
     public bool GetIsInteracting()
     {
         return interacting;
+    }
+
+    public void SetInSoftLock(bool softLock)
+    {
+        animator.SetInSoftLock(softLock);
+        if(softLock)
+            SuspendActions(false);
     }
 }

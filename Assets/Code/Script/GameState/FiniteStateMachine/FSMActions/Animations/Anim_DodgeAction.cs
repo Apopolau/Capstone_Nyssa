@@ -13,7 +13,7 @@ public class Anim_DodgeAction : FSMAction
             animatorScript = stateMachine.GetComponent<CelestialPlayerAnimator>();
         }
         
-        animatorScript.PlayAnimation("dodge", 0.1f);
+        animatorScript.PlayAnimation("dodge");
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -25,6 +25,7 @@ public class Anim_DodgeAction : FSMAction
     {
         animatorScript.GetComponent<CelestialPlayer>().StopDodgeMovement();
         animatorScript.GetComponent<CelestialPlayer>().EndIFrames();
+        animatorScript.GetComponent<CelestialPlayer>().SuspendActions(false);
         animatorScript.SetAnimationFlag("dodge", false);
     }
 }

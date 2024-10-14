@@ -109,11 +109,13 @@ public class CelestialPlayerMovement : MonoBehaviour
         
         if (rb.velocity.magnitude > new Vector3(0.1f, 0.1f, 0.1f).magnitude && !dodging)
         {
-            celestialAnimator.SetAnimationFlag("move", true);
+            if(!celestialAnimator.GetAnimationFlag("move"))
+                celestialAnimator.SetAnimationFlag("move", true);
         }
         else
         {
-            celestialAnimator.SetAnimationFlag("move", false);
+            if(celestialAnimator.GetAnimationFlag("move"))
+                celestialAnimator.SetAnimationFlag("move", false);
         }
 
         //ground check, send a raycast to check if the ground is present half way down the players body+0.2

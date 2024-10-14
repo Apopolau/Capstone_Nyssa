@@ -13,7 +13,7 @@ public class Anim_ChokeAction : FSMAction
             animatorScript = stateMachine.GetComponent<OurAnimator>();
         }
         
-        animatorScript.PlayAnimation("choke", 0.1f);
+        animatorScript.PlayAnimation("choke");
     }
 
     public override void Execute(BaseStateMachine stateMachine)

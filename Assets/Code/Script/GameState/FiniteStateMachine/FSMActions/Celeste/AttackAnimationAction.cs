@@ -47,7 +47,8 @@ public class AttackAnimationAction : FSMAction
 
             if (!player.GetCanBasicAttack())
             {
-                player.StartCoroutine(player.animateBasicAttack());
+                //player.StartCoroutine(player.animateBasicAttack());
+                player.SetBasicAttackAnimation();
                 player.ResetBasic();
 
             }

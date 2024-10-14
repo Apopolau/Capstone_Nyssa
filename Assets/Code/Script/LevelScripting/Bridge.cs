@@ -154,19 +154,14 @@ public class Bridge : Interactable
         earthPlayer.SetTurnTarget(this.transform.position);
         earthPlayer.ToggleTurning(true);
         //Set animations
-        //earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfBuildingHash, true);
         earthPlayer.GetComponent<EarthPlayerAnimator>().SetAnimationFlag("build", true);
 
         //Initiate state change
-        earthPlayer.SetSuspensionTime(buildTime);
         earthPlayer.ToggleInteractingState();
-        //earthPlayer.CallSuspendActions(buildTime);
         yield return buildTime;
         earthPlayer.ToggleInteractingState();
         earthPlayer.ToggleTurning(false);
 
-        //earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfBuildingHash, false);
-        earthPlayer.GetComponent<EarthPlayerAnimator>().SetAnimationFlag("build", false);
         FinishBridgeBuild();
     }
 

@@ -10,7 +10,7 @@ public class Anim_BuildAction : FSMAction
     {
         animatorScript = stateMachine.GetComponent<OurAnimator>();
         
-        animatorScript.PlayAnimation("build", 0.1f);
+        animatorScript.PlayAnimation("build");
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -20,6 +20,8 @@ public class Anim_BuildAction : FSMAction
 
     public override void ExitState(BaseStateMachine stateMachine)
     {
-        
+        animatorScript = stateMachine.GetComponent<OurAnimator>();
+
+        animatorScript.GetComponent<EarthPlayer>().BuildWrapUp();
     }
 }
