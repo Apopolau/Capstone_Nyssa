@@ -15,7 +15,7 @@ public class LevelOneFourthEnemyDead : EnemyDeathBehaviour
     //public CelestialPlayer player;
     // Start is called before the first frame update
 
-    public override void CheckIfDead()
+    public override void CheckIfDead(Enemy enemy)
     {
         levelOneEvents = (LevelOneEvents)levelOneManager.eventManager;
         levelOneEvents.OnFourthMonsterDefeated();

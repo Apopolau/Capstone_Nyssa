@@ -7,5 +7,5 @@ public abstract class EnemyDeathBehaviour : ScriptableObject
 {
     public CelestialPlayer celestialPlayer;
 
-    public abstract void CheckIfDead();
+    public abstract void CheckIfDead(Enemy enemy);
 }

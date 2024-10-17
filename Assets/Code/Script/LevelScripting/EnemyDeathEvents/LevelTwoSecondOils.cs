@@ -9,9 +9,9 @@ public class LevelTwoSecondOils : EnemyDeathBehaviour
     [SerializeField] LevelManagerObject levelTwoManager;
     [SerializeField] LevelTwoEvents levelTwoEvents;
 
-    public override void CheckIfDead()
+    public override void CheckIfDead(Enemy enemy)
     {
         levelTwoEvents = (LevelTwoEvents)levelTwoManager.eventManager;
-        levelTwoEvents.CountDownArea3Monsters();
+        levelTwoEvents.CountDownArea3Monsters(enemy);
     }
 }

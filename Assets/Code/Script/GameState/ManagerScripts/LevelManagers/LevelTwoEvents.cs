@@ -555,7 +555,7 @@ public class LevelTwoEvents : LevelEventManager
     }
 
     //When the player defeats the static smog monster in the lumber yard area
-    public void OnSecondMonsterDefeated()
+    public void OnSecondMonsterDefeated(Enemy enemy)
     {
 
         foreach (GameObject go in loggingAreaTiles)
@@ -566,7 +566,7 @@ public class LevelTwoEvents : LevelEventManager
             }
         }
         secondMonsterDeadDialouge.TriggerDialogue();
-        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 1, dyingEnemy.transform.position.z);
+        Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1, enemy.transform.position.z);
         powerDrop = Instantiate(power.MoonTideAttackStats.powerDropPrefab, enemyPos, Quaternion.identity);
         keyMonsterDefeatCount++;
         secondAreaClear = true;
@@ -575,9 +575,9 @@ public class LevelTwoEvents : LevelEventManager
     }
 
     //When the player defeats the 2 oil monsters hanging out on the west side of the main area
-    public void OnThirdMonsterDefeated()
+    public void OnThirdMonsterDefeated(Enemy enemy)
     {
-        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
+        Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 3, enemy.transform.position.z);
         flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, enemyPos, Quaternion.identity);
         flowerSeedSpawn.GetComponent<PickupObject>().SetInventory(levelTwoProgress.GetInventory());
         flowerSeedSpawn = Instantiate(levelTwoProgress.flowerSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
@@ -626,13 +626,13 @@ public class LevelTwoEvents : LevelEventManager
     }
 
     //Run this for each defeated monster assigned to this spot
-    public void CountDownArea3Monsters()
+    public void CountDownArea3Monsters(Enemy enemy)
     {
         keyMonsterDefeatCount += 1;
         area3MonsterCount -= 1;
         if (area3MonsterCount <= 0)
         {
-            OnThirdMonsterDefeated();
+            OnThirdMonsterDefeated(enemy);
         }
     }
 

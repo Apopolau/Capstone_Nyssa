@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private LevelManagerObject levelManager;
     [SerializeField] private WeatherState weatherState;
+    [SerializeField] private EnemyInvadingPath enemyInvadingPath;
     [SerializeField] private GameObject plasticBagMonsterPrefab;
     [SerializeField] private GameObject enemyOilInvaderPrefab;
     [SerializeField] private GameObject smogMonsterInvaderPrefab;
@@ -141,7 +142,11 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnInterval);
 
             if(enemySet.Items.Count < 10)
+            {
                 Instantiate(currSpawnedEnemy, this.transform);
+                currSpawnedEnemy.GetComponent<Enemy>().SetInvaderEnemyRoutes(enemyInvadingPath);
+            }
+                
         }
     }
 

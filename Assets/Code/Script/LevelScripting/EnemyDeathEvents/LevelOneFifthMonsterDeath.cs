@@ -9,7 +9,7 @@ public class LevelOneFifthMonsterDeath : EnemyDeathBehaviour
     [SerializeField] LevelManagerObject levelOneManager;
     [SerializeField] LevelOneEvents levelOneEvents;
 
-    public override void CheckIfDead()
+    public override void CheckIfDead(Enemy enemy)
     {
         levelOneEvents = (LevelOneEvents)levelOneManager.eventManager;
         levelOneEvents.CountDownFinalMonsters();

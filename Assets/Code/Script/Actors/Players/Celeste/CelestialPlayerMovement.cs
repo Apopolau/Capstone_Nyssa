@@ -326,6 +326,11 @@ public class CelestialPlayerMovement : MonoBehaviour
         readyToJump = true;
     }
 
+    public Transform GetPlayerObj()
+    {
+        return playerObj;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         //If we're touching the ground

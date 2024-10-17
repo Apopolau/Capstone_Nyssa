@@ -1046,11 +1046,11 @@ MonoBehaviour:
   Powers: 0
   powerInUse: 0
   celestialControls: {fileID: 0}
+  moontideOffset: {x: -10, y: 0, z: 20}
   c_soundLibrary: {fileID: 0}
   treeSeedPrefab: {fileID: 4222843129626314802, guid: 6482a3cc3c478bd44b278f27a007293e, type: 3}
   enemySeen: 1
   enemyHit: 0
-  enemyTarget: {fileID: 0}
   enemyLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &5203004283134060588
 MonoBehaviour:
@@ -1072,7 +1072,7 @@ MonoBehaviour:
   rb: {fileID: 8515091030154412494}
   rotationSpeed: 5
   moveSpeed: 16
-  dodgeSpeed: 20
+  dodgeSpeed: 70
   groundDrag: 5
   jumpForce: 8
   jumpCoolDown: 0.25
@@ -1283,6 +1283,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 576346163583008015}
+  currentAnimation: {fileID: 0}
   idleAnimation: {fileID: 11400000, guid: d8d22c14305e20b41a97ce843a5018af, type: 2}
   moveAnimation: {fileID: 11400000, guid: e055ff6fab280e84bbe65cfeb6641209, type: 2}
   hurtAnimation: {fileID: 11400000, guid: 812cfe94485932d468a71df32836a392, type: 2}

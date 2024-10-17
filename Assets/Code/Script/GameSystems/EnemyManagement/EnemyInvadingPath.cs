@@ -12,7 +12,7 @@ public class EnemyInvadingPath : MonoBehaviour
     [SerializeField] public List<Transform> pathFourWaypoints;
     [SerializeField] public List<Transform> escapeWaypoints;
     public List<List<Transform>> pathsList = new List<List<Transform>>();
-   // public List<GameObject> pathsList = new List<GameObject>();
+    // public List<GameObject> pathsList = new List<GameObject>();
     public int pathCount;
     public List<Transform> chosenPath;
     public List<Transform> BranchWayPoints;
@@ -20,16 +20,16 @@ public class EnemyInvadingPath : MonoBehaviour
     // Update is called once per frame
     public void LoadPathList()
     {
-       /* foreach (GameObject path in pathSet.Items)
-        {
-            pathsList.Add(path);
-        }*/
-       pathsList.Add(pathOneWaypoints);
-      pathsList.Add(pathTwoWaypoints);
-       pathsList.Add(pathThreeWaypoints);
-       pathsList.Add(pathFourWaypoints);
+        /* foreach (GameObject path in pathSet.Items)
+         {
+             pathsList.Add(path);
+         }*/
+        pathsList.Add(pathOneWaypoints);
+        pathsList.Add(pathTwoWaypoints);
+        pathsList.Add(pathThreeWaypoints);
+        pathsList.Add(pathFourWaypoints);
         pathCount = pathsList.Count;
-       
+
     }
     public List<Transform> getRandomPath()
     {
@@ -58,7 +58,7 @@ public class EnemyInvadingPath : MonoBehaviour
         }
         return minEscapeWPoint;
     }
-        
+
 
     public void setClosestEscapeRoute(KidnappingEnemy enemy, Transform escapeWaypoint)
     {

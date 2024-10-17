@@ -159,6 +159,11 @@ public abstract class Enemy : Actor
         return invaderEnemyRoutes;
     }
 
+    public void SetInvaderEnemyRoutes(EnemyInvadingPath invadingPaths)
+    {
+        invaderEnemyRoutes = invadingPaths;
+    }
+
     public bool GetIsColliding()
     {
         return isColliding;

@@ -720,6 +720,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4144c54d4bced804e83a357d6f728acc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  animator: {fileID: 2449388460271823589}
   hudManager: {fileID: 0}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
   keyboardControls: {fileID: 3462690462426893458}
@@ -769,7 +771,6 @@ MonoBehaviour:
   i_shovel: {fileID: 21300000, guid: 04ee6cc18436db74588a01e4a749139e, type: 3}
   ThornShieldPrefab: {fileID: 699971024190529053, guid: d4d187bc0a511bd40896d295d703326c, type: 3}
   enrouteToPlant: 0
-  earthAnimator: {fileID: 0}
   earthControls: {fileID: 0}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
   inventory: {fileID: 11400000, guid: 3fb32cccb38bb404d83f75b11332cde0, type: 2}
@@ -1147,6 +1148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2358141840973909759}
+  currentAnimation: {fileID: 0}
   idleAnimation: {fileID: 11400000, guid: 5f79733dcf70d594fb6a76190d0349c1, type: 2}
   moveAnimation: {fileID: 11400000, guid: cb7067bdf30c36d49a00286b2f344446, type: 2}
   hurtAnimation: {fileID: 11400000, guid: ad14b9f726f93004180a55f09831dad0, type: 2}
@@ -2901,6 +2903,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 86e7cd8ca4f5f9448ae6ad013d2c02da, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2358141840973909759}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 86e7cd8ca4f5f9448ae6ad013d2c02da, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5710132439007177546}
   m_SourcePrefab: {fileID: 100100000, guid: 86e7cd8ca4f5f9448ae6ad013d2c02da, type: 3}
 --- !u!4 &3852507015264198756 stripped
 Transform:
@@ -2933,3 +2938,15 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5710132439007177546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4484751887382723294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e7fa992e7ffe11469a3033b4263fcca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

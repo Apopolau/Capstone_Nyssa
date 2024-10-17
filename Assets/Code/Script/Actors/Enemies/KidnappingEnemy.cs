@@ -78,12 +78,12 @@ public abstract class KidnappingEnemy : Enemy
             kidnappedAnimal.SetKidnapStatus(false);
         isDying = true;
         isStaggered = true;
-        eventManager.dyingEnemy = this;
+        //eventManager.dyingEnemy = this;
         animator.SetAnimationFlag("die", true);
-        yield return animator.GetAnimationWaitTime("die"); ;
+        yield return animator.GetAnimationWaitTime("die");
         if (isSpecial)
         {
-            deathBehaviour.CheckIfDead();
+            deathBehaviour.CheckIfDead(this);
         }
         Destroy(gameObject);
     }

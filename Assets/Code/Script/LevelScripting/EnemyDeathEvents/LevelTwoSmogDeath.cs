@@ -9,9 +9,9 @@ public class LevelTwoSmogDeath : EnemyDeathBehaviour
     [SerializeField] LevelManagerObject levelTwoManager;
     [SerializeField] LevelTwoEvents levelTwoEvents;
 
-    public override void CheckIfDead()
+    public override void CheckIfDead(Enemy enemy)
     {
         levelTwoEvents = (LevelTwoEvents)levelTwoManager.eventManager;
-        levelTwoEvents.OnSecondMonsterDefeated();
+        levelTwoEvents.OnSecondMonsterDefeated(enemy);
     }
 }

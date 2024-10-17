@@ -23,11 +23,19 @@ public class TaskInvadeChoosePath : BTNode
         }
         else
         {
-            thisEnemy.GetInvaderEnemyRoutes().LoadPathList();
-            waypoints = thisEnemy.GetInvaderEnemyRoutes().GetComponent<EnemyInvadingPath>().getRandomPath();
-            thisEnemy.GetInvaderEnemyRoutes().setEnemiesPath( thisEnemy, waypoints );
-            thisEnemy.SetIsPathSelected(true);
-            state = NodeState.SUCCESS;
+            //Don't run this is InvaderEnemyRoutes hasn't been initialized yet
+            if (thisEnemy.GetInvaderEnemyRoutes())
+            {
+                thisEnemy.GetInvaderEnemyRoutes().LoadPathList();
+                waypoints = thisEnemy.GetInvaderEnemyRoutes().GetComponent<EnemyInvadingPath>().getRandomPath();
+                thisEnemy.GetInvaderEnemyRoutes().setEnemiesPath(thisEnemy, waypoints);
+                thisEnemy.SetIsPathSelected(true);
+                state = NodeState.SUCCESS;
+            }
+            else
+            {
+                state = NodeState.FAILURE;
+            }
         }
         return state;
     }

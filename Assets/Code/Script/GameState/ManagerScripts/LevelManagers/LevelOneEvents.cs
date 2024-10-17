@@ -556,7 +556,7 @@ public class LevelOneEvents : LevelEventManager
     /// <summary>
     /// EVENTS RELATED TO DEFEATING MONSTERS
     /// </summary>
-    public void OnFirstMonsterDefeated()
+    public void OnFirstMonsterDefeated(Enemy enemy)
     {
 
         foreach (GameObject go in firstAreaTiles)
@@ -566,7 +566,7 @@ public class LevelOneEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
+        Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 3, enemy.transform.position.z);
         grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, enemyPos, Quaternion.identity);
         grassSeedSpawn.GetComponent<PickupObject>().SetInventory(levelOneProgress.GetInventory());
         grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
@@ -592,7 +592,7 @@ public class LevelOneEvents : LevelEventManager
         duck1.GetComponent<Duck>().Unstuck();
     }
 
-    public void OnSecondMonsterDefeated()
+    public void OnSecondMonsterDefeated(Enemy enemy)
     {
         foreach (GameObject go in secondAreaTiles)
         {
@@ -601,7 +601,7 @@ public class LevelOneEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        Vector3 enemyPos = new Vector3(dyingEnemy.transform.position.x, dyingEnemy.transform.position.y + 3, dyingEnemy.transform.position.z);
+        Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 3, enemy.transform.position.z);
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, enemyPos, Quaternion.identity);
         treeSeedSpawn.GetComponent<PickupObject>().SetInventory(levelOneProgress.GetInventory());
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);

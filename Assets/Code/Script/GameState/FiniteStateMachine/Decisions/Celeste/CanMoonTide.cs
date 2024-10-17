@@ -18,7 +18,6 @@ public class CanMoonTide : Decision
         //if (stateMachine.GetComponent<CelestialPlayer>().buttonMoonTide && stateMachine.GetComponent<CelestialPlayer>().canMoonTide && stateMachine.GetComponent<PowerBehaviour>().MoonTideAttackStats.isEnabled && stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.MOONTIDE)
         if (stateMachine.GetComponent<CelestialPlayer>().powerInUse == CelestialPlayer.Power.MOONTIDE)
         {
-            Debug.Log("Attempting to cast Moontide");
             /*
             //if (stateMachine.GetComponent<CelestialPlayer>().energy.current > -(attack.MoonTideAttackStats.energyDrain))
             if (stateMachine.GetComponent<CelestialPlayer>().CheckIfCastable(attack.LightningStats, false))

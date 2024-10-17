@@ -5025,11 +5025,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3985401341913684705, guid: 2056f2cee47dd53439b56f4fc6d29276, type: 3}
   m_PrefabInstance: {fileID: 229866237}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &234691445 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 576346163583008015, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-  m_PrefabInstance: {fileID: 2041691065}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &234901798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11862,6 +11857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelManager: {fileID: 11400000, guid: c3a6c5558a2b4cd41815abb1073599a4, type: 2}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  enemyInvadingPath: {fileID: 722728410}
   plasticBagMonsterPrefab: {fileID: 4505594305641103696, guid: d068d0e3c2a876f4aa607d11545739c5, type: 3}
   enemyOilInvaderPrefab: {fileID: 5913674526504397533, guid: a2e4aee8dc2932044851608be7f9055a, type: 3}
   smogMonsterInvaderPrefab: {fileID: 1951011047699265629, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
@@ -14507,6 +14503,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6275352046092819799, guid: 9a4dc6e21611f8442b9b9049eee13f88, type: 3}
   m_PrefabInstance: {fileID: 722340626}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &722728410 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8380131726015751106, guid: 0ccb8ac502c0d1746a593fdf16b88f46, type: 3}
+  m_PrefabInstance: {fileID: 159844793}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2b51afd7dbd2d46a625462dc10acd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &728945838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18499,6 +18506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelManager: {fileID: 11400000, guid: c3a6c5558a2b4cd41815abb1073599a4, type: 2}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  enemyInvadingPath: {fileID: 722728410}
   plasticBagMonsterPrefab: {fileID: 4505594305641103696, guid: d068d0e3c2a876f4aa607d11545739c5, type: 3}
   enemyOilInvaderPrefab: {fileID: 5913674526504397533, guid: a2e4aee8dc2932044851608be7f9055a, type: 3}
   smogMonsterInvaderPrefab: {fileID: 1951011047699265629, guid: cbc209219a46b4442a06d67cd85ab771, type: 3}
@@ -36148,7 +36156,7 @@ Transform:
   m_GameObject: {fileID: 1960334987}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 339.7, y: 13.3, z: -32.2}
+  m_LocalPosition: {x: 7.5, y: 0, z: 7.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -37547,14 +37555,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1247048518}
     m_Modifications:
-    - target: {fileID: 616051488619230335, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: dialogueManager
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1028325472782930115, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: animator
-      value: 
-      objectReference: {fileID: 234691445}
     - target: {fileID: 4687744544096372904, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 346.3412
@@ -37599,77 +37599,29 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1527470863}
-    - target: {fileID: 5752642823608885967, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: keyboardUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5752642823608885967, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: controllerUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: frenchUI.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: frenchUI.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: englishUI.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6663649609590881961, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: englishUI.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: rainFill
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: hudManager
       value: 
       objectReference: {fileID: 1046486637}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: displayText
-      value: 
+      propertyPath: moontideOffset.x
+      value: -12
       objectReference: {fileID: 0}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: CTRLRainFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: coldSnapFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: moonTideFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: playerWarningBG
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: CTRLColdSnapFill
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: CTRLMoonTideFill
-      value: 
+      propertyPath: moontideOffset.z
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: RainParticleSystem
       value: 
       objectReference: {fileID: 2098320185}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: lightingStrikeFill
-      value: 
+      propertyPath: moonTideDistance.x
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7093202383440998290, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
-      propertyPath: CTRLightingStrikeFill
-      value: 
+      propertyPath: moonTideDistance.z
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7159944928166958832, guid: 96a57bc50b89612498e3294c1129e6b9, type: 3}
       propertyPath: m_Name
@@ -41817,6 +41769,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3273122878946457831, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: attackRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3273122878946457831, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
       propertyPath: eventManager
       value: 
       objectReference: {fileID: 1046486629}
@@ -41872,6 +41828,10 @@ PrefabInstance:
       propertyPath: m_Avatar
       value: 
       objectReference: {fileID: 9000000, guid: 40ec3c321085f6c4aa1aefcbf832933e, type: 3}
+    - target: {fileID: 8484278331407762736, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
+      propertyPath: m_StoppingDistance
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4514425187417883027, guid: 26aa242f4fecb49449f474ef06e57bc5, type: 3}
     m_RemovedGameObjects: []

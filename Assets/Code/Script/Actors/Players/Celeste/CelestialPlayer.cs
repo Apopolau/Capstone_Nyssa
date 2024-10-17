@@ -82,6 +82,9 @@ public class CelestialPlayer : Player
     GameObject coldOrb;
     GameObject moonTide;
 
+    [SerializeField] Vector3 moontideOffset;
+    [SerializeField] Vector3 moonTideDistance;
+
     [SerializeField] private CelesteSoundLibrary c_soundLibrary;
 
     [SerializeField] public GameObject treeSeedPrefab;
@@ -93,7 +96,8 @@ public class CelestialPlayer : Player
     //Interaction with the player
     public bool enemySeen = false;
     public bool enemyHit = false;
-    public GameObject enemyTarget = null;
+    //public GameObject enemyTarget = null;
+    private GameObject puzzleTarget = null;
     public Vector3 enemyLocation;
 
     //private bool inRangeOfPuzzle = false;
@@ -111,8 +115,8 @@ public class CelestialPlayer : Player
         c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
 
         //Change these to modify how long her spells appear on screen and can hit things
-        coldOrbDuration = new WaitForSeconds(2f);
-        waveDuration = new WaitForSeconds(2f);
+        coldOrbDuration = new WaitForSeconds(1.5f);
+        waveDuration = new WaitForSeconds(1f);
         lightningDuration = new WaitForSeconds(0.5f);
     }
 
@@ -132,14 +136,17 @@ public class CelestialPlayer : Player
     // Update is called once per frame
     void Update()
     {
+        /*
         if (isTargeted)
         {
             ShootTowardsTarget(coldOrb);
         }
+        */
     }
 
     private void OnTriggerStay(Collider other)
     {
+        /*
         if (other.gameObject.tag == "Enemy")
         {
             //Player is in range of enemy, in invading monster they can pursue the player
@@ -149,20 +156,23 @@ public class CelestialPlayer : Player
             enemyTarget = other.transform.gameObject;
 
         }
+        
         if (other.GetComponent<ClearDebrisTrigger>())
         {
             //inRangeOfPuzzle = true;
-            enemyTarget = other.transform.gameObject;
+            puzzleTarget = other.transform.gameObject;
         }
-        else if (other.GetComponent<ShutOffTerminal>())
+        */
+        if (other.GetComponent<ShutOffTerminal>())
         {
             //inRangeOfPuzzle = true;
-            enemyTarget = other.GetComponent<ShutOffTerminal>().GetStrikeTarget();
+            puzzleTarget = other.GetComponent<ShutOffTerminal>().GetStrikeTarget();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        /*
         if (other.transform.gameObject.tag == "Enemy")
         {
             //Player is in range of enemy, in invading monster they can pursue the player
@@ -171,10 +181,11 @@ public class CelestialPlayer : Player
             enemyLocation = other.transform.position;
             enemyTarget = null;
         }
-        if (other.GetComponent<ClearDebrisTrigger>() || other.GetComponent<ShutOffTerminal>())
+        */
+        if (other.GetComponent<ShutOffTerminal>())
         {
             //inRangeOfPuzzle = false;
-            enemyTarget = null;
+            puzzleTarget = null;
         }
     }
 
@@ -298,7 +309,7 @@ public class CelestialPlayer : Player
     /// Celestial Player Control >> Powers are animated>> Heads into Reseting the Power 
     /// 
 
-    //Runs the basic attack after the button has been pressed
+    //DEPRECATED (check "SetBasicAttackAnimation")
     public IEnumerator animateBasicAttack()
     {
         //Set flags
@@ -322,37 +333,38 @@ public class CelestialPlayer : Player
         SuspendActions(true);
     }
 
-    ////////////////////////////////////////////////
-    /// THIS SECTION IS DEPRECATED
+
 
     //COLDSNAP POWER
     public IEnumerator animateColdSnap()
     {
-        
-        //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
-        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z), Quaternion.identity);
+        //Create the actual cold snap prefab
+        InitializeColdSnap();
 
         //Attacking animation of player
         SetCastAnimation();
 
-        //If enemy is around make the cold orb target said enemy >> update 
+        //If enemy is around make the cold orb target said enemy >> update
+        /*
         if (enemyTarget != null)
         {
             isTargeted = true;
             ColdSnapAttack();
         }
+        */
         c_soundLibrary.PlayFrostClips();
 
         yield return coldOrbDuration;
 
         isTargeted = false;
-        Destroy(coldOrb, 1f);
+
+        coldOrb.GetComponent<ColdSnapTrigger>().Die();
+        //Destroy(coldOrb, 1f);
         //isAttacking = false;
 
     }
 
     //LIGHTNINGSTRIKE POWER
-    //TO BE CHANGED!!!!!!!
     public IEnumerator animateLightningStrike()
     {
         VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
@@ -366,6 +378,7 @@ public class CelestialPlayer : Player
         // Move our position a step closer to the target.
         var step = 5 * Time.deltaTime; // calculate distance to move
 
+        /*
         if (enemyTarget != null && enemyTarget.GetComponent<Enemy>())
         {
 
@@ -374,9 +387,10 @@ public class CelestialPlayer : Player
             LightningAttack();
 
         }
-        if (enemyTarget != null && enemyTarget.GetComponentInParent<ShutOffTerminal>())
+        */
+        if (puzzleTarget != null && puzzleTarget.GetComponentInParent<ShutOffTerminal>())
         {
-            enemyTarget.GetComponentInParent<ShutOffTerminal>().TerminalShutOff();
+            puzzleTarget.GetComponentInParent<ShutOffTerminal>().TerminalShutOff();
         }
 
         //Stop action during the course of animation and yield time
@@ -391,33 +405,32 @@ public class CelestialPlayer : Player
     //MOONTIDE POWER
     public IEnumerator animateMoonTide()
     {
-        
-        //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
-        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj), new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
+
+        InitializeMoonTide();
 
         //Attacking animation of player
         SetCastAnimation();
 
         //If enemy is around make the cold orb target said enemy >> update 
+        /*
         if (enemyTarget != null && enemyTarget.GetComponent<Enemy>())
         {
             isTargeted = true;
             MoonTideAttack();
         }
-        if (enemyTarget != null && enemyTarget.GetComponent<ClearDebrisTrigger>())
-        {
-            enemyTarget.GetComponent<ClearDebrisTrigger>().InitiateClear();
-        }
+        */
 
         c_soundLibrary.PlayWaveClips();
         yield return waveDuration;
 
         //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
         isTargeted = false;
-        Destroy(coldOrb, 1f);
+        moonTide.GetComponent<MoontideTrigger>().Die();
+        //Destroy(coldOrb, 1f);
         //isAttacking = false;
     }
 
+    //Turns on the general cast animation on Celeste
     public void SetCastAnimation()
     {
         //Attacking animation of player
@@ -429,50 +442,39 @@ public class CelestialPlayer : Player
     /// <summary>
     /// HANDLES DEALING DAMAGE WITH EACH POWER
     /// </summary>
-    public void ColdSnapAttack()
+    public void ColdSnapAttack(Enemy enemy)
     {
         bool enemyIsDead;
-        if (enemyTarget && powerInUse == Power.COLDSNAP && canColdSnap == true)
+        //if (enemy && powerInUse == Power.COLDSNAP && canColdSnap == true)
+        if (enemy)
         {
-            Power weakness = GetEnemyWeakness(enemyTarget);
-            int HitPoints = GetPowerHitDamage(weakness);
-            enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
+            Power weakness = GetEnemyWeakness(enemy);
+            int HitPoints = GetPowerHitDamage(Power.COLDSNAP, weakness);
+            enemyIsDead = enemy.TakeHit(HitPoints);
         }
     }
 
-    /*
-    public void BasicAttack()
+    public void LightningAttack(Enemy enemy)
     {
         bool enemyIsDead;
-        //if (enemyTarget && powerInUse == Power.BASIC && canBasicAttack == false)
-        if ( powerInUse == Power.BASIC && canBasicAttack == true)
+        //if (enemy && powerInUse == Power.LIGHTNINGSTRIKE && canLightningStrike == true)
+        if (enemy)
         {
-            Power weakness = GetEnemyWeakness(enemyTarget);
-            int HitPoints = GetPowerHitDamage(weakness);
-            enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
-        }
-    }
-    */
-
-    public void LightningAttack()
-    {
-        bool enemyIsDead;
-        if (enemyTarget && powerInUse == Power.LIGHTNINGSTRIKE && canLightningStrike == true)
-        {
-            Power weakness = GetEnemyWeakness(enemyTarget);
-            int HitPoints = GetPowerHitDamage(weakness);
-            enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
+            Power weakness = GetEnemyWeakness(enemy);
+            int HitPoints = GetPowerHitDamage(Power.LIGHTNINGSTRIKE, weakness);
+            enemyIsDead = enemy.TakeHit(HitPoints);
         }
     }
 
-    public void MoonTideAttack()
+    public void MoonTideAttack(Enemy enemy)
     {
         bool enemyIsDead;
-        if (enemyTarget && powerInUse == Power.MOONTIDE && canMoonTide == true)
+        //if (enemy && powerInUse == Power.MOONTIDE && canMoonTide == true)
+        if (enemy)
         {
-            Power weakness = GetEnemyWeakness(enemyTarget);
-            int HitPoints = GetPowerHitDamage(weakness);
-            enemyIsDead = enemyTarget.GetComponent<Enemy>().TakeHit(HitPoints);
+            Power weakness = GetEnemyWeakness(enemy);
+            int HitPoints = GetPowerHitDamage(Power.MOONTIDE, weakness);
+            enemyIsDead = enemy.TakeHit(HitPoints);
         }
     }
 
@@ -491,7 +493,6 @@ public class CelestialPlayer : Player
         StartCooldownUI("CastCold", coldSnapTimer);
     }
 
-
     public void ResetLightningStrike()
     {
         powerInUse = Power.NONE;
@@ -501,7 +502,6 @@ public class CelestialPlayer : Player
         StartCoroutine(ResetCooldownTime(lightningStrikeTimer, powerBehaviour.LightningStats));
         StartCooldownUI("CastThunder", lightningStrikeTimer);
     }
-
 
     public void ResetBasic()
     {
@@ -523,19 +523,58 @@ public class CelestialPlayer : Player
         StartCooldownUI("CastMoontide", moonTideTimer);
     }
 
+    ///
+    /// INITIALIZE EACH POWER THAT CREATES AN EFFECT HERE
+    ///
+
+    private void InitializeColdSnap()
+    {
+        //Get our spawn position
+        Vector3 spawnPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 4, gameObject.transform.position.z);
+        Quaternion lookRot = GetComponent<CelestialPlayerMovement>().GetPlayerObj().localRotation;
+
+        //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
+        coldOrb = Instantiate((powerBehaviour.GetComponent<PowerBehaviour>().ColdSnapStats.visualGameObj), 
+            spawnPos, lookRot);
+        coldOrb.GetComponent<ColdSnapTrigger>().SetPlayer(this);
+        coldOrb.GetComponent<ColdSnapTrigger>().InitializeSelf(GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward);
+    }
+
+    //Create and set the position and rotation of the physical wave object in MoonTide
+    private void InitializeMoonTide()
+    {
+        //Set up the rotation we will use for the wave's orientation
+        Quaternion lookRot = new Quaternion();
+        //Get the actual angle, set to degrees instead of radians
+        float theta = Mathf.Atan2(-GetComponent<CelestialPlayerMovement>().GetPlayerObj().right.x, -GetComponent<CelestialPlayerMovement>().GetPlayerObj().right.z) * Mathf.Rad2Deg;
+        //Set our y rotation to this, leave the others blank
+        Vector3 lookAngle = new Vector3(0, theta, 0);
+        lookRot.eulerAngles = lookAngle;
+
+        //To get an offset posiiton relative to our facing direction, multiply those vectors together
+        Vector3 spawnPos = Vector3.Scale(moontideOffset.normalized, (GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward));
+        //Then scale that vector based on how far we wanted the object
+        spawnPos = Vector3.Scale(moonTideDistance, spawnPos);
+
+        //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
+        moonTide = Instantiate(powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj,
+            (this.transform.position + spawnPos), lookRot);
+        moonTide.GetComponent<MoontideTrigger>().SetPlayer(this);
+        moonTide.GetComponent<MoontideTrigger>().InitializeSelf(-GetComponent<CelestialPlayerMovement>().GetPlayerObj().right);
+    }
 
 
     /// <summary>
     /// ATTACK HELPERS
     /// </summary>
-    
+
     //Handles calculating the final damage dealt by a particular power
-    public int GetPowerHitDamage(Power weakness)
+    public int GetPowerHitDamage(Power powerUsed, Power weakness)
     {
         PowerBehaviour attack;
         attack = GetComponent<PowerBehaviour>();
         int powerDamage = 0;
-        if (powerInUse == Power.BASIC)
+        if (powerUsed == Power.BASIC)
         {
             powerDamage = Random.Range(attack.BasicAttackStats.minDamage, attack.BasicAttackStats.maxDamage);
 
@@ -543,7 +582,7 @@ public class CelestialPlayer : Player
         }
 
 
-        if (powerInUse == Power.COLDSNAP)
+        if (powerUsed == Power.COLDSNAP)
         {
 
             if (weakness == Power.COLDSNAP)
@@ -558,7 +597,7 @@ public class CelestialPlayer : Player
             return powerDamage;
         }
 
-        if (powerInUse == Power.MOONTIDE)
+        if (powerUsed == Power.MOONTIDE)
         {
             //DrainEnergy(attack.MoonTideAttackStats.energyDrain);
             if (weakness == Power.MOONTIDE)
@@ -575,7 +614,7 @@ public class CelestialPlayer : Player
         }
 
 
-        if (powerInUse == Power.LIGHTNINGSTRIKE)
+        if (powerUsed == Power.LIGHTNINGSTRIKE)
         {
             //DrainEnergy(attack.LightningStats.energyDrain);
             if (weakness == Power.LIGHTNINGSTRIKE)
@@ -590,20 +629,18 @@ public class CelestialPlayer : Player
 
             return powerDamage;
         }
-        return 0;
-
-
+        return powerDamage;
     }
 
     //Returns which power an enemy is weak to
-    public Power GetEnemyWeakness(GameObject enemyTarget)
+    public Power GetEnemyWeakness(Enemy enemyTarget)
     {
-        if (enemyTarget.GetComponent<Enemy>().GetEnemyStats().enemyType == EnemyStats.enemyTypes.OilMonster)
+        if (enemyTarget.GetEnemyStats().enemyType == EnemyStats.enemyTypes.OilMonster)
         {
             return Power.COLDSNAP;
         }
 
-        if (enemyTarget.GetComponent<Enemy>().GetEnemyStats().enemyType == EnemyStats.enemyTypes.Smog)
+        if (enemyTarget.GetEnemyStats().enemyType == EnemyStats.enemyTypes.Smog)
         {
             return Power.MOONTIDE;
         }
@@ -612,6 +649,7 @@ public class CelestialPlayer : Player
     }
 
     //Handles moving the ColdSnap orb forward from Celeste
+    /*
     public void ShootTowardsTarget(GameObject Orb)
     {
         var step = 20 * Time.deltaTime; // calculate distance to move
@@ -619,6 +657,7 @@ public class CelestialPlayer : Player
         Orb.transform.LookAt(enemyTarget.transform.position, Vector3.up);
 
     }
+    */
 
     //Use this to handle moving the moontide attack after it's been summoned
     public void HandleWaveMove()
@@ -645,25 +684,23 @@ public class CelestialPlayer : Player
         OnPowerStateChange();
     }
 
+    public void ClearColdSnap()
+    {
+        coldOrb = null;
+    }
+
+    public void ClearMoonTide()
+    {
+        moonTide = null;
+    }
+
 
     /// <summary>
     /// OTHER ABILITY MAIN FUNCTIONS
     /// </summary>
     /// <returns></returns>
 
-    //Runs the animation flags for dodging, tells movement script to move the character
-    private IEnumerator AnimateDodge()
-    {
-        animator.SetAnimationFlag("dodge", true);
-        StartDodgeMovement();
-        StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("dodge")));
-
-        yield return animator.GetAnimationWaitTime("dodge");
-
-        animator.SetAnimationFlag("dodge", false);
-    }
-
-    //Removed the coroutine to have the animation events handle this instead
+    //Turns on Celeste's dodge animation and tells the movement script to handle moving her
     private void SetDodge()
     {
         animator.SetAnimationFlag("dodge", true);
