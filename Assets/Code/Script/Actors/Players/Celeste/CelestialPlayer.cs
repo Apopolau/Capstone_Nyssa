@@ -83,7 +83,7 @@ public class CelestialPlayer : Player
     GameObject moonTide;
 
     [SerializeField] Vector3 moontideOffset;
-    [SerializeField] Vector3 moonTideDistance;
+    //[SerializeField] Vector3 moonTideDistance;
 
     [SerializeField] private CelesteSoundLibrary c_soundLibrary;
 
@@ -110,7 +110,7 @@ public class CelestialPlayer : Player
         agent.enabled = false;
         celestialControls = GetComponent<CelestialPlayerControls>();
         health = new Stat(100, 100, false);
-        energy = new Stat(100, 50, true);
+        energy = new Stat(100, 1000, true);
         //uiManager = GetComponent<CelestUIManager>();
         c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
 
@@ -131,6 +131,12 @@ public class CelestialPlayer : Player
         lightningCoolDownTime = powerBehaviour.LightningStats.rechargeTimer;
         staff = GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
         staff.SetPlayer(this);
+        Debug.Log("Position of Celeste: " + this.transform.position + ", position we want wave to show up from forward: " + (this.transform.position + moontideOffset));
+        Debug.Log("Vector to where we want the wave to show up: " + (this.transform.position - (this.transform.position + moontideOffset)).normalized);
+
+        Debug.Log("If we want it to show up behind us in the right spot: " + (this.transform.position - (this.transform.position - moontideOffset)).normalized);
+
+
     }
 
     // Update is called once per frame
@@ -552,15 +558,24 @@ public class CelestialPlayer : Player
         lookRot.eulerAngles = lookAngle;
 
         //To get an offset posiiton relative to our facing direction, multiply those vectors together
-        Vector3 spawnPos = Vector3.Scale(moontideOffset.normalized, (GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward));
+        Vector3 spawnVector = (this.transform.position - (this.transform.position + moontideOffset)).normalized;
+        //Vector3 spawnVector = new Vector3(moontideOffset.x / GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward.x,
+        //    0f, moontideOffset.z / GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward.z).normalized;
+        //Vector3 spawnPos = Vector3.Scale(spawnVector, (GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward));
+        //Vector3 spawnPos = (spawnVector - GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward).normalized;
+        float theta2 = Mathf.Atan2(GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward.x, GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward.z);
+        Vector3 lookAngle2 = new Vector3(0, theta, 0);
+        Vector3 spawnPos = Quaternion.Euler(lookAngle2) * spawnVector;
         //Then scale that vector based on how far we wanted the object
-        spawnPos = Vector3.Scale(moonTideDistance, spawnPos);
+        //spawnPos = Vector3.Scale(moontideOffset, spawnPos);
+        spawnPos *= Mathf.Abs(moontideOffset.magnitude);
 
         //Instatiate the visual asset and set it to the ColdOrB game object, spawn the cold orb at the player
         moonTide = Instantiate(powerBehaviour.GetComponent<PowerBehaviour>().MoonTideAttackStats.visualGameObj,
             (this.transform.position + spawnPos), lookRot);
         moonTide.GetComponent<MoontideTrigger>().SetPlayer(this);
         moonTide.GetComponent<MoontideTrigger>().InitializeSelf(-GetComponent<CelestialPlayerMovement>().GetPlayerObj().right);
+        Debug.Log("Celeste's look vector is: " + GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward + ", moonTide was spawned at " + spawnPos + " from her position.");
     }
 
 
