@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 5804434315703889750}
   - component: {fileID: 4840897772112739693}
   - component: {fileID: 136383110719407848}
+  - component: {fileID: 8048887616831125169}
   m_Layer: 0
   m_Name: OilSpillIdleMonster
   m_TagString: Enemy
@@ -234,6 +235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7476623895178863548}
+  currentAnimation: {fileID: 0}
   idleAnimation: {fileID: 11400000, guid: 0c62168abd8575943a0973d46318bbe6, type: 2}
   moveAnimation: {fileID: 11400000, guid: dfe455b7649d8d949b351f100e609831, type: 2}
   hurtAnimation: {fileID: 11400000, guid: 05cd9d88588e3f041b8fc2a14d71ea83, type: 2}
@@ -320,6 +322,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationToSet:
   - {fileID: 11400000, guid: c2fcfe388840ed645995049c33e871c9, type: 2}
+--- !u!114 &8048887616831125169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2090664895178657524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectRuntimeSet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
 --- !u!1 &2898012355351432001
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,11 +79,18 @@ public class CelestialPlayer : Player
 
     [Header("Power Drop Assets")]
     private VisualEffect powerDrop;
+
+    [Header("Storage for power objects")]
     GameObject coldOrb;
     GameObject moonTide;
+    GameObject lightning;
 
-    [SerializeField] Vector3 moontideOffset;
-    //[SerializeField] Vector3 moonTideDistance;
+    [SerializeField] private Vector3 moontideOffset;
+    [SerializeField] private float lightningOffset;
+    //[SerializeField] private float lightningRange;
+    [SerializeField] private float lightningAngle;
+
+    
 
     [SerializeField] private CelesteSoundLibrary c_soundLibrary;
 
@@ -94,6 +101,7 @@ public class CelestialPlayer : Player
     // Start is called before the first frame update
 
     //Interaction with the player
+    [SerializeField] private GameObjectRuntimeSet enemyList;
     public bool enemySeen = false;
     public bool enemyHit = false;
     //public GameObject enemyTarget = null;
@@ -124,6 +132,7 @@ public class CelestialPlayer : Player
     {
         dodgeMoveStopTime = new WaitForSeconds(0.7f);
         powerBehaviour = GetComponent<PowerBehaviour>();
+        validTargets = new List<GameObject>();
         
         //dodgeAnimTime = new WaitForSeconds();
         coldSnapCoolDownTime = powerBehaviour.ColdSnapStats.rechargeTimer;
@@ -131,12 +140,6 @@ public class CelestialPlayer : Player
         lightningCoolDownTime = powerBehaviour.LightningStats.rechargeTimer;
         staff = GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
         staff.SetPlayer(this);
-        Debug.Log("Position of Celeste: " + this.transform.position + ", position we want wave to show up from forward: " + (this.transform.position + moontideOffset));
-        Debug.Log("Vector to where we want the wave to show up: " + (this.transform.position - (this.transform.position + moontideOffset)).normalized);
-
-        Debug.Log("If we want it to show up behind us in the right spot: " + (this.transform.position - (this.transform.position - moontideOffset)).normalized);
-
-
     }
 
     // Update is called once per frame
@@ -373,16 +376,13 @@ public class CelestialPlayer : Player
     //LIGHTNINGSTRIKE POWER
     public IEnumerator animateLightningStrike()
     {
-        VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
-        VisualEffect clone = Instantiate(lightningStrike, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
-
-        clone.transform.Rotate(-90.0f, 0.0f, 0.0f, Space.World);
+        
 
         //Attacking animation of player
         SetCastAnimation();
 
         // Move our position a step closer to the target.
-        var step = 5 * Time.deltaTime; // calculate distance to move
+        //var step = 5 * Time.deltaTime; // calculate distance to move
 
         /*
         if (enemyTarget != null && enemyTarget.GetComponent<Enemy>())
@@ -394,17 +394,21 @@ public class CelestialPlayer : Player
 
         }
         */
+        InitializeLightningStrikeTrig();
+
+        /*
         if (puzzleTarget != null && puzzleTarget.GetComponentInParent<ShutOffTerminal>())
         {
             puzzleTarget.GetComponentInParent<ShutOffTerminal>().TerminalShutOff();
         }
+        */
 
         //Stop action during the course of animation and yield time
         c_soundLibrary.PlayLightningClips();
 
         yield return lightningDuration;
 
-        Destroy(clone, 1f);
+        lightning.GetComponent<LightningTrigger>().Die();
         //isAttacking = false;
     }
 
@@ -575,7 +579,54 @@ public class CelestialPlayer : Player
             (this.transform.position + spawnPos), lookRot);
         moonTide.GetComponent<MoontideTrigger>().SetPlayer(this);
         moonTide.GetComponent<MoontideTrigger>().InitializeSelf(-GetComponent<CelestialPlayerMovement>().GetPlayerObj().right);
-        Debug.Log("Celeste's look vector is: " + GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward + ", moonTide was spawned at " + spawnPos + " from her position.");
+    }
+
+    //Create and set the position and rotation of the physical lightning object in LightningStrike
+    private void InitializeLightningStrikeTrig()
+    {
+        validTargets.Clear();
+
+        Debug.Log(enemyList.Items.Count);
+
+        foreach(GameObject enemy in enemyList.Items)
+        {
+            if(JudgeDistance(enemy.transform.position, this.transform.position, spellRange))
+            {
+                validTargets.Add(enemy.gameObject);
+            }
+        }
+        if(validTargets.Count > 0)
+        {
+            foreach(GameObject enemy in validTargets)
+            {
+                Vector3 directionToTarget = (enemy.transform.position - this.transform.position).normalized;
+                if(Vector3.Angle(transform.forward, directionToTarget) !< lightningAngle / 2)
+                {
+                    validTargets.Remove(enemy);
+                }
+            }
+            //Assigns powerTarget variable
+            PickClosestTarget();
+            if(validTargets.Count > 0)
+            {
+                lightning = Instantiate(powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualGameObj,
+            new Vector3(powerTarget.transform.position.x, powerTarget.transform.position.y, powerTarget.transform.position.z), Quaternion.identity);
+            }
+        }
+        else
+        {
+            Vector3 spawnPos = -GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward * lightningOffset;
+
+            lightning = Instantiate(powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualGameObj, (this.transform.position - spawnPos), Quaternion.identity);
+        }
+
+        
+        lightning.GetComponent<LightningTrigger>().SetPlayer(this);
+        lightning.GetComponent<LightningTrigger>().InitializeSelf();
+        //VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
+        //VisualEffect clone = Instantiate(lightningStrike, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
+
+        //lightning.transform.Rotate(-90.0f, 0.0f, 0.0f, Space.World);
     }
 
 
@@ -707,6 +758,11 @@ public class CelestialPlayer : Player
     public void ClearMoonTide()
     {
         moonTide = null;
+    }
+
+    public void ClearLightning()
+    {
+        lightning = null;
     }
 
 

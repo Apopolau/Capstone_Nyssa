@@ -30,6 +30,12 @@ public abstract class Player : Actor
 
     protected bool interacting = false;
 
+    protected List<GameObject> validTargets;
+    protected GameObject powerTarget;
+    [SerializeField] protected float spellRange;
+    protected float closestDistance;
+    protected int validTargetIndex = 0;
+
     protected Vector3 OrigPos;
     public Stat health;
 
@@ -171,6 +177,45 @@ public abstract class Player : Actor
         if (OnCooldownStarted != null)
             OnCooldownStarted(powerName, timer);
         //yield return new WaitForSeconds(timer);
+    }
+
+    //Create a list of targets that are in range of your abilities
+    protected bool JudgeDistance(Vector3 transform1, Vector3 transform2, float distance)
+    {
+        float calcDistance = Mathf.Abs((transform1 - transform2).magnitude);
+
+
+        if (calcDistance <= distance)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //Goes through the current list of targets in range, finds the closest one
+    public void PickClosestTarget()
+    {
+        closestDistance = spellRange;
+        int i = 0;
+        foreach (GameObject potTarget in validTargets)
+        {
+            i++;
+            float distanceMeasured = Mathf.Abs((potTarget.transform.position - this.transform.position).magnitude);
+            if (distanceMeasured < closestDistance)
+            {
+                validTargetIndex = i;
+                closestDistance = distanceMeasured;
+                powerTarget = potTarget;
+            }
+        }
+    }
+
+    public GameObject GetPowerTarget()
+    {
+        return powerTarget;
     }
 
     /// <summary>

@@ -64,10 +64,7 @@ public class EarthPlayer : Player
     [SerializeField] private GameObjectRuntimeSet animalList;
     [SerializeField] private GameObjectRuntimeSet buildList;
     private CelestialPlayer celestialPlayer;
-    private GameObject powerTarget;
     private GameObject thornShield;
-    List<GameObject> validTargets;
-    private int validTargetIndex = 0;
 
     private float healCooldown = 10f;
     private float barrierCooldown = 10f;
@@ -85,8 +82,7 @@ public class EarthPlayer : Player
     private bool barrierOnCooldown;
     
 
-    [SerializeField] float spellRange;
-    private float closestDistance;
+    
 
     [Header("Plant Objects")]
     [SerializeField] private GameObject treePrefab;
@@ -970,44 +966,12 @@ public class EarthPlayer : Player
         }
     }
 
-    //Create a list of targets that are in range of your abilities
-    private bool JudgeDistance(Vector3 transform1, Vector3 transform2, float distance)
-    {
-        float calcDistance = Mathf.Abs((transform1 - transform2).magnitude);
+    
+    
 
+    
 
-        if (calcDistance <= distance)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    //Goes through the current list of targets in range, finds the closest one
-    public void PickClosestTarget()
-    {
-        closestDistance = spellRange;
-        int i = 0;
-        foreach (GameObject potTarget in validTargets)
-        {
-            i++;
-            float distanceMeasured = Mathf.Abs((potTarget.transform.position - this.transform.position).magnitude);
-            if (distanceMeasured < closestDistance)
-            {
-                validTargetIndex = i;
-                closestDistance = distanceMeasured;
-                powerTarget = potTarget;
-            }
-        }
-    }
-
-    public GameObject GetPowerTarget()
-    {
-        return powerTarget;
-    }
+    
 
 
     /// <summary>
