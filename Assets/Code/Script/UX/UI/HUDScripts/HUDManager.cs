@@ -711,9 +711,16 @@ public class HUDManager : MonoBehaviour
                 float fillAmount = (float)currentEnergy / maxEnergy; // Assuming energy bar's max value is 100
                 fillImage.fillAmount = Mathf.Clamp01(fillAmount); // Clamp fill amount between 0 and 1
             }
+            model.GetEnergyBar().transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = currentEnergy.ToString();
         }
 
 
+    }
+
+    public void InstantiateEnergyIcon(int pointsAdded)
+    {
+        GameObject energyNode = Instantiate(model.GetEnergyNode(), hudCanvas.transform);
+        energyNode.GetComponent<EnergyNode>().SetEnergyAmount(pointsAdded);
     }
 
     //////////SPROUT
@@ -970,8 +977,6 @@ public class HUDManager : MonoBehaviour
     {
         model.SetSproutVirtualMouseUI(incMouseUI);
     }
-
-    
 
     public List<GameObject> GetAnimalSet()
     {

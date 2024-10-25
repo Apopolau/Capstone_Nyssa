@@ -79,6 +79,7 @@ public class HUDModel : ScriptableObject
     [Tooltip("Drag EnergyBar prefab here")]
     [SerializeField] private GameObject energyBarPrefab;
     private GameObject energyBar;
+    [SerializeField] private GameObject energyNode;
     //This data is populated at runtime
     private GameObject activeCelesteUI;
     [SerializeField] private GameObject[] celesteAbilityOverlays = new GameObject[celestePowerCount];
@@ -227,6 +228,17 @@ public class HUDModel : ScriptableObject
     public void InitializeEnergyBar()
     {
         energyBar = Instantiate(energyBarPrefab, hudCanvas.transform);
+        if (energyBar != null)
+        {
+            Image fillImage = energyBar.transform.GetChild(0).GetComponent<Image>(); //The first child of the energy bar is the fill bar
+            if (fillImage != null)
+            {
+                // Calculate the new fill amount
+                float fillAmount = (float)50 / 100; // Assuming energy bar's max value is 100
+                fillImage.fillAmount = Mathf.Clamp01(fillAmount); // Clamp fill amount between 0 and 1
+            }
+            energyBar.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = 50.ToString();
+        }
     }
 
     //Creates and sets up the player pop up text box
@@ -277,6 +289,7 @@ public class HUDModel : ScriptableObject
         Instantiate(menuKeyPrefab, hudCanvas.transform);
     }
 
+    //Creates the indicators for when an animal is being kidnapped
     public void InitializeKidnapIcons()
     {
         animalPointers = new GameObject[manager.GetAnimalSet().Count];
@@ -623,6 +636,11 @@ public class HUDModel : ScriptableObject
     public float GetAcidRainHardThreshold()
     {
         return acidRainHardThreshold;
+    }
+
+    public GameObject GetEnergyNode()
+    {
+        return energyNode;
     }
 
 

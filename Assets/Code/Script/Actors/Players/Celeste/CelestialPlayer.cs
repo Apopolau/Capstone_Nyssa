@@ -533,6 +533,7 @@ public class CelestialPlayer : Player
         StartCooldownUI("CastMoontide", moonTideTimer);
     }
 
+
     ///
     /// INITIALIZE EACH POWER THAT CREATES AN EFFECT HERE
     ///
@@ -628,6 +629,7 @@ public class CelestialPlayer : Player
 
         //lightning.transform.Rotate(-90.0f, 0.0f, 0.0f, Space.World);
     }
+
 
 
     /// <summary>
@@ -766,6 +768,7 @@ public class CelestialPlayer : Player
     }
 
 
+
     /// <summary>
     /// OTHER ABILITY MAIN FUNCTIONS
     /// </summary>
@@ -778,6 +781,8 @@ public class CelestialPlayer : Player
         StartDodgeMovement();
         SuspendActions(true);
     }
+
+
 
     /// <summary>
     /// HUD HELPER FUNCTIONS
@@ -813,6 +818,7 @@ public class CelestialPlayer : Player
         
         OnPowerStateChange();
     }
+
 
 
     /// <summary>
@@ -933,6 +939,8 @@ public class CelestialPlayer : Player
         staff.ToggleAttacking(false);
     }
 
+
+
     /// <summary>
     /// ENERGY FUNCTIONS
     /// </summary>
@@ -940,11 +948,14 @@ public class CelestialPlayer : Player
     //Handles increases in energy as from energy drops
     public void IncreaseEnergy(int pointsAdded)
     {
+        hudManager.InstantiateEnergyIcon(pointsAdded);
         energy.current += pointsAdded;
         OnPowerStateChange();
         if (OnEnergyChanged != null)
             OnEnergyChanged(energy.current, energy.max);
     }
+
+    
 
     //Handles draining energy 1 time for spells
     public void DrainEnergy(int pointsDrained)

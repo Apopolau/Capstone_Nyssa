@@ -8,6 +8,8 @@ public class Plant : Creatable
     [Header("Set these on the prefab")]
     [SerializeField] public PlantStats stats;
     [SerializeField] List<LevelManagerObject> levelManagers;
+    [SerializeField] private GameObjectRuntimeSet playerSet;
+    private CelestialPlayer celestialPlayer;
     public GameObject plantObject;
     [SerializeField] WeatherState weatherState;
     [SerializeField] GameObject energyPrefab;
@@ -16,12 +18,8 @@ public class Plant : Creatable
     Inventory inventory;
 
     [Header("These set themselves")]
-    
     [SerializeField] private Stat storedSunlight;
     [SerializeField] private Stat storedWater;
-    //[SerializeField] storedSunlight.current;
-    //private Stat storedSunlight;
-    //private Stat storedWater;
 
     // Reference to the UI elements
     public GameObject waterUI;
@@ -84,6 +82,14 @@ public class Plant : Creatable
     {
         StartCoroutine(GrowPlant());
         StartCoroutine(StoreNutrients());
+
+        foreach (GameObject go in playerSet.Items)
+        {
+            if (go.GetComponent<CelestialPlayer>())
+            {
+                celestialPlayer = go.GetComponent<CelestialPlayer>();
+            }
+        }
     }
 
     // Update is called once per frame
@@ -208,8 +214,10 @@ public class Plant : Creatable
             HandleTreeColliders(0.5f, 1, 5, 0, Vector3.zero);
             if (energySet.Items.Count < 10)
             {
-                energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-                energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.seedlingEnergy;
+                //energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+                //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.seedlingEnergy;
+                int energyQuantity = stats.seedlingEnergy;
+                celestialPlayer.IncreaseEnergy(energyQuantity);
             }
             growthPoints = 0;
         }
@@ -225,8 +233,10 @@ public class Plant : Creatable
             HandleTreeColliders(1f, 50, 1, 0, Vector3.zero);
             if (energySet.Items.Count < 10)
             {
-                energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-                energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
+                //energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+                //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
+                int energyQuantity = stats.sproutEnergy;
+                celestialPlayer.IncreaseEnergy(energyQuantity);
             }
 
             growthPoints = 0;
@@ -243,8 +253,10 @@ public class Plant : Creatable
             HandleTreeColliders(2.5f, 25, 10, 14, new Vector3(0, 18.5f, -1.5f));
             if (energySet.Items.Count < 10)
             {
-                energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-                energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
+                //energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+                //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
+                int energyQuantity = stats.juvenileEnergy;
+                celestialPlayer.IncreaseEnergy(energyQuantity);
             }
 
             DropSeed();
@@ -255,8 +267,10 @@ public class Plant : Creatable
         {
             if (energySet.Items.Count < 10)
             {
-                energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-                energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.matureEnergy;
+                //energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
+                //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.matureEnergy;
+                int energyQuantity = stats.matureEnergy;
+                celestialPlayer.IncreaseEnergy(energyQuantity);
             }
             DropSeed();
             growthPoints = 0;
