@@ -28,6 +28,11 @@ public class EnergyNode : MonoBehaviour
         energyCounterText.text = "+" + energy.ToString();
     }
 
+    public void TurnCounterOff()
+    {
+        energyCounterText.enabled = false;
+    }
+
     private void Move()
     {
         Vector3 newLocation = new Vector3(GetComponent<RectTransform>().localPosition.x, GetComponent<RectTransform>().localPosition.y + 2, GetComponent<RectTransform>().localPosition.z);

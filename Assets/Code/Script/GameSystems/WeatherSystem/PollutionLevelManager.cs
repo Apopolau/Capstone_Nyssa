@@ -8,7 +8,9 @@ public class PollutionLevelManager : MonoBehaviour
     [Header("References")]
     [SerializeField] GameObjectRuntimeSet buildSet;
     [SerializeField] GameObjectRuntimeSet monsterSet;
-    [SerializeField] GameObject RainParticleSystem;
+    [SerializeField] GameObject rainParticleSystem;
+    private ParticleSystemRenderer rainRenderer;
+    Material rainMaterial;
 
     [Header("Pollution Icon")]
     [SerializeField] private Image earthIcon;
@@ -37,8 +39,11 @@ public class PollutionLevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        rainRenderer = rainParticleSystem.GetComponent<ParticleSystemRenderer>();
+        rainMaterial = rainRenderer.material;
         CalculatePollutionLevel();
         StartCoroutine(PollutionCalcRoutine());
+        
     }
 
     private IEnumerator PollutionCalcRoutine()
@@ -59,26 +64,22 @@ public class PollutionLevelManager : MonoBehaviour
         float pollutionPercent = (float)pollutionLevel / maxPollution;
 
         GetComponent<HUDManager>().UpdatePollutionDisplay(pollutionPercent);
-
-        /*
-        pollutionLevelBar.fillAmount = pollutionPercent;
         
-        if (pollutionPercent >= acidRainThreshold && pollutionPercent < acidRainHardThreshold)
+        //Change colour of rain to reflect acid levels
+        //Add a change of sound effect here when the time arises
+        if (weatherState.GetAcidRainState() == WeatherState.AcidRainState.NONE)
         {
-            weatherState.acidRainState = WeatherState.AcidRainState.LIGHT;
-            earthIcon.sprite = sadLevelImage;
+            rainMaterial.color = c_cleanRain;
         }
-        else if (pollutionPercent >= acidRainHardThreshold)
+        else if (weatherState.GetAcidRainState() == WeatherState.AcidRainState.LIGHT)
         {
-            weatherState.acidRainState = WeatherState.AcidRainState.HEAVY;
-            earthIcon.sprite = desperateLevelImage;
+            rainMaterial.color = c_lightAcid;
         }
-        else
+        else if(weatherState.GetAcidRainState() == WeatherState.AcidRainState.HEAVY)
         {
-            weatherState.acidRainState = WeatherState.AcidRainState.NONE;
-            earthIcon.sprite = happyLevelImage;
+            rainMaterial.color = c_heavyAcid;
         }
-        */
+        
 
     }
 

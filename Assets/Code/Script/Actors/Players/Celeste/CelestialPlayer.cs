@@ -52,6 +52,8 @@ public class CelestialPlayer : Player
     private WaitForSeconds waveDuration;
     private WaitForSeconds lightningDuration;
 
+    private WaitForSeconds energyRegenTimer = new WaitForSeconds(5);
+
     private bool isTargeted = false;
 
     public enum Power
@@ -69,16 +71,20 @@ public class CelestialPlayer : Player
     public Power Powers;
     public Power powerInUse = Power.NONE;
 
+    [Header("Energy variables")]
+    private Stat energy;
+    [SerializeField] private int maxEnergyVal;
+    [SerializeField] private int startingEnergyVal;
     public event System.Action<int, int> OnEnergyChanged;
     public event System.Action OnPowerStateChange;
     //public event System.Action<string, float> OnCooldownStarted;
 
-    public Stat energy;
+    
     PowerBehaviour powerBehaviour;
     public CelestialPlayerControls celestialControls;
 
-    [Header("Power Drop Assets")]
-    private VisualEffect powerDrop;
+    //[Header("Power Drop Assets")]
+    //private VisualEffect powerDrop;
 
     [Header("Storage for power objects")]
     GameObject coldOrb;
@@ -89,8 +95,6 @@ public class CelestialPlayer : Player
     [SerializeField] private float lightningOffset;
     //[SerializeField] private float lightningRange;
     [SerializeField] private float lightningAngle;
-
-    
 
     [SerializeField] private CelesteSoundLibrary c_soundLibrary;
 
@@ -118,7 +122,7 @@ public class CelestialPlayer : Player
         agent.enabled = false;
         celestialControls = GetComponent<CelestialPlayerControls>();
         health = new Stat(100, 100, false);
-        energy = new Stat(100, 1000, true);
+        energy = new Stat(maxEnergyVal, startingEnergyVal, true);
         //uiManager = GetComponent<CelestUIManager>();
         c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
 
@@ -140,6 +144,7 @@ public class CelestialPlayer : Player
         lightningCoolDownTime = powerBehaviour.LightningStats.rechargeTimer;
         staff = GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
         staff.SetPlayer(this);
+        StartCoroutine(RegenEnergy());
     }
 
     // Update is called once per frame
@@ -587,8 +592,6 @@ public class CelestialPlayer : Player
     {
         validTargets.Clear();
 
-        Debug.Log(enemyList.Items.Count);
-
         foreach(GameObject enemy in enemyList.Items)
         {
             if(JudgeDistance(enemy.transform.position, this.transform.position, spellRange))
@@ -955,6 +958,22 @@ public class CelestialPlayer : Player
             OnEnergyChanged(energy.current, energy.max);
     }
 
+    public IEnumerator RegenEnergy()
+    {
+        while (true)
+        {
+            yield return energyRegenTimer;
+
+            if (energy.current < 5)
+            {
+                energy.current++;
+                OnPowerStateChange();
+                if (OnEnergyChanged != null)
+                    OnEnergyChanged(energy.current, energy.max);
+            }
+        }
+        
+    }
     
 
     //Handles draining energy 1 time for spells
@@ -1025,6 +1044,16 @@ public class CelestialPlayer : Player
     public float GetEnergy()
     {
         return energy.current;
+    }
+
+    public int GetMaxEnergy()
+    {
+        return maxEnergyVal;
+    }
+
+    public int GetStartingEnergy()
+    {
+        return startingEnergyVal;
     }
 
     public bool GetIsAttacking()

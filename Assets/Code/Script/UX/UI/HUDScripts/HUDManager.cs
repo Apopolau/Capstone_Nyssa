@@ -73,6 +73,7 @@ public class HUDManager : MonoBehaviour
                 celestialPlayer.OnCooldownStarted += OnCooldownStarted;
                 celestialPlayer.OnPowerStateChange += OnPowerStateChange;
                 celestialPlayer.GetComponent<PowerBehaviour>().OnPowerStateChange += OnPowerStateChange;
+                OnEnergyChanged(celestialPlayer.GetStartingEnergy(), celestialPlayer.GetMaxEnergy());
             }
             else if (player.GetComponent<EarthPlayer>())
             {

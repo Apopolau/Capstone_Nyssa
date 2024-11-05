@@ -37,7 +37,8 @@ public class Plant : Creatable
     public PlantStats.PlantStage currentPlantStage;
 
     private GameObject seed;
-    private GameObject energyDrop;
+    //private GameObject energyDrop;
+    [SerializeField] private GameObject energyNode;
     private GameObject logs;
 
     public event System.Action<int, int> OnHealthChanged;
@@ -82,6 +83,7 @@ public class Plant : Creatable
     {
         StartCoroutine(GrowPlant());
         StartCoroutine(StoreNutrients());
+        StartCoroutine(HandleAcidRain());
 
         foreach (GameObject go in playerSet.Items)
         {
@@ -100,11 +102,8 @@ public class Plant : Creatable
 
     private void FixedUpdate()
     {
-        StoreNutrients();
-        GrowPlant();
         AdvancePlantStage();
         ResolveStats();
-        HandleAcidRain();
     }
 
     private IEnumerator GrowPlant()
@@ -218,6 +217,7 @@ public class Plant : Creatable
                 //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.seedlingEnergy;
                 int energyQuantity = stats.seedlingEnergy;
                 celestialPlayer.IncreaseEnergy(energyQuantity);
+                SpawnEnergyNode();
             }
             growthPoints = 0;
         }
@@ -237,6 +237,7 @@ public class Plant : Creatable
                 //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
                 int energyQuantity = stats.sproutEnergy;
                 celestialPlayer.IncreaseEnergy(energyQuantity);
+                SpawnEnergyNode();
             }
 
             growthPoints = 0;
@@ -257,6 +258,7 @@ public class Plant : Creatable
                 //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
                 int energyQuantity = stats.juvenileEnergy;
                 celestialPlayer.IncreaseEnergy(energyQuantity);
+                SpawnEnergyNode();
             }
 
             DropSeed();
@@ -271,6 +273,7 @@ public class Plant : Creatable
                 //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.matureEnergy;
                 int energyQuantity = stats.matureEnergy;
                 celestialPlayer.IncreaseEnergy(energyQuantity);
+                SpawnEnergyNode();
             }
             DropSeed();
             growthPoints = 0;
@@ -285,6 +288,16 @@ public class Plant : Creatable
             seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
             seed.GetComponent<PickupObject>().SetInventory(inventory);
         }
+    }
+
+    private void SpawnEnergyNode()
+    {
+        Vector3 spawnOffset = new Vector3(0, 3, 0);
+        Vector3 spawnPos = this.transform.position + spawnOffset;
+        GameObject node = Instantiate(energyNode, this.transform.GetChild(1).GetChild(0).GetChild(0).transform);
+        node.GetComponent<EnergyNode>().TurnCounterOff();
+        node.GetComponent<RectTransform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        node.transform.position = spawnPos;
     }
 
     private void HandleTreeColliders(float c_ColliderRadius, float c_ColliderHeight, float c_ColliderCenter, float sphereRadius, Vector3 sphereCenter)
@@ -372,17 +385,19 @@ public class Plant : Creatable
         }
     }
 
-    private void HandleAcidRain()
+    private IEnumerator HandleAcidRain()
     {
+        yield return growthRate;
+
         if(weatherState.GetSkyState() == WeatherState.SkyState.RAINY)
         {
             if (weatherState.GetAcidRainState() == WeatherState.AcidRainState.LIGHT)
             {
-                TakeDamage(1);
+                TakeDamage(5);
             }
             else if(weatherState.GetAcidRainState() == WeatherState.AcidRainState.HEAVY)
             {
-                TakeDamage(2);
+                TakeDamage(10);
             }
         } 
     }
