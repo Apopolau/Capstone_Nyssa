@@ -31,11 +31,8 @@ public class CtrlsRemovingAction : FSMAction
         //TurnOnTileSelect manages enabling most of the functionality of tile selection
         earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
         earthPlayer.TurnOnTileSelect(earthPlayer.transform);
-        /*
-         if (earthPlayer.plantingControlsUI != null)
-        { earthPlayer.plantingControlsUI.SetActive(true); }
-        */
-        hudManager.TurnOnPopUpText("Select a Tile");
+
+        hudManager.TurnOnPopUpText("Select a Tile", "Veuillez sélectionner une tuile");
         hudManager.ToggleSproutPanel(true);
 
         //Set our appropriate bools

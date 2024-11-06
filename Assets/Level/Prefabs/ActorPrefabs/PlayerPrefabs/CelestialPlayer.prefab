@@ -880,7 +880,7 @@ GameObject:
   - component: {fileID: 2551764230926651092}
   - component: {fileID: 8515091030154412494}
   - component: {fileID: 750242367197262}
-  - component: {fileID: 6760139227266853711}
+  - component: {fileID: 1141516705554411456}
   - component: {fileID: 7093202383440998290}
   - component: {fileID: 5203004283134060588}
   - component: {fileID: 616051488619230335}
@@ -994,8 +994,8 @@ CapsuleCollider:
   m_Height: 16.798248
   m_Direction: 1
   m_Center: {x: -0.006187439, y: 7.899124, z: 0.21810246}
---- !u!135 &6760139227266853711
-SphereCollider:
+--- !u!136 &1141516705554411456
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1004,7 +1004,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1012,9 +1012,11 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 1.9682312
+  m_Height: 16.798248
+  m_Direction: 1
+  m_Center: {x: -0.006187439, y: 7.899124, z: 0.21810246}
 --- !u!114 &7093202383440998290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,7 +1049,7 @@ MonoBehaviour:
   Powers: 0
   powerInUse: 0
   maxEnergyVal: 100
-  startingEnergyVal: 1000
+  startingEnergyVal: 50
   celestialControls: {fileID: 0}
   moontideOffset: {x: -12, y: 0, z: 12}
   lightningOffset: 15

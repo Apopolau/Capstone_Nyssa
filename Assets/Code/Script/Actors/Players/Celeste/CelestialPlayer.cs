@@ -158,51 +158,6 @@ public class CelestialPlayer : Player
         */
     }
 
-    private void OnTriggerStay(Collider other)
-    {
-        /*
-        if (other.gameObject.tag == "Enemy")
-        {
-            //Player is in range of enemy, in invading monster they can pursue the player
-            enemySeen = true;
-
-            enemyLocation = other.transform.position;
-            enemyTarget = other.transform.gameObject;
-
-        }
-        
-        if (other.GetComponent<ClearDebrisTrigger>())
-        {
-            //inRangeOfPuzzle = true;
-            puzzleTarget = other.transform.gameObject;
-        }
-        */
-        if (other.GetComponent<ShutOffTerminal>())
-        {
-            //inRangeOfPuzzle = true;
-            puzzleTarget = other.GetComponent<ShutOffTerminal>().GetStrikeTarget();
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        /*
-        if (other.transform.gameObject.tag == "Enemy")
-        {
-            //Player is in range of enemy, in invading monster they can pursue the player
-            enemySeen = false;
-
-            enemyLocation = other.transform.position;
-            enemyTarget = null;
-        }
-        */
-        if (other.GetComponent<ShutOffTerminal>())
-        {
-            //inRangeOfPuzzle = false;
-            puzzleTarget = null;
-        }
-    }
-
     //POWER BUTTONS (HANDLES BUTTON PRESSES)
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
     /// Celestial Player Control >> Power buttons are selected >> Heads int FSM CAN_____powersname____
@@ -848,10 +803,11 @@ public class CelestialPlayer : Player
     {
         if (!power.isEnabled)
         {
-            string powerNotEnabled = "Power hasn't been unlocked";
+            string enPowerNotEnabled = "Power hasn't been unlocked";
+            string frPowerNotEnabled = "L'alimentation n'a pas été déverrouillée";
             //Allows a use case for the system to call this function even if it's not intending to use the ability
             if (!checking)
-                hudManager.ThrowPlayerWarning(powerNotEnabled);
+                hudManager.ThrowPlayerWarning(enPowerNotEnabled, frPowerNotEnabled);
             return true;
         }
         return false;
@@ -862,10 +818,11 @@ public class CelestialPlayer : Player
     {
         if (energy.current <= power.energyDrain)
         {
-            string notEnoughEnergy = "Not enough energy";
+            string enNotEnoughEnergy = "Not enough energy";
+            string frNotEnoughEnergy = "Pas assez d'énergie";
             //Allows a use case for the system to call this function even if it's not intending to use the ability
-            if(!checking)
-                hudManager.ThrowPlayerWarning(notEnoughEnergy);
+            if (!checking)
+                hudManager.ThrowPlayerWarning(enNotEnoughEnergy, frNotEnoughEnergy);
             return true;
         }
         return false;
@@ -876,10 +833,11 @@ public class CelestialPlayer : Player
     {
         if (energy.current < powerCost)
         {
-            string notEnoughEnergy = "Not enough energy";
+            string enNotEnoughEnergy = "Not enough energy";
+            string frNotEnoughEnergy = "Pas assez d'énergie";
             //Allows a use case for the system to call this function even if it's not intending to use the ability
             if (!checking)
-                hudManager.ThrowPlayerWarning(notEnoughEnergy);
+                hudManager.ThrowPlayerWarning(enNotEnoughEnergy, frNotEnoughEnergy);
             return true;
         }
         return false;
@@ -890,9 +848,10 @@ public class CelestialPlayer : Player
     {
         if (power.isOnCooldown)
         {
-            string powerOnCooldown = "Power is still on cooldown";
+            string enPowerOnCooldown = "Power is still on cooldown";
+            string frPowerOnCooldown = "La puissance est toujours en recharge";
             if (!checking)
-                hudManager.ThrowPlayerWarning(powerOnCooldown);
+                hudManager.ThrowPlayerWarning(enPowerOnCooldown, frPowerOnCooldown);
             return true;
         }
         return false;

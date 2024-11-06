@@ -21,7 +21,7 @@ public class EnemyAttackTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 12)
+        if (other.gameObject.layer == 12 && other.gameObject.GetComponent<Player>())
         {
             Player playerBeingHit = other.gameObject.GetComponent<Player>();
             if (midAttack)

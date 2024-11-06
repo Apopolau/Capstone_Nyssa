@@ -218,14 +218,16 @@ public class Ladder : Interactable
 
     private void NotEnoughLogs()
     {
-        string warningText = "Not enough logs";
-        hudManager.ThrowPlayerWarning(warningText);
+        string enWarningText = "Not enough logs";
+        string frWarningText = "Pas assez de bûche";
+        hudManager.ThrowPlayerWarning(enWarningText, frWarningText);
     }
 
     private void WrongCharacter()
     {
-        string warningText = "Only Sprout can build this";
-        hudManager.ThrowPlayerWarning(warningText);
+        string enWarningText = "Only Sprout can build this";
+        string frWarningText = "Seul Sprout peut construire ceci";
+        hudManager.ThrowPlayerWarning(enWarningText, frWarningText);
     }
 
     private void TriggerLadderClimb()

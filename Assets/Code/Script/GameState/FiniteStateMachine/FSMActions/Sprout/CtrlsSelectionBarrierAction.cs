@@ -33,7 +33,7 @@ public class CtrlsSelectionBarrierAction : FSMAction
 
         //Update UI
         //earthPlayer.displayText.text = "Select a target to shield";
-        hudManager.TurnOnPopUpText("Select a target to shield");
+        hudManager.TurnOnPopUpText("Select a target to shield", "Sélectionnez une cible à Shield");
         //earthPlayer.uiController.DarkenOverlay(earthPlayer.GetPlantDarkenObject());
         hudManager.ToggleSproutPanel(true);
         /*

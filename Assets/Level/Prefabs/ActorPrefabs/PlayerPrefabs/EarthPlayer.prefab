@@ -596,6 +596,7 @@ GameObject:
   - component: {fileID: 7701263254620628334}
   - component: {fileID: 8860692220178841176}
   - component: {fileID: 6219824939934418946}
+  - component: {fileID: 1873124076116651809}
   - component: {fileID: 4289947878237477393}
   - component: {fileID: 2536686373789044869}
   - component: {fileID: 1030210978683770242}
@@ -686,6 +687,29 @@ CapsuleCollider:
   m_Height: 12
   m_Direction: 1
   m_Center: {x: 0, y: 5.5, z: 0}
+--- !u!136 &1873124076116651809
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033276866688796702}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 2
+  m_Height: 12
+  m_Direction: 1
+  m_Center: {x: 0, y: 5.5, z: 0}
 --- !u!195 &4289947878237477393
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -729,6 +753,7 @@ MonoBehaviour:
   playerObj: {fileID: 99740619803956081}
   isDying: 0
   isRespawning: 0
+  spellRange: 50
   soundLibrary: {fileID: 11400000, guid: a8c92392b680be741ad59d0802ca5207, type: 2}
   plantParent: {fileID: 0}
   mainCamera: {fileID: 0}
@@ -754,7 +779,6 @@ MonoBehaviour:
   playerList: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   animalList: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
   buildList: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
-  spellRange: 50
   treePrefab: {fileID: 8326592455623684711, guid: d221844011b19ac47ada2e40f3b91f02, type: 3}
   landGrassPrefab: {fileID: 8326592455623684711, guid: 2938a7a0c54ca5f448e41f884a596426, type: 3}
   waterGrassPrefab: {fileID: 8326592455623684711, guid: fb6eac0bbccc5fc4784a1140b0696f91, type: 3}

@@ -52,7 +52,7 @@ public class EndLevelOneDialogueTrigger : MonoBehaviour
     {
         if((playerOnePresent && !playerTwoPresent) || (!playerOnePresent && playerTwoPresent))
         {
-            hudModel.GetManager().ThrowPlayerWarning("Both players must be present to leave");
+            hudModel.GetManager().ThrowPlayerWarning("Both players must be present to leave", "Les deux joueurs doivent être présents pour partir");
             //displayText.text = "Both players must be present to leave";
         }
         /*

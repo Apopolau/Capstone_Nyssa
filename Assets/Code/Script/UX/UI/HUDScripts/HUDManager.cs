@@ -345,9 +345,17 @@ public class HUDManager : MonoBehaviour
     }
 
     //Makes a box of text appear on-screen to inform the player of something for a set period of time
-    public void ThrowPlayerWarning(string incText)
+    public void ThrowPlayerWarning(string incEngText, string incFRText)
     {
-        model.SetPopUpText(incText);
+        if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            model.SetPopUpText(incEngText);
+        }
+        else
+        {
+            model.SetPopUpText(incFRText);
+        }
+
         model.GetPopUpTextBox().SetActive(true);
         popUpTextIsOn = true;
         if (textDisplay != null)
@@ -358,9 +366,17 @@ public class HUDManager : MonoBehaviour
     }
 
     //Makes a box of text appear on-screen to inform the player of something for no set period of time
-    public void TurnOnPopUpText(string incText)
+    public void TurnOnPopUpText(string incEngText, string incFRText)
     {
-        model.SetPopUpText(incText);
+        if(userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            model.SetPopUpText(incEngText);
+        }
+        else
+        {
+            model.SetPopUpText(incFRText);
+        }
+        
         model.GetPopUpTextBox().SetActive(true);
         popUpTextIsOn = true;
     }

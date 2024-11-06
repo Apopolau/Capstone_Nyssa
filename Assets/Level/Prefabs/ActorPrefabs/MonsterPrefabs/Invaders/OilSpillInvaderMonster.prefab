@@ -256,7 +256,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -265,8 +265,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.055
+  m_Center: {x: -4.8577198e-11, y: 0.03, z: 0}
 --- !u!136 &2417354407139929936
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -289,7 +289,7 @@ CapsuleCollider:
   m_Radius: 0.01
   m_Height: 0.045
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.02, z: 0}
 --- !u!114 &8092171853389202274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +310,6 @@ MonoBehaviour:
   isInvader: 1
   invaderEnemyRoutes: {fileID: 0}
   eventManager: {fileID: 0}
-  enemyAnimator: {fileID: 0}
   soundLibrary: {fileID: 11400000, guid: 1f49927d75e930243959e032c3cac11b, type: 2}
   chosenPath: []
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
@@ -381,6 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2718514053905339862}
+  currentAnimation: {fileID: 0}
   idleAnimation: {fileID: 11400000, guid: 0c62168abd8575943a0973d46318bbe6, type: 2}
   moveAnimation: {fileID: 11400000, guid: dfe455b7649d8d949b351f100e609831, type: 2}
   hurtAnimation: {fileID: 11400000, guid: 05cd9d88588e3f041b8fc2a14d71ea83, type: 2}
@@ -688,12 +688,12 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.01
-  m_Height: 0.05
+  m_Height: 0.1
   m_Direction: 0
-  m_Center: {x: 0.02, y: -0.005, z: 0}
+  m_Center: {x: 0.05, y: -0.005, z: 0}
 --- !u!4 &3390717724789755774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3dbc1a37b2180ed4286e156f03dc29e2, type: 3}

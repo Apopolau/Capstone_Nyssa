@@ -33,7 +33,7 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
         earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
 
         //Update the UI
-        hudManager.TurnOnPopUpText("Select a target to heal");
+        hudManager.TurnOnPopUpText("Select a target to heal", "Sélectionnez une cible pour guérir");
         hudManager.ToggleSproutPanel(true);
     }
 

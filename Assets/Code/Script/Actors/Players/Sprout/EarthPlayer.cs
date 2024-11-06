@@ -214,8 +214,9 @@ public class EarthPlayer : Player
         }
         else
         {
-            string insufficentSeeds = "Insufficient seeds of that type";
-            hudManager.ThrowPlayerWarning(insufficentSeeds);
+            string enInsufficentSeeds = "Insufficient seeds of that type";
+            string frInsufficientSeeds = "Des graines insuffisantes de ce type";
+            hudManager.ThrowPlayerWarning(enInsufficentSeeds, frInsufficientSeeds);
         }
     }
 
@@ -239,8 +240,9 @@ public class EarthPlayer : Player
         }
         else
         {
-            string insufficentSeeds = "Insufficient seeds of that type";
-            hudManager.ThrowPlayerWarning(insufficentSeeds);
+            string enInsufficentSeeds = "Insufficient seeds of that type";
+            string frInsufficientSeeds = "Des graines insuffisantes de ce type";
+            hudManager.ThrowPlayerWarning(enInsufficentSeeds, frInsufficientSeeds);
         }
     }
 
@@ -265,8 +267,9 @@ public class EarthPlayer : Player
         }
         else
         {
-            string insufficentSeeds = "Insufficient seeds of that type";
-            hudManager.ThrowPlayerWarning(insufficentSeeds);
+            string enInsufficentSeeds = "Insufficient seeds of that type";
+            string frInsufficientSeeds = "Des graines insuffisantes de ce type";
+            hudManager.ThrowPlayerWarning(enInsufficentSeeds, frInsufficientSeeds);
         }
 
     }
@@ -298,8 +301,9 @@ public class EarthPlayer : Player
         if(selectedTile == null)
         {
             //Display error message
-            string invalidTile = "Invalid plant placement";
-            hudManager.ThrowPlayerWarning(invalidTile);
+            string enInvalidTile = "Invalid plant placement";
+            string frInvalidTile = "Placement des plantes non valides";
+            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
             yield break;
         }
         //If the tile selected checks out
@@ -344,8 +348,10 @@ public class EarthPlayer : Player
         else if (isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
         {
             //Display error message
-            string invalidTile = "Invalid plant placement";
-            hudManager.ThrowPlayerWarning(invalidTile);
+            string enInvalidTile = "Invalid plant placement";
+            string frInvalidTile = "Placement des plantes non valides";
+
+            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
             yield break;
         }
         //Unknown use case?
@@ -361,8 +367,9 @@ public class EarthPlayer : Player
         if (selectedTile == null)
         {
             //Display error message
-            string invalidTile = "Invalid plant placement";
-            hudManager.ThrowPlayerWarning(invalidTile);
+            string enInvalidTile = "Invalid plant placement";
+            string frInvalidTile = "Placement des plantes non valides";
+            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
         }
         //If the tile selected checks out
         else if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
@@ -395,8 +402,9 @@ public class EarthPlayer : Player
         else if (isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
         {
             //Display error message
-            string invalidTile = "Invalid plant placement";
-            hudManager.ThrowPlayerWarning(invalidTile);
+            string enInvalidTile = "Invalid plant placement";
+            string frInvalidTile = "Placement des plantes non valides";
+            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
         }
     }
 
@@ -513,8 +521,9 @@ public class EarthPlayer : Player
         }
         else
         {
-            string removeWarning = "No plants to remove";
-            hudManager.ThrowPlayerWarning(removeWarning);
+            string enRemoveWarning = "No plants to remove";
+            string frRemoveWarning = "Pas de plantes à éliminer";
+            hudManager.ThrowPlayerWarning(enRemoveWarning, frRemoveWarning);
         }
         
     }
@@ -532,8 +541,9 @@ public class EarthPlayer : Player
         if (selectedTile == null)
         {
             //Display error message
-            string invalidTile = "No tile selected";
-            hudManager.ThrowPlayerWarning(invalidTile);
+            string enInvalidTile = "No tile selected";
+            string frInvalidTile = "Aucune tuile sélectionnée";
+            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
             yield break;
         }
         //Check if the tile they highlighted has a plant on it
@@ -575,8 +585,10 @@ public class EarthPlayer : Player
         //If the tile has no build
         else if (selectedTile.GetComponent<Cell>().tileIsActivated && !selectedTile.GetComponent<Cell>().tileHasBuild)
         {
-            string invalidTile = "No valid objects to remove";
-            hudManager.ThrowPlayerWarning(invalidTile);
+            string enInvalidTile = "No valid objects to remove";
+            string frInvalidTile = "Pas d'objets valides à supprimer";
+
+            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
         }
         else
         {
@@ -590,8 +602,9 @@ public class EarthPlayer : Player
         if (selectedTile == null)
         {
             //Display error message
-            string invalidTile = "No tile selected";
-            hudManager.ThrowPlayerWarning(invalidTile);
+            string enInvalidTile = "No tile selected";
+            string frInvalidTile = "Aucune tuile sélectionnée";
+            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
         }
         //Check if the tile they highlighted has a plant on it
         if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
@@ -624,8 +637,10 @@ public class EarthPlayer : Player
         //If the tile has no build
         else if (selectedTile.GetComponent<Cell>().tileIsActivated && !selectedTile.GetComponent<Cell>().tileHasBuild)
         {
-            string invalidTile = "No valid objects to remove";
-            hudManager.ThrowPlayerWarning(invalidTile);
+            string enInvalidTile = "No valid objects to remove";
+            string frInvalidTile = "Pas d'objets valides à supprimer";
+
+            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
         }
     }
 
@@ -728,13 +743,15 @@ public class EarthPlayer : Player
         }
         else if (healOnCooldown)
         {
-            string OnCooldown = "That ability is still on cooldown";
-            hudManager.ThrowPlayerWarning(OnCooldown);
+            string enOnCooldown = "That ability is still on cooldown";
+            string frOnCooldown = "Cette capacité est en temps de recharge";
+            hudManager.ThrowPlayerWarning(enOnCooldown, frOnCooldown);
         }
         else if (!CheckIfValidTargets())
         {
-            string noValidTargets = "There are no valid targets nearby";
-            hudManager.ThrowPlayerWarning(noValidTargets);
+            string enNoValidTargets = "There are no valid targets nearby";
+            string frNoValidTargets = "Il n'y a pas de cibles valides à proximité";
+            hudManager.ThrowPlayerWarning(enNoValidTargets, frNoValidTargets);
         }
     }
 
@@ -813,14 +830,15 @@ public class EarthPlayer : Player
         }
         else if (barrierOnCooldown)
         {
-            string shieldOnCooldown = "That ability is still on cooldown";
-            //StartCoroutine(ThrowPlayerWarning(shieldOnCooldown));
-            hudManager.ThrowPlayerWarning(shieldOnCooldown);
+            string enOnCooldown = "That ability is still on cooldown";
+            string frOnCooldown = "Cette capacité est en temps de recharge";
+            hudManager.ThrowPlayerWarning(enOnCooldown, frOnCooldown);
         }
         else if (!CheckIfValidTargets())
         {
-            string noValidTargets = "There are no valid targets nearby";
-            hudManager.ThrowPlayerWarning(noValidTargets);
+            string enNoValidTargets = "There are no valid targets nearby";
+            string frNoValidTargets = "Il n'y a pas de cibles valides à proximité";
+            hudManager.ThrowPlayerWarning(enNoValidTargets, frNoValidTargets);
         }
     }
 
@@ -999,7 +1017,7 @@ public class EarthPlayer : Player
         //tileOutline = Instantiate(tileOutlinePrefab, target.transform);
         TurnOnCursor();
         //DisplayTileText();
-        hudManager.ThrowPlayerWarning("Please select a tile");
+        hudManager.ThrowPlayerWarning("Please select a tile", "Veuillez sélectionner une tuile");
         //uiController.DarkenOverlay(darkenWhilePlanting);
         //DarkenAllImages(GetPlantDarkenObject());
         hudManager.ToggleSproutPanel(true);

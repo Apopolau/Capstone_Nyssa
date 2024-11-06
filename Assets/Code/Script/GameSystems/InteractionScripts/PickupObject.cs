@@ -94,8 +94,9 @@ public class PickupObject : Interactable
 
     private void ThrowInventoryWarning()
     {
-        string warningText = "Inventory is full";
-        hudManager.ThrowPlayerWarning(warningText);
+        string enWarningText = "Inventory is full";
+        string frWarningText = "L'inventaire est plein";
+        hudManager.ThrowPlayerWarning(enWarningText, frWarningText);
     }
 
     private void UpdateUIText()

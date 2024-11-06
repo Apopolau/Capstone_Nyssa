@@ -26,16 +26,12 @@ public abstract class OurAnimator : MonoBehaviour
         animator.CrossFadeInFixedTime(GetAnimationName(stateName), animations[stateName].GetAnimationBlendTime());
     }
 
-    public void PlayAnimationWithSoftlock(string stateName, float timer)
+    /*
+    public void RewindAn()
     {
-        currentAnimation = animations[stateName];
-        animator.CrossFade(GetAnimationName(stateName), timer);
+        animator.CrossFadeInFixedTime(GetAnimationName("noAnimation"), 0.1f);
     }
-
-    public void StopAnimation(string stateName)
-    {
-        
-    }
+    */
 
     //Turns an animation flag on or off
     public void SetAnimationFlag(string animationType, bool toSetTo)
@@ -81,7 +77,7 @@ public abstract class OurAnimator : MonoBehaviour
 
     public void SetInSoftLock(bool softLock)
     {
-        if(softLock)
+        if (softLock)
             animationFlags[currentAnimation.GetAnimationFlag()] = false;
         inSoftLock = softLock;
     }
