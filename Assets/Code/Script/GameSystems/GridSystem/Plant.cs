@@ -71,11 +71,11 @@ public class Plant : Creatable
 
         foreach(SpriteRenderer r in waterUI.GetComponentsInChildren<SpriteRenderer>())
         {
-            r.material.renderQueue += 1;
+            r.material.renderQueue += 2;
         }
         foreach (SpriteRenderer r in sunlightUI.GetComponentsInChildren<SpriteRenderer>())
         {
-            r.material.renderQueue += 1;
+            r.material.renderQueue += 2;
         }
     }
 
@@ -211,14 +211,11 @@ public class Plant : Creatable
             }
             PlacePlant(stats.sproutScale, stats.sproutTileOffset);
             HandleTreeColliders(0.5f, 1, 5, 0, Vector3.zero);
-            if (energySet.Items.Count < 10)
-            {
-                //energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-                //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.seedlingEnergy;
-                int energyQuantity = stats.seedlingEnergy;
-                celestialPlayer.IncreaseEnergy(energyQuantity);
-                SpawnEnergyNode();
-            }
+            
+            int energyQuantity = stats.seedlingEnergy;
+            celestialPlayer.IncreaseEnergy(energyQuantity);
+            SpawnEnergyNode();
+            
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.SPROUT && growthPoints >= stats.sproutGrowTime)
@@ -231,14 +228,11 @@ public class Plant : Creatable
             }
             PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
             HandleTreeColliders(1f, 50, 1, 0, Vector3.zero);
-            if (energySet.Items.Count < 10)
-            {
-                //energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-                //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.sproutEnergy;
-                int energyQuantity = stats.sproutEnergy;
-                celestialPlayer.IncreaseEnergy(energyQuantity);
-                SpawnEnergyNode();
-            }
+            
+            int energyQuantity = stats.sproutEnergy;
+            celestialPlayer.IncreaseEnergy(energyQuantity);
+            SpawnEnergyNode();
+            
 
             growthPoints = 0;
         }
@@ -252,29 +246,21 @@ public class Plant : Creatable
             }
             PlacePlant(stats.matureScale, stats.matureTileOffset);
             HandleTreeColliders(2.5f, 25, 10, 14, new Vector3(0, 18.5f, -1.5f));
-            if (energySet.Items.Count < 10)
-            {
-                //energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-                //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.juvenileEnergy;
-                int energyQuantity = stats.juvenileEnergy;
-                celestialPlayer.IncreaseEnergy(energyQuantity);
-                SpawnEnergyNode();
-            }
 
+            int energyQuantity = stats.juvenileEnergy;
+            celestialPlayer.IncreaseEnergy(energyQuantity);
+            SpawnEnergyNode();
+            
             DropSeed();
 
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.MATURE && growthPoints >= stats.matureSeedDropTime)
         {
-            if (energySet.Items.Count < 10)
-            {
-                //energyDrop = Instantiate(energyPrefab, tilePlantedOn.transform);
-                //energyDrop.GetComponent<EnergyPickup>().energyQuantity = stats.matureEnergy;
-                int energyQuantity = stats.matureEnergy;
-                celestialPlayer.IncreaseEnergy(energyQuantity);
-                SpawnEnergyNode();
-            }
+            int energyQuantity = stats.matureEnergy;
+            celestialPlayer.IncreaseEnergy(energyQuantity);
+            SpawnEnergyNode();
+            
             DropSeed();
             growthPoints = 0;
         }
@@ -282,7 +268,15 @@ public class Plant : Creatable
 
     private void DropSeed()
     {
-        if(seedSet.Items.Count < 10)
+        List<GameObject> thisTypeSeed = new List<GameObject>();
+        foreach(GameObject go in seedSet.Items)
+        {
+            if(go.GetComponent<PickupObject>().GetItemName() == stats.seedPrefab.GetComponent<PickupObject>().GetItemName())
+            {
+                thisTypeSeed.Add(go);
+            }
+        }
+        if(thisTypeSeed.Count < 5)
         {
             seed = Instantiate(stats.seedPrefab, this.transform);
             seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;

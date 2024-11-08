@@ -547,6 +547,7 @@ public class CelestialPlayer : Player
     {
         validTargets.Clear();
 
+        //Grab a list of all enemies within range distance of the lightning strike
         foreach(GameObject enemy in enemyList.Items)
         {
             if(JudgeDistance(enemy.transform.position, this.transform.position, spellRange))
@@ -556,20 +557,34 @@ public class CelestialPlayer : Player
         }
         if(validTargets.Count > 0)
         {
+            //We want to clear out any enemies that are not inside the angle in front of Celeste
+            List<GameObject> enemiesToRemove = new List<GameObject>();
             foreach(GameObject enemy in validTargets)
             {
                 Vector3 directionToTarget = (enemy.transform.position - this.transform.position).normalized;
                 if(Vector3.Angle(transform.forward, directionToTarget) !< lightningAngle / 2)
                 {
-                    validTargets.Remove(enemy);
+                    enemiesToRemove.Add(enemy);
                 }
             }
-            //Assigns powerTarget variable
-            PickClosestTarget();
+            //We do this on a separate iteration because otherwise Unity gets cranky
+            foreach(GameObject enemy in enemiesToRemove)
+            {
+                validTargets.Remove(enemy);
+            }
+            
+            //If there's at least one enemy in range in front of us, we pick the closest enemy as our power target
             if(validTargets.Count > 0)
             {
+                PickClosestTarget();
                 lightning = Instantiate(powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualGameObj,
             new Vector3(powerTarget.transform.position.x, powerTarget.transform.position.y, powerTarget.transform.position.z), Quaternion.identity);
+            }
+            else
+            {
+                Vector3 spawnPos = -GetComponent<CelestialPlayerMovement>().GetPlayerObj().forward * lightningOffset;
+
+                lightning = Instantiate(powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualGameObj, (this.transform.position - spawnPos), Quaternion.identity);
             }
         }
         else

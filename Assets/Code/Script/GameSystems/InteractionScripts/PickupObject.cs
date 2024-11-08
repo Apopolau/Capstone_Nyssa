@@ -124,6 +124,11 @@ public class PickupObject : Interactable
         inventory = newInventory;
     }
 
+    public string GetItemName()
+    {
+        return item.stats.name;
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))

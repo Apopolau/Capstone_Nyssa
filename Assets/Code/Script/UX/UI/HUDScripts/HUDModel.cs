@@ -648,6 +648,14 @@ public class HUDModel : ScriptableObject
     public void SetEarthIcon(Sprite incSprite)
     {
         earthIcon.sprite = incSprite;
+        if(incSprite == happyLevelImage || incSprite == sadLevelImage)
+        {
+            earthIcon.rectTransform.sizeDelta = new Vector2(156, 156);
+        }
+        else
+        {
+            earthIcon.rectTransform.sizeDelta = new Vector2(176, 156);
+        }
     }
 
     public Sprite GetHappyEarthIcon()

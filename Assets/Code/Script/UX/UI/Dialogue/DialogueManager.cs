@@ -491,7 +491,7 @@ public class DialogueManager : MonoBehaviour
     public IEnumerator StartAnimation(DialogueAnimation animation)
     {
         yield return animation.GetAnimationDelay();
-        animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), true);
+        animation.GetTargetAnimator().SetAnimationFlag(animation.GetAnimation(), true);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.UnscaledTime;
         StartCoroutine(TurnOffAnimation(animation));
     }
@@ -505,7 +505,7 @@ public class DialogueManager : MonoBehaviour
     public IEnumerator TurnOffAnimation(DialogueAnimation animation)
     {
         yield return animation.GetAnimationTime();
-        animation.GetTargetAnimator().animator.SetBool(animation.GetAnimation(), false);
+        animation.GetTargetAnimator().SetAnimationFlag(animation.GetAnimation(), false);
         animation.GetTargetAnimator().animator.updateMode = AnimatorUpdateMode.Normal;
     }
 
@@ -656,8 +656,15 @@ public class DialogueManager : MonoBehaviour
     {
         if (isDialogueStarted)
         {
-            activeDialogueEvents.Enqueue(dialogue);
-            multipleDialogueEnqueued = true;
+            if(dialogue == currentDialogue)
+            {
+                return;
+            }
+            else
+            {
+                activeDialogueEvents.Enqueue(dialogue);
+                multipleDialogueEnqueued = true;
+            }
         }
         
     }

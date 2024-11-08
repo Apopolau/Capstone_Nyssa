@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LightningTrigger : MonoBehaviour
 {
-    [SerializeField] private SphereCollider sphereCollider;
+    [SerializeField] private CapsuleCollider capsuleCollider;
     //[SerializeField] private float moveSpeed;
     private CelestialPlayer celestialPlayer;
     private List<Enemy> enemiesHit;

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3896630556919065610}
   - component: {fileID: 8420058201057317546}
-  - component: {fileID: 2665404110908667331}
+  - component: {fileID: 5790627606734326988}
   - component: {fileID: 1846357913890759334}
   m_Layer: 0
   m_Name: PS_LightningStrike
@@ -62,8 +62,8 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &2665404110908667331
-SphereCollider:
+--- !u!136 &5790627606734326988
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -80,9 +80,11 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 2.5
+  m_Height: 30
+  m_Direction: 1
+  m_Center: {x: 0, y: 12, z: 0}
 --- !u!114 &1846357913890759334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f2c5b653daa63847965a6e876a2aba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sphereCollider: {fileID: 2665404110908667331}
+  capsuleCollider: {fileID: 5790627606734326988}
 --- !u!1001 &1400334425015510456
 PrefabInstance:
   m_ObjectHideFlags: 0

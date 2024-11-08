@@ -24,8 +24,6 @@ public class Nyssa : Animal
         isHiding = false;
         animator = GetComponentInChildren<OurAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
-
-        
     }
 
     private void OnEnable()

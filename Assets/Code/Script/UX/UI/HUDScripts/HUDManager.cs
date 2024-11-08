@@ -622,10 +622,10 @@ public class HUDManager : MonoBehaviour
             
 
             Vector3 cappedTargetScreenPosition = targetPositionScreenPoint;
-            if (cappedTargetScreenPosition.x <= 0) cappedTargetScreenPosition.x = borderSize;
-            if (cappedTargetScreenPosition.x >= Screen.width) cappedTargetScreenPosition.x = Screen.width - borderSize;
-            if (cappedTargetScreenPosition.y <= 0) cappedTargetScreenPosition.y = borderSize;
-            if (cappedTargetScreenPosition.y >= Screen.height) cappedTargetScreenPosition.y = Screen.height - borderSize;
+            if (cappedTargetScreenPosition.x <= borderSize) cappedTargetScreenPosition.x = borderSize;
+            if (cappedTargetScreenPosition.x >= Screen.width - borderSize) cappedTargetScreenPosition.x = Screen.width - borderSize;
+            if (cappedTargetScreenPosition.y <= borderSize) cappedTargetScreenPosition.y = borderSize;
+            if (cappedTargetScreenPosition.y >= Screen.height - borderSize) cappedTargetScreenPosition.y = Screen.height - borderSize;
 
             Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(cappedTargetScreenPosition);
             kidnapIcon.transform.position = pointerWorldPosition;
