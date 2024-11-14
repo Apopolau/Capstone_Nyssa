@@ -81,9 +81,6 @@ public class EarthPlayer : Player
     private bool healOnCooldown;
     private bool barrierOnCooldown;
     
-
-    
-
     [Header("Plant Objects")]
     [SerializeField] private GameObject treePrefab;
     [SerializeField] private GameObject landGrassPrefab;
@@ -983,11 +980,6 @@ public class EarthPlayer : Player
             SetTurnTarget(powerTarget.transform.position);
         }
     }
-
-    
-    
-
-    
 
     
 
