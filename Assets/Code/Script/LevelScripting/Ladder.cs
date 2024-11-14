@@ -22,7 +22,7 @@ public class Ladder : Interactable
     [SerializeField] DialogueTrigger celestialClimbUp;
     [SerializeField] DialogueTrigger celestialClimbDown;
 
-    [SerializeField] GameObject logImage;
+    [SerializeField] GameObject logReqs;
 
     private void Awake()
     {
@@ -198,7 +198,7 @@ public class Ladder : Interactable
         }
         //popupText.GetComponent<TextMeshProUGUI>().text = "Climb";
         isCelestialInteractable = true;
-        logImage.SetActive(false);
+        logReqs.SetActive(false);
         //Destroy(this.gameObject.GetComponent<BoxCollider>());
     }
 

@@ -10,6 +10,7 @@ public class InteractPrompt : MonoBehaviour
     [SerializeField] private UserSettingsManager settingsManager;
 
     // Internal References
+    private GameObject layoutObject;
     [SerializeField] private TextMeshProUGUI pickupLetter;
     [SerializeField] private TextMeshProUGUI promptText;
     [SerializeField] string englishPrompt;
@@ -27,7 +28,7 @@ public class InteractPrompt : MonoBehaviour
 
     private void InitializeBoxSettings()
     {
-        GameObject layoutObject = transform.GetChild(1).gameObject;
+        layoutObject = transform.GetChild(1).gameObject;
         LayoutRebuilder.MarkLayoutForRebuild(layoutObject.GetComponent<RectTransform>());
     }
 
@@ -85,5 +86,6 @@ public class InteractPrompt : MonoBehaviour
     public void ChangeText(string newText)
     {
         promptText.text = newText;
+        LayoutRebuilder.MarkLayoutForRebuild(layoutObject.GetComponent<RectTransform>());
     }
 }

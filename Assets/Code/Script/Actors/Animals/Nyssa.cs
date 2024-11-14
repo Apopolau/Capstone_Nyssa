@@ -9,7 +9,6 @@ public class Nyssa : Animal
     private bool inRangeOfPickup = false;
     private bool beingHeld = false;
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
-    [SerializeField] private GameObject uiText;
 
     //private Dictionary<string, bool> animationFlags;
 
@@ -156,11 +155,11 @@ public class Nyssa : Animal
         }
         if(userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
         {
-            uiText.GetComponent<TextMeshProUGUI>().text = "Put down";
+            interactPrompt.GetComponent<InteractPrompt>().ChangeText("Put down");
         }
         else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
         {
-            uiText.GetComponent<TextMeshProUGUI>().text = "Déposer";
+            interactPrompt.GetComponent<InteractPrompt>().ChangeText("Déposer");
         }
         
         beingHeld = true;
@@ -176,11 +175,11 @@ public class Nyssa : Animal
         beingHeld = false;
         if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
         {
-            uiText.GetComponent<TextMeshProUGUI>().text = "Pick up";
+            interactPrompt.GetComponent<InteractPrompt>().ChangeText("Pick up");
         }
         else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
         {
-            uiText.GetComponent<TextMeshProUGUI>().text = "Ramasser";
+            interactPrompt.GetComponent<InteractPrompt>().ChangeText("Ramasser");
         }
         
 

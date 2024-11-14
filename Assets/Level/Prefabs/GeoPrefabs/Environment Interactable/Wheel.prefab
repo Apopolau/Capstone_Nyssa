@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 8184530169333250617}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.000000029802319, z: 2.2204458e-15, w: 1}
-  m_LocalPosition: {x: -22.82, y: 8, z: -1.78}
+  m_LocalPosition: {x: -19.87, y: 14.97, z: 9.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -108,8 +108,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5840681529189251652, guid: 48d0497be0ab22d47ba048fde126975b, type: 3}
-      propertyPath: m_AnchoredPosition.x
+      propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5840681529189251652, guid: 48d0497be0ab22d47ba048fde126975b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5840681529189251652, guid: 48d0497be0ab22d47ba048fde126975b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -122,6 +126,14 @@ PrefabInstance:
     - target: {fileID: 7848141350487869928, guid: 48d0497be0ab22d47ba048fde126975b, type: 3}
       propertyPath: englishPrompt
       value: Turn
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915949206607764059, guid: 48d0497be0ab22d47ba048fde126975b, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7915949206607764059, guid: 48d0497be0ab22d47ba048fde126975b, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8666163771918825830, guid: 48d0497be0ab22d47ba048fde126975b, type: 3}
       propertyPath: m_Pivot.x
@@ -374,7 +386,7 @@ MonoBehaviour:
   p2IsInRange: 0
   uiObject: {fileID: 8184530169333250617}
   interactPrompt: {fileID: 7891400466730066524}
-  interactDistance: 10
+  interactDistance: 18
   m_Renderer: {fileID: 0}
   levelOneEvents: {fileID: 0}
   soundEvent: {fileID: 0}
