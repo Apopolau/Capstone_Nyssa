@@ -47,6 +47,7 @@ public class TurnOffSludgePump : Interactable
     {
         if (!sludgePumpIsOff)
         {
+            CalcDistance();
             TurnOff();
             UpdateUIElement();
         }

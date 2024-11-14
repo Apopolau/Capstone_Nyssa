@@ -15,7 +15,7 @@ public class Bridge : Interactable
     private bool bridgeIsBuilt = false;
     private bool previewOn;
 
-    [SerializeField] private float interactDistance;
+    
 
     private void Awake()
     {
@@ -47,71 +47,17 @@ public class Bridge : Interactable
     {
         if (!bridgeIsBuilt)
         {
+            CalcDistance();
+            if(p1IsInRange || p2IsInRange)
+            {
+                ActivateBridgePreview();
+            }
+            else
+            {
+                DeactivateBridgePreview();
+            }
             StartBridgeBuild();
             UpdateUIElement();
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        CalcDistance();
-        if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
-        {
-            //p1IsInRange = true;
-            if (!bridgeIsBuilt)
-            {
-                ActivateBridgePreview();
-            }
-        }
-        if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
-        {
-            //p2IsInRange = true;
-            if (!bridgeIsBuilt)
-            {
-                ActivateBridgePreview();
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        CalcDistance();
-        if (other.GetComponent<EarthPlayer>())
-        {
-            //p1IsInRange = false;
-            if (!bridgeIsBuilt)
-            {
-                DeactivateBridgePreview();
-            }
-        }
-        if (other.GetComponent<CelestialPlayer>())
-        {
-            //p2IsInRange = false;
-            if (!bridgeIsBuilt)
-            {
-                DeactivateBridgePreview();
-            }
-        }
-    }
-
-    private void CalcDistance()
-    {
-        if(Mathf.Abs((earthPlayer.GetGeo().transform.position - this.transform.position).magnitude) < interactDistance)
-        {
-            p1IsInRange = true;
-        }
-        else
-        {
-            p1IsInRange = false;
-        }
-
-        if (Mathf.Abs((celestialPlayer.GetGeo().transform.position - this.transform.position).magnitude) < interactDistance)
-        {
-            p2IsInRange = true;
-        }
-        else
-        {
-            p2IsInRange = false;
         }
     }
 
@@ -119,7 +65,7 @@ public class Bridge : Interactable
     {
         previewOn = true;
         bridgeGeometry.SetActive(true);
-        pickupTarget.SetActive(true);
+        //pickupTarget.SetActive(true);
         levelOneEvents.OnBridgeEncountered();
     }
 
@@ -127,7 +73,7 @@ public class Bridge : Interactable
     {
         previewOn = false;
         bridgeGeometry.SetActive(false);
-        pickupTarget.SetActive(false);
+        //pickupTarget.SetActive(false);
     }
 
     private void StartBridgeBuild()
@@ -177,7 +123,7 @@ public class Bridge : Interactable
     private void NotEnoughLogs()
     {
         string enWarningText = "Not enough logs";
-        string frWarningText = "Pas assez de bûche";
+        string frWarningText = "Pas assez du bûche";
         hudManager.ThrowPlayerWarning(enWarningText, frWarningText);
         //yield return buildTime;
         //earthPlayer.displayText.text = "";

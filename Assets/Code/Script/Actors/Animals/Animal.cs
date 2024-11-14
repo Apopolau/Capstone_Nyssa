@@ -23,9 +23,11 @@ public abstract class Animal : Actor
     [Header("These can be set on the prefab")]
     [SerializeField] protected LevelProgress levelProgress;
     [SerializeField] protected WeatherState weatherState;
+    [SerializeField] protected UserSettingsManager userSettingsManager;
     [SerializeField] protected AnimalSoundLibrary soundLibrary;
     [SerializeField] protected GameObject uiTarget;
     [SerializeField] protected GameObject escortPopup;
+    [SerializeField] protected InteractPrompt interactPrompt;
     [SerializeField] protected GameObject speechTarget;
     [SerializeField] protected GameObjectRuntimeSet playerSet;
     [SerializeField] protected GameObjectRuntimeSet enemySet;
@@ -416,6 +418,7 @@ public abstract class Animal : Actor
     public void ToggleEscortPopup(bool on)
     {
         escortPopup.SetActive(on);
+        interactPrompt.SetButtonPrompt(earthPlayer);
     }
 
     

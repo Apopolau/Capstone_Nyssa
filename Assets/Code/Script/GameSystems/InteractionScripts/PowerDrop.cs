@@ -44,8 +44,9 @@ public class PowerDrop : Interactable
     // Update is called once per frame
     void Update()
     {
+        CalcDistance();
+        UpdateUIElement();
         PowerPickup();
-
     }
 
     /// <summary>
@@ -54,7 +55,7 @@ public class PowerDrop : Interactable
     public void PowerPickup()
     {
 
-        if ((p1IsInRange && earthPlayer.GetIsInteracting()) || (p2IsInRange && celestialPlayer.GetIsInteracting()))
+        if (p2IsInRange && celestialPlayer.GetIsInteracting())
         {
             PowerStats currPowerStats = getPowerDropStatRef(powerDrop);
             powerBehaviour.setEnabled(currPowerStats);
@@ -100,32 +101,4 @@ public class PowerDrop : Interactable
         return null;
     }
 
-    //You may want a UI function here to turn up the button corresponding to this power, here
-
-    //Then call it in PowerPickup
-
-    //Make sure there's a collider on it for this
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
-        {
-            p1IsInRange = true;
-        }
-        if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
-        {
-            p2IsInRange = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.GetComponent<EarthPlayer>() && other.GetType() == typeof(CapsuleCollider))
-        {
-            p1IsInRange = false;
-        }
-        if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
-        {
-            p2IsInRange = false;
-        }
-    }
 }

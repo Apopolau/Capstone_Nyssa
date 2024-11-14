@@ -6,6 +6,7 @@ using TMPro;
 public class Ladder : Interactable
 {
     [SerializeField] LevelTwoEvents levelTwoEvents;
+    [SerializeField] UserSettingsManager userSettingsManager;
     [SerializeField] GameObject pickupTarget;
     [SerializeField] GameObject ladderGeometry;
     Material material;
@@ -21,9 +22,6 @@ public class Ladder : Interactable
     [SerializeField] DialogueTrigger celestialClimbUp;
     [SerializeField] DialogueTrigger celestialClimbDown;
 
-    [SerializeField] private float interactDistance;
-
-    [SerializeField] GameObject popupText;
     [SerializeField] GameObject logImage;
 
     private void Awake()
@@ -120,27 +118,6 @@ public class Ladder : Interactable
         }
     }
 
-    private void CalcDistance()
-    {
-        if(Mathf.Abs((earthPlayer.GetGeo().transform.position - this.transform.position).magnitude) < interactDistance)
-        {
-            p1IsInRange = true;
-        }
-        else
-        {
-            p1IsInRange = false;
-        }
-
-        if (Mathf.Abs((celestialPlayer.GetGeo().transform.position - this.transform.position).magnitude) < interactDistance)
-        {
-            p2IsInRange = true;
-        }
-        else
-        {
-            p2IsInRange = false;
-        }
-    }
-
     private void ActivateLadderPreview()
     {
         previewOn = true;
@@ -211,7 +188,16 @@ public class Ladder : Interactable
         ladderGeometry.GetComponentInChildren<MeshRenderer>().material = material;
         //levelTwoEvents.OnBridgeBuilt();
         ladderIsBuilt = true;
-        popupText.GetComponent<TextMeshProUGUI>().text = "Climb";
+        if(userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            interactPrompt.ChangeText("Climb");
+        }
+        else if(userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
+        {
+            interactPrompt.ChangeText("Grimper");
+        }
+        //popupText.GetComponent<TextMeshProUGUI>().text = "Climb";
+        isCelestialInteractable = true;
         logImage.SetActive(false);
         //Destroy(this.gameObject.GetComponent<BoxCollider>());
     }

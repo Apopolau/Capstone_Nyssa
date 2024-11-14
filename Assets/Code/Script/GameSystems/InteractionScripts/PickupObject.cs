@@ -7,6 +7,7 @@ using TMPro;
 public class PickupObject : Interactable
 {
     protected SpriteRenderer spriteRenderer;
+    
 
     [SerializeField] Item item;
     [SerializeField] ItemStats itemStats;
@@ -20,8 +21,8 @@ public class PickupObject : Interactable
     WaitForSeconds absorbDelay = new WaitForSeconds(0.1f);
     WaitForSeconds inventoryDisplay = new WaitForSeconds(3);
 
-    public UserSettingsManager userSettingsManager;
-    [SerializeField] GameObject pickupLetter; // Reference to the TextMeshPro component
+    //public UserSettingsManager userSettingsManager;
+    //[SerializeField] GameObject pickupLetter; // Reference to the TextMeshPro component
 
     //[SerializeField] GameObjectRuntimeSet playerSet;
 
@@ -64,14 +65,14 @@ public class PickupObject : Interactable
         //GameObject textObject = GameObject.Find("Letter"); 
         
 
-        UpdatePickupLetter();
+        //UpdatePickupLetter();
     }
 
     private void Update()
     {
         ItemPickup();
         UpdateUIElement();
-        UpdatePickupLetter();
+        //UpdatePickupLetter();
     }
 
     public void ItemPickup()
@@ -136,6 +137,7 @@ public class PickupObject : Interactable
             p1IsInRange = true;
 
             // Update the text based on the control type from the user settings manager
+            /*
             if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
             {
                 pickupLetter.GetComponent<TextMeshProUGUI>().text = "P";
@@ -144,11 +146,12 @@ public class PickupObject : Interactable
             {
             pickupLetter.GetComponent<TextMeshProUGUI>().text = "A";
             }
+            */
         }
         if (other.GetComponent<CelestialPlayer>() && other.GetType() == typeof(CapsuleCollider))
         {
             p2IsInRange = true;
-
+            /*
             // Update pickup letter based on celestial player's control type
             if (userSettingsManager.celestialControlType == UserSettingsManager.ControlType.KEYBOARD)
             {
@@ -158,13 +161,16 @@ public class PickupObject : Interactable
             {
                 pickupLetter.GetComponent<TextMeshProUGUI>().text = "A";
             }
+            */
         }
 
         // If one player goes out of range, update pickup letter back to "P" if EarthPlayer is still in range
+        /*
         if (!p2IsInRange && p1IsInRange && userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             pickupLetter.GetComponent<TextMeshProUGUI>().text = "P";
         }
+        */
     }
 
     private void OnTriggerExit(Collider other)

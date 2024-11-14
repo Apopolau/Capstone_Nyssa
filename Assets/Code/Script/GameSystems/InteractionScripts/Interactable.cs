@@ -21,6 +21,8 @@ public class Interactable : MonoBehaviour
 
     [Tooltip("The object attached to this one that holds the root for the ui popup")]
     [SerializeField] protected GameObject uiObject;
+    [SerializeField] protected InteractPrompt interactPrompt;
+    [SerializeField] protected float interactDistance;
 
     private void Start()
     {
@@ -38,6 +40,14 @@ public class Interactable : MonoBehaviour
         if((p1IsInRange && isEarthInteractable) || (p2IsInRange && isCelestialInteractable))
         {
             uiObject.SetActive(true);
+            if(p1IsInRange && isEarthInteractable)
+            {
+                interactPrompt.SetButtonPrompt(earthPlayer);
+            }
+            else if(p2IsInRange && isCelestialInteractable)
+            {
+                interactPrompt.SetButtonPrompt(celestialPlayer);
+            }
         }
         else if((!isEarthInteractable && !p2IsInRange) || (!isCelestialInteractable && !p1IsInRange))
         {
@@ -48,5 +58,26 @@ public class Interactable : MonoBehaviour
             uiObject.SetActive(false);
         }
         
+    }
+
+    protected void CalcDistance()
+    {
+        if (Mathf.Abs((earthPlayer.GetGeo().transform.position - this.transform.position).magnitude) < interactDistance)
+        {
+            p1IsInRange = true;
+        }
+        else
+        {
+            p1IsInRange = false;
+        }
+
+        if (Mathf.Abs((celestialPlayer.GetGeo().transform.position - this.transform.position).magnitude) < interactDistance)
+        {
+            p2IsInRange = true;
+        }
+        else
+        {
+            p2IsInRange = false;
+        }
     }
 }

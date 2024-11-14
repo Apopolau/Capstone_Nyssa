@@ -154,7 +154,14 @@ public class Nyssa : Animal
         {
             collider.enabled = false;
         }
-        uiText.GetComponent<TextMeshProUGUI>().text = "Put down";
+        if(userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            uiText.GetComponent<TextMeshProUGUI>().text = "Put down";
+        }
+        else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
+        {
+            uiText.GetComponent<TextMeshProUGUI>().text = "Déposer";
+        }
         
         beingHeld = true;
     }
@@ -167,7 +174,15 @@ public class Nyssa : Animal
             collider.enabled = true;
         }
         beingHeld = false;
-        uiText.GetComponent<TextMeshProUGUI>().text = "Pick up";
+        if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            uiText.GetComponent<TextMeshProUGUI>().text = "Pick up";
+        }
+        else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
+        {
+            uiText.GetComponent<TextMeshProUGUI>().text = "Ramasser";
+        }
+        
 
         this.transform.position = earthPlayer.transform.position + earthPlayer.transform.forward * 5;
     }
