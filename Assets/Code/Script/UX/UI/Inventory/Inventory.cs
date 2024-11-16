@@ -85,18 +85,6 @@ public class Inventory : ScriptableObject
         if (itemToRemove != null)
         {
             RemoveItem(itemToRemove, quantity);
-            
-
-            // Add a log message to check the current inventory after removal
-            /*foreach (var item in items)
-            {
-                
-            }
-            */
-        }
-        else
-        {
-            
         }
     }
 
@@ -148,12 +136,14 @@ public class Inventory : ScriptableObject
         {
             if (itemSlots[i] != null)
             {
-                
+                /*
                 if (itemSlots[i].Item == null)
                 {
                     itemSlots[i].SetItem(items[i]);
                 }
-                
+                */
+                itemSlots[i].SetItem(items[i]);
+
                 itemSlots[i].SetItemDisplay();
                 itemSlots[i].UpdateQuantityText();
             }
@@ -165,12 +155,6 @@ public class Inventory : ScriptableObject
             {
                 itemSlots[i].Item = null;
             }
-        }
-
-        // Display quantity changes in the console log.
-        foreach (Item item in items)
-        {
-            
         }
     }
 
