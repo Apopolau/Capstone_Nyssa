@@ -69,6 +69,7 @@ public class Plant : Creatable
             storedWater.low = false;
         }
 
+        /*
         foreach(SpriteRenderer r in waterUI.GetComponentsInChildren<SpriteRenderer>())
         {
             r.material.renderQueue += 2;
@@ -77,6 +78,7 @@ public class Plant : Creatable
         {
             r.material.renderQueue += 2;
         }
+        */
     }
 
     private void Start()
@@ -279,7 +281,7 @@ public class Plant : Creatable
         if(thisTypeSeed.Count < 5)
         {
             seed = Instantiate(stats.seedPrefab, this.transform);
-            seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
+            //seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
             seed.GetComponent<PickupObject>().SetInventory(inventory);
         }
     }

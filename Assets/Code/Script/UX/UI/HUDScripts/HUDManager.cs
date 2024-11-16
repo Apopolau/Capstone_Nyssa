@@ -401,7 +401,7 @@ public class HUDManager : MonoBehaviour
     //Switches which cursor is activated, used when switching between split screen and single camera
     public void SwitchCursorCanvas(MouseCanvasType mouseCanvasType, bool isActive)
     {
-        VirtualMouseInput inputToUse;
+        CustomMouseInput inputToUse;
         GameObject uiToUse;
         ToggleVirtualMouseSprite(false);
         if (mouseCanvasType == MouseCanvasType.SPROUT)
@@ -984,7 +984,7 @@ public class HUDManager : MonoBehaviour
     }
 
     //Get our currently used virtual mouse input
-    public VirtualMouseInput GetVirtualMouseInput()
+    public CustomMouseInput GetVirtualMouseInput()
     {
         return model.GetVirtualMouseInput();
     }

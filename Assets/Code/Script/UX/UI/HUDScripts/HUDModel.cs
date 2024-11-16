@@ -35,9 +35,9 @@ public class HUDModel : ScriptableObject
     private GameObject virtualMouseUI;
     private GameObject virtualMouseUIMain;
     private GameObject virtualMouseUISprout;
-    private VirtualMouseInput virtualMouseInput;
-    private VirtualMouseInput virtualMouseInputMain;
-    private VirtualMouseInput virtualMouseInputSprout;
+    private CustomMouseInput virtualMouseInput;
+    private CustomMouseInput virtualMouseInputMain;
+    private CustomMouseInput virtualMouseInputSprout;
     private Image cursorImage;
     [Tooltip("Drag Dialogue Manager prefab here")]
     [SerializeField] private GameObject dialogueManagerPrefab;
@@ -191,7 +191,7 @@ public class HUDModel : ScriptableObject
         virtualMouseUI = virtualMouseUIMain;
         cursorImage = virtualMouseUI.gameObject.GetComponentInChildren<Image>();
         cursorImage.enabled = false;
-        virtualMouseInputMain = virtualMouseUI.GetComponent<VirtualMouseInput>();
+        virtualMouseInputMain = virtualMouseUI.GetComponent<CustomMouseInput>();
         virtualMouseInput = virtualMouseInputMain;
         
         //virtualMouseUI.GetComponent<VirtualMouseUI>().SetRectTransform(hudCanvas.GetComponent<RectTransform>());
@@ -562,22 +562,22 @@ public class HUDModel : ScriptableObject
     }
 
     //Return the VirtualMouseInput object
-    public VirtualMouseInput GetVirtualMouseInput()
+    public CustomMouseInput GetVirtualMouseInput()
     {
         return virtualMouseInput;
     }
 
-    public VirtualMouseInput GetMainVirtualMouseInput()
+    public CustomMouseInput GetMainVirtualMouseInput()
     {
         return virtualMouseInputMain;
     }
 
-    public VirtualMouseInput GetSproutVirtualMouseInput()
+    public CustomMouseInput GetSproutVirtualMouseInput()
     {
         return virtualMouseInputSprout;
     }
 
-    public void SetVirtualMouseInput(VirtualMouseInput incInput)
+    public void SetVirtualMouseInput(CustomMouseInput incInput)
     {
         virtualMouseInput = incInput;
     }
@@ -600,7 +600,7 @@ public class HUDModel : ScriptableObject
     public void SetSproutVirtualMouseUI(GameObject incMouseUI)
     {
         virtualMouseUISprout = incMouseUI;
-        virtualMouseInputSprout = virtualMouseUISprout.GetComponent<VirtualMouseInput>();
+        virtualMouseInputSprout = virtualMouseUISprout.GetComponent<CustomMouseInput>();
         virtualMouseUISprout.transform.GetChild(0).gameObject.GetComponent<Image>().enabled = false;
     }
 

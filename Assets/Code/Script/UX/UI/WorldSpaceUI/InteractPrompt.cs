@@ -16,12 +16,9 @@ public class InteractPrompt : MonoBehaviour
     [SerializeField] string englishPrompt;
     [SerializeField] string frenchPrompt;
 
-    [SerializeField] int renderOrder;
-
     // Start is called before the first frame update
     void Start()
     {
-        AssignRenderOrder();
         AssignLanguage();
         InitializeBoxSettings();
     }
@@ -72,14 +69,6 @@ public class InteractPrompt : MonoBehaviour
         else if(settingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
         {
             promptText.text = frenchPrompt;
-        }
-    }
-
-    private void AssignRenderOrder()
-    {
-        foreach (SpriteRenderer r in GetComponentsInChildren<SpriteRenderer>())
-        {
-            r.material.renderQueue += renderOrder;
         }
     }
 

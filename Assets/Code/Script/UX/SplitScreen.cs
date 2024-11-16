@@ -18,8 +18,8 @@ public class SplitScreen : MonoBehaviour
     [SerializeField] public Camera celestialCam;
     [SerializeField] public Camera mainCam;
     [SerializeField] public float distance;
-    [SerializeField] public VirtualMouseInput virtualMouseInput;
-    [SerializeField] public VirtualMouseInput earthVirtualMouseInput;
+    [SerializeField] public CustomMouseInput virtualMouseInput;
+    [SerializeField] public CustomMouseInput earthVirtualMouseInput;
     
 
     public DialogueManager dialogue;

@@ -7,11 +7,11 @@ using UnityEngine.InputSystem.UI;
 public class VirtualMouseUI : MonoBehaviour
 {
     [SerializeField] private RectTransform canvasRectTransform;
-    private VirtualMouseInput virtualMouseInput;
+    private CustomMouseInput virtualMouseInput;
 
     private void Awake()
     {
-        virtualMouseInput = GetComponent<VirtualMouseInput>();
+        virtualMouseInput = GetComponent<CustomMouseInput>();
         canvasRectTransform = GetComponentInParent<RectTransform>();
     }
 
