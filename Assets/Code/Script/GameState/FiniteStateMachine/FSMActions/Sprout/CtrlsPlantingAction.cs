@@ -32,15 +32,7 @@ public class CtrlsPlantingAction : FSMAction
         earthPlayer.plantSelected.transform.position = earthPlayer.transform.position;
         earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
 
-        //Adjust the UI accordingly
-        /*
-        if (earthPlayer.plantingControlsUI != null)
-        { earthPlayer.plantingControlsUI.SetActive(true); }
-        */
-
         earthPlayer.TurnOnTileSelect(earthPlayer.transform);
-        //earthPlayer.DisplayTileText();
-        //earthPlayer.DarkenAllImages(earthPlayer.GetPlantDarkenObject());
         hudManager.ToggleSproutPanel(true);
     }
 

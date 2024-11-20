@@ -268,11 +268,17 @@ namespace UnityEngine.InputSystem.UI
             if (m_CursorMode == CursorMode.HardwareCursorIfAvailable)
                 TryEnableHardwareCursor();
 
+
             // Add mouse device.
             if (m_VirtualMouse == null)
+            {
                 m_VirtualMouse = (Mouse)InputSystem.AddDevice("VirtualMouse");
+            }
             else if (!m_VirtualMouse.added)
+            {
+                //Bug is here
                 InputSystem.AddDevice(m_VirtualMouse);
+            }
 
             InputSystem.EnableDevice(m_VirtualMouse);
 

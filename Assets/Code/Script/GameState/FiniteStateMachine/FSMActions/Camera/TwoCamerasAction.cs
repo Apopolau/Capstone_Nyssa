@@ -22,25 +22,14 @@ public class TwoCamerasAction : FSMAction
         
         //go into the the plant systems main camera and make sure it is properly set
         splitScreen.earthPlayer.GetComponent<EarthPlayer>().SetCamera(splitScreen.earthCam);
-        //splitScreen.earthVirtualMouseInput.cursorTransform.position = splitScreen.earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
-        //splitScreen.GetHudManager().SetVirtualMousePosition(splitScreen.virtualMouseInput.cursorTransform.position);
+
         if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || splitScreen.earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
         {
-            /*
-            splitScreen.earthPlayer.GetComponent<EarthPlayer>().TurnOffCursor();
-            //splitScreen.earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput = splitScreen.earthVirtualMouseInput;
-            splitScreen.GetHudManager().SwitchVirtualMouseInputs(splitScreen.earthVirtualMouseInput);
-            splitScreen.earthPlayer.GetComponent<EarthPlayer>().SwitchCursorIcon(splitScreen.virtualMouseInput.cursorGraphic.GetComponent<Image>().sprite);
-            if(splitScreen.earthPlayer.GetComponent<EarthPlayer>().GetInPlantSelection() || splitScreen.earthPlayer.GetComponent<EarthPlayer>().GetInRemovalSelection())
-            {
-                splitScreen.earthPlayer.GetComponent<EarthPlayer>().TurnOnCursor();
-            }
-            */
             splitScreen.hudManager.SwitchCursorCanvas(HUDManager.MouseCanvasType.SPROUT, true);
         }
         else
         {
-            splitScreen.hudManager.SwitchCursorCanvas(HUDManager.MouseCanvasType.SPROUT, false);
+            splitScreen.hudManager.SwitchCursorCanvas(HUDManager.MouseCanvasType.SPROUT, false) ;
         }
         splitScreen.mainCam.gameObject.SetActive(false);
         splitScreen.mainCam.enabled = false;

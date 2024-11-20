@@ -85,8 +85,8 @@ public class EarthPlayerControl : MonoBehaviour
 
         //EarthPlayerDefault
         controls.EarthPlayerDefault.Disable();
-        controls.EarthPlayerDefault.EarthWalk.performed += OnEarthMovePerformed;
-        controls.EarthPlayerDefault.EarthWalk.canceled += OnEarthMoveCancelled;
+        controls.EarthPlayerDefault.EarthWalkDef.performed += OnEarthMovePerformed;
+        controls.EarthPlayerDefault.EarthWalkDef.canceled += OnEarthMoveCancelled;
         controls.EarthPlayerDefault.PickTree.performed += OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.PickFlower.performed += OnPickFlower; // <- we can talk about Attack here because P1Controls has an Attack action
         controls.EarthPlayerDefault.PickGrass.performed += OnPickGrass; // <- we can talk about Attack here because P1Controls has an Attack action
@@ -101,15 +101,15 @@ public class EarthPlayerControl : MonoBehaviour
         controls.PlantIsSelected.Disable();
         controls.PlantIsSelected.Plantplant.performed += OnPlantPlantedPerformed;
         controls.PlantIsSelected.Cancelplanting.performed += OnPlantingCancelledPerformed;
-        controls.PlantIsSelected.EarthWalk.performed += OnEarthMovePerformed;
-        controls.PlantIsSelected.EarthWalk.canceled += OnEarthMoveCancelled;
+        controls.PlantIsSelected.EarthWalkPlant.performed += OnEarthMovePerformed;
+        controls.PlantIsSelected.EarthWalkPlant.canceled += OnEarthMoveCancelled;
 
         //When removing plant
         controls.RemovingPlant.Disable();
         controls.RemovingPlant.RemovePlant.performed += OnPlantRemoved;
         controls.RemovingPlant.CancelRemoval.performed += OnRemovingPlantCancelled;
-        controls.RemovingPlant.EarthWalk.performed += OnEarthMovePerformed;
-        controls.RemovingPlant.EarthWalk.canceled += OnEarthMoveCancelled;
+        controls.RemovingPlant.EarthWalkRemove.performed += OnEarthMovePerformed;
+        controls.RemovingPlant.EarthWalkRemove.canceled += OnEarthMoveCancelled;
 
         controls.HealSelect.Disable();
         controls.HealSelect.SelectTarget.started += OnTargetSelected;
@@ -122,8 +122,8 @@ public class EarthPlayerControl : MonoBehaviour
         controls.BarrierSelect.CycleTarget.started += OnTargetCycled;
 
         controls.HoldingNyssa.Disable();
-        controls.HoldingNyssa.EarthWalk.started += OnEarthMovePerformed;
-        controls.HoldingNyssa.EarthWalk.canceled += OnEarthMoveCancelled;
+        controls.HoldingNyssa.EarthWalkHold.started += OnEarthMovePerformed;
+        controls.HoldingNyssa.EarthWalkHold.canceled += OnEarthMoveCancelled;
         controls.HoldingNyssa.PutNyssaDown.started += OnPutNyssaDown;
 
         //When in the menus
@@ -171,6 +171,8 @@ public class EarthPlayerControl : MonoBehaviour
 
     public void ShutOffControls()
     {
+        InputSystem.DisableAllEnabledActions();
+        /*
         controls.CutsceneControls.Disable();
         controls.MenuControls.Disable();
         controls.EarthPlayerDefault.Disable();
@@ -222,6 +224,7 @@ public class EarthPlayerControl : MonoBehaviour
         controls.DialogueControls.Disable();
         controls.DialogueControls.Continue.started += OnContinuePerformed;
         controls.DialogueControls.Skip.started += OnSkipPerformed;
+        */
     }
 
 

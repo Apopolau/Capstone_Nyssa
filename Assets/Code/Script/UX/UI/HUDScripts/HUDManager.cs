@@ -398,12 +398,17 @@ public class HUDManager : MonoBehaviour
         popUpTextIsOn = false;
     }
 
-    //Switches which cursor is activated, used when switching between split screen and single camera
+    /// <summary>
+    /// Switch which virtual mouse cursor is active: Sprout's personal one or the main canvas one
+    /// </summary>
+    /// <param name="mouseCanvasType">Which canvas is being activated</param>
+    /// <param name="isActive">Whether or not the cursor is active at time of switch</param>
     public void SwitchCursorCanvas(MouseCanvasType mouseCanvasType, bool isActive)
     {
         CustomMouseInput inputToUse;
         GameObject uiToUse;
         ToggleVirtualMouseSprite(false);
+
         if (mouseCanvasType == MouseCanvasType.SPROUT)
         {
             inputToUse = model.GetSproutVirtualMouseInput();
