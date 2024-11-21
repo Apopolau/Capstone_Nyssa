@@ -7064,21 +7064,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1680896471}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: origSpeed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: kidnapIcon
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: managerObject
       value: 
-      objectReference: {fileID: 1224415384}
+      objectReference: {fileID: 1304372715}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: waterWaypoint
       value: 
       objectReference: {fileID: 1995758489}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: kidnappedSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: shelterWaypoint
       value: 
       objectReference: {fileID: 2085992848}
+    - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: kidnapIconSprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: duckWayPoints.Array.size
       value: 5
@@ -19657,11 +19669,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 982d8739fe5f8c541abc09db726259e8, type: 3}
   m_PrefabInstance: {fileID: 1053491026}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1053505727 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3645209631482356489, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-  m_PrefabInstance: {fileID: 1806025542}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1056286080
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32027,26 +32034,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1463262981}
     m_Modifications:
-    - target: {fileID: 643746350714191412, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 2736
+    - target: {fileID: 1899923180019688547, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2293652205981867178, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 3248
+    - target: {fileID: 1899923180019688547, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2332831829506939876, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-      propertyPath: objectToPanTo.Array.size
-      value: 2
+    - target: {fileID: 1899923180019688547, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2332831829506939876, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-      propertyPath: objectToPanTo.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3f2cf16001730c44d884fdce4ad741b8, type: 2}
-    - target: {fileID: 2332831829506939876, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-      propertyPath: objectToPanTo.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 21c58fcdfd6da4343a40901ec980706e, type: 2}
+    - target: {fileID: 1899923180019688547, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899923180019688547, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1899923180019688547, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3668103021458720016, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -88.2
@@ -32091,18 +32102,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Duck
       objectReference: {fileID: 0}
-    - target: {fileID: 5665216156270961092, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-      propertyPath: uiTarget
-      value: 
-      objectReference: {fileID: 1053505727}
-    - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
-      propertyPath: kidnapIcon
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: managerObject
       value: 
@@ -32136,8 +32135,7 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1102025696}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 213399662373931819, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
@@ -38261,6 +38259,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6275658991242812774, guid: 92092c3da8315a34ea91698dfd7bab6a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6275658991242812774, guid: 92092c3da8315a34ea91698dfd7bab6a, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -38270,7 +38272,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6805581171601626266, guid: 92092c3da8315a34ea91698dfd7bab6a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6982796378372430470, guid: 92092c3da8315a34ea91698dfd7bab6a, type: 3}
       propertyPath: m_StaticEditorFlags

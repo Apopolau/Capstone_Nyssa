@@ -45,6 +45,7 @@ public class RockSlideInteraction : Interactable
         {
             isAnimated = true;
             soundEvent.Play();
+            isEarthInteractable = false;
             StartCoroutine(LetTimerRun());
         }
     }

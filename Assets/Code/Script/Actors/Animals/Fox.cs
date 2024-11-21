@@ -64,7 +64,7 @@ public class Fox : Animal
                 SetEscort(false);
             }
         }
-        if (isEscorted && uiTarget.activeSelf)
+        if (isEscorted && escortPopup.activeSelf)
         {
             //uiTarget.SetActive(false);
             ToggleEscortPopup(false);
@@ -141,7 +141,7 @@ public class Fox : Animal
 
     private void OnTriggerExit(Collider other)
     {
-        if (uiTarget.activeSelf && other.GetComponent<EarthPlayer>())
+        if (escortPopup.activeSelf && other.GetComponent<EarthPlayer>())
         {
             //uiTarget.SetActive(false);
             ToggleEscortPopup(false);

@@ -27,8 +27,8 @@ public abstract class Animal : Actor
     [SerializeField] protected AnimalSoundLibrary soundLibrary;
     [SerializeField] protected GameObject uiTarget;
     [SerializeField] protected GameObject escortPopup;
+    [SerializeField] protected GameObject speechBubble;
     [SerializeField] protected InteractPrompt interactPrompt;
-    [SerializeField] protected GameObject speechTarget;
     [SerializeField] protected GameObjectRuntimeSet playerSet;
     [SerializeField] protected GameObjectRuntimeSet enemySet;
     [SerializeField] protected GameObjectRuntimeSet buildSet;
@@ -43,31 +43,34 @@ public abstract class Animal : Actor
     [SerializeField] protected Sprite celesteImage;
     [SerializeField] protected Sprite kidnapIconSprite;
 
+    private CanvasScaler matchCanvas;
+    private float pixelHeightOnCanvas = 0.7f;
+
     [Header("Stats")]
     protected Stat hunger;
     protected Stat thirst;
     protected Stat entertained;
 
     [Header("Behaviour states")]
-    protected bool isStuck;
-    protected bool isScared;
-    protected bool isHiding = false;
-    protected bool isShielded = false;
-    protected bool isEscorted = false;
-    protected bool isKidnapped = false;
+    [SerializeField] protected bool isStuck;
+    [SerializeField] protected bool isScared;
+    [SerializeField] protected bool isHiding = false;
+    [SerializeField] protected bool isShielded = false;
+    [SerializeField] protected bool isEscorted = false;
+    [SerializeField] protected bool isKidnapped = false;
 
     [Header("Other Kidnap Variables")]
-    protected KidnappingEnemy kidnapper;
+    [SerializeField] protected KidnappingEnemy kidnapper;
     [SerializeField] protected float origSpeed;
     [SerializeField] protected float kidnappedSpeed;
-    protected bool kidnapIconOn;
+    [SerializeField] protected bool kidnapIconOn;
 
     [Header("Other variables")]
-    protected bool hasCleanWater = false;
-    protected bool hasShelter = false;
-    protected bool hasAnyFood = false;
-    protected bool midAnimation = false;
-    protected bool inRangeOfEscort = false;
+    [SerializeField] protected bool hasCleanWater = false;
+    [SerializeField] protected bool hasShelter = false;
+    [SerializeField] protected bool hasAnyFood = false;
+    [SerializeField] protected bool midAnimation = false;
+    [SerializeField] protected bool inRangeOfEscort = false;
 
     //Timers
     protected WaitForSeconds barrierLength = new WaitForSeconds(5f);
@@ -141,11 +144,13 @@ public abstract class Animal : Actor
 
     public void SetWalkingState()
     {
+        /*
         if (GetComponent<Rigidbody>().velocity.magnitude > new Vector3(0.1f, 0.1f, 0.1f).magnitude)
         {
             animator.SetAnimationFlag("move", true);
         }
-        else if (GetComponent<NavMeshAgent>().enabled && GetComponent<NavMeshAgent>().hasPath)
+        */
+        if (GetComponent<NavMeshAgent>().enabled && GetComponent<NavMeshAgent>().hasPath)
         {
             animator.SetAnimationFlag("move", true);
         }
@@ -199,16 +204,6 @@ public abstract class Animal : Actor
     {
         if (kidnapIconOn)
         {
-            /*
-            kidnapIcon.transform.position = uiTarget.transform.position;
-            float xPos = Mathf.Clamp(uiTarget.transform.position.x, 0f, Screen.width);
-            float yPos = Mathf.Clamp(uiTarget.transform.position.x, 0f, Screen.height);
-            kidnapIcon.transform.position = new Vector3(xPos, yPos, 0);
-
-            Vector3 pointToRotateTowards = new Vector3(0, 0, kidnapIcon.transform.GetChild(0).GetChild(1).transform.position.z);
-
-            kidnapIcon.transform.GetChild(0).GetChild(0).LookAt(this.gameObject.transform);
-            */
             managerObject.GetComponent<HUDManager>().MoveKidnapIcon(kidnapIcon, uiTarget, this.gameObject);
         }
     }
@@ -404,15 +399,19 @@ public abstract class Animal : Actor
 
     public void TurnOnSpeechPopup(Sprite sprite)
     {
-        speechTarget.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = sprite;
-        speechTarget.SetActive(true);
+        //Get the sprite we're modifying
+        speechBubble.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = sprite;
+
+        UpdateSpriteScale(speechBubble.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>());
+
+        speechBubble.SetActive(true);
         StartCoroutine(PopupRoutine());
     }
 
     public IEnumerator PopupRoutine()
     {
         yield return popupLength;
-        speechTarget.SetActive(false);
+        speechBubble.SetActive(false);
     }
 
     public void ToggleEscortPopup(bool on)
@@ -421,5 +420,10 @@ public abstract class Animal : Actor
         interactPrompt.SetButtonPrompt(earthPlayer);
     }
 
-    
+    void UpdateSpriteScale(SpriteRenderer _sprite)
+    {
+        float xWidth = 0.7f / _sprite.sprite.bounds.size.x;
+        float yWidth = 0.7f / _sprite.sprite.bounds.size.y;
+        _sprite.transform.localScale = new Vector3(xWidth, yWidth, 1);
+    }
 }

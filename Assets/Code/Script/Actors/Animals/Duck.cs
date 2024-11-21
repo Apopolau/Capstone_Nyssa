@@ -29,8 +29,6 @@ public class Duck : Animal
         isHiding = false;
         animator = GetComponent<DuckAnimator>();
         navAgent = GetComponent<NavMeshAgent>();
-
-        
     }
 
     private void OnEnable()
@@ -69,9 +67,9 @@ public class Duck : Animal
                 SetEscort(false);
             }
         }
-        if (isEscorted && uiTarget.activeSelf)
+        if (isEscorted && escortPopup.activeSelf)
         {
-            uiTarget.SetActive(false);
+            escortPopup.SetActive(false);
         }
     }
 
@@ -136,7 +134,7 @@ public class Duck : Animal
         {
             if (other.GetComponent<EarthPlayer>() && !isEscorted)
             {
-                uiTarget.SetActive(true);
+                ToggleEscortPopup(true);
                 inRangeOfEscort = true;
             }
         }
@@ -144,9 +142,9 @@ public class Duck : Animal
 
     private void OnTriggerExit(Collider other)
     {
-        if (uiTarget.activeSelf && other.GetComponent<EarthPlayer>())
+        if (escortPopup.activeSelf && other.GetComponent<EarthPlayer>())
         {
-            uiTarget.SetActive(false);
+            ToggleEscortPopup(false);
             inRangeOfEscort = false;
         }
     }

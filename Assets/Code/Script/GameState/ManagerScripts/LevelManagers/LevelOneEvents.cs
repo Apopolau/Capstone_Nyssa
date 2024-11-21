@@ -630,7 +630,7 @@ public class LevelOneEvents : LevelEventManager
             }
         }
 
-        duck2.GetComponent<Duck>().Unstuck();
+        
 
         //duck1.GetComponent<Duck>().SetFarBankOn();
         //duck2.GetComponent<Duck>().SetFarBankOn();
@@ -644,6 +644,8 @@ public class LevelOneEvents : LevelEventManager
     {
         //duck1.GetComponent<Duck>().SetHalfwayPointOn();
         //duck2.GetComponent<Duck>().SetHalfwayPointOn();
+
+        duck2.GetComponent<Duck>().Unstuck();
 
         keyMonsterDefeatCount++;
         //fourthAreaClear = true;
