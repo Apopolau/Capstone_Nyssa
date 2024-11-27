@@ -15,6 +15,7 @@ public class CheckIfPathSelected : BTCondition
     //Returns true if it's night time
     protected override NodeState OnRun()
     {
+        /*
         if (thisEnemy.GetIsPathSelected())
         {
             return NodeState.SUCCESS;
@@ -23,6 +24,8 @@ public class CheckIfPathSelected : BTCondition
         {
             return NodeState.FAILURE;
         }
+        */
+        return NodeState.SUCCESS;
     }
 
     protected override void OnReset() { }

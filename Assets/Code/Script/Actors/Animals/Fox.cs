@@ -69,6 +69,10 @@ public class Fox : Animal
             //uiTarget.SetActive(false);
             ToggleEscortPopup(false);
         }
+        if (isKidnapped)
+        {
+            FollowKidnapper();
+        }
     }
 
     override protected IEnumerator UpdateAnimalState()

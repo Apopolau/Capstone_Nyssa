@@ -85,8 +85,8 @@ MonoBehaviour:
   soundLibrary: {fileID: 11400000, guid: 75c7ecd4bbb912d4bbc37260df9bcecd, type: 2}
   uiTarget: {fileID: 4697382249011736361}
   escortPopup: {fileID: 4697382249011736361}
+  speechBubble: {fileID: 4662540494609431590}
   interactPrompt: {fileID: 3029685084975243812}
-  speechTarget: {fileID: 4662540494609431590}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   enemySet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
   buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
@@ -98,8 +98,21 @@ MonoBehaviour:
   sproutImage: {fileID: 0}
   celesteImage: {fileID: 0}
   kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
+  isStuck: 0
+  isScared: 0
+  isHiding: 0
+  isShielded: 0
+  isEscorted: 0
+  isKidnapped: 0
+  kidnapper: {fileID: 0}
   origSpeed: 0
   kidnappedSpeed: 0
+  kidnapIconOn: 0
+  hasCleanWater: 0
+  hasShelter: 0
+  hasAnyFood: 0
+  midAnimation: 0
+  inRangeOfEscort: 0
 --- !u!54 &4831530610944231379
 Rigidbody:
   m_ObjectHideFlags: 0

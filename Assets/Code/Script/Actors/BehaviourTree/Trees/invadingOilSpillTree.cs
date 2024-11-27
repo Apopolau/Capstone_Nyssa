@@ -53,12 +53,7 @@ public class invadingOilSpillTree : BTree
               new TaskHeadOut(enemy)
              *
 
-
-
         }),*/
-
-
-
 
             //KIDNAP ANIMAL SEQUENCE
                 new Sequence(new List<BTNode>
@@ -73,11 +68,6 @@ public class invadingOilSpillTree : BTree
               //if animal is kidnapped 
               //get closests waypoint 
               //bring animal with you 
-
-
-
-
-
         }),
                //PATHTOAnimal
             new Sequence(new List<BTNode>
@@ -86,11 +76,6 @@ public class invadingOilSpillTree : BTree
               new Inverter(new CheckIfStaggered(enemy)),
               new CheckIfAnimalSpotted(enemy),
               new TaskPathToAnimal(enemy),
-
-
-
-
-
            }),
 
 
@@ -129,8 +114,8 @@ public class invadingOilSpillTree : BTree
           
                 ////PATROL SEQUENCE
                 new Inverter(new CheckIfDying(enemy)),
-                new Inverter(new CheckIfPathSelected(enemy)),
-                new TaskInvadeChoosePath(enemy),
+                //new Inverter(new CheckIfPathSelected(enemy)),
+                //new TaskInvadeChoosePath(enemy),
                 new TaskInvadePatrol(enemy,enemyMeshAgent,transform),
           
          

@@ -65,6 +65,10 @@ public class Hedgehog : Animal
         {
             ToggleEscortPopup(false);
         }
+        if (isKidnapped)
+        {
+            FollowKidnapper();
+        }
     }
 
     override protected IEnumerator UpdateAnimalState()

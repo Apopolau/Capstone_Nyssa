@@ -1096,6 +1096,7 @@ public class EarthPlayer : Player
             {
                 selectedTile = null;
             }
+            
         }
     }
 

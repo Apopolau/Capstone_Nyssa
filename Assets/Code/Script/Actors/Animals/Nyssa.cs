@@ -63,6 +63,10 @@ public class Nyssa : Animal
             UnSetPickup();
         }
         StaysWithSprout();
+        if (isKidnapped)
+        {
+            FollowKidnapper();
+        }
     }
 
     override protected IEnumerator UpdateAnimalState()

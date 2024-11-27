@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.VFX;
 
 
-[CreateAssetMenu(menuName = "Data Type/Stats/Power Stats", fileName = "PowerStats")]
+[CreateAssetMenu(menuName = "DataType/Stats/PowerStats", fileName = "PowerStats")]
 
 
 public class PowerStats : ScriptableObject

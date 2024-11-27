@@ -71,6 +71,10 @@ public class Duck : Animal
         {
             escortPopup.SetActive(false);
         }
+        if (isKidnapped)
+        {
+            FollowKidnapper();
+        }
     }
 
     override protected IEnumerator UpdateAnimalState()

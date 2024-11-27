@@ -9,15 +9,15 @@ public class TaskHeadOut : BTNode
     KidnappingEnemy thisEnemy;
     //Transformation
     private Transform transformPos;
-    private List<Transform> currWayPointList;
-    private int currWaypointIndex = 0;
+    //private List<Transform> currWayPointList;
+    //private int currWaypointIndex = 0;
     //Wait a Sec
-    private bool iswaiting = false;
-    private float waitTime = 1f;
-    private float waitCounter = 0;
-    Rigidbody rb;
+    //private bool iswaiting = false;
+    //private float waitTime = 1f;
+    //private float waitCounter = 0;
+    //Rigidbody rb;
   
-    private float elapsed = 0.0f;
+    //private float elapsed = 0.0f;
 
     public TaskHeadOut(KidnappingEnemy enemy, NavMeshAgent enemyMeshAgent, Transform transform)
     {
@@ -30,32 +30,30 @@ public class TaskHeadOut : BTNode
     protected override NodeState OnRun()
     {
 
-        //if while player is chilling they are in range of somehing, patroling fails
-        currWayPointList = thisEnemy.GetChosenPath();
+        //If the player stops us, we stop kidnapping
+        //currWayPointList = thisEnemy.GetEscapeRoute();
+
         if (thisEnemy.GetIsStaggered() || thisEnemy.GetIsDying())
         {
             thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().SetKidnapStatus(false);
-            //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
-            //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().ResetOrigSpeed();
             state = NodeState.FAILURE;
         }
         else
-        { 
-            Transform wPoint = thisEnemy.GetEscapeRoute();
+        {
+            //Transform wPoint = currWayPointList[currWaypointIndex].transform;
+            Transform wPoint = thisEnemy.GetEscapeWaypoint();
+
             float distance = Vector3.Distance(transformPos.position, wPoint.position);
-           
             float stoppingDistance = thisAgent.stoppingDistance;
 
             if (distance < stoppingDistance)
             {
-
-                state = NodeState.RUNNING;
-
+                //currWaypointIndex++;
+                //state = NodeState.RUNNING;
+                state = NodeState.SUCCESS;
             }
             else
             {
-
-
                 thisEnemy.SetAgentPath(wPoint.position);
 
                 transformPos.LookAt(wPoint.position);

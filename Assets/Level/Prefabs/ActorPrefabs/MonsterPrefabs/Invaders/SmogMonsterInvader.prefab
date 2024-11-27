@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &661026633352960656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2343373370636948126}
+  m_Layer: 0
+  m_Name: KidnapTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2343373370636948126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661026633352960656}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 15.12, z: 4.01}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7875459936262026101}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1247582060929235606
 GameObject:
   m_ObjectHideFlags: 0
@@ -72,6 +103,7 @@ Transform:
   - {fileID: 5241570856126507742}
   - {fileID: 557686180941482097}
   - {fileID: 8738957182932924120}
+  - {fileID: 2343373370636948126}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8484278331407762736
@@ -166,13 +198,15 @@ MonoBehaviour:
   isInvader: 1
   invaderEnemyRoutes: {fileID: 0}
   eventManager: {fileID: 0}
-  enemyAnimator: {fileID: 0}
   soundLibrary: {fileID: 11400000, guid: c4a9a84b113095d489ead7c7c7b1d65d, type: 2}
-  chosenPath: []
+  invasionPath: []
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   animalSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
   attackTrigger: {fileID: 1703028325125813691}
-  escapeRoute: {fileID: 0}
+  kidnapAnimalTarget: {fileID: 661026633352960656}
+  escapeRoute:
+  - {fileID: 0}
+  escapeWayPoint: {fileID: 0}
   attackRange: 10
   kidnapRange: 10
 --- !u!114 &6936945984691434751
@@ -215,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7993782789147946141}
+  currentAnimation: {fileID: 0}
   idleAnimation: {fileID: 11400000, guid: 38dc062c0ce5e0840a7e26d338f4f6b5, type: 2}
   moveAnimation: {fileID: 11400000, guid: 815386bf4ae7b854c9b58b86f75edb55, type: 2}
   hurtAnimation: {fileID: 11400000, guid: aa7f2f5a0ed042e4c8368fd28afddfbb, type: 2}

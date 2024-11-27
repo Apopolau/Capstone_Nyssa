@@ -17,6 +17,7 @@ public abstract class KidnappingEnemy : Enemy
     protected GameObject closestAnimal;
     protected GameObject closestPlayer;
 
+    [SerializeField] protected GameObject kidnapAnimalTarget;
     protected Animal kidnappedAnimal;
 
     //Interaction with the player
@@ -30,7 +31,8 @@ public abstract class KidnappingEnemy : Enemy
     protected bool inKidnapRange = false;
     protected bool hasAnimal = false;
     protected bool isKidnapping = false;
-    [SerializeField] protected Transform escapeRoute = null;
+    [SerializeField] protected List<Transform> escapeRoute = new List<Transform>();
+    [SerializeField] protected Transform escapeWayPoint;
 
     [SerializeField] protected float attackRange;
     [SerializeField] protected float kidnapRange;
@@ -156,59 +158,23 @@ public abstract class KidnappingEnemy : Enemy
 
     }
 
-    /// <summary>
-    /// GETTERS AND SETTERS
-    /// </summary>
-    
-    //Returns whether or not the monster is in the middle of an attack
-    public bool GetAttackInitiated()
-    {
-        return attackInitiated;
-    }
-
-    public void SetAttackInitiated(bool initiated)
-    {
-        attackInitiated = initiated;
-    }
-
+    //Turn on the attack collider so the monster can do damage
     public void AttackCollisionOn()
     {
         attackTrigger.ToggleAttacking(true);
     }
 
+    //Turn off the attack collider so the monster won't do damage anymore
     public void AttackCollisionOff()
     {
         attackTrigger.ToggleAttacking(false);
     }
 
-    //Returns the animal marked as closest
-    public GameObject GetClosestAnimal()
-    {
-        return closestAnimal;
 
-    }
 
-    //Sets a new animal marked as closest
-    public void SetClosestAnimal(GameObject nextAnimal)
-    {
-        closestAnimal = nextAnimal;
-    }
-
-    //Returns the animal this monster is currently kidnapping
-    public Animal GetKidnappedAnimal()
-    {
-        return kidnappedAnimal;
-    }
-
-    public void SetKidnappedAnimal(Animal animal)
-    {
-        kidnappedAnimal = animal;
-    }
-
-    public bool GetSeesAnimal()
-    {
-        return seesAnimal;
-    }
+    /// <summary>
+    /// GETTERS AND SETTERS
+    /// </summary>
 
     public GameObjectRuntimeSet GetPlayerSet()
     {
@@ -232,6 +198,69 @@ public abstract class KidnappingEnemy : Enemy
         closestPlayer = newPlayer;
     }
 
+
+    /// ATTACK GETTERS AND SETTERS
+    //Returns whether or not the monster is in the middle of an attack
+    public bool GetAttackInitiated()
+    {
+        return attackInitiated;
+    }
+
+    public void SetAttackInitiated(bool initiated)
+    {
+        attackInitiated = initiated;
+    }
+
+    //Returns the range at which the monster should attempt to land an attack
+    public float GetAttackRange()
+    {
+        return attackRange;
+    }
+
+    public bool GetInAttackRange()
+    {
+        return inAttackRange;
+    }
+
+
+    /// KIDNAP GETTERS AND SETTERS
+    //Returns the animal marked as closest
+    public GameObject GetClosestAnimal()
+    {
+        return closestAnimal;
+
+    }
+
+    //Sets a new animal marked as closest
+    public void SetClosestAnimal(GameObject nextAnimal)
+    {
+        closestAnimal = nextAnimal;
+    }
+
+    //Returns the animal this monster is currently kidnapping
+    public Animal GetKidnappedAnimal()
+    {
+        return kidnappedAnimal;
+    }
+
+    //Sets the animal a monster is trying to kidnap
+    public void SetKidnappedAnimal(Animal animal)
+    {
+        kidnappedAnimal = animal;
+    }
+
+    //Get the marker the animal should move to when being kidnapped
+    public GameObject GetKidnapAnimalTarget()
+    {
+        return kidnapAnimalTarget;
+    }
+
+    //Can the monster see an animal right now?
+    public bool GetSeesAnimal()
+    {
+        return seesAnimal;
+    }
+
     //Returns if the monster is in range to kidnap an animal
     public bool GetInKidnapRange()
     {
@@ -244,30 +273,34 @@ public abstract class KidnappingEnemy : Enemy
         return isKidnapping;
     }
 
-    //Returns the range at which the monster can land an attack
-    public float GetAttackRange()
-    {
-        return attackRange;
-    }
-
-    public bool GetInAttackRange()
-    {
-        return inAttackRange;
-    }
-
     //Returns the range at which the monster can kidnap an animal
     public float GetKidnapRange()
     {
         return kidnapRange;
     }
 
-    public Transform GetEscapeRoute()
+
+    /// WAYPOINT GETTERS AND SETTERS
+    //Returns a list of waypoints to use as an escape route
+    public List<Transform> GetEscapeRoute()
     {
         return escapeRoute;
     }
 
-    public void SetEscapeRoute(Transform route)
+    public void SetEscapeRoute(List<Transform> route)
     {
         escapeRoute = route;
+    }
+
+    //Returns the specific location the monster should path to in order to escape with an animal
+    public Transform GetEscapeWaypoint()
+    {
+        return escapeWayPoint;
+    }
+
+    //Set the location the monster should attempt to escape to while kidnapping
+    public void SetEscapeWaypoint(Transform waypoint)
+    {
+        escapeWayPoint = waypoint;
     }
 }

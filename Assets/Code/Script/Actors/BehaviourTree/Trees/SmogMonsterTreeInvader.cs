@@ -129,8 +129,8 @@ public class smogMonsterTreeInvader: BTree
           
                 ////PATROL SEQUENCE
                 new Inverter(new CheckIfDying(enemy)),
-                new Inverter(new CheckIfPathSelected(enemy)),
-                new TaskInvadeChoosePath(enemy),
+                //new Inverter(new CheckIfPathSelected(enemy)),
+                //new TaskInvadeChoosePath(enemy),
                 new TaskInvadePatrol(enemy,enemyMeshAgent,transform),
           
          

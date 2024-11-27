@@ -11,27 +11,25 @@ public class TaskInvadePatrol : BTNode
     private Transform transformPos;
     private List<Transform> currWayPointList;
     private int currWaypointIndex = 0;
-    //Wait a Sec
-    private bool iswaiting = false;
-    //private float waitTime = 1f;
-    //private float waitCounter = 0;
-    Rigidbody rb;
-    NavMeshPath path;
-    //private float elapsed = 0.0f;
 
     public TaskInvadePatrol(KidnappingEnemy enemy, NavMeshAgent enemyMeshAgent, Transform transform)
     {
         thisEnemy = enemy;
         thisAgent = enemyMeshAgent;
         transformPos = transform;
-        path = new NavMeshPath();
     }
 
     protected override NodeState OnRun()
     {
 
-        //if while player is chilling they are in range of somehing, patroling fails
-        currWayPointList = thisEnemy.GetChosenPath();
+        //If we run across a player or animal while pathing, stop pathing
+        currWayPointList = thisEnemy.GetInvasionPath();
+
+        if(currWayPointList.Count == 0)
+        {
+            state = NodeState.FAILURE;
+            return state;
+        }
 
         if (thisEnemy.GetSeesPlayer() || thisEnemy.GetSeesAnimal())
         {

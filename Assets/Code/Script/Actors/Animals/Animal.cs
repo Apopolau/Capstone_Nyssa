@@ -61,8 +61,8 @@ public abstract class Animal : Actor
 
     [Header("Other Kidnap Variables")]
     [SerializeField] protected KidnappingEnemy kidnapper;
-    [SerializeField] protected float origSpeed;
-    [SerializeField] protected float kidnappedSpeed;
+    //[SerializeField] protected float origSpeed;
+    //[SerializeField] protected float kidnappedSpeed;
     [SerializeField] protected bool kidnapIconOn;
 
     [Header("Other variables")]
@@ -177,12 +177,18 @@ public abstract class Animal : Actor
         if (status)
         {
             soundLibrary.PlayPanicClips();
-            SetKidnapSpeed();
+            GetComponent<CapsuleCollider>().enabled = false;
+            ResetAgentPath();
+            GetComponent<NavMeshAgent>().enabled = false;
+            //SetKidnapSpeed();
         }
         else
         {
-            ResetOrigSpeed();
+            GetComponent<CapsuleCollider>().enabled = true;
+            GetComponent<NavMeshAgent>().enabled = true;
+            //ResetOrigSpeed();
         }
+        
     }
 
     public void UpdateKidnapIcon()
@@ -192,6 +198,7 @@ public abstract class Animal : Actor
         {
             kidnapIconOn = true;
             kidnapIcon.SetActive(true);
+            HandleKidnapIcon();
         }
         else
         {
@@ -204,19 +211,28 @@ public abstract class Animal : Actor
     {
         if (kidnapIconOn)
         {
-            managerObject.GetComponent<HUDManager>().MoveKidnapIcon(kidnapIcon, uiTarget, this.gameObject);
+            managerObject.GetComponent<HUDManager>().MoveKidnapIcon(kidnapIcon, uiTarget);
         }
     }
 
+    protected void FollowKidnapper()
+    {
+        this.transform.position = kidnapper.GetKidnapAnimalTarget().transform.position;
+    }
+
+    /*
     public void SetKidnapSpeed()
     {
         GetNavMeshAgent().speed = kidnappedSpeed;
     }
+    */
 
+    /*
     public void ResetOrigSpeed()
     {
         GetNavMeshAgent().speed = origSpeed;
     }
+    */
 
     public KidnappingEnemy GetKidnapper()
     {

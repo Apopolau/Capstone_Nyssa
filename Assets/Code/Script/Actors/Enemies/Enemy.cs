@@ -29,8 +29,7 @@ public abstract class Enemy : Actor
 
     //InvaderCoder
     [Header("Invader info")]
-    protected bool isPathSelected = false;
-    [SerializeField] protected List<Transform> chosenPath;
+    [SerializeField] protected List<Transform> invasionPath;
 
     //Registered public events
     public event System.Action<int, int> OnHealthChanged;
@@ -134,35 +133,17 @@ public abstract class Enemy : Actor
         beingHit = isHit;
     }
 
-    public bool GetIsPathSelected()
+    public List<Transform> GetInvasionPath()
     {
-        return isPathSelected;
+        return invasionPath;
     }
 
-    public void SetIsPathSelected(bool selected)
+    public void SetInvasionPath(List<Transform> pathList)
     {
-        isPathSelected = selected;
+        invasionPath = pathList;
     }
 
-    public List<Transform> GetChosenPath()
-    {
-        return chosenPath;
-    }
-
-    public void SetChosenPath(List<Transform> pathList)
-    {
-        chosenPath = pathList;
-    }
-
-    public EnemyInvadingPath GetInvaderEnemyRoutes()
-    {
-        return invaderEnemyRoutes;
-    }
-
-    public void SetInvaderEnemyRoutes(EnemyInvadingPath invadingPaths)
-    {
-        invaderEnemyRoutes = invadingPaths;
-    }
+    
 
     public bool GetIsColliding()
     {

@@ -37,18 +37,14 @@ public class TaskFindEscapeRoute : BTNode
 
         if (thisEnemy.GetInKidnapRange())
         {
-            escapeWaypoint = thisEnemy.GetInvaderEnemyRoutes().getClosestEscapeRoute(thisEnemy);
-            thisEnemy.GetInvaderEnemyRoutes().setClosestEscapeRoute(thisEnemy, escapeWaypoint);
-           // thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().SetCurrSpeed();
+            //escapeWaypoint = thisEnemy.GetInvaderEnemyRoutes().getClosestEscapeRoute(thisEnemy);
+            //thisEnemy.SetEscapeRoute();
+            // thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().SetCurrSpeed();
             thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().GetNavMeshAgent().speed = 8;
             thisAgent.speed = 8;
 
         
             //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().isKidnapped = true;
-
-
-
-
             state = NodeState.SUCCESS;
 
         }

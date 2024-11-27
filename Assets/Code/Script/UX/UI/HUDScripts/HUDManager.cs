@@ -595,51 +595,51 @@ public class HUDManager : MonoBehaviour
 
     //NEEDS HEAVILY DEBUGGED
     //Moves a kidnap icon to try to get as close to an animal that's being kidnapped as possible while staying on-screen
-    public void MoveKidnapIcon(GameObject kidnapIcon, GameObject uiTarget, GameObject animal)
+    public void MoveKidnapIcon(GameObject kidnapIcon, GameObject uiTarget)
     {
-        
-        //float xPos = Mathf.Clamp(120, 0f, Screen.width - 120);
-        //float yPos = Mathf.Clamp(120, 0f, Screen.height - 120);
-        //kidnapIcon.transform.position = new Vector3(xPos, yPos, 0);
+        float angle = 0;
 
-        //Calculate the direction between the camera and the animal
-        Vector3 toPosition = animal.transform.position;
-        Vector3 fromPosition = Camera.main.transform.position;
-        fromPosition.z = 0f;
+        //Get the position of the target location for the kidnap icon based on its screen space position
+        Vector3 kidnapIconTarget = new Vector3(uiTarget.transform.position.x, uiTarget.transform.position.y + 5, uiTarget.transform.position.z);
+        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(kidnapIconTarget);
 
-        Vector3 dir = (toPosition - fromPosition).normalized;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-        if (angle < 0)
-            angle += 360;
-
-        kidnapIcon.transform.GetChild(0).gameObject.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, angle);
-
-        //Move the kidnap icon to the closest point in the screen space to the animal's UI target
-        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(uiTarget.transform.position);
-
+        //Calculate if the icon is within a margin or beyond off of screen space
         float borderSize = 100f;
-
         bool isOffScreen = targetPositionScreenPoint.x <= borderSize || targetPositionScreenPoint.x >= Screen.width - borderSize || targetPositionScreenPoint.y <= borderSize || targetPositionScreenPoint.y >= Screen.height - borderSize;
 
         //If the position it would be at falls off of the edge of the visible screen
         if (isOffScreen)
         {
-            
+            //Calculate the direction between the camera and the animal
+            Vector3 toPosition = kidnapIconTarget;
+            //Vector3 realCameraPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, Camera.main.nearClipPlane));
+            Vector3 realCameraPos = Camera.main.transform.position;
+            Vector3 fromPosition = realCameraPos;
+            fromPosition.z = 0f;
 
+            //Rotate the background pointer part so the arrow points at the animal
+            Vector3 dir = (toPosition - fromPosition).normalized;
+            angle = (Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg);
+            if (angle < 0)
+                angle += 360;
+
+            //Correct the position to move it on-screen
             Vector3 cappedTargetScreenPosition = targetPositionScreenPoint;
             if (cappedTargetScreenPosition.x <= borderSize) cappedTargetScreenPosition.x = borderSize;
             if (cappedTargetScreenPosition.x >= Screen.width - borderSize) cappedTargetScreenPosition.x = Screen.width - borderSize;
             if (cappedTargetScreenPosition.y <= borderSize) cappedTargetScreenPosition.y = borderSize;
             if (cappedTargetScreenPosition.y >= Screen.height - borderSize) cappedTargetScreenPosition.y = Screen.height - borderSize;
 
-            Vector3 pointerWorldPosition = Camera.main.ScreenToWorldPoint(cappedTargetScreenPosition);
-            kidnapIcon.transform.position = pointerWorldPosition;
+            kidnapIcon.transform.position = cappedTargetScreenPosition;
             kidnapIcon.transform.localPosition = new Vector3(kidnapIcon.transform.localPosition.x, kidnapIcon.transform.localPosition.y, 0);
         }
-        //Vector3 pointToRotateTowards = new Vector3(kidnapIcon.transform.position.x, kidnapIcon.transform.position.y, animal.transform.position.x);
+        else
+        {
+            kidnapIcon.transform.position = targetPositionScreenPoint;
+            kidnapIcon.transform.localPosition = new Vector3(kidnapIcon.transform.localPosition.x, kidnapIcon.transform.localPosition.y, 0);
+        }
 
-        //kidnapIcon.transform.GetChild(0).LookAt(pointToRotateTowards);
-
+        kidnapIcon.transform.GetChild(0).gameObject.GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, angle);
     }
 
     private void OnPowerStateChange()
