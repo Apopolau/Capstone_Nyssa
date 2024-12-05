@@ -15,9 +15,16 @@ public class CheckIfPlayerDead : BTCondition
 
     protected override NodeState OnRun()
     {
-        if (thisEnemy.GetClosestPlayer().GetComponent<Player>().IsDead())
+        if(thisEnemy.GetClosestPlayer() != null)
         {
-            return NodeState.SUCCESS;
+            if (thisEnemy.GetClosestPlayer().GetComponent<Player>().IsDead())
+            {
+                return NodeState.SUCCESS;
+            }
+            else
+            {
+                return NodeState.FAILURE;
+            }
         }
         else
         {

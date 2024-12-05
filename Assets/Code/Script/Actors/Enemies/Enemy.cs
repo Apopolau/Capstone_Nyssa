@@ -42,7 +42,25 @@ public abstract class Enemy : Actor
         health = new Stat(enemyStats.maxHealth, enemyStats.maxHealth, false);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
 
+            isColliding = true;
+
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Enemy")
+        {
+
+            isColliding = false;
+
+        }
+    }
 
     public bool TakeHit( int hitPoints)
     {
@@ -67,26 +85,6 @@ public abstract class Enemy : Actor
        
     }
     
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-
-            isColliding = true;
-
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == "Enemy")
-        {
-
-            isColliding = false;
-
-        }
-    }
     
     private IEnumerator TakePlayerHit()
     {

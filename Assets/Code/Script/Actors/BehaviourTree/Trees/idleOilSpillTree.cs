@@ -6,85 +6,57 @@ using UnityEngine.AI;
 
 public class idleOilSpillTree : BTree
 {
-    private CelestialPlayer player;
-    private OilMonster enemy;
-    private NavMeshAgent enemyMeshAgent;
-    Rigidbody rb;
-    //Enemy Movements
+    private OilMonster thisEnemy;
     public Transform[] waypoints;
-    public static float speed = 2f;
-
-    //Enemy Health
-    [SerializeField] private float startingHealth;
-    [SerializeField] private float currHealth;
-   // [SerializeField] private Transform playerTransform;
-
-    //collider attackCollider or attack range
-    //collider chase collider or chase range
 
     protected override BTNode SetupTree()
     {
-        enemyMeshAgent = transform.GetComponent<NavMeshAgent>();
-        //player = transform.GetComponent<Enemy>().celestialPlayer;
-        enemy = transform.GetComponent<OilMonster>();
-        rb = GetComponent<Rigidbody>();
+        thisEnemy = transform.GetComponent<OilMonster>();
 
         // Your behaviour tree will go in here: put your sequences after "new List<BTNode>"
         BTNode root = new Selector(new List<BTNode>
         {
-            new Sequence(new List<BTNode>
+            new Selector(new List<BTNode>
             {
-                new Inverter(new CheckIfDying(enemy)),
-                new Inverter(new CheckIfStaggered(enemy)),
-                new CheckInAttackRange(enemy),
-                new Inverter(new CheckIfPlayerDead(enemy)),
-                new Timer(enemy.GetEnemyAnimator().GetAnimationLength("attack"), new taskInitiateAttack(enemy)),
-                new TaskEndAttack(enemy)
-            }),
+                ////NOT STAGGERED SEQUENCE
+                new Sequence(new List<BTNode>
+                {
+                    new Inverter(new CheckIfDying(thisEnemy)),
+                    new Inverter(new CheckIfStaggered(thisEnemy)),
+                    new Selector(new List<BTNode>()
+                    {
+                        ////ATTACK PLAYER SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new Inverter(new CheckIfPlayerDead(thisEnemy)),
+                            new CheckInAttackRange(thisEnemy),
+                            new Timer(thisEnemy.GetEnemyAnimator().GetAnimationLength("attack"), new taskInitiateAttack(thisEnemy)),
+                            new TaskEndAttack(thisEnemy)
+                        }),
+                        ////CHASE PLAYER SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new Inverter(new CheckIfPlayerDead(thisEnemy)),
+                            new CheckPlayerInRange(thisEnemy),
+                            new taskChase(thisEnemy)
+                        }),
+                        ////PATROL SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new Inverter(new CheckIfDying(thisEnemy)),
+                            new Inverter(new CheckIfStaggered(thisEnemy)),
+                            new TaskPatrol( thisEnemy, waypoints),
+                        })
+                    })
 
-            new Sequence(new List<BTNode>
-            {
-                //check if anything is in the range of the enemy
-                // new CheckIfAnyInRange(enemyMeshAgent),
-            
-                //check if player is in the enemy range
-                // new CheckIfPlayerIsVisible(enemyMeshAgent),
-                new Inverter(new CheckIfDying(enemy)),
-                new Inverter(new CheckIfStaggered(enemy)),
-                new CheckInRange(enemy),
-                new Inverter(new CheckIfPlayerDead(enemy)),
-                //new TaskAttackPlayer(enemyMeshAgent,player)
-                //CHASE THE PLAYER
-                new taskChase(enemy)
-             }),
-           
+                }),
 
-            /*MAKE ANOTHER ONE TO RESPOND TO ATTACKS*/
-
-            /*
-            if they can see the player (collider)
-            if close enough to player
-            Attack player
-            if they can see the player/not close enough
-            Run at player
-
-            if nothing else
-            switch to wander behaviour
-            */
-         
-            new Sequence(new List<BTNode>
-            {
-          
-                ////PATROL SEQUENCE
-                new Inverter(new CheckIfDying(enemy)),
-                new TaskPatrol( enemy,rb,enemyMeshAgent, transform, waypoints),
-            }),
-
-            new Sequence(new List<BTNode>
-            {
-                new TaskAwaitDeath(enemyMeshAgent)
+                ////STAGGER AND DEATH SEQUENCE
+                new Sequence(new List<BTNode>
+                {
+                    new TaskAwaitDeath(thisEnemy)
+                })
             })
-
         });
         return root;
 

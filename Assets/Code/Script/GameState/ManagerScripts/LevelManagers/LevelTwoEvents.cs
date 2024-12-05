@@ -9,17 +9,25 @@ public class LevelTwoEvents : LevelEventManager
     [Header("Specific to level 2")]
     [Header("Scene Data")]
     [SerializeField] LevelTwoProgress levelTwoProgress;
-    
+
+    [Header("Prefabs")]
+    private GameObject flowerSeedSpawn;
     [SerializeField] Item grassSeed;
     [SerializeField] Item treeSeed;
     [SerializeField] private PowerBehaviour power;
+    private GameObject powerDrop;
+
+    [Header("Spawners")]
     [SerializeField] private GameObject spawn1;
     [SerializeField] private GameObject spawn2;
-    //[SerializeField] private List<GameObject> animalKidnapIcons;
 
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
     [SerializeField] GameObject lake;
+
+    [Header("Visual Update Assets")]
+    [SerializeField] private GameObject facility;
+    [SerializeField] private GameObject loggingBuilding;
 
     [Header("Tile grids")]
     [SerializeField] GameObject tileGrid;
@@ -52,32 +60,7 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] private int grassSteps;
     [SerializeField] private int dirtSteps;
 
-    private bool firstAreaClear = false;
-    private bool secondAreaClear = false;
-    private bool thirdAreaClear = false;
-    private bool fourthAreaClear = false;
-
-    private bool staticMonstersDefeated = false;
-    private bool spawnsDestroyed = false;
-
-    [Header("Objectives")]
-    //[SerializeField] GameObject objectiveListEN;
-    //[SerializeField] GameObject objectiveListFR;
-    //[SerializeField] private TaskListManager[] task;
-    //[SerializeField] TaskListManager task1;
-    //[SerializeField] TaskListManager task2;
-    //[SerializeField] TaskListManager task3;
-    //[SerializeField] TaskListManager task4;
-    //[SerializeField] TaskListManager task5;
-    //[SerializeField] TaskListManager task6;
-    //[SerializeField] TaskListManager task7;
-    //[SerializeField] TaskListManager task8;
-
-    private GameObject flowerSeedSpawn;
-    private GameObject powerDrop;
-
-
-    [Header("Dialogue triggers")]
+    [Header("Dialogue variables")]
     [SerializeField] GameObject leaveTriggerObj;
     public DialogueTrigger firstMonsterDeadDialouge;
     public DialogueTrigger secondMonsterDeadDialouge;
@@ -86,12 +69,28 @@ public class LevelTwoEvents : LevelEventManager
     public DialogueTrigger allMonstersDefeatedDialogue;
     public DialogueTrigger allObjectivesMetDialogue;
 
+    private bool runDefeatDialogue = false;
+    private bool runReadyToLeaveDialogue = false;
+
     [Header("Animals")]
+    [SerializeField] private GameObjectRuntimeSet animalSet;
     [SerializeField] private GameObject hog1;
     [SerializeField] private GameObject hog2;
     [SerializeField] private GameObject hog3;
     [SerializeField] private GameObject fox;
     [SerializeField] private GameObject nyssa;
+
+    [Header("Waypoints")]
+    [SerializeField] private GameObject firstWaypoint;
+    [SerializeField] private GameObject secondWaypoint;
+    [SerializeField] private GameObject thirdWaypoint;
+    [SerializeField] private GameObject fourthWaypoint;
+
+    [Header("Progress variables")]
+    private bool firstAreaClear = false;
+    private bool secondAreaClear = false;
+    private bool thirdAreaClear = false;
+    private bool fourthAreaClear = false;
 
     int keyMonsterDefeatCount;
     int monsterCount = 7;
@@ -99,13 +98,8 @@ public class LevelTwoEvents : LevelEventManager
     int area3MonsterCount = 2;
     int area4MonsterCount = 3;
 
-    private bool runDefeatDialogue = false;
-    private bool runReadyToLeaveDialogue = false;
-    //private bool hasEncounteredLadder = false;
-    //private bool hasFoundNyssa = false;
-
-    WaitForSeconds delayTime = new WaitForSeconds(0.1f);
-    WaitForSeconds extraDelayTime = new WaitForSeconds(1);
+    private bool staticMonstersDefeated = false;
+    private bool spawnsDestroyed = false;
 
     //If different conversion milestones have been met
     private bool areaOneMOneMet = false;
@@ -117,12 +111,12 @@ public class LevelTwoEvents : LevelEventManager
     private bool areaFourMOneMet = false;
     private bool areaFourMTwoMet = false;
 
-    [Header("Visual Update Assets")]
-    [SerializeField] private GameObject facility;
-    [SerializeField] private GameObject loggingBuilding;
-
     bool setClean = false;
     bool setSuperClean = false;
+
+    [Header("Time intervals")]
+    WaitForSeconds delayTime = new WaitForSeconds(0.1f);
+    WaitForSeconds extraDelayTime = new WaitForSeconds(1);
 
     private void Awake()
     {
@@ -545,13 +539,20 @@ public class LevelTwoEvents : LevelEventManager
         }
 
         levelTwoProgress.animalHasShelter = true;
+        keyMonsterDefeatCount++;
+        firstAreaClear = true;
+
+        //We want to allow all active animals to travel to this location
+        foreach (GameObject go in animalSet.Items)
+        {
+            go.GetComponent<Animal>().AddWayPointToWanderList(firstWaypoint);
+        }
 
         firstMonsterDeadDialouge.TriggerDialogue();
-        keyMonsterDefeatCount++;
-        //objectiveContainer.SetActive(true);
+
         hudManager.ToggleObjectivesState(true);
-        firstAreaClear = true;
-        hog1.GetComponent<Hedgehog>().Unstuck();
+
+        hog1.GetComponent<Hedgehog>().SetStuck(false);
     }
 
     //When the player defeats the static smog monster in the lumber yard area
@@ -565,13 +566,22 @@ public class LevelTwoEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
-        secondMonsterDeadDialouge.TriggerDialogue();
+
         Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 1, enemy.transform.position.z);
         powerDrop = Instantiate(power.MoonTideAttackStats.powerDropPrefab, enemyPos, Quaternion.identity);
+
         keyMonsterDefeatCount++;
         secondAreaClear = true;
+
+        secondMonsterDeadDialouge.TriggerDialogue();
+
+        //We want to allow all active animals to travel to this location
+        foreach (GameObject go in animalSet.Items)
+        {
+            go.GetComponent<Animal>().AddWayPointToWanderList(secondWaypoint);
+        }
+
         spawn1.GetComponent<EnemySpawner>().ToggleSpawns(false);
-        //Cause Celeste's tidal wave to drop here
     }
 
     //When the player defeats the 2 oil monsters hanging out on the west side of the main area
@@ -603,6 +613,12 @@ public class LevelTwoEvents : LevelEventManager
 
         thirdAreaClear = true;
         fourthAreaClear = true;
+
+        //We want to allow all active animals to travel to this location
+        foreach (GameObject go in animalSet.Items)
+        {
+            go.GetComponent<Animal>().AddWayPointToWanderList(thirdWaypoint);
+        }
     }
 
     //When the player defeats the last 3 oil monsters, over by the terminal, that are surrounding the hedgehog friends
@@ -620,9 +636,15 @@ public class LevelTwoEvents : LevelEventManager
         fourthAreaClear = true;
         levelTwoProgress.GetTask(7).CrossOutTask();
         SetFriendCompletion();
+
+        foreach (GameObject go in animalSet.Items)
+        {
+            go.GetComponent<Animal>().AddWayPointToWanderList(fourthWaypoint);
+        }
+
         fourthMonsterDeadDialouge.TriggerDialogue();
-        hog2.GetComponent<Hedgehog>().Unstuck();
-        hog3.GetComponent<Hedgehog>().Unstuck();
+        hog2.GetComponent<Hedgehog>().SetStuck(false);
+        hog3.GetComponent<Hedgehog>().SetStuck(false);
     }
 
     //Run this for each defeated monster assigned to this spot

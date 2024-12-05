@@ -8,16 +8,12 @@ using UnityEngine.AI;
 public class TaskGetKidnapped: BTNode
 {
     Animal thisAnimal;
-    KidnappingEnemy kidnapper;
     NavMeshAgent thisAgent;
-    Transform transformPos;
 
-
-    public  TaskGetKidnapped (Animal animal, NavMeshAgent animalMeshAgent, Transform transform)
+    public  TaskGetKidnapped (Animal animal)
     {
         thisAnimal = animal;
-        thisAgent = animalMeshAgent;
-        transformPos = transform;
+        thisAgent = thisAnimal.GetNavMeshAgent();
     }
     protected override NodeState OnRun()
     { 
@@ -29,24 +25,8 @@ public class TaskGetKidnapped: BTNode
 
         if (thisAnimal.GetIsKidnapped())
         {
-            kidnapper = thisAnimal.GetComponent<Animal>().GetKidnapper();
-            float distance = Vector3.Distance(transformPos.position, kidnapper.transform.position);
-            float stoppingDistance = thisAgent.stoppingDistance;
-            if (distance < stoppingDistance)
-            {
-                state = NodeState.RUNNING;
-
-            }
-            else
-            {
-                thisAnimal.SetAgentPath(kidnapper.transform.position);
-                transformPos.LookAt(kidnapper.transform.position);
-
-                // make it follow its kidnapper
-                state = NodeState.RUNNING;
-            }
-
-           
+            thisAgent.ResetPath();
+            state = NodeState.RUNNING;
         }
 
         return state;

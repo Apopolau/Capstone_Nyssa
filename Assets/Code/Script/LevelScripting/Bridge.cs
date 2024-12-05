@@ -13,7 +13,7 @@ public class Bridge : Interactable
     WaitForSeconds buildTime = new WaitForSeconds(4.542f);
 
     private bool bridgeIsBuilt = false;
-    private bool previewOn;
+    //private bool previewOn;
 
     
 
@@ -63,7 +63,7 @@ public class Bridge : Interactable
 
     private void ActivateBridgePreview()
     {
-        previewOn = true;
+        //previewOn = true;
         bridgeGeometry.SetActive(true);
         //pickupTarget.SetActive(true);
         levelOneEvents.OnBridgeEncountered();
@@ -71,7 +71,7 @@ public class Bridge : Interactable
 
     private void DeactivateBridgePreview()
     {
-        previewOn = false;
+        //previewOn = false;
         bridgeGeometry.SetActive(false);
         //pickupTarget.SetActive(false);
     }

@@ -18,10 +18,12 @@ public class CheckIfAnyFood : BTCondition
     {
         if (animal.GetHasFood())
         {
+            //Debug.Log("There was food");
             return NodeState.SUCCESS;
         }
         else
         {
+            //Debug.Log("There was no food");
             return NodeState.FAILURE;
         }
     }

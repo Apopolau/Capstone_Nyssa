@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 using UnityEngine.AI;
-public class CheckInRange : BTCondition
+public class CheckPlayerInRange : BTCondition
 {
     KidnappingEnemy thisEnemy;
 
-    public CheckInRange(KidnappingEnemy enemy)
+    public CheckPlayerInRange(KidnappingEnemy enemy)
     {
         thisEnemy = enemy;
     }

@@ -7,45 +7,35 @@ using UnityEngine.AI;
 public class taskInitiatePathToFood : BTNode
 {
     NavMeshAgent thisAgent;
-    OurAnimator thisAnimator;
-    Animal animal;
+    Animal thisAnimal;
 
-    public taskInitiatePathToFood(NavMeshAgent navAgent, OurAnimator animator)
+    public taskInitiatePathToFood(Animal animal)
     {
-        thisAgent = navAgent;
-        thisAnimator = animator;
-        animal = navAgent.GetComponent<Animal>();
+        thisAnimal = animal;
+        thisAgent = thisAnimal.GetComponent<NavMeshAgent>();
     }
 
 
     protected override NodeState OnRun()
     {
-        bool inRange = Mathf.Abs((thisAgent.transform.position - animal.GetClosestFood().transform.position).magnitude) <= thisAgent.stoppingDistance;
+        //bool inRange = Mathf.Abs((thisAgent.transform.position - thisAnimal.GetClosestFood().transform.position).magnitude) <= thisAgent.stoppingDistance;
+        //Debug.Log(thisAnimal + " is seeking " + thisAnimal.GetClosestFood());
 
         //If we're not at the destination but we can reach it
-        if (!inRange && thisAgent.path.status != NavMeshPathStatus.PathInvalid)
-        {
-            animal.SetAgentPath(animal.GetClosestFood().transform.position);
-            //thisAnimator.ToggleSetWalk();
-            animal.GetAnimator().SetAnimationFlag("move", true);
-            state = NodeState.RUNNING;
-        }
+        //if (!inRange)
+        //{
+            thisAnimal.SetActiveWaypoint(thisAnimal.GetClosestFood());
+            thisAnimal.SetAgentPath(thisAnimal.GetActiveWaypoint().transform.position);
+            state = NodeState.SUCCESS;
+        //}
         //If we've reached the destination
+        /*
         else if (inRange)
         {
-            //thisAnimator.ToggleSetWalk();
-            //animal.SetAnimationFlag("move", false);
-            animal.ResetAgentPath();
-            state = NodeState.SUCCESS;
-        }
-        //If we can't reach the destination
-        else if (thisAgent.path.status == NavMeshPathStatus.PathInvalid)
-        {
-            //thisAnimator.ToggleSetWalk();
-            //animal.SetAnimationFlag("move", false);
-            animal.ResetAgentPath();
+            thisAnimal.ResetAgentPath();
             state = NodeState.FAILURE;
         }
+        */
         return state;
     }
 

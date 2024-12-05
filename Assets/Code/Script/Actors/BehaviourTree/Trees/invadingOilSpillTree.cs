@@ -6,139 +6,74 @@ using UnityEngine.AI;
 
 public class invadingOilSpillTree : BTree
 {
-    private CelestialPlayer player;
-    private OilMonster enemy;
-    private NavMeshAgent enemyMeshAgent;
-    Rigidbody rb;
-    public static float speed = 2f;
-    //public EnemyInvadingPath waypointPath;
-    //Enemy Health
-    //[SerializeField] private float startingHealth = 10;
-    [SerializeField] private float currHealth;
-    [SerializeField] private Transform playerTransform;
-    //[SerializeField] public List<Transform> waypointPath;
-    //collider attackCollider or attack range
-    //collider chase collider or chase range
+    private OilMonster thisEnemy;
 
     protected override BTNode SetupTree()
     {
-        enemyMeshAgent = transform.GetComponent<NavMeshAgent>();
-        //player = transform.GetComponent<Enemy>().celestialPlayer;
-        enemy = transform.GetComponent<OilMonster>();
-        rb = GetComponent<Rigidbody>();
-        //waypointPath = GetComponent<EnemyInvadingPath>();
+        thisEnemy = transform.GetComponent<OilMonster>();
 
-        // Your behaviour tree will go in here: put your sequences after "new List<BTNode>"
         BTNode root = new Selector(new List<BTNode>
         {
-            //ATTACK PLAYER SEQUENCE
-            new Sequence(new List<BTNode>
+
+            new Selector(new List<BTNode>
             {
-                new Inverter(new CheckIfDying(enemy)),
-                new Inverter(new CheckIfStaggered(enemy)),
-                new CheckInAttackRange(enemy),
-                new Inverter(new CheckIfPlayerDead(enemy)),
-                new Timer(enemy.GetEnemyAnimator().GetAnimationLength("attack"), new taskInitiateAttack(enemy)),
-                new TaskEndAttack(enemy)
-            }),
-
-              //ESCAPE SEQUENCE
-         /*       new Sequence(new List<BTNode>
-        {
-              new Inverter(new CheckIfAnimalKidnapped(enemy)),
-              new Inverter(new CheckIfDying(enemy)),
-              new Inverter(new CheckIfStaggered(enemy)),
-          
-              new TaskFindEscapeRoute(enemy),
-              new TaskHeadOut(enemy)
-             *
-
-        }),*/
-
-            //KIDNAP ANIMAL SEQUENCE
+                ////NOT STAGGERED SEQUENCE
                 new Sequence(new List<BTNode>
-        {
-              new Inverter(new CheckIfDying(enemy)),
-              new Inverter(new CheckIfStaggered(enemy)),
-              new CheckInKidnapRange(enemy),
-             // new Timer(2f, new TaskInitiateSmother(enemy)),
-              new TaskKidnapAnimal(enemy),
-             new TaskFindEscapeRoute(enemy),
-              new TaskHeadOut(enemy,enemyMeshAgent,transform),
-              //if animal is kidnapped 
-              //get closests waypoint 
-              //bring animal with you 
-        }),
-               //PATHTOAnimal
-            new Sequence(new List<BTNode>
-           {
-                new Inverter(new CheckIfDying(enemy)),
-              new Inverter(new CheckIfStaggered(enemy)),
-              new CheckIfAnimalSpotted(enemy),
-              new TaskPathToAnimal(enemy),
-           }),
+                {
+                    new Inverter(new CheckIfDying(thisEnemy)),
+                    new Inverter(new CheckIfStaggered(thisEnemy)),
+                    new Selector(new List<BTNode>()
+                    {
+                        ////ATTACK PLAYER SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new Inverter(new CheckIfPlayerDead(thisEnemy)),
+                            new CheckInAttackRange(thisEnemy),
+                            new Inverter(new CheckIfPlayerDead(thisEnemy)),
+                            new Timer(thisEnemy.GetEnemyAnimator().GetAnimationLength("attack"), new taskInitiateAttack(thisEnemy)),
+                            new TaskEndAttack(thisEnemy)
+                        }),
 
+                        ////KIDNAP ANIMAL SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new CheckInKidnapRange(thisEnemy),
+                            new TaskKidnapAnimal(thisEnemy),
+                            new TaskFindEscapeRoute(thisEnemy),
+                            new TaskHeadOut(thisEnemy)
+                        }),
 
-            new Sequence(new List<BTNode>
-            {
-                //check if anything is in the range of the enemy
-                // new CheckIfAnyInRange(enemyMeshAgent),
-            
-                //check if player is in the enemy range
-                // new CheckIfPlayerIsVisible(enemyMeshAgent),
-                new Inverter(new CheckIfDying(enemy)),
-                new Inverter(new CheckIfStaggered(enemy)),
-                new CheckInRange(enemy),
-                new Inverter(new CheckIfPlayerDead(enemy)),
-                //new TaskAttackPlayer(enemyMeshAgent,player)
-                //CHASE THE PLAYER
-                new taskChase(enemy)
-             }),
-           
+                        ////PATH TO ANIMAL SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new CheckIfAnimalSpotted(thisEnemy),
+                            new TaskPathToAnimal(thisEnemy)
+                        }),
 
-            /*MAKE ANOTHER ONE TO RESPOND TO ATTACKS*/
-
-            /*
-            if they can see the player (collider)
-            if close enough to player
-            Attack player
-            if they can see the player/not close enough
-            Run at player
-
-            if nothing else
-            switch to wander behaviour
-            */
+                        ////CHASE PLAYER SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new Inverter(new CheckIfPlayerDead(thisEnemy)),
+                            new CheckPlayerInRange(thisEnemy),
+                            new Inverter(new CheckIfPlayerDead(thisEnemy)),
+                            new taskChase(thisEnemy)
+                        }),
          
-            new Sequence(new List<BTNode>
-            {
-          
-                ////PATROL SEQUENCE
-                new Inverter(new CheckIfDying(enemy)),
-                //new Inverter(new CheckIfPathSelected(enemy)),
-                //new TaskInvadeChoosePath(enemy),
-                new TaskInvadePatrol(enemy,enemyMeshAgent,transform),
-          
-         
+                        ////PATROL SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new TaskInvadePatrol(thisEnemy),
+                        })
+                    })
+                }),
 
-                //take in a series or route
-                // chooses a random route
-                //follows the random route
-                //if player spotter break and follow
-                // if animal spotted break adn atack or break and kidnap
-                // if route complete, hover around for a bit the follow a new route that branches and checks the other branches
-               // new TaskInvasionPatrol( enemy,rb,enemyMeshAgent, transform, waypoints),
-                //take waypoints that are located with the scene and simply go through those
-                //if they are close to an animal kidnapp
-                // if they are close to a person attack
-            }),
-
-            new Sequence(new List<BTNode>
-            {
-                new TaskAwaitDeath(enemyMeshAgent)
+                ////WAIT OUT STAGGER OR DEATH ANIMATION
+                new Sequence(new List<BTNode>
+                {
+                    new TaskAwaitDeath(thisEnemy)
+                })
             })
-
         });
         return root;
-
     }
 }

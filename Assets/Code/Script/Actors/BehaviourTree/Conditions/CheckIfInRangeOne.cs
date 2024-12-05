@@ -10,7 +10,7 @@ public class CheckIfInRangeOne : BTCondition
     GameObject checkingObject;
     GameObject checkIfClose;
     float distanceRange;
-    bool objectInRange;
+    
 
     // 
     public CheckIfInRangeOne(GameObject checkingEntity, GameObject entityToCheckAgainst, float range)
@@ -23,6 +23,7 @@ public class CheckIfInRangeOne : BTCondition
     //Returns true if it's night time
     protected override NodeState OnRun()
     {
+        bool objectInRange = false;
         float objectRange = (checkingObject.transform.position - checkIfClose.transform.position).magnitude;
         if (Mathf.Abs(objectRange) <= distanceRange)
         {

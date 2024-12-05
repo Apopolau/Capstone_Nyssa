@@ -97,7 +97,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
@@ -166,9 +166,8 @@ MonoBehaviour:
   isInvader: 1
   invaderEnemyRoutes: {fileID: 0}
   eventManager: {fileID: 0}
-  enemyAnimator: {fileID: 0}
   soundLibrary: {fileID: 11400000, guid: 9db399db278904248b32abc0b9e4ab37, type: 2}
-  chosenPath: []
+  invasionPath: []
   plantSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
   smotherRange: 3
 --- !u!114 &5917709612708952003
@@ -209,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 5758235279620162026}
+  currentAnimation: {fileID: 0}
   idleAnimation: {fileID: 11400000, guid: c0cccadf65964844094c1bc2197e2b01, type: 2}
   moveAnimation: {fileID: 11400000, guid: c3cd27c52eeed234bbbb2c11daf4d01b, type: 2}
   hurtAnimation: {fileID: 11400000, guid: be9f05aa61a17e14fadefadd9181c482, type: 2}

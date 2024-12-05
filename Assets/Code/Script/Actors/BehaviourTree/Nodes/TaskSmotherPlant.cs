@@ -37,7 +37,7 @@ public class TaskSmotherPlant : BTNode
             {
                 state = NodeState.SUCCESS;
                 
-                thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().TakeDamage((int)15);
+                thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().TakeDamage((int)thisEnemy.GetEnemyStats().maxDamage);
             }
             //Otherwise we want to leave this procedure
             else if (thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isDying)

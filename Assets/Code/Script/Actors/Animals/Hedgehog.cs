@@ -13,13 +13,11 @@ public class Hedgehog : Animal
     {
         base.Awake();
 
-        hunger = new Stat(100, 100, false);
-        thirst = new Stat(50, 50, false);
-        entertained = new Stat(150, 150, false);
-        isScared = false;
-        isHiding = false;
+        hunger = new Stat(50, 200, false);
+        thirst = new Stat(50, 200, false);
+        entertained = new Stat(50, 100, false);
         animator = GetComponentInChildren<HedgehogAnimator>();
-        navAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
 
         
     }

@@ -10,15 +10,17 @@ public abstract class Animal : Actor
     [SerializeField] protected GameObject managerObject;
     [SerializeField] protected GameObject shelterWaypoint;
     [SerializeField] protected GameObject waterWaypoint;
-    [SerializeField] protected GameObject kidnapIcon;
+    
 
     [Header("These variables set themselves")]
-    [SerializeField] protected NavMeshAgent navAgent;
-    [SerializeField] protected EarthPlayer earthPlayer;
-    [SerializeField] protected CelestialPlayer celestialPlayer;
-    [SerializeField] public GameObject closestGrass;
-    [SerializeField] public GameObject closestFood;
-    [SerializeField] public GameObject closestPlayer;
+    //protected NavMeshAgent navAgent;
+    protected EarthPlayer earthPlayer;
+    protected CelestialPlayer celestialPlayer;
+    
+    [SerializeField] protected GameObject kidnapIcon;
+    [SerializeField] protected GameObject closestGrass;
+    [SerializeField] protected GameObject closestFood;
+    [SerializeField] protected GameObject closestPlayer;
 
     [Header("These can be set on the prefab")]
     [SerializeField] protected LevelProgress levelProgress;
@@ -41,28 +43,32 @@ public abstract class Animal : Actor
     [SerializeField] protected Sprite friendImage;
     [SerializeField] protected Sprite sproutImage;
     [SerializeField] protected Sprite celesteImage;
-    [SerializeField] protected Sprite kidnapIconSprite;
-
-    private CanvasScaler matchCanvas;
-    private float pixelHeightOnCanvas = 0.7f;
 
     [Header("Stats")]
     protected Stat hunger;
     protected Stat thirst;
+    protected Stat lonely;
     protected Stat entertained;
+
+    protected Dictionary<string, bool> needOnCooldown;
+    protected bool hungryOnCooldown = false;
+    protected bool thirstyOnCooldown = false;
+    protected bool unsafeOnCooldown = false;
+    protected bool lonelyOnCooldown = false;
+    protected bool acknowledgeOnCooldown = false;
 
     [Header("Behaviour states")]
     [SerializeField] protected bool isStuck;
-    [SerializeField] protected bool isScared;
+    //[SerializeField] protected bool isScared = false;
     [SerializeField] protected bool isHiding = false;
     [SerializeField] protected bool isShielded = false;
     [SerializeField] protected bool isEscorted = false;
+    protected bool resettingEscort = false;
     [SerializeField] protected bool isKidnapped = false;
 
     [Header("Other Kidnap Variables")]
+    [SerializeField] protected Sprite kidnapIconSprite;
     [SerializeField] protected KidnappingEnemy kidnapper;
-    //[SerializeField] protected float origSpeed;
-    //[SerializeField] protected float kidnappedSpeed;
     [SerializeField] protected bool kidnapIconOn;
 
     [Header("Other variables")]
@@ -75,9 +81,22 @@ public abstract class Animal : Actor
     //Timers
     protected WaitForSeconds barrierLength = new WaitForSeconds(5f);
     protected WaitForSeconds popupLength = new WaitForSeconds(3);
+    protected WaitForSeconds resetTimer = new WaitForSeconds(0.5f);
+    protected WaitForSeconds behaviourCooldown = new WaitForSeconds(15f);
 
     virtual protected void Awake()
     {
+        needOnCooldown = new Dictionary<string, bool>();
+        needOnCooldown.Add("hungry", hungryOnCooldown);
+        needOnCooldown.Add("thirsty", thirstyOnCooldown);
+        needOnCooldown.Add("unsafe", unsafeOnCooldown);
+        needOnCooldown.Add("lonely", lonelyOnCooldown);
+        needOnCooldown.Add("acknowledge", acknowledgeOnCooldown);
+
+        wanderWaypoints = new List<GameObject>();
+        wanderWaypoints.Add(shelterWaypoint);
+        wanderWaypoints.Add(waterWaypoint);
+
         vocalizeSprites = new Dictionary<string, Sprite>();
         vocalizeSprites.Add("waterImage", waterImage);
         vocalizeSprites.Add("foodImage", foodImage);
@@ -91,11 +110,6 @@ public abstract class Animal : Actor
     /// </summary>
     /// <returns></returns>
     protected abstract IEnumerator UpdateAnimalState();
-
-    public void Unstuck()
-    {
-        isStuck = false;
-    }
 
     public bool GetIsStuck()
     {
@@ -137,19 +151,20 @@ public abstract class Animal : Actor
         return entertained;
     }
 
+    /*
     public bool GetIsScared()
     {
         return isScared;
     }
 
+    public void SetScared(bool scared)
+    {
+        isScared = scared;
+    }
+    */
+
     public void SetWalkingState()
     {
-        /*
-        if (GetComponent<Rigidbody>().velocity.magnitude > new Vector3(0.1f, 0.1f, 0.1f).magnitude)
-        {
-            animator.SetAnimationFlag("move", true);
-        }
-        */
         if (GetComponent<NavMeshAgent>().enabled && GetComponent<NavMeshAgent>().hasPath)
         {
             animator.SetAnimationFlag("move", true);
@@ -172,28 +187,24 @@ public abstract class Animal : Actor
 
     public void SetKidnapStatus(bool status)
     {
-        isKidnapped = status;
-        UpdateKidnapIcon();
         if (status)
         {
             soundLibrary.PlayPanicClips();
             GetComponent<CapsuleCollider>().enabled = false;
             ResetAgentPath();
             GetComponent<NavMeshAgent>().enabled = false;
-            //SetKidnapSpeed();
         }
         else
         {
             GetComponent<CapsuleCollider>().enabled = true;
             GetComponent<NavMeshAgent>().enabled = true;
-            //ResetOrigSpeed();
         }
-        
+        isKidnapped = status;
+        UpdateKidnapIcon();
     }
 
     public void UpdateKidnapIcon()
     {
-        Debug.Log("Updating kidnap icon");
         if (isKidnapped)
         {
             kidnapIconOn = true;
@@ -338,7 +349,7 @@ public abstract class Animal : Actor
 
     public NavMeshAgent GetNavMeshAgent()
     {
-        return navAgent;
+        return agent;
     }
 
     public GameObject GetShelterWaypoint()
@@ -359,6 +370,13 @@ public abstract class Animal : Actor
     public void SetEscort(bool status)
     {
         isEscorted = status;
+    }
+
+    protected IEnumerator ResetEscort()
+    {
+        resettingEscort = true;
+        yield return resetTimer;
+        resettingEscort = false;
     }
 
     public bool GetIsHiding()
@@ -428,6 +446,20 @@ public abstract class Animal : Actor
     {
         yield return popupLength;
         speechBubble.SetActive(false);
+    }
+
+    public IEnumerator RunVocalizeCooldown(string cooldownName)
+    {
+        //Debug.Log(this.gameObject + " starting " + cooldownName + " cooldown");
+        needOnCooldown[cooldownName] = true;
+        yield return behaviourCooldown;
+        needOnCooldown[cooldownName] = false;
+        //Debug.Log(this.gameObject + " ending " + cooldownName + " cooldown");
+    }
+
+    public bool GetIsNeedOnCooldown(string cooldownName)
+    {
+        return needOnCooldown[cooldownName];
     }
 
     public void ToggleEscortPopup(bool on)

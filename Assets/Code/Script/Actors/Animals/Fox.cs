@@ -12,19 +12,15 @@ public class Fox : Animal
 
     private WaitForSeconds degredateRate = new WaitForSeconds(1);
 
-    
-
     protected override void Awake()
     {
         base.Awake();
 
-        hunger = new Stat(100, 100, false);
-        thirst = new Stat(50, 50, false);
-        entertained = new Stat(150, 150, false);
-        isScared = false;
-        isHiding = false;
+        hunger = new Stat(50, 200, false);
+        thirst = new Stat(50, 200, false);
+        entertained = new Stat(50, 100, false);
         animator = GetComponent<FoxAnimator>();
-        navAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     private void OnEnable()
@@ -55,12 +51,16 @@ public class Fox : Animal
         HandleKidnapIcon();
         if (earthPlayer.GetIsInteracting() && inRangeOfEscort)
         {
-            if (!isEscorted)
+            if (!isEscorted && !resettingEscort)
             {
+                Debug.Log("Escort was set to true");
+                StartCoroutine(ResetEscort());
                 SetEscort(true);
             }
-            else if (isEscorted)
+            else if (isEscorted && !resettingEscort)
             {
+                Debug.Log("And then right back to false.");
+                StartCoroutine(ResetEscort());
                 SetEscort(false);
             }
         }

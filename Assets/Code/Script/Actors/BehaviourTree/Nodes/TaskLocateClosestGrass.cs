@@ -35,6 +35,14 @@ public class TaskLocateClosestGrass : BTNode
                 }
 
             }
+            if(d < 1000)
+            {
+                state = NodeState.SUCCESS;
+            }
+            else
+            {
+                state = NodeState.FAILURE;
+            }
         }
         return state;
     }

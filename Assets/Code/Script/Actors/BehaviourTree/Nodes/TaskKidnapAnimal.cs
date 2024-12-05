@@ -20,42 +20,39 @@ public class TaskKidnapAnimal : BTNode
 
         float distance = Vector3.Distance(thisEnemy.GetClosestAnimal().transform.position, thisAgent.transform.position);
 
+        //If the monster gets attacked, it should drop its animal and eject from this sequence
         if (thisEnemy.GetIsStaggered() || thisEnemy.GetIsDying())
         {
             if(thisEnemy.GetKidnappedAnimal() != null)
                 thisEnemy.GetKidnappedAnimal().SetKidnapStatus(false);
-            //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
-            // thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
+
             state = NodeState.FAILURE;
             return state;
         }
+        //If the monster falls out of kidnap range we don't want it to be able to kidnap
         if (!thisEnemy.GetInKidnapRange())
         {
             if (thisEnemy.GetKidnappedAnimal() != null)
                 thisEnemy.GetKidnappedAnimal().SetKidnapStatus(false);
-            //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
-            // thisEnemy.enemyAnimator.animator.SetBool(thisEnemy.enemyAnimator.IfAttackingHash, false);
+
             state = NodeState.FAILURE;
             return state;
         }
-        if (thisEnemy.GetClosestAnimal().GetComponent<Animal>().GetIsKidnapped())
+        //If the animal it's trying to kidnap is already kidnapped, it should fail
+        if (thisEnemy.GetClosestAnimal().GetComponent<Animal>().GetIsKidnapped() || thisEnemy.GetClosestAnimal().GetComponent<Animal>().GetIsStuck())
         {
             state = NodeState.FAILURE;
             return state;
-
         }
-
-        //if (thisEnemy.inSmotherRange && thisEnemy.smotherInitiated)
+        
+        //if none of those other things are true, we should successfully kidnap
         if (thisEnemy.GetInKidnapRange())
         {
             thisEnemy.GetClosestAnimal().GetComponent<Animal>().SetKidnapper(thisEnemy);
             thisEnemy.GetClosestAnimal().GetComponent<Animal>().SetKidnapStatus(true);
             thisEnemy.SetKidnappedAnimal(thisEnemy.GetClosestAnimal().GetComponent<Animal>());
-            //thisEnemy.GetClosestAnimal().GetComponentInParent<Animal>().UpdateKidnapIcon();
-
 
             state = NodeState.SUCCESS;
-
         }
         return state;
     }

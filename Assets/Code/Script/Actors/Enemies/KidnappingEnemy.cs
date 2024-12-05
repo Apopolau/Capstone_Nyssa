@@ -34,8 +34,8 @@ public abstract class KidnappingEnemy : Enemy
     [SerializeField] protected List<Transform> escapeRoute = new List<Transform>();
     [SerializeField] protected Transform escapeWayPoint;
 
-    [SerializeField] protected float attackRange;
-    [SerializeField] protected float kidnapRange;
+    //[SerializeField] protected float attackRange;
+    //[SerializeField] protected float kidnapRange;
 
     //Animation parameters
     protected WaitForSeconds attackTime;
@@ -96,8 +96,11 @@ public abstract class KidnappingEnemy : Enemy
         {
             //arbitrarily using attack time since it's 1s. May need to change in future
             yield return attackTime;
+
             float distance = enemyStats.sightRange;
             inAttackRange = false;
+            closestPlayer = null;
+
             foreach (GameObject go in playerSet.Items)
             {
                 if (Mathf.Abs((go.GetComponent<Player>().GetGeo().transform.position - this.transform.position).magnitude) < distance)
@@ -105,17 +108,24 @@ public abstract class KidnappingEnemy : Enemy
                     distance = Mathf.Abs((go.GetComponent<Player>().GetGeo().transform.position - this.transform.position).magnitude);
                     closestPlayer = go;
                     seesPlayer = true;
+                    //Debug.Log("Found a player in range of sight");
+                }
+                if(closestPlayer == null)
+                {
+                    seesPlayer = false;
                 }
             }
-            if (distance < attackRange)
+
+            if (distance < enemyStats.attackRange)
             {
+                //Debug.Log("Found a player in range of attack");
                 inAttackRange = true;
             }
+
             if (enemyStats.enemyType != EnemyStats.enemyTypes.OilMonster)
             {
                 if (agent.hasPath)
                 {
-                    //enemyAnimator.animator.SetBool(enemyAnimator.IfWalkingHash, true);
                     animator.SetAnimationFlag("move", true);
                 }
                 else
@@ -146,7 +156,7 @@ public abstract class KidnappingEnemy : Enemy
 
                 }
             }
-            if (distance < kidnapRange)
+            if (distance < enemyStats.kidnapRange)
             {
                 inKidnapRange = true;
             }
@@ -214,7 +224,7 @@ public abstract class KidnappingEnemy : Enemy
     //Returns the range at which the monster should attempt to land an attack
     public float GetAttackRange()
     {
-        return attackRange;
+        return enemyStats.attackRange;
     }
 
     public bool GetInAttackRange()
@@ -276,7 +286,7 @@ public abstract class KidnappingEnemy : Enemy
     //Returns the range at which the monster can kidnap an animal
     public float GetKidnapRange()
     {
-        return kidnapRange;
+        return enemyStats.kidnapRange;
     }
 
 

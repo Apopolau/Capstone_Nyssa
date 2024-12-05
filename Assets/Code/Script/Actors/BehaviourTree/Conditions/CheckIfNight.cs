@@ -17,10 +17,12 @@ public class CheckIfNight : BTCondition
     {
         if (weatherState.GetTimeOfDay() == WeatherState.TimeOfDay.NIGHT)
         {
+            //Debug.Log("It is night.");
             return NodeState.SUCCESS;
         }
         else
         {
+            //Debug.Log("It is day.");
             return NodeState.FAILURE;
         }
     }

@@ -19,6 +19,10 @@ public class TaskInitiateSmother : BTNode
     {
 
         //float distance = Vector3.Distance(thisEnemy.GetClosestPlant().transform.position, thisAgent.transform.position);
+        if(thisEnemy.GetClosestPlant() == null)
+        {
+            return NodeState.FAILURE;
+        }
 
         if (!thisEnemy.GetSmotherInitiated() && !thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isDying)
         {

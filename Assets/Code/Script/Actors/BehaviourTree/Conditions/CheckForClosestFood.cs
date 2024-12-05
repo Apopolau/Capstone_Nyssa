@@ -30,7 +30,7 @@ public class CheckForClosestFood : BTCondition
             foreach (GameObject g in thisAnimal.GetFoodSet().Items)
             {
                 float objectRange = (thisAnimal.transform.position - g.transform.position).magnitude;
-                if (Mathf.Abs(objectRange) <= distanceRange || Mathf.Abs(objectRange) <= newRange)
+                if (Mathf.Abs(objectRange) <= newRange)
                 {
                     newRange = objectRange;
                     thisAnimal.SetClosestFood(g);

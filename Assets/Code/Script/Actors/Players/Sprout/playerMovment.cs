@@ -32,7 +32,7 @@ public class playerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCoolDown;
     public float airMultiplier;
-    bool readyToJump = true;
+    //bool readyToJump = true;
     [SerializeField] private float gravityScale;
 
     //Keys Based on player
@@ -253,10 +253,12 @@ public class playerMovement : MonoBehaviour
 
     }
 
+    /*
     private void ResetJump()
     {
         readyToJump = true;
     }
+    */
 
     private void OnTriggerStay(Collider other)
     {

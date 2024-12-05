@@ -11,11 +11,30 @@ public class LevelOneEvents : LevelEventManager
     [Header("Scene Data")]
     [SerializeField] LevelOneProgress levelOneProgress;
 
+    [Header("Prefabs")]
+    private GameObject grassSeedSpawn;
+    private GameObject treeSeedSpawn;
+
+    [Header("PowerDrop")]
+    [SerializeField] private PowerBehaviour power;
+    private GameObject powerDrop;
+
+    [Header("Spawners")]
+    [SerializeField] private GameObject plasticBagInvaderWaypoint;
+
     [Header("Water related events")]
     [SerializeField] Material cleanWaterMaterial;
     //[SerializeField] GameObject river;
     //[SerializeField] GameObject lake;
     [SerializeField] GameObject water;
+
+    [Header("Visual Update Assets")]
+    [SerializeField] private GameObject factory;
+    [SerializeField] private List<GameObject> pipes;
+    [SerializeField] private GameObject tank;
+    [SerializeField] private Material cleanFactoryMaterial;
+    [SerializeField] private Material cleanPipeMaterial;
+    [SerializeField] private Material cleanTankMaterial;
 
     [Header("Tile grids")]
     [SerializeField] GameObject tileGrid;
@@ -28,12 +47,6 @@ public class LevelOneEvents : LevelEventManager
     List<GameObject> secondAreaTiles = new List<GameObject>();
     List<GameObject> thirdAreaTiles = new List<GameObject>();
     List<GameObject> fourthAreaTiles = new List<GameObject>();
-
-    private bool firstAreaClear = false;
-    private bool secondAreaClear = false;
-    private bool thirdAreaClear = false;
-    //private bool fourthAreaClear = false;
-    private bool fifthAreaClear = false;
 
     [Header("Terrain variables")]
     [SerializeField] private Vector3 areaOneMinVals;
@@ -53,24 +66,7 @@ public class LevelOneEvents : LevelEventManager
     [SerializeField] private int grassSteps;
     [SerializeField] private int dirtSteps;
 
-
-    //[Header("Objectives")]
-    /*
-    [SerializeField] GameObject objectiveListEN;
-    [SerializeField] GameObject objectiveListFR;
-    [SerializeField] TaskListManager task1;
-    [SerializeField] TaskListManager task2;
-    [SerializeField] TaskListManager task3;
-    [SerializeField] TaskListManager task4;
-    [SerializeField] TaskListManager task5;
-    [SerializeField] TaskListManager task6;
-    [SerializeField] TaskListManager task7;
-    */
-
-    private GameObject grassSeedSpawn;
-    private GameObject treeSeedSpawn;
-
-    [Header("Dialogue triggers")]
+    [Header("Dialogue variables")]
     [SerializeField] GameObject leaveTriggerObj;
     public DialogueTrigger firstMonsterDeadDialouge;
     public DialogueTrigger secondMonsterDeadDialouge;
@@ -79,31 +75,32 @@ public class LevelOneEvents : LevelEventManager
     public DialogueTrigger allMonstersDefeatedDialogue;
     public DialogueTrigger allObjectivesMetDialogue;
 
-    [Header("PowerDrop")]
-    [SerializeField] private PowerBehaviour power;
-    private GameObject powerDrop;
-
-    /*
-    [Header("UI indicators")]
-    [SerializeField] PlantingUIIndicator treeIndicator;
-    [SerializeField] PlantingUIIndicator flowerIndicator;
-    [SerializeField] PlantingUIIndicator grassIndicator;
-    */
-
-    [Header("Ducks")]
-    [SerializeField] private GameObject duck1;
-    [SerializeField] private GameObject duck2;
-
-    int keyMonsterDefeatCount;
-    int totalMonsters = 6;
-    int areaFiveMonsterCount = 2;
-
     private bool runDefeatDialogue = false;
     private bool runReadyToLeaveDialogue = false;
     private bool hasEncounteredBridge = false;
 
-    WaitForSeconds delayTime = new WaitForSeconds(0.1f);
-    WaitForSeconds extraDelayTime = new WaitForSeconds(1);
+    [Header("Ducks")]
+    [SerializeField] private GameObjectRuntimeSet duckSet;
+    [SerializeField] private GameObject duck1;
+    [SerializeField] private GameObject duck2;
+
+    [Header("Waypoints")]
+    [SerializeField] private GameObject firstWaypoint;
+    [SerializeField] private GameObject secondWaypoint;
+    [SerializeField] private GameObject thirdWaypoint;
+    [SerializeField] private GameObject fourthWaypoint;
+    [SerializeField] private GameObject fifthWaypoint;
+
+    [Header("Progress variables")]
+    private bool firstAreaClear = false;
+    private bool secondAreaClear = false;
+    private bool thirdAreaClear = false;
+    private bool fourthAreaClear = false;
+    private bool fifthAreaClear = false;
+
+    int keyMonsterDefeatCount;
+    int totalMonsters = 6;
+    int areaFiveMonsterCount = 2;
 
     //If different conversion milestones have been met
     private bool areaOneMOneMet = false;
@@ -115,18 +112,12 @@ public class LevelOneEvents : LevelEventManager
     private bool areaFourMOneMet = false;
     private bool areaFourMTwoMet = false;
 
-    [Header("Visual Update Assets")]
-    
-    [SerializeField] private GameObject factory;
-    [SerializeField] private GameObject plasticBagInvaderWaypoint;
-    [SerializeField] private List<GameObject> pipes;
-    [SerializeField] private GameObject tank;
-    [SerializeField] private Material cleanFactoryMaterial;
-    [SerializeField] private Material cleanPipeMaterial;
-    [SerializeField] private Material cleanTankMaterial;
-
     bool setClean = false;
     bool setSuperClean = false;
+
+    [Header("Time intervals")]
+    WaitForSeconds delayTime = new WaitForSeconds(0.1f);
+    WaitForSeconds extraDelayTime = new WaitForSeconds(1);
 
     private void Awake()
     {
@@ -558,7 +549,6 @@ public class LevelOneEvents : LevelEventManager
     /// </summary>
     public void OnFirstMonsterDefeated(Enemy enemy)
     {
-
         foreach (GameObject go in firstAreaTiles)
         {
             if (go.GetComponent<Cell>().terrainType == Cell.TerrainType.DIRT)
@@ -567,29 +557,37 @@ public class LevelOneEvents : LevelEventManager
             }
         }
         Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 3, enemy.transform.position.z);
+
+        //Drop our seeds and powers
         grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, enemyPos, Quaternion.identity);
         grassSeedSpawn.GetComponent<PickupObject>().SetInventory(levelOneProgress.GetInventory());
         grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
         grassSeedSpawn.GetComponent<PickupObject>().SetInventory(levelOneProgress.GetInventory());
         grassSeedSpawn = Instantiate(levelOneProgress.grassSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
         grassSeedSpawn.GetComponent<PickupObject>().SetInventory(levelOneProgress.GetInventory());
-        levelOneProgress.animalHasShelter = true;
+        
         powerDrop = Instantiate( power.ColdSnapStats.powerDropPrefab, enemyPos, Quaternion.identity);
-        plasticBagInvaderWaypoint.SetActive(true);
 
-
-        //We want to activate the objective menu here probably, or once the trigger dialogue is done.
-        ////////////////////////////////////////////this is where we are going to drop the celestial cold orb!!!//////////////////////////////////////////////
-        ///   GetComponent<CelestialPlayer>().PowerDrop((GetComponent<PowerBehaviour>().ColdSnapStats), enemyPos);
-
-
-
-        firstMonsterDeadDialouge.TriggerDialogue();
+        //Set level progress
+        levelOneProgress.animalHasShelter = true;
         keyMonsterDefeatCount++;
-        //objectiveContainer.SetActive(true);
-        hudManager.ToggleObjectivesState(true);
         firstAreaClear = true;
-        duck1.GetComponent<Duck>().Unstuck();
+
+        //We want to allow all active ducks to travel to this location
+        foreach(GameObject go in duckSet.Items)
+        {
+            go.GetComponent<Duck>().AddWayPointToWanderList(firstWaypoint);
+        }
+
+        //Play the first monster defeat dialogue
+        firstMonsterDeadDialouge.TriggerDialogue();
+        
+        hudManager.ToggleObjectivesState(true);
+        
+        duck1.GetComponent<Duck>().SetStuck(false);
+
+        //Start spawning plastic bags
+        plasticBagInvaderWaypoint.SetActive(true);
     }
 
     public void OnSecondMonsterDefeated(Enemy enemy)
@@ -601,7 +599,10 @@ public class LevelOneEvents : LevelEventManager
                 go.GetComponent<Cell>().enviroState = Cell.EnviroState.CLEAN;
             }
         }
+
         Vector3 enemyPos = new Vector3(enemy.transform.position.x, enemy.transform.position.y + 3, enemy.transform.position.z);
+
+        //Instantiate all our tree seeds
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, enemyPos, Quaternion.identity);
         treeSeedSpawn.GetComponent<PickupObject>().SetInventory(levelOneProgress.GetInventory());
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x + 1, enemyPos.y, enemyPos.z - 1), Quaternion.identity);
@@ -609,13 +610,15 @@ public class LevelOneEvents : LevelEventManager
         treeSeedSpawn = Instantiate(levelOneProgress.treeSeedPrefab, new Vector3(enemyPos.x - 1, enemyPos.y, enemyPos.z + 1), Quaternion.identity);
         treeSeedSpawn.GetComponent<PickupObject>().SetInventory(levelOneProgress.GetInventory());
 
+        //Update our objectives
         keyMonsterDefeatCount++;
-
-        //Reinstantiate these when we actually have behaviours for them
-        //duck1.GetComponent<Duck>().SetUpperBankOn();
-        //duck2.GetComponent<Duck>().SetUpperBankOn();
-
         secondAreaClear = true;
+
+        //We want to allow all active ducks to travel to this location
+        foreach (GameObject go in duckSet.Items)
+        {
+            go.GetComponent<Duck>().AddWayPointToWanderList(secondWaypoint);
+        }
 
         secondMonsterDeadDialouge.TriggerDialogue();
     }
@@ -630,29 +633,29 @@ public class LevelOneEvents : LevelEventManager
             }
         }
 
-        
-
-        //duck1.GetComponent<Duck>().SetFarBankOn();
-        //duck2.GetComponent<Duck>().SetFarBankOn();
-
         thirdAreaClear = true;
-
         keyMonsterDefeatCount++;
+
+        foreach (GameObject go in duckSet.Items)
+        {
+            go.GetComponent<Duck>().AddWayPointToWanderList(thirdWaypoint);
+        }
     }
 
     public void OnFourthMonsterDefeated()
     {
-        //duck1.GetComponent<Duck>().SetHalfwayPointOn();
-        //duck2.GetComponent<Duck>().SetHalfwayPointOn();
-
-        duck2.GetComponent<Duck>().Unstuck();
+        duck2.GetComponent<Duck>().SetStuck(false);
 
         keyMonsterDefeatCount++;
-        //fourthAreaClear = true;
-
-
+        fourthAreaClear = true;
         levelOneProgress.GetTask(3).CrossOutTask();
         SetFriendCompletion();
+        
+        foreach (GameObject go in duckSet.Items)
+        {
+            go.GetComponent<Duck>().AddWayPointToWanderList(fourthWaypoint);
+        }
+
         fourthMonsterDeadDialouge.TriggerDialogue();
     }
 
@@ -666,15 +669,17 @@ public class LevelOneEvents : LevelEventManager
             }
         }
 
-        //duck1.GetComponent<Duck>().SetTopAreaOn();
-        //duck2.GetComponent<Duck>().SetTopAreaOn();
-
+        //No key monster defeat count addition needed here because it's handled in CountDownFinalMonsters instead
         fifthAreaClear = true;
+
+        foreach (GameObject go in duckSet.Items)
+        {
+            go.GetComponent<Duck>().AddWayPointToWanderList(fifthWaypoint);
+        }
     }
 
     public void CountDownFinalMonsters()
     {
-        
         keyMonsterDefeatCount++;
         areaFiveMonsterCount -= 1;
         if (areaFiveMonsterCount <= 0)

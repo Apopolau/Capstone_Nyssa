@@ -16,6 +16,7 @@ public class CheckIfBored : BTCondition
     //Returns true if it's night time
     protected override NodeState OnRun()
     {
+        //Debug.Log("Checking if " + animal + " is bored");
         if (animal.GetBoredState())
         {
             return NodeState.SUCCESS;

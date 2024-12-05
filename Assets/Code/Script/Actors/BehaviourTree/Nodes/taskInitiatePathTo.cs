@@ -6,44 +6,41 @@ using UnityEngine.AI;
 
 public class taskInitiatePathTo : BTNode
 {
-    private Transform thisTarget;
+    private GameObject thisTarget;
+    Actor thisActor;
     NavMeshAgent thisAgent;
-    OurAnimator thisAnimator;
 
-    public taskInitiatePathTo(NavMeshAgent navAgent, Transform target, OurAnimator animator)
+    public taskInitiatePathTo(Actor actor, GameObject targetLocation)
     {
-        thisAgent = navAgent;
-        thisTarget = target;
-        thisAnimator = animator;   
+        thisActor = actor;
+        thisTarget = targetLocation;
+        thisAgent = thisActor.GetComponent<NavMeshAgent>();   
     }
 
 
     protected override NodeState OnRun()
     {
-        bool inRange = Mathf.Abs((thisAgent.transform.position - thisTarget.position).magnitude) <= thisAgent.stoppingDistance;
+        //bool inRange = Mathf.Abs((thisActor.transform.position - thisTarget.transform.position).magnitude) <= thisAgent.stoppingDistance;
 
         //If we're not at the destination but we can reach it
-        if (!inRange && thisAgent.path.status != NavMeshPathStatus.PathInvalid)
-        {
-            thisAgent.GetComponent<Animal>().SetAgentPath(thisTarget.position);
+        //if (!inRange)
+        //{
+            //Debug.Log("Heading to " + thisTarget);
+            thisActor.SetActiveWaypoint(thisTarget);
+            state = NodeState.SUCCESS;
 
-            //thisAnimator.ToggleSetWalk();
-            state = NodeState.RUNNING;
-        }
+        
+        //}
         //If we've reached the destination
+        /*
         else if (inRange)
         {
-            thisAgent.GetComponent<Animal>().ResetAgentPath();
-            //thisAnimator.ToggleSetWalk();
-            state = NodeState.SUCCESS;
-        }
-        //If we can't reach the destination
-        else if(thisAgent.path.status == NavMeshPathStatus.PathInvalid)
-        {
-            thisAgent.GetComponent<Animal>().ResetAgentPath();
-            //thisAnimator.ToggleSetWalk();
+            Debug.Log("No need to go to " + thisTarget + ", we're already here.");
+            thisActor.ResetAgentPath();
             state = NodeState.FAILURE;
         }
+        */
+
         return state;
     }
 

@@ -19,10 +19,8 @@ public class Nyssa : Animal
         hunger = new Stat(100, 100, false);
         thirst = new Stat(50, 50, false);
         entertained = new Stat(150, 150, false);
-        isScared = false;
-        isHiding = false;
         animator = GetComponentInChildren<OurAnimator>();
-        navAgent = GetComponent<NavMeshAgent>();
+        agent = GetComponent<NavMeshAgent>();
     }
 
     private void OnEnable()

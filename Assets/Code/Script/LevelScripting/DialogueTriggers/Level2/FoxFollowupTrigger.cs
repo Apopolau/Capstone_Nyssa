@@ -14,7 +14,7 @@ public class FoxFollowupTrigger : MonoBehaviour
         {
             foxEncounter2.TriggerDialogue();
             Fox foxScript = fox.GetComponent<Fox>();
-            foxScript.Unstuck();
+            foxScript.SetStuck(false);
             foxScript.SetIsWaiting(false);
             foxScript.SetOpeningDialogueDone(true);
             // Destroy the GameObject collider

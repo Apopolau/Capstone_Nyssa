@@ -93,8 +93,6 @@ public class EnemySpawner : MonoBehaviour
                 Instantiate(currSpawnedEnemy, this.transform);
                 currSpawnedEnemy.GetComponent<Enemy>().SetInvasionPath(enemyInvadingPath.GetPath(spawnerIndex));
 
-                Debug.Log(currSpawnedEnemy.GetComponent<KidnappingEnemy>());
-
                 if (currSpawnedEnemy.GetComponent<KidnappingEnemy>())
                     currSpawnedEnemy.GetComponent<KidnappingEnemy>().SetEscapeWaypoint(enemyInvadingPath.GetEscapePoint(spawnerIndex));
             }

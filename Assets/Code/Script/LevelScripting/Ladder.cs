@@ -14,7 +14,7 @@ public class Ladder : Interactable
     WaitForSeconds buildTime = new WaitForSeconds(4.542f);
 
     private bool ladderIsBuilt = false;
-    private bool previewOn;
+    //private bool previewOn;
     //private bool canBeClimbed = false;
 
     [SerializeField] DialogueTrigger earthClimbUp;
@@ -120,7 +120,7 @@ public class Ladder : Interactable
 
     private void ActivateLadderPreview()
     {
-        previewOn = true;
+        //previewOn = true;
         ladderGeometry.SetActive(true);
         TurnOnPopup();
         //levelTwoEvents.OnLadderEncountered();
@@ -128,7 +128,7 @@ public class Ladder : Interactable
 
     private void DeactivateLadderPreview()
     {
-        previewOn = false;
+        //previewOn = false;
         ladderGeometry.SetActive(false);
         TurnOffPopup();
     }

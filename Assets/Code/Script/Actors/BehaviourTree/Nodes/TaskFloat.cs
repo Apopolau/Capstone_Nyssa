@@ -11,26 +11,21 @@ public class TaskFloat : BTNode
     //Transformation
     private Transform transformPos;
     //Wait a Sec
-    private bool iswaiting = false;
-    private float waitTime = 1f;
-    private float waitCounter = 0;
+    //private bool iswaiting = false;
+    //private float waitTime = 1f;
+    //private float waitCounter = 0;
     Rigidbody rb;
     bool isSet = false;
     Vector3 newPos = Vector3.zero;
-    UnityEngine.AI.NavMeshHit hit;
     float distanceToEdge = 1;
 
     public float range=20;
 
-
-
-
-    public TaskFloat(PlasticBagMonster enemy, Rigidbody rbi, NavMeshAgent enemyMeshAgent, Transform transform)
+    public TaskFloat(PlasticBagMonster enemy)
     {
         thisEnemy = enemy;
-        thisAgent = enemyMeshAgent;
-        transformPos = transform;
-        rb = rbi;
+        thisAgent = thisEnemy.GetComponent<NavMeshAgent>();
+        transformPos = thisEnemy.GetComponent<Transform>();
     }
     protected override NodeState OnRun()
     {
@@ -73,10 +68,10 @@ public class TaskFloat : BTNode
             if (distance < 3f)
             {
 
-                waitCounter = 0f;
+                //waitCounter = 0f;
 
                 isSet = false;
-               // state = NodeState.RUNNING;
+                //state = NodeState.RUNNING;
                 state = NodeState.FAILURE;
             }
             else if (thisEnemy.GetIsColliding())

@@ -25,19 +25,26 @@ public class TaskPathToPlant : BTNode
         }
 
         if (thisEnemy.GetSeesPlant() && !thisEnemy.GetInSmotherRange())
-
         {
-            thisEnemy.SetAgentPath(thisEnemy.GetClosestPlant().transform.position);
-            //thisAgent.SetDestination(thisEnemy.GetClosestPlant().transform.position);
-            thisEnemy.transform.LookAt(thisEnemy.GetClosestPlant().transform.position);
+            //Make sure we still have a target
+            if(thisEnemy.GetClosestPlant() != null)
+            {
+                thisEnemy.SetAgentPath(thisEnemy.GetClosestPlant().transform.position);
+                //thisEnemy.transform.LookAt(thisEnemy.GetClosestPlant().transform.position);
 
-            if (thisEnemy.GetInSmotherRange())
+                if (thisEnemy.GetInSmotherRange())
+                {
+                    thisEnemy.ResetAgentPath();
+                    state = NodeState.FAILURE;
+                    return state;
+                }
+                state = NodeState.RUNNING;
+            }
+            else
             {
                 thisEnemy.ResetAgentPath();
                 state = NodeState.FAILURE;
-                return state;
             }
-            state = NodeState.RUNNING;
         }
         else if (thisEnemy.GetInSmotherRange() || !thisEnemy.GetSeesPlant())
         {

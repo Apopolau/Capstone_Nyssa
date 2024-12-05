@@ -18,7 +18,7 @@ public class CelestialPlayer : Player
     [SerializeField] WeatherState weatherState;
     private bool isRaining = false;
     private bool triggeredRain = false;
-    private bool isDodging = false;
+    //private bool isDodging = false;
     [SerializeField] public GameObject RainParticleSystem;
 
     //[Header("Button press")]
@@ -54,7 +54,7 @@ public class CelestialPlayer : Player
 
     private WaitForSeconds energyRegenTimer = new WaitForSeconds(5);
 
-    private bool isTargeted = false;
+    //private bool isTargeted = false;
 
     public enum Power
     {
@@ -109,7 +109,7 @@ public class CelestialPlayer : Player
     public bool enemySeen = false;
     public bool enemyHit = false;
     //public GameObject enemyTarget = null;
-    private GameObject puzzleTarget = null;
+    //private GameObject puzzleTarget = null;
     public Vector3 enemyLocation;
 
     //private bool inRangeOfPuzzle = false;
@@ -325,7 +325,7 @@ public class CelestialPlayer : Player
 
         yield return coldOrbDuration;
 
-        isTargeted = false;
+        //isTargeted = false;
 
         coldOrb.GetComponent<ColdSnapTrigger>().Die();
         //Destroy(coldOrb, 1f);
@@ -394,7 +394,7 @@ public class CelestialPlayer : Player
         yield return waveDuration;
 
         //reset animation, is attacking orb target, detroy te orb gameobject and reset DPAD
-        isTargeted = false;
+        //isTargeted = false;
         moonTide.GetComponent<MoontideTrigger>().Die();
         //Destroy(coldOrb, 1f);
         //isAttacking = false;
@@ -596,7 +596,7 @@ public class CelestialPlayer : Player
 
         
         lightning.GetComponent<LightningTrigger>().SetPlayer(this);
-        lightning.GetComponent<LightningTrigger>().InitializeSelf();
+        //lightning.GetComponent<LightningTrigger>().InitializeSelf();
         //VisualEffect lightningStrike = powerBehaviour.GetComponent<PowerBehaviour>().LightningStats.visualDisplay;
         //VisualEffect clone = Instantiate(lightningStrike, new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z), Quaternion.identity);
 
@@ -883,14 +883,14 @@ public class CelestialPlayer : Player
     public void StartDodgeMovement()
     {
         //This will be turned off by the animator FSM or animation event
-        isDodging = true;
+        //isDodging = true;
         this.GetComponent<CelestialPlayerMovement>().ToggleDodging(true);
     }
 
     //Turns off the Celestial player's physical movement while dodging
     public void StopDodgeMovement()
     {
-        isDodging = false;
+        //isDodging = false;
         this.GetComponent<CelestialPlayerMovement>().ToggleDodging(false);
     }
 

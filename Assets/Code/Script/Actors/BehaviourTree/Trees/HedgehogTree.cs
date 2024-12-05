@@ -8,47 +8,17 @@ public class HedgehogTree : BTree
 {
     Hedgehog thisHog;
     NavMeshAgent hogAgent;
-    GameObject managerObject;
     WeatherState weatherState;
     OurAnimator hogAnimator;
     EarthPlayer earthPlayer;
-    CelestialPlayer celestialPlayer;
 
     protected override BTNode SetupTree()
     {
         thisHog = GetComponent<Hedgehog>();
         hogAgent = GetComponent<NavMeshAgent>();
         earthPlayer = thisHog.GetEarthPlayer();
-        celestialPlayer = thisHog.GetCelestialPlayer();
         weatherState = thisHog.GetWeatherManager();
         hogAnimator = thisHog.GetAnimator();
-
-        /*
-        List<int> nonEatingAnimations;
-
-        nonEatingAnimations = new List<int>();
-        nonEatingAnimations.Add(hogAnimator.IfPanickingHash);
-        nonEatingAnimations.Add(hogAnimator.IfWalkingHash);
-        nonEatingAnimations.Add(hogAnimator.IfSwimmingHash);
-
-        List<int> nonPanickingAnimations;
-        nonPanickingAnimations = new List<int>();
-        nonPanickingAnimations.Add(hogAnimator.IfEatingHash);
-        nonPanickingAnimations.Add(hogAnimator.IfWalkingHash);
-        nonPanickingAnimations.Add(hogAnimator.IfSwimmingHash);
-
-        List<int> nonWalkingAnimations;
-        nonWalkingAnimations = new List<int>();
-        nonWalkingAnimations.Add(hogAnimator.IfEatingHash);
-        nonWalkingAnimations.Add(hogAnimator.IfPanickingHash);
-        nonWalkingAnimations.Add(hogAnimator.IfSwimmingHash);
-
-        List<int> nonSwimmingAnimations;
-        nonSwimmingAnimations = new List<int>();
-        nonSwimmingAnimations.Add(hogAnimator.IfEatingHash);
-        nonSwimmingAnimations.Add(hogAnimator.IfPanickingHash);
-        nonSwimmingAnimations.Add(hogAnimator.IfWalkingHash);
-        */
 
         BTNode root = new Selector(new List<BTNode>
         {
@@ -61,16 +31,16 @@ public class HedgehogTree : BTree
                  new Sequence(new List<BTNode>
                 {
                     new CheckIfKidnapped(thisHog),
-                    new TaskGetKidnapped(thisHog, hogAgent, transform)
+                    new TaskGetKidnapped(thisHog)
                 }),
+
                 ///
                 ///STAY IN PLACE IF STUCK
                 ///
                 new Sequence(new List<BTNode>
                 {
                     new CheckIfStuck(thisHog),
-                    new Inverter( new CheckIfKidnapped(thisHog)),
-                    new TaskAwaitDeath(hogAgent)
+                    new TaskAwaitDeath(thisHog)
                 }),
 
                 ///
@@ -79,35 +49,8 @@ public class HedgehogTree : BTree
                 new Sequence(new List<BTNode>
                 {
                     //Check if enemy nearby
-                    new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetEnemySet(), 20),
-                    //If there is an enemy, run or hide
-                    new Selector(new List<BTNode>
-                    {
-                        //RUN!
-                        new Sequence(new List<BTNode>
-                        {
-                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetEnemySet(), 10),
-                            new TaskRunAwayFromTarget(thisHog, thisHog.GetEnemySet(), 10)
-                        }),
-                        //If not in immediate proximity of a monster, prioritize shelter first
-                        new Sequence(new List<BTNode>
-                        {
-                            new CheckIfAnyShelter(thisHog),
-                            new CheckIfInRangeOne(thisHog.gameObject, thisHog.GetShelterWaypoint(), 20),
-                            new taskInitiatePathTo(hogAgent, thisHog.GetShelterWaypoint().transform, hogAnimator),
-                            new TaskHide(thisHog)
-                        }),
-                        //If no shelter, find grass
-                        new Sequence(new List<BTNode>
-                        {
-                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetGrassSet(), 20),
-                            new CheckForClosestGrass(thisHog, thisHog.GetGrassSet(), 20),
-                            new TaskLocateClosestGrass(thisHog, hogAgent),
-                            new taskInitiatePathToGrass(hogAgent, hogAnimator),
-                            new TaskHide(thisHog)
-                        }),
-
-                    })
+                    new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetEnemySet(), 50),
+                    new TaskRunAwayFromTarget(thisHog, thisHog.GetEnemySet(), 50)
                 }),
                 
                 ///
@@ -121,7 +64,7 @@ public class HedgehogTree : BTree
 
                 ///
                 /// IF NONE OF THOSE THINGS, FOLLOW THESE BEHAVIOURS BY DEFAULT
-                /// NIGHT TIME
+                /// NIGHT TIME ///
                 /// 
                 new Sequence(new List<BTNode>
                 {
@@ -129,21 +72,23 @@ public class HedgehogTree : BTree
                     //Pick between hiding in the shelter and hiding in tall grass
                     new Selector(new List<BTNode>
                     {
-                        //Shelter
+                        //FIND SHELTER SEQUENCE
                         new Sequence(new List<BTNode>
                         {
                             new CheckIfAnyShelter(thisHog),
-                            new CheckIfInRangeOne(thisHog.gameObject, thisHog.GetShelterWaypoint(), 20),
-                            new taskInitiatePathTo(hogAgent, thisHog.GetShelterWaypoint().transform, hogAnimator),
+                            new CheckIfInRangeOne(thisHog.gameObject, thisHog.GetShelterWaypoint(), 100),
+                            new taskInitiatePathTo(thisHog, thisHog.GetShelterWaypoint()),
+                            new TaskPathToWaypoint(thisHog),
                             new TaskHide(thisHog)
                         }),
-                        //Tall grass
+
+                        //FIND TALL GRASS SEQUENCE
                         new Sequence(new List<BTNode>
                         {
-                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetGrassSet(), 20),
-                            new CheckForClosestGrass(thisHog, thisHog.GetGrassSet(), 20),
-                            new TaskLocateClosestGrass(thisHog, hogAgent),
-                            new taskInitiatePathToGrass(hogAgent, hogAnimator),
+                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetGrassSet(), 150),
+                            new CheckForClosestGrass(thisHog, thisHog.GetGrassSet(), 150),
+                            new taskInitiatePathToGrass(hogAgent),
+                            new TaskPathToWaypoint(thisHog),
                             new TaskHide(thisHog)
                         }),
                     })
@@ -152,7 +97,7 @@ public class HedgehogTree : BTree
 
                 ///
                 /// IF NONE OF THOSE THINGS, FOLLOW THESE BEHAVIOURS BY DEFAULT
-                /// DAY TIME
+                /// DAY TIME ///
                 /// 
                 new Sequence(new List<BTNode>
                 {
@@ -163,15 +108,18 @@ public class HedgehogTree : BTree
                         //Highest priority is to stop what you're doing and look at the player if they're close
                         new Sequence(new List<BTNode>
                         {
-                            //Add a check for if the player is nearby
-                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetPlayerSet(), 15),
-                            new CheckIfAnimating(hogAnimator),
+                            //// RECOGNIZE PLAYER SEQUENCE
+                            new Inverter(new CheckIfVocalizeOnCooldown(thisHog, "acknowledge")),
+                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetPlayerSet(), 20),
                             new CheckForClosestPlayer(thisHog, 15),
-                            new Timer(3f, new TaskVocalizePlayer(hogAgent, thisHog, 15))
+                            new Timer(3f, new TaskVocalizePlayer(hogAgent, thisHog, 20)),
+                            new TaskSetVocalizeOnCooldown(thisHog, "acknowledge")
                         }),
-                        //Check if hungry first, find food
+
+                        //ALLEVIATE HUNGER SEQUENCE
                         new Sequence(new List<BTNode>
                         {
+                            new Inverter(new CheckIfVocalizeOnCooldown(thisHog, "hungry")),
                             new CheckIfHungry(thisHog),
                             //If hungry, is there anything to eat?
                             new Selector(new List<BTNode>
@@ -183,17 +131,19 @@ public class HedgehogTree : BTree
                                     {
                                         new Sequence(new List<BTNode>
                                         {
+                                            //If we're on top of a source of food, eat
                                             new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetBuildSet(), 5),
                                             new CheckForClosestFood(thisHog, 5),
-                                            new taskInitiatePathToFood(hogAgent, hogAnimator),
                                             new Timer(2f, new TaskInitiateAnimation(hogAnimator, "eat")),
                                             new TaskRestoreStat(thisHog.GetHunger())
                                         }),
                                         new Sequence(new List<BTNode>
                                         {
-                                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetBuildSet(), 50),
-                                            new CheckForClosestFood(thisHog, 5),
-                                            new taskInitiatePathToFood(hogAgent, hogAnimator)
+                                            //Otherwise, try to find the closest source
+                                            new CheckIfInRangeAll(thisHog.gameObject, thisHog.GetBuildSet(), 200),
+                                            new CheckForClosestFood(thisHog, 200),
+                                            new taskInitiatePathToFood(thisHog),
+                                            new TaskPathToWaypoint(thisHog)
                                         })
                                     })
                                 }),
@@ -201,14 +151,17 @@ public class HedgehogTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new Inverter(new CheckIfAnyFood(thisHog)),
-                                    new CheckForClosestPlayer(thisHog, 15),
-                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15, thisHog.GetVocalizeImage("foodImage")))
+                                    new CheckForClosestPlayer(thisHog, 20),
+                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 20, thisHog.GetVocalizeImage("foodImage"))),
+                                    new TaskSetVocalizeOnCooldown(thisHog, "hungry")
                                 })
                             })
                         }),
-                        //Check if thirsty next, find water
+
+                        //// ALLEVIATE THIRST SEQUENCE
                         new Sequence(new List<BTNode>
                         {
+                            new CheckIfVocalizeOnCooldown(thisHog, "thirsty"),
                             new CheckIfThirsty(thisHog),
                             //If thirsty, is there anything to drink?
                             new Selector(new List<BTNode>
@@ -220,14 +173,16 @@ public class HedgehogTree : BTree
                                     {
                                         new Sequence(new List<BTNode>
                                         {
+                                            //If we're right on top of water, drink
                                             new CheckIfInRangeOne(thisHog.gameObject, thisHog.GetWaterWaypoint(), 5),
                                             new Timer(2f, new TaskInitiateAnimation(hogAnimator, "eat")),
                                             new TaskRestoreStat(thisHog.GetThirst())
                                         }),
                                         new Sequence(new List<BTNode>
                                         {
-                                            new CheckIfInRangeOne(thisHog.gameObject, thisHog.GetWaterWaypoint(), 50),
-                                            new taskInitiatePathTo(hogAgent, thisHog.GetWaterWaypoint().transform, hogAnimator),
+                                            new CheckIfInRangeOne(thisHog.gameObject, thisHog.GetWaterWaypoint(), 200),
+                                            new taskInitiatePathTo(thisHog, thisHog.GetWaterWaypoint()),
+                                            new TaskPathToWaypoint(thisHog)
                                         })
                                     })
                                 }),
@@ -235,19 +190,23 @@ public class HedgehogTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new Inverter(new CheckIfAnyWater(thisHog)),
-                                    new CheckForClosestPlayer(thisHog, 15),
-                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 15, thisHog.GetVocalizeImage("waterImage")))
+                                    new CheckForClosestPlayer(thisHog, 20),
+                                    new Timer(3f, new TaskVocalize(hogAgent, thisHog, 20, thisHog.GetVocalizeImage("waterImage"))),
+                                    new TaskSetVocalizeOnCooldown(thisHog, "thirsty")
                                 })
 
                             })
 
                         }),
-                        //Check if bored finally, play
+
+                        //// ALLEVIATE BOREDOM SEQUENCE
                         new Sequence(new List<BTNode>
                         {
+                            //We could introduce slightly more customized behaviour for each animal with some variations
                             new CheckIfBored(thisHog),
-                            //Find some nice behaviours for a bored duck
-                            new TaskRestoreStat(thisHog.GetBoredom())
+                            new TaskPickRandomWaypoint(thisHog),
+                            new TaskPathToWaypoint(thisHog),
+                            new Timer(10f, new TaskRestoreStat(thisHog.GetBoredom()))
                         })
                     })
                 })

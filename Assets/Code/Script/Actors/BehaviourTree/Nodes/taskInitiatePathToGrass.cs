@@ -7,13 +7,11 @@ using UnityEngine.AI;
 public class taskInitiatePathToGrass : BTNode
 {
     NavMeshAgent thisAgent;
-    OurAnimator thisAnimator;
     Animal animal;
 
-    public taskInitiatePathToGrass(NavMeshAgent navAgent, OurAnimator animator)
+    public taskInitiatePathToGrass(NavMeshAgent navAgent)
     {
         thisAgent = navAgent;
-        thisAnimator = animator;
         animal = navAgent.GetComponent<Animal>();
     }
 
@@ -23,28 +21,16 @@ public class taskInitiatePathToGrass : BTNode
         bool inRange = Mathf.Abs((thisAgent.transform.position - animal.GetClosestGrass().transform.position).magnitude) <= thisAgent.stoppingDistance;
 
         //If we're not at the destination but we can reach it
-        if (!inRange && thisAgent.path.status != NavMeshPathStatus.PathInvalid)
+        if (!inRange)
         {
-            //thisAgent.SetDestination(animal.GetClosestGrass().transform.position);
-            //animal.SetAnimationFlag("move", true);
-            animal.SetAgentPath(animal.GetClosestGrass().transform.position);
-            //thisAnimator.ToggleSetWalk();
-            state = NodeState.RUNNING;
+            animal.SetActiveWaypoint(animal.GetClosestGrass());
+            animal.SetAgentPath(animal.GetActiveWaypoint().transform.position);
+            state = NodeState.SUCCESS;
         }
         //If we've reached the destination
         else if (inRange)
         {
             animal.ResetAgentPath();
-            //animal.SetAnimationFlag("move", false);
-            //thisAnimator.ToggleSetWalk();
-            state = NodeState.SUCCESS;
-        }
-        //If we can't reach the destination
-        else if(thisAgent.path.status == NavMeshPathStatus.PathInvalid)
-        {
-            animal.ResetAgentPath();
-            //animal.SetAnimationFlag("move", false);
-            //thisAnimator.ToggleSetWalk();
             state = NodeState.FAILURE;
         }
         return state;

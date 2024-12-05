@@ -10,7 +10,6 @@ public class CheckIfInRangeAll : BTCondition
     GameObject checkingObject;
     GameObjectRuntimeSet checkObjectSet;
     float distanceRange;
-    bool foundObjectInRange;
 
     // 
     public CheckIfInRangeAll(GameObject checkingEntity, GameObjectRuntimeSet entitiesCheckedAgainst, float range)
@@ -23,6 +22,8 @@ public class CheckIfInRangeAll : BTCondition
     //Returns true if there's an object of this type in range
     protected override NodeState OnRun()
     {
+        bool foundObjectInRange = false;
+
         if(checkObjectSet.Items != null)
         {
             foreach (GameObject g in checkObjectSet.Items)

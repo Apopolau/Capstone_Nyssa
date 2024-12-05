@@ -13,13 +13,11 @@ public class SmogAnimationEvents : MonoBehaviour
 
     public void TurnOnCollisionFrames()
     {
-        Debug.Log("Turning on attack collision frames");
         smogMonster.AttackCollisionOn();
     }
 
     public void TurnOffCollisionFrames()
     {
-        Debug.Log("Turning off attack collision frames");
         smogMonster.AttackCollisionOff();
     }
 }

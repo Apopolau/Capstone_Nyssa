@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7247374361532633313}
   - component: {fileID: 6151018915522629806}
-  - component: {fileID: 8705872294788497160}
   - component: {fileID: 2906999800888013163}
+  - component: {fileID: 5178162564328912945}
+  - component: {fileID: 8705872294788497160}
   - component: {fileID: 5477290125158561831}
   - component: {fileID: 9188026174410810753}
   - component: {fileID: 2300890220153589942}
@@ -19,7 +20,6 @@ GameObject:
   - component: {fileID: 6216512458912780763}
   - component: {fileID: 208207923508479372}
   - component: {fileID: 8282551407586969574}
-  - component: {fileID: 5178162564328912945}
   m_Layer: 0
   m_Name: Fox
   m_TagString: Untagged
@@ -71,28 +71,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!195 &8705872294788497160
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 73972206450328811}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 10
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 3
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!136 &2906999800888013163
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -116,6 +94,49 @@ CapsuleCollider:
   m_Height: 5
   m_Direction: 2
   m_Center: {x: 0, y: 2, z: 0}
+--- !u!135 &5178162564328912945
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73972206450328811}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 20
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &8705872294788497160
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 73972206450328811}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 10
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 3
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &5477290125158561831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,9 +155,6 @@ MonoBehaviour:
   shelterWaypoint: {fileID: 0}
   waterWaypoint: {fileID: 0}
   kidnapIcon: {fileID: 0}
-  navAgent: {fileID: 0}
-  earthPlayer: {fileID: 0}
-  celestialPlayer: {fileID: 0}
   closestGrass: {fileID: 0}
   closestFood: {fileID: 0}
   closestPlayer: {fileID: 0}
@@ -158,16 +176,13 @@ MonoBehaviour:
   friendImage: {fileID: 21300000, guid: 90b524711c243b54b9954e8e3e700533, type: 3}
   sproutImage: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
   celesteImage: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-  kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
   isStuck: 0
-  isScared: 0
   isHiding: 0
   isShielded: 0
   isEscorted: 0
   isKidnapped: 0
+  kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
   kidnapper: {fileID: 0}
-  origSpeed: 10
-  kidnappedSpeed: 0
   kidnapIconOn: 0
   hasCleanWater: 0
   hasShelter: 0
@@ -262,27 +277,6 @@ MonoBehaviour:
   objectToMoveSet:
   - {fileID: 11400000, guid: 4edd18b1901e2fc43a782f2b60d18845, type: 2}
   - {fileID: 11400000, guid: 5e897625fd455cc42b0c4cb37c0626b1, type: 2}
---- !u!135 &5178162564328912945
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 73972206450328811}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 20
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6181435207192587300
 GameObject:
   m_ObjectHideFlags: 0

@@ -23,7 +23,26 @@ public class TaskFollowPlayer : BTNode
     protected override NodeState OnRun()
     {
         float distanceToFinal = (thisActor.transform.position - destination).magnitude;
-        if(distanceToFinal < 20)
+
+        if (thisActor.GetComponent<NavMeshAgent>().path.status == NavMeshPathStatus.PathInvalid)
+        {
+            //thisAnimator.ToggleSetWalk();
+            thisActor.GetComponent<OurAnimator>().SetAnimationFlag("move", false);
+            state = NodeState.FAILURE;
+        }
+
+        if (thisActor.GetComponent<Animal>())
+        {
+            if (!thisActor.GetComponent<Animal>().GetIsEscorted() || thisActor.GetComponent<Animal>().GetIsKidnapped())
+            {
+                thisActor.GetComponent<OurAnimator>().SetAnimationFlag("move", false);
+                thisActor.ResetAgentPath();
+                state = NodeState.FAILURE;
+                return state;
+            }
+        }
+
+        if (distanceToFinal < 15)
         {
             //thisAnimator.ToggleSetWalk();
             thisActor.GetComponent<OurAnimator>().SetAnimationFlag("move", false);
@@ -33,31 +52,11 @@ public class TaskFollowPlayer : BTNode
             return state;
         }
 
-        if (thisActor.GetComponent<Animal>())
-        {
-            if(!thisActor.GetComponent<Animal>().GetIsEscorted() || thisActor.GetComponent<Animal>().GetIsScared() || thisActor.GetComponent<Animal>().GetIsKidnapped())
-            {
-                thisActor.GetComponent<OurAnimator>().SetAnimationFlag("move", false);
-                thisActor.ResetAgentPath();
-                state = NodeState.FAILURE;
-                return state;
-            }
-        }
-
-
-
-        thisActor.GetComponent<NavMeshAgent>().destination = player.transform.position;
-        //thisAnimator.ToggleSetWalk();
+        //thisActor.GetComponent<NavMeshAgent>().destination = player.transform.position;
+        thisActor.SetAgentPath(player.transform.position);
         thisActor.GetComponent<OurAnimator>().SetAnimationFlag("move", true);
 
         state = NodeState.RUNNING;
-
-        if (thisActor.GetComponent<NavMeshAgent>().path.status == NavMeshPathStatus.PathInvalid)
-        {
-            //thisAnimator.ToggleSetWalk();
-            thisActor.GetComponent<OurAnimator>().SetAnimationFlag("move", false);
-            state = NodeState.FAILURE;
-        }
 
         return state;
     }

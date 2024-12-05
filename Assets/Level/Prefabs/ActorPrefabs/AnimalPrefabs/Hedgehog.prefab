@@ -56,15 +56,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1527861654803304021}
+  - component: {fileID: 1776568748796092495}
+  - component: {fileID: 3591569397110130441}
+  - component: {fileID: 5414611268939979957}
+  - component: {fileID: 9169678131112647438}
   - component: {fileID: 1236817262978721761}
   - component: {fileID: 3922106270410184847}
   - component: {fileID: 8575002985578263412}
   - component: {fileID: 6781013830105985750}
   - component: {fileID: 5409344411859352931}
-  - component: {fileID: 9169678131112647438}
-  - component: {fileID: 1776568748796092495}
-  - component: {fileID: 3591569397110130441}
-  - component: {fileID: 5414611268939979957}
   m_Layer: 0
   m_Name: Hedgehog
   m_TagString: Untagged
@@ -90,142 +90,6 @@ Transform:
   - {fileID: 8527120526963534040}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1236817262978721761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4122216922130878906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94861935eff0214bbab625203102384, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  animator: {fileID: 3922106270410184847}
-  managerObject: {fileID: 0}
-  shelterWaypoint: {fileID: 0}
-  waterWaypoint: {fileID: 0}
-  kidnapIcon: {fileID: 0}
-  navAgent: {fileID: 0}
-  earthPlayer: {fileID: 0}
-  celestialPlayer: {fileID: 0}
-  closestGrass: {fileID: 0}
-  closestFood: {fileID: 0}
-  closestPlayer: {fileID: 0}
-  levelProgress: {fileID: 11400000, guid: d72188606e7e6e9409fddb57f1bcf001, type: 2}
-  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
-  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
-  soundLibrary: {fileID: 11400000, guid: 147e73da614172a448462ec71082a4f1, type: 2}
-  uiTarget: {fileID: 2075298780221948663}
-  escortPopup: {fileID: 3400114724638887807}
-  speechBubble: {fileID: 6028584549084687909}
-  interactPrompt: {fileID: 4905630140769452658}
-  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
-  enemySet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
-  buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
-  foodSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
-  grassSet: {fileID: 11400000, guid: c50479ae29688984d94f86bfe3821cf3, type: 2}
-  waterImage: {fileID: 21300000, guid: 2ba99edd7746cbb41a3cbfde3f95b592, type: 3}
-  foodImage: {fileID: 21300000, guid: 02afec829a8667b4ab02534698afd5cd, type: 3}
-  friendImage: {fileID: 21300000, guid: 8e058d963d623cb4692ebd75c6e672c2, type: 3}
-  sproutImage: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
-  celesteImage: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-  kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
-  isStuck: 0
-  isScared: 0
-  isHiding: 0
-  isShielded: 0
-  isEscorted: 0
-  isKidnapped: 0
-  kidnapper: {fileID: 0}
-  origSpeed: 3.5
-  kidnappedSpeed: 0
-  kidnapIconOn: 0
-  hasCleanWater: 0
-  hasShelter: 0
-  hasAnyFood: 0
-  midAnimation: 0
-  inRangeOfEscort: 0
---- !u!114 &3922106270410184847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4122216922130878906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a81a8ac0f936ad548bb0a60bd051a390, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 3654682180480747334}
-  currentAnimation: {fileID: 0}
-  idleAnimation: {fileID: 11400000, guid: 2c05eb596c5a7774688dfb41aa71de71, type: 2}
-  moveAnimation: {fileID: 11400000, guid: 94d56caeff2fc714f82a551026877b56, type: 2}
-  eatAnimation: {fileID: 11400000, guid: 16a083dbfe5498946b5a01968349a4d3, type: 2}
-  panicAnimation: {fileID: 11400000, guid: 0447c8ab762da2743bfe5d80ceb0d5cd, type: 2}
---- !u!114 &8575002985578263412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4122216922130878906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 756bb4aa12122ee47bc2eb9c1aa2419d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _initialState: {fileID: 11400000, guid: a7950fb84ed2a884e9f97a9ea5bb36b7, type: 2}
---- !u!114 &6781013830105985750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4122216922130878906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aba296753d56989469e5d8bb877bdf29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5409344411859352931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4122216922130878906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameObjectRuntimeSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
---- !u!195 &9169678131112647438
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4122216922130878906}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!54 &1776568748796092495
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -297,6 +161,136 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!195 &9169678131112647438
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122216922130878906}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 3
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1236817262978721761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122216922130878906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a94861935eff0214bbab625203102384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  animator: {fileID: 3922106270410184847}
+  managerObject: {fileID: 0}
+  shelterWaypoint: {fileID: 0}
+  waterWaypoint: {fileID: 0}
+  kidnapIcon: {fileID: 0}
+  closestGrass: {fileID: 0}
+  closestFood: {fileID: 0}
+  closestPlayer: {fileID: 0}
+  levelProgress: {fileID: 11400000, guid: d72188606e7e6e9409fddb57f1bcf001, type: 2}
+  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  soundLibrary: {fileID: 11400000, guid: 147e73da614172a448462ec71082a4f1, type: 2}
+  uiTarget: {fileID: 2075298780221948663}
+  escortPopup: {fileID: 3400114724638887807}
+  speechBubble: {fileID: 6028584549084687909}
+  interactPrompt: {fileID: 4905630140769452658}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  enemySet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
+  buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
+  foodSet: {fileID: 11400000, guid: bfbb6d3c262e4eb4e9bd8060a0c88a03, type: 2}
+  grassSet: {fileID: 11400000, guid: c50479ae29688984d94f86bfe3821cf3, type: 2}
+  waterImage: {fileID: 21300000, guid: 2ba99edd7746cbb41a3cbfde3f95b592, type: 3}
+  foodImage: {fileID: 21300000, guid: 02afec829a8667b4ab02534698afd5cd, type: 3}
+  friendImage: {fileID: 21300000, guid: 8e058d963d623cb4692ebd75c6e672c2, type: 3}
+  sproutImage: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+  celesteImage: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
+  isStuck: 0
+  isHiding: 0
+  isShielded: 0
+  isEscorted: 0
+  isKidnapped: 0
+  kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
+  kidnapper: {fileID: 0}
+  kidnapIconOn: 0
+  hasCleanWater: 0
+  hasShelter: 0
+  hasAnyFood: 0
+  midAnimation: 0
+  inRangeOfEscort: 0
+--- !u!114 &3922106270410184847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122216922130878906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81a8ac0f936ad548bb0a60bd051a390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3654682180480747334}
+  currentAnimation: {fileID: 0}
+  idleAnimation: {fileID: 11400000, guid: 2c05eb596c5a7774688dfb41aa71de71, type: 2}
+  moveAnimation: {fileID: 11400000, guid: 94d56caeff2fc714f82a551026877b56, type: 2}
+  eatAnimation: {fileID: 11400000, guid: 16a083dbfe5498946b5a01968349a4d3, type: 2}
+  panicAnimation: {fileID: 11400000, guid: 0447c8ab762da2743bfe5d80ceb0d5cd, type: 2}
+--- !u!114 &8575002985578263412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122216922130878906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756bb4aa12122ee47bc2eb9c1aa2419d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _initialState: {fileID: 11400000, guid: a7950fb84ed2a884e9f97a9ea5bb36b7, type: 2}
+--- !u!114 &6781013830105985750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122216922130878906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aba296753d56989469e5d8bb877bdf29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5409344411859352931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122216922130878906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62948d24ef85d649aa4497ead7e3965, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjectRuntimeSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
 --- !u!1 &9192371061849660770
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,15 +6,16 @@ using UnityEngine.AI;
 
 public class TaskAwaitDeath : BTNode
 {
-    NavMeshAgent thisAgent;
-    public TaskAwaitDeath(NavMeshAgent agent)
+    Actor thisActor;
+
+    public TaskAwaitDeath(Actor actor)
     {
-        thisAgent = agent;
+        thisActor = actor;
     }
 
     protected override NodeState OnRun()
     {
-        thisAgent.ResetPath();
+        thisActor.ResetAgentPath();
         state = NodeState.SUCCESS;
         return state;
 

@@ -23,31 +23,6 @@ public class DuckTree : BTree
         weatherState = thisDuck.GetWeatherManager();
         duckAnimator = thisDuck.GetAnimator();
 
-        /*
-        List<int> nonEatingAnimations;
-        nonEatingAnimations = new List<int>();
-        nonEatingAnimations.Add(duckAnimator.IfPanickingHash);
-        nonEatingAnimations.Add(duckAnimator.IfWalkingHash);
-        nonEatingAnimations.Add(duckAnimator.IfSwimmingHash);
-
-        List<int> nonPanickingAnimations;
-        nonPanickingAnimations = new List<int>();
-        nonPanickingAnimations.Add(duckAnimator.IfEatingHash);
-        nonPanickingAnimations.Add(duckAnimator.IfWalkingHash);
-        nonPanickingAnimations.Add(duckAnimator.IfSwimmingHash);
-
-        List<int> nonWalkingAnimations;
-        nonWalkingAnimations = new List<int>();
-        nonWalkingAnimations.Add(duckAnimator.IfEatingHash);
-        nonWalkingAnimations.Add(duckAnimator.IfPanickingHash);
-        nonWalkingAnimations.Add(duckAnimator.IfSwimmingHash);
-
-        List<int> nonSwimmingAnimations;
-        nonSwimmingAnimations = new List<int>();
-        nonSwimmingAnimations.Add(duckAnimator.IfEatingHash);
-        nonSwimmingAnimations.Add(duckAnimator.IfPanickingHash);
-        nonSwimmingAnimations.Add(duckAnimator.IfWalkingHash);
-        */
 
         BTNode root = new Selector(new List<BTNode>
         {
@@ -55,12 +30,21 @@ public class DuckTree : BTree
             new Selector(new List<BTNode>
             {
                 ///
+                /// GO WITH ENEMY IF KIDNAPPED
+                /// 
+                 new Sequence(new List<BTNode>
+                {
+                    new CheckIfKidnapped(thisDuck),
+                    new TaskGetKidnapped(thisDuck)
+                }),
+
+                ///
                 ///STAY IN PLACE IF STUCK
                 ///
                 new Sequence(new List<BTNode>
                 {
                     new CheckIfStuck(thisDuck),
-                    new TaskAwaitDeath(duckAgent)
+                    new TaskAwaitDeath(thisDuck)
                 }),
 
                 ///
@@ -69,35 +53,8 @@ public class DuckTree : BTree
                 new Sequence(new List<BTNode>
                 {
                     //Check if enemy nearby
-                    new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetEnemySet(), 20),
-                    //If there is an enemy, run or hide
-                    new Selector(new List<BTNode>
-                    {
-                        //RUN!
-                        new Sequence(new List<BTNode>
-                        {
-                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetEnemySet(), 10),
-                            new TaskRunAwayFromTarget(thisDuck, thisDuck.GetEnemySet(), 10)
-                        }),
-                        //If not in immediate proximity of a monster, prioritize shelter first
-                        new Sequence(new List<BTNode>
-                        {
-                            new CheckIfAnyShelter(thisDuck),
-                            new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.GetShelterWaypoint(), 20),
-                            new taskInitiatePathTo(duckAgent, thisDuck.GetShelterWaypoint().transform, duckAnimator),
-                            new TaskHide(thisDuck)
-                        }),
-                        //If no shelter, find grass
-                        new Sequence(new List<BTNode>
-                        {
-                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetGrassSet(), 20),
-                            new CheckForClosestGrass(thisDuck, thisDuck.GetGrassSet(), 20),
-                            new TaskLocateClosestGrass(thisDuck, duckAgent),
-                            new taskInitiatePathToGrass(duckAgent, duckAnimator),
-                            new TaskHide(thisDuck)
-                        }),
-
-                    })
+                    new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetEnemySet(), 50),
+                    new TaskRunAwayFromTarget(thisDuck, thisDuck.GetEnemySet(), 50)
                 }),
                 
                 ///
@@ -123,17 +80,19 @@ public class DuckTree : BTree
                         new Sequence(new List<BTNode>
                         {
                             new CheckIfAnyShelter(thisDuck),
-                            new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.GetShelterWaypoint(), 20),
-                            new taskInitiatePathTo(duckAgent, thisDuck.GetShelterWaypoint().transform, duckAnimator),
+                            new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.GetShelterWaypoint(), 100),
+                            new taskInitiatePathTo(thisDuck, thisDuck.GetShelterWaypoint()),
+                            new TaskPathToWaypoint(thisDuck),
                             new TaskHide(thisDuck)
                         }),
                         //Tall grass
                         new Sequence(new List<BTNode>
                         {
-                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetGrassSet(), 20),
-                            new CheckForClosestGrass(thisDuck, thisDuck.GetGrassSet(), 20),
+                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetGrassSet(), 150),
+                            new CheckForClosestGrass(thisDuck, thisDuck.GetGrassSet(), 150),
                             new TaskLocateClosestGrass(thisDuck, duckAgent),
-                            new taskInitiatePathToGrass(duckAgent, duckAnimator),
+                            new taskInitiatePathToGrass(duckAgent),
+                            new TaskPathToWaypoint(thisDuck),
                             new TaskHide(thisDuck)
                         }),
                     })
@@ -154,14 +113,16 @@ public class DuckTree : BTree
                         new Sequence(new List<BTNode>
                         {
                             //Add a check for if the player is nearby
-                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetPlayerSet(), 15),
-                            new CheckIfAnimating(duckAnimator),
+                            new Inverter(new CheckIfVocalizeOnCooldown(thisDuck, "acknowledge")),
+                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetPlayerSet(), 20),
                             new CheckForClosestPlayer(thisDuck, 15),
-                            new Timer(3f, new TaskVocalizePlayer(duckAgent, thisDuck, 15))
+                            new Timer(3f, new TaskVocalizePlayer(duckAgent, thisDuck, 20)),
+                            new TaskSetVocalizeOnCooldown(thisDuck, "acknowledge")
                         }),
                         //Check if hungry first, find food
                         new Sequence(new List<BTNode>
                         {
+                            new Inverter(new CheckIfVocalizeOnCooldown(thisDuck, "hungry")),
                             new CheckIfHungry(thisDuck),
                             //If hungry, is there anything to eat?
                             new Selector(new List<BTNode>
@@ -180,9 +141,10 @@ public class DuckTree : BTree
                                         }),
                                         new Sequence(new List<BTNode>
                                         {
-                                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetBuildSet(), 50),
-                                            new CheckForClosestFood(thisDuck, 50),
-                                            new taskInitiatePathToFood(duckAgent, duckAnimator),
+                                            new CheckIfInRangeAll(thisDuck.gameObject, thisDuck.GetBuildSet(), 200),
+                                            new CheckForClosestFood(thisDuck, 200),
+                                            new taskInitiatePathToFood(thisDuck),
+                                            new TaskPathToWaypoint(thisDuck)
                                         })
                                     }),
                                 }),
@@ -190,14 +152,16 @@ public class DuckTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new Inverter(new CheckIfAnyFood(thisDuck)),
-                                    new CheckForClosestPlayer(thisDuck, 15),
-                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15, thisDuck.GetVocalizeImage("foodImage")))
+                                    new CheckForClosestPlayer(thisDuck, 20),
+                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 20, thisDuck.GetVocalizeImage("foodImage"))),
+                                    new TaskSetVocalizeOnCooldown(thisDuck, "hungry")
                                 })
                             })
                         }),
                         //Check if thirsty next, find water
                         new Sequence(new List<BTNode>
                         {
+                            new Inverter(new CheckIfVocalizeOnCooldown(thisDuck, "thirsty")),
                             new CheckIfThirsty(thisDuck),
                             //If thirsty, is there anything to drink?
                             new Selector(new List<BTNode>
@@ -215,8 +179,9 @@ public class DuckTree : BTree
                                         }),
                                         new Sequence(new List<BTNode>
                                         {
-                                            new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.GetWaterWaypoint(), 50),
-                                            new taskInitiatePathTo(duckAgent, thisDuck.GetWaterWaypoint().transform, duckAnimator),
+                                            new CheckIfInRangeOne(thisDuck.gameObject, thisDuck.GetWaterWaypoint(), 200),
+                                            new taskInitiatePathTo(thisDuck, thisDuck.GetWaterWaypoint()),
+                                            new TaskPathToWaypoint(thisDuck)
                                         })
                                     })
                                 }),
@@ -224,24 +189,27 @@ public class DuckTree : BTree
                                 new Sequence(new List<BTNode>
                                 {
                                     new Inverter(new CheckIfAnyWater(thisDuck)),
-                                    new CheckForClosestPlayer(thisDuck, 15),
-                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 15, thisDuck.GetVocalizeImage("waterImage")))
+                                    new CheckForClosestPlayer(thisDuck, 20),
+                                    new Timer(3f, new TaskVocalize(duckAgent, thisDuck, 20, thisDuck.GetVocalizeImage("waterImage"))),
+                                    new TaskSetVocalizeOnCooldown(thisDuck, "thirsty")
                                 })
-                                
+
                             })
-                            
+
                         }),
                         //Check if bored finally, play
                         new Sequence(new List<BTNode>
                         {
+                            //We could introduce slightly more customized behaviour for each animal with some variations
                             new CheckIfBored(thisDuck),
-                            //Find some nice behaviours for a bored duck
-                            new TaskRestoreStat(thisDuck.GetBoredom())
+                            new TaskPickRandomWaypoint(thisDuck),
+                            new TaskPathToWaypoint(thisDuck),
+                            new Timer(10f, new TaskRestoreStat(thisDuck.GetBoredom()))
                         })
                     })
                 })
             })
-        }); ;
+        });
         return root;
         
     }

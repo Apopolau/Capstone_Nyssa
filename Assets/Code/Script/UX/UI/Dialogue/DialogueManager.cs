@@ -48,7 +48,7 @@ public class DialogueManager : MonoBehaviour
     //Flags for managing box state
     private bool isEndDialogueRunning = false;
     private bool isDialogueStarted = false;
-    private bool multipleDialogueEnqueued = false;
+    //private bool multipleDialogueEnqueued = false;
     private bool eventEnded = true;
 
     private bool movingOn = false;
@@ -174,7 +174,7 @@ public class DialogueManager : MonoBehaviour
                 currentDialogueEvent.Enqueue(dialogueEvent);
             }
             
-            multipleDialogueEnqueued = false;
+            //multipleDialogueEnqueued = false;
 
             eventEnded = true;
 
@@ -333,8 +333,8 @@ public class DialogueManager : MonoBehaviour
                 if (activeDialogueEvents.Count > 0)
                 {
                     StartFollowupDialogue(activeDialogueEvents.Dequeue());
-                    if (activeDialogueEvents.Count <= 0)
-                        multipleDialogueEnqueued = false;
+                    //if (activeDialogueEvents.Count <= 0)
+                        //multipleDialogueEnqueued = false;
                 }
                 //If there aren't, return everything to normal
                 else
@@ -663,7 +663,7 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 activeDialogueEvents.Enqueue(dialogue);
-                multipleDialogueEnqueued = true;
+                //multipleDialogueEnqueued = true;
             }
         }
         

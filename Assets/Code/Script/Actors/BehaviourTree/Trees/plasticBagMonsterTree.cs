@@ -6,56 +6,52 @@ using UnityEngine.AI;
 
 public class plasticBagMonsterTree : BTree
 {
-    private CelestialPlayer player;
-    private PlasticBagMonster enemy;
-    private NavMeshAgent enemyMeshAgent;
-    Rigidbody rb;
-    //Enemy Movements
-    public static float speed = 2f;
-
-
+    private PlasticBagMonster thisEnemy;
 
     protected override BTNode SetupTree()
     {
-        enemyMeshAgent = transform.GetComponent<NavMeshAgent>();
-        //player = transform.GetComponent<Enemy>().celestialPlayer;
-        enemy = transform.GetComponent<PlasticBagMonster>();
-        rb = GetComponent<Rigidbody>();
-        // Your behaviour tree will go in here: put your sequences after "new List<BTNode>"
+        thisEnemy = transform.GetComponent<PlasticBagMonster>();
+
         BTNode root = new Selector(new List<BTNode>
         {
-            //ATTACK PLANT SEQUENCE
-            
-        new Sequence(new List<BTNode>
-        {
-              new Inverter(new CheckIfDying(enemy)),
-              new Inverter(new CheckIfStaggered(enemy)),
-              new CheckInSmotherRange(enemy),
-              new Timer(2f, new TaskInitiateSmother(enemy)),
-              new TaskSmotherPlant(enemy),
-        }),
-
-           new Sequence(new List<BTNode>
-           {
-                new Inverter(new CheckIfDying(enemy)),
-              new Inverter(new CheckIfStaggered(enemy)),
-              new CheckIfPlantSpotted(enemy),
-              new TaskPathToPlant(enemy),
-           }),
-
-        new Sequence(new List<BTNode>
-        {
-            ////PATROL SEQUENCE
-            new Inverter(new CheckIfDying(enemy)),
-            new TaskFloat( enemy,rb,enemyMeshAgent, transform),
-
-
-        }),
-          
-               
-            new Sequence(new List<BTNode>
+            new Selector(new List<BTNode>
             {
-                new TaskAwaitDeath(enemyMeshAgent)
+                ////NOT STAGGERED SEQUENCE
+                new Sequence(new List<BTNode>
+                {
+                    new Inverter(new CheckIfDying(thisEnemy)),
+                    new Inverter(new CheckIfStaggered(thisEnemy)),
+                    new Selector(new List<BTNode>()
+                    {
+                        //ATTACK PLANT SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new CheckInSmotherRange(thisEnemy),
+                            new Timer(2f, new TaskInitiateSmother(thisEnemy)),
+                            new TaskSmotherPlant(thisEnemy),
+                        }),
+
+                        ////PATH TO PLANT SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new CheckIfPlantSpotted(thisEnemy),
+                            new TaskPathToPlant(thisEnemy),
+                        }),
+
+                        ////PATROL SEQUENCE
+                        new Sequence(new List<BTNode>
+                        {
+                            new Inverter(new CheckIfDying(thisEnemy)),
+                            new TaskFloat(thisEnemy),
+                        })
+                    })
+                }),
+
+                ////WAIT OUT STAGGER AND DEATH
+                new Sequence(new List<BTNode>
+                {
+                    new TaskAwaitDeath(thisEnemy)
+                })
             })
 
         });

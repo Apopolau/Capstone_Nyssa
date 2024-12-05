@@ -3,26 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using BehaviourTree;
 using UnityEngine.AI;
-public class CheckIfAnyWater : BTCondition
+
+public class CheckIfVocalizeOnCooldown : BTCondition
 {
-    Animal animal;
+    Animal thisAnimal;
+    string thisNeedKey;
+
     // Start is called before the first frame update
-    public CheckIfAnyWater(Animal thisAnimal)
+    public CheckIfVocalizeOnCooldown(Animal animal, string needKey)
     {
-        animal = thisAnimal;
+        thisAnimal = animal;
+        thisNeedKey = needKey;
     }
 
     //Returns true if it's night time
     protected override NodeState OnRun()
     {
-        if (animal.GetHasWater())
+        if (thisAnimal.GetIsNeedOnCooldown(thisNeedKey))
         {
-            //Debug.Log("There is water!");
+            //Debug.Log(thisAnimal + "'s " + thisNeedKey + " need was on cooldown");
             return NodeState.SUCCESS;
         }
         else
         {
-            //Debug.Log("There is no water...");
             return NodeState.FAILURE;
         }
     }

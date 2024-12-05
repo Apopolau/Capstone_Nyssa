@@ -12,11 +12,11 @@ public class TaskInvadePatrol : BTNode
     private List<Transform> currWayPointList;
     private int currWaypointIndex = 0;
 
-    public TaskInvadePatrol(KidnappingEnemy enemy, NavMeshAgent enemyMeshAgent, Transform transform)
+    public TaskInvadePatrol(KidnappingEnemy enemy)
     {
         thisEnemy = enemy;
-        thisAgent = enemyMeshAgent;
-        transformPos = transform;
+        thisAgent = thisEnemy.GetComponent<NavMeshAgent>();
+        transformPos = thisEnemy.GetComponent<Transform>();
     }
 
     protected override NodeState OnRun()

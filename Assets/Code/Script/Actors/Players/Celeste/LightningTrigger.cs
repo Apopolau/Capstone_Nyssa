@@ -10,7 +10,7 @@ public class LightningTrigger : MonoBehaviour
     private List<Enemy> enemiesHit;
     //private Rigidbody rb;
     //private Vector3 moveDirection;
-    private bool initialized = false;
+    //private bool initialized = false;
 
     private void Awake()
     {
@@ -45,10 +45,12 @@ public class LightningTrigger : MonoBehaviour
         }
     }
 
+    /*
     public void InitializeSelf()
     {
         initialized = true;
     }
+    */
 
     public void SetPlayer(CelestialPlayer celeste)
     {

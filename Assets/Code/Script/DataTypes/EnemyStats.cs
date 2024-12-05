@@ -20,6 +20,9 @@ public class EnemyStats : ScriptableObject
     [SerializeField] public float attackAnimTime;
     [SerializeField] public float takeHitAnimTime;
     [SerializeField] public float deathAnimTime;
+
     [SerializeField] public float sightRange;
+    [SerializeField] public float attackRange;
+    [SerializeField] public float kidnapRange;
 
 }

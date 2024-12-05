@@ -32,7 +32,7 @@ public class CheckForClosestGrass : BTCondition
                 if (Mathf.Abs(objectRange) <= distanceRange)
                 {
                     distanceRange = objectRange;
-                    thisAnimal.SetClosestFood(g);
+                    thisAnimal.SetClosestGrass(g);
                     foundObjectInRange = true;
                 }
             }

@@ -8,16 +8,12 @@ public class TaskRunAwayFromTarget : BTNode
 {
     private GameObjectRuntimeSet thingsToRunFrom;
     Actor thisActor;
-    //NavMeshAgent thisAgent;
-    //OurAnimator thisAnimator;
     float runRange;
 
     public TaskRunAwayFromTarget(Actor actor, GameObjectRuntimeSet runtimeSet, float range)
     {
         thisActor = actor;
-        //thisAgent = navAgent;
         thingsToRunFrom = runtimeSet;
-        //thisAnimator = animator;
         runRange = range;
     }
 
@@ -35,7 +31,6 @@ public class TaskRunAwayFromTarget : BTNode
 
         if(objectsInRange.Count > 0)
         {
-            //Vector3 fleeVector = location - this.transform.position;
             List<Vector3> directionVectors = new List<Vector3>();
             Vector3 finalVector = Vector3.zero;
             foreach(GameObject go in objectsInRange)
@@ -45,14 +40,13 @@ public class TaskRunAwayFromTarget : BTNode
             }
             finalVector.Normalize();
 
-            //if(thisActor.GetComponent<NavMeshAgent>().T)
             thisActor.SetAgentPath(finalVector);
             state = NodeState.RUNNING;
         }
         else
         {
             thisActor.ResetAgentPath();
-            state = NodeState.SUCCESS;
+            state = NodeState.FAILURE;
         }
 
         return state;

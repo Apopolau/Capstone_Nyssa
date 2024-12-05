@@ -4638,6 +4638,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6275352046092819799, guid: 9a4dc6e21611f8442b9b9049eee13f88, type: 3}
   m_PrefabInstance: {fileID: 225178119}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &227461369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2551639401127243146, guid: 5f891df270e1ef245828839209d75892, type: 3}
+  m_PrefabInstance: {fileID: 1757651505}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &227461370 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1971298402174009526, guid: 5f891df270e1ef245828839209d75892, type: 3}
+  m_PrefabInstance: {fileID: 1757651505}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &227461371 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5015440583530000807, guid: 5f891df270e1ef245828839209d75892, type: 3}
+  m_PrefabInstance: {fileID: 1757651505}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &227461372 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2123724128822981337, guid: 5f891df270e1ef245828839209d75892, type: 3}
+  m_PrefabInstance: {fileID: 1757651505}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &229678162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32296,6 +32316,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3187922514659222074, guid: 5f891df270e1ef245828839209d75892, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 46.7
+      objectReference: {fileID: 0}
     - target: {fileID: 6522331644689231881, guid: 5f891df270e1ef245828839209d75892, type: 3}
       propertyPath: m_Name
       value: L2Waypoints
@@ -41157,6 +41181,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1561895814}
     - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: facility
+      value: 
+      objectReference: {fileID: 1615433521}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: tileGrid
       value: 
       objectReference: {fileID: 1455602232}
@@ -41173,6 +41201,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1455602230}
     - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: firstWaypoint
+      value: 
+      objectReference: {fileID: 227461372}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: thirdWaypoint
+      value: 
+      objectReference: {fileID: 227461371}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: fourthWaypoint
+      value: 
+      objectReference: {fileID: 227461370}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: secondWaypoint
+      value: 
+      objectReference: {fileID: 227461369}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: leaveTriggerObj
       value: 
       objectReference: {fileID: 1570086383}
@@ -41180,6 +41224,10 @@ PrefabInstance:
       propertyPath: loggingAreaGrid
       value: 
       objectReference: {fileID: 1455602228}
+    - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
+      propertyPath: loggingBuilding
+      value: 
+      objectReference: {fileID: 1847365712}
     - target: {fileID: 3426407758838150730, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: buildingAreaGrid
       value: 
@@ -41236,10 +41284,6 @@ PrefabInstance:
       propertyPath: hudCanvas
       value: 
       objectReference: {fileID: 1773625666}
-    - target: {fileID: 8746814340790431660, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
-      propertyPath: RainParticleSystem
-      value: 
-      objectReference: {fileID: 2098320185}
     - target: {fileID: 8746814340790431660, guid: 8a019147dd3d9984da2142eea22ca992, type: 3}
       propertyPath: rainParticleSystem
       value: 

@@ -11,9 +11,9 @@ public class TaskWander : BTNode
     //Transformation
     private Transform transformPos;
     //Wait a Sec
-    private bool iswaiting = false;
-    private float waitTime = 1f;
-    private float waitCounter = 0;
+    //private bool iswaiting = false;
+    //private float waitTime = 1f;
+    //private float waitCounter = 0;
     Rigidbody rb;
     bool isSet = false;
     Vector3 newPos = Vector3.zero;
@@ -70,7 +70,7 @@ public class TaskWander : BTNode
 
                 //rb.MovePosition( wPoint.position);
                 // thisAgent.transform.position = newPos;
-                waitCounter = 0f;
+                //waitCounter = 0f;
 
                 isSet = false;
                 state = NodeState.RUNNING;
