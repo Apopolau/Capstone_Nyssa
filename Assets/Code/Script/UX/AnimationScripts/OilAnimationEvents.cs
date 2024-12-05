@@ -13,13 +13,11 @@ public class OilAnimationEvents : MonoBehaviour
 
     public void TurnOnCollisionFrames()
     {
-        //Debug.Log("Turning on attack collision frames");
         oilMonster.AttackCollisionOn();
     }
 
     public void TurnOffCollisionFrames()
     {
-        //Debug.Log("Turning off attack collision frames");
         oilMonster.AttackCollisionOff();
     }
 }

@@ -38,7 +38,6 @@ public class smogMonsterTree : BTree
                         {
                             new Inverter(new CheckIfPlayerDead(thisEnemy)),
                             new CheckPlayerInRange(thisEnemy),
-                            new Inverter(new CheckIfPlayerDead(thisEnemy)),
                             new taskChase(thisEnemy)
                         }),
                         ////PATROL SEQUENCE

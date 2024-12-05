@@ -12,6 +12,7 @@ public class RockSlideInteraction : Interactable
     private void Awake()
     {
         isEarthInteractable = true;
+        isCelestialInteractable = false;
     }
 
     private void Start()
@@ -46,6 +47,7 @@ public class RockSlideInteraction : Interactable
             isAnimated = true;
             soundEvent.Play();
             isEarthInteractable = false;
+            uiObject.SetActive(false);
             StartCoroutine(LetTimerRun());
         }
     }
