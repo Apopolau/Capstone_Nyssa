@@ -578,6 +578,7 @@ public class LevelOneEvents : LevelEventManager
         {
             go.GetComponent<Duck>().AddWayPointToWanderList(firstWaypoint);
         }
+        
 
         //Play the first monster defeat dialogue
         firstMonsterDeadDialouge.TriggerDialogue();
@@ -588,6 +589,7 @@ public class LevelOneEvents : LevelEventManager
 
         //Start spawning plastic bags
         plasticBagInvaderWaypoint.SetActive(true);
+        plasticBagInvaderWaypoint.GetComponent<EnemySpawner>().AddNewWaypoint(firstWaypoint);
     }
 
     public void OnSecondMonsterDefeated(Enemy enemy)
@@ -619,6 +621,7 @@ public class LevelOneEvents : LevelEventManager
         {
             go.GetComponent<Duck>().AddWayPointToWanderList(secondWaypoint);
         }
+        plasticBagInvaderWaypoint.GetComponent<EnemySpawner>().AddNewWaypoint(secondWaypoint);
 
         secondMonsterDeadDialouge.TriggerDialogue();
     }
@@ -640,6 +643,7 @@ public class LevelOneEvents : LevelEventManager
         {
             go.GetComponent<Duck>().AddWayPointToWanderList(thirdWaypoint);
         }
+        plasticBagInvaderWaypoint.GetComponent<EnemySpawner>().AddNewWaypoint(thirdWaypoint);
     }
 
     public void OnFourthMonsterDefeated()
@@ -655,6 +659,7 @@ public class LevelOneEvents : LevelEventManager
         {
             go.GetComponent<Duck>().AddWayPointToWanderList(fourthWaypoint);
         }
+        plasticBagInvaderWaypoint.GetComponent<EnemySpawner>().AddNewWaypoint(fourthWaypoint);
 
         fourthMonsterDeadDialouge.TriggerDialogue();
     }
@@ -676,6 +681,7 @@ public class LevelOneEvents : LevelEventManager
         {
             go.GetComponent<Duck>().AddWayPointToWanderList(fifthWaypoint);
         }
+        plasticBagInvaderWaypoint.GetComponent<EnemySpawner>().AddNewWaypoint(fifthWaypoint);
     }
 
     public void CountDownFinalMonsters()

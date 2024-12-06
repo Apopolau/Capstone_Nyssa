@@ -18,6 +18,14 @@ public class TaskPathToWaypoint : BTNode
     {
         float distance = (thisActor.transform.position - thisActor.GetActiveWaypoint().transform.position).magnitude;
 
+        if (thisActor.GetComponent<PlasticBagMonster>())
+        {
+            if (thisActor.GetComponent<PlasticBagMonster>().GetSeesPlant())
+            {
+                return NodeState.FAILURE;
+            }
+        }
+
         if(distance <= thisAgent.stoppingDistance + 1)
         {
             thisActor.ResetAgentPath();

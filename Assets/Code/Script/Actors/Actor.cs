@@ -8,7 +8,7 @@ public abstract class Actor : MonoBehaviour
     [Header("Actor variables")]
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected OurAnimator animator;
-    protected List<GameObject> wanderWaypoints;
+    [SerializeField] protected List<GameObject> wanderWaypoints;
     [SerializeField] protected GameObject currentWaypoint;
 
 
@@ -46,12 +46,21 @@ public abstract class Actor : MonoBehaviour
 
     public void AddWayPointToWanderList(GameObject waypoint)
     {
+        if(wanderWaypoints == null)
+        {
+            wanderWaypoints = new List<GameObject>();
+        }
         wanderWaypoints.Add(waypoint);
     }
 
     public GameObject GetWanderWayPoint(int i)
     {
         return wanderWaypoints[i];
+    }
+
+    public List<GameObject> GetWanderList()
+    {
+        return wanderWaypoints;
     }
 
     public void SetActiveWaypoint(GameObject waypoint)

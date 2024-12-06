@@ -42,7 +42,9 @@ public class plasticBagMonsterTree : BTree
                         new Sequence(new List<BTNode>
                         {
                             new Inverter(new CheckIfDying(thisEnemy)),
-                            new TaskFloat(thisEnemy),
+                            new TaskPickRandomWaypoint(thisEnemy),
+                            new TaskPathToWaypoint(thisEnemy),
+                            new Timer(20f, new TaskFloat(thisEnemy))
                         })
                     })
                 }),

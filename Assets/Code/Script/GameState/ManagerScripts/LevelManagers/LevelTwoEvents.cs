@@ -547,6 +547,8 @@ public class LevelTwoEvents : LevelEventManager
         {
             go.GetComponent<Animal>().AddWayPointToWanderList(firstWaypoint);
         }
+        spawn1.GetComponent<EnemySpawner>().AddNewWaypoint(firstWaypoint);
+        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(firstWaypoint);
 
         firstMonsterDeadDialouge.TriggerDialogue();
 
@@ -582,6 +584,7 @@ public class LevelTwoEvents : LevelEventManager
         }
 
         spawn1.GetComponent<EnemySpawner>().ToggleSpawns(false);
+        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(secondWaypoint);
     }
 
     //When the player defeats the 2 oil monsters hanging out on the west side of the main area
@@ -619,6 +622,8 @@ public class LevelTwoEvents : LevelEventManager
         {
             go.GetComponent<Animal>().AddWayPointToWanderList(thirdWaypoint);
         }
+        spawn1.GetComponent<EnemySpawner>().AddNewWaypoint(thirdWaypoint);
+        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(thirdWaypoint);
     }
 
     //When the player defeats the last 3 oil monsters, over by the terminal, that are surrounding the hedgehog friends
@@ -641,6 +646,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             go.GetComponent<Animal>().AddWayPointToWanderList(fourthWaypoint);
         }
+        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(thirdWaypoint);
 
         fourthMonsterDeadDialouge.TriggerDialogue();
         hog2.GetComponent<Hedgehog>().SetStuck(false);

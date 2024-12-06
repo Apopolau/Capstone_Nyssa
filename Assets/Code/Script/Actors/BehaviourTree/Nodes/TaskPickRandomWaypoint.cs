@@ -18,6 +18,11 @@ public class TaskPickRandomWaypoint : BTNode
 
     protected override NodeState OnRun()
     {
+        if(thisActor.GetWanderList().Count == 0)
+        {
+            return NodeState.FAILURE;
+        }
+
         thisActor.SetActiveWaypoint(thisActor.GetRandomWaypoint());
         thisAgent.destination = thisActor.GetActiveWaypoint().transform.position;
 

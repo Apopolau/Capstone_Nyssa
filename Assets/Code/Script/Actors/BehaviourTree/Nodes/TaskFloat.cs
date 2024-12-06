@@ -19,7 +19,7 @@ public class TaskFloat : BTNode
     Vector3 newPos = Vector3.zero;
     float distanceToEdge = 1;
 
-    public float range=20;
+    public float range = 20;
 
     public TaskFloat(PlasticBagMonster enemy)
     {
@@ -29,17 +29,23 @@ public class TaskFloat : BTNode
     }
     protected override NodeState OnRun()
     {
+
+        if (thisEnemy.GetComponent<PlasticBagMonster>().GetSeesPlant())
+        {
+            return NodeState.FAILURE;
+        }
+
         //Get a random point inside of a sphere based on the range given and the current position
         Vector3 randomPoint = transformPos.position + Random.insideUnitSphere * range;
-  
-        bool validPos=false;
+
+        bool validPos = false;
         NavMeshHit hit;
 
         if (thisEnemy.GetSeesPlant())
         {
             state = NodeState.FAILURE;
         }
-    
+
 
         if (!isSet)
         {
@@ -60,7 +66,7 @@ public class TaskFloat : BTNode
         }
 
 
-     if (isSet)
+        if (isSet)
         {
             float distance = Vector3.Distance(thisAgent.transform.position, newPos);
 

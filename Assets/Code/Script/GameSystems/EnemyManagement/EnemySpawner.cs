@@ -7,6 +7,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private LevelManagerObject levelManager;
     [SerializeField] private WeatherState weatherState;
     [SerializeField] private EnemyInvadingPath enemyInvadingPath;
+    [SerializeField] private List<GameObject> plasticWaypoints;
     [SerializeField] private GameObject plasticBagMonsterPrefab;
     //[SerializeField] private GameObject enemyOilInvaderPrefab;
     //[SerializeField] private GameObject smogMonsterInvaderPrefab;
@@ -28,10 +29,20 @@ public class EnemySpawner : MonoBehaviour
     //Range is minimum or maximum time between waves/spawns
     [SerializeField, Range(15, 60)] private float spawnInterval;
 
+    private void Awake()
+    {
+        plasticWaypoints = new List<GameObject>();
+    }
+
     void Start()
     {
-        if(!spawnerData.GetStartsOn())
-            spawnsOn = false;
+        
+
+        if(spawnerData != null)
+        {
+            if (!spawnerData.GetStartsOn())
+                spawnsOn = false;
+        }
 
         if (spawnsOn)
         {
@@ -91,10 +102,24 @@ public class EnemySpawner : MonoBehaviour
             if(enemySet.Items.Count < maxEnemies)
             {
                 Instantiate(currSpawnedEnemy, this.transform);
-                currSpawnedEnemy.GetComponent<Enemy>().SetInvasionPath(enemyInvadingPath.GetPath(spawnerIndex));
+                
 
                 if (currSpawnedEnemy.GetComponent<KidnappingEnemy>())
+                {
+                    currSpawnedEnemy.GetComponent<Enemy>().SetInvasionPath(enemyInvadingPath.GetPath(spawnerIndex));
                     currSpawnedEnemy.GetComponent<KidnappingEnemy>().SetEscapeWaypoint(enemyInvadingPath.GetEscapePoint(spawnerIndex));
+                }
+                    
+
+                if (currSpawnedEnemy.GetComponent<PlasticBagMonster>())
+                {
+                    foreach(GameObject go in plasticWaypoints)
+                    {
+                        Debug.Log("Adding waypoints to plastic bag monster!");
+                        currSpawnedEnemy.GetComponent<PlasticBagMonster>().AddWayPointToWanderList(go);
+                    }
+                }
+                    
             }
                 
         }
@@ -135,6 +160,12 @@ public class EnemySpawner : MonoBehaviour
     public bool GetSpawnsOn()
     {
         return spawnsOn;
+    }
+
+    public void AddNewWaypoint(GameObject waypoint)
+    {
+        Debug.Log("Plastic waypoints are getting " + waypoint + " added");
+        plasticWaypoints.Add(waypoint);
     }
 
     //Check the Day 

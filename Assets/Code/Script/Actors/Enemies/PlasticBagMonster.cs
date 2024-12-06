@@ -21,6 +21,10 @@ public class PlasticBagMonster : Enemy
     {
         InitializeAnimator();
         base.Awake();
+        if(wanderWaypoints == null)
+        {
+            wanderWaypoints = new List<GameObject>();
+        }
     }
 
     private void Start()

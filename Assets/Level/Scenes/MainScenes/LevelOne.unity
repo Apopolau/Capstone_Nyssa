@@ -5617,6 +5617,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5436833805211562502, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
   m_PrefabInstance: {fileID: 8270769471954893968}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &436360039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436360037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2afc984d493fbbd4d966111f2312cfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelManager: {fileID: 11400000, guid: 84a591d714bdf7e4387770b536fd3615, type: 2}
+  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  enemyInvadingPath: {fileID: 0}
+  plasticWaypoints: []
+  plasticBagMonsterPrefab: {fileID: 4505594305641103696, guid: 6b41e825c307f244cba29457d2092e46, type: 3}
+  enemySet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
+  spawnerIndex: 0
+  spawnerData: {fileID: 0}
+  maxEnemies: 5
+  spawnInterval: 30
 --- !u!1001 &436653645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7118,7 +7140,7 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: duckWayPoints.Array.size
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: duckWayPoints.Array.data[0]
@@ -32142,6 +32164,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2085992848}
     - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
+      propertyPath: duckWayPoints.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8670618033757916726, guid: d9e8e00a45c886f4b94c460c6eac4ad0, type: 3}
       propertyPath: duckWayPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1102025700}
@@ -39299,7 +39325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114948990934596960, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 344.77255
+      value: -68.2
       objectReference: {fileID: 0}
     - target: {fileID: 114948990934596960, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
       propertyPath: m_LocalPosition.y
@@ -39307,7 +39333,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114948990934596960, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 35.455685
+      value: 57.7
       objectReference: {fileID: 0}
     - target: {fileID: 114948990934596960, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
       propertyPath: m_LocalRotation.w
@@ -39360,8 +39386,12 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 5413376097683713185, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
+    - {fileID: 6686315232772432282, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5436833805211562502, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 436360039}
   m_SourcePrefab: {fileID: 100100000, guid: 7c4fd2273c700a9468977c9a97b0ce59, type: 3}
 --- !u!65 &8300292879011220184
 BoxCollider:
