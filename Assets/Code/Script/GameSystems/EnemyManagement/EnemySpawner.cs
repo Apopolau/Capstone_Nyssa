@@ -115,7 +115,6 @@ public class EnemySpawner : MonoBehaviour
                 {
                     foreach(GameObject go in plasticWaypoints)
                     {
-                        Debug.Log("Adding waypoints to plastic bag monster!");
                         currSpawnedEnemy.GetComponent<PlasticBagMonster>().AddWayPointToWanderList(go);
                     }
                 }
@@ -164,7 +163,6 @@ public class EnemySpawner : MonoBehaviour
 
     public void AddNewWaypoint(GameObject waypoint)
     {
-        Debug.Log("Plastic waypoints are getting " + waypoint + " added");
         plasticWaypoints.Add(waypoint);
     }
 

@@ -18,13 +18,21 @@ public class TaskPickRandomWaypoint : BTNode
 
     protected override NodeState OnRun()
     {
-        if(thisActor.GetWanderList().Count == 0)
+        if (thisActor.GetComponent<Animal>())
+        {
+            if (thisActor.GetComponent<Animal>().GetIsKidnapped())
+            {
+                return NodeState.FAILURE;
+            }
+        }
+
+        if (thisActor.GetWanderList().Count == 0)
         {
             return NodeState.FAILURE;
         }
 
         thisActor.SetActiveWaypoint(thisActor.GetRandomWaypoint());
-        thisAgent.destination = thisActor.GetActiveWaypoint().transform.position;
+        thisActor.SetAgentPath(thisActor.GetActiveWaypoint().transform.position);
 
         //If the function successfully found a new location to path to
         if (thisAgent.path.status != NavMeshPathStatus.PathInvalid)
@@ -34,7 +42,7 @@ public class TaskPickRandomWaypoint : BTNode
         //If we can't reach the destination
         else if (thisAgent.path.status == NavMeshPathStatus.PathInvalid)
         {
-            thisAgent.GetComponent<Actor>().ResetAgentPath();
+            thisActor.ResetAgentPath();
             state = NodeState.RUNNING;
         }
         return state;

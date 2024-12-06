@@ -19,6 +19,14 @@ public class TaskRunAwayFromTarget : BTNode
 
     protected override NodeState OnRun()
     {
+        if (thisActor.GetComponent<Animal>())
+        {
+            if (thisActor.GetComponent<Animal>().GetIsKidnapped())
+            {
+                return NodeState.FAILURE;
+            }
+        }
+
         List<GameObject> objectsInRange = new List<GameObject>();
         foreach(GameObject go in thingsToRunFrom.Items)
         {

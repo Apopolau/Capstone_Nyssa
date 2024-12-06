@@ -25,7 +25,7 @@ public class TaskGetKidnapped: BTNode
 
         if (thisAnimal.GetIsKidnapped())
         {
-            thisAgent.ResetPath();
+            thisAnimal.ResetAgentPath();
             state = NodeState.RUNNING;
         }
 

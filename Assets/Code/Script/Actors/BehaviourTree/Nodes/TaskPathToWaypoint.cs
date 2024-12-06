@@ -26,6 +26,14 @@ public class TaskPathToWaypoint : BTNode
             }
         }
 
+        if (thisActor.GetComponent<Animal>())
+        {
+            if (thisActor.GetComponent<Animal>().GetIsKidnapped())
+            {
+                return NodeState.FAILURE;
+            }
+        }
+
         if(distance <= thisAgent.stoppingDistance + 1)
         {
             thisActor.ResetAgentPath();

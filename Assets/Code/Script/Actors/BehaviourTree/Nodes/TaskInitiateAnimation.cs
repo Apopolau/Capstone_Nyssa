@@ -18,7 +18,16 @@ public class TaskInitiateAnimation : BTNode
     //Restores a stat like hunger or life to full
     protected override NodeState OnRun()
     {
-        if(animator != null)
+        if (animator.GetComponent<Animal>())
+        {
+            if (animator.GetComponent<Animal>().GetIsKidnapped())
+            {
+                animator.GetComponent<Animal>().SetIsHiding(false);
+                return NodeState.FAILURE;
+            }
+        }
+
+        if (animator != null)
         {
             animator.SetAnimationFlag(animationName, true);
         }

@@ -18,8 +18,6 @@ public class Hedgehog : Animal
         entertained = new Stat(50, 100, false);
         animator = GetComponentInChildren<HedgehogAnimator>();
         agent = GetComponent<NavMeshAgent>();
-
-        
     }
 
     private void OnEnable()

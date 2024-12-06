@@ -15,8 +15,23 @@ public class TaskHide : BTNode
 
     protected override NodeState OnRun()
     {
+        if (animal.GetComponent<Animal>())
+        {
+            if (animal.GetComponent<Animal>().GetIsKidnapped())
+            {
+                animal.SetIsHiding(false);
+                return NodeState.FAILURE;
+            }
+        }
+
+        if (animal.GetWeatherManager().dayTime || animal.GetIsEscorted())
+        {
+            animal.SetIsHiding(false);
+            return NodeState.SUCCESS;
+        }
+
         animal.SetIsHiding(true);
-        state = NodeState.SUCCESS;
+        state = NodeState.RUNNING;
         return state;
     }
 
