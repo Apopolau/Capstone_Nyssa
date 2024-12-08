@@ -45,6 +45,8 @@ public class LevelTwoEvents : LevelEventManager
     List<GameObject> buildingAreaTiles = new List<GameObject>();
     List<GameObject> waterTiles = new List<GameObject>();
 
+    [SerializeField] int tileCount = 0;
+
     [Header("Terrain variables")]
     [SerializeField] private Vector3 areaOneMinVals;
     [SerializeField] private Vector3 areaOneMaxVals;
@@ -158,6 +160,8 @@ public class LevelTwoEvents : LevelEventManager
         {
             waterTiles.Add(childTransform.gameObject);
         }
+
+        tileCount = hedgehogAreaTiles.Count + mainAreaTiles.Count + loggingAreaTiles.Count + buildingAreaTiles.Count;
 
         foreach (GameObject player in playerSet.Items)
         {
@@ -351,11 +355,8 @@ public class LevelTwoEvents : LevelEventManager
                 EvaluateAreaFour();
             }
 
-            int plantCount = 0;
-            int tileCount = hedgehogAreaTiles.Count + mainAreaTiles.Count + loggingAreaTiles.Count + buildingAreaTiles.Count;
-
             //Calculate the total amount of plants that have been planted
-            plantCount = levelTwoProgress.totalPlants;
+            int plantCount = levelTwoProgress.totalPlants;
 
             //We want to start changing up the ambient sounds as the map gets improved
             if ((plantCount > tileCount / 6) && (plantCount < tileCount / 4))
@@ -368,7 +369,7 @@ public class LevelTwoEvents : LevelEventManager
                     setClean = false;
                     setSuperClean = false;
                 }
-                soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
+                soundPlayers[1].SetVolume(1 / (float)(plantCount / tileCount));
             }
             else if ((plantCount > tileCount / 4) && (plantCount < tileCount / 2))
             {
@@ -383,8 +384,8 @@ public class LevelTwoEvents : LevelEventManager
                     soundPlayers[2].Stop(0.5f);
                     setSuperClean = false;
                 }
-                soundPlayers[0].SetVolume(plantCount / tileCount);
-                soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
+                soundPlayers[0].SetVolume(1 / (float)(tileCount / plantCount));
+                soundPlayers[1].SetVolume(1 / (float)(plantCount / tileCount));
             }
             else if (plantCount > tileCount / 2)
             {
@@ -394,8 +395,9 @@ public class LevelTwoEvents : LevelEventManager
                     soundPlayers[2].Play(nature, 0.5f);
                     setSuperClean = true;
                 }
-                soundPlayers[0].SetVolume(plantCount / tileCount);
-                soundPlayers[2].SetVolume(plantCount / tileCount);
+                soundPlayers[0].SetVolume(1 / (float)(tileCount / plantCount));
+                soundPlayers[1].SetVolume(1 / (float)(plantCount / tileCount));
+                soundPlayers[2].SetVolume(1 / (float)(tileCount / plantCount));
 
             }
         }
@@ -451,7 +453,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaTwoMOneMet)
             {
-                ApplyTextureChangeOverArea((int)areaOneMinVals.x, (int)areaOneMaxVals.x, (int)areaOneMinVals.z, (int)areaOneMaxVals.z, dirtSteps, dirtLayer, 1);
+                ApplyTextureChangeOverArea((int)areaTwoMinVals.x, (int)areaTwoMaxVals.x, (int)areaTwoMinVals.z, (int)areaTwoMaxVals.z, dirtSteps, dirtLayer, 1);
                 areaTwoMOneMet = true;
             }
         }
@@ -459,7 +461,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaTwoMTwoMet)
             {
-                ApplyTextureChangeOverArea((int)areaOneMinVals.x, (int)areaOneMaxVals.x, (int)areaOneMinVals.z, (int)areaOneMaxVals.z, grassSteps, grassLayer, 1);
+                ApplyTextureChangeOverArea((int)areaTwoMinVals.x, (int)areaTwoMaxVals.x, (int)areaTwoMinVals.z, (int)areaTwoMaxVals.z, grassSteps, grassLayer, 1);
                 areaTwoMTwoMet = true;
             }
         }
@@ -511,7 +513,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaFourMOneMet)
             {
-                ApplyTextureChangeOverArea((int)areaFourMinVals.x, (int)areaFourMinVals.x, (int)areaFourMinVals.z, (int)areaFourMinVals.z, dirtSteps, dirtLayer, 1);
+                ApplyTextureChangeOverArea((int)areaFourMinVals.x, (int)areaFourMaxVals.x, (int)areaFourMinVals.z, (int)areaFourMaxVals.z, dirtSteps, dirtLayer, 1);
                 areaFourMOneMet = true;
             }
         }
@@ -519,7 +521,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             if (!areaFourMTwoMet)
             {
-                ApplyTextureChangeOverArea((int)areaFourMinVals.x, (int)areaFourMinVals.x, (int)areaFourMinVals.z, (int)areaFourMinVals.z, grassSteps, grassLayer, 1);
+                ApplyTextureChangeOverArea((int)areaFourMinVals.x, (int)areaFourMaxVals.x, (int)areaFourMinVals.z, (int)areaFourMaxVals.z, grassSteps, grassLayer, 1);
 
                 areaFourMTwoMet = true;
             }

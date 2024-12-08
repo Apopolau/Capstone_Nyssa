@@ -48,6 +48,8 @@ public class LevelOneEvents : LevelEventManager
     List<GameObject> thirdAreaTiles = new List<GameObject>();
     List<GameObject> fourthAreaTiles = new List<GameObject>();
 
+    [SerializeField] int tileCount;
+
     [Header("Terrain variables")]
     [SerializeField] private Vector3 areaOneMinVals;
     [SerializeField] private Vector3 areaOneMaxVals;
@@ -112,6 +114,7 @@ public class LevelOneEvents : LevelEventManager
     private bool areaFourMOneMet = false;
     private bool areaFourMTwoMet = false;
 
+    bool unclean = true;
     bool setClean = false;
     bool setSuperClean = false;
 
@@ -153,6 +156,8 @@ public class LevelOneEvents : LevelEventManager
         {
             fourthAreaTiles.Add(childTransform.gameObject);
         }
+
+        tileCount = firstAreaTiles.Count + secondAreaTiles.Count + thirdAreaTiles.Count + fourthAreaTiles.Count;
 
         foreach (GameObject player in playerSet.Items)
         {
@@ -329,28 +334,28 @@ public class LevelOneEvents : LevelEventManager
                 EvaluateAreaFour();
             }
 
-            int plantCount = 0;
-            int tileCount = firstAreaTiles.Count + secondAreaTiles.Count + thirdAreaTiles.Count + fourthAreaTiles.Count;
-
             //Calculate the total amount of plants that have been planted
-            plantCount = levelOneProgress.totalPlants;
+            int plantCount = levelOneProgress.totalPlants;
 
             //ambientSoundPlayer.SetVolume(plantCount / tileCount);
 
             //We want to start changing up the ambient sounds as the map gets improved
-            if ((plantCount > tileCount / 6) && (plantCount < tileCount / 4))
+            //between 16% and 25%
+            if ((plantCount >= tileCount / 6) && (plantCount <= tileCount / 4))
             {
-                if (setClean)
+                if (unclean)
                 {
                     soundPlayers[0].Stop(0.5f);
                     soundPlayers[2].Stop(0.5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(false);
+                    unclean = false;
                     setClean = false;
                     setSuperClean = false;
                 }
                 soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
             }
-            else if ((plantCount > tileCount / 4) && (plantCount < tileCount / 2))
+            //between 25% and 50%
+            else if ((plantCount >= tileCount / 4) && (plantCount <= tileCount / 2))
             {
                 if (!setClean)
                 {
@@ -363,10 +368,10 @@ public class LevelOneEvents : LevelEventManager
                     soundPlayers[2].Stop(0.5f);
                     setSuperClean = false;
                 }
-                soundPlayers[0].SetVolume(plantCount / tileCount);
-                soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
+                soundPlayers[0].SetVolume((tileCount / plantCount) / 1);
+                soundPlayers[1].SetVolume((plantCount / tileCount) / 1);
             }
-            else if (plantCount > tileCount / 2)
+            else if (plantCount >= tileCount / 2)
             {
                 if (!setSuperClean)
                 {
@@ -374,8 +379,9 @@ public class LevelOneEvents : LevelEventManager
                     soundPlayers[2].Play(nature, 0.5f);
                     setSuperClean = true;
                 }
-                soundPlayers[0].SetVolume(plantCount / tileCount);
-                soundPlayers[2].SetVolume(plantCount / tileCount);
+                soundPlayers[0].SetVolume((tileCount / plantCount) / 1);
+                soundPlayers[1].SetVolume((plantCount / tileCount) / 1);
+                soundPlayers[2].SetVolume((tileCount / plantCount) / 1);
 
             }
         }

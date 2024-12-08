@@ -53,13 +53,11 @@ public class Fox : Animal
         {
             if (!isEscorted && !resettingEscort)
             {
-                Debug.Log("Escort was set to true");
                 StartCoroutine(ResetEscort());
                 SetEscort(true);
             }
             else if (isEscorted && !resettingEscort)
             {
-                Debug.Log("And then right back to false.");
                 StartCoroutine(ResetEscort());
                 SetEscort(false);
             }
