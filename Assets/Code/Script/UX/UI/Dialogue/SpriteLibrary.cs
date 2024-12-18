@@ -12,5 +12,18 @@ public class SpriteLibrary : ScriptableObject
     public Sprite Upset;
     public Sprite Angry;
     public Sprite Determined;
+    public Sprite Worried;
+    public Sprite Surprised;
+    public Sprite Confused;
+
+    //Alert
+    //Angry
+    //Assured
+    //Excited
+    //Happy
+    //Idle
+    //Shocked
+    //Thinking
+    //Worried
 
 }

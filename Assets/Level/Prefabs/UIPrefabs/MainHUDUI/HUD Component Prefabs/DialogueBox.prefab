@@ -67,7 +67,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -168,7 +168,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3076734818838078553
 Transform:
   m_ObjectHideFlags: 0
@@ -631,7 +631,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4128444253407638331}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.000000014901159, y: 0.000000059604638, z: 0.000000014901159, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1364.3, y: -217.51, z: -25.00003}
   m_LocalScale: {x: 4, y: 4, z: 2.5}
   m_ConstrainProportionsScale: 0
@@ -653,14 +653,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
   hudManager: {fileID: 0}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  mainCam: {fileID: 0}
+  split: {fileID: 0}
+  dialogueBox: {fileID: 1527609183279401032}
   characterIconLeft: {fileID: 2412443630827294531}
   characterIconRight: {fileID: 4343524471540266708}
   dialogueArea: {fileID: 5738935411443475329}
-  isDialogueActive: 0
-  dialogueBox: {fileID: 1527609183279401032}
-  split: {fileID: 0}
-  mainCam: {fileID: 0}
-  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   spriteLibraries:
   - {fileID: 11400000, guid: c34b125c12d05804091183ff392e3bb0, type: 2}
   - {fileID: 11400000, guid: e8199d78ad442cd45bf07de6714b3077, type: 2}
@@ -675,10 +674,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a63478c24df665b4fafc544c93356f7f, type: 2}
   - {fileID: 11400000, guid: 45f18947fae6e71448eeee1ef8f82ec1, type: 2}
   - {fileID: 11400000, guid: 544556122f5ede94c9a72b488909bc75, type: 2}
-  panToOrigin: {fileID: 11400000, guid: 4491f95866657d641bcfb815dfa115ca, type: 2}
   typingSpeed: 0.05
-  panningOn: 0
-  returningToOrigin: 0
+  panToOrigin: {fileID: 11400000, guid: 4491f95866657d641bcfb815dfa115ca, type: 2}
 --- !u!1 &4509208316008982673
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,7 +807,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &5809619171540023313
@@ -944,7 +941,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &6832818020581847398
@@ -1217,7 +1214,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 41.220497}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7915658268130597608
@@ -1247,14 +1244,14 @@ RectTransform:
   m_GameObject: {fileID: 7915658268130597608}
   m_LocalRotation: {x: -0, y: -0, z: -2.1175824e-22, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -135}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2.2020617, y: 2.2020617, z: 2.2020617}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3076734818838078553}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 488.2, y: -18.699986}
+  m_AnchoredPosition: {x: 483.1, y: -39.3}
   m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7546208273873057393
@@ -1285,9 +1282,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2c980e0d210015b45b98a23d3ad3d97d, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

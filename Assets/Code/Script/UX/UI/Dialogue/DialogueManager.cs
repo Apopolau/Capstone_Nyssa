@@ -705,21 +705,33 @@ public class DialogueManager : MonoBehaviour
         {
             currentSprite = currentCharacter.characterSprites.Silhouette;
         }
-        if (currentLine.emotion == DialogueLine.Emotion.HAPPY)
+        else if (currentLine.emotion == DialogueLine.Emotion.HAPPY)
         {
             currentSprite = currentCharacter.characterSprites.Happy;
         }
-        if (currentLine.emotion == DialogueLine.Emotion.UPSET)
+        else if (currentLine.emotion == DialogueLine.Emotion.UPSET)
         {
             currentSprite = currentCharacter.characterSprites.Upset;
         }
-        if (currentLine.emotion == DialogueLine.Emotion.ANGRY)
+        else if (currentLine.emotion == DialogueLine.Emotion.ANGRY)
         {
             currentSprite = currentCharacter.characterSprites.Angry;
         }
-        if (currentLine.emotion == DialogueLine.Emotion.DETERMINED)
+        else if (currentLine.emotion == DialogueLine.Emotion.DETERMINED)
         {
             currentSprite = currentCharacter.characterSprites.Determined;
+        }
+        else if(currentLine.emotion == DialogueLine.Emotion.WORRIED)
+        {
+            currentSprite = currentCharacter.characterSprites.Worried;
+        }
+        else if (currentLine.emotion == DialogueLine.Emotion.SURPRISED)
+        {
+            currentSprite = currentCharacter.characterSprites.Surprised;
+        }
+        else if (currentLine.emotion == DialogueLine.Emotion.CONFUSED)
+        {
+            currentSprite = currentCharacter.characterSprites.Confused;
         }
     }
 
