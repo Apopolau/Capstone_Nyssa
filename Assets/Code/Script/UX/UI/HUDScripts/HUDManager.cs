@@ -20,6 +20,8 @@ public class HUDManager : MonoBehaviour
     public enum MouseCanvasType { MAIN, SPROUT };
     private MouseCanvasType currentCanvas = MouseCanvasType.MAIN;
 
+    [SerializeField] private Camera activeCamera;
+
     [SerializeField] private Canvas hudCanvas;
 
     [SerializeField] private GameObjectRuntimeSet playerSet;
@@ -52,6 +54,7 @@ public class HUDManager : MonoBehaviour
 
     private void Awake()
     {
+        activeCamera = Camera.main;
         model.SetManager(this);
         levelEvents = GetComponent<LevelEventManager>();
         PopulateUI();
@@ -593,7 +596,6 @@ public class HUDManager : MonoBehaviour
         //This will need to spin the tab on the day night cycle once it's created
     }
 
-    //NEEDS HEAVILY DEBUGGED
     //Moves a kidnap icon to try to get as close to an animal that's being kidnapped as possible while staying on-screen
     public void MoveKidnapIcon(GameObject kidnapIcon, GameObject uiTarget)
     {
@@ -601,7 +603,7 @@ public class HUDManager : MonoBehaviour
 
         //Get the position of the target location for the kidnap icon based on its screen space position
         Vector3 kidnapIconTarget = new Vector3(uiTarget.transform.position.x, uiTarget.transform.position.y + 5, uiTarget.transform.position.z);
-        Vector3 targetPositionScreenPoint = Camera.main.WorldToScreenPoint(kidnapIconTarget);
+        Vector3 targetPositionScreenPoint = activeCamera.WorldToScreenPoint(kidnapIconTarget);
 
         //Calculate if the icon is within a margin or beyond off of screen space
         float borderSize = 100f;
@@ -613,7 +615,7 @@ public class HUDManager : MonoBehaviour
             //Calculate the direction between the camera and the animal
             Vector3 toPosition = kidnapIconTarget;
             //Vector3 realCameraPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, Camera.main.nearClipPlane));
-            Vector3 realCameraPos = Camera.main.transform.position;
+            Vector3 realCameraPos = activeCamera.transform.position;
             Vector3 fromPosition = realCameraPos;
             fromPosition.z = 0f;
 
@@ -1003,5 +1005,10 @@ public class HUDManager : MonoBehaviour
     public List<GameObject> GetAnimalSet()
     {
         return animalSet.Items;
+    }
+
+    public void SetCamera(Camera camera)
+    {
+        activeCamera = camera;
     }
 }

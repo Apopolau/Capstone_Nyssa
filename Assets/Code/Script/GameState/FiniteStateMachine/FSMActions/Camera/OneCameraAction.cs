@@ -19,6 +19,7 @@ public class OneCameraAction : FSMAction
         splitScreen.mainCam.enabled = true;
 
         splitScreen.earthPlayer.GetComponent<EarthPlayer>().SetCamera(splitScreen.mainCam);
+        splitScreen.hudManager.SetCamera(splitScreen.mainCam);
 
         //splitScreen.virtualMouseInput.cursorTransform.position = splitScreen.earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
         //splitScreen.GetHudManager().SetVirtualMousePosition(splitScreen.GetHudManager().GetVirtualMousePosition());

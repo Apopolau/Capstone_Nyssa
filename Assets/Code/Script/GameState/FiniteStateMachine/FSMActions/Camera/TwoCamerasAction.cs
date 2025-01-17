@@ -22,6 +22,7 @@ public class TwoCamerasAction : FSMAction
         
         //go into the the plant systems main camera and make sure it is properly set
         splitScreen.earthPlayer.GetComponent<EarthPlayer>().SetCamera(splitScreen.earthCam);
+        splitScreen.hudManager.SetCamera(splitScreen.earthCam);
 
         if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || splitScreen.earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
         {
