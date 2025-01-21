@@ -20,26 +20,17 @@ public class taskInitiatePathTo : BTNode
 
     protected override NodeState OnRun()
     {
-        //bool inRange = Mathf.Abs((thisActor.transform.position - thisTarget.transform.position).magnitude) <= thisAgent.stoppingDistance;
-
-        //If we're not at the destination but we can reach it
-        //if (!inRange)
-        //{
-            //Debug.Log("Heading to " + thisTarget);
-            thisActor.SetActiveWaypoint(thisTarget);
-            state = NodeState.SUCCESS;
-
-        
-        //}
-        //If we've reached the destination
-        /*
-        else if (inRange)
+        if (thisActor.GetComponent<Animal>())
         {
-            Debug.Log("No need to go to " + thisTarget + ", we're already here.");
-            thisActor.ResetAgentPath();
-            state = NodeState.FAILURE;
+            if (thisActor.GetComponent<Animal>().GetIsKidnapped())
+            {
+                state = NodeState.FAILURE;
+                return state;
+            }
         }
-        */
+
+        thisActor.SetActiveWaypoint(thisTarget);
+        state = NodeState.SUCCESS;
 
         return state;
     }

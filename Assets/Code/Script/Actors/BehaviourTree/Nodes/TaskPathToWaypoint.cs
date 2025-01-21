@@ -16,8 +16,6 @@ public class TaskPathToWaypoint : BTNode
 
     protected override NodeState OnRun()
     {
-        float distance = (thisActor.transform.position - thisActor.GetActiveWaypoint().transform.position).magnitude;
-
         if (thisActor.GetComponent<PlasticBagMonster>())
         {
             if (thisActor.GetComponent<PlasticBagMonster>().GetSeesPlant())
@@ -34,7 +32,9 @@ public class TaskPathToWaypoint : BTNode
             }
         }
 
-        if(distance <= thisAgent.stoppingDistance + 1)
+        float distance = (thisActor.transform.position - thisActor.GetActiveWaypoint().transform.position).magnitude;
+
+        if (distance <= thisAgent.stoppingDistance + 1)
         {
             thisActor.ResetAgentPath();
             state = NodeState.SUCCESS;
@@ -49,7 +49,6 @@ public class TaskPathToWaypoint : BTNode
             state = NodeState.RUNNING;
         }
 
-        //Debug.Log("Pathing to waypoint, status " + state);
         return state;
     }
     protected override void OnReset()

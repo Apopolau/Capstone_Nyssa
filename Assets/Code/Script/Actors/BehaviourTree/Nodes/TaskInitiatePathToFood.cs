@@ -18,25 +18,27 @@ public class taskInitiatePathToFood : BTNode
 
     protected override NodeState OnRun()
     {
-        //bool inRange = Mathf.Abs((thisAgent.transform.position - thisAnimal.GetClosestFood().transform.position).magnitude) <= thisAgent.stoppingDistance;
-        //Debug.Log(thisAnimal + " is seeking " + thisAnimal.GetClosestFood());
-
-        //If we're not at the destination but we can reach it
-        //if (!inRange)
-        //{
-            thisAnimal.SetActiveWaypoint(thisAnimal.GetClosestFood());
-            thisAnimal.SetAgentPath(thisAnimal.GetActiveWaypoint().transform.position);
-            state = NodeState.SUCCESS;
-        //}
-        //If we've reached the destination
-        /*
-        else if (inRange)
+        if (thisAnimal.GetIsKidnapped())
         {
-            thisAnimal.ResetAgentPath();
             state = NodeState.FAILURE;
+            return state;
         }
-        */
-        return state;
+
+        thisAnimal.SetActiveWaypoint(thisAnimal.GetClosestFood());
+        thisAnimal.SetAgentPath(thisAnimal.GetActiveWaypoint().transform.position);
+
+        if(thisAgent.pathStatus != NavMeshPathStatus.PathInvalid)
+        {
+            state = NodeState.SUCCESS;
+
+            return state;
+        }
+        else
+        {
+            state = NodeState.FAILURE;
+            return state;
+        }
+        
     }
 
 

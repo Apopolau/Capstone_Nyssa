@@ -7,30 +7,36 @@ using UnityEngine.AI;
 public class taskInitiatePathToGrass : BTNode
 {
     NavMeshAgent thisAgent;
-    Animal animal;
+    Animal thisAnimal;
 
     public taskInitiatePathToGrass(NavMeshAgent navAgent)
     {
         thisAgent = navAgent;
-        animal = navAgent.GetComponent<Animal>();
+        thisAnimal = navAgent.GetComponent<Animal>();
     }
 
 
     protected override NodeState OnRun()
     {
-        bool inRange = Mathf.Abs((thisAgent.transform.position - animal.GetClosestGrass().transform.position).magnitude) <= thisAgent.stoppingDistance;
+        if (thisAnimal.GetIsKidnapped())
+        {
+            state = NodeState.FAILURE;
+            return state;
+        }
+
+        bool inRange = Mathf.Abs((thisAgent.transform.position - thisAnimal.GetClosestGrass().transform.position).magnitude) <= thisAgent.stoppingDistance;
 
         //If we're not at the destination but we can reach it
         if (!inRange)
         {
-            animal.SetActiveWaypoint(animal.GetClosestGrass());
-            animal.SetAgentPath(animal.GetActiveWaypoint().transform.position);
+            thisAnimal.SetActiveWaypoint(thisAnimal.GetClosestGrass());
+            thisAnimal.SetAgentPath(thisAnimal.GetActiveWaypoint().transform.position);
             state = NodeState.SUCCESS;
         }
         //If we've reached the destination
         else if (inRange)
         {
-            animal.ResetAgentPath();
+            thisAnimal.ResetAgentPath();
             state = NodeState.FAILURE;
         }
         return state;

@@ -230,13 +230,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   animator: {fileID: 7672907173581107229}
+  wanderWaypoints: []
+  currentWaypoint: {fileID: 0}
   managerObject: {fileID: 0}
   shelterWaypoint: {fileID: 0}
   waterWaypoint: {fileID: 0}
   kidnapIcon: {fileID: 0}
-  navAgent: {fileID: 0}
-  earthPlayer: {fileID: 0}
-  celestialPlayer: {fileID: 0}
   closestGrass: {fileID: 0}
   closestFood: {fileID: 0}
   closestPlayer: {fileID: 0}
@@ -258,22 +257,23 @@ MonoBehaviour:
   friendImage: {fileID: 21300000, guid: 1717634f88fe8c447ad8e69fdda4e18b, type: 3}
   sproutImage: {fileID: 21300000, guid: f14b918562e51524fa95cfd1103ffa8d, type: 3}
   celesteImage: {fileID: 21300000, guid: 24a80fe7d3ac06347ab0676d5b8efc6c, type: 3}
-  kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
   isStuck: 1
-  isScared: 0
   isHiding: 0
   isShielded: 0
   isEscorted: 0
   isKidnapped: 0
+  kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
   kidnapper: {fileID: 0}
-  origSpeed: 3.5
-  kidnappedSpeed: 5
   kidnapIconOn: 0
   hasCleanWater: 0
   hasShelter: 0
   hasAnyFood: 0
   midAnimation: 0
   inRangeOfEscort: 0
+  enemyNearby: 0
+  distanceToNearestEnemy: 0
+  threatRange: 50
+  nearestEnemy: {fileID: 0}
   duckWayPoints:
   - {fileID: 0}
   - {fileID: 0}

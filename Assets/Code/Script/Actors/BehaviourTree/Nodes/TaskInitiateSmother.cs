@@ -24,17 +24,17 @@ public class TaskInitiateSmother : BTNode
             return NodeState.FAILURE;
         }
 
-        if (!thisEnemy.GetSmotherInitiated() && !thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isDying)
+        if (!thisEnemy.GetSmotherInitiated() && !thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().GetIsDying())
         {
             if (thisEnemy.GetInSmotherRange() && !thisEnemy.GetIsDying() && !thisEnemy.GetIsStaggered())
             {
-                thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isSmothered = true;
+                thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().SetSmothered(true);
                 thisEnemy.SetSmotherInitiated(true);
                 state = NodeState.SUCCESS;
             }
             else
             {
-                thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isSmothered = false;
+                thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().SetSmothered(false);
                 thisEnemy.SetSmotherInitiated(false);
                 state = NodeState.FAILURE;
             }

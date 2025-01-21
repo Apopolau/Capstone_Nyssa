@@ -24,7 +24,7 @@ public class Plant : Creatable
     // Reference to the UI elements
     public GameObject waterUI;
     public GameObject sunlightUI;
-    
+
     public SpriteRenderer[] plantVisuals;
     private Cell tilePlantedOn;
     bool waterPlant = false;
@@ -32,8 +32,8 @@ public class Plant : Creatable
     public int currentPollutionContribution;
     [SerializeField] private int growthPoints;
     private WaitForSeconds growthRate = new WaitForSeconds(1);
-    public bool isSmothered;
-    public bool isDying;
+    private bool isSmothered = false;
+    private bool isDying = false;
     public PlantStats.PlantStage currentPlantStage;
 
     private GameObject seed;
@@ -68,17 +68,6 @@ public class Plant : Creatable
             storedWater.current = 100;
             storedWater.low = false;
         }
-
-        /*
-        foreach(SpriteRenderer r in waterUI.GetComponentsInChildren<SpriteRenderer>())
-        {
-            r.material.renderQueue += 2;
-        }
-        foreach (SpriteRenderer r in sunlightUI.GetComponentsInChildren<SpriteRenderer>())
-        {
-            r.material.renderQueue += 2;
-        }
-        */
     }
 
     private void Start()
@@ -96,11 +85,6 @@ public class Plant : Creatable
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     private void FixedUpdate()
     {
@@ -118,9 +102,10 @@ public class Plant : Creatable
             //If it's a water plant it doesn't need rain to grow
             if (waterPlant)
             {
-                if (weatherState.dayTime)
+                if (weatherState.dayTime && !isSmothered)
                 {
                     growthPoints++;
+                    HandleHealthChanges(1);
                 }
                 else
                 {
@@ -129,9 +114,10 @@ public class Plant : Creatable
             }
             else
             {
-                if (weatherState.dayTime && weatherState.GetSkyState() == WeatherState.SkyState.RAINY)
+                if (weatherState.dayTime && weatherState.GetSkyState() == WeatherState.SkyState.RAINY && !isSmothered)
                 {
                     growthPoints++;
+                    HandleHealthChanges(1);
                 }
                 else
                 {
@@ -139,30 +125,28 @@ public class Plant : Creatable
                 }
             }
         }
-        
+
     }
 
     private void UseReserveNutrients()
     {
+
         if (waterPlant)
         {
             if (storedSunlight.current > 0)
             {
-                growthPoints ++;
+                growthPoints++;
                 storedSunlight.current -= Mathf.Clamp(1, 0, storedSunlight.max);
                 //we want our plants to heal if they're not full health while they're growing
                 //We may choose to add a check where they don't heal if they're actively being affected by a monster
-                if (health.current < health.max)
-                {
-                    health.current++;
-                }
+                HandleHealthChanges(1);
             }
         }
         else
         {
             if (storedSunlight.current > 0 && storedWater.current > 0)
             {
-                growthPoints ++;
+                growthPoints++;
                 if (!weatherState.dayTime)
                 {
                     storedSunlight.current -= Mathf.Clamp(1, 0, storedSunlight.max);
@@ -173,12 +157,10 @@ public class Plant : Creatable
                 }
                 //we want our plants to heal if they're not full health while they're growing
                 //We may choose to add a check where they don't heal if they're actively being affected by a monster
-                if (health.current < health.max)
-                {
-                    health.current++;
-                }
+                HandleHealthChanges(1);
             }
         }
+
     }
 
     private IEnumerator StoreNutrients()
@@ -199,6 +181,18 @@ public class Plant : Creatable
         }
     }
 
+    private void HandleHealthChanges(int amount)
+    {
+        health.current += amount;
+
+        health.current = Mathf.Clamp(health.current, 0, health.max);
+
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged(health.max, health.current);
+        }
+    }
+
     //Handles what to do when the plant has been in each stage of growth with enough nutrients
     private void AdvancePlantStage()
     {
@@ -213,11 +207,11 @@ public class Plant : Creatable
             }
             PlacePlant(stats.sproutScale, stats.sproutTileOffset);
             HandleTreeColliders(0.5f, 1, 5, 0, Vector3.zero);
-            
+
             int energyQuantity = stats.seedlingEnergy;
             celestialPlayer.IncreaseEnergy(energyQuantity);
             SpawnEnergyNode();
-            
+
             growthPoints = 0;
         }
         else if (currentPlantStage == PlantStats.PlantStage.SPROUT && growthPoints >= stats.sproutGrowTime)
@@ -230,11 +224,11 @@ public class Plant : Creatable
             }
             PlacePlant(stats.juvenileScale, stats.juvenileTileOffset);
             HandleTreeColliders(1f, 50, 1, 0, Vector3.zero);
-            
+
             int energyQuantity = stats.sproutEnergy;
             celestialPlayer.IncreaseEnergy(energyQuantity);
             SpawnEnergyNode();
-            
+
 
             growthPoints = 0;
         }
@@ -252,7 +246,7 @@ public class Plant : Creatable
             int energyQuantity = stats.juvenileEnergy;
             celestialPlayer.IncreaseEnergy(energyQuantity);
             SpawnEnergyNode();
-            
+
             DropSeed();
 
             growthPoints = 0;
@@ -262,7 +256,7 @@ public class Plant : Creatable
             int energyQuantity = stats.matureEnergy;
             celestialPlayer.IncreaseEnergy(energyQuantity);
             SpawnEnergyNode();
-            
+
             DropSeed();
             growthPoints = 0;
         }
@@ -271,14 +265,14 @@ public class Plant : Creatable
     private void DropSeed()
     {
         List<GameObject> thisTypeSeed = new List<GameObject>();
-        foreach(GameObject go in seedSet.Items)
+        foreach (GameObject go in seedSet.Items)
         {
-            if(go.GetComponent<PickupObject>().GetItemName() == stats.seedPrefab.GetComponent<PickupObject>().GetItemName())
+            if (go.GetComponent<PickupObject>().GetItemName() == stats.seedPrefab.GetComponent<PickupObject>().GetItemName())
             {
                 thisTypeSeed.Add(go);
             }
         }
-        if(thisTypeSeed.Count < 5)
+        if (thisTypeSeed.Count < 5)
         {
             seed = Instantiate(stats.seedPrefab, this.transform);
             //seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
@@ -306,7 +300,7 @@ public class Plant : Creatable
             collider.center = new Vector3(collider.center.x, c_ColliderCenter, collider.center.z);
             //collider.center = colliderYPosition;
         }
-        if(this.GetComponent<SphereCollider>() != null)
+        if (this.GetComponent<SphereCollider>() != null)
         {
             SphereCollider collider = this.GetComponent<SphereCollider>();
             collider.radius = sphereRadius;
@@ -316,7 +310,7 @@ public class Plant : Creatable
 
     private void PlacePlant(float scale, float tileOffset)
     {
-        
+
         if (plantVisuals.Length > 1)
         {
             int i = 0;
@@ -341,7 +335,7 @@ public class Plant : Creatable
 
     private void ResolveStats()
     {
-        
+
         bool waterLow = storedWater.current < storedWater.max / 4;
         bool sunlightLow = storedSunlight.current < storedSunlight.max / 4;
 
@@ -383,28 +377,29 @@ public class Plant : Creatable
 
     private IEnumerator HandleAcidRain()
     {
-        yield return growthRate;
-
-        if(weatherState.GetSkyState() == WeatherState.SkyState.RAINY)
+        while (true)
         {
-            if (weatherState.GetAcidRainState() == WeatherState.AcidRainState.LIGHT)
+            yield return growthRate;
+
+            if (weatherState.GetSkyState() == WeatherState.SkyState.RAINY)
             {
-                TakeDamage(5);
+                if (weatherState.GetAcidRainState() == WeatherState.AcidRainState.LIGHT)
+                {
+                    TakeDamage(10);
+                }
+                else if (weatherState.GetAcidRainState() == WeatherState.AcidRainState.HEAVY)
+                {
+                    TakeDamage(15);
+                }
             }
-            else if(weatherState.GetAcidRainState() == WeatherState.AcidRainState.HEAVY)
-            {
-                TakeDamage(10);
-            }
-        } 
+        }
+
     }
 
     public override void TakeDamage(int damageTaken)
     {
-        health.current -= Mathf.Clamp(damageTaken, 0, health.max);
-
-        if (OnHealthChanged != null)
-        { OnHealthChanged(health.max, health.current);
-        }
+        
+        HandleHealthChanges(-damageTaken);
 
         if (health.current <= 0)
         {
@@ -447,5 +442,20 @@ public class Plant : Creatable
     public void SetInventory(Inventory newInventory)
     {
         inventory = newInventory;
+    }
+
+    public void SetSmothered(bool isSmothered)
+    {
+        this.isSmothered = isSmothered;
+    }
+
+    public bool GetIsSmothered()
+    {
+        return isSmothered;
+    }
+
+    public bool GetIsDying()
+    {
+        return isDying;
     }
 }

@@ -18,7 +18,13 @@ public class TaskLocateClosestGrass : BTNode
 
     protected override NodeState OnRun()
     {
-        if(thisAnimal.GetGrassSet().Items.Count <= 0)
+        if (thisAnimal.GetIsKidnapped())
+        {
+            state = NodeState.FAILURE;
+            return state;
+        }
+
+        if (thisAnimal.GetGrassSet().Items.Count <= 0)
         {
             state = NodeState.FAILURE;
         }

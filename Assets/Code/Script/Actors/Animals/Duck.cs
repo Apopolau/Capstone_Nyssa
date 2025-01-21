@@ -96,6 +96,8 @@ public class Duck : Animal
             {
                 entertained.low = true;
             }
+
+            CalculateEnemyDistance();
         }
         
     }

@@ -77,6 +77,11 @@ public abstract class Animal : Actor
     [SerializeField] protected bool hasAnyFood = false;
     [SerializeField] protected bool midAnimation = false;
     [SerializeField] protected bool inRangeOfEscort = false;
+    [SerializeField] protected bool enemyNearby = false;
+
+    [SerializeField] protected float distanceToNearestEnemy;
+    [SerializeField] protected float threatRange;
+    [SerializeField] GameObject nearestEnemy;
 
     //Timers
     protected WaitForSeconds barrierLength = new WaitForSeconds(5f);
@@ -173,6 +178,42 @@ public abstract class Animal : Actor
         {
             animator.SetAnimationFlag("move", false);
         }
+    }
+
+    protected void CalculateEnemyDistance()
+    {
+        bool foundObjectInRange = false;
+        if (enemySet.Items != null)
+        {
+            foreach (GameObject g in enemySet.Items)
+            {
+                float objectRange = (this.gameObject.transform.position - g.transform.position).magnitude;
+                if (Mathf.Abs(objectRange) <= threatRange)
+                {
+                    distanceToNearestEnemy = objectRange;
+                    nearestEnemy = g;
+                    foundObjectInRange = true;
+                }
+            }
+            if (foundObjectInRange)
+            {
+                enemyNearby = true;
+            }
+            else
+            {
+                enemyNearby = false;
+                nearestEnemy = null;
+            }
+        }
+        else
+        {
+            enemyNearby = false;
+        }
+    }
+
+    public bool GetIsEnemyNearby()
+    {
+        return enemyNearby;
     }
 
     

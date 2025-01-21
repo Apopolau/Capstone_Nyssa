@@ -20,7 +20,7 @@ public class TaskSmotherPlant : BTNode
         //If the bag is interrupted, it can't smother anymore
         if (thisEnemy.GetIsStaggered() || thisEnemy.GetIsDying())
         {
-            thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isSmothered = false;
+            thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().SetSmothered(false);
             thisEnemy.SetSmotherInitiated(false);
             state = NodeState.FAILURE;
             return state;
@@ -29,23 +29,25 @@ public class TaskSmotherPlant : BTNode
         if (thisEnemy.GetInSmotherRange() && thisEnemy.GetSmotherInitiated())
         {
             //Reset bag's smother state so it can try again
-            thisEnemy.SetSmotherInitiated(false);
             state = NodeState.RUNNING;
 
             //If the plant's not dead, we get it to take damage
-            if (!thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isDying)
+            if (!thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().GetIsDying())
             {
                 state = NodeState.SUCCESS;
                 
                 thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().TakeDamage((int)thisEnemy.GetEnemyStats().maxDamage);
             }
             //Otherwise we want to leave this procedure
-            else if (thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().isDying)
+            else if (thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().GetIsDying())
             {
+                thisEnemy.GetClosestPlant().GetComponentInParent<Plant>().SetSmothered(false);
+                thisEnemy.SetSmotherInitiated(false);
                 state = NodeState.FAILURE;
                 return state;
             }
         }
+        thisEnemy.SetSmotherInitiated(false);
         return state;
     }
     protected override void OnReset()

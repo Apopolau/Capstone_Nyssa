@@ -48,7 +48,7 @@ public class PlasticBagMonster : Enemy
                     distance = Mathf.Abs((plant.GetComponent<Plant>().transform.position - this.transform.position).magnitude);
                     closestPlant = plant;
                     //if its already smothered dont gang up
-                    if (!plant.GetComponent<Plant>().isSmothered)
+                    if (!plant.GetComponent<Plant>().GetIsSmothered())
                     { seesPlant = true; }
                 }
             }

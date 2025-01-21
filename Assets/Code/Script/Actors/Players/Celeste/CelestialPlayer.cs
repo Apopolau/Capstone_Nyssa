@@ -12,23 +12,11 @@ public class CelestialPlayer : Player
     [SerializeField] public Camera mainCamera;
     [SerializeField] private LayerMask tileMask;
 
-    //private NavMeshAgent celestialAgent;
-
     [Header("Rain System")]
     [SerializeField] WeatherState weatherState;
     private bool isRaining = false;
     private bool triggeredRain = false;
-    //private bool isDodging = false;
     [SerializeField] public GameObject RainParticleSystem;
-
-    //[Header("Button press")]
-    /*
-    private bool buttonRain = false;
-    private bool buttonBasicAttack = false;
-    private bool buttonColdSnap = false;
-    private bool buttonLightningStrike = false;
-    private bool buttonMoonTide = false;
-    */
 
     [Header("Attack")]
     CelestialPlayerBasicAttackTrigger staff;
@@ -42,11 +30,6 @@ public class CelestialPlayer : Player
     //private bool canSetFrostTrap = true;
     //private bool canSunBeam = true;
 
-    private WaitForSeconds basicCoolDownTime;
-    private WaitForSeconds coldSnapCoolDownTime;
-    private WaitForSeconds lightningCoolDownTime;
-
-    private WaitForSeconds dodgeMoveStopTime;
 
     private WaitForSeconds coldOrbDuration;
     private WaitForSeconds waveDuration;
@@ -77,14 +60,9 @@ public class CelestialPlayer : Player
     [SerializeField] private int startingEnergyVal;
     public event System.Action<int, int> OnEnergyChanged;
     public event System.Action OnPowerStateChange;
-    //public event System.Action<string, float> OnCooldownStarted;
-
-    
+  
     PowerBehaviour powerBehaviour;
     public CelestialPlayerControls celestialControls;
-
-    //[Header("Power Drop Assets")]
-    //private VisualEffect powerDrop;
 
     [Header("Storage for power objects")]
     GameObject coldOrb;
@@ -99,20 +77,15 @@ public class CelestialPlayer : Player
     [SerializeField] private CelesteSoundLibrary c_soundLibrary;
 
     [SerializeField] public GameObject treeSeedPrefab;
-    //private CelestialPlayerInputActions celestialPlayerInput;
     private PlayerInput playerInput;
-    // [Header("Lightning System")]
-    // Start is called before the first frame update
-
+ 
     //Interaction with the player
     [SerializeField] private GameObjectRuntimeSet enemyList;
     public bool enemySeen = false;
     public bool enemyHit = false;
-    //public GameObject enemyTarget = null;
-    //private GameObject puzzleTarget = null;
     public Vector3 enemyLocation;
 
-    //private bool inRangeOfPuzzle = false;
+
 
     private void Awake()
     {
@@ -123,7 +96,6 @@ public class CelestialPlayer : Player
         celestialControls = GetComponent<CelestialPlayerControls>();
         health = new Stat(100, 100, false);
         energy = new Stat(maxEnergyVal, startingEnergyVal, true);
-        //uiManager = GetComponent<CelestUIManager>();
         c_soundLibrary = base.soundLibrary as CelesteSoundLibrary;
 
         //Change these to modify how long her spells appear on screen and can hit things
@@ -134,14 +106,9 @@ public class CelestialPlayer : Player
 
     void Start()
     {
-        dodgeMoveStopTime = new WaitForSeconds(0.7f);
         powerBehaviour = GetComponent<PowerBehaviour>();
         validTargets = new List<GameObject>();
         
-        //dodgeAnimTime = new WaitForSeconds();
-        coldSnapCoolDownTime = powerBehaviour.ColdSnapStats.rechargeTimer;
-        basicCoolDownTime = powerBehaviour.BasicAttackStats.rechargeTimer;
-        lightningCoolDownTime = powerBehaviour.LightningStats.rechargeTimer;
         staff = GetComponentInChildren<CelestialPlayerBasicAttackTrigger>();
         staff.SetPlayer(this);
         StartCoroutine(RegenEnergy());
@@ -976,6 +943,7 @@ public class CelestialPlayer : Player
             else
             {
                 isRaining = false;
+                weatherState.SetRainyState(false);
                 RainParticleSystem.SetActive(false);
 
                 NotEnoughEnergy(rainDrain, false);

@@ -151,6 +151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 8705872294788497160}
   animator: {fileID: -3574164750002949607}
+  wanderWaypoints: []
+  currentWaypoint: {fileID: 0}
   managerObject: {fileID: 0}
   shelterWaypoint: {fileID: 0}
   waterWaypoint: {fileID: 0}
@@ -189,6 +191,10 @@ MonoBehaviour:
   hasAnyFood: 0
   midAnimation: 0
   inRangeOfEscort: 0
+  enemyNearby: 0
+  distanceToNearestEnemy: 0
+  threatRange: 50
+  nearestEnemy: {fileID: 0}
   triggerArea: {fileID: 0}
 --- !u!114 &9188026174410810753
 MonoBehaviour:

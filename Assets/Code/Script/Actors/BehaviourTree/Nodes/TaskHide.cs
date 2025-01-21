@@ -24,7 +24,7 @@ public class TaskHide : BTNode
             }
         }
 
-        if (animal.GetWeatherManager().dayTime || animal.GetIsEscorted())
+        if ((animal.GetWeatherManager().dayTime || animal.GetIsEscorted()) && !animal.GetIsEnemyNearby())
         {
             animal.SetIsHiding(false);
             return NodeState.SUCCESS;
