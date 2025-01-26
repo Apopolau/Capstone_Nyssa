@@ -32,6 +32,11 @@ public class TaskPathToWaypoint : BTNode
             }
         }
 
+        if(thisActor.GetActiveWaypoint() == null)
+        {
+            return NodeState.FAILURE;
+        }
+
         float distance = (thisActor.transform.position - thisActor.GetActiveWaypoint().transform.position).magnitude;
 
         if (distance <= thisAgent.stoppingDistance + 1)

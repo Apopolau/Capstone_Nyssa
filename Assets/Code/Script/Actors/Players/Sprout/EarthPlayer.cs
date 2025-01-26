@@ -28,6 +28,7 @@ public class EarthPlayer : Player
     private bool inDialogue_FSM = false;
     private bool inWaiting_FSM = false;
     private bool inHoldingNyssa_FSM = false;
+    private bool inInGameMenu_FSM = false;
     //Note: this is for animations where the player should stop moving
     private bool isMidAnimation_FSM;
 
@@ -155,7 +156,7 @@ public class EarthPlayer : Player
         barrierActiveTime = new WaitForSeconds(5);
         iFramesLength = new WaitForSeconds(0.5f);
         
-        hudManager.SetSproutVirtualMouseUI(virtualMouseUI);
+        //hudManager.SetSproutVirtualMouseUI(virtualMouseUI);
     }
 
     // Update is called once per frame
@@ -1228,6 +1229,16 @@ public class EarthPlayer : Player
     public bool GetIsHoldingNyssa()
     {
         return inHoldingNyssa_FSM;
+    }
+
+    public bool GetInMenu()
+    {
+        return inInGameMenu_FSM;
+    }
+
+    public void SetInMenu(bool inMenu)
+    {
+        inInGameMenu_FSM = inMenu;
     }
 
     public bool GetMidAnimation()

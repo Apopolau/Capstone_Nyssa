@@ -27,7 +27,7 @@ public class MainMenuManager : MonoBehaviour
     public CelestialPlayerControls celestialPlayerControls;
     //public VirtualMouseInput virtualMouseInputC;
     //public Vector2 virtualMousePositionC;
-    public VirtualMouseInput virtualMouseInputS;
+    public CustomMouseInput virtualMouseInputS;
     public Vector2 virtualMousePositionS;
 
     [SerializeField] private UISoundLibrary soundLibrary;
@@ -67,7 +67,6 @@ public class MainMenuManager : MonoBehaviour
 
     public void ToggleLevelPage(bool turnOn)
     {
-        Debug.Log("Toggling level page");
         if (turnOn)
         {
             soundLibrary.PlayClickClips();
@@ -104,8 +103,6 @@ public class MainMenuManager : MonoBehaviour
 
         DeactivateAllButtons();
         ActivateButtonsBasedOnLanguage(englishButtons, frenchButtons);
-
-        
     }
 
     public void SetLanguageToFrench()

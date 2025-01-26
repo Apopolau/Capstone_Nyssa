@@ -976,7 +976,15 @@ public class CelestialPlayer : Player
         return false;
     }
 
+    public void OnMenuOpen()
+    {
+        hudManager.ToggleMenuPanel(true);
+    }
 
+    public void OnMenuClose()
+    {
+        hudManager.ToggleMenuPanel(false);
+    }
 
     /// <summary>
     /// GETTERS AND SETTERS

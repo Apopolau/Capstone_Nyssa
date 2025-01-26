@@ -85,6 +85,7 @@ public class HUDManager : MonoBehaviour
                 earthPlayer.OnPowerStateChange += OnPowerStateChange;
             }
         }
+        model.InitializeVirtualMouseCanvas(earthPlayer);
         model.InitializeKidnapIcons();
         SetDialogueManagerControls(model.GetDialogueManager().GetComponent<DialogueManager>());
         SetMovementKeyIndicators();
@@ -113,13 +114,13 @@ public class HUDManager : MonoBehaviour
         //Create the UI assets on the HUD
         model.InitializeObjectives(levelEvents);
         model.InitializeInventory(levelEvents.GetProgress().GetInventory());
-        model.InitializeVirtualMouseCanvas();
         model.InitializeDialogueManager();
         model.InitializePollutionBar();
         model.InitializeDayNightCycle();
         model.InitializeEnergyBar();
         model.InitializePopUpText();
         model.InitializeMenuKeyGuide();
+        model.InitializeMenu();
         
 
         //Create the UI assets for player controls
@@ -344,6 +345,45 @@ public class HUDManager : MonoBehaviour
         {
             model.GetObjectives().SetActive(false);
             //objectivesIsOn = false;
+        }
+    }
+
+    public void ToggleMenuPanel(bool isActive)
+    {
+        if (isActive)
+        {
+            ToggleUIForDialogue(true);
+            model.GetMenu().SetActive(true);
+            model.GetMenu().GetComponent<InGameMenuManager>().TurnOnMainPage();
+
+            celestialPlayer.celestialControls.ShutOffControls();
+            earthPlayer.earthControls.ShutOffControls();
+
+
+            SwitchCursorCanvas(MouseCanvasType.MAIN, false);
+            model.GetActiveVirtualMouseUI().SetActive(false);
+            model.GetActiveVirtualMouseUI().SetActive(true);
+            ToggleVirtualMouseSprite(true);
+            
+            celestialPlayer.celestialControls.controls.MenuControls.Enable();
+            earthPlayer.SetInMenu(true);
+            
+            Time.timeScale = 0f;
+        }
+        else if(!isActive)
+        {
+            ToggleUIForDialogue(false);
+            model.GetMenu().SetActive(false);
+
+            celestialPlayer.celestialControls.ShutOffControls();
+            earthPlayer.earthControls.ShutOffControls();
+
+            ToggleVirtualMouseSprite(false);
+
+            celestialPlayer.celestialControls.controls.CelestialPlayerDefault.Enable();
+            earthPlayer.SetInMenu(false);
+
+            Time.timeScale = 1f;
         }
     }
 

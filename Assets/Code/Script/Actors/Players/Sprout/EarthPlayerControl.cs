@@ -15,7 +15,7 @@ public class EarthPlayerControl : MonoBehaviour
     public CutsceneManager cutsceneManager;
     public DialogueManager dialogueManager;
     public UserSettingsManager userSettingsManager;
-    public VirtualMouseInput virtualMouseInput;
+    public CustomMouseInput virtualMouseInput;
     public Vector2 virtualMousePosition;
 
     //public enum DeviceUsed { KEYBOARD, CONTROLLER};
@@ -131,6 +131,8 @@ public class EarthPlayerControl : MonoBehaviour
         controls.MenuControls.Disable();
         //controls.MenuControls.Submit.started += OnMenuSubmitPerformed;
 
+        controls.UI.Enable();
+
         controls.CutsceneControls.Disable();
         controls.CutsceneControls.NextSlide.started += OnNextSlideSelected;
 
@@ -152,6 +154,7 @@ public class EarthPlayerControl : MonoBehaviour
         if (mainMenu != null)
         {
             controls.MenuControls.Enable();
+            controls.UI.Enable();
             controls.CutsceneControls.Disable();
             controls.EarthPlayerDefault.Disable();
         }
@@ -167,6 +170,11 @@ public class EarthPlayerControl : MonoBehaviour
             controls.MenuControls.Disable();
             controls.EarthPlayerDefault.Enable();
         }
+    }
+
+    public void RegisterUIEvents()
+    {
+        //controls.UI.Point.
     }
 
     public void ShutOffControls()

@@ -13,6 +13,7 @@ public class VirtualMouseUI : MonoBehaviour
     {
         virtualMouseInput = GetComponent<CustomMouseInput>();
         canvasRectTransform = GetComponentInParent<RectTransform>();
+        //Cursor.lockState = CursorLockMode.Confined;
     }
 
     private void Update()

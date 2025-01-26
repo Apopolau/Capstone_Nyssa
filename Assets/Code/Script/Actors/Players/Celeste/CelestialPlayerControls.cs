@@ -96,6 +96,7 @@ public class CelestialPlayerControls : MonoBehaviour
         //When in the menus
         //We may want to switch this one to be active when we start up the game instead of the default
         controls.MenuControls.Disable();
+        controls.MenuControls.CloseMenu.performed += OnMenuClosed;
         //controls.MenuControls.Interact.started += OnMenuInteractPerformed;
 
         controls.CutsceneControls.Disable();
@@ -137,6 +138,8 @@ public class CelestialPlayerControls : MonoBehaviour
 
     public void ShutOffControls()
     {
+        InputSystem.DisableAllEnabledActions();
+        /*
         controls.CutsceneControls.Disable();
         controls.MenuControls.Disable();
         controls.CelestialPlayerDefault.Disable();
@@ -157,6 +160,7 @@ public class CelestialPlayerControls : MonoBehaviour
 
         controls.DialogueControls.Continue.started -= OnContinuePerformed;
         controls.DialogueControls.Skip.started -= OnSkipPerformed;
+        */
     }
 
     /// <summary>
@@ -278,7 +282,17 @@ public class CelestialPlayerControls : MonoBehaviour
     {
         if (context.control.device.deviceId == myDeviceID)
         {
-            SceneManager.LoadScene("MainMenu");
+            //SceneManager.LoadScene("MainMenu");
+            this.GetComponent<CelestialPlayer>().OnMenuOpen();
+        }
+    }
+
+    private void OnMenuClosed(InputAction.CallbackContext context)
+    {
+        if (context.control.device.deviceId == myDeviceID)
+        {
+            //SceneManager.LoadScene("MainMenu");
+            this.GetComponent<CelestialPlayer>().OnMenuClose();
         }
     }
 

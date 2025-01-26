@@ -57,6 +57,9 @@ public class HUDModel : ScriptableObject
     [SerializeField] private GameObject[] animalPointers;
     [Tooltip("Drag the menu UI key indicator prefab here")]
     [SerializeField] private GameObject menuKeyPrefab;
+    [Tooltip("Drag the menu prefab here")]
+    [SerializeField] private GameObject menuPrefab;
+    private GameObject menu;
     //This data is populated at runtime
     private GameObject[] englishUI;
     private GameObject[] frenchUI;
@@ -185,13 +188,19 @@ public class HUDModel : ScriptableObject
     }
 
     //Creates and sets up the main Virtual Mouse Canvas
-    public void InitializeVirtualMouseCanvas()
+    public void InitializeVirtualMouseCanvas(EarthPlayer sprout)
     {
+        GameObject sproutTargetCanvas = sprout.gameObject.transform.GetChild(0).GetChild(0).gameObject;
+
         virtualMouseUIMain = Instantiate(virtualMouseUIPrefab, hudCanvas.transform);
+        virtualMouseUISprout = Instantiate(virtualMouseUIPrefab, sproutTargetCanvas.transform);
         virtualMouseUI = virtualMouseUIMain;
+        
         cursorImage = virtualMouseUI.gameObject.GetComponentInChildren<Image>();
         cursorImage.enabled = false;
+
         virtualMouseInputMain = virtualMouseUI.GetComponent<CustomMouseInput>();
+        virtualMouseInputSprout = virtualMouseUISprout.GetComponent<CustomMouseInput>();
         virtualMouseInput = virtualMouseInputMain;
         
         //virtualMouseUI.GetComponent<VirtualMouseUI>().SetRectTransform(hudCanvas.GetComponent<RectTransform>());
@@ -287,6 +296,13 @@ public class HUDModel : ScriptableObject
     public void InitializeMenuKeyGuide()
     {
         Instantiate(menuKeyPrefab, hudCanvas.transform);
+    }
+
+    public void InitializeMenu()
+    {
+        menu = Instantiate(menuPrefab, hudCanvas.transform);
+        menu.GetComponent<InGameMenuManager>().SetHUDManager(manager);
+        menu.SetActive(false);
     }
 
     //Creates the indicators for when an animal is being kidnapped
@@ -728,5 +744,10 @@ public class HUDModel : ScriptableObject
         dialogueTriggers.Add(trigger);
         if(dialogueManager != null)
             trigger.SetDialogueManager(dialogueManager.GetComponent<DialogueManager>());
+    }
+
+    public GameObject GetMenu()
+    {
+        return menu;
     }
 }
