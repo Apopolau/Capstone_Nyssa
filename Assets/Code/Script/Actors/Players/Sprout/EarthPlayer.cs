@@ -15,6 +15,8 @@ public class EarthPlayer : Player
 
     [Header("UI elements")]
     [SerializeField] private GameObject virtualMouseUI;
+    [SerializeField] private GameObject plantControlsUI;
+    [SerializeField] private GameObject castControlsUI;
 
     [Header("State machine elements")]
     private BaseStateMachine stateMachine;
@@ -138,7 +140,7 @@ public class EarthPlayer : Player
 
         agent.enabled = false;
 
-        
+        SetLanguageState(userSettingsManager.chosenLanguage);
     }
 
     // Start is called before the first frame update
@@ -164,7 +166,7 @@ public class EarthPlayer : Player
     {
         ActivateTile();
         MovePlantPreview();
-        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < agent.stoppingDistance + 2)
+        if (enrouteToPlant && Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) <= agent.stoppingDistance + 1)
         {
             ResetAgentPath();
             if (isPlantSelected)
@@ -180,10 +182,7 @@ public class EarthPlayer : Player
 
     private void FixedUpdate()
     {
-        if (isTurning)
-        {
-            TurnToTarget();
-        }
+        
     }
 
     private void LateUpdate()
@@ -286,6 +285,7 @@ public class EarthPlayer : Player
     /// THESE FUNCTIONS HANDLE WHEN THE PLAYER SELECTS A TILE TO PLANT ON
     /// AND ACTUALLY PLANTS
     /// </summary>
+    //This function is called when the player selects a tile while in the planting controls
     public void PlantPlantingHandler()
     {
         //StartCoroutine(OnPlantPlanted());
@@ -319,7 +319,7 @@ public class EarthPlayer : Player
                 ResetAgentPath();
 
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+                pMovement.GetPlayerGeo().LookAt(this.transform);
 
                 //Pause other controls, initiate animation
                 StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("plant")));
@@ -359,6 +359,7 @@ public class EarthPlayer : Player
         }
     }
 
+    //Called after a player selects a tile to plant on
     public void SetPlant()
     {
         //Have to add checks to make sure they are on a tile at all
@@ -374,7 +375,7 @@ public class EarthPlayer : Player
         {
             inPlantSelection_FSM = false;
 
-            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < agent.stoppingDistance + 2)
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) <= agent.stoppingDistance + 1)
             {
                 //Set all our flags
                 isPlantSelected = false;
@@ -383,7 +384,7 @@ public class EarthPlayer : Player
                 ResetAgentPath();
                 animator.SetAnimationFlag("plant", true);
 
-                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+                pMovement.GetPlayerGeo().LookAt(this.transform);
 
                 //Pause other controls, initiate animation
                 inInteraction_FSM = true;
@@ -560,7 +561,7 @@ public class EarthPlayer : Player
                 ResetAgentPath();
 
                 Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+                pMovement.GetPlayerGeo().LookAt(this.transform);
 
                 //Pause other controls and start animations
                 StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("plant")));
@@ -610,7 +611,7 @@ public class EarthPlayer : Player
             inRemovalSelection_FSM = false;
 
             //If we're close enough to the plant, we can go ahead and remove it
-            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < agent.stoppingDistance + 2)
+            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) <= agent.stoppingDistance + 1)
             {
                 //Set all our flags
                 isRemovalStarted = false;
@@ -619,7 +620,7 @@ public class EarthPlayer : Player
                 isRemoving = true;
                 ResetAgentPath();
 
-                GetComponent<playerMovement>().playerObj.transform.LookAt(this.transform);
+                pMovement.GetPlayerGeo().LookAt(this.transform);
 
                 //Pause other controls and start animations
                 SuspendActions(true);
@@ -926,14 +927,21 @@ public class EarthPlayer : Player
     /// GENERAL SPELL HELPERS
     /// </summary>
     /// <returns></returns>
+    //Used when casting a spell to see if any targets in the spell range can receive the spell
     private bool CheckIfValidTargets()
     {
+        //Start our valid targets over
         validTargets.Clear();
+        //Add ourselves to the list
         validTargets.Add(this.gameObject);
+
+        //If we're in spell range of Celeste, add her
         if(JudgeDistance(celestialPlayer.transform.position, this.gameObject.transform.position, spellRange))
         {
             validTargets.Add(celestialPlayer.gameObject);
         }
+
+        //If we're in spell range of an animal, add them
         foreach(GameObject animal in animalList.Items)
         {
             if (JudgeDistance(animal.transform.position, this.transform.position, spellRange))
@@ -941,6 +949,7 @@ public class EarthPlayer : Player
                 validTargets.Add(animal.gameObject);
             }
         }
+        //If we found any targets (which I guess we will since the player is always a valid target), say yes
         if(validTargets.Count > 0)
         {
             return true;
@@ -948,37 +957,51 @@ public class EarthPlayer : Player
         return false;
     }
 
+    //Used when we're switching between targets for a spell
     public void OnCycleTargets(bool right)
     {
+        //Debug.Log("Player is cycling targets, there are " + validTargets.Count + " targets to cycle through");
         if (right && validTargets.Count > 1)
         {
             if (validTargetIndex < validTargets.Count - 1)
             {
-                powerTarget = validTargets[validTargetIndex + 1];
+                //Debug.Log("Valid target index is: " + validTargetIndex + " before switching, power target was " + powerTarget);
                 validTargetIndex++;
+                powerTarget = validTargets[validTargetIndex];
+                //Debug.Log("Valid target index is: " + validTargetIndex + " after switching, power target is " + powerTarget);
             }
             else
             {
-                powerTarget = validTargets[0];
+                //Debug.Log("Valid target index is: " + validTargetIndex + " before switching, power target was " + powerTarget);
                 validTargetIndex = 0;
+                powerTarget = validTargets[validTargetIndex];
+                //Debug.Log("Valid target index is: " + validTargetIndex + " after switching, power target is " + powerTarget);
             }
             tileOutline.transform.position = powerTarget.transform.position;
-            SetTurnTarget(powerTarget.transform.position);
+            SetTurnTarget(powerTarget);
         }
         else if(!right && validTargets.Count > 1)
         {
             if (validTargetIndex > 0)
             {
-                powerTarget = validTargets[validTargetIndex - 1];
+                //Debug.Log("Valid target index is: " + validTargetIndex + " before switching, power target was " + powerTarget);
                 validTargetIndex--;
+                powerTarget = validTargets[validTargetIndex];
+                //Debug.Log("Valid target index is: " + validTargetIndex + " after switching, power target is " + powerTarget);
             }
             else
             {
-                powerTarget = validTargets[validTargets.Count - 1];
+                //Debug.Log("Valid target index is: " + validTargetIndex + " before switching, power target was " + powerTarget);
                 validTargetIndex = validTargets.Count - 1;
+                powerTarget = validTargets[validTargetIndex];
+                //Debug.Log("Valid target index is: " + validTargetIndex + " after switching, power target is " + powerTarget);
             }
             tileOutline.transform.position = powerTarget.transform.position;
-            SetTurnTarget(powerTarget.transform.position);
+            SetTurnTarget(powerTarget);
+        }
+        else
+        {
+            //Debug.Log("Valid target count wasn't high enough to switch targets: " + validTargets.Count);
         }
     }
 
@@ -1077,6 +1100,16 @@ public class EarthPlayer : Player
         return tileOutlinePrefab;
     }
 
+    public GameObject GetPlantControlsUI()
+    {
+        return plantControlsUI;
+    }
+
+    public GameObject GetCastControlsUI()
+    {
+        return castControlsUI;
+    }
+
 
     /// <summary>
     /// HELPER FUNCTIONS
@@ -1117,27 +1150,15 @@ public class EarthPlayer : Player
         }
     }
 
-
-    public void SetTurnTarget(Vector3 target)
+    public void SetTurnTarget(GameObject target)
     {
-        turnToTarget = target;
-    }
-
-    public void TurnToTarget()
-    {
-        float step;
-        float speed = 0.3f;
-        step = speed * Time.deltaTime;
-        Vector3 lookVector = new Vector3(pMovement.playerObj.transform.position.x,
-            turnToTarget.y, pMovement.playerObj.transform.position.z);
-        Vector3 rotateVector = Vector3.RotateTowards(pMovement.playerObj.transform.position, lookVector, step, 0f);
-        pMovement.playerObj.rotation = Quaternion.LookRotation(rotateVector);
-
+        pMovement.SetTurnTarget(target);
     }
 
     public void ToggleTurning(bool turning)
     {
-        isTurning = turning;
+        //isTurning = turning;
+        pMovement.SetTurning(turning);
     }
 
     
@@ -1283,5 +1304,10 @@ public class EarthPlayer : Player
         {
             inInteraction_FSM = true;
         }
+    }
+
+    public void SetLanguageState(UserSettingsManager.GameLanguage gameLanguage)
+    {
+
     }
 }

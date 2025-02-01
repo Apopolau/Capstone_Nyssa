@@ -31,10 +31,10 @@ public abstract class Player : Actor
     protected bool interacting = false;
 
     protected List<GameObject> validTargets;
+    protected int validTargetIndex = 0;
     protected GameObject powerTarget;
     [SerializeField] protected float spellRange;
     protected float closestDistance;
-    protected int validTargetIndex = 0;
 
     protected Vector3 OrigPos;
     public Stat health;
@@ -202,7 +202,6 @@ public abstract class Player : Actor
         int i = 0;
         foreach (GameObject potTarget in validTargets)
         {
-            i++;
             float distanceMeasured = Mathf.Abs((potTarget.transform.position - this.transform.position).magnitude);
             if (distanceMeasured < closestDistance)
             {
@@ -210,6 +209,7 @@ public abstract class Player : Actor
                 closestDistance = distanceMeasured;
                 powerTarget = potTarget;
             }
+            i++;
         }
     }
 

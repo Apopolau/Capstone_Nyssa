@@ -10,18 +10,17 @@ public class CtrlsHoldingNyssaAction : FSMAction
 
     public override void EnterState(BaseStateMachine stateMachine)
     {
-        earthPlayer = stateMachine.GetComponent<EarthPlayer>();
-        hudManager = earthPlayer.GetHudManager();
+        if(earthPlayer == null || hudManager == null)
+        {
+            earthPlayer = stateMachine.GetComponent<EarthPlayer>();
+            hudManager = earthPlayer.GetHudManager();
+        }
+        
 
-        earthPlayer.earthControls.controls.DialogueControls.Disable();
-        earthPlayer.earthControls.controls.EarthPlayerDefault.Disable();
-        earthPlayer.earthControls.controls.PlantIsSelected.Disable();
-        earthPlayer.earthControls.controls.RemovingPlant.Disable();
-        earthPlayer.earthControls.controls.HealSelect.Disable();
-        earthPlayer.earthControls.controls.BarrierSelect.Disable();
+        earthPlayer.earthControls.ShutOffControls();
         earthPlayer.earthControls.controls.HoldingNyssa.Enable();
 
-        //earthPlayer.DarkenAllImages(earthPlayer.GetPlantDarkenObject());
+        hudManager.SetSproutOccupied(true);
         hudManager.ToggleSproutPanel(false);
     }
 
@@ -33,7 +32,7 @@ public class CtrlsHoldingNyssaAction : FSMAction
     public override void ExitState(BaseStateMachine stateMachine)
     {
         earthPlayer.SetHoldingNyssa(false);
-        //earthPlayer.uiController.RestoreUI(earthPlayer.GetPlantDarkenObject());
+        hudManager.SetSproutOccupied(false);
         hudManager.ToggleSproutPanel(true);
         earthPlayer.earthControls.controls.HoldingNyssa.Disable();
     }

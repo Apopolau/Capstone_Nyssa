@@ -122,7 +122,7 @@ public class EarthPlayerControl : MonoBehaviour
         controls.BarrierSelect.CycleTarget.started += OnTargetCycled;
 
         controls.HoldingNyssa.Disable();
-        controls.HoldingNyssa.EarthWalkHold.started += OnEarthMovePerformed;
+        controls.HoldingNyssa.EarthWalkHold.performed += OnEarthMovePerformed;
         controls.HoldingNyssa.EarthWalkHold.canceled += OnEarthMoveCancelled;
         controls.HoldingNyssa.PutNyssaDown.started += OnPutNyssaDown;
 
@@ -179,60 +179,7 @@ public class EarthPlayerControl : MonoBehaviour
 
     public void ShutOffControls()
     {
-        InputSystem.DisableAllEnabledActions();
-        /*
-        controls.CutsceneControls.Disable();
-        controls.MenuControls.Disable();
-        controls.EarthPlayerDefault.Disable();
-
-        controls.EarthPlayerDefault.EarthWalk.performed -= OnEarthMovePerformed;
-        controls.EarthPlayerDefault.EarthWalk.canceled -= OnEarthMoveCancelled;
-        controls.EarthPlayerDefault.PickTree.performed -= OnPickTree; // <- we can talk about Attack here because P1Controls has an Attack action
-        controls.EarthPlayerDefault.PickFlower.performed -= OnPickFlower; // <- we can talk about Attack here because P1Controls has an Attack action
-        controls.EarthPlayerDefault.PickGrass.performed -= OnPickGrass; // <- we can talk about Attack here because P1Controls has an Attack action
-        controls.EarthPlayerDefault.RemoveBuilding.performed -= OnRemovePlant;
-        controls.EarthPlayerDefault.Interact.started -= OnInteract;
-        controls.EarthPlayerDefault.Interact.canceled -= OnInteract;
-        controls.EarthPlayerDefault.Heal.started -= OnHealPerformed;
-        controls.EarthPlayerDefault.ThornShield.started -= OnThornShieldPerformed;
-
-        //When planting
-        controls.PlantIsSelected.Plantplant.performed -= OnPlantPlantedPerformed;
-        controls.PlantIsSelected.Cancelplanting.performed -= OnPlantingCancelledPerformed;
-        controls.PlantIsSelected.EarthWalk.performed -= OnEarthMovePerformed;
-        controls.PlantIsSelected.EarthWalk.canceled -= OnEarthMoveCancelled;
-
-        //When removing plant
-        controls.RemovingPlant.RemovePlant.performed -= OnPlantRemoved;
-        controls.RemovingPlant.CancelRemoval.performed -= OnRemovingPlantCancelled;
-        controls.RemovingPlant.EarthWalk.performed -= OnEarthMovePerformed;
-        controls.RemovingPlant.EarthWalk.canceled -= OnEarthMoveCancelled;
-
-        controls.HealSelect.SelectTarget.started -= OnTargetSelected;
-        controls.HealSelect.CancelHeal.started -= OnHealCancelled;
-        controls.HealSelect.CycleTarget.started -= OnTargetCycled;
-
-        controls.BarrierSelect.SelectTarget.started -= OnTargetSelected;
-        controls.BarrierSelect.CancelBarrier.started -= OnBarrierCancelled;
-        controls.BarrierSelect.CycleTarget.started -= OnTargetCycled;
-
-        controls.HoldingNyssa.EarthWalk.started -= OnEarthMovePerformed;
-        controls.HoldingNyssa.EarthWalk.canceled -= OnEarthMoveCancelled;
-        controls.HoldingNyssa.PutNyssaDown.started -= OnPutNyssaDown;
-
-        //When in the menus
-        //We may want to switch this one to be active when we start up the game instead of the default
-        controls.MenuControls.Disable();
-        //controls.MenuControls.Submit.started += OnMenuSubmitPerformed;
-
-        controls.CutsceneControls.Disable();
-        controls.CutsceneControls.NextSlide.started += OnNextSlideSelected;
-
-        //When in dialogue
-        controls.DialogueControls.Disable();
-        controls.DialogueControls.Continue.started += OnContinuePerformed;
-        controls.DialogueControls.Skip.started += OnSkipPerformed;
-        */
+        controls.Disable();
     }
 
 
@@ -273,6 +220,7 @@ public class EarthPlayerControl : MonoBehaviour
             this.GetComponent<playerMovement>().EndMovement(context);
         }
     }
+
 
     private void OnPickTree(InputAction.CallbackContext context)
     {
@@ -415,8 +363,9 @@ public class EarthPlayerControl : MonoBehaviour
             float input;
             if (userSettingsManager.earthControlType == UserSettingsManager.ControlType.CONTROLLER)
             {
+                //If player presses left trigger, input will be 1. If right trigger, it will be -2, if both simultaneously, -1
                 input = Gamepad.all[playerIndex].leftTrigger.ReadValue();
-                input += Gamepad.all[playerIndex].rightTrigger.ReadValue() * -2;
+                input += (Gamepad.all[playerIndex].rightTrigger.ReadValue() * -2);
                 if (input < 0)
                 {
                     earthPlayer.OnCycleTargets(true);
@@ -429,7 +378,7 @@ public class EarthPlayerControl : MonoBehaviour
             else
             {
                 input = Keyboard.current.leftArrowKey.ReadValue();
-                input += Keyboard.current.rightArrowKey.ReadValue() * -2;
+                input += (Keyboard.current.rightArrowKey.ReadValue() * -2);
                 if (input < 0)
                 {
                     earthPlayer.OnCycleTargets(true);

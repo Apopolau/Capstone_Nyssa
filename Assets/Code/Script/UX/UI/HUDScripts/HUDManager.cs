@@ -486,12 +486,6 @@ public class HUDManager : MonoBehaviour
     //Turns the overlay on or off all of Sprout's powers
     public void ToggleSproutPanel(bool on)
     {
-        /*
-        foreach (GameObject overlay in model.GetSproutOverlays())
-        {
-            overlay.transform.GetChild(0).gameObject.SetActive(on);
-        }
-        */
         OnPowerStateChange();
     }
 

@@ -24,7 +24,7 @@ public class CtrlsSelectionBarrierAction : FSMAction
 
         //Get targets for shielding
         earthPlayer.PickClosestTarget();
-        earthPlayer.SetTurnTarget(earthPlayer.GetPowerTarget().transform.position);
+        earthPlayer.SetTurnTarget(earthPlayer.GetPowerTarget());
         earthPlayer.ToggleTurning(true);
 
         //Instantiate appropriate objects
@@ -32,19 +32,12 @@ public class CtrlsSelectionBarrierAction : FSMAction
         earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
 
         //Update UI
-        //earthPlayer.displayText.text = "Select a target to shield";
         hudManager.TurnOnPopUpText("Select a target to shield", "Sélectionnez une cible à Shield");
-        //earthPlayer.uiController.DarkenOverlay(earthPlayer.GetPlantDarkenObject());
         hudManager.ToggleSproutPanel(true);
-        /*
-        if (earthPlayer.spellsControlsUI != null)
-        { earthPlayer.spellsControlsUI.SetActive(true); }
-        */
     }
 
     public override void Execute(BaseStateMachine stateMachine)
     {
-        
         Vector3 targetLocation = new Vector3(earthPlayer.GetPowerTarget().transform.position.x, earthPlayer.GetPowerTarget().transform.position.y + 1, earthPlayer.GetPowerTarget().transform.position.z);
         earthPlayer.tileOutline.transform.position = targetLocation;
     }
@@ -56,13 +49,8 @@ public class CtrlsSelectionBarrierAction : FSMAction
         earthPlayer.ToggleTurning(false);
 
         //Update UI
-        //earthPlayer.displayText.text = "";
         hudManager.TurnOffPopUpText();
         Destroy(earthPlayer.tileOutline);
-        /*
-        if (earthPlayer.spellsControlsUI != null)
-        { earthPlayer.spellsControlsUI.SetActive(false); }
-        */
         hudManager.ToggleSproutPanel(false);
     }
 }

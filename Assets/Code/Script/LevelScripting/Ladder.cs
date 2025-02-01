@@ -163,7 +163,7 @@ public class Ladder : Interactable
     private IEnumerator BuildLadder()
     {
         //Get the player turning towards the bridge as they start building
-        earthPlayer.SetTurnTarget(this.transform.position);
+        earthPlayer.SetTurnTarget(this.gameObject);
         earthPlayer.ToggleTurning(true);
         //Set animations
         //earthPlayer.earthAnimator.animator.SetBool(earthPlayer.earthAnimator.IfBuildingHash, true);

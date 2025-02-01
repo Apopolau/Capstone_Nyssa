@@ -67,7 +67,7 @@ public class TurnOffSludgePump : Interactable
     private IEnumerator SludgePumpTurnsOff()
     {
         //Make the player turn to the sludge pump
-        earthPlayer.SetTurnTarget(this.transform.position);
+        earthPlayer.SetTurnTarget(this.gameObject);
         earthPlayer.ToggleTurning(true);
 
         //Set appropriate animations

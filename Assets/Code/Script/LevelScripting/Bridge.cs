@@ -97,7 +97,7 @@ public class Bridge : Interactable
     private IEnumerator BuildBridge()
     {
         //Get the player turning towards the bridge as they start building
-        earthPlayer.SetTurnTarget(this.transform.position);
+        earthPlayer.SetTurnTarget(this.gameObject);
         earthPlayer.ToggleTurning(true);
         //Set animations
         earthPlayer.GetComponent<EarthPlayerAnimator>().SetAnimationFlag("build", true);

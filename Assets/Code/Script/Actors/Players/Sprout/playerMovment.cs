@@ -12,60 +12,51 @@ using UnityEngine.AI;
 
 public class playerMovement : MonoBehaviour
 {
+    [Header("Key references")]
+    private Rigidbody rb;
+    private Transform player;
+    [SerializeField] private Transform playerObj;
+    [SerializeField] private Transform orientation;
+    [SerializeField] private GameObject movementControlsUI;
 
-    public GameObject movementControlsUI; //assign controlsUI
-    // Start is called before the first frame update
-    //Rotation of the player
-    public Transform orientation;
-    public Transform player;
-    public Transform playerObj;
-    public Rigidbody rb;
-
-    public float rotationSpeed;
-
-    //Movement of the player
-    public float moveSpeed;
-    //if the player is on the ground don't let them slip and slide let them have drag
-    public float groundDrag;
-
-    //Jumping
-    public float jumpForce;
-    public float jumpCoolDown;
-    public float airMultiplier;
-    //bool readyToJump = true;
+    [Header("Movement Variables")]
+    private float horInput;
+    private float vertInput;
+    //private Vector3 moveDirection;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float groundDrag; //prevents player from sliding
     [SerializeField] private float gravityScale;
-
-    //Keys Based on player
-    public KeyCode jumpKeyP1 = KeyCode.Space;
-    public KeyCode jumpKeyP2 = KeyCode.KeypadEnter;
-
-
     //Check if player is on the ground
-    public float playerHeight;
-    public LayerMask groundMask;
-    [SerializeField] bool grounded;
+    [SerializeField] private float playerHeight;
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private bool grounded;
+    [SerializeField] private bool playerHasMoved = false;
 
-    float horInput;
-    float vertInput;
-    Vector3 moveDirection;
-    //bool isMoveKeyHeld;
+    [Header("Rotation Variables")]
+    [SerializeField] private float rotationSpeed;
+    //Serialized for testing
+    [SerializeField] private bool isTurning = false;
+    private GameObject turnToTarget;
+    //Rotation of the player
 
-    private PlayerInputActions playerInputActions;
-    private PlayerInput playerInput;
-    Vector2 inputVector;
-    Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-    Matrix4x4 isometricRotIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
-    Vector3 isometricInput;
-    Vector3 isometricRotInput;
-    int EarthDeviceID;
-    //private CelestialPlayerInput celestialPlayerInput;
+    //Variables for handling isometric view vs 2D input map
+    private Vector2 inputVector;
+    private Matrix4x4 isometricIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+    private Matrix4x4 isometricRotIdentity = Matrix4x4.Rotate(Quaternion.Euler(0, 45, 0));
+    private Vector3 isometricInput;
+    private Vector3 isometricRotInput;
 
-    public InputDevice lastDevice;
+    //Jumping was cut from the game but if we ever chose to re-implement it, the variables are here
+    //Jumping
+    //private float jumpForce;
+    //private float jumpCoolDown;
+    //private float airMultiplier;
+    //bool readyToJump = true;
 
     private void Awake()
     {
         player = this.GetComponent<Transform>();
-        playerInputActions = GetComponent<EarthPlayerControl>().controls;
+        //playerInputActions = GetComponent<EarthPlayerControl>().controls;
         isometricInput = isometricIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
         isometricRotInput = isometricRotIdentity.MultiplyPoint3x4(new Vector3(horInput, 0, vertInput));
     }
@@ -74,6 +65,7 @@ public class playerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        /*
         if (GetComponent<EarthPlayerControl>().userSettingsManager.earthControlType == UserSettingsManager.ControlType.KEYBOARD)
         {
             EarthDeviceID = Keyboard.current.deviceId;
@@ -82,13 +74,13 @@ public class playerMovement : MonoBehaviour
         {
             EarthDeviceID = Gamepad.all[1].deviceId;
         }
+        */
     }
 
     // Update is called once per frame
     void Update()
     {
         SpeedControl();
-        OrientPlayer();
 
         //check if grounded
         if (grounded)
@@ -128,13 +120,21 @@ public class playerMovement : MonoBehaviour
         {
             rb.AddForce(Physics.gravity * (gravityScale - 1) * rb.mass);
         }
+
+        if (isTurning)
+        {
+            TurnToTarget();
+        }
+        else
+        {
+            if(playerHasMoved)
+                OrientPlayer();
+        }
     }
 
     //This is the function that handles actually moving the player
     public void MovePlayer(Vector2 input)
     {
-        //isMoveKeyHeld = true;
-
         inputVector = input;
         horInput = inputVector.x;
         vertInput = inputVector.y;
@@ -162,6 +162,7 @@ public class playerMovement : MonoBehaviour
             // Disable the UI element
             if (movementControlsUI != null)
             {
+                playerHasMoved = true;
                 movementControlsUI.SetActive(false);
             }
         }
@@ -178,7 +179,7 @@ public class playerMovement : MonoBehaviour
     //This turns the player in the direction they are moving
     private void OrientPlayer()
     {
-        //If we've activated the nav mesh agent, we want to turn in the direction it is moving
+        //If we're using player inputs, we want to face the direction they're walking
         if (!this.GetComponent<NavMeshAgent>().enabled)
         {
             //rotate orientation
@@ -199,6 +200,7 @@ public class playerMovement : MonoBehaviour
             }
 
         }
+        //If we've activated the nav mesh agent, we want to turn in the direction it is moving
         else
         {
 
@@ -218,6 +220,25 @@ public class playerMovement : MonoBehaviour
                 playerObj.forward = Vector3.Slerp(playerObj.forward, inputDir.normalized, Time.deltaTime * rotationSpeed);
             }
 
+        }
+    }
+
+    //When run, turns player geometry towards a defined target object
+    public void TurnToTarget()
+    {
+        if(turnToTarget != this.gameObject)
+        {
+            float step;
+            //float speed = 0.3f;
+            step = rotationSpeed * Time.deltaTime;
+
+            //Get the direction we should be looking in
+            Vector3 lookDirection = turnToTarget.transform.position - playerObj.position;
+            lookDirection.y = 0;
+            //Pick a stepped direction between that direction and current direction
+            Vector3 rotateVector = Vector3.RotateTowards(playerObj.forward, lookDirection, step, 0.1f);
+            //Set our rotation to that
+            playerObj.rotation = Quaternion.LookRotation(rotateVector);
         }
     }
 
@@ -244,6 +265,7 @@ public class playerMovement : MonoBehaviour
         orientation.localRotation = new Quaternion(0, 0, 0, 1);
     }
 
+    /*
     private void Jump()
     {
         //makes sure y velocity is set to 0
@@ -251,12 +273,6 @@ public class playerMovement : MonoBehaviour
         //set the forceMode to impulse since you are only jumping once
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
 
-    }
-
-    /*
-    private void ResetJump()
-    {
-        readyToJump = true;
     }
     */
 
@@ -276,6 +292,26 @@ public class playerMovement : MonoBehaviour
         {
             grounded = false;
         }
+    }
+
+    public Transform GetPlayerGeo()
+    {
+        return playerObj;
+    }
+
+    public void SetTurning(bool isTurning)
+    {
+        this.isTurning = isTurning;
+    }
+
+    public bool GetTurning()
+    {
+        return isTurning;
+    }
+
+    public void SetTurnTarget(GameObject target)
+    {
+        turnToTarget = target;
     }
 }
 

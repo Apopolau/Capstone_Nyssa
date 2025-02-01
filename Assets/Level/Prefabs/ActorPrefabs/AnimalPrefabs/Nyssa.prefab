@@ -69,13 +69,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
   animator: {fileID: 3804132174285526398}
+  wanderWaypoints: []
+  currentWaypoint: {fileID: 0}
   managerObject: {fileID: 0}
   shelterWaypoint: {fileID: 0}
   waterWaypoint: {fileID: 0}
   kidnapIcon: {fileID: 0}
-  navAgent: {fileID: 0}
-  earthPlayer: {fileID: 0}
-  celestialPlayer: {fileID: 0}
   closestGrass: {fileID: 0}
   closestFood: {fileID: 0}
   closestPlayer: {fileID: 0}
@@ -97,22 +96,23 @@ MonoBehaviour:
   friendImage: {fileID: 0}
   sproutImage: {fileID: 0}
   celesteImage: {fileID: 0}
-  kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
   isStuck: 0
-  isScared: 0
   isHiding: 0
   isShielded: 0
   isEscorted: 0
   isKidnapped: 0
+  kidnapIconSprite: {fileID: 21300000, guid: f3c348099f4d027489aff06719d5e64e, type: 3}
   kidnapper: {fileID: 0}
-  origSpeed: 0
-  kidnappedSpeed: 0
   kidnapIconOn: 0
   hasCleanWater: 0
   hasShelter: 0
   hasAnyFood: 0
   midAnimation: 0
   inRangeOfEscort: 0
+  enemyNearby: 0
+  distanceToNearestEnemy: 0
+  threatRange: 0
+  nearestEnemy: {fileID: 0}
 --- !u!54 &4831530610944231379
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -329,6 +329,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 3bbc52cf9e6061b4686e92ec70c8a5e7, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 57b5e6581c3e7064096f3c44eab40f14, type: 2}
     - target: {fileID: 919132149155446097, guid: 3bbc52cf9e6061b4686e92ec70c8a5e7, type: 3}
       propertyPath: m_Name
       value: baby_babycarrier

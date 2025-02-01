@@ -720,8 +720,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 30
-  m_Acceleration: 25
+  m_Speed: 20
+  m_Acceleration: 35
   avoidancePriority: 20
   m_AngularSpeed: 0
   m_StoppingDistance: 10
@@ -760,6 +760,8 @@ MonoBehaviour:
   plantParent: {fileID: 0}
   mainCamera: {fileID: 0}
   virtualMouseUI: {fileID: 0}
+  plantControlsUI: {fileID: 8544560998684819284}
+  castControlsUI: {fileID: 4895535407208006652}
   isPlantSelected: 0
   isRemovalStarted: 0
   isATileSelected: 0
@@ -813,25 +815,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46638c6b0724f7340b5d2ad117f6828d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementControlsUI: {fileID: 3122927013880566019}
-  orientation: {fileID: 8047777894440074435}
-  player: {fileID: 7701263254620628334}
   playerObj: {fileID: 8893157228811693227}
-  rb: {fileID: 8860692220178841176}
-  rotationSpeed: 5
+  orientation: {fileID: 8047777894440074435}
+  movementControlsUI: {fileID: 3122927013880566019}
   moveSpeed: 16
   groundDrag: 5
-  jumpForce: 8
-  jumpCoolDown: 0.25
-  airMultiplier: 0.4
   gravityScale: 8
-  jumpKeyP1: 32
-  jumpKeyP2: 271
   playerHeight: 8
   groundMask:
     serializedVersion: 2
     m_Bits: 64
   grounded: 0
+  playerHasMoved: 0
+  rotationSpeed: 5
+  isTurning: 0
 --- !u!114 &2255882322329543974
 MonoBehaviour:
   m_ObjectHideFlags: 0

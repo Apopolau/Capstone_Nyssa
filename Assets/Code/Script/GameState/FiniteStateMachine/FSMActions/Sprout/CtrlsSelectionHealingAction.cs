@@ -25,7 +25,7 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
         //Initiate targeting
         earthPlayer.PickClosestTarget();
 
-        earthPlayer.SetTurnTarget(earthPlayer.GetPowerTarget().transform.position);
+        earthPlayer.SetTurnTarget(earthPlayer.GetPowerTarget());
         earthPlayer.ToggleTurning(true);
 
         //Instantiate appropriate objects
