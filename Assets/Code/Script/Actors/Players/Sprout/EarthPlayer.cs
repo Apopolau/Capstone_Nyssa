@@ -293,6 +293,7 @@ public class EarthPlayer : Player
     }
 
     //Handles if they're in a position to start planting a plant
+    /*
     private IEnumerator OnPlantPlanted()
     {
         //Have to add checks to make sure they are on a tile at all
@@ -358,6 +359,7 @@ public class EarthPlayer : Player
             yield break;
         }
     }
+    */
 
     //Called after a player selects a tile to plant on
     public void SetPlant()
@@ -534,6 +536,7 @@ public class EarthPlayer : Player
         SetPlantRemoval();
     }
 
+    /*
     private IEnumerator OnPlantRemoved()
     {
         //Have to add checks to make sure they are on a tile
@@ -594,6 +597,7 @@ public class EarthPlayer : Player
             yield break;
         }
     }
+    */
 
     private void SetPlantRemoval()
     {
@@ -1033,7 +1037,7 @@ public class EarthPlayer : Player
         //tileOutline = Instantiate(tileOutlinePrefab, target.transform);
         TurnOnCursor();
         //DisplayTileText();
-        hudManager.ThrowPlayerWarning("Please select a tile", "Veuillez sélectionner une tuile");
+        hudManager.TurnOnPopUpText("Please select a tile", "Veuillez sélectionner une tuile");
         //uiController.DarkenOverlay(darkenWhilePlanting);
         //DarkenAllImages(GetPlantDarkenObject());
         hudManager.ToggleSproutPanel(true);

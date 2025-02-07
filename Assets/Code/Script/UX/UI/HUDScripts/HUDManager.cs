@@ -93,6 +93,8 @@ public class HUDManager : MonoBehaviour
         //StartCoroutine(UpdateEnergyBar());
         //StartCoroutine(UpdateSeedQuantityText());
         OnPowerStateChange();
+
+        InitializeListeners();
     }
 
     private void Update()
@@ -411,6 +413,13 @@ public class HUDManager : MonoBehaviour
     //Makes a box of text appear on-screen to inform the player of something for no set period of time
     public void TurnOnPopUpText(string incEngText, string incFRText)
     {
+        //If we're throwing a timed display, turn it off
+        if(textDisplay != null)
+        {
+            StopCoroutine(textDisplay);
+            textDisplay = null;
+        }
+
         if(userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
         {
             model.SetPopUpText(incEngText);
@@ -957,6 +966,66 @@ public class HUDManager : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// USER SETTINGS LISTENERS
+    /// </summary>
+    /// <returns></returns>
+    private void InitializeListeners()
+    {
+        userSettingsManager.OnLanguageChanged += OnLanguageTypeChanged;
+        userSettingsManager.OnControlTypeChanged += OnControlTypeChanged;
+    }
+
+    private void OnLanguageTypeChanged(UserSettingsManager.GameLanguage language)
+    {
+        if(language == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            //Change item labels to English
+
+            //Change main menu text to English
+
+            //Change in-game menu text to English
+
+            //Change dialogue Button to English
+        }
+        else if(language == UserSettingsManager.GameLanguage.FRENCH)
+        {
+            //Change item labels to French
+
+            //Change main menu text to French
+
+            //Change in-game menu text to French
+
+            //Change dialogue Button to French
+        }
+    }
+
+    private void OnControlTypeChanged(UserSettingsManager.ControlType controlType, int characterIndex)
+    {
+        //if the character is Celeste
+        if(characterIndex == 0)
+        {
+            if(controlType == UserSettingsManager.ControlType.KEYBOARD)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+            if (controlType == UserSettingsManager.ControlType.KEYBOARD)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+    }
 
 
     /// <summary>

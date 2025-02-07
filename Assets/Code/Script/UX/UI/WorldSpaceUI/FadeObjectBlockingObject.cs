@@ -28,6 +28,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
         StartCoroutine(CheckForObjects());
     }
 
+    //Periodically check for objects occluding the camera from the player
     private IEnumerator CheckForObjects()
     {
         while (true)
@@ -64,6 +65,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
         }
     }
 
+    //
     private IEnumerator FadeObjectOut(ObjectFader objectFader)
     {
         
@@ -116,6 +118,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
         }
     }
 
+    //
     private IEnumerator FadeObjectIn(ObjectFader objectFader)
     {
         float time = 0;
@@ -167,6 +170,7 @@ public class FadeObjectBlockingObject : MonoBehaviour
         }
     }
 
+    //
     private void FadeObjectsNoLongerBeingHit()
     {
         List<ObjectFader> objectsToRemove = new List<ObjectFader>(objectsBlockingView.Count);
@@ -205,11 +209,14 @@ public class FadeObjectBlockingObject : MonoBehaviour
         }
     }
 
+
+    //Reset occlusion hits
     private void ClearHits()
     {
         System.Array.Clear(Hits, 0, Hits.Length);
     }
 
+    //Check if an object has an ObjectFader component (any object marked to fade when occluding)
     private ObjectFader GetFadingObjectFromHit(RaycastHit hit)
     {
         return hit.collider != null ? hit.collider.GetComponent<ObjectFader>() : null;
