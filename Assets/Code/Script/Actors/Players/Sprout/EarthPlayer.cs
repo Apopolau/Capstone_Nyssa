@@ -1272,18 +1272,6 @@ public class EarthPlayer : Player
         return inWaiting_FSM;
     }
 
-    public void ToggleDialogueState()
-    {
-        if (inDialogue_FSM)
-        {
-            inDialogue_FSM = false;
-        }
-        if (!inDialogue_FSM)
-        {
-            inDialogue_FSM = true;
-        }
-    }
-
     public void ToggleDialogueState(bool newState)
     {
         inDialogue_FSM = newState;

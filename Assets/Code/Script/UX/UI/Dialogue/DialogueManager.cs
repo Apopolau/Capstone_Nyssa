@@ -138,6 +138,7 @@ public class DialogueManager : MonoBehaviour
         {
             isDialogueStarted = true;
             currentDialogue = dialogue;
+            panningOn = false;
 
             // If the references aren't set, we need to set them now
             if (mainCam == null || earthPlayer == null || celestialPlayer == null)
@@ -253,14 +254,12 @@ public class DialogueManager : MonoBehaviour
     {
         if (currentEvent is DialogueLine)
         {
-            //Debug.Log(Time.time + ": Activating DialogueLine event");
             ToggleDialogueBox(true);
             currentLineEvent = currentEvent as DialogueLine;
             DisplayNextDialogueLine((DialogueLine)currentEvent);
         }
         else if (currentEvent is DialogueCameraPan)
         {
-            //Debug.Log(Time.time + ": Activating DialogueCameraPan event");
             ToggleDialogueBox(false);
             DialogueCameraPan pan = currentEvent as DialogueCameraPan;
             panningOn = true;
@@ -270,7 +269,6 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialoguePanAndText)
         {
-            //Debug.Log(Time.time + ": Activating DialoguePanAndText event");
             ToggleDialogueBox(true);
             DialoguePanAndText panLineEvent = currentEvent as DialoguePanAndText;
 
@@ -283,13 +281,11 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialogueAnimation)
         {
-            //Debug.Log(Time.time + ": Activating DialogueAnimation event");
             eventEnded = true;
             HandleAnimation((DialogueAnimation)currentEvent);
         }
         else if (currentEvent is DialogueMoveEvent)
         {
-            //Debug.Log(Time.time + ": Activating DialogueMove event");
             movingOn = true;
 
             currentMove = currentEvent as DialogueMoveEvent;
@@ -303,7 +299,6 @@ public class DialogueManager : MonoBehaviour
         }
         else if (currentEvent is DialogueMissionEnd)
         {
-            //Debug.Log(Time.time + ": Activating DialogueMissionEnd event");
             HandleSceneTransition((DialogueMissionEnd)currentEvent);
         }
     }

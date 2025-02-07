@@ -26,7 +26,8 @@ public class InteractPrompt : MonoBehaviour
     private void InitializeBoxSettings()
     {
         layoutObject = transform.GetChild(1).gameObject;
-        LayoutRebuilder.MarkLayoutForRebuild(layoutObject.GetComponent<RectTransform>());
+        //LayoutRebuilder.MarkLayoutForRebuild(layoutObject.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(layoutObject.GetComponent<RectTransform>());
     }
 
     // Method to update the text based on the current settings
@@ -75,6 +76,6 @@ public class InteractPrompt : MonoBehaviour
     public void ChangeText(string newText)
     {
         promptText.text = newText;
-        LayoutRebuilder.MarkLayoutForRebuild(layoutObject.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(layoutObject.GetComponent<RectTransform>());
     }
 }

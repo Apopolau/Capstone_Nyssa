@@ -662,30 +662,8 @@ public partial class @CelestialPlayerInputActions: IInputActionCollection2, IDis
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9469a737-c776-4334-8a4b-abf5af463337"",
-                    ""path"": ""<Keyboard>/enter"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Continue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""ae11d5c3-b112-4d73-ac5c-9e473371f8d2"",
                     ""path"": ""<Gamepad>/buttonNorth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Skip"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""24f105ae-b7f1-44cf-9029-79909122978e"",
-                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

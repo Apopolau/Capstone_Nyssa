@@ -36,6 +36,16 @@ public class TaskFollowPlayer : BTNode
             if (!thisActor.GetComponent<Animal>().GetIsEscorted() || thisActor.GetComponent<Animal>().GetIsKidnapped())
             {
                 thisActor.GetComponent<OurAnimator>().SetAnimationFlag("move", false);
+                thisActor.GetComponent<Animal>().SetEscort(false);
+                thisActor.ResetAgentPath();
+                state = NodeState.FAILURE;
+                return state;
+            }
+
+            if (thisActor.GetComponent<Animal>().GetWeatherManager().dayTime)
+            {
+                thisActor.GetComponent<OurAnimator>().SetAnimationFlag("move", false);
+                thisActor.GetComponent<Animal>().SetEscort(false);
                 thisActor.ResetAgentPath();
                 state = NodeState.FAILURE;
                 return state;

@@ -1358,7 +1358,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""974a3c29-3b96-44ee-9c34-e63370084ad1"",
+                    ""id"": ""cfaf9764-2434-4145-9354-d859040dcdd4"",
                     ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -1380,7 +1380,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""898d31ce-77bb-45b5-8c75-c2b404f3fb52"",
+                    ""id"": ""3f487e80-38c2-49ea-bd7e-1573c6d22fb0"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
