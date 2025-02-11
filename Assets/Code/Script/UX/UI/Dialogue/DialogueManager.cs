@@ -442,12 +442,15 @@ public class DialogueManager : MonoBehaviour
 
         if (pan.GetPanType() == DialogueCameraPan.PanType.OBJECT)
         {
-            //Set location
-            Vector3 targetLocation = new Vector3(pan.GetPanObject().transform.position.x + pan.GetPanOffset().x,
-                pan.GetPanObject().transform.position.y + pan.GetPanOffset().y, pan.GetPanObject().transform.position.z + pan.GetPanOffset().z);
-            //Shift towards it
-            mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position,
-                targetLocation, ref panVelocity, pan.GetPanSpeed(), 100, 1);
+            if(pan.GetPanObject() != null)
+            {
+                //Set location
+                Vector3 targetLocation = new Vector3(pan.GetPanObject().transform.position.x + pan.GetPanOffset().x,
+                    pan.GetPanObject().transform.position.y + pan.GetPanOffset().y, pan.GetPanObject().transform.position.z + pan.GetPanOffset().z);
+                //Shift towards it
+                mainCam.gameObject.transform.position = Vector3.SmoothDamp(mainCam.gameObject.transform.position,
+                    targetLocation, ref panVelocity, pan.GetPanSpeed(), 100, 1);
+            }
         }
         else if (pan.GetPanType() == DialogueCameraPan.PanType.LOCATION)
         {

@@ -38,6 +38,7 @@ public class smogMonsterTreeInvader: BTree
                         new Sequence(new List<BTNode>
                         {
                             new CheckInKidnapRange(thisEnemy),
+                            new Inverter(new CheckIfStuck(thisEnemy)),
                             new TaskKidnapAnimal(thisEnemy),
                             new TaskFindEscapeRoute(thisEnemy),
                             new TaskHeadOut(thisEnemy)
@@ -46,6 +47,7 @@ public class smogMonsterTreeInvader: BTree
                         new Sequence(new List<BTNode>
                         {
                             new CheckIfAnimalSpotted(thisEnemy),
+                            new Inverter(new CheckIfStuck(thisEnemy)),
                             new TaskPathToAnimal(thisEnemy)
                         }),
 

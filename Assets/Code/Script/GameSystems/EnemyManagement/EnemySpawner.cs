@@ -7,12 +7,14 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private LevelManagerObject levelManager;
     [SerializeField] private WeatherState weatherState;
     [SerializeField] private EnemyInvadingPath enemyInvadingPath;
+    [SerializeField] private List<Transform> mainPath;
     [SerializeField] private List<GameObject> plasticWaypoints;
     [SerializeField] private GameObject plasticBagMonsterPrefab;
     //[SerializeField] private GameObject enemyOilInvaderPrefab;
     //[SerializeField] private GameObject smogMonsterInvaderPrefab;
     public GameObjectRuntimeSet enemySet;
-    GameObject currSpawnedEnemy;
+    GameObject curEnemySpawnArchetype;
+    GameObject lastSpawnedEnemy;
 
     //Match this to the path you want the monsters to take
     [SerializeField] private int spawnerIndex;
@@ -32,12 +34,12 @@ public class EnemySpawner : MonoBehaviour
     private void Awake()
     {
         plasticWaypoints = new List<GameObject>();
+        mainPath = new List<Transform>();
     }
 
     void Start()
     {
-        
-
+        ExtractWaypoints();
         if(spawnerData != null)
         {
             if (!spawnerData.GetStartsOn())
@@ -48,7 +50,6 @@ public class EnemySpawner : MonoBehaviour
         {
             StartCoroutine(spawnEnemy());
         }
-            
     }
 
     private void Update()
@@ -79,11 +80,11 @@ public class EnemySpawner : MonoBehaviour
         {
             if (dayTime)
             {
-                currSpawnedEnemy = plasticBagMonsterPrefab;
+                curEnemySpawnArchetype = plasticBagMonsterPrefab;
             }
             if (!dayTime)
             {
-                currSpawnedEnemy = spawnerData.GetMonsterSpawn();
+                curEnemySpawnArchetype = spawnerData.GetMonsterSpawn();
             }
         }
     }
@@ -93,29 +94,32 @@ public class EnemySpawner : MonoBehaviour
 
         while (true)
         {
-            SetSpawns();
+            
             //if daynight cycle.nights passed is bigger  that 2 interval decrease
             //yield return new WaitForSeconds(interval);
             //GameObject newEnemy = Instantiate(currSpawnedEnemy, this.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(spawnInterval);
 
-            if(enemySet.Items.Count < maxEnemies)
+            SetSpawns();
+
+            if (enemySet.Items.Count < maxEnemies)
             {
-                Instantiate(currSpawnedEnemy, this.transform);
+                
+                lastSpawnedEnemy =  Instantiate(curEnemySpawnArchetype, this.transform);
                 
 
-                if (currSpawnedEnemy.GetComponent<KidnappingEnemy>())
+                if (lastSpawnedEnemy.GetComponent<KidnappingEnemy>())
                 {
-                    currSpawnedEnemy.GetComponent<Enemy>().SetInvasionPath(enemyInvadingPath.GetPath(spawnerIndex));
-                    currSpawnedEnemy.GetComponent<KidnappingEnemy>().SetEscapeWaypoint(enemyInvadingPath.GetEscapePoint(spawnerIndex));
+                    lastSpawnedEnemy.GetComponent<KidnappingEnemy>().SetInvasionPath(mainPath);
+                    lastSpawnedEnemy.GetComponent<KidnappingEnemy>().SetEscapeWaypoint(enemyInvadingPath.GetEscapePoint(spawnerIndex));
                 }
                     
 
-                if (currSpawnedEnemy.GetComponent<PlasticBagMonster>())
+                if (lastSpawnedEnemy.GetComponent<PlasticBagMonster>())
                 {
                     foreach(GameObject go in plasticWaypoints)
                     {
-                        currSpawnedEnemy.GetComponent<PlasticBagMonster>().AddWayPointToWanderList(go);
+                        lastSpawnedEnemy.GetComponent<PlasticBagMonster>().AddWayPointToWanderList(go);
                     }
                 }
                     
@@ -159,6 +163,11 @@ public class EnemySpawner : MonoBehaviour
     public bool GetSpawnsOn()
     {
         return spawnsOn;
+    }
+
+    public void ExtractWaypoints()
+    {
+        mainPath = enemyInvadingPath.GetPath(spawnerIndex);
     }
 
     public void AddNewWaypoint(GameObject waypoint)

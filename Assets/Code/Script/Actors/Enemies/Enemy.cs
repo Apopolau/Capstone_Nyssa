@@ -27,9 +27,7 @@ public abstract class Enemy : Actor
     protected bool isColliding = false;
     protected bool beingHit = false;
 
-    //InvaderCoder
-    [Header("Invader info")]
-    [SerializeField] protected List<Transform> invasionPath;
+    
 
     //Registered public events
     public event System.Action<int, int> OnHealthChanged;
@@ -131,17 +129,6 @@ public abstract class Enemy : Actor
         beingHit = isHit;
     }
 
-    public List<Transform> GetInvasionPath()
-    {
-        return invasionPath;
-    }
-
-    public void SetInvasionPath(List<Transform> pathList)
-    {
-        invasionPath = pathList;
-    }
-
-    
 
     public bool GetIsColliding()
     {

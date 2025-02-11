@@ -185,6 +185,7 @@ public class HUDModel : ScriptableObject
         inventoryPanel = Instantiate(inventoryPanelPrefab, hudCanvas.transform);
         manager.GetInventorySlotManager().GetComponent<InventorySlotManager>().SetInventory(incInventory);
         manager.GetLevelManager().PopulateInventory();
+        inventory.ChangeLanguage(userSettingsManager.chosenLanguage);
     }
 
     //Creates and sets up the main Virtual Mouse Canvas

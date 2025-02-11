@@ -6,19 +6,37 @@ using UnityEngine.AI;
 
 public class CheckIfStuck : BTCondition
 {
-    Animal animal;
+    Actor actor;
 
-    public CheckIfStuck(Animal animal)
+    public CheckIfStuck(Actor actor)
     {
-        this.animal = animal;
+        this.actor = actor;
     }
 
     //Returns true if it's night time
     protected override NodeState OnRun()
     {
-        if (animal.GetIsStuck())
+        if(actor.GetComponent<Animal>() != null)
         {
-            return NodeState.SUCCESS;
+            if (actor.GetComponent<Animal>().GetIsStuck())
+            {
+                return NodeState.SUCCESS;
+            }
+            else
+            {
+                return NodeState.FAILURE;
+            }
+        }
+        else if(actor.GetComponent<KidnappingEnemy>() != null)
+        {
+            if (actor.GetComponent<KidnappingEnemy>().GetClosestAnimal().GetComponent<Animal>().GetIsStuck())
+            {
+                return NodeState.SUCCESS;
+            }
+            else
+            {
+                return NodeState.FAILURE;
+            }
         }
         else
         {

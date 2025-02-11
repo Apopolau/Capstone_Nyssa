@@ -17,8 +17,9 @@ public class Item
     public Item(Item oldItem)
     {
         stats = oldItem.stats;
-        stats.Icon = oldItem.stats.Icon;
-        stats.name = oldItem.stats.name;
+        stats.SetIcon(oldItem.stats.GetIcon());
+        stats.SetItemNameEN(oldItem.stats.GetItemNameEN());
+        stats.SetItemNameFR(oldItem.stats.GetItemNameFR());
         quantity = oldItem.quantity;
     }
 

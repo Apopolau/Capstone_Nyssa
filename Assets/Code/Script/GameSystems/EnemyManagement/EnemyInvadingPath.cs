@@ -18,9 +18,14 @@ public class EnemyInvadingPath : MonoBehaviour
     //public List<Transform> chosenPath;
     //public List<Transform> BranchWayPoints;
 
-    private void Start()
+    private void Awake()
     {
         LoadPathList();
+    }
+
+    private void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -35,6 +40,7 @@ public class EnemyInvadingPath : MonoBehaviour
             foreach(Transform childTransform in waypointClusters[i].transform)
             {
                 pathsList[i].Add(childTransform);
+
             }
             i++;
         }

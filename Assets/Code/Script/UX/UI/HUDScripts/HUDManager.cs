@@ -132,6 +132,7 @@ public class HUDManager : MonoBehaviour
     }
 
     //Checks the user's language settings and switches the active UI accordingly
+    /*
     public void ActivateUIBasedOnLanguage()
     {
         if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
@@ -158,6 +159,7 @@ public class HUDManager : MonoBehaviour
             }
         }
     }
+    */
 
     //Sets whether the controller or keyboard movement keys appear above the characters' heads
     private void SetMovementKeyIndicators()
@@ -978,10 +980,11 @@ public class HUDManager : MonoBehaviour
 
     private void OnLanguageTypeChanged(UserSettingsManager.GameLanguage language)
     {
-        if(language == UserSettingsManager.GameLanguage.ENGLISH)
-        {
-            //Change item labels to English
+        //Change item labels to respective language
+        model.GetInventory().ChangeLanguage(language);
 
+        if (language == UserSettingsManager.GameLanguage.ENGLISH)
+        {
             //Change main menu text to English
 
             //Change in-game menu text to English
@@ -990,8 +993,6 @@ public class HUDManager : MonoBehaviour
         }
         else if(language == UserSettingsManager.GameLanguage.FRENCH)
         {
-            //Change item labels to French
-
             //Change main menu text to French
 
             //Change in-game menu text to French

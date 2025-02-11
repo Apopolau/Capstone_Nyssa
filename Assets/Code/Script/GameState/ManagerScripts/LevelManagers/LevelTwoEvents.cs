@@ -83,10 +83,10 @@ public class LevelTwoEvents : LevelEventManager
     [SerializeField] private GameObject nyssa;
 
     [Header("Waypoints")]
-    [SerializeField] private GameObject firstWaypoint;
-    [SerializeField] private GameObject secondWaypoint;
-    [SerializeField] private GameObject thirdWaypoint;
-    [SerializeField] private GameObject fourthWaypoint;
+    [SerializeField] private GameObject firstWaypoint; //Stump, hedgehog area
+    [SerializeField] private GameObject secondWaypoint; //Main area
+    [SerializeField] private GameObject thirdWaypoint; //Logging Camp
+    [SerializeField] private GameObject fourthWaypoint; //Facility
 
     [Header("Progress variables")]
     private bool firstAreaClear = false;
@@ -549,6 +549,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             go.GetComponent<Animal>().AddWayPointToWanderList(firstWaypoint);
         }
+        
         spawn1.GetComponent<EnemySpawner>().AddNewWaypoint(firstWaypoint);
         spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(firstWaypoint);
 
@@ -557,6 +558,8 @@ public class LevelTwoEvents : LevelEventManager
         hudManager.ToggleObjectivesState(true);
 
         hog1.GetComponent<Hedgehog>().SetStuck(false);
+
+        spawn1.GetComponent<EnemySpawner>().ToggleSpawns(true);
     }
 
     //When the player defeats the static smog monster in the lumber yard area
@@ -582,11 +585,11 @@ public class LevelTwoEvents : LevelEventManager
         //We want to allow all active animals to travel to this location
         foreach (GameObject go in animalSet.Items)
         {
-            go.GetComponent<Animal>().AddWayPointToWanderList(secondWaypoint);
+            go.GetComponent<Animal>().AddWayPointToWanderList(thirdWaypoint);
         }
 
         spawn1.GetComponent<EnemySpawner>().ToggleSpawns(false);
-        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(secondWaypoint);
+        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(thirdWaypoint);
     }
 
     //When the player defeats the 2 oil monsters hanging out on the west side of the main area
@@ -617,15 +620,15 @@ public class LevelTwoEvents : LevelEventManager
         }
 
         thirdAreaClear = true;
-        fourthAreaClear = true;
+        //fourthAreaClear = true;
 
         //We want to allow all active animals to travel to this location
         foreach (GameObject go in animalSet.Items)
         {
-            go.GetComponent<Animal>().AddWayPointToWanderList(thirdWaypoint);
+            go.GetComponent<Animal>().AddWayPointToWanderList(secondWaypoint);
         }
-        spawn1.GetComponent<EnemySpawner>().AddNewWaypoint(thirdWaypoint);
-        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(thirdWaypoint);
+        spawn1.GetComponent<EnemySpawner>().AddNewWaypoint(secondWaypoint);
+        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(secondWaypoint);
     }
 
     //When the player defeats the last 3 oil monsters, over by the terminal, that are surrounding the hedgehog friends
@@ -648,7 +651,7 @@ public class LevelTwoEvents : LevelEventManager
         {
             go.GetComponent<Animal>().AddWayPointToWanderList(fourthWaypoint);
         }
-        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(thirdWaypoint);
+        spawn2.GetComponent<EnemySpawner>().AddNewWaypoint(fourthWaypoint);
 
         fourthMonsterDeadDialouge.TriggerDialogue();
         hog2.GetComponent<Hedgehog>().SetStuck(false);

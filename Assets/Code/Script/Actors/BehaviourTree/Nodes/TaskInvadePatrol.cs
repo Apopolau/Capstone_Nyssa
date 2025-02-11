@@ -31,7 +31,7 @@ public class TaskInvadePatrol : BTNode
             return state;
         }
 
-        if (thisEnemy.GetSeesPlayer() || thisEnemy.GetSeesAnimal())
+        if (thisEnemy.GetSeesPlayer() || (thisEnemy.GetSeesAnimal() && !thisEnemy.GetClosestAnimal().GetComponent<Animal>().GetIsStuck()))
         {
             state = NodeState.FAILURE;
         }

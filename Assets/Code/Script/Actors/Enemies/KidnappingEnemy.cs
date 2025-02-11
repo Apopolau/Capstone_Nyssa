@@ -31,9 +31,10 @@ public abstract class KidnappingEnemy : Enemy
     protected bool inKidnapRange = false;
     protected bool hasAnimal = false;
     protected bool isKidnapping = false;
+    [SerializeField] protected List<Transform> invasionPath;
     [SerializeField] protected List<Transform> escapeRoute = new List<Transform>();
     [SerializeField] protected Transform escapeWayPoint;
-
+    
     //[SerializeField] protected float attackRange;
     //[SerializeField] protected float kidnapRange;
 
@@ -265,6 +266,11 @@ public abstract class KidnappingEnemy : Enemy
         return kidnapAnimalTarget;
     }
 
+    public void SetKidnapAnimalTarget(GameObject target)
+    {
+        kidnapAnimalTarget = target;
+    }
+
     //Can the monster see an animal right now?
     public bool GetSeesAnimal()
     {
@@ -291,6 +297,16 @@ public abstract class KidnappingEnemy : Enemy
 
 
     /// WAYPOINT GETTERS AND SETTERS
+    public List<Transform> GetInvasionPath()
+    {
+        return invasionPath;
+    }
+
+    public void SetInvasionPath(List<Transform> pathList)
+    {
+        invasionPath = pathList;
+    }
+
     //Returns a list of waypoints to use as an escape route
     public List<Transform> GetEscapeRoute()
     {

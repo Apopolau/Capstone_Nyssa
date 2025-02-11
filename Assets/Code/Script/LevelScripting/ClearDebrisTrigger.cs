@@ -10,6 +10,8 @@ public class ClearDebrisTrigger : MonoBehaviour
     bool hasTriggered1 = false;
     bool hasTriggered2 = false;
 
+    bool clearStarted = false;
+
     WaitForSeconds debrisClearTime = new WaitForSeconds(4.542f);
     bool isAnimated = false;
 
@@ -41,7 +43,11 @@ public class ClearDebrisTrigger : MonoBehaviour
 
     public void InitiateClear()
     {
-        StartCoroutine(LetTimerRun());
+        if (!clearStarted)
+        {
+            clearStarted = true;
+            StartCoroutine(LetTimerRun());
+        }
     }
 
     private void ClearDebris()

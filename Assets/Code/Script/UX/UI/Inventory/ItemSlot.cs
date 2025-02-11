@@ -27,7 +27,7 @@ public class ItemSlot : MonoBehaviour
             }
             else
             {
-                image.sprite = _item.stats.Icon;
+                image.sprite = _item.stats.GetIcon();
                 image.enabled = true;
                 UpdateItemNameText();
                 UpdateQuantityText();
@@ -76,7 +76,7 @@ public class ItemSlot : MonoBehaviour
         }
         else
         {
-            image.sprite = _item.stats.Icon;
+            image.sprite = _item.stats.GetIcon();
             image.enabled = true;
             UpdateItemNameText();
             UpdateQuantityText();
@@ -89,7 +89,7 @@ public class ItemSlot : MonoBehaviour
         if (_item != null)
         {
             itemNameText.gameObject.SetActive(true);
-            itemNameText.text = _item.stats.ItemName;
+            itemNameText.text = _item.stats.GetCurrentName();
         }
     }
 

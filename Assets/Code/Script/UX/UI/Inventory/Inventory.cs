@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class Inventory : ScriptableObject
 {
     //int inventorySize = 4;
+    [SerializeField] private UserSettingsManager userSettingsManager;
     [SerializeField] public List<Item> items;
     [SerializeField] public List<ItemSlot> itemSlots;
 
@@ -16,7 +17,8 @@ public class Inventory : ScriptableObject
 
     private void OnEnable()
     {
-        RefreshUI();
+        //RefreshUI();
+        ChangeLanguage(userSettingsManager.chosenLanguage);
     }
 
     private void OnDisable()
@@ -36,7 +38,7 @@ public class Inventory : ScriptableObject
         // Check if the item already exists in the inventory.
         foreach (var existingItem in items)
         {
-            if (existingItem.stats.ItemName == item.stats.ItemName)
+            if (existingItem.stats.GetItemNameEN() == item.stats.GetItemNameEN())
             {
                 existingItem.quantity += quantity; // Increase the quantity.
                 if (OnItemChange != null)
@@ -53,6 +55,15 @@ public class Inventory : ScriptableObject
 
         // If the item is not in the inventory, add a new one.
         Item itemToAdd = new Item(item);
+        if(userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            itemToAdd.stats.SetCurrentName(itemToAdd.stats.GetItemNameEN());
+        }
+        else
+        {
+            itemToAdd.stats.SetCurrentName(itemToAdd.stats.GetItemNameFR());
+        }
+        
         items.Add(itemToAdd);
         if (OnItemChange != null)
             OnItemChange();
@@ -76,7 +87,7 @@ public class Inventory : ScriptableObject
         // Find the item with the specified name and remove it
         foreach (Item item in items)
         {
-            if (item.stats.ItemName == itemName && item.quantity >= quantity)
+            if (item.stats.GetItemNameEN() == itemName && item.quantity >= quantity)
             {
                 itemToRemove = item;
             }
@@ -94,7 +105,7 @@ public class Inventory : ScriptableObject
         int i = 0;
         foreach (var existingItem in items)
         {
-            if (existingItem.stats.ItemName == item.stats.ItemName)
+            if (existingItem.stats.GetItemNameEN() == item.stats.GetItemNameEN())
             {
                 existingItem.quantity -= quantity;
 
@@ -188,7 +199,7 @@ public class Inventory : ScriptableObject
         int currentQuantity = 0;
         foreach (var item in items)
         {
-            if (item.stats.ItemName == itemType)
+            if (item.stats.GetItemNameEN() == itemType)
             {
                 currentQuantity += item.quantity;
             }
@@ -202,7 +213,7 @@ public class Inventory : ScriptableObject
 
         foreach (var item in items)
         {
-            if (item.stats.ItemName == itemName && item.quantity >= quantity)
+            if (item.stats.GetItemNameEN() == itemName && item.quantity >= quantity)
             {
                 return true;
             }
@@ -210,4 +221,23 @@ public class Inventory : ScriptableObject
         return false;
     }
 
+
+    public void ChangeLanguage(UserSettingsManager.GameLanguage gameLanguage)
+    {
+        if(gameLanguage == UserSettingsManager.GameLanguage.ENGLISH)
+        {
+            foreach(var item in items)
+            {
+                item.stats.SetCurrentName(item.stats.GetItemNameEN());
+            }
+        }
+        else
+        {
+            foreach (var item in items)
+            {
+                item.stats.SetCurrentName(item.stats.GetItemNameFR());
+            }
+        }
+        RefreshUI();
+    }
 }

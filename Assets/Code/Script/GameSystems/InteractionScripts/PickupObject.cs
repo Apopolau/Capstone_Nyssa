@@ -39,7 +39,7 @@ public class PickupObject : Interactable
         if (item != null)
         {
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-            spriteRenderer.sprite = item.stats.Icon;
+            spriteRenderer.sprite = item.stats.GetIcon();
             spriteRenderer.enabled = true;
         }
         else
