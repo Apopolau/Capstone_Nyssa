@@ -39,7 +39,8 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        ExtractWaypoints();
+        if(levelManager.currentLevel != 1)
+            ExtractWaypoints();
         if(spawnerData != null)
         {
             if (!spawnerData.GetStartsOn())

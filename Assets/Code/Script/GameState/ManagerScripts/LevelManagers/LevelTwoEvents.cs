@@ -363,42 +363,57 @@ public class LevelTwoEvents : LevelEventManager
             {
                 if (setClean)
                 {
-                    soundPlayers[0].Stop(0.5f);
-                    soundPlayers[2].Stop(0.5f);
+                    soundPlayers[0].Stop(5f);
+                    soundPlayers[2].Stop(5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(false);
                     setClean = false;
                     setSuperClean = false;
                 }
-                soundPlayers[1].SetVolume(1 / (float)(plantCount / tileCount));
+                //soundPlayers[1].SetVolume(1 / (float)(plantCount / tileCount));
             }
             else if ((plantCount > tileCount / 4) && (plantCount < tileCount / 2))
             {
                 if (!setClean)
                 {
-                    soundPlayers[0].Play(music, 0.5f);
+                    soundPlayers[0].Play(music, 5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(true);
                     setClean = true;
                 }
                 if (setSuperClean)
                 {
-                    soundPlayers[2].Stop(0.5f);
+                    soundPlayers[2].Stop(5f);
                     setSuperClean = false;
                 }
-                soundPlayers[0].SetVolume(1 / (float)(tileCount / plantCount));
-                soundPlayers[1].SetVolume(1 / (float)(plantCount / tileCount));
+                //soundPlayers[0].SetVolume(1 / (float)(tileCount / plantCount));
+                //soundPlayers[1].SetVolume(1 / (float)(plantCount / tileCount));
             }
             else if (plantCount > tileCount / 2)
             {
                 if (!setSuperClean)
                 {
-                    soundPlayers[1].Stop(0.5f);
-                    soundPlayers[2].Play(nature, 0.5f);
+                    soundPlayers[1].Stop(5f);
+                    soundPlayers[2].Play(nature, 5f);
                     setSuperClean = true;
                 }
-                soundPlayers[0].SetVolume(1 / (float)(tileCount / plantCount));
-                soundPlayers[1].SetVolume(1 / (float)(plantCount / tileCount));
-                soundPlayers[2].SetVolume(1 / (float)(tileCount / plantCount));
+            }
 
+            if(plantCount != 0)
+            {
+                if (soundPlayers[1].enabled)
+                {
+                    //Adjust howling wind volume to get gradually quieter as more plants are planted
+                    soundPlayers[1].FadeVolume(1 / (float)(plantCount / tileCount), 0.1f);
+                }
+                if (setClean)
+                {
+                    //Adjust music volume to get gradually louder as more plants are planted
+                    soundPlayers[0].FadeVolume(1 / (float)(tileCount / plantCount), 0.1f);
+                }
+                if (setSuperClean)
+                {
+                    //Adjust bird ambience to get gradually louder as more plants are planted
+                    soundPlayers[2].FadeVolume(1 / (float)(tileCount / plantCount), 0.1f);
+                }
             }
         }
 

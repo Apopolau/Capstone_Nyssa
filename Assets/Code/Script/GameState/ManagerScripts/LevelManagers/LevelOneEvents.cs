@@ -521,7 +521,7 @@ public class LevelOneEvents : LevelEventManager
                 //Sludge pump area
                 ApplyTextureChangeOverArea((int)areaFour1MinVals.x, (int)areaFour1MaxVals.x, (int)areaFour1MinVals.z, (int)areaFour1MaxVals.z, dirtSteps, dirtLayer, 1);
                 //Middle platform
-                ApplyTextureChangeOverArea((int)areaFour1MinVals.x, (int)areaFour1MaxVals.x, (int)areaFour1MinVals.z, (int)areaFour1MaxVals.z, grassSteps, grassLayer, 1);
+                ApplyTextureChangeOverArea((int)areaFour2MinVals.x, (int)areaFour2MaxVals.x, (int)areaFour2MinVals.z, (int)areaFour2MaxVals.z, dirtSteps, dirtLayer, 1);
 
                 areaFourMOneMet = true;
             }
@@ -531,7 +531,7 @@ public class LevelOneEvents : LevelEventManager
             if (!areaFourMTwoMet)
             {
                 //Sludge pump area
-                ApplyTextureChangeOverArea((int)areaFour2MinVals.x, (int)areaFour2MaxVals.x, (int)areaFour2MinVals.z, (int)areaFour2MaxVals.z, dirtSteps, dirtLayer, 1);
+                ApplyTextureChangeOverArea((int)areaFour1MinVals.x, (int)areaFour1MaxVals.x, (int)areaFour1MinVals.z, (int)areaFour1MaxVals.z, grassSteps, grassLayer, 1);
                 //Middle platform
                 ApplyTextureChangeOverArea((int)areaFour2MinVals.x, (int)areaFour2MaxVals.x, (int)areaFour2MinVals.z, (int)areaFour2MaxVals.z, grassSteps, grassLayer, 1);
 

@@ -70,6 +70,7 @@ MonoBehaviour:
   model: {fileID: 11400000, guid: 52e0bb50aeb62a342a3139323585b2d9, type: 2}
   userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
   weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  activeCamera: {fileID: 0}
   hudCanvas: {fileID: 0}
   playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
   animalSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
@@ -90,37 +91,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973851733484a4045b4e85a158183091, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
-  inventorySlotManager: {fileID: 0}
   hudManager: {fileID: 1622098183511203309}
-  dialogueManager: {fileID: 0}
-  objectiveContainer: {fileID: 0}
+  terrain: {fileID: 0}
+  playerSet: {fileID: 11400000, guid: 8b5b02fadfb6bce4790e52182caed676, type: 2}
+  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
+  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  uiSoundLibrary: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
   music: {fileID: 11400000, guid: a6da14652a76a4944aed856f25e19569, type: 2}
   wind: {fileID: 11400000, guid: 2aec86a56eabb5c438d3be3ee0766a53, type: 2}
   nature: {fileID: 11400000, guid: 7d947dc4de6893c428a9141249e45d84, type: 2}
   rain: {fileID: 11400000, guid: 73917364e62279743894f4bb18a57aed, type: 2}
+  inventorySlotManager: {fileID: 0}
+  dialogueManager: {fileID: 0}
+  objectiveContainer: {fileID: 0}
   soundPlayers: []
-  uiSoundLibrary: {fileID: 11400000, guid: 38518b37c92a4c041be73e1496f7f86e, type: 2}
-  userSettingsManager: {fileID: 11400000, guid: ce91511a984cf4041944f8a9622ef6d7, type: 2}
-  dyingEnemy: {fileID: 0}
-  terrain: {fileID: 0}
   terrainData1: {fileID: 0}
   terrainData2: {fileID: 0}
-  weatherState: {fileID: 11400000, guid: d6e7c65ee3a75954db30ba444bed51ec, type: 2}
+  dyingEnemy: {fileID: 0}
   levelOneProgress: {fileID: 11400000, guid: 3e1b7b16d5bf02c40ab8bf479cf07e9e, type: 2}
+  power: {fileID: 0}
+  plasticBagInvaderWaypoint: {fileID: 0}
   cleanWaterMaterial: {fileID: 2100000, guid: e33eb5d28521d5f4188aec862cee5330, type: 2}
   water: {fileID: 0}
+  factory: {fileID: 0}
+  pipes:
+  - {fileID: 0}
+  - {fileID: 0}
+  tank: {fileID: 0}
+  cleanFactoryMaterial: {fileID: 2100000, guid: 354c80dce15dfaa46b31520d1ce1a725, type: 2}
+  cleanPipeMaterial: {fileID: 2100000, guid: e26065eb2d3a8af43b42483649733b30, type: 2}
+  cleanTankMaterial: {fileID: 2100000, guid: 00499c2130de31b43b5a2ffffc4f72f5, type: 2}
   tileGrid: {fileID: 0}
   firstAreaGrid: {fileID: 0}
   secondAreaGrid: {fileID: 0}
   thirdAreaGrid: {fileID: 0}
   fourthAreaGrid: {fileID: 0}
+  tileCount: 0
   areaOneMinVals: {x: -100, y: 0, z: -114}
   areaOneMaxVals: {x: -2, y: 0, z: -10}
   areaTwoMinVals: {x: 7, y: 0, z: -135}
   areaTwoMaxVals: {x: 84, y: 0, z: -21}
   areaThreeMinVals: {x: -100, y: 0, z: 0}
-  areaThreeMaxVals: {x: 0, y: 0, z: 100}
+  areaThreeMaxVals: {x: -15, y: 0, z: 75}
   areaFour1MinVals: {x: 96, y: 0, z: -55}
   areaFour1MaxVals: {x: 209, y: 0, z: 85}
   areaFour2MinVals: {x: 2, y: 0, z: 4}
@@ -136,21 +148,14 @@ MonoBehaviour:
   fourthMonsterDeadDialouge: {fileID: 7868941164567360802}
   allMonstersDefeatedDialogue: {fileID: 2484009731153438493}
   allObjectivesMetDialogue: {fileID: 4735597307128877273}
-  power: {fileID: 0}
-  treeIndicator: {fileID: 0}
-  flowerIndicator: {fileID: 0}
-  grassIndicator: {fileID: 0}
+  duckSet: {fileID: 11400000, guid: c72ae6de3eba455438326e97dbef891e, type: 2}
   duck1: {fileID: 0}
   duck2: {fileID: 0}
-  factory: {fileID: 0}
-  plasticBagInvaderWaypoint: {fileID: 0}
-  pipes:
-  - {fileID: 0}
-  - {fileID: 0}
-  tank: {fileID: 0}
-  cleanFactoryMaterial: {fileID: 2100000, guid: 354c80dce15dfaa46b31520d1ce1a725, type: 2}
-  cleanPipeMaterial: {fileID: 2100000, guid: e26065eb2d3a8af43b42483649733b30, type: 2}
-  cleanTankMaterial: {fileID: 2100000, guid: 00499c2130de31b43b5a2ffffc4f72f5, type: 2}
+  firstWaypoint: {fileID: 0}
+  secondWaypoint: {fileID: 0}
+  thirdWaypoint: {fileID: 0}
+  fourthWaypoint: {fileID: 0}
+  fifthWaypoint: {fileID: 0}
 --- !u!114 &4908730373353662941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,7 +429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buildSet: {fileID: 11400000, guid: b5c6b9e9b2d61c345ba972c1b10e18e4, type: 2}
   monsterSet: {fileID: 11400000, guid: 3bf122952797b5c45ad33f6ed26e05ee, type: 2}
-  RainParticleSystem: {fileID: 0}
+  rainParticleSystem: {fileID: 0}
   earthIcon: {fileID: 0}
   happyLevelImage: {fileID: 21300000, guid: 1a70d4890f5d6e243bf0905b77f06740, type: 3}
   sadLevelImage: {fileID: 21300000, guid: 8178be71e114a3346a239b15a48ac942, type: 3}
