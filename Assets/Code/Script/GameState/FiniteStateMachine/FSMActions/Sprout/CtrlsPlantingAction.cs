@@ -23,14 +23,14 @@ public class CtrlsPlantingAction : FSMAction
         earthPlayer.earthControls.controls.HealSelect.Disable();
 
         //Set our appropriate bools
-        earthPlayer.isPlantSelected = true;
-        earthPlayer.isATileSelected = false;
+        earthPlayer.SetIsPlantSelected(true);
+        earthPlayer.SetIsTileSelected(false);
 
         //Set transforms for relevant objects
-        if(earthPlayer.plantSelected == null)
+        if(earthPlayer.GetSelectedPlant() == null)
             earthPlayer.InitializePlantPreview();
-        earthPlayer.plantSelected.transform.position = earthPlayer.transform.position;
-        earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
+        earthPlayer.GetSelectedPlant().transform.position = earthPlayer.transform.position;
+        earthPlayer.SetTileOutline(Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform));
 
         earthPlayer.TurnOnTileSelect(earthPlayer.transform);
         hudManager.ToggleSproutPanel(true);
@@ -44,13 +44,13 @@ public class CtrlsPlantingAction : FSMAction
     public override void ExitState(BaseStateMachine stateMachine)
     {
         //Set our bools to facilitate a clean change in UI
-        earthPlayer.isATileSelected = true;
+        earthPlayer.SetIsTileSelected(true);
         
         //Turn our controls back off
         earthPlayer.earthControls.controls.PlantIsSelected.Disable();
 
         //Remove the plant preview
-        Destroy(earthPlayer.plantSelected);
+        Destroy(earthPlayer.GetSelectedPlant());
 
         //Update UI components
         earthPlayer.TurnOffTileSelect();

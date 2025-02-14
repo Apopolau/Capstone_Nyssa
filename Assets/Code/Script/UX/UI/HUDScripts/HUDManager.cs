@@ -640,7 +640,7 @@ public class HUDManager : MonoBehaviour
             if(model.GetDayNightCycle().activeSelf && dayNightCycleIsOn)
             {
                 float scalar = 360 / 24;
-                float offset = 90; //Using this to start us at morning, because at 0 rotation we're mid-day
+                float offset = 135; //Using this to start us at morning, because at 0 rotation we're mid-day
                 float angle = Mathf.Clamp(timeOfDay * scalar, 0, 360);
 
                 Vector3 newAngle = new Vector3(0, 0, (-angle + offset));

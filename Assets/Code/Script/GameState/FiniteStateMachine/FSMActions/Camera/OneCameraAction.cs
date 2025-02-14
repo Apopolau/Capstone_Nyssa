@@ -24,7 +24,7 @@ public class OneCameraAction : FSMAction
         //splitScreen.virtualMouseInput.cursorTransform.position = splitScreen.earthPlayer.GetComponent<EarthPlayer>().virtualMouseInput.cursorTransform.position;
         //splitScreen.GetHudManager().SetVirtualMousePosition(splitScreen.GetHudManager().GetVirtualMousePosition());
 
-        if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || splitScreen.earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().GetIsPlantSelected() || splitScreen.earthPlayer.GetComponent<EarthPlayer>().GetIsRemovalStarted())
         {
             /*
             splitScreen.GetHudManager().ToggleVirtualMouseSprite(true);

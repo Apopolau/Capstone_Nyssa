@@ -27,17 +27,17 @@ public class CtrlsRemovingAction : FSMAction
 
         //Update the UI
         //earthPlayer.SwitchCursorIcon(earthPlayer.i_shovel);
-        hudManager.SetVirtualMouseImage(earthPlayer.i_shovel);
+        hudManager.SetVirtualMouseImage(earthPlayer.GetShovelIcon());
         //TurnOnTileSelect manages enabling most of the functionality of tile selection
-        earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform);
+        earthPlayer.SetTileOutline(Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.transform));
         earthPlayer.TurnOnTileSelect(earthPlayer.transform);
 
         hudManager.TurnOnPopUpText("Select a Tile", "Veuillez sélectionner une tuile");
         hudManager.ToggleSproutPanel(true);
 
         //Set our appropriate bools
-        earthPlayer.isRemovalStarted = true;
-        earthPlayer.isATileSelected = false;
+        earthPlayer.SetIsRemovalStarted(true);
+        earthPlayer.SetIsTileSelected(false);
     }
 
     public override void Execute(BaseStateMachine stateMachine)
@@ -50,7 +50,7 @@ public class CtrlsRemovingAction : FSMAction
         //Turn our controls back off
         earthPlayer.earthControls.controls.RemovingPlant.Disable();
 
-        earthPlayer.isATileSelected = true;
+        earthPlayer.SetIsTileSelected(true);
 
         //Update UI components
         //TurnOffTileSelect manages disabling most of the functionality of tile selection

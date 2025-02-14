@@ -38,17 +38,17 @@ public class EarthPlayer : Player
     private bool isTurning;
 
     [Header("Info for selecting plants")]
-    public bool isPlantSelected = false;
+    private bool isPlantSelected = false;
     private bool isPlanting = false;
-    public bool isRemovalStarted = false;
+    private bool isRemovalStarted = false;
     private bool isRemoving = false;
-    public bool isATileSelected = false;
-    public GameObject plantSelected;
-    public List<GameObject> plantsPlanted;
-    public GameObject tempPlantPlanted;
-    public GameObject plantPreview;
-    [SerializeField] GameObject tileOutlinePrefab;
-    public GameObject tileOutline;
+    private bool isATileSelected = false;
+    private GameObject selectedPlantPreview;
+    private List<GameObject> plantsPlanted;
+    private GameObject tempPlantPlanted;
+    //private GameObject plantPreview;
+    [SerializeField] private GameObject tileOutlinePrefab;
+    private GameObject tileOutline;
 
     //Data for when the player picks a plant to plant
     public enum PlantSelectedType { NONE, TREE, FLOWER, GRASS }
@@ -56,8 +56,8 @@ public class EarthPlayer : Player
 
     //Data for the tile they're trying to plant on
     public enum TileSelectedType { LAND, WATER };
-    public TileSelectedType currentTileSelectedType;
-    public GameObject selectedTile;
+    private TileSelectedType currentTileSelectedType;
+    private GameObject selectedTile;
     [SerializeField] private LayerMask tileMask;
     [SerializeField] private LayerMask groundMask;
     //public Vector2 virtualMousePosition;
@@ -102,7 +102,7 @@ public class EarthPlayer : Player
     [SerializeField] private Sprite i_grassSeed;
     [SerializeField] private Sprite i_flowerSeed;
     [SerializeField] private Sprite i_treeSeed;
-    [SerializeField] public Sprite i_shovel;
+    [SerializeField] private Sprite i_shovel;
 
     [Header("VFX")]
     [SerializeField] private GameObject ThornShieldPrefab;
@@ -141,6 +141,8 @@ public class EarthPlayer : Player
         agent.enabled = false;
 
         SetLanguageState(userSettingsManager.chosenLanguage);
+
+        plantsPlanted = new List<GameObject>();
     }
 
     // Start is called before the first frame update
@@ -224,7 +226,7 @@ public class EarthPlayer : Player
             if (isPlantSelected)
             {
                 isPlantSelected = false;
-                Destroy(plantSelected);
+                Destroy(selectedPlantPreview);
                 Destroy(tileOutline);
             }
             if (!isPlantSelected)
@@ -251,7 +253,7 @@ public class EarthPlayer : Player
             if (isPlantSelected)
             {
                 isPlantSelected = false;
-                Destroy(plantSelected);
+                Destroy(selectedPlantPreview);
                 Destroy(tileOutline);
             }
             if (!isPlantSelected)
@@ -292,75 +294,6 @@ public class EarthPlayer : Player
         SetPlant();
     }
 
-    //Handles if they're in a position to start planting a plant
-    /*
-    private IEnumerator OnPlantPlanted()
-    {
-        //Have to add checks to make sure they are on a tile at all
-        if(selectedTile == null)
-        {
-            //Display error message
-            string enInvalidTile = "Invalid plant placement";
-            string frInvalidTile = "Placement des plantes non valides";
-            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
-            yield break;
-        }
-        //If the tile selected checks out
-        else if (isPlantSelected && selectedTile.GetComponent<Cell>().tileValid)
-        {
-            inPlantSelection_FSM = false;
-            
-            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < agent.stoppingDistance + 2)
-            {
-                //Set all our flags
-                isPlantSelected = false;
-                enrouteToPlant = false;
-                animator.SetAnimationFlag("plant", true);
-                inInteraction_FSM = true;
-                ResetAgentPath();
-
-                Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                pMovement.GetPlayerGeo().LookAt(this.transform);
-
-                //Pause other controls, initiate animation
-                StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("plant")));
-                s_soundLibrary.PlayPlantClips();
-
-                //After wait time
-                yield return animator.GetAnimationWaitTime("plant");
-
-                //Return our flags off
-                animator.SetAnimationFlag("plant", false);
-                inInteraction_FSM = false;
-                
-                //Create the plant and reset our variables
-                PlantPlant(activeTileCell);
-                plantSelectedType = PlantSelectedType.NONE;
-            }
-            //If we're not close enough, we need to start heading towards the tile selected
-            else
-            {
-                ApproachTile();
-            }
-        }
-        //If they're trying to select an invalid tile
-        else if (isPlantSelected && !selectedTile.GetComponent<Cell>().tileValid)
-        {
-            //Display error message
-            string enInvalidTile = "Invalid plant placement";
-            string frInvalidTile = "Placement des plantes non valides";
-
-            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
-            yield break;
-        }
-        //Unknown use case?
-        else
-        {
-            yield break;
-        }
-    }
-    */
-
     //Called after a player selects a tile to plant on
     public void SetPlant()
     {
@@ -386,7 +319,9 @@ public class EarthPlayer : Player
                 ResetAgentPath();
                 animator.SetAnimationFlag("plant", true);
 
-                pMovement.GetPlayerGeo().LookAt(this.transform);
+                //pMovement.GetPlayerGeo().LookAt(this.transform);
+                pMovement.SetTurnTarget(selectedTile);
+                pMovement.SetTurning(true);
 
                 //Pause other controls, initiate animation
                 inInteraction_FSM = true;
@@ -433,6 +368,9 @@ public class EarthPlayer : Player
 
     public void PlantWrapUp()
     {
+        pMovement.SetTurning(false);
+        pMovement.SetTurnTarget(null);
+        
         inInteraction_FSM = false;
         animator.SetAnimationFlag("plant", false);
         animator.SetInSoftLock(true);
@@ -450,6 +388,7 @@ public class EarthPlayer : Player
     //Finishes the process of planting a plant
     private void PlantPlant(Cell activeTileCell)
     {
+        activeTileCell.UpdatePlantPreview();
         //We will want to add checks to make sure the tile type is valid, and check whether they are selecting a water or land tile
         //Pick the right plant based on the type of plant selected, and the tile selected, and then consume the appropriate seed
         if (plantSelectedType == PlantSelectedType.TREE)
@@ -536,69 +475,7 @@ public class EarthPlayer : Player
         SetPlantRemoval();
     }
 
-    /*
-    private IEnumerator OnPlantRemoved()
-    {
-        //Have to add checks to make sure they are on a tile
-        if (selectedTile == null)
-        {
-            //Display error message
-            string enInvalidTile = "No tile selected";
-            string frInvalidTile = "Aucune tuile sélectionnée";
-            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
-            yield break;
-        }
-        //Check if the tile they highlighted has a plant on it
-        if (selectedTile.GetComponent<Cell>().tileIsActivated && selectedTile.GetComponent<Cell>().tileHasBuild)
-        {
-            inRemovalSelection_FSM = false;
-
-            //If we're close enough to the plant, we can go ahead and remove it
-            if (Mathf.Abs((this.transform.position - selectedTile.transform.position).magnitude) < agent.stoppingDistance + 2)
-            {
-                //Set all our flags
-                isRemovalStarted = false;
-                enrouteToPlant = false;
-                animator.SetAnimationFlag("plant", true);
-                inInteraction_FSM = true;
-                ResetAgentPath();
-
-                Cell activeTileCell = selectedTile.GetComponent<Cell>();
-                pMovement.GetPlayerGeo().LookAt(this.transform);
-
-                //Pause other controls and start animations
-                StartCoroutine(SuspendActions(animator.GetAnimationWaitTime("plant")));
-                s_soundLibrary.PlayPlantClips();
-
-                yield return animator.GetAnimationWaitTime("plant");
-
-                //Return our flags off
-                inInteraction_FSM = false;
-                animator.SetAnimationFlag("plant", false);
-
-                RemovePlant(activeTileCell);
-            }
-            //If we're not close enough, we'll have to get close enough
-            else
-            {
-                ApproachTile();
-            }
-        }
-        //If the tile has no build
-        else if (selectedTile.GetComponent<Cell>().tileIsActivated && !selectedTile.GetComponent<Cell>().tileHasBuild)
-        {
-            string enInvalidTile = "No valid objects to remove";
-            string frInvalidTile = "Pas d'objets valides à supprimer";
-
-            hudManager.ThrowPlayerWarning(enInvalidTile, frInvalidTile);
-        }
-        else
-        {
-            yield break;
-        }
-    }
-    */
-
+    //Sets us up to remove a plant
     private void SetPlantRemoval()
     {
         //Have to add checks to make sure they are on a tile
@@ -624,7 +501,9 @@ public class EarthPlayer : Player
                 isRemoving = true;
                 ResetAgentPath();
 
-                pMovement.GetPlayerGeo().LookAt(this.transform);
+                //pMovement.GetPlayerGeo().LookAt(this.transform);
+                pMovement.SetTurnTarget(selectedTile);
+                pMovement.SetTurning(true);
 
                 //Pause other controls and start animations
                 SuspendActions(true);
@@ -647,9 +526,13 @@ public class EarthPlayer : Player
         }
     }
 
+    //Turns off all behaviour related to removing plants
     public void PlantRemoveWrapUp()
     {
         //Return our flags off
+        pMovement.SetTurning(false);
+        pMovement.SetTurnTarget(null);
+
         inInteraction_FSM = false;
         animator.SetAnimationFlag("plant", false);
         animator.SetInSoftLock(true);
@@ -684,6 +567,8 @@ public class EarthPlayer : Player
             {
                 ResetAgentPath();
             }
+            pMovement.SetTurning(false);
+            pMovement.SetTurnTarget(null);
             isATileSelected = false;
             isRemovalStarted = false;
             inRemovalSelection_FSM = false;
@@ -862,14 +747,6 @@ public class EarthPlayer : Player
         soundLibrary.PlaySpellClips();
     }
 
-    private IEnumerator BarrierStarted()
-    {
-        //Wait for the action to finish
-        yield return animator.GetAnimationWaitTime("castBarrier");
-
-        animator.SetAnimationFlag("castBarrier", false);
-    }
-
     public void TurnShieldOn()
     {
         //Apply the shield and the effect
@@ -1034,12 +911,8 @@ public class EarthPlayer : Player
     //Handles UI components of tile select
     public void TurnOnTileSelect(Transform target)
     {
-        //tileOutline = Instantiate(tileOutlinePrefab, target.transform);
         TurnOnCursor();
-        //DisplayTileText();
         hudManager.TurnOnPopUpText("Please select a tile", "Veuillez sélectionner une tuile");
-        //uiController.DarkenOverlay(darkenWhilePlanting);
-        //DarkenAllImages(GetPlantDarkenObject());
         hudManager.ToggleSproutPanel(true);
     }
 
@@ -1047,10 +920,7 @@ public class EarthPlayer : Player
     public void TurnOffTileSelect()
     {
         TurnOffCursor();
-        //HideTileText();
         hudManager.TurnOffPopUpText();
-        //uiController.RestoreUI(darkenWhilePlanting);
-        //ResetImageColor(GetPlantDarkenObject());
         hudManager.ToggleSproutPanel(false);
         Destroy(tileOutline);
     }
@@ -1061,11 +931,32 @@ public class EarthPlayer : Player
         if (plantSelectedType == PlantSelectedType.NONE)
             return;
         if (plantSelectedType == PlantSelectedType.TREE)
-            plantSelected = Instantiate(treePreviewPrefab, plantParent.transform);
+            selectedPlantPreview = Instantiate(treePreviewPrefab, plantParent.transform);
+
         if (plantSelectedType == PlantSelectedType.FLOWER)
-            plantSelected = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
+        {
+            if (currentTileSelectedType == TileSelectedType.LAND)
+            {
+                selectedPlantPreview = Instantiate(landFlowerPreviewPrefab, plantParent.transform);
+            }
+            else
+            {
+                selectedPlantPreview = Instantiate(waterFlowerPreviewPrefab, plantParent.transform);
+            }
+        }
+            
         if (plantSelectedType == PlantSelectedType.GRASS)
-            plantSelected = Instantiate(landGrassPreviewPrefab, plantParent.transform);
+        {
+            if (currentTileSelectedType == TileSelectedType.LAND)
+            {
+                selectedPlantPreview = Instantiate(landGrassPreviewPrefab, plantParent.transform);
+            }
+            else
+            {
+                selectedPlantPreview = Instantiate(waterGrassPreviewPrefab, plantParent.transform);
+            }
+        }
+            
     }
 
     public void SwitchCursorIcon(Sprite newSprite)
@@ -1095,7 +986,6 @@ public class EarthPlayer : Player
 
     public void TurnOffCursor()
     {
-        //virtualMouseInput.gameObject.GetComponentInChildren<Image>().enabled = false;
         hudManager.ToggleVirtualMouseSprite(false);
     }
 
@@ -1142,13 +1032,13 @@ public class EarthPlayer : Player
     {
         if(isPlantSelected && !isATileSelected && selectedTile == null)
         {
-            plantSelected.GetComponentInChildren<SpriteRenderer>().color = new Color(1, 0.5f, 0.5f, 0.5f);
+            selectedPlantPreview.GetComponentInChildren<SpriteRenderer>().color = new Color(1, 0.5f, 0.5f, 0.5f);
             tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.red;
             Ray cameraRay = mainCamera.ScreenPointToRay(hudManager.GetVirtualMousePosition());
             RaycastHit hit;
             if (Physics.Raycast(cameraRay, out hit, 1000, groundMask))
             {
-                plantSelected.transform.position = hit.point;
+                selectedPlantPreview.transform.position = hit.point;
                 tileOutline.transform.position = hit.point;
             }
         }
@@ -1214,6 +1104,72 @@ public class EarthPlayer : Player
     public bool GetInInteraction()
     {
         return inInteraction_FSM;
+    }
+
+    public void SetIsTileSelected(bool isSelected)
+    {
+        isATileSelected = isSelected;
+    }
+
+    public bool GetIsATileSelected()
+    {
+        return isATileSelected;
+    }
+
+    public void SetTileOutline(GameObject outline)
+    {
+        tileOutline = outline;
+    }
+
+    public GameObject GetTileOutline()
+    {
+        return tileOutline;
+    }
+
+    public void SetTileSelectedType(TileSelectedType typeSelected)
+    {
+        currentTileSelectedType = typeSelected;
+    }
+
+    public GameObject GetSelectedTile()
+    {
+        return selectedTile;
+    }
+
+    public TileSelectedType GetTileSelectedType()
+    {
+        return currentTileSelectedType;
+    }
+
+    public void SetIsRemovalStarted(bool isStarted)
+    {
+        isRemovalStarted = isStarted;
+    }
+
+    public bool GetIsRemovalStarted()
+    {
+        return isRemovalStarted;
+    }
+
+    public void SetIsPlantSelected(bool isSelected)
+    {
+        isPlantSelected = isSelected;
+    }
+
+    public bool GetIsPlantSelected()
+    {
+        return isPlantSelected;
+    }
+
+    public void SetSelectedPlant(GameObject selectedPlant)
+    {
+        Debug.Log("Making a new plant preview");
+        selectedPlantPreview = selectedPlant;
+    }
+
+    public GameObject GetSelectedPlant()
+    {
+        return selectedPlantPreview;
     }
 
     public bool GetInPlantSelection()
@@ -1296,6 +1252,11 @@ public class EarthPlayer : Player
         {
             inInteraction_FSM = true;
         }
+    }
+
+    public Sprite GetShovelIcon()
+    {
+        return i_shovel;
     }
 
     public void SetLanguageState(UserSettingsManager.GameLanguage gameLanguage)

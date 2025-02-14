@@ -144,7 +144,7 @@ public class SplitScreen : MonoBehaviour
             
             //virtualMouseInput.cursorTransform.position = hudManager.GetVirtualMousePosition();
 
-            if (earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+            if (earthPlayer.GetComponent<EarthPlayer>().GetIsPlantSelected() || earthPlayer.GetComponent<EarthPlayer>().GetIsRemovalStarted())
             {
                 /*
                 hudManager.ToggleVirtualMouseSprite(false);

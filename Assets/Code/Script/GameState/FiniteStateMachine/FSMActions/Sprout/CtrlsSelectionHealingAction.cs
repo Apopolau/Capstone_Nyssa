@@ -29,8 +29,8 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
         earthPlayer.ToggleTurning(true);
 
         //Instantiate appropriate objects
-        earthPlayer.tileOutline = Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.GetPowerTarget().transform);
-        earthPlayer.tileOutline.GetComponentInChildren<SpriteRenderer>().color = Color.green;
+        earthPlayer.SetTileOutline(Instantiate(earthPlayer.GetTileOutlinePrefab(), earthPlayer.GetPowerTarget().transform));
+        earthPlayer.GetTileOutline().GetComponentInChildren<SpriteRenderer>().color = Color.green;
 
         //Update the UI
         hudManager.TurnOnPopUpText("Select a target to heal", "Sélectionnez une cible pour guérir");
@@ -40,7 +40,7 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
     public override void Execute(BaseStateMachine stateMachine)
     {
         Vector3 targetLocation = new Vector3(earthPlayer.GetPowerTarget().transform.position.x, earthPlayer.GetPowerTarget().transform.position.y + 1, earthPlayer.GetPowerTarget().transform.position.z);
-        earthPlayer.tileOutline.transform.position = targetLocation;
+        earthPlayer.GetTileOutline().transform.position = targetLocation;
     }
 
     public override void ExitState(BaseStateMachine stateMachine)
@@ -51,7 +51,7 @@ public class CtrlsSelectionHealingBarrierAction : FSMAction
 
         //Restore the UI
         hudManager.TurnOffPopUpText();
-        Destroy(earthPlayer.tileOutline);
+        Destroy(earthPlayer.GetTileOutline());
         hudManager.ToggleSproutPanel(false);
     }
 }

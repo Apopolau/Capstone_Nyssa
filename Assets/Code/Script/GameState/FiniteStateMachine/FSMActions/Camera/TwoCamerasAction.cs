@@ -24,7 +24,7 @@ public class TwoCamerasAction : FSMAction
         splitScreen.earthPlayer.GetComponent<EarthPlayer>().SetCamera(splitScreen.earthCam);
         splitScreen.hudManager.SetCamera(splitScreen.earthCam);
 
-        if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().isPlantSelected || splitScreen.earthPlayer.GetComponent<EarthPlayer>().isRemovalStarted)
+        if (splitScreen.earthPlayer.GetComponent<EarthPlayer>().GetIsPlantSelected() || splitScreen.earthPlayer.GetComponent<EarthPlayer>().GetIsRemovalStarted())
         {
             splitScreen.hudManager.SwitchCursorCanvas(HUDManager.MouseCanvasType.SPROUT, true);
         }

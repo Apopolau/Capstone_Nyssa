@@ -274,7 +274,7 @@ public class Plant : Creatable
         }
         if (thisTypeSeed.Count < 5)
         {
-            seed = Instantiate(stats.seedPrefab, this.transform);
+            seed = Instantiate(stats.seedPrefab, tilePlantedOn.transform);
             //seed.GetComponentInChildren<SpriteRenderer>().material.renderQueue = this.GetComponentInChildren<SpriteRenderer>().material.renderQueue + 1;
             seed.GetComponent<PickupObject>().SetInventory(inventory);
         }

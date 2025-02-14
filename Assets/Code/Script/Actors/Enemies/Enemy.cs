@@ -70,17 +70,19 @@ public abstract class Enemy : Actor
             OnHealthChanged(health.max, health.current);
 
         if (isDead) {
-            soundLibrary.PlayDeathClips();
+            if (!isDying)
+                soundLibrary.PlayDeathClips();
+
+            isDying = true;
             OnDeath();
         }
-        if (hitPoints > 0)
+        if (hitPoints > 0 && isDead)
         {
             soundLibrary.PlayTakeHitClips();
             StartCoroutine(TakePlayerHit());
         }
 
         return isDead;
-       
     }
     
     
