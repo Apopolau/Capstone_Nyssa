@@ -41,7 +41,7 @@ public class HUDManager : MonoBehaviour
     private bool objectivesIsOn = false;
     //private bool menuIsOn = false;
     private bool pollutionIsOn = true;
-    //private bool dayNightCycleIsOn = true;
+    private bool dayNightCycleIsOn = true;
     private bool popUpTextIsOn = false;
 
     private WaitForSeconds textTimer = new WaitForSeconds(3);
@@ -229,14 +229,12 @@ public class HUDManager : MonoBehaviour
             {
                 model.GetPopUpTextBox().SetActive(false);
             }
-            //UNCOMMENT THIS WHEN WE HAVE A DAY NIGHT CYCLE UI
-            /*
             //If the day night cycle UI is on, turn it off
             if (model.GetDayNightCycle().activeSelf)
             {
                 model.GetDayNightCycle().SetActive(false);
             }
-            */
+            
         }
         //We want to restore UI elements that were on before dialogue started
         if (!isActive)
@@ -254,12 +252,10 @@ public class HUDManager : MonoBehaviour
             {
                 model.GetPollutionBar().SetActive(true);
             }
-            /*
             if (dayNightCycleIsOn)
             {
                 model.GetDayNightCycle().SetActive(true);
             }
-            */
             if (popUpTextIsOn)
             {
                 model.GetPopUpTextBox().SetActive(true);
@@ -636,9 +632,21 @@ public class HUDManager : MonoBehaviour
 
     //NEEDS SETUP
     //Update Day/Night circle
-    public void UpdateDayNightDisplay()
+    public void UpdateDayNightDisplay(float timeOfDay)
     {
         //This will need to spin the tab on the day night cycle once it's created
+        if(model.GetDayNightCycle() != null)
+        {
+            if(model.GetDayNightCycle().activeSelf && dayNightCycleIsOn)
+            {
+                float scalar = 360 / 24;
+                float offset = 90; //Using this to start us at morning, because at 0 rotation we're mid-day
+                float angle = Mathf.Clamp(timeOfDay * scalar, 0, 360);
+
+                Vector3 newAngle = new Vector3(0, 0, (-angle + offset));
+                model.GetDayNightCycle().transform.GetChild(1).rotation = Quaternion.Euler(newAngle);
+            }
+        }
     }
 
     //Moves a kidnap icon to try to get as close to an animal that's being kidnapped as possible while staying on-screen

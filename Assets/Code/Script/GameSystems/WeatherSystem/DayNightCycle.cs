@@ -7,6 +7,8 @@ using UnityEngine;
 //
 public class DayNightCycle : MonoBehaviour
 {
+    [Header("Major References")]
+    [SerializeField] private HUDModel model;
     // Start is called before the first frame update
     [Header("Lights in Scene")]
     [SerializeField] private Light directionalLight;
@@ -92,15 +94,7 @@ public class DayNightCycle : MonoBehaviour
     {
         if (Application.isPlaying && timeOfDayChanges)
         {
-            /*
-            timeOfDay += Time.deltaTime;
-            timeOfDay %= 24;
-            */
-            timeRaw += Time.deltaTime;
-            scaledTime = timeRaw / timeScale;
-            nightsPassed = (int)scaledTime / 24;
-            timeOfDay = scaledTime % 24;
-            UpdateLighting();
+            CalculateTimeOfDay();
         }
 
     }
@@ -166,6 +160,16 @@ public class DayNightCycle : MonoBehaviour
         //print(V);
     }
 
+    private void CalculateTimeOfDay()
+    {
+        timeRaw += Time.deltaTime;
+        scaledTime = timeRaw / timeScale;
+        nightsPassed = (int)scaledTime / 24;
+        timeOfDay = scaledTime % 24;
+        UpdateLighting();
+        model.GetManager().UpdateDayNightDisplay(timeOfDay);
+    }
+
     public int NightsPassed()
     {
         return nightsPassed;
@@ -187,5 +191,10 @@ public class DayNightCycle : MonoBehaviour
             currentDirectionalLightColor = dirtyDirectionalLightColor;
             currentDirectionalLightIntensity = dirtyDirectionalLightIntensity;
         }
+    }
+
+    public float GetTimeOfDay()
+    {
+        return timeOfDay;
     }
 }

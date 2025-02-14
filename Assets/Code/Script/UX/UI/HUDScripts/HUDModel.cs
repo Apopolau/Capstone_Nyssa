@@ -232,6 +232,7 @@ public class HUDModel : ScriptableObject
     public void InitializeDayNightCycle()
     {
         //Put the day night cycle here
+        dayNightCycle = Instantiate(dayNightCyclePrefab, hudCanvas.transform);
     }
 
     //Creates and sets up Celeste's Energy Bar UI
