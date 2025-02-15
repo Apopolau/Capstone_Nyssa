@@ -337,25 +337,21 @@ public class LevelOneEvents : LevelEventManager
             //Calculate the total amount of plants that have been planted
             int plantCount = levelOneProgress.totalPlants;
 
-            //ambientSoundPlayer.SetVolume(plantCount / tileCount);
-
             //We want to start changing up the ambient sounds as the map gets improved
             //between 16% and 25%
             if ((plantCount >= tileCount / 6) && (plantCount <= tileCount / 4))
             {
-                if (unclean)
+                if (setClean)
                 {
                     soundPlayers[0].Stop(0.5f);
                     soundPlayers[2].Stop(0.5f);
                     GetComponent<DayNightCycle>().SwapSkyColours(false);
-                    unclean = false;
                     setClean = false;
                     setSuperClean = false;
                 }
-                soundPlayers[1].SetVolume((tileCount / plantCount) / 1);
             }
             //between 25% and 50%
-            else if ((plantCount >= tileCount / 4) && (plantCount <= tileCount / 2))
+            else if ((plantCount > tileCount / 4) && (plantCount < tileCount / 2))
             {
                 if (!setClean)
                 {
@@ -368,8 +364,6 @@ public class LevelOneEvents : LevelEventManager
                     soundPlayers[2].Stop(0.5f);
                     setSuperClean = false;
                 }
-                soundPlayers[0].SetVolume((tileCount / plantCount) / 1);
-                soundPlayers[1].SetVolume((plantCount / tileCount) / 1);
             }
             else if (plantCount >= tileCount / 2)
             {
@@ -379,10 +373,26 @@ public class LevelOneEvents : LevelEventManager
                     soundPlayers[2].Play(nature, 0.5f);
                     setSuperClean = true;
                 }
-                soundPlayers[0].SetVolume((tileCount / plantCount) / 1);
-                soundPlayers[1].SetVolume((plantCount / tileCount) / 1);
-                soundPlayers[2].SetVolume((tileCount / plantCount) / 1);
 
+            }
+
+            if (plantCount != 0)
+            {
+                if (soundPlayers[1].enabled)
+                {
+                    //Adjust howling wind volume to get gradually quieter as more plants are planted
+                    soundPlayers[1].FadeVolume(1 / (float)(plantCount / tileCount), 0.1f);
+                }
+                if (setClean)
+                {
+                    //Adjust music volume to get gradually louder as more plants are planted
+                    soundPlayers[0].FadeVolume(1 / (float)(tileCount / plantCount), 0.1f);
+                }
+                if (setSuperClean)
+                {
+                    //Adjust bird ambience to get gradually louder as more plants are planted
+                    soundPlayers[2].FadeVolume(1 / (float)(tileCount / plantCount), 0.1f);
+                }
             }
         }
         

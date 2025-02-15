@@ -104,7 +104,7 @@ public class DayNightCycle : MonoBehaviour
 
     }
 
-    private void UpdateLighting()
+    private void UpdateTimeOfDay()
     {
         //float timeFraction = timeOfDay / 24;
 
@@ -149,12 +149,7 @@ public class DayNightCycle : MonoBehaviour
         }
         */
 
-        RenderSettings.ambientEquatorColor = currentEquatorColor.Evaluate(timeOfDay / 24);
-        RenderSettings.ambientSkyColor = currentEquatorColor.Evaluate(timeOfDay / 24);
-        directionalLight.color = currentDirectionalLightColor.Evaluate(timeOfDay / 24);
-        float H, S, V;
-        Color.RGBToHSV(currentDirectionalLightIntensity.Evaluate(timeOfDay / 24), out H, out S, out V);
-        directionalLight.intensity = V;
+        
 
         //print(directionalLightColor.Evaluate(timeFraction));
         //print(V);
@@ -166,6 +161,7 @@ public class DayNightCycle : MonoBehaviour
         scaledTime = timeRaw / timeScale;
         nightsPassed = (int)scaledTime / 24;
         timeOfDay = scaledTime % 24;
+        UpdateTimeOfDay();
         UpdateLighting();
         model.GetManager().UpdateDayNightDisplay(timeOfDay);
     }
@@ -183,6 +179,7 @@ public class DayNightCycle : MonoBehaviour
             currentSkyColor = skyColor;
             currentDirectionalLightColor = directionalLightColor;
             currentDirectionalLightIntensity = directionalLightIntensity;
+            UpdateLighting();
         }
         else
         {
@@ -190,7 +187,18 @@ public class DayNightCycle : MonoBehaviour
             currentSkyColor = dirtySkyColor;
             currentDirectionalLightColor = dirtyDirectionalLightColor;
             currentDirectionalLightIntensity = dirtyDirectionalLightIntensity;
+            UpdateLighting();
         }
+    }
+
+    public void UpdateLighting()
+    {
+        RenderSettings.ambientEquatorColor = currentEquatorColor.Evaluate(timeOfDay / 24);
+        RenderSettings.ambientSkyColor = currentEquatorColor.Evaluate(timeOfDay / 24);
+        directionalLight.color = currentDirectionalLightColor.Evaluate(timeOfDay / 24);
+        float H, S, V;
+        Color.RGBToHSV(currentDirectionalLightIntensity.Evaluate(timeOfDay / 24), out H, out S, out V);
+        directionalLight.intensity = V;
     }
 
     public float GetTimeOfDay()
