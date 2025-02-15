@@ -48,7 +48,8 @@ public class CutsceneManager : MonoBehaviour
         //Update the next scene
         if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.ENGLISH)
         {
-            nextImg = q_sceneListEN.Dequeue();
+            if (q_sceneListEN.Count > 0)
+                nextImg = q_sceneListEN.Dequeue();
             if(nextImg != null && q_sceneListEN.Count > 0)
             {
                 currentImg = nextImg;
@@ -60,7 +61,8 @@ public class CutsceneManager : MonoBehaviour
         }
         else if (userSettingsManager.chosenLanguage == UserSettingsManager.GameLanguage.FRENCH)
         {
-            nextImg = q_sceneListFR.Dequeue();
+            if (q_sceneListFR.Count > 0)
+                nextImg = q_sceneListFR.Dequeue();
             if (nextImg != null && q_sceneListFR.Count > 0)
             {
                 currentImg = nextImg;
