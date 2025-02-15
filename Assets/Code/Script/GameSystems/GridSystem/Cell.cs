@@ -246,12 +246,13 @@ public class Cell : MonoBehaviour
         /////IF TILE IS EARTH
         if ((this.terrainType == TerrainType.GRASS || this.terrainType == TerrainType.DIRT) && earthPlayer.GetTileSelectedType() == EarthPlayer.TileSelectedType.WATER)
         {
-
+            //If it's not a tree, we need to destroy the previous preview
             if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
             {
                 Destroy(earthPlayer.GetSelectedPlant());
             }
 
+            //Make a new preview
             if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
             {
                 earthPlayer.SetSelectedPlant(Instantiate(earthPlayer.landFlowerPreviewPrefab, earthPlayer.plantParent.transform));
@@ -265,12 +266,13 @@ public class Cell : MonoBehaviour
         //////IF TILE IS WATER
         else if ((this.terrainType == TerrainType.WATER) && earthPlayer.GetTileSelectedType() == EarthPlayer.TileSelectedType.LAND)
         {
-
+            //If it's not a tree, we need to destroy the previous preview
             if (earthPlayer.plantSelectedType != EarthPlayer.PlantSelectedType.TREE)
             {
                 Destroy(earthPlayer.GetSelectedPlant());
             }
 
+            //Make a new preview
             if (earthPlayer.plantSelectedType == EarthPlayer.PlantSelectedType.FLOWER)
             {
                 earthPlayer.SetSelectedPlant(Instantiate(earthPlayer.waterFlowerPreviewPrefab, earthPlayer.plantParent.transform));

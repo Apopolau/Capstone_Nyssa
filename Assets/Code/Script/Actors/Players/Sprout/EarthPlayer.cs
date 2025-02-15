@@ -426,6 +426,9 @@ public class EarthPlayer : Player
         int finalIndex = plantsPlanted.Count - 1;
         activeTileCell.placedObject = plantsPlanted[finalIndex];
         activeTileCell.tileHasBuild = true;
+
+        if(selectedPlantPreview != null)
+            Destroy(selectedPlantPreview);
     }
 
     //If the player cancels planting while they have a plant selected
@@ -1163,7 +1166,6 @@ public class EarthPlayer : Player
 
     public void SetSelectedPlant(GameObject selectedPlant)
     {
-        Debug.Log("Making a new plant preview");
         selectedPlantPreview = selectedPlant;
     }
 

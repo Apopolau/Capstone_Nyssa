@@ -76,7 +76,7 @@ public abstract class Enemy : Actor
             isDying = true;
             OnDeath();
         }
-        if (hitPoints > 0 && isDead)
+        if (hitPoints > 0 && !isDead)
         {
             soundLibrary.PlayTakeHitClips();
             StartCoroutine(TakePlayerHit());
