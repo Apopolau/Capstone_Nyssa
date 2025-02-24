@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class RockSlideInteraction : Interactable
 {
-    WaitForSeconds slideClearTime = new WaitForSeconds(4.542f);
+    [SerializeField] GameObject rockslideObject;
+    [SerializeField] VisualEffect dustEffect;
+
+    WaitForSeconds slideClearTime = new WaitForSeconds(3.5f);
     bool isAnimated = false;
     [SerializeField] InstanceSoundEvent soundEvent;
     
@@ -48,6 +54,8 @@ public class RockSlideInteraction : Interactable
             soundEvent.Play();
             isEarthInteractable = false;
             uiObject.SetActive(false);
+            dustEffect.gameObject.SetActive(true);
+            dustEffect.Play();
             StartCoroutine(LetTimerRun());
         }
     }
@@ -56,7 +64,7 @@ public class RockSlideInteraction : Interactable
     {
         if (isAnimated)
         {
-            this.gameObject.transform.localPosition = new Vector3(this.gameObject.transform.localPosition.x, this.gameObject.transform.localPosition.y - 0.3f, this.gameObject.transform.localPosition.z);
+            rockslideObject.transform.localPosition = new Vector3(rockslideObject.transform.localPosition.x, rockslideObject.transform.localPosition.y - 0.06f, rockslideObject.transform.localPosition.z);
         }
     }
 
@@ -65,6 +73,7 @@ public class RockSlideInteraction : Interactable
         
         yield return slideClearTime;
         isAnimated = false;
+        dustEffect.Stop();
     }
 
     private void OnTriggerStay(Collider other)

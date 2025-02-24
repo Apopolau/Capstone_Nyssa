@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.VFX;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class LevelOneEvents : LevelEventManager
 {
@@ -119,7 +121,7 @@ public class LevelOneEvents : LevelEventManager
     bool setSuperClean = false;
 
     [Header("Time intervals")]
-    WaitForSeconds delayTime = new WaitForSeconds(0.1f);
+    WaitForSeconds delayTime = new WaitForSeconds(0.3f);
     WaitForSeconds extraDelayTime = new WaitForSeconds(1);
 
     private void Awake()
@@ -127,6 +129,12 @@ public class LevelOneEvents : LevelEventManager
         levelOneProgress.SetEventManager(this);
         soundPlayers = AmbienceManager.Instance.GetComponents<SoundPlayer>();
         weatherState.SetEventManager(this);
+        postProcessVolume.profile.TryGet<Bloom>(out bloom);
+        postProcessVolume.profile.TryGet<DepthOfField>(out depthOfField);
+        //bloom.intensity.value = 0;
+        //depthOfField.focusDistance.value = 5f;
+        bloom.intensity.SetValue(new NoInterpMinFloatParameter(0, 0, true));
+        depthOfField.focusDistance.SetValue(new NoInterpMinFloatParameter(5, 0, true));
     }
 
     // Start is called before the first frame update
@@ -317,6 +325,7 @@ public class LevelOneEvents : LevelEventManager
         while (true)
         {
             yield return delayTime;
+
             if (firstAreaClear)
             {
                 EvaluateAreaOne();
@@ -336,6 +345,7 @@ public class LevelOneEvents : LevelEventManager
 
             //Calculate the total amount of plants that have been planted
             int plantCount = levelOneProgress.totalPlants;
+            float plantCompletion = (float)plantCount / (float)tileCount;
 
             //We want to start changing up the ambient sounds as the map gets improved
             //between 16% and 25%
@@ -376,12 +386,19 @@ public class LevelOneEvents : LevelEventManager
 
             }
 
+            //Adjust some values granularly
             if (plantCount != 0)
             {
+                float bloomIntensity = plantCompletion * 1.9f;
+                float focusDistance = 5f - plantCompletion;
+
+                bloom.intensity.SetValue(new NoInterpMinFloatParameter(bloomIntensity, 0, true));
+                depthOfField.focusDistance.SetValue(new NoInterpMinFloatParameter(focusDistance, 0, true));
+
                 if (soundPlayers[1].enabled)
                 {
                     //Adjust howling wind volume to get gradually quieter as more plants are planted
-                    soundPlayers[1].FadeVolume(1 / (float)(plantCount / tileCount), 0.1f);
+                    soundPlayers[1].FadeVolume(1 / plantCompletion, 0.1f);
                 }
                 if (setClean)
                 {

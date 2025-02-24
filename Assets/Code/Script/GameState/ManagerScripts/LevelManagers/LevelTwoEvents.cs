@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class LevelTwoEvents : LevelEventManager
 {
@@ -357,6 +359,7 @@ public class LevelTwoEvents : LevelEventManager
 
             //Calculate the total amount of plants that have been planted
             int plantCount = levelTwoProgress.totalPlants;
+            float plantCompletion = (float)plantCount / (float)tileCount;
 
             //We want to start changing up the ambient sounds as the map gets improved
             if ((plantCount > tileCount / 6) && (plantCount < tileCount / 4))
@@ -399,6 +402,12 @@ public class LevelTwoEvents : LevelEventManager
 
             if(plantCount != 0)
             {
+                float bloomIntensity = plantCompletion * 1.9f;
+                float focusDistance = 5f - plantCompletion;
+
+                bloom.intensity.SetValue(new NoInterpMinFloatParameter(bloomIntensity, 0, true));
+                depthOfField.focusDistance.SetValue(new NoInterpMinFloatParameter(focusDistance, 0, true));
+
                 if (soundPlayers[1].enabled)
                 {
                     //Adjust howling wind volume to get gradually quieter as more plants are planted

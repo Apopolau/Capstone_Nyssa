@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public abstract class LevelEventManager : EventManager
 {
@@ -14,6 +16,9 @@ public abstract class LevelEventManager : EventManager
     [SerializeField] protected GameObjectRuntimeSet playerSet;
     [SerializeField] protected UserSettingsManager userSettingsManager;
     [SerializeField] protected WeatherState weatherState;
+    [SerializeField] protected Volume postProcessVolume;
+    protected Bloom bloom;
+    protected DepthOfField depthOfField;
     [SerializeField] protected UISoundLibrary uiSoundLibrary;
     //List of specific ambient sounds used in every level
     [SerializeField] protected SoundEvent music;
